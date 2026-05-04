@@ -9,6 +9,7 @@ import LogoStrip from "@/components/LogoStrip";
 import { Button } from "@/components/ui/button";
 import { SOLUTIONS } from "@/content/solutions";
 import { INDUSTRIES } from "@/content/industries";
+import SectionMarker from "@/components/SectionMarker";
 
 const Index = () => {
   return (
