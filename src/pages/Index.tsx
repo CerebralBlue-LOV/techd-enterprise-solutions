@@ -31,7 +31,7 @@ const Index = () => {
         <Suspense fallback={null}>
           <HeroParticleField />
         </Suspense>
-        <HeroFloatingCards />
+        
         <div className="container-page relative z-10 pt-32 pb-32 md:pt-40 md:pb-40">
           <Reveal>
             <div className="max-w-3xl">
