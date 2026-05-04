@@ -32,12 +32,7 @@ export const Header = () => {
   }, [location.pathname]);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full bg-background/90 backdrop-blur border-b border-border transition-[box-shadow] duration-200",
-        scrolled && "shadow-[0_1px_0_0_hsl(var(--border))]",
-      )}
-    >
+    <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur border-b border-border">
       <div className="container-page flex h-16 items-center justify-between gap-6">
         <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="TechD home">
           <img src={logo} alt="TechD" className="h-8 w-auto" loading="eager" />
