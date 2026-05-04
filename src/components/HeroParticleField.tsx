@@ -78,6 +78,7 @@ const Field = ({ animate }: { animate: boolean }) => {
   const pointerWorld = useRef(new THREE.Vector3(999, 0, 999)); // off-field default
   const pointerSmoothed = useRef(new THREE.Vector3(999, 0, 999));
   const pointerActive = useRef(0); // 0..1 envelope for ripple amplitude
+  const pointerActiveTarget = useRef(0);
   const tiltTarget = useRef({ x: 0, y: 0 });
   const tiltCurrent = useRef({ x: 0, y: 0 });
 
@@ -115,14 +116,15 @@ const Field = ({ animate }: { animate: boolean }) => {
         local.y = ly * cosA + lz * sinA;
         local.z = -ly * sinA + lz * cosA;
         pointerWorld.current.set(local.x, 0, local.z);
-        pointerActive.current = 1;
+        pointerActiveTarget.current = 1;
       }
       // Tilt target from NDC, capped to small angle.
       tiltTarget.current.x = ndc.y * 0.08; // pitch
       tiltTarget.current.y = ndc.x * 0.18; // yaw
     };
     const onLeave = () => {
-      pointerActive.current = 0;
+      // Smoothly ease everything back to neutral instead of snapping.
+      pointerActiveTarget.current = 0;
       tiltTarget.current.x = 0;
       tiltTarget.current.y = 0;
     };
@@ -138,12 +140,12 @@ const Field = ({ animate }: { animate: boolean }) => {
     if (!animate) return;
     const t = clock.getElapsedTime();
 
-    // Smooth pointer follow + active envelope decay.
-    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 6));
+    // Smooth pointer follow (slower = smoother) + eased active envelope.
+    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 3.5));
     pointerActive.current = THREE.MathUtils.lerp(
       pointerActive.current,
-      pointerActive.current > 0.01 ? pointerActive.current : 0,
-      0.05,
+      pointerActiveTarget.current,
+      Math.min(1, delta * 2.5),
     );
 
     const px = pointerSmoothed.current.x;
