@@ -26,6 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import SectionMarker from "@/components/SectionMarker";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Required").max(100),
@@ -70,7 +71,8 @@ const Contact = () => {
         description="Talk to a TechD principal about your AI, data, security, or cloud program."
       />
 
-      <section className="relative overflow-hidden">
+      <section data-section="contact:hero" className="relative overflow-hidden">
+        <SectionMarker page="Contact" name="Hero" />
         <GeometricAccent />
         <div className="container-page relative pt-20 pb-16 md:pt-28">
           <Reveal>
@@ -84,7 +86,8 @@ const Contact = () => {
         </div>
       </section>
 
-      <section className="pb-24">
+      <section data-section="contact:form" className="pb-24">
+        <SectionMarker page="Contact" name="Contact Info + Form" />
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
             <div className="space-y-8">

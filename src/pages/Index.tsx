@@ -9,6 +9,7 @@ import LogoStrip from "@/components/LogoStrip";
 import { Button } from "@/components/ui/button";
 import { SOLUTIONS } from "@/content/solutions";
 import { INDUSTRIES } from "@/content/industries";
+import SectionMarker from "@/components/SectionMarker";
 
 const Index = () => {
   return (
@@ -19,7 +20,8 @@ const Index = () => {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section data-section="home:hero" className="relative overflow-hidden">
+        <SectionMarker page="Home" name="Hero" />
         <GeometricAccent />
         <div className="container-page relative pt-20 pb-24 md:pt-28 md:pb-32">
           <Reveal>
@@ -45,10 +47,14 @@ const Index = () => {
         </div>
       </section>
 
-      <LogoStrip />
+      <div data-section="home:logo-strip">
+        <SectionMarker page="Home" name="Customer Logo Strip" />
+        <LogoStrip />
+      </div>
 
       {/* Solutions */}
-      <section className="section">
+      <section data-section="home:solutions" className="section">
+        <SectionMarker page="Home" name="Solutions Grid" />
         <div className="container-page">
           <Reveal>
             <SectionHeading
@@ -82,7 +88,8 @@ const Index = () => {
       </section>
 
       {/* Industries */}
-      <section className="section bg-muted/40">
+      <section data-section="home:industries" className="section bg-muted/40">
+        <SectionMarker page="Home" name="Industries Grid" />
         <div className="container-page">
           <Reveal>
             <SectionHeading
@@ -107,7 +114,8 @@ const Index = () => {
       </section>
 
       {/* Featured case study */}
-      <section className="section">
+      <section data-section="home:case-study" className="section">
+        <SectionMarker page="Home" name="Featured Case Study" />
         <div className="container-page">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
@@ -148,7 +156,8 @@ const Index = () => {
       </section>
 
       {/* Why TechD */}
-      <section className="section bg-muted/40">
+      <section data-section="home:why-techd" className="section bg-muted/40">
+        <SectionMarker page="Home" name="Why TechD" />
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.4fr] items-start">
           <Reveal>
             <SectionHeading eyebrow="Why TechD" title="A different kind of partner." />
@@ -184,7 +193,8 @@ const Index = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="section">
+      <section data-section="home:final-cta" className="section">
+        <SectionMarker page="Home" name="Final CTA" />
         <div className="container-page">
           <Reveal>
             <div className="rounded-2xl border border-border bg-background p-10 md:p-16 text-center">

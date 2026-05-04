@@ -6,6 +6,7 @@ import SectionHeading from "@/components/SectionHeading";
 import GeometricAccent from "@/components/GeometricAccent";
 import { Button } from "@/components/ui/button";
 import { INDUSTRIES } from "@/content/industries";
+import SectionMarker from "@/components/SectionMarker";
 
 const Industries = () => (
   <Layout>
@@ -14,7 +15,8 @@ const Industries = () => (
       description="TechD delivers enterprise AI, data, and security for Healthcare, Financial Services, Insurance, Energy, Higher Education, and Public Sector."
     />
 
-    <section className="relative overflow-hidden">
+    <section data-section="industries:hero" className="relative overflow-hidden">
+      <SectionMarker page="Industries" name="Hero" />
       <GeometricAccent />
       <div className="container-page relative pt-20 pb-16 md:pt-28">
         <Reveal>
@@ -28,7 +30,8 @@ const Industries = () => (
       </div>
     </section>
 
-    <section className="pb-24">
+    <section data-section="industries:grid" className="pb-24">
+      <SectionMarker page="Industries" name="Industries Grid" />
       <div className="container-page grid gap-6 md:grid-cols-2">
         {INDUSTRIES.map((ind, i) => (
           <Reveal key={ind.id} delay={i * 50}>
