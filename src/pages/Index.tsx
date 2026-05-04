@@ -4,7 +4,6 @@ import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/HeroBackdrop";
-import HeroFloatingCards from "@/components/HeroFloatingCards";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 import SectionHeading from "@/components/SectionHeading";
@@ -32,7 +31,7 @@ const Index = () => {
         <Suspense fallback={null}>
           <HeroParticleField />
         </Suspense>
-        <HeroFloatingCards />
+        
         <div className="container-page relative z-10 pt-32 pb-32 md:pt-40 md:pb-40">
           <Reveal>
             <div className="max-w-3xl">
