@@ -1,30 +1,41 @@
 /**
- * Hero-only backdrop. Two layers, all decorative:
- *  1. Engineered grid (full-bleed, no mask — visible across the whole hero)
- *  2. Soft cyan wash anchored to the top-right (does not cover the grid below)
+ * Hero-only backdrop. Three layers, all decorative:
+ *  1. Faint engineered grid (CSS, masked to fade at edges)
+ *  2. Multi-blob soft cyan gradient wash (slowly drifting)
+ *  3. Top + bottom vignette into background
  */
 export const HeroBackdrop = () => (
   <div
     aria-hidden="true"
     className="pointer-events-none absolute inset-0 overflow-hidden"
   >
-    {/* 1. Grid — strong enough to read on white, no radial mask. */}
+    {/* 1. Grid */}
     <div
       className="absolute inset-0"
       style={{
         backgroundImage:
-          "linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)",
+          "linear-gradient(to right, hsl(var(--border) / 0.55) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.55) 1px, transparent 1px)",
         backgroundSize: "48px 48px",
-        opacity: 0.7,
+        WebkitMaskImage:
+          "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
+        maskImage:
+          "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
       }}
     />
 
-    {/* 2. Gradient wash — top-right only, does not bleed into the bottom grid area. */}
-    <div className="absolute -top-40 -right-32 h-[560px] w-[640px] rounded-full bg-primary/20 blur-3xl animate-gradient-drift" />
+    {/* 2. Gradient wash */}
+    <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
     <div
-      className="absolute -top-20 right-1/4 h-[360px] w-[420px] rounded-full bg-primary/10 blur-3xl animate-gradient-drift"
+      className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl animate-gradient-drift"
       style={{ animationDelay: "-9s" }}
     />
+    <div
+      className="absolute bottom-0 left-1/3 h-[420px] w-[680px] rounded-full bg-accent/60 blur-3xl animate-gradient-drift"
+      style={{ animationDelay: "-4s" }}
+    />
+
+    {/* 3. Top vignette only — bottom kept open so the grid reads into the next section. */}
+    <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
   </div>
 );
 
