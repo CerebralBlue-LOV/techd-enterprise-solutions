@@ -9,7 +9,8 @@ export const INDUSTRIES: Industry[] = [
   {
     id: "healthcare",
     name: "Healthcare & Life Sciences",
-    outcome: "Accelerate research, protect patient data, scale clinical operations.",
+    outcome:
+      "HIPAA-grade data platforms and clinical knowledge agents. Trusted by Johns Hopkins Medicine, CHOP, Jefferson Health, Temple Health, Genesis HealthCare, Memorial Sloan Kettering, and Quest Diagnostics.",
     examples: [
       "Clinical knowledge agents",
       "HIPAA-grade data platforms",
@@ -17,33 +18,38 @@ export const INDUSTRIES: Industry[] = [
     ],
   },
   {
-    id: "financial",
-    name: "Financial Services",
-    outcome: "Outpace risk and regulation with provable controls.",
-    examples: ["Fraud detection", "Regulatory reporting", "Core modernization"],
+    id: "media",
+    name: "Media & Entertainment",
+    outcome:
+      "AI-powered content, audience, and operations platforms. Trusted by Sony Pictures, Sony Interactive Entertainment, and Comcast / Peacock.",
+    examples: ["Content intelligence", "Audience analytics", "Operational AI"],
   },
   {
     id: "insurance",
     name: "Insurance",
-    outcome: "Underwrite, price, and settle with AI-assisted precision.",
+    outcome:
+      "Underwriting copilots, claims acceleration, actuarial analytics. Trusted by PURE Insurance, National General, and Affinion.",
     examples: ["Claims automation", "Underwriting copilots", "Actuarial analytics"],
   },
   {
     id: "energy",
     name: "Energy & Utilities",
-    outcome: "Operate critical infrastructure with confidence.",
+    outcome:
+      "Grid analytics, asset performance, and OT/IT security. Trusted by Dominion Energy and MISO.",
     examples: ["Grid analytics", "Asset performance", "OT/IT security"],
   },
   {
     id: "education",
-    name: "Higher Education",
-    outcome: "Modernize the research and student experience.",
+    name: "Higher Education & Research",
+    outcome:
+      "Research computing, identity, and student data platforms. Trusted by Princeton, Johns Hopkins, Villanova, Smith College, VCU Health, and Temple.",
     examples: ["Research computing", "Identity and SSO", "Student data platforms"],
   },
   {
     id: "public",
     name: "Public Sector",
-    outcome: "Deliver mission outcomes with auditable AI.",
+    outcome:
+      "Auditable AI and modernized records for mission delivery. Trusted by DHS, the City of Philadelphia, and L3Harris.",
     examples: ["Citizen services AI", "FedRAMP-aligned cloud", "Records modernization"],
   },
 ];
