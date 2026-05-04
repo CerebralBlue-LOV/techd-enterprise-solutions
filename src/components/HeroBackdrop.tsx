@@ -5,10 +5,7 @@
  *  3. Top + bottom vignette into background
  */
 export const HeroBackdrop = () => (
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute inset-0 overflow-hidden"
-  >
+  <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
     {/* 1. Grid */}
     <div
       className="absolute inset-0"
@@ -16,10 +13,8 @@ export const HeroBackdrop = () => (
         backgroundImage:
           "linear-gradient(to right, hsl(var(--border) / 0.55) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.55) 1px, transparent 1px)",
         backgroundSize: "48px 48px",
-        WebkitMaskImage:
-          "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
-        maskImage:
-          "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
+        WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
+        maskImage: "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
       }}
     />
 
@@ -35,7 +30,7 @@ export const HeroBackdrop = () => (
     />
 
     {/* 3. Top vignette only — bottom kept open so the grid reads into the next section. */}
-    <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
+    <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-background to-transparent" />
   </div>
 );
 
