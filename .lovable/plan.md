@@ -1,85 +1,66 @@
-## Hero Section Redesign — `home:hero` only
+# Logo Strip Upgrade — Monochrome, Enterprise-Confident
 
-Scope: only the Hero section in `src/pages/Index.tsx`. No other sections, pages, routes, or content change. Stays within existing brand tokens (primary cyan, white bg, secondary dark gray) and motion rules (respects `prefers-reduced-motion`, no scroll-jacking, lightweight).
+## Goal
 
-### 1. Make the section larger
+Replace the plain text marquee in `home:logo-strip` with a refined monochrome wordmark strip — the Linear / Anthropic / Stripe approach. No color shift, no hover gimmicks. With 22 featured clients, the marquee finally has enough mass to feel substantial rather than thin.
 
-In `src/pages/Index.tsx`, increase the hero's vertical padding and headline scale so it occupies roughly a full viewport on desktop:
+## Approach
 
-- Wrapper: `min-h-[88vh] flex items-center`, padding `pt-32 pb-40 md:pt-40 md:pb-48`.
-- Headline: bump to `text-6xl md:text-8xl`, max-w-5xl.
-- Sub-copy: `max-w-2xl text-xl md:text-2xl`.
-- CTA row spacing: `mt-12`.
+### 1. Expand client list (`src/content/site.ts`)
 
-### 2. Background layer (replace `GeometricAccent` for the hero only)
+Replace the current 5-name `CUSTOMERS` array with all 22 featured clients in the order provided. Keep export name so nothing else breaks.
 
-Create a new dedicated component `src/components/HeroBackdrop.tsx` so the existing `GeometricAccent` stays untouched for other use. Layer order, all `aria-hidden`, `pointer-events-none`, `absolute inset-0`:
+### 2. Build inline SVG wordmark set (`src/components/logos/index.tsx`)
 
-1. **Base grid pattern** — pure CSS, no image. A repeating 48px × 48px grid using two `linear-gradient`s on a single div, color `hsl(var(--border) / 0.45)`, line width 1px. Mask with a radial `mask-image` so the grid fades out toward the edges (keeps it subtle, "engineered" not graph-paper).
-2. **Soft multi-layer gradient wash** — two large blurred radial blobs (cyan `primary/15` top-right, cyan `primary/8` bottom-left) plus one neutral warm-white blob center. Each uses `animate-gradient-drift` (already defined, 18s) with staggered `animationDelay` so the wash slowly breathes without hard edges.
-3. **Top + bottom vignette** — a thin `bg-gradient-to-b from-background via-transparent to-background` overlay so the grid never touches the header or the next section's seam.
+A single new file exporting one React component per client. Each is a hand-tuned inline SVG wordmark (text-based, set in a weight close to each brand's actual logo) so we get crisp rendering at any size and full control over color via `currentColor`.
 
-### 3. Main visual graphic — 3D particle network
+- All wordmarks normalized to the same visual height (~28px on desktop, ~22px on mobile) via a shared `viewBox` height and a wrapper that sets `h-7 md:h-8 w-auto`.
+- All use `fill="currentColor"` so a single Tailwind text color drives the whole strip.
+- Each component accepts `className` so the strip controls sizing/color.
+- Names rendered as styled text inside SVG (using web-safe stack — actual brand fonts are licensed). This is standard practice for B2B logo walls when official SVGs aren't licensed; visually reads as "wordmark," not "label."
 
-Use **react-three-fiber** + **drei** (versions pinned per the stack: `@react-three/fiber@^8.18`, `@react-three/drei@^9.122.0`, `three@^0.160`). Build `src/components/HeroParticleField.tsx`:
+A `LOGOS` array exports `{ name, Component }` tuples in the same order as `CUSTOMERS`, so the strip iterates one source of truth.
 
-- `<Canvas>` sized to fill the right half on desktop (`absolute right-0 top-0 h-full w-full md:w-[60%]`), pointer-events-none, `dpr={[1, 1.5]}` for perf, `gl={{ antialias: true, alpha: true }}`, transparent background.
-- A `Points` mesh with ~2,500 particles distributed on an undulating plane (sample x/z grid, y = layered sine noise). Particles use a small round sprite material in cyan `#00B3E3` at low opacity.
-- A `LineSegments` mesh that connects each particle to its 2 nearest neighbors (precomputed once on mount, not per frame) using `LineBasicMaterial` at very low opacity for the "network" look.
-- ~12 "highlight" nodes at random indices rendered as slightly larger, brighter points with a subtle additive-blend glow (`THREE.AdditiveBlending`); they pulse opacity on a slow sine in `useFrame`.
-- Animation: `useFrame` updates the y-coordinate of each particle with a slow noise/sine offset (cap delta-time, target ~30fps feel) so the "data landscape" undulates gently. Whole group rotates ~0.02 rad on Y over time.
-- Camera: perspective, slight tilt looking down at the field. OrbitControls disabled.
-- Right-edge fade: a CSS gradient overlay so the field dissolves into the background instead of having a hard canvas edge; left-edge fade so it never crowds the headline.
-- Loaded via `React.lazy` + `Suspense` with `null` fallback so the initial paint isn't blocked.
-- Reduced-motion: if `window.matchMedia('(prefers-reduced-motion: reduce)').matches`, render a single static frame (no `useFrame` loop) — still a beautiful still image, no animation cost.
-- Mobile (`< md`): do not mount the canvas at all; show only the background layer. Saves battery and avoids clutter on narrow viewports.
+> Note: if later you obtain official SVGs from any client (with permission), we swap the inline component for the real asset — the strip's API doesn't change.
 
-### 4. Floating glass-morphism cards
+### 3. Rebuild `src/components/LogoStrip.tsx`
 
-Build `src/components/HeroFloatingCards.tsx` — 3 abstract UI cards positioned absolutely over the particle field on desktop, hidden below `md`. Pure HTML/CSS, no canvas:
-
-- **Card A — "ML Node"** (top-right area): small node-graph icon (lucide `Network` or a tiny inline SVG of 3 connected dots), label "Inference · 142ms", a thin progress bar at 78% in cyan.
-- **Card B — "Performance Metric"** (mid-right): lucide `TrendingUp` icon, label "Run-rate impact", value "+$4.2M", tiny inline SVG sparkline trending up in cyan.
-- **Card C — "Data Pipeline"** (lower-center-right): lucide `Workflow` icon, label "Agents online", value "23 / 23" with a small green dot.
-
-Each card:
-- `bg-white/55 backdrop-blur-xl border border-white/60`
-- `rounded-2xl px-5 py-4`
-- Soft layered shadow: `shadow-[0_20px_50px_-20px_hsl(193_100%_45%/0.18),0_8px_20px_-12px_hsl(240_3%_35%/0.15)]`
-- Subtle float animation — new keyframe `float` (translateY -6px to +6px over 7s, ease-in-out, infinite, alternate). Each card gets a different `animationDelay` so they drift independently. Disabled under `prefers-reduced-motion`.
-- Slight rotation per card (`-rotate-2`, `rotate-1`, `-rotate-1`) for an organic, "floating" feel.
-- All decorative — `aria-hidden`, no links.
-
-### 5. Layering & text protection
-
-In the hero JSX, the stack (back to front) is:
 ```text
-HeroBackdrop  →  HeroParticleField  →  HeroFloatingCards  →  text content (relative z-10)
+┌─────────────────────────────────────────────────────────┐
+│           TRUSTED BY FORTUNE 500 LEADERS                │  ← eyebrow
+│                                                         │
+│   [J&J]  [Comcast]  [Sony]  [JH]  [Princeton]  [DHS]…  │  ← marquee, monochrome
+│                                                         │
+│   25+ years  ·  Fortune 500 clients  ·  6 industries    │  ← proof line
+└─────────────────────────────────────────────────────────┘
 ```
-Headline column is constrained to `max-w-3xl` on the left so the right ~40% stays clear for the visual. On `lg+`, use a 2-column grid (`grid lg:grid-cols-[1.1fr_1fr]`) so text and visual share the row cleanly; on `md` only the backdrop + text show; on `sm` everything but the backdrop hides.
 
-### 6. Tailwind / CSS additions
+- Section: `py-16 border-y border-border bg-background` (more breathing room than current `py-12`).
+- Eyebrow stays, slightly upgraded copy: **"Trusted by leaders in healthcare, media, energy, and the public sector"**.
+- Marquee track keeps the existing `marquee` keyframe but slows to 60s (was 45s) — with 22 logos doubled = 44 items, slower feels more confident.
+- Each logo wrapped in a flex item: `shrink-0 h-8 flex items-center text-secondary/60 hover:text-secondary transition-colors duration-300`. (Hover only deepens the gray — no color shift, satisfies your "monochrome, no color shift" pick. Can remove the hover entirely if you want it fully static — flag it and we drop it.)
+- Gap between logos: `gap-14 md:gap-20`.
+- Edge fade masks (left/right) so logos fade into the page background instead of hard-clipping at the marquee edges. Pure CSS `mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent)`.
+- Pause-on-hover: `.marquee-wrap:hover .marquee { animation-play-state: paused; }` (already standard pattern; add to `index.css` if not present).
+- Below the marquee: a centered proof line in `text-xs uppercase tracking-[0.18em] text-muted-foreground`:
+  **`25+ years  ·  Fortune 500 clients  ·  6 regulated industries`**
+  Separated by `·` characters with `mx-3` spacing.
 
-In `tailwind.config.ts` add one keyframe + animation:
-- `float`: `0%,100% { transform: translateY(-6px) } 50% { transform: translateY(6px) }`
-- `animation: { float: "float 7s ease-in-out infinite" }`
+### 4. Reduced motion
 
-In `src/index.css` extend the reduced-motion block to also null out `.animate-float`.
+In `src/index.css`'s reduced-motion block, ensure `.marquee { animation: none; }` and switch the strip to a static centered wrap (`flex-wrap justify-center`). Already partially handled — verify and extend.
 
-### 7. Dependencies to install
+## Files touched
 
-- `three@^0.160.0`
-- `@react-three/fiber@^8.18.0`
-- `@react-three/drei@^9.122.0`
+- `src/content/site.ts` — expand `CUSTOMERS` to 22 entries.
+- `src/components/logos/index.tsx` — new, 22 inline SVG wordmark components + `LOGOS` array.
+- `src/components/LogoStrip.tsx` — rebuilt to render `LOGOS`, edge-fade mask, proof line, slower marquee.
+- `src/index.css` — pause-on-hover + reduced-motion fallback for the strip (only if not already present).
 
-### Files touched
+## Open questions
 
-- `src/pages/Index.tsx` — hero JSX only (size, layout, swap backdrop, mount new components).
-- `src/components/HeroBackdrop.tsx` — new.
-- `src/components/HeroParticleField.tsx` — new (lazy-loaded).
-- `src/components/HeroFloatingCards.tsx` — new.
-- `tailwind.config.ts` — add `float` keyframe/animation.
-- `src/index.css` — reduced-motion rule for `.animate-float`.
-- `package.json` — three / r3f / drei.
+1. **Hover behavior** — keep the subtle gray-deepen on hover, or fully static (no hover at all)? You said "no hover gimmick"; I lean fully static. Confirm and I'll drop it.
+2. **Proof line copy** — the suggested `25+ years · Fortune 500 clients · 6 regulated industries` — good, or want different metrics (e.g. swap "6 regulated industries" for "$2B+ in client outcomes" or similar)?
+3. **Order** — keep your provided order, or reshuffle so the most recognizable names (J&J, Sony, Comcast, Johns Hopkins, Princeton, DHS) lead the visible window?
 
-Nothing else changes.
+Answer those three and I'll switch to build mode and ship it.
