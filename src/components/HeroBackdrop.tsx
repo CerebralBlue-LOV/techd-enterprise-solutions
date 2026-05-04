@@ -13,8 +13,8 @@ export const HeroBackdrop = () => (
         backgroundImage:
           "linear-gradient(to right, hsl(var(--border) / 0.55) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.55) 1px, transparent 1px)",
         backgroundSize: "48px 48px",
-        WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
-        maskImage: "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
+        WebkitMaskImage: "radial-gradient(80% 80% at 50% 30%, black 35%, transparent 80%)",
+        maskImage: "radial-gradient(80% 80% at 50% 30%, black 35%, transparent 80%)",
       }}
     />
 
