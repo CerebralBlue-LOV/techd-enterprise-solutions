@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 const COLS = 56;
@@ -73,16 +73,106 @@ const Field = ({ animate }: { animate: boolean }) => {
     [highlightIdx],
   );
 
-  useFrame(({ clock }) => {
+  // === Interactivity state ===
+  // Pointer projected onto the field's local plane (X/Z), smoothed.
+  const pointerWorld = useRef(new THREE.Vector3(999, 0, 999)); // off-field default
+  const pointerSmoothed = useRef(new THREE.Vector3(999, 0, 999));
+  const pointerActive = useRef(0); // 0..1 envelope for ripple amplitude
+  const tiltTarget = useRef({ x: 0, y: 0 });
+  const tiltCurrent = useRef({ x: 0, y: 0 });
+
+  const { camera, gl } = useThree();
+  const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  // The field's local plane is Y=0 in group space, but the group is rotated
+  // and translated. We raycast against a world-space plane that approximates
+  // the field surface (group sits at y = -1.2 + ~0). Good enough for ripple.
+  const interactionPlane = useMemo(
+    () => new THREE.Plane(new THREE.Vector3(0, 1, 0), 1.2),
+    [],
+  );
+
+  useMemo(() => {
+    const dom = gl.domElement;
+    const onMove = (e: PointerEvent) => {
+      const rect = dom.getBoundingClientRect();
+      const ndc = new THREE.Vector2(
+        ((e.clientX - rect.left) / rect.width) * 2 - 1,
+        -((e.clientY - rect.top) / rect.height) * 2 + 1,
+      );
+      raycaster.setFromCamera(ndc, camera);
+      const hit = new THREE.Vector3();
+      if (raycaster.ray.intersectPlane(interactionPlane, hit)) {
+        // Convert world hit into the group's local space (group is at
+        // position [0,-1.2,0] and rotated [-0.55, 0, 0]). We invert that.
+        const local = hit.clone();
+        local.y += 1.2;
+        // Inverse rotation around X by -0.55:
+        const a = 0.55;
+        const cosA = Math.cos(a);
+        const sinA = Math.sin(a);
+        const ly = local.y;
+        const lz = local.z;
+        local.y = ly * cosA + lz * sinA;
+        local.z = -ly * sinA + lz * cosA;
+        pointerWorld.current.set(local.x, 0, local.z);
+        pointerActive.current = 1;
+      }
+      // Tilt target from NDC, capped to small angle.
+      tiltTarget.current.x = ndc.y * 0.08; // pitch
+      tiltTarget.current.y = ndc.x * 0.18; // yaw
+    };
+    const onLeave = () => {
+      pointerActive.current = 0;
+      tiltTarget.current.x = 0;
+      tiltTarget.current.y = 0;
+    };
+    dom.addEventListener("pointermove", onMove);
+    dom.addEventListener("pointerleave", onLeave);
+    return () => {
+      dom.removeEventListener("pointermove", onMove);
+      dom.removeEventListener("pointerleave", onLeave);
+    };
+  }, [camera, gl, interactionPlane, raycaster]);
+
+  useFrame(({ clock }, delta) => {
     if (!animate) return;
     const t = clock.getElapsedTime();
+
+    // Smooth pointer follow + active envelope decay.
+    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 6));
+    pointerActive.current = THREE.MathUtils.lerp(
+      pointerActive.current,
+      pointerActive.current > 0.01 ? pointerActive.current : 0,
+      0.05,
+    );
+
+    const px = pointerSmoothed.current.x;
+    const pz = pointerSmoothed.current.z;
+    const RIPPLE_RADIUS = 2.2;
+    const RIPPLE_AMP = 0.55 * pointerActive.current;
+    const r2 = RIPPLE_RADIUS * RIPPLE_RADIUS;
+
     for (let i = 0; i < livePositions.length; i += 3) {
       const x = basePositions[i];
       const z = basePositions[i + 2];
-      livePositions[i + 1] =
+      let y =
         Math.sin(x * 0.55 + t * 0.45) * 0.35 +
         Math.cos(z * 0.45 + t * 0.35) * 0.35 +
         Math.sin((x + z) * 0.2 + t * 0.6) * 0.12;
+
+      // Ripple bump (gaussian) under cursor.
+      if (RIPPLE_AMP > 0.001) {
+        const dx = x - px;
+        const dz = z - pz;
+        const d2 = dx * dx + dz * dz;
+        if (d2 < r2 * 2) {
+          const falloff = Math.exp(-d2 / (r2 * 0.5));
+          const wave = Math.sin(Math.sqrt(d2) * 2.2 - t * 4);
+          y += RIPPLE_AMP * falloff * (0.6 + 0.4 * wave);
+        }
+      }
+
+      livePositions[i + 1] = y;
     }
 
     if (pointsRef.current) {
@@ -111,8 +201,21 @@ const Field = ({ animate }: { animate: boolean }) => {
       mat.opacity = 0.7 + Math.sin(t * 1.5) * 0.25;
     }
 
+    // Parallax tilt: smooth follow toward cursor, plus base ambient sway.
+    tiltCurrent.current.x = THREE.MathUtils.lerp(
+      tiltCurrent.current.x,
+      tiltTarget.current.x,
+      Math.min(1, delta * 3),
+    );
+    tiltCurrent.current.y = THREE.MathUtils.lerp(
+      tiltCurrent.current.y,
+      tiltTarget.current.y,
+      Math.min(1, delta * 3),
+    );
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(t * 0.08) * 0.15;
+      groupRef.current.rotation.x = -0.55 + tiltCurrent.current.x;
+      groupRef.current.rotation.y =
+        Math.sin(t * 0.08) * 0.15 + tiltCurrent.current.y;
     }
   });
 
@@ -193,7 +296,9 @@ export const HeroParticleField = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-y-0 right-0 hidden md:block md:w-[62%] lg:w-[58%]"
+      // Container catches pointer events so the canvas can react. Edge-fade
+      // overlays below explicitly opt out so they don't block interaction.
+      className="absolute inset-y-0 right-0 hidden md:block md:w-[62%] lg:w-[58%]"
     >
       <Canvas
         dpr={[1, 1.5]}
@@ -204,9 +309,9 @@ export const HeroParticleField = () => {
         <Field animate={!reduced} />
       </Canvas>
       {/* Edge fades so the canvas dissolves into the page */}
-      <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent" />
-      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </div>
   );
 };
