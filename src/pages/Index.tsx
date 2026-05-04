@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { ArrowRight, ShieldCheck, Sparkles, Workflow, Bot, Database, Cloud, Lock, RefreshCw } from "lucide-react";
+
+const SOLUTION_ICONS: Record<string, typeof Bot> = {
+  "ai-automation": Bot,
+  "data": Database,
+  "cloud": Cloud,
+  "security": Lock,
+  "app-mod": RefreshCw,
+};
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
@@ -77,25 +85,80 @@ const Index = () => {
             />
           </Reveal>
           <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {SOLUTIONS.map((s, i) => (
-              <Reveal key={s.id} delay={i * 50}>
-                <Link
-                  to={`/solutions#${s.id}`}
-                  className="card-hover block h-full rounded-xl p-7 group"
-                >
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                    {s.name}
-                  </p>
-                  <h3 className="mt-3 text-2xl leading-tight">{s.outcome}</h3>
-                  <p className="mt-4 text-sm font-light text-muted-foreground">
-                    {s.description}
-                  </p>
-                  <span className="mt-6 inline-flex items-center gap-1 text-sm font-bold text-primary">
-                    Learn more <ArrowRight className="!size-4 transition-transform group-hover:translate-x-0.5" />
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
+            {SOLUTIONS.map((s, i) => {
+              const Icon = SOLUTION_ICONS[s.id] ?? Sparkles;
+              const featured = s.id === "ai-automation";
+              return (
+                <Reveal key={s.id} delay={i * 50}>
+                  <Link
+                    to={`/solutions#${s.id}`}
+                    className={
+                      "group relative block h-full rounded-xl p-7 border transition-all duration-300 hover:-translate-y-0.5 " +
+                      (featured
+                        ? "bg-secondary border-secondary text-secondary-foreground hover:border-primary lg:row-span-1"
+                        : "bg-background border-border hover:border-primary hover:shadow-lg")
+                    }
+                  >
+                    {featured && (
+                      <span className="absolute right-5 top-5 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                        Featured
+                      </span>
+                    )}
+                    <div
+                      className={
+                        "inline-flex h-14 w-14 items-center justify-center rounded-xl border transition-colors duration-300 " +
+                        (featured
+                          ? "border-primary/40 bg-primary/15 text-primary"
+                          : "border-border bg-muted/50 text-secondary group-hover:border-primary group-hover:bg-primary/10 group-hover:text-primary")
+                      }
+                    >
+                      <Icon className="!size-6" strokeWidth={1.5} />
+                    </div>
+                    <p
+                      className={
+                        "mt-6 text-xs font-bold uppercase tracking-[0.18em] " +
+                        (featured ? "text-primary" : "text-primary")
+                      }
+                    >
+                      {s.name}
+                    </p>
+                    <h3 className="mt-3 text-2xl leading-tight">{s.outcome}</h3>
+                    <p
+                      className={
+                        "mt-4 text-sm font-light " +
+                        (featured ? "opacity-80" : "text-muted-foreground")
+                      }
+                    >
+                      {s.description}
+                    </p>
+                    <ul className="mt-6 flex flex-wrap gap-2">
+                      {s.capabilities.slice(0, 3).map((cap) => (
+                        <li
+                          key={cap}
+                          className={
+                            "rounded-full border px-3 py-1 text-[11px] font-light " +
+                            (featured
+                              ? "border-primary/30 text-secondary-foreground/85"
+                              : "border-border text-muted-foreground")
+                          }
+                        >
+                          {cap}
+                        </li>
+                      ))}
+                    </ul>
+                    <span
+                      className={
+                        "mt-7 inline-flex items-center gap-1 text-sm font-bold " +
+                        (featured ? "text-primary" : "text-primary")
+                      }
+                    >
+                      Learn more{" "}
+                      <ArrowRight className="!size-4 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
