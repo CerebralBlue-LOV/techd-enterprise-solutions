@@ -169,14 +169,6 @@ const Field = ({ animate }: { animate: boolean }) => {
         }
       }
 
-        if (d2 < r2 * 2) {
-          const falloff = Math.exp(-d2 / (r2 * 0.5));
-          // Pure positive bump (a hill) — no oscillating wave term so it
-          // doesn't push particles down or flicker.
-          y += RIPPLE_AMP * falloff;
-        }
-      }
-
       livePositions[i + 1] = y;
     }
 
@@ -206,21 +198,10 @@ const Field = ({ animate }: { animate: boolean }) => {
       mat.opacity = 0.7 + Math.sin(t * 1.5) * 0.25;
     }
 
-    // Parallax tilt: smooth follow toward cursor, plus base ambient sway.
-    tiltCurrent.current.x = THREE.MathUtils.lerp(
-      tiltCurrent.current.x,
-      tiltTarget.current.x,
-      Math.min(1, delta * 3),
-    );
-    tiltCurrent.current.y = THREE.MathUtils.lerp(
-      tiltCurrent.current.y,
-      tiltTarget.current.y,
-      Math.min(1, delta * 3),
-    );
+    // Ambient-only group rotation (no cursor-driven tilt — kept stable so
+    // the cursor "hill" feels predictable).
     if (groupRef.current) {
-      groupRef.current.rotation.x = -0.55 + tiltCurrent.current.x;
-      groupRef.current.rotation.y =
-        Math.sin(t * 0.08) * 0.15 + tiltCurrent.current.y;
+      groupRef.current.rotation.y = Math.sin(t * 0.08) * 0.15;
     }
   });
 
