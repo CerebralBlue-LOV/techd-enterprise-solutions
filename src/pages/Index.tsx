@@ -45,14 +45,6 @@ const Index = () => {
                 We design, build, and run the AI, data, security, and automation
                 platforms that move Fortune 500 P&Ls — not pilots.
               </p>
-              <div className="mt-12 flex flex-wrap gap-3">
-                <Button asChild size="lg" className="transition-transform duration-200 hover:-translate-y-0.5">
-                  <Link to="/contact">Talk to an Expert <ArrowRight /></Link>
-                </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link to="/solutions">Explore Solutions</Link>
-                </Button>
-              </div>
             </div>
           </Reveal>
         </div>
