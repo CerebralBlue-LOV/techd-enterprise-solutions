@@ -95,12 +95,12 @@ const Index = () => {
                     className={
                       "group relative block h-full rounded-xl p-7 border transition-all duration-300 hover:-translate-y-0.5 " +
                       (featured
-                        ? "bg-secondary border-secondary text-secondary-foreground hover:border-primary lg:row-span-1"
+                        ? "bg-background border-2 border-primary shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.35)] ring-1 ring-primary/20 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.5)]"
                         : "bg-background border-border hover:border-primary hover:shadow-lg")
                     }
                   >
                     {featured && (
-                      <span className="absolute right-5 top-5 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                      <span className="absolute right-5 top-5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
                         Featured
                       </span>
                     )}
@@ -108,27 +108,17 @@ const Index = () => {
                       className={
                         "inline-flex h-14 w-14 items-center justify-center rounded-xl border transition-colors duration-300 " +
                         (featured
-                          ? "border-primary/40 bg-primary/15 text-primary"
+                          ? "border-primary bg-primary/10 text-primary"
                           : "border-border bg-muted/50 text-secondary group-hover:border-primary group-hover:bg-primary/10 group-hover:text-primary")
                       }
                     >
                       <Icon className="!size-6" strokeWidth={1.5} />
                     </div>
-                    <p
-                      className={
-                        "mt-6 text-xs font-bold uppercase tracking-[0.18em] " +
-                        (featured ? "text-primary" : "text-primary")
-                      }
-                    >
+                    <p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-primary">
                       {s.name}
                     </p>
                     <h3 className="mt-3 text-2xl leading-tight">{s.outcome}</h3>
-                    <p
-                      className={
-                        "mt-4 text-sm font-light " +
-                        (featured ? "opacity-80" : "text-muted-foreground")
-                      }
-                    >
+                    <p className="mt-4 text-sm font-light text-muted-foreground">
                       {s.description}
                     </p>
                     <ul className="mt-6 flex flex-wrap gap-2">
@@ -138,7 +128,7 @@ const Index = () => {
                           className={
                             "rounded-full border px-3 py-1 text-[11px] font-light " +
                             (featured
-                              ? "border-primary/30 text-secondary-foreground/85"
+                              ? "border-primary/40 bg-primary/5 text-secondary"
                               : "border-border text-muted-foreground")
                           }
                         >
@@ -146,12 +136,7 @@ const Index = () => {
                         </li>
                       ))}
                     </ul>
-                    <span
-                      className={
-                        "mt-7 inline-flex items-center gap-1 text-sm font-bold " +
-                        (featured ? "text-primary" : "text-primary")
-                      }
-                    >
+                    <span className="mt-7 inline-flex items-center gap-1 text-sm font-bold text-primary">
                       Learn more{" "}
                       <ArrowRight className="!size-4 transition-transform group-hover:translate-x-0.5" />
                     </span>
