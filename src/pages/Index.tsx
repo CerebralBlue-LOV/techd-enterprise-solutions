@@ -3,7 +3,10 @@ import { ArrowRight, ShieldCheck, Sparkles, Workflow } from "lucide-react";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
-import GeometricAccent from "@/components/GeometricAccent";
+import HeroBackdrop from "@/components/HeroBackdrop";
+import HeroFloatingCards from "@/components/HeroFloatingCards";
+import { lazy, Suspense } from "react";
+const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 import SectionHeading from "@/components/SectionHeading";
 import LogoStrip from "@/components/LogoStrip";
 import { Button } from "@/components/ui/button";
@@ -20,28 +23,37 @@ const Index = () => {
       />
 
       {/* Hero */}
-      <section data-section="home:hero" className="relative overflow-hidden">
+      <section
+        data-section="home:hero"
+        className="relative overflow-hidden min-h-[88vh] flex items-center"
+      >
         <SectionMarker page="Home" name="Hero" />
-        <GeometricAccent />
-        <div className="container-page relative pt-20 pb-24 md:pt-28 md:pb-32">
+        <HeroBackdrop />
+        <Suspense fallback={null}>
+          <HeroParticleField />
+        </Suspense>
+        <HeroFloatingCards />
+        <div className="container-page relative z-10 pt-32 pb-32 md:pt-40 md:pb-40">
           <Reveal>
-            <p className="eyebrow">IBM Platinum Business Partner</p>
-            <h1 className="mt-4 text-5xl md:text-7xl leading-[1.02] max-w-4xl">
-              Enterprise AI,
-              <br />
-              <span className="text-primary">engineered for outcomes.</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg md:text-xl font-light text-muted-foreground">
-              We design, build, and run the AI, data, security, and automation
-              platforms that move Fortune 500 P&Ls — not pilots.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="transition-transform duration-200 hover:-translate-y-0.5">
-                <Link to="/contact">Talk to an Expert <ArrowRight /></Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link to="/solutions">Explore Solutions</Link>
-              </Button>
+            <div className="max-w-3xl">
+              <p className="eyebrow">IBM Platinum Business Partner</p>
+              <h1 className="mt-4 text-6xl md:text-8xl leading-[1.02] font-bold tracking-tight">
+                Enterprise AI,
+                <br />
+                <span className="text-primary">engineered for outcomes.</span>
+              </h1>
+              <p className="mt-6 max-w-2xl text-xl md:text-2xl font-light text-muted-foreground">
+                We design, build, and run the AI, data, security, and automation
+                platforms that move Fortune 500 P&Ls — not pilots.
+              </p>
+              <div className="mt-12 flex flex-wrap gap-3">
+                <Button asChild size="lg" className="transition-transform duration-200 hover:-translate-y-0.5">
+                  <Link to="/contact">Talk to an Expert <ArrowRight /></Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link to="/solutions">Explore Solutions</Link>
+                </Button>
+              </div>
             </div>
           </Reveal>
         </div>

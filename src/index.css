@@ -159,4 +159,7 @@
   .marquee {
     animation: none !important;
   }
+  .animate-float {
+    animation: none !important;
+  }
 }
