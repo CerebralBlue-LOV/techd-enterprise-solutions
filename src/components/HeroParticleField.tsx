@@ -292,7 +292,7 @@ export const HeroParticleField = () => {
       <Canvas
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
-        camera={{ position: [0, 5, 10], fov: 42 }}
+        camera={{ position: [0, 4, 7.5], fov: 50 }}
         frameloop={reduced ? "demand" : "always"}
       >
         <Field animate={!reduced} />
