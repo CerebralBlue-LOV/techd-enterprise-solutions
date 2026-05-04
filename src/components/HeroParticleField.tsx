@@ -292,14 +292,13 @@ export const HeroParticleField = () => {
       <Canvas
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
-        camera={{ position: [0, 5, 10], fov: 42 }}
+        camera={{ position: [0, 4, 7.5], fov: 50 }}
         frameloop={reduced ? "demand" : "always"}
       >
         <Field animate={!reduced} />
       </Canvas>
-      {/* Edge fades so the canvas dissolves into the page on every side */}
+      {/* Edge fades so the canvas dissolves into the page */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background to-transparent" />
       
