@@ -298,9 +298,10 @@ export const HeroParticleField = () => {
   return (
     <div
       aria-hidden="true"
-      // Container catches pointer events so the canvas can react. Edge-fade
-      // overlays below explicitly opt out so they don't block interaction.
-      className="absolute inset-y-0 right-0 hidden md:block md:w-[62%] lg:w-[58%]"
+      // Canvas now spans the full hero width so the cursor can interact
+      // anywhere in the section. Headline/CTA block has its own protect zone
+      // (rendered in Index.tsx) sitting above this layer.
+      className="absolute inset-0 hidden md:block"
     >
       <Canvas
         dpr={[1, 1.5]}
@@ -310,9 +311,7 @@ export const HeroParticleField = () => {
       >
         <Field animate={!reduced} />
       </Canvas>
-      {/* Entire canvas is interactive. */}
       {/* Edge fades so the canvas dissolves into the page */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </div>
