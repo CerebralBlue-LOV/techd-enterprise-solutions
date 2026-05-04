@@ -74,19 +74,9 @@ const Index = () => {
       </div>
 
       {/* Solutions */}
-      <section data-section="home:solutions" className="section bg-background relative">
+      <section data-section="home:solutions" className="section">
         <SectionMarker page="Home" name="Solutions Grid" />
-        {/* Subtle dotted pattern, like the reference */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "radial-gradient(hsl(var(--muted-foreground) / 0.18) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-        <div className="container-page relative">
+        <div className="container-page">
           <Reveal>
             <SectionHeading
               eyebrow="Solutions"
@@ -94,11 +84,8 @@ const Index = () => {
               subtitle="Each practice is led by senior IBM-certified practitioners with a decade-plus of enterprise delivery on watsonx, Db2, OpenShift, and the modern data stack."
             />
           </Reveal>
-
-          {(() => {
-            const top = SOLUTIONS.slice(0, 3);
-            const bottom = SOLUTIONS.slice(3);
-            const renderCard = (s: typeof SOLUTIONS[number], i: number) => {
+          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {SOLUTIONS.map((s, i) => {
               const Icon = SOLUTION_ICONS[s.id] ?? Sparkles;
               const featured = s.id === "ai-automation";
               return (
@@ -106,54 +93,73 @@ const Index = () => {
                   <Link
                     to={`/solutions#${s.id}`}
                     className={
-                      "group relative block h-full rounded-xl p-7 border bg-background transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-lg " +
-                      (featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border")
+                      "group relative block h-full rounded-xl p-7 border transition-all duration-300 hover:-translate-y-0.5 " +
+                      (featured
+                        ? "bg-secondary border-secondary text-secondary-foreground hover:border-primary lg:row-span-1"
+                        : "bg-background border-border hover:border-primary hover:shadow-lg")
                     }
                   >
                     {featured && (
-                      <span className="absolute right-5 top-5 inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                      <span className="absolute right-5 top-5 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
                         Featured
                       </span>
                     )}
-                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-muted/50 text-secondary transition-colors duration-300 group-hover:border-primary group-hover:bg-primary/10 group-hover:text-primary">
+                    <div
+                      className={
+                        "inline-flex h-14 w-14 items-center justify-center rounded-xl border transition-colors duration-300 " +
+                        (featured
+                          ? "border-primary/40 bg-primary/15 text-primary"
+                          : "border-border bg-muted/50 text-secondary group-hover:border-primary group-hover:bg-primary/10 group-hover:text-primary")
+                      }
+                    >
                       <Icon className="!size-6" strokeWidth={1.5} />
                     </div>
-                    <p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                    <p
+                      className={
+                        "mt-6 text-xs font-bold uppercase tracking-[0.18em] " +
+                        (featured ? "text-primary" : "text-primary")
+                      }
+                    >
                       {s.name}
                     </p>
                     <h3 className="mt-3 text-2xl leading-tight">{s.outcome}</h3>
-                    <p className="mt-4 text-sm font-light text-muted-foreground">
+                    <p
+                      className={
+                        "mt-4 text-sm font-light " +
+                        (featured ? "opacity-80" : "text-muted-foreground")
+                      }
+                    >
                       {s.description}
                     </p>
                     <ul className="mt-6 flex flex-wrap gap-2">
                       {s.capabilities.slice(0, 3).map((cap) => (
                         <li
                           key={cap}
-                          className="rounded-full border border-border px-3 py-1 text-[11px] font-light text-muted-foreground"
+                          className={
+                            "rounded-full border px-3 py-1 text-[11px] font-light " +
+                            (featured
+                              ? "border-primary/30 text-secondary-foreground/85"
+                              : "border-border text-muted-foreground")
+                          }
                         >
                           {cap}
                         </li>
                       ))}
                     </ul>
-                    <span className="mt-7 inline-flex items-center gap-1 text-sm font-bold text-primary">
+                    <span
+                      className={
+                        "mt-7 inline-flex items-center gap-1 text-sm font-bold " +
+                        (featured ? "text-primary" : "text-primary")
+                      }
+                    >
                       Learn more{" "}
                       <ArrowRight className="!size-4 transition-transform group-hover:translate-x-0.5" />
                     </span>
                   </Link>
                 </Reveal>
               );
-            };
-            return (
-              <div className="mt-14 space-y-5">
-                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                  {top.map((s, i) => renderCard(s, i))}
-                </div>
-                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:max-w-[66.666%] lg:mx-auto">
-                  {bottom.map((s, i) => renderCard(s, i + 3))}
-                </div>
-              </div>
-            );
-          })()}
+            })}
+          </div>
         </div>
       </section>
 
