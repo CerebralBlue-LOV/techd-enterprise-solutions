@@ -133,10 +133,21 @@
 }
 
 /* Marquee for logo strip */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
 .marquee {
   display: flex;
   width: max-content;
   animation: marquee 45s linear infinite;
+}
+.marquee-reverse {
+  animation: marquee-reverse 45s linear infinite;
 }
 .marquee-slow {
   animation-duration: 80s;
