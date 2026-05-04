@@ -308,13 +308,7 @@ export const HeroParticleField = () => {
       >
         <Field animate={!reduced} />
       </Canvas>
-      {/*
-        Interactivity is restricted to the four corners. We cover the center
-        of the canvas with a transparent overlay that captures pointer events
-        so they never reach the canvas — leaving an L-shaped corner band
-        around it as the only interactive zone.
-      */}
-      <div className="absolute inset-y-[35%] inset-x-[35%] pointer-events-auto" />
+      {/* Entire canvas is interactive. */}
       {/* Edge fades so the canvas dissolves into the page */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
