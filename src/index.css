@@ -138,6 +138,9 @@
   width: max-content;
   animation: marquee 45s linear infinite;
 }
+.marquee-slow {
+  animation-duration: 80s;
+}
 .marquee-wrap:hover .marquee {
   animation-play-state: paused;
 }
