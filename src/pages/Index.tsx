@@ -126,41 +126,49 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured case study */}
+      {/* Featured case study — real, IBM-published */}
       <section data-section="home:case-study" className="section">
         <SectionMarker page="Home" name="Featured Case Study" />
         <div className="container-page">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
               <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case Study</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
               <h2 className="mt-4 max-w-3xl text-4xl md:text-5xl text-secondary-foreground leading-[1.05]">
-                Global pharma cuts trial review time by 62% with agentic AI.
+                A US family-owned retailer rebuilt online shopping on IBM Db2, watsonx Assistant, and NeuralSeek.
               </h2>
-              <div className="mt-10 grid gap-10 md:grid-cols-3">
+              <div className="mt-10 grid gap-8 md:grid-cols-3">
                 <div>
-                  <div className="text-5xl font-bold text-primary">62%</div>
-                  <p className="mt-2 text-sm font-light opacity-80">Faster protocol review cycles</p>
+                  <div className="text-sm font-bold uppercase tracking-wider text-primary">Personalization</div>
+                  <p className="mt-3 text-base font-light opacity-90">
+                    Personalized product descriptions delivered through retrieval-augmented generation.
+                  </p>
                 </div>
                 <div>
-                  <div className="text-5xl font-bold text-primary">$18M</div>
-                  <p className="mt-2 text-sm font-light opacity-80">Annualized operating savings</p>
+                  <div className="text-sm font-bold uppercase tracking-wider text-primary">Service efficiency</div>
+                  <p className="mt-3 text-base font-light opacity-90">
+                    Call-center efficiency gains and reduced customer frustration.
+                  </p>
                 </div>
                 <div>
-                  <div className="text-5xl font-bold text-primary">11wk</div>
-                  <p className="mt-2 text-sm font-light opacity-80">From kickoff to first production agent</p>
+                  <div className="text-sm font-bold uppercase tracking-wider text-primary">Shopper insight</div>
+                  <p className="mt-3 text-base font-light opacity-90">
+                    Real-time insight into shopper behavior across virtual and in-store channels.
+                  </p>
                 </div>
               </div>
-              <blockquote className="mt-10 max-w-3xl border-l-2 border-primary pl-5 text-lg font-light italic opacity-90">
-                "TechD shipped what three other firms had only diagrammed. The
-                difference was senior people on the keyboard."
-                <footer className="mt-3 text-sm not-italic font-bold opacity-100">
-                  — VP, Clinical Operations, Top-5 Pharmaceutical
-                </footer>
-              </blockquote>
-              <div className="mt-10">
+              <p className="mt-10 max-w-3xl text-sm font-light opacity-75">
+                Co-authored by Scott Nichols, Senior Developer Analyst at TechD, and Garrett Rowe, President of Cerebral Blue.
+              </p>
+              <div className="mt-8">
                 <Button asChild variant="default" className="bg-primary hover:bg-primary/90">
-                  <Link to="/resources?tab=case-studies">Read the case study <ArrowRight /></Link>
+                  <a
+                    href="https://www.ibm.com/case-studies/blog/ibm-and-techd-partner-to-securely-share-data-and-power-insights-with-gen-ai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Read on IBM.com <ArrowRight />
+                  </a>
                 </Button>
               </div>
             </div>
@@ -181,17 +189,17 @@ const Index = () => {
               <div className="leading-tight">
                 <div className="text-xs font-bold uppercase tracking-wider text-primary">Platinum</div>
                 <div className="text-base font-bold text-secondary">Business Partner</div>
-                <div className="text-xs text-muted-foreground">25+ years · Top-tier delivery</div>
+                <div className="text-xs text-muted-foreground">15+ years · Platinum since 2009</div>
               </div>
             </div>
           </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2">
             {[
-              { icon: Sparkles, title: "Senior people on the keyboard", body: "Principals deliver, not just sell. Average team tenure: 14 years." },
-              { icon: ShieldCheck, title: "Built for regulators", body: "Auditable AI, governed data, defensible architecture." },
-              { icon: Workflow, title: "Outcome contracts", body: "We commit to business outcomes — not staff augmentation hours." },
-              { icon: Sparkles, title: "IBM-deep, multi-cloud fluent", body: "watsonx, OpenShift, Z, plus AWS, Azure, and GCP at scale." },
+              { icon: Sparkles, title: "Senior people on the keyboard", body: "Principals deliver, not just sell. Our technical team averages 10+ years of certified IBM delivery." },
+              { icon: ShieldCheck, title: "Built for regulators", body: "Auditable AI, governed data, and defensible architecture across HIPAA, FedRAMP, and PCI environments." },
+              { icon: Workflow, title: "Outcome-aligned engagements", body: "We commit to business outcomes — not staff augmentation hours." },
+              { icon: Sparkles, title: "IBM-deep, multi-cloud fluent", body: "watsonx, Db2, OpenShift, and Z — plus AWS, Azure, and GCP at enterprise scale." },
             ].map((d, i) => (
               <Reveal key={d.title} delay={i * 50}>
                 <div className="card-hover h-full rounded-xl p-6">
@@ -213,14 +221,14 @@ const Index = () => {
             <div className="rounded-2xl border border-border bg-background p-10 md:p-16 text-center">
               <p className="eyebrow">Ready to talk?</p>
               <h2 className="mt-4 text-4xl md:text-5xl max-w-2xl mx-auto leading-[1.05]">
-                Tell us where you want the next 18 months to land.
+                Talk to a TechD principal.
               </h2>
               <p className="mt-5 max-w-xl mx-auto text-lg font-light text-muted-foreground">
-                A 30-minute conversation with a TechD principal, not a sales pass-through.
+                30-minute conversation. No sales pass-through, no slide deck. Just engineering.
               </p>
               <div className="mt-8">
                 <Button asChild size="lg" className="transition-transform duration-200 hover:-translate-y-0.5">
-                  <Link to="/contact">Talk to an Expert <ArrowRight /></Link>
+                  <Link to="/contact">Start the conversation <ArrowRight /></Link>
                 </Button>
               </div>
             </div>
