@@ -297,8 +297,14 @@ export const HeroParticleField = () => {
       >
         <Field animate={!reduced} />
       </Canvas>
-      {/* Edge fades so the canvas dissolves into the page */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-background to-transparent" />
+      {/* Edge fades — radial on the left so it only blends where the graphic actually sits */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 45% 55% at 0% 75%, hsl(var(--background)) 0%, hsl(var(--background) / 0.85) 35%, transparent 70%)",
+        }}
+      />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background to-transparent" />
       
