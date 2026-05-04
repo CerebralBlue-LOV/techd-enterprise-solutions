@@ -25,7 +25,7 @@ export const HeroBackdrop = () => (
       style={{ animationDelay: "-9s" }}
     />
     <div
-      className="absolute bottom-0 left-1/3 h-[420px] w-[680px] rounded-full bg-background blur-3xl animate-gradient-drift"
+      className="absolute bottom-0 left-[10%] h-[420px] w-[680px] rounded-full bg-background blur-3xl animate-gradient-drift"
       style={{ animationDelay: "-4s" }}
     />
 
