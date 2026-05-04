@@ -1,8 +1,41 @@
 # Content Audit — techd.com legacy pages
 
-**Source:** 210 HTML pages from site crawl (Day 1)
-**Method:** URL-tag only. No body extraction. Redirect targets assigned by category.
-**Date:** 2026-05-04 (Day 2)
+**Source:** 210 HTML pages from site crawl (Day 1) + body extraction of `/our-story`, `/about-us`, `/depth-of-experience`, and IBM-published joint case study (Day 3)
+**Method:** URL-tag for redirects. Body extraction for the 3 highest-value legacy pages + 1 IBM source.
+**Date:** 2026-05-04 (Day 2 — URL pass) · 2026-05-04 (Day 3 — content freshness pass)
+
+---
+
+## Content freshness (Day 3 audit)
+
+The legacy site was last meaningfully updated in 2020. Significant drift between what the public site says and what TechD actually delivers in 2026.
+
+### Still valid — use as-is or with light modernization
+- **IBM Platinum Business Partner since 2009** — verified on `/our-story` and IBM case-study blog. Use everywhere.
+- **Mission "help organizations gain truth from their data"** — strong, on-brand. Modernized homepage tagline: *"Turn enterprise data into trustworthy AI."*
+- **Client list** (Burlington, CHOP, Comcast, Genesis, Hamilton Beach, Johns Hopkins, J&J, L3Harris, MSK, Quest, Smith, Villanova, City of Philadelphia, Jefferson, VCU Health, Temple, Affinion, PURE, Buckeye, Princeton, EZ Storage, Sony Pictures, Sony Interactive, Dominion, MISO, DHS, Kennedy Center, KenSeal, Corning) — verified on `/our-story` + `/about-us`. Safe to use on LogoStrip + industry pages.
+- **HQ Miami, FL with USA + Canada resources** — verified on `/our-story`. Replaces stale "Wayne, PA" press release.
+- **Technical team avg 10+ years IBM delivery** — verified on `/depth-of-experience`. Use in Why TechD.
+
+### Stale — drop or reframe as "modernization story"
+- **CogSuite** product family (License Manager, Content Manager, Administrator) — 2015-era Cognos tooling. Don't lead with it. Mention only on `/services` if at all.
+- **"Watson Assistant / Discovery / NLU"** — IBM rebranded to **watsonx Assistant** + **watsonx.ai**. Update everywhere.
+- **"Premier IBM Business Partner"** — IBM retired the Premier tier. Current correct term is **Platinum** under IBM Partner Plus.
+- **Heavy Cognos / TM1 / Netezza / Tivoli / QRadar Guardium emphasis** — these are still real expertise but should be framed as *Analytics Modernization* (Cognos → watsonx.ai), not as the headline offering.
+- **"25+ years" partnership claim** anywhere — TechD has been an IBM partner since 2009, that's 17 years. Use **"15+ years as an IBM Platinum partner"** consistently.
+- **2020 office-opening press release** (`/techd-announces-the-opening-of-new-headquarters-at-489-devon-park-drive-suite-318-wayne-pennsylvania-19087/`) — drop entirely. HQ is Miami per `/our-story`.
+
+### Verified 2024–2026 facts (new, from IBM source)
+Per `https://www.ibm.com/case-studies/blog/ibm-and-techd-partner-to-securely-share-data-and-power-insights-with-gen-ai`:
+- TechD's **current productized stack** is **IBM Db2 + IBM watsonx Assistant + NeuralSeek** (RAG / gen AI).
+- TechD partners with **Cerebral Blue** (Garrett Rowe, President) on the NeuralSeek side.
+- Authoring contact at TechD: **Scott Nichols, Senior Developer Analyst**.
+- Real production reference: **a prominent US family-owned retail enterprise** built personalized product descriptions, call-center efficiency, and shopper analytics on this stack. *(No public dollar/percent metrics — do not invent any.)*
+- This is the **only currently approved named case study** for the new homepage.
+
+### Removed from homepage scope (invented in earlier scaffold — must go)
+- "62% faster trial review" / "$18M annualized savings" / "11wk to first agent" pharma stat block on `Index.tsx` — **no source**. Replace with the real IBM/NeuralSeek retail case (Option A in `docs/COPY-SOURCE.md`).
+- Generic "Fortune 500 banking" framing — TechD has no verified large bank on the public client list. Drop "Financial Services" as a featured industry; promote **Media & Entertainment** instead (Sony × 2 + Comcast/Peacock = three real logos).
 
 ---
 
