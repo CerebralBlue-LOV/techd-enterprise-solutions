@@ -314,7 +314,7 @@ export const HeroParticleField = () => {
         so they never reach the canvas — leaving an L-shaped corner band
         around it as the only interactive zone.
       */}
-      <div className="absolute inset-y-[18%] inset-x-[18%] pointer-events-auto" />
+      <div className="absolute inset-y-[35%] inset-x-[35%] pointer-events-auto" />
       {/* Edge fades so the canvas dissolves into the page */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
