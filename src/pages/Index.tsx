@@ -95,7 +95,7 @@ const Index = () => {
                     className={
                       "group relative block h-full rounded-xl p-7 border transition-all duration-300 hover:-translate-y-0.5 " +
                       (featured
-                        ? "bg-background border-2 border-primary shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.35)] ring-1 ring-primary/20 hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.5)]"
+                        ? "bg-background border-2 border-primary ring-1 ring-primary/20 border-solid shadow-none"
                         : "bg-background border-border hover:border-primary hover:shadow-lg")
                     }
                   >
