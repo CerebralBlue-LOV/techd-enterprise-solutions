@@ -160,3 +160,8 @@ _To be filled in._
 - **Day 1, AM** — Plan confirmed. Crawl + spam analysis complete.
 - **Day 1, PM** — Repo set up via Lovable. Scaffold generated and synced. Deploy pipeline configured.
 - **Day 1, PM** — Fixed BrowserRouter basename (was showing 404 on all GitHub Pages routes).
+- **Day 3, AM** — Content freshness audit. Pulled live `/our-story`, `/about-us`, `/depth-of-experience`, and the IBM-published TechD + NeuralSeek case study. Identified what's still true (IBM Platinum since 2009, client list, Miami HQ, "gain truth from data" mission) vs. what's stale (CogSuite, "Watson Assistant", "Premier" tier, "25+ years" math, Wayne PA HQ).
+- **Day 3, AM** — Created `docs/COPY-SOURCE.md` as homepage copy source-of-truth. Every line tagged verified / inferred / placeholder. No invented stats.
+- **Day 3, AM** — Pharma "62% / $18M / 11wk" stat block flagged for removal (scaffold placeholder). Replacing with the real IBM-published Db2 + watsonx Assistant + NeuralSeek retail case.
+- **Day 3, AM** — Industry list rebalanced: dropping unverified "Financial Services", adding "Media & Entertainment" (Sony Pictures + Sony Interactive + Comcast/Peacock).
+- **Day 3, next** — Apply the rewrite to `Index.tsx`, `solutions.ts`, `industries.ts`.

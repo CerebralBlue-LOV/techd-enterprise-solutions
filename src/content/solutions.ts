@@ -9,67 +9,67 @@ export type Solution = {
 export const SOLUTIONS: Solution[] = [
   {
     id: "ai-automation",
-    name: "AI & Automation",
-    outcome: "Compress decision cycles from weeks to minutes.",
+    name: "AI & Generative Solutions",
+    outcome: "Ship trustworthy gen AI on top of governed enterprise data.",
     description:
-      "Production-grade agentic AI, generative experiences, and intelligent automation built on IBM watsonx and best-of-breed open models.",
+      "Production RAG, agentic workflows, and conversational interfaces built on IBM watsonx Assistant, watsonx.ai, and NeuralSeek — grounded in your data, not the open web.",
     capabilities: [
-      "Agentic workflows on watsonx",
-      "Enterprise RAG and knowledge fabric",
-      "Process automation with measurable ROI",
+      "watsonx Assistant + NeuralSeek RAG",
+      "Agentic workflows on watsonx.ai",
+      "Enterprise knowledge retrieval",
       "MLOps and model governance",
     ],
   },
   {
     id: "data",
-    name: "Data Solutions",
-    outcome: "Turn fragmented data into a defensible advantage.",
+    name: "Data Platforms",
+    outcome: "Make your data AI-ready, governed, and defensible.",
     description:
-      "Unified data architecture, governance, and analytics that hold up to regulators and scale to AI workloads.",
+      "IBM Db2, lakehouse, and data fabric architectures — the foundation that decides whether your AI tells the truth.",
     capabilities: [
-      "Lakehouse and data fabric architecture",
-      "Master data and governance",
-      "Real-time analytics and BI modernization",
+      "IBM Db2 + watsonx.data lakehouse",
+      "Data fabric and unified governance",
+      "Master data and lineage",
       "AI-ready data products",
     ],
   },
   {
-    id: "security",
-    name: "Security",
-    outcome: "Reduce risk without slowing the business.",
+    id: "cloud",
+    name: "Hybrid Cloud",
+    outcome: "Run mission workloads where they belong — and move them when you need to.",
     description:
-      "Zero-trust, identity, and threat management programs designed for regulated, multi-cloud environments.",
+      "Hybrid landing zones across IBM Cloud, AWS, Azure, and on-prem, with OpenShift and mainframe integration where it matters.",
     capabilities: [
+      "Hybrid and multi-cloud strategy",
+      "Red Hat OpenShift",
+      "Landing zone and FinOps",
+      "Mainframe (Z) integration",
+    ],
+  },
+  {
+    id: "security",
+    name: "Security & Governance",
+    outcome: "Pass the audit. Survive the breach attempt.",
+    description:
+      "Identity, zero-trust, and data protection programs designed for HIPAA, FedRAMP, PCI, and the next regulator on the horizon.",
+    capabilities: [
+      "IBM Guardium data protection",
       "Identity and access modernization",
       "Zero-trust network architecture",
-      "Threat detection and response",
       "Compliance and audit readiness",
     ],
   },
   {
-    id: "cloud",
-    name: "Cloud & Infrastructure",
-    outcome: "Build infrastructure that survives the next decade.",
-    description:
-      "Hybrid cloud strategy, landing zones, and resilient infrastructure across IBM Cloud, AWS, Azure, and on-prem.",
-    capabilities: [
-      "Hybrid and multi-cloud strategy",
-      "Landing zone and FinOps",
-      "Resilience and disaster recovery",
-      "Mainframe integration",
-    ],
-  },
-  {
     id: "app-mod",
-    name: "Application Modernization",
-    outcome: "Replatform legacy systems for the AI era.",
+    name: "Analytics Modernization",
+    outcome: "Modernize Cognos, TM1, and legacy BI without breaking the business.",
     description:
-      "Move from monoliths to composable architectures without disrupting the business of record.",
+      "Fifteen years of Cognos, TM1, and Netezza in production — now used to migrate clients to watsonx.ai, lakehouse, and modern BI without losing institutional knowledge.",
     capabilities: [
-      "Mainframe and COBOL modernization",
-      "Microservices and API strategy",
-      "DevSecOps platforms",
-      "Containers and Kubernetes (OpenShift)",
+      "Cognos → watsonx.ai migration",
+      "TM1 / Planning Analytics modernization",
+      "BI consolidation",
+      "Custom Cognos SDK extensions",
     ],
   },
 ];
