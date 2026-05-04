@@ -7,6 +7,7 @@ import SectionHeading from "@/components/SectionHeading";
 import GeometricAccent from "@/components/GeometricAccent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RESOURCES, type Resource } from "@/content/resources";
+import SectionMarker from "@/components/SectionMarker";
 
 const TABS: { value: Resource["type"]; label: string }[] = [
   { value: "case-studies", label: "Case Studies" },
@@ -35,7 +36,8 @@ const Resources = () => {
         description="Case studies, blog posts, webinars, and events from the TechD team."
       />
 
-      <section className="relative overflow-hidden">
+      <section data-section="resources:hero" className="relative overflow-hidden">
+        <SectionMarker page="Resources" name="Hero" />
         <GeometricAccent />
         <div className="container-page relative pt-20 pb-12 md:pt-28">
           <Reveal>
@@ -49,7 +51,8 @@ const Resources = () => {
         </div>
       </section>
 
-      <section className="pb-24">
+      <section data-section="resources:tabs" className="pb-24">
+        <SectionMarker page="Resources" name="Tabbed Content (Case Studies / Blog / Webinars / Events)" />
         <div className="container-page">
           <Tabs
             value={tab}

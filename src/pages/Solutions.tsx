@@ -7,6 +7,7 @@ import SectionHeading from "@/components/SectionHeading";
 import GeometricAccent from "@/components/GeometricAccent";
 import { Button } from "@/components/ui/button";
 import { SOLUTIONS } from "@/content/solutions";
+import SectionMarker from "@/components/SectionMarker";
 
 const Solutions = () => (
   <Layout>
@@ -15,7 +16,8 @@ const Solutions = () => (
       description="AI & Automation, Data, Security, Cloud & Infrastructure, and Application Modernization for the Fortune 500."
     />
 
-    <section className="relative overflow-hidden">
+    <section data-section="solutions:hero" className="relative overflow-hidden">
+      <SectionMarker page="Solutions" name="Hero" />
       <GeometricAccent />
       <div className="container-page relative pt-20 pb-16 md:pt-28">
         <Reveal>
@@ -29,7 +31,8 @@ const Solutions = () => (
       </div>
     </section>
 
-    <section className="pb-24">
+    <section data-section="solutions:list" className="pb-24">
+      <SectionMarker page="Solutions" name="Practices List" />
       <div className="container-page space-y-20">
         {SOLUTIONS.map((s, i) => (
           <Reveal key={s.id}>
