@@ -14,12 +14,12 @@ export const HeroBackdrop = () => (
       className="absolute inset-0"
       style={{
         backgroundImage:
-          "linear-gradient(to right, hsl(var(--secondary) / 0.18) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--secondary) / 0.18) 1px, transparent 1px)",
+          "linear-gradient(to right, hsl(var(--border) / 0.55) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.55) 1px, transparent 1px)",
         backgroundSize: "48px 48px",
         WebkitMaskImage:
-          "radial-gradient(ellipse 110% 110% at 50% 50%, black 75%, transparent 100%)",
+          "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
         maskImage:
-          "radial-gradient(ellipse 110% 110% at 50% 50%, black 75%, transparent 100%)",
+          "radial-gradient(ellipse 80% 70% at 50% 45%, black 35%, transparent 85%)",
       }}
     />
 
