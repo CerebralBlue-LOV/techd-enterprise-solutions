@@ -79,8 +79,6 @@ const Field = ({ animate }: { animate: boolean }) => {
   const pointerSmoothed = useRef(new THREE.Vector3(999, 0, 999));
   const pointerActive = useRef(0); // 0..1 envelope for ripple amplitude
   const pointerActiveTarget = useRef(0);
-  const tiltTarget = useRef({ x: 0, y: 0 });
-  const tiltCurrent = useRef({ x: 0, y: 0 });
 
   const { camera, gl } = useThree();
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
@@ -118,15 +116,10 @@ const Field = ({ animate }: { animate: boolean }) => {
         pointerWorld.current.set(local.x, 0, local.z);
         pointerActiveTarget.current = 1;
       }
-      // Tilt target from NDC, capped to small angle.
-      tiltTarget.current.x = ndc.y * 0.08; // pitch
-      tiltTarget.current.y = ndc.x * 0.18; // yaw
     };
     const onLeave = () => {
-      // Smoothly ease everything back to neutral instead of snapping.
+      // Smoothly ease the ripple back to neutral instead of snapping.
       pointerActiveTarget.current = 0;
-      tiltTarget.current.x = 0;
-      tiltTarget.current.y = 0;
     };
     dom.addEventListener("pointermove", onMove);
     dom.addEventListener("pointerleave", onLeave);
@@ -140,18 +133,19 @@ const Field = ({ animate }: { animate: boolean }) => {
     if (!animate) return;
     const t = clock.getElapsedTime();
 
-    // Smooth pointer follow (slower = smoother) + eased active envelope.
-    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 3.5));
+    // Smooth pointer follow (slower lerp = the hill drifts toward the
+    // cursor instead of teleporting). Eased active envelope.
+    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 2.2));
     pointerActive.current = THREE.MathUtils.lerp(
       pointerActive.current,
       pointerActiveTarget.current,
-      Math.min(1, delta * 2.5),
+      Math.min(1, delta * 2),
     );
 
     const px = pointerSmoothed.current.x;
     const pz = pointerSmoothed.current.z;
-    const RIPPLE_RADIUS = 2.2;
-    const RIPPLE_AMP = 0.55 * pointerActive.current;
+    const RIPPLE_RADIUS = 2.0;
+    const RIPPLE_AMP = 0.45 * pointerActive.current;
     const r2 = RIPPLE_RADIUS * RIPPLE_RADIUS;
 
     for (let i = 0; i < livePositions.length; i += 3) {
@@ -169,8 +163,9 @@ const Field = ({ animate }: { animate: boolean }) => {
         const d2 = dx * dx + dz * dz;
         if (d2 < r2 * 2) {
           const falloff = Math.exp(-d2 / (r2 * 0.5));
-          const wave = Math.sin(Math.sqrt(d2) * 2.2 - t * 4);
-          y += RIPPLE_AMP * falloff * (0.6 + 0.4 * wave);
+          // Pure positive bump (a hill) — no oscillating wave term so it
+          // doesn't push particles down or flicker.
+          y += RIPPLE_AMP * falloff;
         }
       }
 
@@ -203,21 +198,10 @@ const Field = ({ animate }: { animate: boolean }) => {
       mat.opacity = 0.7 + Math.sin(t * 1.5) * 0.25;
     }
 
-    // Parallax tilt: smooth follow toward cursor, plus base ambient sway.
-    tiltCurrent.current.x = THREE.MathUtils.lerp(
-      tiltCurrent.current.x,
-      tiltTarget.current.x,
-      Math.min(1, delta * 3),
-    );
-    tiltCurrent.current.y = THREE.MathUtils.lerp(
-      tiltCurrent.current.y,
-      tiltTarget.current.y,
-      Math.min(1, delta * 3),
-    );
+    // Ambient-only group rotation (no cursor-driven tilt — kept stable so
+    // the cursor "hill" feels predictable).
     if (groupRef.current) {
-      groupRef.current.rotation.x = -0.55 + tiltCurrent.current.x;
-      groupRef.current.rotation.y =
-        Math.sin(t * 0.08) * 0.15 + tiltCurrent.current.y;
+      groupRef.current.rotation.y = Math.sin(t * 0.08) * 0.15;
     }
   });
 
