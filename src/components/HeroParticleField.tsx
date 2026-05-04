@@ -78,6 +78,7 @@ const Field = ({ animate }: { animate: boolean }) => {
   const pointerWorld = useRef(new THREE.Vector3(999, 0, 999)); // off-field default
   const pointerSmoothed = useRef(new THREE.Vector3(999, 0, 999));
   const pointerActive = useRef(0); // 0..1 envelope for ripple amplitude
+  const pointerActiveTarget = useRef(0);
   const tiltTarget = useRef({ x: 0, y: 0 });
   const tiltCurrent = useRef({ x: 0, y: 0 });
 
@@ -115,14 +116,15 @@ const Field = ({ animate }: { animate: boolean }) => {
         local.y = ly * cosA + lz * sinA;
         local.z = -ly * sinA + lz * cosA;
         pointerWorld.current.set(local.x, 0, local.z);
-        pointerActive.current = 1;
+        pointerActiveTarget.current = 1;
       }
       // Tilt target from NDC, capped to small angle.
       tiltTarget.current.x = ndc.y * 0.08; // pitch
       tiltTarget.current.y = ndc.x * 0.18; // yaw
     };
     const onLeave = () => {
-      pointerActive.current = 0;
+      // Smoothly ease everything back to neutral instead of snapping.
+      pointerActiveTarget.current = 0;
       tiltTarget.current.x = 0;
       tiltTarget.current.y = 0;
     };
@@ -138,12 +140,12 @@ const Field = ({ animate }: { animate: boolean }) => {
     if (!animate) return;
     const t = clock.getElapsedTime();
 
-    // Smooth pointer follow + active envelope decay.
-    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 6));
+    // Smooth pointer follow (slower = smoother) + eased active envelope.
+    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 3.5));
     pointerActive.current = THREE.MathUtils.lerp(
       pointerActive.current,
-      pointerActive.current > 0.01 ? pointerActive.current : 0,
-      0.05,
+      pointerActiveTarget.current,
+      Math.min(1, delta * 2.5),
     );
 
     const px = pointerSmoothed.current.x;
@@ -296,9 +298,10 @@ export const HeroParticleField = () => {
   return (
     <div
       aria-hidden="true"
-      // Container catches pointer events so the canvas can react. Edge-fade
-      // overlays below explicitly opt out so they don't block interaction.
-      className="absolute inset-y-0 right-0 hidden md:block md:w-[62%] lg:w-[58%]"
+      // Canvas now spans the full hero width so the cursor can interact
+      // anywhere in the section. Headline/CTA block has its own protect zone
+      // (rendered in Index.tsx) sitting above this layer.
+      className="absolute inset-0 hidden md:block"
     >
       <Canvas
         dpr={[1, 1.5]}
@@ -308,9 +311,7 @@ export const HeroParticleField = () => {
       >
         <Field animate={!reduced} />
       </Canvas>
-      {/* Entire canvas is interactive. */}
       {/* Edge fades so the canvas dissolves into the page */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </div>
