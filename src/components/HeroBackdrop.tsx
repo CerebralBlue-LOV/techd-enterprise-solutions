@@ -24,6 +24,10 @@ export const HeroBackdrop = () => (
       className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl animate-gradient-drift"
       style={{ animationDelay: "-9s" }}
     />
+    <div
+      className="absolute bottom-0 left-1/3 h-[420px] w-[680px] rounded-full bg-background blur-3xl animate-gradient-drift"
+      style={{ animationDelay: "-4s" }}
+    />
 
     {/* 3. Top vignette only — bottom kept open so the grid reads into the next section. */}
     <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-background to-transparent" />
