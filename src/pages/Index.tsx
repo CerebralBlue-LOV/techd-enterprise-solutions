@@ -17,8 +17,8 @@ const Index = () => {
   return (
     <Layout>
       <SEO
-        title="TechD — Enterprise AI, Engineered for Outcomes"
-        description="IBM Platinum Business Partner delivering enterprise AI, data, security, and automation to Fortune 500 organizations."
+        title="TechD — IBM Platinum Partner for Enterprise AI, Data & Hybrid Cloud"
+        description="TechD has helped Fortune 500 enterprises turn data into trustworthy AI since 2009. IBM Platinum Business Partner specializing in watsonx, Db2, hybrid cloud, and security for regulated industries."
       />
 
       {/* Hero */}
@@ -31,20 +31,30 @@ const Index = () => {
         <Suspense fallback={null}>
           <HeroParticleField />
         </Suspense>
-        
+
         <div className="container-page relative z-10 pt-32 pb-32 md:pt-40 md:pb-40">
           <Reveal>
             <div className="max-w-3xl">
-              <p className="eyebrow">IBM Platinum Business Partner</p>
+              <p className="eyebrow">IBM Platinum Business Partner · Since 2009</p>
               <h1 className="mt-4 text-6xl md:text-8xl leading-[1.02] font-bold tracking-tight">
-                Enterprise AI,
+                Turn enterprise data into
                 <br />
-                <span className="text-primary">engineered for outcomes.</span>
+                <span className="text-primary">trustworthy AI.</span>
               </h1>
               <p className="mt-6 max-w-2xl text-xl md:text-2xl font-light text-muted-foreground">
-                We design, build, and run the AI, data, security, and automation
-                platforms that move Fortune 500 P&Ls — not pilots.
+                We design, build, and run secure AI, data, and hybrid cloud
+                systems for Fortune 500 healthcare, media, energy, and public
+                sector organizations — on IBM watsonx, Db2, and the open stack
+                around them.
               </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Button asChild size="lg" className="transition-transform duration-200 hover:-translate-y-0.5">
+                  <Link to="/contact">Talk to a principal <ArrowRight /></Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link to="/solutions">See our solutions</Link>
+                </Button>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -63,7 +73,7 @@ const Index = () => {
             <SectionHeading
               eyebrow="Solutions"
               title="Five practices. One outcome: leverage."
-              subtitle="Each practice is led by senior practitioners with two decades of enterprise delivery."
+              subtitle="Each practice is led by senior IBM-certified practitioners with a decade-plus of enterprise delivery on watsonx, Db2, OpenShift, and the modern data stack."
             />
           </Reveal>
           <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
