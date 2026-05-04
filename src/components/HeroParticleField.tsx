@@ -287,12 +287,12 @@ export const HeroParticleField = () => {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-y-0 right-0 hidden md:block md:w-1/2"
+      className="absolute inset-y-0 right-0 hidden md:block md:w-[58%] lg:w-[55%]"
     >
       <Canvas
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
-        camera={{ position: [0, 4.5, 8], fov: 42 }}
+        camera={{ position: [0, 5, 10], fov: 42 }}
         frameloop={reduced ? "demand" : "always"}
       >
         <Field animate={!reduced} />

@@ -34,8 +34,8 @@ export const Header = () => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full bg-background/90 backdrop-blur transition-[border-color,box-shadow] duration-200",
-        scrolled ? "border-b border-border" : "border-b border-transparent",
+        "sticky top-0 z-50 w-full bg-background/90 backdrop-blur border-b border-border transition-[box-shadow] duration-200",
+        scrolled && "shadow-[0_1px_0_0_hsl(var(--border))]",
       )}
     >
       <div className="container-page flex h-16 items-center justify-between gap-6">
