@@ -65,9 +65,46 @@ Build the 5 page templates in Lovable: Homepage, Solution, Industry, Service, Re
 
 ---
 
-## Day 2 (Tuesday) — Templates + content audit
+## Day 2 (Tuesday) — Content audit + redirect map
 
-_To be filled in._
+### Tasks
+
+- [x] Review crawl data (210 HTML pages from Day 1)
+- [x] Define audit scope (4 key decisions — see below)
+- [x] Classify all 210 URLs by category and redirect target
+- [x] Produce `docs/CONTENT-AUDIT.md` — 210 rows, grouped by target route
+- [x] Produce `docs/REDIRECT-MAP.md` — 208 redirect rules, all 301s
+- [ ] Day 3 decision: build `/privacy-policy` page or 301 to `/contact`
+- [ ] Lovable: visual templates for all 7 page types (parallel track)
+
+### Decisions made
+
+- **About pages** — `/about-us/`, `/our-story/`, `/depth-of-experience/` all fold into `/contact`. No `/about` route.
+- **Detail pages** — Coarse 301: all 42 data-solution sub-pages → `/solutions`, all 15 services sub-pages → `/services`. Matches deferred-detail-pages decision.
+- **Webinar + event pages (~86 URLs)** — Drop all → `/resources`. Resources hub starts clean; no historical archive.
+- **Audit method** — URL-tag only. No content body extraction Day 2. Keeps the day focused.
+
+### Redirect map stats
+
+| Destination | Count |
+|---|---:|
+| `/` | 24 |
+| `/contact` | 4 |
+| `/solutions` | 51 |
+| `/services` | 16 |
+| `/resources` | 112 |
+| `/privacy-policy` | 1 |
+| **Total** | **208** |
+
+### Blockers & open questions
+
+- **301 enforcement** — GitHub Pages cannot serve 301s. Redirect map is ready but cannot ship until Cloudflare proxy or alternate host is in place. Day 4 Cloudflare Worker decision unlocks this.
+- **`/privacy-policy/`** — Only legacy URL without a mapped P0 route. Needs Day 3 decision: minimal legal page or 301 to `/contact`.
+- **Logo files** — Still needed from product owner. Typographic wordmark still placeholder.
+
+### Tomorrow's first move
+
+Day 3: Start populating `src/content/` with real copy sourced from the audit's "merge" rows. Priority order: homepage → solutions → services → contact (about content). Use `docs/CONTENT-AUDIT.md` Group 1–4 as the source-of-truth for what belongs on each page.
 
 ---
 
