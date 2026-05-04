@@ -1,117 +1,85 @@
+## Hero Section Redesign — `home:hero` only
 
-# TechD Marketing Website — Build Plan
+Scope: only the Hero section in `src/pages/Index.tsx`. No other sections, pages, routes, or content change. Stays within existing brand tokens (primary cyan, white bg, secondary dark gray) and motion rules (respects `prefers-reduced-motion`, no scroll-jacking, lightweight).
 
-A premium, typography-led marketing site for TechD (IBM Platinum Business Partner). Built with React + TypeScript + Tailwind + shadcn/ui. Quiet, confident motion (Stripe/Linear/Vercel-toned). No backend, no CMS — content lives in editable TS modules.
+### 1. Make the section larger
 
-## 1. Design System
+In `src/pages/Index.tsx`, increase the hero's vertical padding and headline scale so it occupies roughly a full viewport on desktop:
 
-- `index.css` HSL tokens for the brand palette:
-  - `--primary` #00B3E3 (cyan) — CTAs, accents, focus rings
-  - `--foreground` #56565A (warm dark gray) — body text
-  - `--muted` / `--border` #A7A5A8 (warm light gray)
-  - `--background` #FFFFFF
-- `tailwind.config.ts`:
-  - Map semantic tokens to brand palette (no raw hex in components)
-  - `fontFamily.sans = ['"Roboto Condensed"', 'sans-serif']`
-  - Add brand keyframes: `fade-up` (opacity 0→1, translateY 16px→0), `marquee` (logo strip), `gradient-drift` (15–20s ambient hero loop)
-- Roboto Condensed (300/400/700) loaded via Google Fonts in `index.html`
-- Type scale set in `@layer base`: bold display, regular subheads, light body
-- Generous whitespace via shared section padding utilities
+- Wrapper: `min-h-[88vh] flex items-center`, padding `pt-32 pb-40 md:pt-40 md:pb-48`.
+- Headline: bump to `text-6xl md:text-8xl`, max-w-5xl.
+- Sub-copy: `max-w-2xl text-xl md:text-2xl`.
+- CTA row spacing: `mt-12`.
 
-## 2. Logo Asset
+### 2. Background layer (replace `GeometricAccent` for the hero only)
 
-- Copy uploaded `TechD-home-logo.webp` to `src/assets/techd-logo.webp`
-- Imported as ES module by `Header` and `Footer`
-- Sized appropriately, with `alt="TechD"`
+Create a new dedicated component `src/components/HeroBackdrop.tsx` so the existing `GeometricAccent` stays untouched for other use. Layer order, all `aria-hidden`, `pointer-events-none`, `absolute inset-0`:
 
-## 3. Shared Components (`src/components/`)
+1. **Base grid pattern** — pure CSS, no image. A repeating 48px × 48px grid using two `linear-gradient`s on a single div, color `hsl(var(--border) / 0.45)`, line width 1px. Mask with a radial `mask-image` so the grid fades out toward the edges (keeps it subtle, "engineered" not graph-paper).
+2. **Soft multi-layer gradient wash** — two large blurred radial blobs (cyan `primary/15` top-right, cyan `primary/8` bottom-left) plus one neutral warm-white blob center. Each uses `animate-gradient-drift` (already defined, 18s) with staggered `animationDelay` so the wash slowly breathes without hard edges.
+3. **Top + bottom vignette** — a thin `bg-gradient-to-b from-background via-transparent to-background` overlay so the grid never touches the header or the next section's seam.
 
-- `Header.tsx` — sticky, white bg, subtle bottom border on scroll; logo left, shadcn `NavigationMenu` center (5 items with dropdowns), persistent "Talk to an Expert" primary CTA right; mobile hamburger via `Sheet`
-- `Footer.tsx` — secondary nav columns, contact info, IBM Platinum Partner badge (typographic), copyright
-- `Layout.tsx` — Header + `<main>` + Footer wrapper
-- `SEO.tsx` — sets per-page `<title>`, meta description, OG tags via a small `useEffect` head hook (no extra deps)
-- `Reveal.tsx` — Intersection Observer wrapper applying `fade-up` once on enter; supports `delay` prop for 50ms stagger; respects `prefers-reduced-motion` (renders instantly)
-- `SectionHeading.tsx`, `CTAButton.tsx`
-- `LogoStrip.tsx` — typographic placeholder logos (J&J, Comcast, Sony, Princeton, Johns Hopkins) in a duplicated marquee track, 40s+ loop, `pause-on-hover` via `animation-play-state`
-- `SolutionCard.tsx`, `IndustryCard.tsx`, `ServiceCard.tsx`, `ResourceCard.tsx` — shared hover treatment: border shifts to cyan, soft shadow, `translateY(-2px)`, 200ms ease-out
-- `GeometricAccent.tsx` — abstract SVG (arcs, gradient blobs) with a single slow `gradient-drift` CSS animation for hero ambience
+### 3. Main visual graphic — 3D particle network
 
-## 4. Routing (`src/App.tsx`)
+Use **react-three-fiber** + **drei** (versions pinned per the stack: `@react-three/fiber@^8.18`, `@react-three/drei@^9.122.0`, `three@^0.160`). Build `src/components/HeroParticleField.tsx`:
 
+- `<Canvas>` sized to fill the right half on desktop (`absolute right-0 top-0 h-full w-full md:w-[60%]`), pointer-events-none, `dpr={[1, 1.5]}` for perf, `gl={{ antialias: true, alpha: true }}`, transparent background.
+- A `Points` mesh with ~2,500 particles distributed on an undulating plane (sample x/z grid, y = layered sine noise). Particles use a small round sprite material in cyan `#00B3E3` at low opacity.
+- A `LineSegments` mesh that connects each particle to its 2 nearest neighbors (precomputed once on mount, not per frame) using `LineBasicMaterial` at very low opacity for the "network" look.
+- ~12 "highlight" nodes at random indices rendered as slightly larger, brighter points with a subtle additive-blend glow (`THREE.AdditiveBlending`); they pulse opacity on a slow sine in `useFrame`.
+- Animation: `useFrame` updates the y-coordinate of each particle with a slow noise/sine offset (cap delta-time, target ~30fps feel) so the "data landscape" undulates gently. Whole group rotates ~0.02 rad on Y over time.
+- Camera: perspective, slight tilt looking down at the field. OrbitControls disabled.
+- Right-edge fade: a CSS gradient overlay so the field dissolves into the background instead of having a hard canvas edge; left-edge fade so it never crowds the headline.
+- Loaded via `React.lazy` + `Suspense` with `null` fallback so the initial paint isn't blocked.
+- Reduced-motion: if `window.matchMedia('(prefers-reduced-motion: reduce)').matches`, render a single static frame (no `useFrame` loop) — still a beautiful still image, no animation cost.
+- Mobile (`< md`): do not mount the canvas at all; show only the background layer. Saves battery and avoids clutter on narrow viewports.
+
+### 4. Floating glass-morphism cards
+
+Build `src/components/HeroFloatingCards.tsx` — 3 abstract UI cards positioned absolutely over the particle field on desktop, hidden below `md`. Pure HTML/CSS, no canvas:
+
+- **Card A — "ML Node"** (top-right area): small node-graph icon (lucide `Network` or a tiny inline SVG of 3 connected dots), label "Inference · 142ms", a thin progress bar at 78% in cyan.
+- **Card B — "Performance Metric"** (mid-right): lucide `TrendingUp` icon, label "Run-rate impact", value "+$4.2M", tiny inline SVG sparkline trending up in cyan.
+- **Card C — "Data Pipeline"** (lower-center-right): lucide `Workflow` icon, label "Agents online", value "23 / 23" with a small green dot.
+
+Each card:
+- `bg-white/55 backdrop-blur-xl border border-white/60`
+- `rounded-2xl px-5 py-4`
+- Soft layered shadow: `shadow-[0_20px_50px_-20px_hsl(193_100%_45%/0.18),0_8px_20px_-12px_hsl(240_3%_35%/0.15)]`
+- Subtle float animation — new keyframe `float` (translateY -6px to +6px over 7s, ease-in-out, infinite, alternate). Each card gets a different `animationDelay` so they drift independently. Disabled under `prefers-reduced-motion`.
+- Slight rotation per card (`-rotate-2`, `rotate-1`, `-rotate-1`) for an organic, "floating" feel.
+- All decorative — `aria-hidden`, no links.
+
+### 5. Layering & text protection
+
+In the hero JSX, the stack (back to front) is:
 ```text
-/             Home
-/solutions    Solutions overview
-/industries   Industries overview
-/services     Services overview
-/resources    Resources hub (tabs)
-/contact      Contact form
-*             404
+HeroBackdrop  →  HeroParticleField  →  HeroFloatingCards  →  text content (relative z-10)
 ```
+Headline column is constrained to `max-w-3xl` on the left so the right ~40% stays clear for the visual. On `lg+`, use a 2-column grid (`grid lg:grid-cols-[1.1fr_1fr]`) so text and visual share the row cleanly; on `md` only the backdrop + text show; on `sm` everything but the backdrop hides.
 
-All routes wrapped in `Layout`. Nav sub-items deep-link to anchors on overview pages (`/solutions#ai-automation`). No page-transition animations.
+### 6. Tailwind / CSS additions
 
-## 5. Pages
+In `tailwind.config.ts` add one keyframe + animation:
+- `float`: `0%,100% { transform: translateY(-6px) } 50% { transform: translateY(6px) }`
+- `animation: { float: "float 7s ease-in-out infinite" }`
 
-### Homepage
-1. Hero — "Enterprise AI, Engineered for Outcomes", subhead, primary "Talk to an Expert" + secondary "Explore Solutions"; `GeometricAccent` background
-2. Customer logo strip — marquee, "Trusted by Fortune 500 leaders"
-3. Solutions — 5 outcome-led cards
-4. Industries — 6-card grid
-5. Featured case study — large card, quantified outcome, pull quote, CTA
-6. Why TechD — IBM Platinum badge, years in business, 3–4 differentiators
-7. Final CTA — "Ready to talk?" → `/contact`
-8. Footer
+In `src/index.css` extend the reduced-motion block to also null out `.animate-float`.
 
-Each section wrapped in `Reveal` with 50ms staggered children.
+### 7. Dependencies to install
 
-### Solutions overview (`/solutions`)
-Hero + 5 detailed sections (anchor IDs): outcome statement, capability bullets, related industries.
+- `three@^0.160.0`
+- `@react-three/fiber@^8.18.0`
+- `@react-three/drei@^9.122.0`
 
-### Industries overview (`/industries`)
-Hero + 6 industry sections with sector outcomes and example use cases.
+### Files touched
 
-### Services overview (`/services`)
-Hero + 4 service tiers (Advisory, Implementation, Managed Services, Training) as comparison cards.
+- `src/pages/Index.tsx` — hero JSX only (size, layout, swap backdrop, mount new components).
+- `src/components/HeroBackdrop.tsx` — new.
+- `src/components/HeroParticleField.tsx` — new (lazy-loaded).
+- `src/components/HeroFloatingCards.tsx` — new.
+- `tailwind.config.ts` — add `float` keyframe/animation.
+- `src/index.css` — reduced-motion rule for `.animate-float`.
+- `package.json` — three / r3f / drei.
 
-### Resources hub (`/resources`)
-Hero + shadcn `Tabs`: Case Studies / Blog / Webinars / Events. Responsive card grid per tab from local TS arrays.
-
-### Contact (`/contact`)
-Two-column: left = headline, contact details, IBM badge; right = form using shadcn `Form` + `react-hook-form` + `zod`. Fields: name, email, company, role, area of interest (`Select`), message (`Textarea`). Submit shows success toast (no backend per spec).
-
-### 404
-Branded replacement of `NotFound.tsx`: large 404, short copy, CTA back home, geometric accent.
-
-## 6. Motion Spec
-
-- **Scroll-reveal**: `Reveal` component — fade in + translateY(16px → 0), 400ms ease-out, triggers once via Intersection Observer (`threshold: 0.15`), 50ms stagger on children
-- **Button hover**: 200ms background-color transition + 1–2px lift on primary CTA; no scale > 1.02
-- **Card hover**: border → cyan, soft shadow, `translateY(-2px)`, 200ms ease-out
-- **Hero accent**: single CSS `gradient-drift` keyframe, 18s ease-in-out infinite alternate
-- **Logo marquee**: 45s linear infinite, pause on hover
-- **Nav dropdowns**: shadcn defaults (150ms slide-fade)
-- **Reduced motion**: global `@media (prefers-reduced-motion: reduce)` rule disables all keyframes, transitions, and the marquee; `Reveal` short-circuits and renders content instantly
-- Explicitly NOT building: parallax, scroll-jacking, typewriter, animated cursors, page transitions
-
-## 7. Content (`src/content/`)
-
-Typed TS modules: `solutions.ts`, `industries.ts`, `services.ts`, `resources.ts`, `caseStudies.ts`. Placeholder copy in brand voice (confident, modern, no fluff). Easy to hand-edit in VSCode.
-
-## 8. Accessibility & Performance
-
-- Semantic landmarks (`header`, `nav`, `main`, `section`, `footer`)
-- All interactive elements keyboard-reachable; visible cyan focus rings
-- Alt text on logo and meaningful SVGs; decorative SVGs `aria-hidden`
-- `loading="lazy"` on any `<img>`
-- Mobile-first responsive (single-column under `md`, expanding grids at `md`/`lg`)
-
-## 9. Technical
-
-- Existing stack: Vite + React 18 + TS + Tailwind + shadcn/ui
-- Add `react-hook-form` + `zod` + `@hookform/resolvers` if not already present (for contact form)
-- No Framer Motion needed — Intersection Observer + CSS keyframes cover the spec and ship lighter
-- Flat, component-based file structure for hand-editability
-
-## Out of Scope (per brief)
-
-CMS, contact form backend, auth, dashboards, individual solution/industry/service detail pages, individual case study/blog post pages.
+Nothing else changes.
