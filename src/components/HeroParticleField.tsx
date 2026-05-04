@@ -302,7 +302,7 @@ export const HeroParticleField = () => {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 45% 55% at 0% 75%, hsl(var(--background)) 0%, hsl(var(--background) / 0.85) 35%, transparent 70%)",
+            "radial-gradient(ellipse 50% 70% at 0% 70%, hsl(var(--background)) 0%, hsl(var(--background) / 0.85) 35%, transparent 75%)",
         }}
       />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
