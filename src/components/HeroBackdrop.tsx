@@ -30,7 +30,7 @@ export const HeroBackdrop = () => (
     />
 
     {/* 3. Top vignette only — bottom kept open so the grid reads into the next section. */}
-    <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-background to-transparent" />
+    <div className="absolute inset-x-0 top-0  h-32 bg-gradient-to-b from-background to-transparent" />
   </div>
 );
 
