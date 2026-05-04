@@ -287,7 +287,7 @@ export const HeroParticleField = () => {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 hidden md:block"
+      className="absolute inset-y-0 right-0 hidden md:block md:w-1/2"
     >
       <Canvas
         dpr={[1, 1.5]}
