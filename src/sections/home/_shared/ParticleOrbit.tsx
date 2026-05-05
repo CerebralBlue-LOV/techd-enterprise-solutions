@@ -112,7 +112,7 @@ export const ParticleOrbit = () => (
     <Canvas
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true }}
-      camera={{ position: [0, 0, 4.2], fov: 45 }}
+      camera={{ position: [0, 0, 5.4], fov: 45 }}
       frameloop="demand"
       style={{ background: "transparent" }}
     >
