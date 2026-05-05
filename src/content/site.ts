@@ -60,7 +60,7 @@ export const NAV: NavItem[] = [
   },
 ];
 
-export type Customer = { name: string; url: string; logo?: string };
+export type Customer = { name: string; url: string; logo?: string; logoClass?: string };
 
 export const CUSTOMERS: Customer[] = [
   { name: "Johnson & Johnson", url: "https://www.jnj.com", logo: "/logos/johnson-and-johnson.png" },
