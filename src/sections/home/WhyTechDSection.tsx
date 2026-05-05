@@ -50,10 +50,10 @@ export const WhyTechDSection = () => (
           <Reveal>
             <div className="relative z-20">
               <SectionHeading
-                align="left"
+                align="center"
                 eyebrow="Why TechD"
                 title="A different kind of partner."
-                className="text-center lg:text-left"
+                className="lg:mx-0 lg:text-left"
               />
             </div>
           </Reveal>
