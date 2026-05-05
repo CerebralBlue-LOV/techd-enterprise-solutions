@@ -15,6 +15,7 @@ import HeroBackdrop from "@/components/HeroBackdrop";
 import SectionBackdrop from "@/components/SectionBackdrop";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
+const ParticleGlobe = lazy(() => import("@/components/ParticleGlobe"));
 import SectionHeading from "@/components/SectionHeading";
 import LogoStrip from "@/components/LogoStrip";
 import { Button } from "@/components/ui/button";
@@ -149,9 +150,12 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Industries + Case Study share one continuous backdrop */}
+      {/* Engineered Field — Industries + Case Study share one continuous backdrop */}
       <div className="relative overflow-hidden">
         <SectionBackdrop intensity="soft" vignettes={false} />
+        <Suspense fallback={null}>
+          <ParticleGlobe />
+        </Suspense>
 
         {/* Industries */}
         <section data-section="home:industries" className="section relative z-10">
