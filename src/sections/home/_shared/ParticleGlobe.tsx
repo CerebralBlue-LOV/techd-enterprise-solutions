@@ -67,7 +67,7 @@ const Globe = ({ animate }: { animate: boolean }) => {
         <lineBasicMaterial
           color="#00B3E3"
           transparent
-          opacity={0.12}
+          opacity={0.22}
           depthWrite={false}
         />
       </lineSegments>
@@ -79,10 +79,10 @@ const Globe = ({ animate }: { animate: boolean }) => {
         </bufferGeometry>
         <pointsMaterial
           color="#00B3E3"
-          size={0.035}
+          size={0.055}
           sizeAttenuation
           transparent
-          opacity={0.7}
+          opacity={0.95}
           depthWrite={false}
         />
       </points>
@@ -97,10 +97,10 @@ const Globe = ({ animate }: { animate: boolean }) => {
         </bufferGeometry>
         <pointsMaterial
           color="#7CE6FF"
-          size={0.14}
+          size={0.2}
           sizeAttenuation
           transparent
-          opacity={0.9}
+          opacity={1}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
