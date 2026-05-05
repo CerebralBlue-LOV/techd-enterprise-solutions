@@ -2,6 +2,7 @@ import { ShieldCheck, Sparkles, Workflow } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
+import ParticleOrbit from "./_shared/ParticleOrbit";
 
 /** Differentiator cards — edit copy here when messaging changes. */
 const DIFFERENTIATORS = [
@@ -29,39 +30,55 @@ const DIFFERENTIATORS = [
 
 /**
  * Section: Home / Why TechD
- * Purpose: Build trust by stacking the IBM Platinum credential alongside four
- *          differentiator cards (people, regulators, outcomes, multi-cloud).
+ * Purpose: Build trust through a centered hero composition — a particle orbit
+ *          ring framing a glassmorphic IBM Platinum Business Partner credential
+ *          card, followed by a 2x2 grid of differentiator cards.
  * Order:   6 of 7 on the Home page.
  * Notes:   Background uses bg-muted/40 to break visual rhythm before the final
- *          CTA. Keep the IBM credential card prominent on the left column.
+ *          CTA. The ParticleOrbit decoration is brand-cyan and respects
+ *          prefers-reduced-motion. Do not restyle the IBM badge without brand
+ *          sign-off.
  */
 export const WhyTechDSection = () => (
   <section className="section bg-muted/40">
     <SectionMarker page="Home" name="Why TechD" />
-    <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.4fr] items-start">
-      {/* Credential card — IBM Platinum badge. Do not restyle without brand sign-off. */}
+    <div className="container-page">
+      {/* Section heading — centered above the orbit hero. */}
       <Reveal>
-        <SectionHeading eyebrow="Why TechD" title="A different kind of partner." />
-        <div className="mt-8 inline-flex items-center gap-4 rounded-xl border border-border bg-background px-5 py-4">
-          <div className="h-12 w-12 rounded-md bg-secondary text-background grid place-items-center font-bold">
-            IBM
-          </div>
-          <div className="leading-tight">
-            <div className="text-xs font-bold uppercase tracking-wider text-primary">
-              Platinum
+        <SectionHeading
+          align="center"
+          eyebrow="Why TechD"
+          title="A different kind of partner."
+        />
+      </Reveal>
+
+      {/* Centered orbit hero — ParticleOrbit fills the square; IBM glass badge sits in its center. */}
+      <Reveal delay={80}>
+        <div className="relative mx-auto mt-12 flex aspect-square w-full max-w-[420px] items-center justify-center md:mt-16 md:max-w-[520px]">
+          <ParticleOrbit />
+
+          {/* Glassmorphic IBM Platinum Business Partner credential card */}
+          <div className="relative z-10 flex flex-col items-center gap-4 rounded-2xl border border-primary/30 bg-background/60 px-8 py-7 text-center shadow-2xl shadow-primary/10 backdrop-blur-xl md:px-10 md:py-8">
+            <div className="grid h-16 w-16 place-items-center rounded-lg bg-secondary text-2xl font-bold text-background">
+              IBM
             </div>
-            <div className="text-base font-bold text-secondary">
-              Business Partner
-            </div>
-            <div className="text-xs text-muted-foreground">
-              15+ years · Platinum since 2009
+            <div className="leading-tight">
+              <div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                Platinum
+              </div>
+              <div className="mt-1 text-xl font-bold text-secondary">
+                Business Partner
+              </div>
+              <div className="mt-2 text-xs text-muted-foreground">
+                15+ years · Platinum since 2009
+              </div>
             </div>
           </div>
         </div>
       </Reveal>
 
       {/* Differentiator grid — 2x2 on sm+, single column on mobile. */}
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="mt-16 grid gap-6 sm:grid-cols-2 md:mt-20">
         {DIFFERENTIATORS.map((d, i) => (
           <Reveal key={d.title} delay={i * 50}>
             <div className="card-hover h-full rounded-xl p-6">
