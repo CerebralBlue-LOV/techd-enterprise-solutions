@@ -1,74 +1,37 @@
-## Redesign: Why TechD Section
+## What the reference shows
 
-Centered composition: a particle ring orbit with a glassmorphic IBM Platinum Business Partner badge floating in its center, then the existing 2x2 differentiator cards below.
+The Stripe-style halo in your video has each particle drifting **outward and back along its own radius** with a unique phase. There's no rotation — the ring just slowly inhales and exhales. Outer particles travel further than inner ones, which is what makes the cloud look like it's gently breathing into space.
 
----
+## Change
 
-### 1. New component: `ParticleOrbit`
+Update `src/sections/home/_shared/ParticleOrbit.tsx` to animate per-particle radial drift.
 
-**File:** `src/sections/home/_shared/ParticleOrbit.tsx`
-**Component name:** `ParticleOrbit` (export both named + default, matching `ParticleGlobe` convention)
+### Per-particle params (computed once at build)
 
-Built with the same stack as `ParticleGlobe` and `HeroParticleField`:
-- `@react-three/fiber` `<Canvas>` with `alpha: true`, `dpr={[1, 1.5]}`
-- A `<points>` cloud — ~2200 particles distributed on a torus/ring (random angle around Y axis, radius jittered ±15%, slight Z thickness for depth)
-- Brand cyan: main points `#00B3E3` at low opacity, additive-blend highlight points `#7CE6FF` for the sparkle effect — matches the user-uploaded reference but recolored to brand
-- Slow rotation on Y axis (~0.05 rad/s) + gentle highlight opacity pulse, both gated by `prefers-reduced-motion` (same pattern as `ParticleGlobe`)
-- Wrapper: `aria-hidden`, `pointer-events-none`, square aspect, centered absolute fill of its parent
-- Soft radial fade overlay so edges dissolve into background
+For each of the 4,200 particles, store:
+- `angle` — its fixed angular position (no rotation)
+- `baseR` — its resting radius (current gaussian distribution, unchanged)
+- `amp` — drift distance: `0.08 + outwardness * 0.55 + jitter`, so outer particles travel further
+- `phase` — random `0..2π` so they don't pulse in sync
+- `speed` — `0.35..0.7` rad/s, slow and varied
 
-JSDoc header explains: "decorative orbit ring, sits behind the centered IBM credential card on the Why TechD section."
-
----
-
-### 2. Rewrite `WhyTechDSection.tsx`
-
-New layout (replaces current 2-column grid):
+### Per-frame update (`useFrame`)
 
 ```text
-┌─────────────────────────────────────────────┐
-│           eyebrow + title (centered)        │
-│                                             │
-│         ╭───── ParticleOrbit ─────╮         │
-│         │                          │         │
-│         │   ┌──────────────────┐   │         │
-│         │   │ IBM glass badge  │   │         │
-│         │   └──────────────────┘   │         │
-│         │                          │         │
-│         ╰──────────────────────────╯         │
-│                                             │
-│   ┌──────┐ ┌──────┐                         │
-│   │ card │ │ card │   (2x2 grid below)      │
-│   ├──────┤ ├──────┤                         │
-│   │ card │ │ card │                         │
-│   └──────┘ └──────┘                         │
-└─────────────────────────────────────────────┘
+r = baseR + sin(t * speed + phase) * amp
+x = cos(angle) * r
+y = sin(angle) * r
 ```
 
-Structure:
-- `SectionHeading` with `align="center"`, eyebrow "Why TechD", title "A different kind of partner."
-- Centered hero block: `relative` square container (~`h-[420px] md:h-[520px]`) with `<ParticleOrbit />` absolute-filling it and the IBM card centered via flex
-- IBM glassmorphic card (centered):
-  - `bg-background/60 backdrop-blur-xl`, `border border-primary/30`, `rounded-2xl`, soft `shadow-2xl shadow-primary/10`
-  - Larger than current: ~`px-8 py-6 md:px-10 md:py-8`
-  - "IBM" mark block scaled up (h-14/w-14), "Platinum" eyebrow, "Business Partner" bold, "15+ years · Platinum since 2009" muted
-- Differentiator cards: existing 2x2 grid moved below the hero block, unchanged styling, full-width within `container-page`
+Mutate the position buffer in place, set `needsUpdate = true`. Highlights re-sample from the same indices each frame so they ride along.
 
-Keep `SectionMarker`, `Reveal` wrappers, `bg-muted/40` section background.
+### Other details
 
----
+- Switch canvas `frameloop` from `"demand"` to `"always"` (only when motion is allowed).
+- Honor `prefers-reduced-motion` — keep current static render in that case.
+- Subtle highlight opacity pulse: `0.75 + sin(t * 1.2) * 0.2`.
+- No global rotation, no z-axis motion — purely radial breathing, matching the reference.
 
-### 3. Files touched
+### Files
 
-- **Create** `src/sections/home/_shared/ParticleOrbit.tsx`
-- **Edit** `src/sections/home/WhyTechDSection.tsx` — restructure as above
-
-No new dependencies (`three`, `@react-three/fiber` already installed). No brand token changes. No content changes.
-
----
-
-### Out of scope
-
-- No edits to other sections, hero, or globe component
-- No changes to differentiator card copy
-- No mobile-specific orbit replacement — orbit renders at all breakpoints, just smaller container on mobile
+- Edit: `src/sections/home/_shared/ParticleOrbit.tsx`

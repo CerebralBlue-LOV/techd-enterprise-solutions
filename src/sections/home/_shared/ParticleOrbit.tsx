@@ -1,19 +1,18 @@
-import { useMemo } from "react";
-import { Canvas } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 /**
- * ParticleOrbit — soft, cloud-like halo of square pixel particles forming a
- * diffuse ring with a hollow center. Inspired by Stripe's "agentic graphic"
- * background canvas: even angular distribution, gaussian thickness across
- * the ring radius, no directional clumping, no rotation.
+ * ParticleOrbit — soft, cloud-like halo of particles forming a diffuse ring
+ * with a hollow center. Particles "breathe" radially: each one drifts
+ * outward and back along its own angle with a unique phase, giving the ring
+ * a slow inhale/exhale pulse. No rotation.
  */
 
 const PARTICLE_COUNT = 4200;
 const HIGHLIGHT_COUNT = 60;
 const RING_RADIUS = 1.85;
 
-/** Box-Muller — true gaussian, gives the soft falloff on both sides. */
 function gauss() {
   let u = 0;
   let v = 0;
@@ -22,19 +21,28 @@ function gauss() {
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 }
 
-/**
- * Even angular coverage (no clumping at corners) with gaussian thickness
- * so the cloud has soft inner + outer edges and a hollow center.
- */
-function buildCloud(count: number) {
+type CloudData = {
+  positions: Float32Array;
+  angles: Float32Array;
+  baseR: Float32Array;
+  amp: Float32Array;
+  phase: Float32Array;
+  speed: Float32Array;
+  z: Float32Array;
+};
+
+function buildCloud(count: number): CloudData {
   const positions = new Float32Array(count * 3);
+  const angles = new Float32Array(count);
+  const baseR = new Float32Array(count);
+  const amp = new Float32Array(count);
+  const phase = new Float32Array(count);
+  const speed = new Float32Array(count);
+  const z = new Float32Array(count);
+
   for (let i = 0; i < count; i++) {
-    // Stratified angle: each particle gets its own slice + jitter, so the
-    // ring is uniformly covered (no random clustering at the corners).
     const angle = ((i + Math.random()) / count) * Math.PI * 2;
 
-    // Tight gaussian thickness — keeps the ring shape with a clean hollow
-    // center. Clamp inward bleed so particles never cross into the core.
     const thickness = gauss() * 0.22;
     const inner = RING_RADIUS - 0.45;
     const outer = RING_RADIUS + 0.9;
@@ -42,38 +50,102 @@ function buildCloud(count: number) {
     if (r < inner) r = inner + Math.random() * 0.05;
     if (r > outer) r = outer - Math.random() * 0.05;
 
+    angles[i] = angle;
+    baseR[i] = r;
+    // Outer particles drift more than inner ones — gives the "exhale" look.
+    const outwardness = Math.max(0, (r - RING_RADIUS) / 0.9);
+    amp[i] = 0.08 + outwardness * 0.55 + Math.random() * 0.15;
+    phase[i] = Math.random() * Math.PI * 2;
+    speed[i] = 0.35 + Math.random() * 0.35;
+    z[i] = (Math.random() - 0.5) * 0.08;
+
     positions[i * 3] = Math.cos(angle) * r;
     positions[i * 3 + 1] = Math.sin(angle) * r;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 0.08;
+    positions[i * 3 + 2] = z[i];
   }
-  return positions;
+  return { positions, angles, baseR, amp, phase, speed, z };
 }
 
-function pickHighlights(source: Float32Array, count: number) {
-  const arr = new Float32Array(count * 3);
-  const total = source.length / 3;
-  for (let i = 0; i < count; i++) {
-    const idx = Math.floor(Math.random() * total) * 3;
-    arr[i * 3] = source[idx];
-    arr[i * 3 + 1] = source[idx + 1];
-    arr[i * 3 + 2] = source[idx + 2] + 0.01;
-  }
-  return arr;
+function pickHighlightIndices(total: number, count: number) {
+  const set = new Set<number>();
+  while (set.size < count) set.add(Math.floor(Math.random() * total));
+  return Array.from(set);
 }
 
-const Orbit = () => {
+const Orbit = ({ animate }: { animate: boolean }) => {
   const cloud = useMemo(() => buildCloud(PARTICLE_COUNT), []);
-  const highlights = useMemo(
-    () => pickHighlights(cloud, HIGHLIGHT_COUNT),
+  const highlightIdx = useMemo(
+    () => pickHighlightIndices(PARTICLE_COUNT, HIGHLIGHT_COUNT),
+    [],
+  );
+
+  const livePositions = useMemo(
+    () => new Float32Array(cloud.positions),
     [cloud],
   );
+  const highlightPositions = useMemo(
+    () => new Float32Array(HIGHLIGHT_COUNT * 3),
+    [],
+  );
+
+  // Seed highlight buffer for the static (reduced-motion) case.
+  useMemo(() => {
+    for (let h = 0; h < highlightIdx.length; h++) {
+      const src = highlightIdx[h] * 3;
+      highlightPositions[h * 3] = livePositions[src];
+      highlightPositions[h * 3 + 1] = livePositions[src + 1];
+      highlightPositions[h * 3 + 2] = livePositions[src + 2] + 0.01;
+    }
+  }, [highlightIdx, highlightPositions, livePositions]);
+
+  const pointsRef = useRef<THREE.Points>(null);
+  const highlightsRef = useRef<THREE.Points>(null);
+
+  useFrame(({ clock }) => {
+    if (!animate) return;
+    const t = clock.getElapsedTime();
+
+    const { angles, baseR, amp, phase, speed, z } = cloud;
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const drift = Math.sin(t * speed[i] + phase[i]) * amp[i];
+      const r = baseR[i] + drift;
+      const a = angles[i];
+      livePositions[i * 3] = Math.cos(a) * r;
+      livePositions[i * 3 + 1] = Math.sin(a) * r;
+      livePositions[i * 3 + 2] = z[i];
+    }
+
+    if (pointsRef.current) {
+      const attr = pointsRef.current.geometry.attributes
+        .position as THREE.BufferAttribute;
+      attr.array = livePositions;
+      attr.needsUpdate = true;
+    }
+
+    for (let h = 0; h < highlightIdx.length; h++) {
+      const src = highlightIdx[h] * 3;
+      highlightPositions[h * 3] = livePositions[src];
+      highlightPositions[h * 3 + 1] = livePositions[src + 1];
+      highlightPositions[h * 3 + 2] = livePositions[src + 2] + 0.01;
+    }
+    if (highlightsRef.current) {
+      const attr = highlightsRef.current.geometry.attributes
+        .position as THREE.BufferAttribute;
+      attr.array = highlightPositions;
+      attr.needsUpdate = true;
+      const mat = highlightsRef.current.material as THREE.PointsMaterial;
+      mat.opacity = 0.75 + Math.sin(t * 1.2) * 0.2;
+    }
+  });
 
   return (
     <group>
-      {/* Main soft cloud — square pixel particles (default PointsMaterial). */}
-      <points>
+      <points ref={pointsRef}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[cloud, 3]} />
+          <bufferAttribute
+            attach="attributes-position"
+            args={[livePositions, 3]}
+          />
         </bufferGeometry>
         <pointsMaterial
           color="#00B3E3"
@@ -85,10 +157,12 @@ const Orbit = () => {
         />
       </points>
 
-      {/* Sparse brighter accents */}
-      <points>
+      <points ref={highlightsRef}>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[highlights, 3]} />
+          <bufferAttribute
+            attach="attributes-position"
+            args={[highlightPositions, 3]}
+          />
         </bufferGeometry>
         <pointsMaterial
           color="#7CE6FF"
@@ -104,21 +178,27 @@ const Orbit = () => {
   );
 };
 
-export const ParticleOrbit = () => (
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute inset-0 z-0"
-  >
-    <Canvas
-      dpr={[1, 1.5]}
-      gl={{ antialias: true, alpha: true }}
-      camera={{ position: [0, 0, 5.4], fov: 45 }}
-      frameloop="demand"
-      style={{ background: "transparent" }}
+export const ParticleOrbit = () => {
+  const reduced =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-0"
     >
-      <Orbit />
-    </Canvas>
-  </div>
-);
+      <Canvas
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true }}
+        camera={{ position: [0, 0, 5.4], fov: 45 }}
+        frameloop={reduced ? "demand" : "always"}
+        style={{ background: "transparent" }}
+      >
+        <Orbit animate={!reduced} />
+      </Canvas>
+    </div>
+  );
+};
 
 export default ParticleOrbit;
