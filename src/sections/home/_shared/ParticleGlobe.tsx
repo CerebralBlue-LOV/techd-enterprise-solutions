@@ -82,7 +82,7 @@ const Globe = ({ animate }: { animate: boolean }) => {
           size={0.035}
           sizeAttenuation
           transparent
-          opacity={0.7}
+          opacity={0.9}
           depthWrite={false}
         />
       </points>
@@ -117,7 +117,7 @@ export const ParticleGlobe = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 hidden md:block w-[760px] h-[760px] lg:w-[920px] lg:h-[920px] opacity-80 z-0"
+      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 hidden md:block w-[760px] h-[760px] lg:w-[920px] lg:h-[920px] opacity-100 z-0"
     >
       <Canvas
         dpr={[1, 1.5]}
