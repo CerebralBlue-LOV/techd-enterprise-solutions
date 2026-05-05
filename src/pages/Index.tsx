@@ -15,6 +15,7 @@ import HeroBackdrop from "@/components/HeroBackdrop";
 import SectionBackdrop from "@/components/SectionBackdrop";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
+const ParticleGlobe = lazy(() => import("@/components/ParticleGlobe"));
 import SectionHeading from "@/components/SectionHeading";
 import LogoStrip from "@/components/LogoStrip";
 import { Button } from "@/components/ui/button";
