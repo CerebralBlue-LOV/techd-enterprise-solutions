@@ -82,7 +82,7 @@ const Globe = ({ animate }: { animate: boolean }) => {
           size={0.035}
           sizeAttenuation
           transparent
-          opacity={0.7}
+          opacity={0.9}
           depthWrite={false}
         />
       </points>
