@@ -11,7 +11,7 @@ import * as THREE from "three";
 
 const PARTICLE_COUNT = 2200;
 const HIGHLIGHT_COUNT = 40;
-const RING_RADIUS = 1.85;
+const RING_RADIUS = 1.5;
 
 function gauss() {
   let u = 0;
@@ -74,19 +74,10 @@ function pickHighlightIndices(total: number, count: number) {
 
 const Orbit = ({ animate }: { animate: boolean }) => {
   const cloud = useMemo(() => buildCloud(PARTICLE_COUNT), []);
-  const highlightIdx = useMemo(
-    () => pickHighlightIndices(PARTICLE_COUNT, HIGHLIGHT_COUNT),
-    [],
-  );
+  const highlightIdx = useMemo(() => pickHighlightIndices(PARTICLE_COUNT, HIGHLIGHT_COUNT), []);
 
-  const livePositions = useMemo(
-    () => new Float32Array(cloud.positions),
-    [cloud],
-  );
-  const highlightPositions = useMemo(
-    () => new Float32Array(HIGHLIGHT_COUNT * 3),
-    [],
-  );
+  const livePositions = useMemo(() => new Float32Array(cloud.positions), [cloud]);
+  const highlightPositions = useMemo(() => new Float32Array(HIGHLIGHT_COUNT * 3), []);
 
   // Seed highlight buffer for the static (reduced-motion) case.
   useMemo(() => {
@@ -104,10 +95,7 @@ const Orbit = ({ animate }: { animate: boolean }) => {
   // Cursor interactivity — pointer projected onto the ring's z=0 plane.
   const { camera, gl } = useThree();
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
-  const plane = useMemo(
-    () => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0),
-    [],
-  );
+  const plane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), []);
   const pointer = useRef(new THREE.Vector3(999, 999, 0));
   const pointerSmooth = useRef(new THREE.Vector3(999, 999, 0));
   const pointerActive = useRef(0);
@@ -182,8 +170,7 @@ const Orbit = ({ animate }: { animate: boolean }) => {
     }
 
     if (pointsRef.current) {
-      const attr = pointsRef.current.geometry.attributes
-        .position as THREE.BufferAttribute;
+      const attr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
       attr.array = livePositions;
       attr.needsUpdate = true;
     }
@@ -195,8 +182,7 @@ const Orbit = ({ animate }: { animate: boolean }) => {
       highlightPositions[h * 3 + 2] = livePositions[src + 2] + 0.01;
     }
     if (highlightsRef.current) {
-      const attr = highlightsRef.current.geometry.attributes
-        .position as THREE.BufferAttribute;
+      const attr = highlightsRef.current.geometry.attributes.position as THREE.BufferAttribute;
       attr.array = highlightPositions;
       attr.needsUpdate = true;
       const mat = highlightsRef.current.material as THREE.PointsMaterial;
@@ -208,27 +194,14 @@ const Orbit = ({ animate }: { animate: boolean }) => {
     <group>
       <points ref={pointsRef}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[livePositions, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[livePositions, 3]} />
         </bufferGeometry>
-        <pointsMaterial
-          color="#00B3E3"
-          size={0.06}
-          sizeAttenuation
-          transparent
-          opacity={0.85}
-          depthWrite={false}
-        />
+        <pointsMaterial color="#00B3E3" size={0.06} sizeAttenuation transparent opacity={0.85} depthWrite={false} />
       </points>
 
       <points ref={highlightsRef}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[highlightPositions, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[highlightPositions, 3]} />
         </bufferGeometry>
         <pointsMaterial
           color="#7CE6FF"
@@ -245,18 +218,13 @@ const Orbit = ({ animate }: { animate: boolean }) => {
 };
 
 export const ParticleOrbit = () => {
-  const reduced =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Canvas extends 40% beyond the container on all sides so particles can drift
   // outward without being clipped. Camera is pulled back by the same factor
   // (5.4 * 1.4 ≈ 7.56) so the ring renders at the same on-screen size.
   return (
-    <div
-      aria-hidden="true"
-      className="absolute -inset-[40%] z-0"
-    >
+    <div aria-hidden="true" className="absolute -inset-[40%] z-0">
       <Canvas
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
