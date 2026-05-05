@@ -13,6 +13,7 @@ import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import SectionBackdrop from "@/components/SectionBackdrop";
+import CaseStudyCardBackdrop from "@/components/CaseStudyCardBackdrop";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 const ParticleGlobe = lazy(() => import("@/components/ParticleGlobe"));
@@ -188,43 +189,8 @@ const Index = () => {
           <SectionMarker page="Home" name="Featured Case Study" />
           <div className="container-page">
             <Reveal>
-              <div
-                className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16"
-                style={{
-                  backgroundImage: `
-                    radial-gradient(55% 50% at 95% 5%, hsl(185 90% 55% / 0.45) 0%, transparent 70%),
-                    linear-gradient(180deg,
-                      hsl(190 65% 25%) 0%,
-                      hsl(205 55% 15%) 35%,
-                      hsl(220 50% 7%)  100%)
-                  `,
-                }}
-              >
-                {/* Starfield — concentrated in the upper third */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    backgroundImage: `
-                      radial-gradient(1px 1px at 20% 30%, hsl(0 0% 100% / 0.8), transparent 50%),
-                      radial-gradient(1px 1px at 70% 15%, hsl(195 100% 85% / 0.6), transparent 50%),
-                      radial-gradient(1.5px 1.5px at 45% 55%, hsl(0 0% 100% / 0.45), transparent 50%),
-                      radial-gradient(1px 1px at 85% 40%, hsl(0 0% 100% / 0.5), transparent 50%),
-                      radial-gradient(1px 1px at 10% 70%, hsl(195 100% 85% / 0.35), transparent 50%),
-                      radial-gradient(1.5px 1.5px at 60% 25%, hsl(0 0% 100% / 0.6), transparent 50%)
-                    `,
-                    backgroundSize: "240px 240px, 200px 200px, 320px 320px, 180px 180px, 280px 280px, 220px 220px",
-                    WebkitMaskImage:
-                      "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
-                    maskImage:
-                      "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
-                  }}
-                />
-                {/* Top rim light */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-                />
+              <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16">
+                <CaseStudyCardBackdrop />
                 <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
                 <h2 className="relative mt-4 max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
                   A US family-owned retailer rebuilt online shopping on IBM Db2, watsonx Assistant, and NeuralSeek.
