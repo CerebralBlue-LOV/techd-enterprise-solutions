@@ -48,11 +48,13 @@ export const WhyTechDSection = () => (
         {/* LEFT — left-aligned heading stacked above the orbit hero with the IBM badge. */}
         <div className="flex flex-col">
           <Reveal>
-            <SectionHeading
-              align="left"
-              eyebrow="Why TechD"
-              title="A different kind of partner."
-            />
+            <div className="relative z-20">
+              <SectionHeading
+                align="left"
+                eyebrow="Why TechD"
+                title="A different kind of partner."
+              />
+            </div>
           </Reveal>
 
           <Reveal delay={80}>
