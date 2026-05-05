@@ -41,9 +41,7 @@ export const SectionBackdrop = ({
       />
 
       {/* 2. Gradient wash */}
-      <div
-        className={`absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full ${blobA} blur-3xl animate-gradient-drift`}
-      />
+      {/* top-right blob removed per design */}
       <div
         className={`absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full ${blobB} blur-3xl animate-gradient-drift`}
         style={{ animationDelay: "-9s" }}
