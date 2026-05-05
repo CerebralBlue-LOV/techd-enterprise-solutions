@@ -224,30 +224,30 @@ const Index = () => {
                   className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
                 />
                 <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
-                <h2 className="mt-4 max-w-3xl text-4xl md:text-5xl text-secondary-foreground leading-[1.05]">
+                <h2 className="relative mt-4 max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
                   A US family-owned retailer rebuilt online shopping on IBM Db2, watsonx Assistant, and NeuralSeek.
                 </h2>
-                <div className="mt-10 grid gap-8 md:grid-cols-3">
+                <div className="relative mt-10 grid gap-8 md:grid-cols-3">
                   <div>
                     <div className="text-sm font-bold uppercase tracking-wider text-primary">Personalization</div>
-                    <p className="mt-3 text-base font-light opacity-90">
+                    <p className="mt-3 text-base font-light text-white/80">
                       Personalized product descriptions delivered through retrieval-augmented generation.
                     </p>
                   </div>
                   <div>
                     <div className="text-sm font-bold uppercase tracking-wider text-primary">Service efficiency</div>
-                    <p className="mt-3 text-base font-light opacity-90">
+                    <p className="mt-3 text-base font-light text-white/80">
                       Call-center efficiency gains and reduced customer frustration.
                     </p>
                   </div>
                   <div>
                     <div className="text-sm font-bold uppercase tracking-wider text-primary">Shopper insight</div>
-                    <p className="mt-3 text-base font-light opacity-90">
+                    <p className="mt-3 text-base font-light text-white/80">
                       Real-time insight into shopper behavior across virtual and in-store channels.
                     </p>
                   </div>
                 </div>
-                <p className="mt-10 max-w-3xl text-sm font-light opacity-75">
+                <p className="relative mt-10 max-w-3xl text-sm font-light text-white/60">
                   Co-authored by Scott Nichols, Senior Developer Analyst at TechD, and Garrett Rowe, President of Cerebral Blue.
                 </p>
                 <div className="mt-8">
