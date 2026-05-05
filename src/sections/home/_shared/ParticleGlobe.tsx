@@ -117,7 +117,7 @@ export const ParticleGlobe = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 hidden md:block w-[760px] h-[760px] lg:w-[920px] lg:h-[920px] opacity-80 z-0"
+      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 hidden md:block w-[860px] h-[860px] lg:w-[1080px] lg:h-[1080px] opacity-100 z-0"
     >
       <Canvas
         dpr={[1, 1.5]}
@@ -132,7 +132,7 @@ export const ParticleGlobe = () => {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 70% at 30% 50%, transparent 0%, transparent 40%, hsl(var(--background) / 0.7) 80%, hsl(var(--background)) 100%)",
+            "radial-gradient(ellipse 65% 75% at 30% 50%, transparent 0%, transparent 55%, hsl(var(--background) / 0.6) 85%, hsl(var(--background)) 100%)",
         }}
       />
     </div>
