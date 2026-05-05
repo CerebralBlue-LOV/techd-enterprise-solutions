@@ -82,6 +82,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "National General Insurance", url: "https://www.nationalgeneral.com", logo: "/logos/national-general.png" },
   { name: "Hamilton Beach", url: "https://www.hamiltonbeach.com", logo: "/logos/hamilton-beach.png" },
   { name: "Burlington", url: "https://www.burlington.com", logo: "/logos/burlington.png" },
+  { name: "White Cap", url: "https://www.whitecap.com", logo: "/logos/white-cap.png" },
   { name: "KenSeal", url: "https://www.kenseal.com", logo: "/logos/kenseal.png" },
   { name: "The Kennedy Center", url: "https://www.kennedy-center.org", logo: "/logos/kennedy-center.png" },
   { name: "VCU", url: "https://www.vcu.edu", logo: "/logos/vcu.png" },
