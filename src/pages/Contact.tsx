@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Mail, MapPin, Phone } from "lucide-react";
-import Layout from "@/components/Layout";
-import SEO from "@/components/SEO";
-import Reveal from "@/components/Reveal";
-import SectionHeading from "@/components/SectionHeading";
-import GeometricAccent from "@/components/GeometricAccent";
+import Layout from "@layout/Layout";
+import SEO from "@seo/SEO";
+import Reveal from "@shared/Reveal";
+import SectionHeading from "@shared/SectionHeading";
+import GeometricAccent from "@shared/GeometricAccent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import SectionMarker from "@/components/SectionMarker";
+import SectionMarker from "@shared/SectionMarker";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Required").max(100),

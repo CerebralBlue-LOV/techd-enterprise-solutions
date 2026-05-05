@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import Layout from "@/components/Layout";
-import SEO from "@/components/SEO";
-import GeometricAccent from "@/components/GeometricAccent";
+import Layout from "@layout/Layout";
+import SEO from "@seo/SEO";
+import GeometricAccent from "@shared/GeometricAccent";
 import { Button } from "@/components/ui/button";
 
 const NotFound = () => {

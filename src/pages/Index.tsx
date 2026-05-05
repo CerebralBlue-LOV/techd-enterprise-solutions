@@ -8,21 +8,21 @@ const SOLUTION_ICONS: Record<string, typeof Bot> = {
   "security": Lock,
   "app-mod": RefreshCw,
 };
-import Layout from "@/components/Layout";
-import SEO from "@/components/SEO";
-import Reveal from "@/components/Reveal";
-import HeroBackdrop from "@/components/HeroBackdrop";
-import SectionBackdrop from "@/components/SectionBackdrop";
-import CaseStudyCardBackdrop from "@/components/CaseStudyCardBackdrop";
+import Layout from "@layout/Layout";
+import SEO from "@seo/SEO";
+import Reveal from "@shared/Reveal";
+import HeroBackdrop from "@sections/home/_shared/HeroBackdrop";
+import SectionBackdrop from "@shared/SectionBackdrop";
+import CaseStudyCardBackdrop from "@sections/home/_shared/CaseStudyCardBackdrop";
 import { lazy, Suspense } from "react";
-const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
-const ParticleGlobe = lazy(() => import("@/components/ParticleGlobe"));
-import SectionHeading from "@/components/SectionHeading";
-import LogoStrip from "@/components/LogoStrip";
+const HeroParticleField = lazy(() => import("@sections/home/_shared/HeroParticleField"));
+const ParticleGlobe = lazy(() => import("@sections/home/_shared/ParticleGlobe"));
+import SectionHeading from "@shared/SectionHeading";
+import LogoStrip from "@shared/LogoStrip";
 import { Button } from "@/components/ui/button";
 import { SOLUTIONS } from "@/content/solutions";
 import { INDUSTRIES } from "@/content/industries";
-import SectionMarker from "@/components/SectionMarker";
+import SectionMarker from "@shared/SectionMarker";
 
 const Index = () => {
   return (

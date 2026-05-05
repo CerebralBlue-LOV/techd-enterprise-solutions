@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import Layout from "@/components/Layout";
-import SEO from "@/components/SEO";
-import Reveal from "@/components/Reveal";
-import SectionHeading from "@/components/SectionHeading";
-import GeometricAccent from "@/components/GeometricAccent";
+import Layout from "@layout/Layout";
+import SEO from "@seo/SEO";
+import Reveal from "@shared/Reveal";
+import SectionHeading from "@shared/SectionHeading";
+import GeometricAccent from "@shared/GeometricAccent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RESOURCES, type Resource } from "@/content/resources";
-import SectionMarker from "@/components/SectionMarker";
+import SectionMarker from "@shared/SectionMarker";
 
 const TABS: { value: Resource["type"]; label: string }[] = [
   { value: "case-studies", label: "Case Studies" },
