@@ -249,15 +249,18 @@ export const ParticleOrbit = () => {
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // Canvas extends 40% beyond the container on all sides so particles can drift
+  // outward without being clipped. Camera is pulled back by the same factor
+  // (5.4 * 1.4 ≈ 7.56) so the ring renders at the same on-screen size.
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 z-0"
+      className="absolute -inset-[40%] z-0"
     >
       <Canvas
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
-        camera={{ position: [0, 0, 5.4], fov: 45 }}
+        camera={{ position: [0, 0, 7.56], fov: 45 }}
         frameloop={reduced ? "demand" : "always"}
         style={{ background: "transparent" }}
       >
