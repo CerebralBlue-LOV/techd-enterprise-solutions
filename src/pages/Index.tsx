@@ -13,6 +13,7 @@ import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import SectionBackdrop from "@/components/SectionBackdrop";
+import PlexusOverlay from "@/components/PlexusOverlay";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 const ParticleGlobe = lazy(() => import("@/components/ParticleGlobe"));
@@ -192,7 +193,7 @@ const Index = () => {
                 className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16"
                 style={{
                   backgroundImage: `
-                    radial-gradient(60% 50% at 78% 8%, hsl(185 90% 55% / 0.35) 0%, transparent 70%),
+                    radial-gradient(55% 50% at 95% 5%, hsl(185 90% 55% / 0.45) 0%, transparent 70%),
                     linear-gradient(180deg,
                       hsl(190 65% 25%) 0%,
                       hsl(205 55% 15%) 35%,
@@ -220,15 +221,23 @@ const Index = () => {
                       "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
                   }}
                 />
+                {/* Plexus / node-network overlay */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    WebkitMaskImage:
+                      "linear-gradient(180deg, black 0%, black 45%, transparent 80%)",
+                    maskImage:
+                      "linear-gradient(180deg, black 0%, black 45%, transparent 80%)",
+                  }}
+                >
+                  <PlexusOverlay nodeCount={32} linkDistance={24} topBias={0.7} />
+                </div>
                 {/* Top rim light */}
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-                />
-                {/* Top rim light */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
                 />
                 <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
                 <h2 className="relative mt-4 max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
