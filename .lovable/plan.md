@@ -1,53 +1,58 @@
-# Add `ParticleGlobe` to the Engineered Field section
+## Goal
 
-## Naming (so we can refer back to it)
-- **Engineered Field** = the shared backdrop wrapping `home:industries` + `home:case-study` (grid + two drifting cyan blobs).
-- **ParticleGlobe** = new decorative 3D component, same visual language as `HeroParticleField` (cyan point cloud, additive glow highlights, slow rotation).
+Restyle the **Featured Case Study** card (`data-section="home:case-study"`) — replace the flat dark `bg-secondary` block + single cyan blur blob with a richer, more intentional surface inspired by the uploaded Pro Plan card (deep navy, subtle starfield, soft directional glow, fine inner border).
 
-## What to build
+## Current state
 
-### 1. New component: `src/components/ParticleGlobe.tsx`
-Three.js / @react-three/fiber sphere built from points + a faint wireframe, matching the hero aesthetic.
-
-- **Geometry**: ~1,500 points distributed on a unit sphere using a **Fibonacci lattice** (even spacing, organic feel).
-- **Layers** (mirrors `HeroParticleField`):
-  - Wireframe latitude/longitude lines: `lineSegments` from a low-res `IcosahedronGeometry` or `SphereGeometry` wireframe — color `#00B3E3`, opacity ~0.15.
-  - Main point cloud: `points` with `pointsMaterial` color `#00B3E3`, size ~0.025, opacity 0.65.
-  - ~20 highlight points (additive blending, color `#7CE6FF`) that gently pulse via `useFrame`.
-- **Motion**: slow Y-axis rotation (~0.05 rad/s) plus a subtle X-axis wobble. Honors `prefers-reduced-motion` (frameloop "demand").
-- **No pointer interactivity** — keep it purely ambient (the hero already owns the interactive moment).
-- **Canvas wrapper**: transparent (`alpha: true`), `dpr={[1, 1.5]}`, fixed camera.
-
-### 2. Placement wrapper
-Inside `SectionBackdrop` is decorative-only, so the globe goes in a sibling layer in `Index.tsx`, positioned absolutely on the **left, vertically centered** within the Engineered Field wrapper.
-
-```text
-<div class="relative overflow-hidden">           ← Engineered Field
-  <SectionBackdrop vignettes={false} />          ← grid + blobs
-  <ParticleGlobe />                              ← NEW: left-center, behind content
-  <section home:industries> ...
-  <section home:case-study> ...
+```
+<div class="rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
+  <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" />
+  ...content
 </div>
 ```
 
-Globe container classes:
-- `absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4`
-- `pointer-events-none hidden md:block`
-- `w-[520px] h-[520px] lg:w-[640px] lg:h-[640px]`
-- `opacity-70` (so it sits behind cards without competing)
-- Soft radial fade on the right edge so it dissolves into the grid before reaching the cards.
+Issues: solid mid‑grey surface reads as "placeholder dark," the single blur blob in the corner feels generic, and the card doesn't visually connect to the cyan particle-globe / engineered-field language of the rest of the page.
 
-### 3. Z-index / readability
-- Globe sits between backdrop and content: `z-0` on globe wrapper, `z-10` already on the two `<section>`s.
-- Industries cards already use `bg-background/70 backdrop-blur-sm` — globe will read through subtly without harming legibility.
+## Proposed direction
 
-## Technical notes
-- Reuse existing deps: `three`, `@react-three/fiber` (already installed for `HeroParticleField`). No new packages.
-- Lazy-load the globe with `React.lazy` + `Suspense` (same pattern as `HeroParticleField` in `Index.tsx`) to keep initial bundle slim.
-- Brand colors: `#00B3E3` (primary cyan) and `#7CE6FF` (highlight) — matches hero exactly.
-- Respect reduced motion: render a single static frame.
+Keep the card dark (it's the page's one strong contrast moment and anchors the CTA), but swap "flat grey" for a **layered deep-navy surface** built from brand tokens, with three stacked decorative layers — same compositional recipe as `SectionBackdrop` and `HeroBackdrop`, just scoped inside the card.
+
+### Visual layers (back → front)
+
+1. **Base** — deep near-black tinted toward the brand. Use `bg-[hsl(220_40%_6%)]` *or* introduce a new token `--surface-deep` in `index.css` so it stays inside the design system. Slight gradient from top-left (slightly lighter) to bottom-right (darker) for depth.
+2. **Starfield** — a fixed, lightweight CSS-generated dot field (no JS, no canvas). Implemented as one or two stacked `radial-gradient` backgrounds with tiny white/cyan dots at varied opacities (0.15 / 0.35 / 0.7), masked by a radial fade so stars concentrate top-right and dissolve toward the CTA. Tile at ~120px. Optional: 4–6 slightly larger "hero" stars rendered as absolutely-positioned spans with a soft `box-shadow` glow.
+3. **Directional glow** — replace the current single corner blob with two soft, offset blobs:
+  - top-right: `bg-primary/25` blur-3xl (tighter, brighter — the "light source")
+  - bottom-left: `bg-primary/10` blur-3xl (ambient bounce, ties to the globe)
+   Both behind content, both `pointer-events-none`.
+4. **Inner hairline border** — `ring-1 ring-white/[0.06]` on top of the existing `border-border` to give the card the same crisp inner edge as the reference image.
+5. **Top edge highlight** — a 1px gradient line at the top (`bg-gradient-to-r from-transparent via-primary/40 to-transparent` absolute strip) to mimic the "rim light" in the Pro Plan card.
+
+### Content-side adjustments (minimal)
+
+- `text-secondary-foreground` → `text-white` (since base is now deep navy, not mid-grey).
+- Eyebrow/metric labels stay `text-primary`.
+- Body copy `opacity-90` → `text-white/80`, footnote → `text-white/60`.
+- CTA button: keep current primary; no change.
 
 ## Out of scope
-- No texture/earth map (keeps the abstract "data globe" vibe consistent with the hero's particle field).
-- No interactivity / hover effects.
-- No changes to existing hero or other sections.
+
+- No animation on the starfield (static — respects `prefers-reduced-motion` by default, and avoids competing with the rotating globe directly above).
+- No changes to copy, layout, grid of three metrics, or the IBM link.
+- No new dependencies — pure CSS/Tailwind.
+- No changes to other sections or to `SectionBackdrop`.
+
+## Files touched
+
+- `src/pages/Index.tsx` — rewrite the case-study card's wrapper div + decorative layers + text color classes (one localized block, ~30 lines).
+- *(Optional)* `src/index.css` — add `--surface-deep` token if we want this reusable; otherwise inline the HSL.
+
+## Open question for you
+
+Which **base tone** do you want?
+
+- **A. Deep navy** (`hsl(220 40% 6%)`) — cool, ties to cyan primary, matches reference image most closely. this one
+- **B. Near-black with cyan tint** (`hsl(195 30% 5%)`) — darker, more "infrastructure," still on-brand.
+- **C. True black** (`#000`) — maximum contrast, most "Stripe/Linear," stars pop hardest.
+
+Reply with A / B / C (or describe a different vibe) and I'll implement.
