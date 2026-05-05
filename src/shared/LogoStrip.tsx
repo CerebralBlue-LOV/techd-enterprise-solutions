@@ -31,22 +31,21 @@ const Row = ({
             rel="noopener noreferrer"
             title={c.name}
             aria-label={c.name}
-            className="shrink-0 flex items-center"
+            className="group shrink-0 flex flex-col items-center gap-2"
             aria-hidden={i >= items.length ? "true" : undefined}
             tabIndex={i >= items.length ? -1 : 0}
           >
-            {c.logo ? (
+            {c.logo && (
               <img
                 src={c.logo}
                 alt={c.name}
                 loading="lazy"
-                className="h-10 md:h-12 w-auto object-contain opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+                className="h-10 md:h-12 w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
               />
-            ) : (
-              <span className="whitespace-nowrap text-lg md:text-2xl font-bold tracking-tight text-secondary/70 transition-colors hover:text-primary">
-                {c.name}
-              </span>
             )}
+            <span className="whitespace-nowrap text-[11px] md:text-xs font-light tracking-wide text-muted-foreground transition-colors group-hover:text-primary">
+              {c.name}
+            </span>
           </a>
         ))}
       </div>
