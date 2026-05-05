@@ -60,7 +60,7 @@ export const NAV: NavItem[] = [
   },
 ];
 
-export type Customer = { name: string; url: string; logo?: string };
+export type Customer = { name: string; url: string; logo?: string; logoClass?: string };
 
 export const CUSTOMERS: Customer[] = [
   { name: "Johnson & Johnson", url: "https://www.jnj.com", logo: "/logos/johnson-and-johnson.png" },
@@ -74,7 +74,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "Corning", url: "https://www.corning.com", logo: "/logos/corning.png" },
   { name: "CHOP", url: "https://www.chop.edu", logo: "/logos/chop.png" },
   { name: "Jefferson Health", url: "https://www.jeffersonhealth.org", logo: "/logos/jefferson-health.png" },
-  { name: "Temple Health", url: "https://www.templehealth.org", logo: "/logos/temple-health.png" },
+  { name: "Temple Health", url: "https://www.templehealth.org", logo: "/logos/temple-health.png", logoClass: "h-7 md:h-8" },
   { name: "Genesis HealthCare", url: "https://www.genesishcc.com", logo: "/logos/genesis-healthcare.png" },
   { name: "Sony Interactive Entertainment", url: "https://www.sie.com", logo: "/logos/sony-interactive.png" },
   { name: "MISO Energy", url: "https://www.misoenergy.org", logo: "/logos/miso-energy.png" },
@@ -82,6 +82,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "National General Insurance", url: "https://www.nationalgeneral.com", logo: "/logos/national-general.png" },
   { name: "Hamilton Beach", url: "https://www.hamiltonbeach.com", logo: "/logos/hamilton-beach.png" },
   { name: "Burlington", url: "https://www.burlington.com", logo: "/logos/burlington.png" },
+  { name: "White Cap", url: "https://www.whitecap.com", logo: "/logos/white-cap.png" },
   { name: "KenSeal", url: "https://www.kenseal.com", logo: "/logos/kenseal.png" },
   { name: "The Kennedy Center", url: "https://www.kennedy-center.org", logo: "/logos/kennedy-center.png" },
   { name: "VCU", url: "https://www.vcu.edu", logo: "/logos/vcu.png" },
