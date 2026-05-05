@@ -19,7 +19,7 @@ const Row = ({
       }}
     >
       <div
-        className={`marquee marquee-slow gap-14 md:gap-20 px-8 items-center ${
+        className={`marquee marquee-slow gap-16 md:gap-24 px-8 items-center ${
           reverse ? "marquee-reverse" : ""
         }`}
       >
@@ -29,7 +29,7 @@ const Row = ({
             href={c.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 whitespace-nowrap text-lg md:text-xl font-bold tracking-tight text-secondary/55 transition-colors hover:text-primary"
+            className="shrink-0 whitespace-nowrap text-2xl md:text-4xl font-bold tracking-tight text-secondary/70 transition-colors hover:text-primary"
             aria-hidden={i >= items.length ? "true" : undefined}
             tabIndex={i >= items.length ? -1 : 0}
           >
@@ -45,23 +45,21 @@ export const LogoStrip = () => {
   return (
     <section
       aria-label="Trusted by Fortune 500 leaders"
-      className="py-16 border-y border-border bg-background"
+      className="py-10 border-y border-border bg-background"
     >
-      <p className="text-center text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
-        Trusted by leaders in healthcare, media, energy & the public sector
-      </p>
-
-      <div className="mt-10">
-        <Row items={CUSTOMERS} />
-      </div>
-
-      <p className="mt-10 text-center text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
+      <p className="px-4 text-center text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground whitespace-normal md:whitespace-nowrap">
+        <span className="text-secondary">Trusted by leaders in healthcare, media, energy &amp; the public sector</span>
+        <span className="mx-3 text-primary">·</span>
         25+ years
-        <span className="mx-3 text-muted-foreground/50">·</span>
+        <span className="mx-3 text-primary">·</span>
         Fortune 500 clients
-        <span className="mx-3 text-muted-foreground/50">·</span>
+        <span className="mx-3 text-primary">·</span>
         6 regulated industries
       </p>
+
+      <div className="mt-8">
+        <Row items={CUSTOMERS} />
+      </div>
     </section>
   );
 };
