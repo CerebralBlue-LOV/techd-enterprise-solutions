@@ -46,13 +46,14 @@ export const WhyTechDSection = () => (
       {/* Two-column layout: left = heading + orbit/IBM credential, right = differentiator cards. */}
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         {/* LEFT — left-aligned heading stacked above the orbit hero with the IBM badge. */}
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center lg:items-stretch">
           <Reveal>
             <div className="relative z-20">
               <SectionHeading
-                align="left"
+                align="center"
                 eyebrow="Why TechD"
                 title="A different kind of partner."
+                className="lg:mx-0 lg:text-left"
               />
             </div>
           </Reveal>
