@@ -191,33 +191,40 @@ const Index = () => {
               <div
                 className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16"
                 style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, hsl(220 40% 8%) 0%, hsl(220 45% 5%) 100%)",
+                  backgroundImage: `
+                    radial-gradient(60% 50% at 25% 8%, hsl(185 90% 55% / 0.35) 0%, transparent 70%),
+                    linear-gradient(180deg,
+                      hsl(190 65% 25%) 0%,
+                      hsl(205 55% 15%) 35%,
+                      hsl(220 50% 7%)  100%)
+                  `,
                 }}
               >
-                {/* Starfield (static, two layered radial-gradient tiles, masked top-right) */}
+                {/* Starfield — concentrated in the upper third */}
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0"
                   style={{
                     backgroundImage: `
-                      radial-gradient(1px 1px at 20% 30%, hsl(0 0% 100% / 0.7), transparent 50%),
-                      radial-gradient(1px 1px at 70% 15%, hsl(195 100% 80% / 0.5), transparent 50%),
-                      radial-gradient(1.5px 1.5px at 45% 70%, hsl(0 0% 100% / 0.35), transparent 50%),
-                      radial-gradient(1px 1px at 85% 55%, hsl(0 0% 100% / 0.4), transparent 50%),
-                      radial-gradient(1px 1px at 10% 80%, hsl(195 100% 80% / 0.3), transparent 50%),
-                      radial-gradient(1.5px 1.5px at 60% 40%, hsl(0 0% 100% / 0.5), transparent 50%)
+                      radial-gradient(1px 1px at 20% 30%, hsl(0 0% 100% / 0.8), transparent 50%),
+                      radial-gradient(1px 1px at 70% 15%, hsl(195 100% 85% / 0.6), transparent 50%),
+                      radial-gradient(1.5px 1.5px at 45% 55%, hsl(0 0% 100% / 0.45), transparent 50%),
+                      radial-gradient(1px 1px at 85% 40%, hsl(0 0% 100% / 0.5), transparent 50%),
+                      radial-gradient(1px 1px at 10% 70%, hsl(195 100% 85% / 0.35), transparent 50%),
+                      radial-gradient(1.5px 1.5px at 60% 25%, hsl(0 0% 100% / 0.6), transparent 50%)
                     `,
                     backgroundSize: "240px 240px, 200px 200px, 320px 320px, 180px 180px, 280px 280px, 220px 220px",
                     WebkitMaskImage:
-                      "radial-gradient(120% 100% at 80% 0%, black 0%, black 35%, transparent 80%)",
+                      "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
                     maskImage:
-                      "radial-gradient(120% 100% at 80% 0%, black 0%, black 35%, transparent 80%)",
+                      "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
                   }}
                 />
-                {/* Directional glows */}
-                <div className="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-primary/25 blur-3xl" aria-hidden="true" />
-                <div className="pointer-events-none absolute -left-24 bottom-[-6rem] h-72 w-72 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
+                {/* Top rim light */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+                />
                 {/* Top rim light */}
                 <div
                   aria-hidden="true"
