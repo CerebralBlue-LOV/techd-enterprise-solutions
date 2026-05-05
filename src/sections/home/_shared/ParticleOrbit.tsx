@@ -3,53 +3,67 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 /**
- * ParticleOrbit — decorative organic cloud of particles loosely orbiting a center.
+ * ParticleOrbit — decorative halo of particles forming an irregular ring.
  *
- * Sits behind the centered IBM credential card on the Why TechD section.
- * Same R3F language as ParticleGlobe / HeroParticleField. Recolored to brand
- * cyan. Shape is intentionally irregular (multi-octave noise + warped radius)
- * so it never reads as a perfect ring. Background is fully transparent — no
- * radial gradient overlay — so the section background shows through cleanly.
+ * Visual reference: a dense ring of small dots with a clearly empty center,
+ * particles scattering outward with a soft falloff, organic (non-perfect)
+ * silhouette. Recolored to brand cyan. Fully transparent canvas.
  */
 
-const POINT_COUNT = 2600;
-const HIGHLIGHT_COUNT = 60;
-const BASE_RADIUS = 1.55;
+const RING_COUNT = 1800;   // dense particles ON the ring
+const SCATTER_COUNT = 900; // looser particles drifting outside the ring
+const HIGHLIGHT_COUNT = 70;
+const RING_RADIUS = 1.6;
 
-/** Pseudo-random but stable per-index — gives each point its own offset. */
 function hash(i: number) {
   const s = Math.sin(i * 12.9898) * 43758.5453;
   return s - Math.floor(s);
 }
 
 /**
- * Distribute points in a warped, lobed cloud roughly around BASE_RADIUS.
- * We sum a few sine harmonics on the angle to break the circle into an
- * organic, slightly blobby halo with thicker and thinner regions.
+ * Particles concentrated on a ring of radius RING_RADIUS with small radial
+ * jitter so the ring has thickness but the center stays empty.
  */
-function buildCloud(count: number) {
+function buildRing(count: number) {
   const positions = new Float32Array(count * 3);
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
 
-    // Warp the radius with low-frequency sines so the silhouette has lobes,
-    // not a clean circle. Multiple harmonics = irregular outline.
+    // Warp the radius a touch with low-frequency sines so the ring isn't
+    // perfectly circular — gives it organic lobes.
     const warp =
-      Math.sin(angle * 3 + hash(i) * 6.28) * 0.18 +
-      Math.sin(angle * 5 + 1.7) * 0.09 +
-      Math.cos(angle * 2 + 0.3) * 0.12;
+      Math.sin(angle * 3 + hash(i) * 6.28) * 0.08 +
+      Math.cos(angle * 2 + 0.4) * 0.06;
 
-    // Wide radial jitter — some points sit deep inside, some drift far out,
-    // so the edge dissolves naturally instead of forming a hard ring.
-    const jitter = (Math.random() - 0.3) * 0.55;
-    const r = BASE_RADIUS + warp + jitter;
-
-    // Tilt out of the XY plane a bit so the cloud has volume.
-    const zTilt = (Math.random() - 0.5) * 0.6 + Math.sin(angle * 2) * 0.15;
+    // Tight Gaussian-ish jitter around the ring radius (use sum of two
+    // randoms for a softer distribution than a flat random).
+    const j = (Math.random() + Math.random() - 1) * 0.18;
+    const r = RING_RADIUS + warp + j;
 
     positions[i * 3] = Math.cos(angle) * r;
-    positions[i * 3 + 1] = Math.sin(angle) * r * (0.85 + Math.random() * 0.25);
-    positions[i * 3 + 2] = zTilt;
+    positions[i * 3 + 1] = Math.sin(angle) * r;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 0.12;
+  }
+  return positions;
+}
+
+/**
+ * Loose scatter outside the ring — particles drift outward with falling
+ * density, which makes the halo feel like it's dissolving into space.
+ */
+function buildScatter(count: number) {
+  const positions = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    // Bias OUTWARD only — keep the center empty.
+    // Math.pow skews most points just outside the ring, with a long tail.
+    const offset = Math.pow(Math.random(), 1.6) * 0.9;
+    const inwardBleed = (Math.random() - 0.5) * 0.15; // tiny inward dust
+    const r = RING_RADIUS + offset + inwardBleed;
+
+    positions[i * 3] = Math.cos(angle) * r;
+    positions[i * 3 + 1] = Math.sin(angle) * r;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 0.25;
   }
   return positions;
 }
@@ -59,18 +73,19 @@ function pickHighlightPositions(source: Float32Array, count: number) {
   const total = source.length / 3;
   for (let i = 0; i < count; i++) {
     const idx = Math.floor(Math.random() * total) * 3;
-    arr[i * 3] = source[idx] * 1.02;
-    arr[i * 3 + 1] = source[idx + 1] * 1.02;
-    arr[i * 3 + 2] = source[idx + 2];
+    arr[i * 3] = source[idx];
+    arr[i * 3 + 1] = source[idx + 1];
+    arr[i * 3 + 2] = source[idx + 2] + 0.01;
   }
   return arr;
 }
 
 const Orbit = ({ animate }: { animate: boolean }) => {
-  const positions = useMemo(() => buildCloud(POINT_COUNT), []);
+  const ring = useMemo(() => buildRing(RING_COUNT), []);
+  const scatter = useMemo(() => buildScatter(SCATTER_COUNT), []);
   const highlights = useMemo(
-    () => pickHighlightPositions(positions, HIGHLIGHT_COUNT),
-    [positions],
+    () => pickHighlightPositions(ring, HIGHLIGHT_COUNT),
+    [ring],
   );
 
   const groupRef = useRef<THREE.Group>(null);
@@ -80,10 +95,10 @@ const Orbit = ({ animate }: { animate: boolean }) => {
     if (!animate) return;
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      // Slow drift on all axes — never a clean spin.
-      groupRef.current.rotation.z = t * 0.04;
-      groupRef.current.rotation.x = Math.sin(t * 0.18) * 0.12;
-      groupRef.current.rotation.y = Math.cos(t * 0.15) * 0.18;
+      // Slow drift — primarily in-plane rotation, tiny out-of-plane tilt.
+      groupRef.current.rotation.z = t * 0.05;
+      groupRef.current.rotation.x = Math.sin(t * 0.15) * 0.06;
+      groupRef.current.rotation.y = Math.cos(t * 0.12) * 0.06;
     }
     if (highlightsRef.current) {
       const mat = highlightsRef.current.material as THREE.PointsMaterial;
@@ -93,30 +108,44 @@ const Orbit = ({ animate }: { animate: boolean }) => {
 
   return (
     <group ref={groupRef}>
-      {/* Main cloud — soft brand cyan haze */}
+      {/* Dense ring — the primary halo */}
       <points>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+          <bufferAttribute attach="attributes-position" args={[ring, 3]} />
         </bufferGeometry>
         <pointsMaterial
           color="#00B3E3"
-          size={0.028}
+          size={0.025}
           sizeAttenuation
           transparent
-          opacity={0.55}
+          opacity={0.85}
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
         />
       </points>
 
-      {/* Sparkle highlights — glowing accent dots */}
+      {/* Outward scatter — dust dissolving into space */}
+      <points>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[scatter, 3]} />
+        </bufferGeometry>
+        <pointsMaterial
+          color="#00B3E3"
+          size={0.022}
+          sizeAttenuation
+          transparent
+          opacity={0.4}
+          depthWrite={false}
+        />
+      </points>
+
+      {/* Sparkle highlights — additive accent dots on the ring */}
       <points ref={highlightsRef}>
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[highlights, 3]} />
         </bufferGeometry>
         <pointsMaterial
           color="#7CE6FF"
-          size={0.1}
+          size={0.09}
           sizeAttenuation
           transparent
           opacity={0.85}
