@@ -10,8 +10,8 @@ import * as THREE from "three";
  */
 
 const PARTICLE_COUNT = 1800;
-const HIGHLIGHT_COUNT = 38;
-const RING_RADIUS = 1.2;
+const HIGHLIGHT_COUNT = 35;
+const RING_RADIUS = 1.5;
 
 function gauss() {
   let u = 0;
