@@ -32,7 +32,7 @@ export const FinalCtaSection = () => (
               <Button
                 asChild
                 size="lg"
-                className="group relative overflow-hidden border border-primary/40 bg-gradient-to-r from-primary via-[hsl(193_100%_55%)] to-primary text-primary-foreground shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_50px_-10px_hsl(var(--primary)/0.85)]"
+                className="group relative overflow-hidden border border-primary/30 bg-gradient-to-r from-[hsl(220_50%_8%)] via-[hsl(210_45%_14%)] to-[hsl(220_50%_8%)] text-primary-foreground shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_14px_50px_-10px_hsl(var(--primary)/0.75)]"
               >
                 <Link to="/contact">
                   {/* Sheen */}
