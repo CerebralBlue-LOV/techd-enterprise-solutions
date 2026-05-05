@@ -215,7 +215,7 @@ const Orbit = ({ animate }: { animate: boolean }) => {
         </bufferGeometry>
         <pointsMaterial
           color="#00B3E3"
-          size={0.045}
+          size={0.06}
           sizeAttenuation
           transparent
           opacity={0.85}
