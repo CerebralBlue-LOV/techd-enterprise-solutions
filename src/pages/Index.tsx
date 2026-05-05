@@ -12,6 +12,7 @@ import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/HeroBackdrop";
+import SectionBackdrop from "@/components/SectionBackdrop";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 import SectionHeading from "@/components/SectionHeading";
@@ -149,9 +150,10 @@ const Index = () => {
       </section>
 
       {/* Industries */}
-      <section data-section="home:industries" className="section bg-muted/40">
+      <section data-section="home:industries" className="section relative overflow-hidden bg-muted/40">
         <SectionMarker page="Home" name="Industries Grid" />
-        <div className="container-page">
+        <SectionBackdrop intensity="soft" vignetteClass="from-muted/40" />
+        <div className="container-page relative z-10">
           <Reveal>
             <SectionHeading
               eyebrow="Industries"
@@ -175,9 +177,10 @@ const Index = () => {
       </section>
 
       {/* Featured case study — real, IBM-published */}
-      <section data-section="home:case-study" className="section">
+      <section data-section="home:case-study" className="section relative overflow-hidden">
         <SectionMarker page="Home" name="Featured Case Study" />
-        <div className="container-page">
+        <SectionBackdrop intensity="soft" />
+        <div className="container-page relative z-10">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
               <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
