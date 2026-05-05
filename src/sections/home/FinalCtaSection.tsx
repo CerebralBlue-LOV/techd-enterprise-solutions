@@ -32,10 +32,16 @@ export const FinalCtaSection = () => (
               <Button
                 asChild
                 size="lg"
-                className="transition-transform duration-200 hover:-translate-y-0.5 shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.6)]"
+                className="group relative overflow-hidden border border-primary/40 bg-gradient-to-r from-primary via-[hsl(193_100%_55%)] to-primary text-primary-foreground shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_50px_-10px_hsl(var(--primary)/0.85)]"
               >
                 <Link to="/contact">
-                  Start the conversation <ArrowRight />
+                  {/* Sheen */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                  />
+                  <span className="relative">Start the conversation</span>
+                  <ArrowRight className="relative transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Link>
               </Button>
             </div>
