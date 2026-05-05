@@ -117,7 +117,7 @@ export const ParticleGlobe = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 hidden md:block w-[520px] h-[520px] lg:w-[640px] lg:h-[640px] opacity-70 z-0"
+      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 hidden md:block w-[760px] h-[760px] lg:w-[920px] lg:h-[920px] opacity-80 z-0"
     >
       <Canvas
         dpr={[1, 1.5]}
