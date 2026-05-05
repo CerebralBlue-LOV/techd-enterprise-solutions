@@ -150,9 +150,10 @@ const Index = () => {
       </section>
 
       {/* Industries */}
-      <section data-section="home:industries" className="section bg-muted/40">
+      <section data-section="home:industries" className="section relative overflow-hidden bg-muted/40">
         <SectionMarker page="Home" name="Industries Grid" />
-        <div className="container-page">
+        <SectionBackdrop intensity="soft" vignetteClass="from-muted/40" />
+        <div className="container-page relative z-10">
           <Reveal>
             <SectionHeading
               eyebrow="Industries"
