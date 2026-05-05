@@ -188,36 +188,69 @@ const Index = () => {
           <SectionMarker page="Home" name="Featured Case Study" />
           <div className="container-page">
             <Reveal>
-              <div className="relative overflow-hidden rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
-                <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
-                <h2 className="mt-4 max-w-3xl text-4xl md:text-5xl text-secondary-foreground leading-[1.05]">
+              <div
+                className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, hsl(220 40% 8%) 0%, hsl(220 45% 5%) 100%)",
+                }}
+              >
+                {/* Starfield (static, two layered radial-gradient tiles, masked top-right) */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    backgroundImage: `
+                      radial-gradient(1px 1px at 20% 30%, hsl(0 0% 100% / 0.7), transparent 50%),
+                      radial-gradient(1px 1px at 70% 15%, hsl(195 100% 80% / 0.5), transparent 50%),
+                      radial-gradient(1.5px 1.5px at 45% 70%, hsl(0 0% 100% / 0.35), transparent 50%),
+                      radial-gradient(1px 1px at 85% 55%, hsl(0 0% 100% / 0.4), transparent 50%),
+                      radial-gradient(1px 1px at 10% 80%, hsl(195 100% 80% / 0.3), transparent 50%),
+                      radial-gradient(1.5px 1.5px at 60% 40%, hsl(0 0% 100% / 0.5), transparent 50%)
+                    `,
+                    backgroundSize: "240px 240px, 200px 200px, 320px 320px, 180px 180px, 280px 280px, 220px 220px",
+                    WebkitMaskImage:
+                      "radial-gradient(120% 100% at 80% 0%, black 0%, black 35%, transparent 80%)",
+                    maskImage:
+                      "radial-gradient(120% 100% at 80% 0%, black 0%, black 35%, transparent 80%)",
+                  }}
+                />
+                {/* Directional glows */}
+                <div className="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-primary/25 blur-3xl" aria-hidden="true" />
+                <div className="pointer-events-none absolute -left-24 bottom-[-6rem] h-72 w-72 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
+                {/* Top rim light */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+                />
+                <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
+                <h2 className="relative mt-4 max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
                   A US family-owned retailer rebuilt online shopping on IBM Db2, watsonx Assistant, and NeuralSeek.
                 </h2>
-                <div className="mt-10 grid gap-8 md:grid-cols-3">
+                <div className="relative mt-10 grid gap-8 md:grid-cols-3">
                   <div>
                     <div className="text-sm font-bold uppercase tracking-wider text-primary">Personalization</div>
-                    <p className="mt-3 text-base font-light opacity-90">
+                    <p className="mt-3 text-base font-light text-white/80">
                       Personalized product descriptions delivered through retrieval-augmented generation.
                     </p>
                   </div>
                   <div>
                     <div className="text-sm font-bold uppercase tracking-wider text-primary">Service efficiency</div>
-                    <p className="mt-3 text-base font-light opacity-90">
+                    <p className="mt-3 text-base font-light text-white/80">
                       Call-center efficiency gains and reduced customer frustration.
                     </p>
                   </div>
                   <div>
                     <div className="text-sm font-bold uppercase tracking-wider text-primary">Shopper insight</div>
-                    <p className="mt-3 text-base font-light opacity-90">
+                    <p className="mt-3 text-base font-light text-white/80">
                       Real-time insight into shopper behavior across virtual and in-store channels.
                     </p>
                   </div>
                 </div>
-                <p className="mt-10 max-w-3xl text-sm font-light opacity-75">
+                <p className="relative mt-10 max-w-3xl text-sm font-light text-white/60">
                   Co-authored by Scott Nichols, Senior Developer Analyst at TechD, and Garrett Rowe, President of Cerebral Blue.
                 </p>
-                <div className="mt-8">
+                <div className="relative mt-8">
                   <Button asChild variant="default" className="bg-primary hover:bg-primary/90">
                     <a
                       href="https://www.ibm.com/case-studies/blog/ibm-and-techd-partner-to-securely-share-data-and-power-insights-with-gen-ai"
