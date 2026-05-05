@@ -252,7 +252,8 @@ export const ParticleOrbit = () => {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 z-0"
+      className="absolute z-0"
+      style={{ inset: "-40%" }}
     >
       <Canvas
         dpr={[1, 1.5]}
