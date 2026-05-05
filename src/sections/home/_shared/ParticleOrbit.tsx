@@ -9,9 +9,9 @@ import * as THREE from "three";
  * a slow inhale/exhale pulse. No rotation.
  */
 
-const PARTICLE_COUNT = 1800;
-const HIGHLIGHT_COUNT = 38;
-const RING_RADIUS = 1.2;
+const PARTICLE_COUNT = 1500;
+const HIGHLIGHT_COUNT = 35;
+const RING_RADIUS = 1.4;
 
 function gauss() {
   let u = 0;
