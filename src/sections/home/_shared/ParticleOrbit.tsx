@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 /**
@@ -9,8 +9,8 @@ import * as THREE from "three";
  * a slow inhale/exhale pulse. No rotation.
  */
 
-const PARTICLE_COUNT = 4200;
-const HIGHLIGHT_COUNT = 60;
+const PARTICLE_COUNT = 2200;
+const HIGHLIGHT_COUNT = 40;
 const RING_RADIUS = 1.85;
 
 function gauss() {
@@ -101,17 +101,83 @@ const Orbit = ({ animate }: { animate: boolean }) => {
   const pointsRef = useRef<THREE.Points>(null);
   const highlightsRef = useRef<THREE.Points>(null);
 
-  useFrame(({ clock }) => {
+  // Cursor interactivity — pointer projected onto the ring's z=0 plane.
+  const { camera, gl } = useThree();
+  const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  const plane = useMemo(
+    () => new THREE.Plane(new THREE.Vector3(0, 0, 1), 0),
+    [],
+  );
+  const pointer = useRef(new THREE.Vector3(999, 999, 0));
+  const pointerSmooth = useRef(new THREE.Vector3(999, 999, 0));
+  const pointerActive = useRef(0);
+  const pointerActiveTarget = useRef(0);
+
+  useMemo(() => {
+    const dom = gl.domElement;
+    const onMove = (e: PointerEvent) => {
+      const rect = dom.getBoundingClientRect();
+      const ndc = new THREE.Vector2(
+        ((e.clientX - rect.left) / rect.width) * 2 - 1,
+        -((e.clientY - rect.top) / rect.height) * 2 + 1,
+      );
+      raycaster.setFromCamera(ndc, camera);
+      const hit = new THREE.Vector3();
+      if (raycaster.ray.intersectPlane(plane, hit)) {
+        pointer.current.copy(hit);
+        pointerActiveTarget.current = 1;
+      }
+    };
+    const onLeave = () => {
+      pointerActiveTarget.current = 0;
+    };
+    dom.addEventListener("pointermove", onMove);
+    dom.addEventListener("pointerleave", onLeave);
+    return () => {
+      dom.removeEventListener("pointermove", onMove);
+      dom.removeEventListener("pointerleave", onLeave);
+    };
+  }, [camera, gl, plane, raycaster]);
+
+  useFrame(({ clock }, delta) => {
     if (!animate) return;
     const t = clock.getElapsedTime();
+
+    pointerSmooth.current.lerp(pointer.current, Math.min(1, delta * 4));
+    pointerActive.current = THREE.MathUtils.lerp(
+      pointerActive.current,
+      pointerActiveTarget.current,
+      Math.min(1, delta * 3),
+    );
+    const px = pointerSmooth.current.x;
+    const py = pointerSmooth.current.y;
+    const PUSH_RADIUS = 0.7;
+    const PUSH_R2 = PUSH_RADIUS * PUSH_RADIUS;
+    const PUSH_AMP = 0.45 * pointerActive.current;
 
     const { angles, baseR, amp, phase, speed, z } = cloud;
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const drift = Math.sin(t * speed[i] + phase[i]) * amp[i];
       const r = baseR[i] + drift;
       const a = angles[i];
-      livePositions[i * 3] = Math.cos(a) * r;
-      livePositions[i * 3 + 1] = Math.sin(a) * r;
+      let x = Math.cos(a) * r;
+      let y = Math.sin(a) * r;
+
+      if (PUSH_AMP > 0.001) {
+        const dx = x - px;
+        const dy = y - py;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < PUSH_R2 * 4) {
+          const falloff = Math.exp(-d2 / (PUSH_R2 * 0.5));
+          const dist = Math.sqrt(d2) || 0.0001;
+          const push = PUSH_AMP * falloff;
+          x += (dx / dist) * push;
+          y += (dy / dist) * push;
+        }
+      }
+
+      livePositions[i * 3] = x;
+      livePositions[i * 3 + 1] = y;
       livePositions[i * 3 + 2] = z[i];
     }
 
@@ -149,7 +215,7 @@ const Orbit = ({ animate }: { animate: boolean }) => {
         </bufferGeometry>
         <pointsMaterial
           color="#00B3E3"
-          size={0.045}
+          size={0.06}
           sizeAttenuation
           transparent
           opacity={0.85}
@@ -166,7 +232,7 @@ const Orbit = ({ animate }: { animate: boolean }) => {
         </bufferGeometry>
         <pointsMaterial
           color="#7CE6FF"
-          size={0.09}
+          size={0.11}
           sizeAttenuation
           transparent
           opacity={0.95}
@@ -186,7 +252,7 @@ export const ParticleOrbit = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0"
+      className="absolute inset-0 z-0"
     >
       <Canvas
         dpr={[1, 1.5]}
