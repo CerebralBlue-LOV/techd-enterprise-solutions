@@ -2,8 +2,8 @@ import { useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-const POINT_COUNT = 1500;
-const HIGHLIGHT_COUNT = 22;
+const POINT_COUNT = 2600;
+const HIGHLIGHT_COUNT = 45;
 const RADIUS = 1.6;
 
 /** Fibonacci sphere — even point distribution. */
@@ -67,7 +67,7 @@ const Globe = ({ animate }: { animate: boolean }) => {
         <lineBasicMaterial
           color="#00B3E3"
           transparent
-          opacity={0.12}
+          opacity={0.22}
           depthWrite={false}
         />
       </lineSegments>
@@ -79,10 +79,10 @@ const Globe = ({ animate }: { animate: boolean }) => {
         </bufferGeometry>
         <pointsMaterial
           color="#00B3E3"
-          size={0.035}
+          size={0.055}
           sizeAttenuation
           transparent
-          opacity={0.7}
+          opacity={0.95}
           depthWrite={false}
         />
       </points>
@@ -97,10 +97,10 @@ const Globe = ({ animate }: { animate: boolean }) => {
         </bufferGeometry>
         <pointsMaterial
           color="#7CE6FF"
-          size={0.14}
+          size={0.2}
           sizeAttenuation
           transparent
-          opacity={0.9}
+          opacity={1}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
@@ -117,7 +117,7 @@ export const ParticleGlobe = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 hidden md:block w-[760px] h-[760px] lg:w-[920px] lg:h-[920px] opacity-80 z-0"
+      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/4 hidden md:block w-[860px] h-[860px] lg:w-[1080px] lg:h-[1080px] opacity-100 z-0"
     >
       <Canvas
         dpr={[1, 1.5]}
@@ -132,7 +132,7 @@ export const ParticleGlobe = () => {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 60% 70% at 30% 50%, transparent 0%, transparent 40%, hsl(var(--background) / 0.7) 80%, hsl(var(--background)) 100%)",
+            "radial-gradient(ellipse 65% 75% at 30% 50%, transparent 0%, transparent 55%, hsl(var(--background) / 0.6) 85%, hsl(var(--background)) 100%)",
         }}
       />
     </div>
