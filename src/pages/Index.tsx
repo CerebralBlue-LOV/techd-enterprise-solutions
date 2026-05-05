@@ -177,9 +177,10 @@ const Index = () => {
       </section>
 
       {/* Featured case study — real, IBM-published */}
-      <section data-section="home:case-study" className="section">
+      <section data-section="home:case-study" className="section relative overflow-hidden">
         <SectionMarker page="Home" name="Featured Case Study" />
-        <div className="container-page">
+        <SectionBackdrop intensity="soft" />
+        <div className="container-page relative z-10">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
               <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
