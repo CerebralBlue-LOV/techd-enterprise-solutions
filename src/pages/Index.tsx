@@ -13,7 +13,6 @@ import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import SectionBackdrop from "@/components/SectionBackdrop";
-import PlexusOverlay from "@/components/PlexusOverlay";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 const ParticleGlobe = lazy(() => import("@/components/ParticleGlobe"));
@@ -221,19 +220,6 @@ const Index = () => {
                       "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
                   }}
                 />
-                {/* Plexus / node-network overlay */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    WebkitMaskImage:
-                      "linear-gradient(180deg, black 0%, black 45%, transparent 80%)",
-                    maskImage:
-                      "linear-gradient(180deg, black 0%, black 45%, transparent 80%)",
-                  }}
-                >
-                  <PlexusOverlay nodeCount={32} linkDistance={24} topBias={0.7} />
-                </div>
                 {/* Top rim light */}
                 <div
                   aria-hidden="true"
