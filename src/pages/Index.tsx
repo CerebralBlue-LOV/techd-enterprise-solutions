@@ -250,7 +250,7 @@ const Index = () => {
                 <p className="relative mt-10 max-w-3xl text-sm font-light text-white/60">
                   Co-authored by Scott Nichols, Senior Developer Analyst at TechD, and Garrett Rowe, President of Cerebral Blue.
                 </p>
-                <div className="mt-8">
+                <div className="relative mt-8">
                   <Button asChild variant="default" className="bg-primary hover:bg-primary/90">
                     <a
                       href="https://www.ibm.com/case-studies/blog/ibm-and-techd-partner-to-securely-share-data-and-power-insights-with-gen-ai"
