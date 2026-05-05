@@ -1,17 +1,13 @@
-import { CUSTOMERS } from "@/content/site";
-
-const half = Math.ceil(CUSTOMERS.length / 2);
-const rowA = CUSTOMERS.slice(0, half);
-const rowB = CUSTOMERS.slice(half);
+import { CUSTOMERS, type Customer } from "@/content/site";
 
 const Row = ({
-  names,
+  items,
   reverse = false,
 }: {
-  names: string[];
+  items: Customer[];
   reverse?: boolean;
 }) => {
-  const items = [...names, ...names];
+  const doubled = [...items, ...items];
   return (
     <div
       className="marquee-wrap overflow-hidden"
@@ -27,14 +23,18 @@ const Row = ({
           reverse ? "marquee-reverse" : ""
         }`}
       >
-        {items.map((name, i) => (
-          <span
-            key={`${name}-${i}`}
-            className="shrink-0 whitespace-nowrap text-lg md:text-xl font-bold tracking-tight text-secondary/55"
-            aria-hidden={i >= names.length ? "true" : undefined}
+        {doubled.map((c, i) => (
+          <a
+            key={`${c.name}-${i}`}
+            href={c.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 whitespace-nowrap text-lg md:text-xl font-bold tracking-tight text-secondary/55 transition-colors hover:text-primary"
+            aria-hidden={i >= items.length ? "true" : undefined}
+            tabIndex={i >= items.length ? -1 : 0}
           >
-            {name}
-          </span>
+            {c.name}
+          </a>
         ))}
       </div>
     </div>
@@ -51,9 +51,8 @@ export const LogoStrip = () => {
         Trusted by leaders in healthcare, media, energy & the public sector
       </p>
 
-      <div className="mt-10 space-y-6">
-        <Row names={rowA} />
-        <Row names={rowB} reverse />
+      <div className="mt-10">
+        <Row items={CUSTOMERS} />
       </div>
 
       <p className="mt-10 text-center text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
