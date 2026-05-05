@@ -23,7 +23,17 @@
     "noFallthroughCasesInSwitch": false,
 
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*":         ["./src/*"],
+      "@app/*":      ["./src/app/*"],
+      "@pages/*":    ["./src/pages/*"],
+      "@sections/*": ["./src/sections/*"],
+      "@layout/*":   ["./src/layout/*"],
+      "@shared/*":   ["./src/shared/*"],
+      "@ui/*":       ["./src/components/ui/*"],
+      "@content/*":  ["./src/content/*"],
+      "@hooks/*":    ["./src/hooks/*"],
+      "@lib/*":      ["./src/lib/*"],
+      "@seo/*":      ["./src/seo/*"]
     }
   },
   "include": ["src"]

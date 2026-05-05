@@ -3,7 +3,17 @@
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*":         ["./src/*"],
+      "@app/*":      ["./src/app/*"],
+      "@pages/*":    ["./src/pages/*"],
+      "@sections/*": ["./src/sections/*"],
+      "@layout/*":   ["./src/layout/*"],
+      "@shared/*":   ["./src/shared/*"],
+      "@ui/*":       ["./src/components/ui/*"],
+      "@content/*":  ["./src/content/*"],
+      "@hooks/*":    ["./src/hooks/*"],
+      "@lib/*":      ["./src/lib/*"],
+      "@seo/*":      ["./src/seo/*"]
     },
     "noImplicitAny": false,
     "noUnusedParameters": false,

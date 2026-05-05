@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
-import Layout from "@/components/Layout";
-import SEO from "@/components/SEO";
-import Reveal from "@/components/Reveal";
-import SectionHeading from "@/components/SectionHeading";
-import GeometricAccent from "@/components/GeometricAccent";
+import Layout from "@layout/Layout";
+import SEO from "@seo/SEO";
+import Reveal from "@shared/Reveal";
+import SectionHeading from "@shared/SectionHeading";
+import GeometricAccent from "@shared/GeometricAccent";
 import { Button } from "@/components/ui/button";
 import { SERVICES } from "@/content/services";
-import SectionMarker from "@/components/SectionMarker";
+import SectionMarker from "@shared/SectionMarker";
 
 const Services = () => (
   <Layout>
@@ -16,7 +16,7 @@ const Services = () => (
       description="Advisory, Implementation, Managed Services, and Training from senior practitioners. IBM Platinum Business Partner."
     />
 
-    <section data-section="services:hero" className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <SectionMarker page="Services" name="Hero" />
       <GeometricAccent />
       <div className="container-page relative pt-20 pb-16 md:pt-28">
@@ -31,7 +31,7 @@ const Services = () => (
       </div>
     </section>
 
-    <section data-section="services:tiers" className="pb-24">
+    <section className="pb-24">
       <SectionMarker page="Services" name="Service Tiers" />
       <div className="container-page grid gap-6 md:grid-cols-2">
         {SERVICES.map((svc, i) => (

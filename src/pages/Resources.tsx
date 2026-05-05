@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import Layout from "@/components/Layout";
-import SEO from "@/components/SEO";
-import Reveal from "@/components/Reveal";
-import SectionHeading from "@/components/SectionHeading";
-import GeometricAccent from "@/components/GeometricAccent";
+import Layout from "@layout/Layout";
+import SEO from "@seo/SEO";
+import Reveal from "@shared/Reveal";
+import SectionHeading from "@shared/SectionHeading";
+import GeometricAccent from "@shared/GeometricAccent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RESOURCES, type Resource } from "@/content/resources";
-import SectionMarker from "@/components/SectionMarker";
+import SectionMarker from "@shared/SectionMarker";
 
 const TABS: { value: Resource["type"]; label: string }[] = [
   { value: "case-studies", label: "Case Studies" },
@@ -36,7 +36,7 @@ const Resources = () => {
         description="Case studies, blog posts, webinars, and events from the TechD team."
       />
 
-      <section data-section="resources:hero" className="relative overflow-hidden">
+      <section className="relative overflow-hidden">
         <SectionMarker page="Resources" name="Hero" />
         <GeometricAccent />
         <div className="container-page relative pt-20 pb-12 md:pt-28">
@@ -51,7 +51,7 @@ const Resources = () => {
         </div>
       </section>
 
-      <section data-section="resources:tabs" className="pb-24">
+      <section className="pb-24">
         <SectionMarker page="Resources" name="Tabbed Content (Case Studies / Blog / Webinars / Events)" />
         <div className="container-page">
           <Tabs
