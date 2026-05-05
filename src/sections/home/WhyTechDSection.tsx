@@ -43,53 +43,57 @@ export const WhyTechDSection = () => (
   <section className="section bg-muted/40">
     <SectionMarker page="Home" name="Why TechD" />
     <div className="container-page">
-      {/* Section heading — centered above the orbit hero. */}
-      <Reveal>
-        <SectionHeading
-          align="center"
-          eyebrow="Why TechD"
-          title="A different kind of partner."
-        />
-      </Reveal>
+      {/* Two-column layout: left = heading + orbit/IBM credential, right = differentiator cards. */}
+      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        {/* LEFT — left-aligned heading stacked above the orbit hero with the IBM badge. */}
+        <div className="flex flex-col">
+          <Reveal>
+            <SectionHeading
+              align="left"
+              eyebrow="Why TechD"
+              title="A different kind of partner."
+            />
+          </Reveal>
 
-      {/* Centered orbit hero — ParticleOrbit fills the square; IBM glass badge sits in its center. */}
-      <Reveal delay={80}>
-        <div className="relative mx-auto mt-12 flex aspect-square w-full max-w-[420px] items-center justify-center md:mt-16 md:max-w-[520px]">
-          <ParticleOrbit />
+          <Reveal delay={80}>
+            <div className="relative mt-10 flex aspect-square w-full max-w-[460px] items-center justify-center md:mt-12">
+              <ParticleOrbit />
 
-          {/* Glassmorphic IBM Platinum Business Partner credential card */}
-          <div className="relative z-10 flex flex-col items-center gap-4 rounded-2xl border border-primary/30 bg-background/60 px-8 py-7 text-center shadow-2xl shadow-primary/10 backdrop-blur-xl md:px-10 md:py-8">
-            <div className="grid h-16 w-16 place-items-center rounded-lg bg-secondary text-2xl font-bold text-background">
-              IBM
-            </div>
-            <div className="leading-tight">
-              <div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                Platinum
+              {/* Glassmorphic IBM Platinum Business Partner credential card */}
+              <div className="relative z-10 flex flex-col items-center gap-4 rounded-2xl border border-primary/30 bg-background/60 px-8 py-7 text-center shadow-2xl shadow-primary/10 backdrop-blur-xl md:px-10 md:py-8">
+                <div className="grid h-16 w-16 place-items-center rounded-lg bg-secondary text-2xl font-bold text-background">
+                  IBM
+                </div>
+                <div className="leading-tight">
+                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                    Platinum
+                  </div>
+                  <div className="mt-1 text-xl font-bold text-secondary">
+                    Business Partner
+                  </div>
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    15+ years · Platinum since 2009
+                  </div>
+                </div>
               </div>
-              <div className="mt-1 text-xl font-bold text-secondary">
-                Business Partner
-              </div>
-              <div className="mt-2 text-xs text-muted-foreground">
-                15+ years · Platinum since 2009
-              </div>
-            </div>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* Differentiator grid — 2x2 on sm+, single column on mobile. */}
-      <div className="mt-16 grid gap-6 sm:grid-cols-2 md:mt-20">
-        {DIFFERENTIATORS.map((d, i) => (
-          <Reveal key={d.title} delay={i * 50}>
-            <div className="card-hover h-full rounded-xl p-6">
-              <d.icon className="text-primary" />
-              <h3 className="mt-4 text-lg">{d.title}</h3>
-              <p className="mt-2 text-sm font-light text-muted-foreground">
-                {d.body}
-              </p>
             </div>
           </Reveal>
-        ))}
+        </div>
+
+        {/* RIGHT — differentiator grid (2x2 on sm+, single column on mobile). */}
+        <div className="grid gap-6 sm:grid-cols-2">
+          {DIFFERENTIATORS.map((d, i) => (
+            <Reveal key={d.title} delay={i * 50}>
+              <div className="card-hover h-full rounded-xl p-6">
+                <d.icon className="text-primary" />
+                <h3 className="mt-4 text-lg">{d.title}</h3>
+                <p className="mt-2 text-sm font-light text-muted-foreground">
+                  {d.body}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </div>
   </section>
