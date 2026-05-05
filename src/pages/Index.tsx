@@ -221,15 +221,23 @@ const Index = () => {
                       "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
                   }}
                 />
+                {/* Plexus / node-network overlay */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    WebkitMaskImage:
+                      "linear-gradient(180deg, black 0%, black 45%, transparent 80%)",
+                    maskImage:
+                      "linear-gradient(180deg, black 0%, black 45%, transparent 80%)",
+                  }}
+                >
+                  <PlexusOverlay nodeCount={32} linkDistance={24} topBias={0.7} />
+                </div>
                 {/* Top rim light */}
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-                />
-                {/* Top rim light */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
                 />
                 <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
                 <h2 className="relative mt-4 max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
