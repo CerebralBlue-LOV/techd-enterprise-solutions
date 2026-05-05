@@ -44,9 +44,9 @@ export const WhyTechDSection = () => (
     <SectionMarker page="Home" name="Why TechD" />
     <div className="container-page">
       {/* Two-column layout: left = heading + orbit/IBM credential, right = differentiator cards. */}
-      <div className="grid items-center gap-10 md:gap-12 lg:grid-cols-2 lg:gap-16">
-        {/* LEFT — heading stacked above the orbit hero with the IBM badge. */}
-        <div className="flex flex-col items-center lg:items-stretch">
+      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        {/* LEFT — left-aligned heading stacked above the orbit hero with the IBM badge. */}
+        <div className="flex flex-col">
           <Reveal>
             <SectionHeading
               align="left"
@@ -56,24 +56,22 @@ export const WhyTechDSection = () => (
           </Reveal>
 
           <Reveal delay={80}>
-            {/* overflow-hidden clips the canvas's -inset-[40%] expansion so it
-                never causes horizontal scroll on small screens. */}
-            <div className="relative mx-auto mt-8 flex aspect-square w-full max-w-[320px] items-center justify-center overflow-hidden sm:max-w-[400px] md:mt-12 md:max-w-[460px]">
+            <div className="relative mt-10 flex aspect-square w-full max-w-[460px] items-center justify-center md:mt-12">
               <ParticleOrbit />
 
               {/* Glassmorphic IBM Platinum Business Partner credential card */}
-              <div className="relative z-20 flex flex-col items-center gap-3 rounded-2xl border border-primary/30 bg-background/90 px-6 py-5 text-center shadow-2xl shadow-primary/10 backdrop-blur-xl sm:gap-4 sm:px-8 sm:py-7 md:px-10 md:py-8">
-                <div className="grid h-14 w-14 place-items-center rounded-lg bg-secondary text-xl font-bold text-background sm:h-16 sm:w-16 sm:text-2xl">
+              <div className="relative z-20 flex flex-col items-center gap-4 rounded-2xl border border-primary/30 bg-background/90 px-8 py-7 text-center shadow-2xl shadow-primary/10 backdrop-blur-xl md:px-10 md:py-8">
+                <div className="grid h-16 w-16 place-items-center rounded-lg bg-secondary text-2xl font-bold text-background">
                   IBM
                 </div>
                 <div className="leading-tight">
-                  <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary sm:text-xs">
+                  <div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                     Platinum
                   </div>
-                  <div className="mt-1 text-lg font-bold text-secondary sm:text-xl">
+                  <div className="mt-1 text-xl font-bold text-secondary">
                     Business Partner
                   </div>
-                  <div className="mt-2 text-[11px] text-muted-foreground sm:text-xs">
+                  <div className="mt-2 text-xs text-muted-foreground">
                     15+ years · Platinum since 2009
                   </div>
                 </div>
@@ -83,12 +81,12 @@ export const WhyTechDSection = () => (
         </div>
 
         {/* RIGHT — differentiator grid (2x2 on sm+, single column on mobile). */}
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+        <div className="grid gap-6 sm:grid-cols-2">
           {DIFFERENTIATORS.map((d, i) => (
             <Reveal key={d.title} delay={i * 50}>
-              <div className="card-hover h-full rounded-xl p-5 sm:p-6">
+              <div className="card-hover h-full rounded-xl p-6">
                 <d.icon className="text-primary" />
-                <h3 className="mt-4 text-base sm:text-lg">{d.title}</h3>
+                <h3 className="mt-4 text-lg">{d.title}</h3>
                 <p className="mt-2 text-sm font-light text-muted-foreground">
                   {d.body}
                 </p>
