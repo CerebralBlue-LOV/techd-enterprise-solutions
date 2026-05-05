@@ -12,6 +12,7 @@ import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/HeroBackdrop";
+import SectionBackdrop from "@/components/SectionBackdrop";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 import SectionHeading from "@/components/SectionHeading";
