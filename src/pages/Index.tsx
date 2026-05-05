@@ -13,7 +13,6 @@ import SEO from "@/components/SEO";
 import Reveal from "@/components/Reveal";
 import HeroBackdrop from "@/components/HeroBackdrop";
 import SectionBackdrop from "@/components/SectionBackdrop";
-import PlexusOverlay from "@/components/PlexusOverlay";
 import { lazy, Suspense } from "react";
 const HeroParticleField = lazy(() => import("@/components/HeroParticleField"));
 const ParticleGlobe = lazy(() => import("@/components/ParticleGlobe"));
