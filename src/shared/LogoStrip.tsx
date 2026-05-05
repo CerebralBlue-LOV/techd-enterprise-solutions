@@ -29,11 +29,24 @@ const Row = ({
             href={c.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 whitespace-nowrap text-lg md:text-2xl font-bold tracking-tight text-secondary/70 transition-colors hover:text-primary"
+            title={c.name}
+            aria-label={c.name}
+            className="shrink-0 flex items-center"
             aria-hidden={i >= items.length ? "true" : undefined}
             tabIndex={i >= items.length ? -1 : 0}
           >
-            {c.name}
+            {c.logo ? (
+              <img
+                src={c.logo}
+                alt={c.name}
+                loading="lazy"
+                className="h-10 md:h-12 w-auto object-contain opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+              />
+            ) : (
+              <span className="whitespace-nowrap text-lg md:text-2xl font-bold tracking-tight text-secondary/70 transition-colors hover:text-primary">
+                {c.name}
+              </span>
+            )}
           </a>
         ))}
       </div>
