@@ -11,11 +11,14 @@ type Props = {
   intensity?: "soft" | "strong";
   /** Tailwind background color class for vignettes (defaults to bg-background). */
   vignetteClass?: string;
+  /** Show top/bottom fade vignettes. Disable when stitching multiple sections. */
+  vignettes?: boolean;
 };
 
 export const SectionBackdrop = ({
   intensity = "soft",
   vignetteClass = "from-background",
+  vignettes = true,
 }: Props) => {
   const strong = intensity === "strong";
   const gridOpacity = strong ? 0.55 : 0.4;
@@ -47,8 +50,12 @@ export const SectionBackdrop = ({
       />
 
       {/* 3. Vignettes */}
-      <div className={`absolute inset-x-0 top-0 h-24 bg-gradient-to-b ${vignetteClass} to-transparent`} />
-      <div className={`absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t ${vignetteClass} to-transparent`} />
+      {vignettes && (
+        <>
+          <div className={`absolute inset-x-0 top-0 h-24 bg-gradient-to-b ${vignetteClass} to-transparent`} />
+          <div className={`absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t ${vignetteClass} to-transparent`} />
+        </>
+      )}
     </div>
   );
 };
