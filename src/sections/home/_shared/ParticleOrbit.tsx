@@ -255,7 +255,7 @@ export const ParticleOrbit = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute -inset-[40%] z-0"
+      className="absolute -inset-[40%] z-0"
     >
       <Canvas
         dpr={[1, 1.5]}
