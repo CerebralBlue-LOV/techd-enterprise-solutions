@@ -15,7 +15,7 @@ const Industries = () => (
       description="TechD delivers enterprise AI, data, and security for Healthcare, Financial Services, Insurance, Energy, Higher Education, and Public Sector."
     />
 
-    <section data-section="industries:hero" className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <SectionMarker page="Industries" name="Hero" />
       <GeometricAccent />
       <div className="container-page relative pt-20 pb-16 md:pt-28">
@@ -30,7 +30,7 @@ const Industries = () => (
       </div>
     </section>
 
-    <section data-section="industries:grid" className="pb-24">
+    <section className="pb-24">
       <SectionMarker page="Industries" name="Industries Grid" />
       <div className="container-page grid gap-6 md:grid-cols-2">
         {INDUSTRIES.map((ind, i) => (

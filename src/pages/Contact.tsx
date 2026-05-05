@@ -71,7 +71,7 @@ const Contact = () => {
         description="Talk to a TechD principal about your AI, data, security, or cloud program."
       />
 
-      <section data-section="contact:hero" className="relative overflow-hidden">
+      <section className="relative overflow-hidden">
         <SectionMarker page="Contact" name="Hero" />
         <GeometricAccent />
         <div className="container-page relative pt-20 pb-16 md:pt-28">
@@ -86,7 +86,7 @@ const Contact = () => {
         </div>
       </section>
 
-      <section data-section="contact:form" className="pb-24">
+      <section className="pb-24">
         <SectionMarker page="Contact" name="Contact Info + Form" />
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>

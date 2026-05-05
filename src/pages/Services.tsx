@@ -16,7 +16,7 @@ const Services = () => (
       description="Advisory, Implementation, Managed Services, and Training from senior practitioners. IBM Platinum Business Partner."
     />
 
-    <section data-section="services:hero" className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <SectionMarker page="Services" name="Hero" />
       <GeometricAccent />
       <div className="container-page relative pt-20 pb-16 md:pt-28">
@@ -31,7 +31,7 @@ const Services = () => (
       </div>
     </section>
 
-    <section data-section="services:tiers" className="pb-24">
+    <section className="pb-24">
       <SectionMarker page="Services" name="Service Tiers" />
       <div className="container-page grid gap-6 md:grid-cols-2">
         {SERVICES.map((svc, i) => (
