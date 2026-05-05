@@ -33,12 +33,14 @@ function buildCloud(count: number) {
     // ring is uniformly covered (no random clustering at the corners).
     const angle = ((i + Math.random()) / count) * Math.PI * 2;
 
-    // Gaussian thickness around the ring radius. ~68% within 0.35 of the
-    // radius, long soft tails outward and a tiny inward bleed.
-    const thickness = gauss() * 0.45;
-
-    // Bias slightly outward so the inner edge stays cleaner than the outer.
-    const r = RING_RADIUS + thickness + Math.max(0, gauss()) * 0.25;
+    // Tight gaussian thickness — keeps the ring shape with a clean hollow
+    // center. Clamp inward bleed so particles never cross into the core.
+    const thickness = gauss() * 0.22;
+    const inner = RING_RADIUS - 0.45;
+    const outer = RING_RADIUS + 0.9;
+    let r = RING_RADIUS + thickness + Math.max(0, gauss()) * 0.18;
+    if (r < inner) r = inner + Math.random() * 0.05;
+    if (r > outer) r = outer - Math.random() * 0.05;
 
     positions[i * 3] = Math.cos(angle) * r;
     positions[i * 3 + 1] = Math.sin(angle) * r;
