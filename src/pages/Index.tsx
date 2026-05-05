@@ -192,7 +192,7 @@ const Index = () => {
                 className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16"
                 style={{
                   backgroundImage: `
-                    radial-gradient(60% 50% at 25% 8%, hsl(185 90% 55% / 0.35) 0%, transparent 70%),
+                    radial-gradient(60% 50% at 78% 8%, hsl(185 90% 55% / 0.35) 0%, transparent 70%),
                     linear-gradient(180deg,
                       hsl(190 65% 25%) 0%,
                       hsl(205 55% 15%) 35%,
