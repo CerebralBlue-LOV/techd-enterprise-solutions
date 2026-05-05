@@ -74,7 +74,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "Corning", url: "https://www.corning.com", logo: "/logos/corning.png" },
   { name: "CHOP", url: "https://www.chop.edu", logo: "/logos/chop.png" },
   { name: "Jefferson Health", url: "https://www.jeffersonhealth.org", logo: "/logos/jefferson-health.png" },
-  { name: "Temple Health", url: "https://www.templehealth.org", logo: "/logos/temple-health.png" },
+  { name: "Temple Health", url: "https://www.templehealth.org", logo: "/logos/temple-health.png", logoClass: "h-7 md:h-8" },
   { name: "Genesis HealthCare", url: "https://www.genesishcc.com", logo: "/logos/genesis-healthcare.png" },
   { name: "Sony Interactive Entertainment", url: "https://www.sie.com", logo: "/logos/sony-interactive.png" },
   { name: "MISO Energy", url: "https://www.misoenergy.org", logo: "/logos/miso-energy.png" },
