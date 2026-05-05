@@ -149,83 +149,86 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Industries */}
-      <section data-section="home:industries" className="section relative overflow-hidden bg-muted/40">
-        <SectionMarker page="Home" name="Industries Grid" />
-        <SectionBackdrop intensity="soft" vignetteClass="from-muted/40" />
-        <div className="container-page relative z-10">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Industries"
-              title="Built for regulated, complex enterprises."
-            />
-          </Reveal>
-          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {INDUSTRIES.map((ind, i) => (
-              <Reveal key={ind.id} delay={i * 50}>
-                <Link
-                  to={`/industries#${ind.id}`}
-                  className="card-hover block h-full rounded-xl p-7"
-                >
-                  <h3 className="text-xl">{ind.name}</h3>
-                  <p className="mt-3 text-sm font-light text-muted-foreground">{ind.outcome}</p>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Industries + Case Study share one continuous backdrop */}
+      <div className="relative overflow-hidden">
+        <SectionBackdrop intensity="soft" vignettes={false} />
 
-      {/* Featured case study — real, IBM-published */}
-      <section data-section="home:case-study" className="section relative overflow-hidden">
-        <SectionMarker page="Home" name="Featured Case Study" />
-        <SectionBackdrop intensity="soft" />
-        <div className="container-page relative z-10">
-          <Reveal>
-            <div className="relative overflow-hidden rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
-              <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
-              <h2 className="mt-4 max-w-3xl text-4xl md:text-5xl text-secondary-foreground leading-[1.05]">
-                A US family-owned retailer rebuilt online shopping on IBM Db2, watsonx Assistant, and NeuralSeek.
-              </h2>
-              <div className="mt-10 grid gap-8 md:grid-cols-3">
-                <div>
-                  <div className="text-sm font-bold uppercase tracking-wider text-primary">Personalization</div>
-                  <p className="mt-3 text-base font-light opacity-90">
-                    Personalized product descriptions delivered through retrieval-augmented generation.
-                  </p>
-                </div>
-                <div>
-                  <div className="text-sm font-bold uppercase tracking-wider text-primary">Service efficiency</div>
-                  <p className="mt-3 text-base font-light opacity-90">
-                    Call-center efficiency gains and reduced customer frustration.
-                  </p>
-                </div>
-                <div>
-                  <div className="text-sm font-bold uppercase tracking-wider text-primary">Shopper insight</div>
-                  <p className="mt-3 text-base font-light opacity-90">
-                    Real-time insight into shopper behavior across virtual and in-store channels.
-                  </p>
-                </div>
-              </div>
-              <p className="mt-10 max-w-3xl text-sm font-light opacity-75">
-                Co-authored by Scott Nichols, Senior Developer Analyst at TechD, and Garrett Rowe, President of Cerebral Blue.
-              </p>
-              <div className="mt-8">
-                <Button asChild variant="default" className="bg-primary hover:bg-primary/90">
-                  <a
-                    href="https://www.ibm.com/case-studies/blog/ibm-and-techd-partner-to-securely-share-data-and-power-insights-with-gen-ai"
-                    target="_blank"
-                    rel="noopener noreferrer"
+        {/* Industries */}
+        <section data-section="home:industries" className="section relative z-10">
+          <SectionMarker page="Home" name="Industries Grid" />
+          <div className="container-page">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Industries"
+                title="Built for regulated, complex enterprises."
+              />
+            </Reveal>
+            <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {INDUSTRIES.map((ind, i) => (
+                <Reveal key={ind.id} delay={i * 50}>
+                  <Link
+                    to={`/industries#${ind.id}`}
+                    className="card-hover block h-full rounded-xl p-7 bg-background/70 backdrop-blur-sm"
                   >
-                    Read on IBM.com <ArrowRight />
-                  </a>
-                </Button>
-              </div>
+                    <h3 className="text-xl">{ind.name}</h3>
+                    <p className="mt-3 text-sm font-light text-muted-foreground">{ind.outcome}</p>
+                  </Link>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {/* Featured case study — real, IBM-published */}
+        <section data-section="home:case-study" className="section relative z-10">
+          <SectionMarker page="Home" name="Featured Case Study" />
+          <div className="container-page">
+            <Reveal>
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-secondary text-secondary-foreground p-10 md:p-16">
+                <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Featured Case · Published by IBM</p>
+                <h2 className="mt-4 max-w-3xl text-4xl md:text-5xl text-secondary-foreground leading-[1.05]">
+                  A US family-owned retailer rebuilt online shopping on IBM Db2, watsonx Assistant, and NeuralSeek.
+                </h2>
+                <div className="mt-10 grid gap-8 md:grid-cols-3">
+                  <div>
+                    <div className="text-sm font-bold uppercase tracking-wider text-primary">Personalization</div>
+                    <p className="mt-3 text-base font-light opacity-90">
+                      Personalized product descriptions delivered through retrieval-augmented generation.
+                    </p>
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold uppercase tracking-wider text-primary">Service efficiency</div>
+                    <p className="mt-3 text-base font-light opacity-90">
+                      Call-center efficiency gains and reduced customer frustration.
+                    </p>
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold uppercase tracking-wider text-primary">Shopper insight</div>
+                    <p className="mt-3 text-base font-light opacity-90">
+                      Real-time insight into shopper behavior across virtual and in-store channels.
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-10 max-w-3xl text-sm font-light opacity-75">
+                  Co-authored by Scott Nichols, Senior Developer Analyst at TechD, and Garrett Rowe, President of Cerebral Blue.
+                </p>
+                <div className="mt-8">
+                  <Button asChild variant="default" className="bg-primary hover:bg-primary/90">
+                    <a
+                      href="https://www.ibm.com/case-studies/blog/ibm-and-techd-partner-to-securely-share-data-and-power-insights-with-gen-ai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Read on IBM.com <ArrowRight />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      </div>
 
       {/* Why TechD */}
       <section data-section="home:why-techd" className="section bg-muted/40">
