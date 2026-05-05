@@ -29,7 +29,7 @@ const Row = ({
             href={c.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 whitespace-nowrap text-2xl md:text-4xl font-bold tracking-tight text-secondary/70 transition-colors hover:text-primary"
+            className="shrink-0 whitespace-nowrap text-lg md:text-2xl font-bold tracking-tight text-secondary/70 transition-colors hover:text-primary"
             aria-hidden={i >= items.length ? "true" : undefined}
             tabIndex={i >= items.length ? -1 : 0}
           >
