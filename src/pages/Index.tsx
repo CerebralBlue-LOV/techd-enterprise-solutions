@@ -150,9 +150,12 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Industries + Case Study share one continuous backdrop */}
+      {/* Engineered Field — Industries + Case Study share one continuous backdrop */}
       <div className="relative overflow-hidden">
         <SectionBackdrop intensity="soft" vignettes={false} />
+        <Suspense fallback={null}>
+          <ParticleGlobe />
+        </Suspense>
 
         {/* Industries */}
         <section data-section="home:industries" className="section relative z-10">
