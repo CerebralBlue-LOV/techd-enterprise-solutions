@@ -68,7 +68,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "Comcast / Peacock", url: "https://www.peacocktv.com", logo: "/logos/comcast-peacock.png" },
   { name: "Johns Hopkins Medicine", url: "https://www.hopkinsmedicine.org", logo: "/logos/johns-hopkins.png" },
   { name: "Princeton University", url: "https://www.princeton.edu", logo: "/logos/princeton-university.png" },
-  { name: "DHS", url: "https://www.dhs.gov", logo: "/logos/dhs.png" },
+  { name: "DHS", url: "https://www.dhs.gov", logo: "/logos/dhs.svg" },
   { name: "L3Harris", url: "https://www.l3harris.com", logo: "/logos/l3harris.png" },
   { name: "Dominion Energy", url: "https://www.dominionenergy.com", logo: "/logos/dominion-energy.png" },
   { name: "Corning", url: "https://www.corning.com", logo: "/logos/corning.png" },
