@@ -9,11 +9,11 @@ export const NAV: NavItem[] = [
     label: "Solutions",
     href: "/solutions",
     children: [
-      { label: "AI & Generative Solutions", href: "/solutions#ai-automation", description: "watsonx Assistant, NeuralSeek RAG, agentic workflows." },
-      { label: "Data Platforms", href: "/solutions#data", description: "IBM Db2, lakehouse, governance, AI-ready data products." },
-      { label: "Hybrid Cloud", href: "/solutions#cloud", description: "IBM Cloud, AWS, Azure, OpenShift, mainframe integration." },
-      { label: "Security & Governance", href: "/solutions#security", description: "Guardium, identity, zero-trust for regulated industries." },
-      { label: "Analytics Modernization", href: "/solutions#app-mod", description: "Cognos, TM1, and BI migration to watsonx.ai." },
+      { label: "AI & Generative Solutions",     href: "/solutions#ai",            description: "watsonx.ai, watsonx Assistant, NeuralSeek, IBM Knowledge Catalog." },
+      { label: "Data & Analytics",              href: "/solutions#data-analytics", description: "Db2, watsonx.data, DataStage, Cognos Analytics, Planning Analytics." },
+      { label: "Automation & FinOps",           href: "/solutions#automation",    description: "IBM Apptio, Instana, Turbonomic." },
+      { label: "Security & Compliance",         href: "/solutions#security",      description: "Guardium, QRadar, Resilient, MDM, Data Replication." },
+      { label: "Hybrid Cloud & Infrastructure", href: "/solutions#hybrid-cloud",  description: "IBM Cloud, Red Hat OpenShift, mainframe integration." },
     ],
   },
   {

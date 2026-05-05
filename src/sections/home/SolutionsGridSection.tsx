@@ -5,7 +5,6 @@ import {
   Cloud,
   Database,
   Lock,
-  RefreshCw,
   Sparkles,
 } from "lucide-react";
 import Reveal from "@shared/Reveal";
@@ -15,11 +14,11 @@ import { SOLUTIONS } from "@content/solutions";
 
 /** Map of solution id → lucide icon. Kept colocated with the section that uses it. */
 const SOLUTION_ICONS: Record<string, typeof Bot> = {
-  "ai-automation": Bot,
-  data: Database,
-  cloud: Cloud,
+  ai: Bot,
+  "data-analytics": Database,
+  automation: Sparkles,
   security: Lock,
-  "app-mod": RefreshCw,
+  "hybrid-cloud": Cloud,
 };
 
 /**
@@ -27,7 +26,7 @@ const SOLUTION_ICONS: Record<string, typeof Bot> = {
  * Purpose: Showcase the five practice areas as clickable cards.
  * Order:   3 of 7 on the Home page.
  * Data:    @content/solutions (SOLUTIONS array).
- * Notes:   The "ai-automation" card is featured (primary border + ring).
+ * Notes:   The "ai" card is featured (primary border + ring).
  *          Each card links to /solutions#<id> for in-page navigation.
  */
 export const SolutionsGridSection = () => (
@@ -46,7 +45,7 @@ export const SolutionsGridSection = () => (
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {SOLUTIONS.map((s, i) => {
           const Icon = SOLUTION_ICONS[s.id] ?? Sparkles;
-          const featured = s.id === "ai-automation";
+          const featured = s.id === "ai";
           return (
             <Reveal key={s.id} delay={i * 50}>
               <Link
@@ -81,9 +80,9 @@ export const SolutionsGridSection = () => (
                   {s.description}
                 </p>
                 <ul className="mt-6 flex flex-wrap gap-2">
-                  {s.capabilities.slice(0, 3).map((cap) => (
+                  {s.products.slice(0, 3).map((p) => (
                     <li
-                      key={cap}
+                      key={p.name}
                       className={
                         "rounded-full border px-3 py-1 text-[11px] font-light " +
                         (featured
@@ -91,7 +90,7 @@ export const SolutionsGridSection = () => (
                           : "border-border text-muted-foreground")
                       }
                     >
-                      {cap}
+                      {p.name}
                     </li>
                   ))}
                 </ul>

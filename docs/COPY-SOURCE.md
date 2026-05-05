@@ -29,37 +29,38 @@
 
 ## 2. Solutions grid (`home:solutions`) → `src/content/solutions.ts`
 
+> **Updated 2026-05-05.** The five practice IDs and names changed as part of the
+> Solutions section rebuild (see `docs/SOLUTIONS-REBUILD.md`). The source of truth
+> for all practice and product copy is now `src/content/solutions.ts`. The entries
+> below are superseded — kept for historical reference only.
+
 Five practices, reframed around the 2024–2026 IBM stack TechD actually delivers.
+Current IDs: `ai` · `data-analytics` · `automation` · `security` · `hybrid-cloud`
 
-### AI & Generative Solutions (`ai-automation`)
+### AI & Generative Solutions (`ai`) — updated
 - **Outcome:** `Ship trustworthy gen AI on top of governed enterprise data.`
-- **Description:** `Production RAG, agentic workflows, and conversational interfaces built on IBM watsonx Assistant, watsonx.ai, and NeuralSeek — grounded in your data, not the open web.`
-- **Capabilities:** watsonx Assistant + NeuralSeek RAG · Agentic workflows on watsonx.ai · Enterprise knowledge retrieval · MLOps and model governance
-- Tag: inferred (verified IBM stack)
+- **Products:** watsonx.ai · watsonx Assistant · NeuralSeek (external) · IBM Knowledge Catalog
+- Tag: inferred
 
-### Data Platforms (`data`)
+### Data & Analytics (`data-analytics`) — updated
 - **Outcome:** `Make your data AI-ready, governed, and defensible.`
-- **Description:** `IBM Db2, lakehouse, and data fabric architectures — the foundation that decides whether your AI tells the truth.`
-- **Capabilities:** IBM Db2 + watsonx.data lakehouse · Data fabric and unified governance · Master data and lineage · AI-ready data products
+- **Products:** IBM Db2 · watsonx.data / CP4D · DataStage · Cognos Analytics · Planning Analytics · Cognos Controller
 - Tag: inferred
 
-### Hybrid Cloud (`cloud`)
+### Automation & FinOps (`automation`) — new practice
+- **Outcome:** `Observe everything, optimize spend, and eliminate manual toil.`
+- **Products:** IBM Apptio · IBM Instana · IBM Turbonomic
+- Tag: inferred
+
+### Security & Compliance (`security`) — updated
+- **Outcome:** `Pass the audit. Protect the data. Respond to the breach.`
+- **Products:** IBM Guardium · IBM QRadar · IBM Resilient · IBM MDM · IBM Data Replication
+- Tag: inferred
+
+### Hybrid Cloud & Infrastructure (`hybrid-cloud`) — updated
 - **Outcome:** `Run mission workloads where they belong — and move them when you need to.`
-- **Description:** `Hybrid landing zones across IBM Cloud, AWS, Azure, and on-prem, with OpenShift and mainframe integration where it matters.`
-- **Capabilities:** Hybrid + multi-cloud strategy · Red Hat OpenShift · Landing zone and FinOps · Mainframe (Z) integration
+- **Products:** IBM Cloud · Red Hat OpenShift · Mainframe Integration
 - Tag: inferred
-
-### Security & Governance (`security`)
-- **Outcome:** `Pass the audit. Survive the breach attempt.`
-- **Description:** `Identity, zero-trust, and data protection programs designed for HIPAA, FedRAMP, PCI, and the next regulator on the horizon.`
-- **Capabilities:** IBM Guardium data protection · Identity and access modernization · Zero-trust network architecture · Compliance and audit readiness
-- Tag: inferred
-
-### Analytics Modernization (`app-mod`)
-- **Outcome:** `Modernize Cognos, TM1, and legacy BI without breaking the business.`
-- **Description:** `Fifteen years of Cognos, TM1, and Netezza in production — now used to migrate clients to watsonx.ai, lakehouse, and modern BI without losing institutional knowledge.`
-- **Capabilities:** Cognos → watsonx.ai migration · TM1 / Planning Analytics modernization · BI consolidation · Custom Cognos SDK extensions
-- Tag: verified (TechD's actual deepest expertise per `/our-story`)
 
 ---
 
