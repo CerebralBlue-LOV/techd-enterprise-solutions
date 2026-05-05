@@ -40,7 +40,7 @@ const Row = ({
                 src={c.logo}
                 alt={c.name}
                 loading="lazy"
-                className="h-10 md:h-12 w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+                className={`${c.logoClass ?? "h-10 md:h-12"} w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
               />
             )}
             <span className="whitespace-nowrap text-[11px] md:text-xs font-light tracking-wide text-muted-foreground transition-colors group-hover:text-primary">
