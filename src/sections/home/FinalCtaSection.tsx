@@ -40,7 +40,6 @@ export const FinalCtaSection = () => (
                     className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
                   />
                   <span className="relative">Start the conversation</span>
-                  <ArrowRight className="relative transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Link>
               </Button>
             </div>
