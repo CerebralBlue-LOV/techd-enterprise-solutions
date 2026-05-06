@@ -87,66 +87,87 @@ const StyleA = ({ practice }: { practice: string }) => (
   </div>
 );
 
-// ---------- Style A2: Centered radial halo — single bloom behind glyph ----------
-const StyleA2 = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
-    <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.22),transparent_70%)]" />
-    <svg
-      viewBox="0 0 64 64"
-      className="relative h-16 w-16 text-primary"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <GlassGlyph practice={practice} opacity={0.55} />
+// All A-variants share the "corner halos" recipe: white tile, 1px border,
+// two cyan blurred halos in opposite corners, primary glyph. Only the
+// halo placement / size / intensity / corner accents change.
+
+// ---------- A-soft: gentler halos, smaller accents ----------
+const StyleASoft = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.35)]">
+    <span className="absolute -left-6 -top-6 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />
+    <span className="absolute -bottom-6 -right-4 h-16 w-16 rounded-full bg-primary/10 blur-2xl" />
+    <svg viewBox="0 0 64 64" className="relative h-16 w-16 text-primary" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <GlassGlyph practice={practice} opacity={0.5} />
     </svg>
-    <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
+    <span className="absolute right-3 top-3 h-0.5 w-0.5 rounded-full bg-primary/70" />
   </div>
 );
 
-// ---------- Style A3: Top-arc halo — bloom from above ----------
-const StyleA3 = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
-    <span className="absolute -top-10 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full bg-primary/30 blur-2xl" />
-    <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-    <svg
-      viewBox="0 0 64 64"
-      className="relative h-16 w-16 text-primary"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+// ---------- A-bold: stronger halos, larger accents ----------
+const StyleABold = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_14px_34px_-16px_hsl(var(--secondary)/0.5)]">
+    <span className="absolute -left-8 -top-8 h-28 w-28 rounded-full bg-primary/35 blur-2xl" />
+    <span className="absolute -bottom-10 -right-6 h-24 w-24 rounded-full bg-primary/25 blur-2xl" />
+    <svg viewBox="0 0 64 64" className="relative h-16 w-16 text-primary" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
       <GlassGlyph practice={practice} opacity={0.55} />
     </svg>
+    <span className="absolute right-3 top-3 h-1.5 w-1.5 rounded-full bg-primary" />
     <span className="absolute bottom-3 left-3 h-1 w-1 rounded-full bg-primary/70" />
   </div>
 );
 
-// ---------- Style A4: Twin halos — top-left + bottom-right symmetry, bigger ----------
-const StyleA4 = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_12px_32px_-16px_hsl(var(--secondary)/0.45)]">
-    <span className="absolute -left-8 -top-8 h-28 w-28 rounded-full bg-primary/30 blur-2xl" />
-    <span className="absolute -bottom-10 -right-6 h-24 w-24 rounded-full bg-primary/20 blur-2xl" />
-    <span className="absolute inset-0 bg-[linear-gradient(135deg,hsl(var(--primary)/0.08),transparent_50%)]" />
-    <svg
-      viewBox="0 0 64 64"
-      className="relative h-16 w-16 text-primary"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.4}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <GlassGlyph practice={practice} opacity={0.55} />
+// ---------- A-mirror: halos on top-right + bottom-left ----------
+const StyleAMirror = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-primary/25 blur-2xl" />
+    <span className="absolute -bottom-8 -left-4 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />
+    <svg viewBox="0 0 64 64" className="relative h-16 w-16 text-primary" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <GlassGlyph practice={practice} opacity={0.5} />
     </svg>
-    <span className="absolute right-3 top-3 h-1.5 w-1.5 rounded-full bg-primary" />
-    <span className="absolute bottom-3 left-3 h-1 w-1 rounded-full bg-primary/60" />
+    <span className="absolute left-3 top-3 h-1 w-1 rounded-full bg-primary" />
+    <span className="absolute bottom-3 right-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
   </div>
 );
+
+// ---------- A-rounded: pill-rounded tile (rounded-3xl) ----------
+const StyleARounded = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-3xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-primary/25 blur-2xl" />
+    <span className="absolute -bottom-8 -right-4 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />
+    <svg viewBox="0 0 64 64" className="relative h-16 w-16 text-primary" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <GlassGlyph practice={practice} opacity={0.5} />
+    </svg>
+    <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
+    <span className="absolute bottom-3 left-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
+  </div>
+);
+
+// ---------- A-square: sharper rounded-lg + thin primary ring ----------
+const StyleASquare = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-lg bg-background ring-1 ring-primary/25 shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-primary/25 blur-2xl" />
+    <span className="absolute -bottom-8 -right-4 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />
+    <svg viewBox="0 0 64 64" className="relative h-16 w-16 text-primary" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <GlassGlyph practice={practice} opacity={0.5} />
+    </svg>
+    <span className="absolute right-3 top-3 h-1 w-1 rounded-sm bg-primary" />
+    <span className="absolute bottom-3 left-3 h-0.5 w-2 bg-primary/60" />
+  </div>
+);
+
+// ---------- A-thicker: thicker stroke glyph, original halos ----------
+const StyleAThick = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-primary/25 blur-2xl" />
+    <span className="absolute -bottom-8 -right-4 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />
+    <svg viewBox="0 0 64 64" className="relative h-16 w-16 text-primary" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <GlassGlyph practice={practice} opacity={0.55} />
+    </svg>
+    <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
+    <span className="absolute bottom-3 left-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
+  </div>
+);
+
 
 // ---------- Style B: Cyan-tinted glass — bg-primary/8 with primary ring ----------
 const StyleB = ({ practice }: { practice: string }) => (
@@ -314,27 +335,45 @@ const IconLab = () => (
           <Row
             letter="A"
             name="Light glass — corner halos (original)"
-            description="White tile, 1px border, layered cyan glow in opposite corners. The original — now with a larger glyph."
+            description="The recommended baseline: white tile, 1px border, layered cyan glow in opposite corners."
             recommended
             Style={StyleA}
           />
           <Row
-            letter="A2"
-            name="Light glass — centered radial bloom"
-            description="Single soft radial halo behind the glyph. Most balanced and symmetrical — reads as a focused spotlight."
-            Style={StyleA2}
+            letter="A·soft"
+            name="Corner halos — soft"
+            description="Same recipe, gentler halos. For dense layouts where multiple icons sit close together."
+            Style={StyleASoft}
           />
           <Row
-            letter="A3"
-            name="Light glass — top arc bloom"
-            description="Halo from above with a thin primary hairline at the top edge. Feels like a header / banner accent."
-            Style={StyleA3}
+            letter="A·bold"
+            name="Corner halos — bold"
+            description="Same recipe, stronger halos and larger corner accents. For hero / feature placements."
+            Style={StyleABold}
           />
           <Row
-            letter="A4"
-            name="Light glass — twin halos + diagonal sweep"
-            description="Stronger version of A: bigger corner halos plus a diagonal cyan sweep. Most brand presence while staying light."
-            Style={StyleA4}
+            letter="A·mirror"
+            name="Corner halos — mirrored"
+            description="Halos flipped to top-right + bottom-left. Useful when paired next to the original for visual rhythm."
+            Style={StyleAMirror}
+          />
+          <Row
+            letter="A·rounded"
+            name="Corner halos — rounded-3xl"
+            description="Softer pill-rounded tile. Friendlier feel, same halo recipe."
+            Style={StyleARounded}
+          />
+          <Row
+            letter="A·square"
+            name="Corner halos — sharper corners + primary ring"
+            description="Tighter rounded-lg with a faint primary ring instead of border. More architectural."
+            Style={StyleASquare}
+          />
+          <Row
+            letter="A·thick"
+            name="Corner halos — thicker glyph stroke"
+            description="Same tile, glyph stroke bumped to 2px. Reads heavier — better at small sizes."
+            Style={StyleAThick}
           />
         </div>
 
