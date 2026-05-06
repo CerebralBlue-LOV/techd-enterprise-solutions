@@ -299,25 +299,50 @@ export const IndustriesCarousel = () => {
     };
   }, [updateState]);
 
-  // Wheel-to-horizontal scroll. Only consume the wheel event when we can still
-  // scroll in the requested direction; otherwise let the page scroll naturally.
+  // Edge-hover auto-scroll. When the cursor is near the left/right edge of the
+  // rail, slowly pan in that direction. Speed scales with proximity to the edge.
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const onWheel = (e: WheelEvent) => {
-      // Trackpad horizontal gestures already produce deltaX — let the browser handle them
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      const delta = e.deltaY;
-      const max = el.scrollWidth - el.clientWidth;
-      const atStart = el.scrollLeft <= 0 && delta < 0;
-      const atEnd = el.scrollLeft >= max - 1 && delta > 0;
-      if (atStart || atEnd) return; // let page scroll
-      e.preventDefault();
-      cancelMomentum();
-      el.scrollLeft += delta;
+    let raf = 0;
+    let pointerX: number | null = null;
+    let inside = false;
+
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      if (!inside || pointerX == null || dragState.current.down) return;
+      const rect = el.getBoundingClientRect();
+      const zone = Math.min(180, rect.width * 0.22); // edge sensitivity zone
+      const distLeft = pointerX - rect.left;
+      const distRight = rect.right - pointerX;
+      let speed = 0;
+      if (distLeft < zone) {
+        const t = 1 - distLeft / zone; // 0..1
+        speed = -t * t * 9; // ease-in, max 9px/frame
+      } else if (distRight < zone) {
+        const t = 1 - distRight / zone;
+        speed = t * t * 9;
+      }
+      if (speed !== 0) el.scrollLeft += speed;
     };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
+
+    const onMove = (e: PointerEvent) => {
+      pointerX = e.clientX;
+      inside = true;
+    };
+    const onLeave = () => {
+      inside = false;
+      pointerX = null;
+    };
+
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerleave", onLeave);
+    raf = requestAnimationFrame(tick);
+    return () => {
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   const onMouseDown = (e: React.MouseEvent) => {
