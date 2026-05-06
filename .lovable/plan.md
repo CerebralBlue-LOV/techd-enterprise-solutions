@@ -1,72 +1,60 @@
 ## Goal
 
-Internal sandbox at `/logo-lab` to QA every customer logo used by the homepage `LogoStrip` ("Trusted by Fortune 500 leaders"). Lets you:
+Rework the `/flip-lab` cards so the decorative motif lives on the **front** of the card (visible by default), drop the icon tile, and upgrade each motif from the current simple sketch into a richer, award-style graphic inspired by the reference image (flowing line waves, halftone dot fields, layered chevrons, scattered particles, concentric pulses, etc.).
 
-- See each logo at the exact size it renders in the marquee.
-- Resize each logo via discrete Tailwind heights.
-- Persist changes by writing the updated `logoClass` directly back into `src/content/site.ts`.
-- Flag any logo whose file is missing or fails to load.
+## Reference reading
 
-## Data source
+The uploaded grid shows 6 award cards. Each has:
+- A small colored icon tile top-left (we are **dropping** this)
+- A date / region label top-right
+- Two-line title + subtitle stacked at center-left
+- A small footer label (region/country)
+- A **single, distinctive geometric motif** anchored bottom-right or center-right, in one accent color, occupying ~40-50% of the card area
+- The motif is the personality of the card — not decoration
 
-Reads `CUSTOMERS` from `src/content/site.ts`. The lab edits only the `logoClass` field per entry. Order, names, URLs, and image paths are not touched.
+This is the pattern we'll match.
 
-## UX
+## Changes
 
-Single page, grid of tiles (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+### 1. `src/sections/flip-lab/FlipCard.tsx`
+- Remove the `icon` prop and the icon tile JSX entirely.
+- Move the motif from the back face to the **front face**, anchored to the right side / bottom-right, behind the text (text stays readable on the left).
+- Front layout becomes:
+  - Top row: small `meta` label top-right (the only top element now)
+  - Left column: eyebrow → title → footer (mirrors the reference)
+  - Motif: absolutely positioned, right-aligned, masked so it fades into the card on the left edge (so text stays legible)
+- Back face keeps its current role: `backTitle`, `backBody`, CTA — but **without** the motif (motif is now on front). On hover the card still flips to show the back content.
 
-Each tile shows:
-- Logo rendered with the same classes used in the marquee (`object-contain`, lazy load) on a white card matching the live section.
-- Below the logo: customer name + URL.
-- A size selector — segmented buttons for: `h-6`, `h-7`, `h-8`, `h-9`, `h-10`, `h-12`, `h-14`, `h-16`, `h-20`, `h-24` (each pair as `h-X md:h-Y`, matching the current convention; one click selects a preset that maps to the existing pattern).
-- Status pill: `OK`, `Missing file` (no `logo` field), or `Broken` (img `onError`).
+### 2. `src/pages/FlipLab.tsx`
+- Remove all `lucide-react` icon imports and the `icon:` field from each card.
 
-Top of the page:
-- Title + short instructions.
-- Two buttons: **Save changes** (writes to `site.ts` via dev endpoint) and **Reset** (revert local edits to file values).
-- A counter "N unsaved changes".
+### 3. Motif rewrite — `src/sections/flip-lab/motifs/*.tsx`
 
-No marquee preview, no grayscale toggle, no reorder — out of scope per your answers.
+Each motif gets rebuilt as a denser, more crafted SVG composition. All cyan (brand primary) — single hue, varied opacity, like the reference's single-color discipline. Each motif gets a subtle on-mount / on-hover animation.
 
-## Saving (dev-only)
+| Card | New motif concept |
+|---|---|
+| AI & Generative | Layered flowing line waves (≈18 stacked sine paths), opacity gradient bottom-to-top, slight phase shift animation |
+| Data & Analytics | Halftone dot field — dot radius varies by position to suggest a curved surface; dots animate radius on hover |
+| Automation & FinOps | Concentric circular pulses + a small orbiting node, slow rotation |
+| Security & Compliance | Stacked chevron arrows (3-4 nested), thick strokes, draw-in animation |
+| Hybrid Cloud | Scattered particle burst — short tilted line segments at varied angles/lengths, fade-in stagger |
 
-Vite dev plugin exposing a single endpoint `POST /__lab/save-logo-sizes`:
-- Body: `[{ name: string, logoClass: string | null }]`
-- Reads `src/content/site.ts`, finds each `{ name: "..." }` entry, and updates/inserts/removes its `logoClass: "..."` field. Preserves all other fields and surrounding formatting.
-- Implementation: a small AST-free string replace driven by a regex anchored on `name: "<exact name>"` within the same object literal — robust enough for this file, which is hand-maintained and uniformly formatted.
+Each motif is a self-contained React SVG component, ~280×280 viewBox, `preserveAspectRatio="xMaxYMax meet"` so it docks bottom-right. Animations use existing CSS keyframes where possible (`motif-wave`, `motif-pulse`, `motif-draw`) and add new ones in `index.css` only if needed.
 
-The plugin is registered in `vite.config.ts` only when `mode === "development"`. It does nothing in production builds, so the lab cannot be used to mutate a deployed site. The endpoint is unauthenticated but only reachable from the local dev server.
-
-The lab page calls this endpoint, then reloads `CUSTOMERS` (full page reload is fine — it's a lab).
-
-## Missing/broken detection
-
-- "Missing file" — entry has no `logo` field.
-- "Broken" — `<img onError>` fires; the tile flips to a red-bordered state with the attempted path so you can fix the filename.
-- Server-side existence check is not needed; the browser's load failure is the source of truth.
-
-## Files
-
-**New**
-- `src/pages/LogoLab.tsx` — page shell, save/reset bar, grid.
-- `src/sections/logo-lab/LogoTile.tsx` — single-logo card with size selector and status pill.
-- `src/sections/logo-lab/sizePresets.ts` — the discrete height presets (label + className).
-- `vite-plugins/save-logo-sizes.ts` — dev-only Vite plugin handling `POST /__lab/save-logo-sizes`.
-
-**Edited**
-- `src/app/routes.tsx` — register `/logo-lab` route.
-- `vite.config.ts` — load the plugin in dev mode only.
-
-No nav link added (lab page, accessed by URL).
-
-## Acceptance check
-
-- Visit `/logo-lab` → grid of every customer with current size highlighted.
-- Click a different size on any tile → preview updates immediately, header shows "1 unsaved change".
-- Click **Save** → `src/content/site.ts` is rewritten, the dev server hot-reloads, the homepage marquee shows the new sizes.
-- Visit `/` → `LogoStrip` reflects the saved sizes.
-- A logo with a missing or wrong file shows a red status pill.
+### 4. `src/index.css`
+- Add a left-fade mask helper (`.flip-motif-mask`) that keeps the right ~60% of the motif visible and fades into transparent toward the text column.
+- Add any keyframes needed by the new motifs (e.g. `motif-orbit`, `motif-stagger-in`).
 
 ## Out of scope
 
-- No production save path. No auth. No reorder/disable. No background or grayscale toggle. No marquee preview. No image upload.
+- No changes to colors / brand tokens.
+- No new dependencies.
+- The flip animation, back face structure, and CTA stay as-is.
+- The Solutions section on `/` is **not** touched — this is lab-only iteration.
+
+## Acceptance
+
+- Visit `/flip-lab` → each card shows a rich, single-color cyan motif on the front (no icon tile).
+- Hovering a card flips it to the back face which shows back title, body, and CTA — no motif on back.
+- Motifs feel hand-crafted and varied, similar in spirit to the reference grid; not five copies of the same idea.
