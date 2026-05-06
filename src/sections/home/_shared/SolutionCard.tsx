@@ -7,6 +7,7 @@ interface Props {
   pitch: string;
   ctaLabel: string;
   icon?: ReactNode;
+  back?: ReactNode;
   children: ReactNode;
 }
 
@@ -14,7 +15,7 @@ interface Props {
  * SolutionCard — full-card flip on hover with a slow rotating cyan→white
  * border beam. Front holds practice content; back holds a short pitch + CTA.
  */
-export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, children }: Props) => {
+export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, back, children }: Props) => {
   const [active, setActive] = useState(false);
 
   return (
