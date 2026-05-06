@@ -35,6 +35,12 @@ export const SOLUTIONS: Solution[] = [
     outcome: "Ship trustworthy gen AI on top of governed enterprise data.",
     description:
       "Production RAG, agentic workflows, and conversational interfaces built on IBM watsonx — grounded in your data, governed from day one.",
+    highlights: [
+      "Grounded RAG on your data",
+      "Foundation model governance",
+      "Agentic workflows in production",
+    ],
+    ctaLabel: "Explore AI practice",
     products: [
       {
         name: "watsonx.ai",
@@ -136,6 +142,12 @@ export const SOLUTIONS: Solution[] = [
     outcome: "Make your data AI-ready, governed, and defensible.",
     description:
       "Fifteen years of Db2, Cognos, and TM1 in production — now extended with open lakehouse, DataStage, and the modern analytics stack your AI depends on.",
+    highlights: [
+      "Open lakehouse architecture",
+      "Cataloged, lineage-traced data",
+      "Modern BI and planning",
+    ],
+    ctaLabel: "Explore data practice",
     products: [
       {
         name: "IBM Db2",
@@ -314,6 +326,12 @@ export const SOLUTIONS: Solution[] = [
     outcome: "Observe everything, optimize spend, and eliminate manual toil.",
     description:
       "IBM Apptio, Instana, and Turbonomic give your IT and finance teams full-stack visibility — from application traces to cloud bill line items — with AI-driven recommendations that act.",
+    highlights: [
+      "Full-stack APM and tracing",
+      "Cloud FinOps and showback",
+      "AI-driven resource actions",
+    ],
+    ctaLabel: "Explore automation practice",
     products: [
       {
         name: "IBM Apptio",
@@ -408,6 +426,12 @@ export const SOLUTIONS: Solution[] = [
     outcome: "Pass the audit. Protect the data. Respond to the breach.",
     description:
       "IBM Guardium, QRadar, Resilient, MDM, and Data Replication — the data security, threat detection, and governance tooling that keeps regulated enterprises compliant and resilient.",
+    highlights: [
+      "Data activity monitoring",
+      "Threat detection and SOAR",
+      "Audit-ready evidence trails",
+    ],
+    ctaLabel: "Explore security practice",
     products: [
       {
         name: "IBM Guardium",
@@ -558,6 +582,12 @@ export const SOLUTIONS: Solution[] = [
     outcome: "Run mission workloads where they belong — and move them when you need to.",
     description:
       "IBM Cloud, Red Hat OpenShift, and mainframe integration — hybrid architecture that connects where your data actually lives with where your AI needs to run.",
+    highlights: [
+      "OpenShift across any cloud",
+      "Mainframe data integration",
+      "Portable, policy-driven workloads",
+    ],
+    ctaLabel: "Explore hybrid cloud practice",
     products: [
       {
         name: "IBM Cloud",
