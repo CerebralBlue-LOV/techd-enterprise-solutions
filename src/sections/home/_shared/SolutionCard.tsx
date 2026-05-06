@@ -25,7 +25,7 @@ export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, back, childr
       onMouseLeave={() => setActive(false)}
       data-featured={featured ? "true" : undefined}
       data-hover={active ? "true" : undefined}
-      className="solution-card group relative block h-full min-h-[440px] lg:min-h-[480px] rounded-xl"
+      className="solution-card group relative block h-full min-h-[320px] lg:min-h-[340px] rounded-xl"
     >
       <div className="solution-card-inner relative h-full w-full">
         {/* FRONT */}
