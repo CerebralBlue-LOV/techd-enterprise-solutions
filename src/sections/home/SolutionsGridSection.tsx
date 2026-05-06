@@ -41,6 +41,7 @@ export const SolutionsGridSection = () => (
           return (
             <Reveal key={s.id} delay={i * 50}>
               <FlipCard
+                to={`/solutions#${s.id}`}
                 eyebrow={s.name}
                 title={s.outcome}
                 footer={m.footer}
