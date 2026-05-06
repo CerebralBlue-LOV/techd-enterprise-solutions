@@ -1,37 +1,28 @@
 /**
- * AI motif — flowing topographic contour lines, dense in the lower-right
- * corner and rippling outward like wind-swept iso-curves.
+ * AI motif — layered flowing line waves (Apple-award style).
+ * Single cyan hue, varied opacity + subtle phase animation.
  */
-const LINES = 22;
+const LINES = 18;
 
 const AiMotif = () => (
   <svg
-    viewBox="0 0 320 320"
+    viewBox="0 0 280 280"
     preserveAspectRatio="xMaxYMax meet"
     className="flip-motif-svg"
     aria-hidden="true"
   >
-    <g
-      fill="none"
-      stroke="hsl(var(--primary))"
-      strokeLinecap="round"
-      style={{ transform: "translate(40px, 30px)" }}
-    >
+    <g fill="none" stroke="hsl(var(--primary))" strokeLinecap="round">
       {Array.from({ length: LINES }).map((_, i) => {
         const t = i / (LINES - 1);
-        // Each contour expands outward from the bottom-right anchor.
-        const spread = 18 + i * 12;
-        const opacity = 0.22 + (1 - t) * 0.55;
-        const sw = 1 + (1 - t) * 0.9;
-        const d = `
-          M ${320 - spread * 0.2} ${320}
-          C ${300 - spread} ${320 - spread * 0.4},
-            ${260 - spread * 1.1} ${300 - spread * 0.9},
-            ${200 - spread * 1.0} ${260 - spread * 0.8}
-          S ${100 - spread * 0.9} ${200 - spread * 0.7},
-            ${20 - spread * 0.5} ${160 - spread * 0.6}
-          L ${-20} ${160 - spread * 0.6}
-        `;
+        const yBase = 60 + t * 180;
+        const opacity = 0.18 + t * 0.55;
+        const sw = 1 + t * 0.6;
+        // Each line is a smooth S-curve with a slight per-line phase shift.
+        const d = `M -10 ${yBase}
+                   C 50 ${yBase - 30 - i * 1.2},
+                     120 ${yBase + 30 + i * 1.4},
+                     200 ${yBase - 20 - i * 0.8}
+                   S 320 ${yBase + 10 + i * 0.6}, 360 ${yBase}`;
         return (
           <path
             key={i}
@@ -39,7 +30,7 @@ const AiMotif = () => (
             strokeWidth={sw}
             opacity={opacity}
             className="flip-motif-line"
-            style={{ animationDelay: `${i * 70}ms` }}
+            style={{ animationDelay: `${i * 80}ms` }}
           />
         );
       })}
