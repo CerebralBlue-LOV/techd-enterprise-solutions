@@ -85,10 +85,7 @@ export const Header = () => {
         </NavigationMenu>
 
         <div className="flex items-center gap-2">
-          <Button
-            asChild
-            className="btn-glow hidden md:inline-flex transition-transform duration-200 hover:-translate-y-0.5"
-          >
+          <Button asChild className="btn-glow hidden md:inline-flex">
             <Link to="/contact">Talk to an expert</Link>
           </Button>
 
