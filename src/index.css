@@ -174,19 +174,22 @@
     z-index: -1;
     background: linear-gradient(
       45deg,
+      hsl(175 90% 45%),
       hsl(193 100% 50%),
-      hsl(200 100% 55%),
-      hsl(210 95% 60%),
-      hsl(220 90% 62%),
-      hsl(210 95% 60%),
-      hsl(200 100% 55%),
-      hsl(193 100% 50%)
+      hsl(200 100% 60%),
+      hsl(215 100% 60%),
+      hsl(230 95% 62%),
+      hsl(245 80% 60%),
+      hsl(240 3% 35%),
+      hsl(285 2% 65%),
+      hsl(193 100% 50%),
+      hsl(175 90% 45%)
     );
     background-size: 400% 400%;
     filter: blur(6px);
     opacity: 0;
     transition: opacity 300ms ease-in-out;
-    animation: btn-glow-shift 20s linear infinite;
+    animation: btn-glow-shift 8s linear infinite;
     pointer-events: none;
   }
   .btn-glow:hover::before,
