@@ -89,7 +89,7 @@ export const EngineeredFieldSection = () => (
                 </p>
               </div>
             </div>
-            <p className="relative mt-10 max-w-3xl text-sm font-light text-white/60">
+            <p className="relative mt-10 mx-auto max-w-3xl text-sm font-light text-white/60">
               Co-authored by Scott Nichols, Senior Developer Analyst at TechD,
               and Garrett Rowe, President of Cerebral Blue.
             </p>
