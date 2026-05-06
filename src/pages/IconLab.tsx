@@ -272,20 +272,20 @@ const IconLab = () => (
           />
           <Row
             letter="D"
-            name="Dark glass — secondary tile + cyan halo"
-            description="Dark secondary-gray tile with layered cyan halos in opposite corners. The dark Style A — closest to the Supabase reference while staying strictly on TechD palette."
+            name="Solid secondary — flat dark tile"
+            description="Pure secondary (#56565A) tile, primary cyan glyph. No halos, no tints — strict two-color combination."
             Style={StyleD}
           />
           <Row
             letter="E"
-            name="Dark gradient — primary ring"
-            description="Dark tile with a diagonal cyan sweep, primary ring, and bottom rim highlight. Strongest brand presence; works as a hero accent on dark sections."
+            name="Secondary tile — primary ring"
+            description="Pure secondary tile with a 2px primary ring and a solid primary corner square. Two colors only."
             Style={StyleE}
           />
           <Row
             letter="F"
-            name="Dark grid — muted lines + cyan bloom"
-            description="Dark tile with a faint muted grid and a single cyan corner bloom. Architectural / technical feel — pairs with engineering content on dark surfaces."
+            name="Inverted — primary tile, secondary glyph"
+            description="Solid primary cyan tile with a secondary-gray glyph. The reverse of Style D — boldest brand presence."
             Style={StyleF}
           />
         </div>
