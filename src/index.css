@@ -216,7 +216,22 @@
   }
 }
 
-/* Motif keyframes */
+/* Slide-up reveal panel on hover */
+@media (hover: hover) {
+  .solution-card[data-hover="true"] .solution-card-reveal {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .solution-card-reveal {
+    transition: opacity 200ms ease-out !important;
+    transform: none !important;
+  }
+  .solution-card[data-hover="true"] .solution-card-reveal {
+    opacity: 1 !important;
+  }
+}
 @keyframes motif-wave {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-3px); }
