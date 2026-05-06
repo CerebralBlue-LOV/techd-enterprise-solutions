@@ -242,15 +242,45 @@ const IndustryCard = ({ ind, index, containerRef, scrollTick }: CardProps) => {
 export const IndustriesCarousel = () => {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [tick, setTick] = useState(0);
-  const dragState = useRef<{ down: boolean; startX: number; scroll: number; moved: boolean }>({
-    down: false,
-    startX: 0,
-    scroll: 0,
-    moved: false,
-  });
+  const dragState = useRef<{
+    down: boolean;
+    startX: number;
+    scroll: number;
+    moved: boolean;
+    lastX: number;
+    lastT: number;
+    velocity: number;
+  }>({ down: false, startX: 0, scroll: 0, moved: false, lastX: 0, lastT: 0, velocity: 0 });
+  const momentumRaf = useRef<number | null>(null);
 
   const updateState = useCallback(() => setTick((t) => t + 1), []);
 
+  const cancelMomentum = () => {
+    if (momentumRaf.current != null) {
+      cancelAnimationFrame(momentumRaf.current);
+      momentumRaf.current = null;
+    }
+  };
+
+  const startMomentum = useCallback(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    let v = dragState.current.velocity; // px per ms
+    if (Math.abs(v) < 0.05) return;
+    const step = () => {
+      if (!el) return;
+      el.scrollLeft -= v * 16;
+      v *= 0.94;
+      if (Math.abs(v) > 0.05) {
+        momentumRaf.current = requestAnimationFrame(step);
+      } else {
+        momentumRaf.current = null;
+      }
+    };
+    momentumRaf.current = requestAnimationFrame(step);
+  }, []);
+
+  // Scroll listener for tilt updates
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
@@ -269,10 +299,40 @@ export const IndustriesCarousel = () => {
     };
   }, [updateState]);
 
+  // Wheel-to-horizontal scroll. Only consume the wheel event when we can still
+  // scroll in the requested direction; otherwise let the page scroll naturally.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      // Trackpad horizontal gestures already produce deltaX — let the browser handle them
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      const delta = e.deltaY;
+      const max = el.scrollWidth - el.clientWidth;
+      const atStart = el.scrollLeft <= 0 && delta < 0;
+      const atEnd = el.scrollLeft >= max - 1 && delta > 0;
+      if (atStart || atEnd) return; // let page scroll
+      e.preventDefault();
+      cancelMomentum();
+      el.scrollLeft += delta;
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
   const onMouseDown = (e: React.MouseEvent) => {
     const el = wrapRef.current;
     if (!el) return;
-    dragState.current = { down: true, startX: e.pageX, scroll: el.scrollLeft, moved: false };
+    cancelMomentum();
+    dragState.current = {
+      down: true,
+      startX: e.pageX,
+      scroll: el.scrollLeft,
+      moved: false,
+      lastX: e.pageX,
+      lastT: performance.now(),
+      velocity: 0,
+    };
     el.classList.add("cursor-grabbing");
   };
   const onMouseMove = (e: React.MouseEvent) => {
@@ -282,10 +342,20 @@ export const IndustriesCarousel = () => {
     const dx = e.pageX - dragState.current.startX;
     if (Math.abs(dx) > 5) dragState.current.moved = true;
     el.scrollLeft = dragState.current.scroll - dx;
+    const now = performance.now();
+    const dt = now - dragState.current.lastT;
+    if (dt > 0) {
+      // velocity in px/ms (positive = moving cursor right => scrollLeft decreases)
+      dragState.current.velocity = (e.pageX - dragState.current.lastX) / dt;
+    }
+    dragState.current.lastX = e.pageX;
+    dragState.current.lastT = now;
   };
   const stopDrag = () => {
+    if (!dragState.current.down) return;
     dragState.current.down = false;
     wrapRef.current?.classList.remove("cursor-grabbing");
+    startMomentum();
   };
   const onClickCapture = (e: React.MouseEvent) => {
     if (dragState.current.moved) {
@@ -304,7 +374,7 @@ export const IndustriesCarousel = () => {
         onMouseUp={stopDrag}
         onMouseLeave={stopDrag}
         onClickCapture={onClickCapture}
-        className="flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden scroll-smooth py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto overflow-y-hidden py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         style={{ paddingInline: "max(1.5rem, calc((100% - 1200px) / 2))" }}
       >
         {INDUSTRIES.map((ind, i) => (
@@ -318,8 +388,8 @@ export const IndustriesCarousel = () => {
         ))}
       </div>
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background via-background/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background via-background/80 to-transparent" />
     </div>
   );
 };
