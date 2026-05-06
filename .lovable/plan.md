@@ -1,37 +1,34 @@
 ## Goal
 
-Keep flip-card motifs from overlapping the front-face text. Move the security chevrons over to the Hybrid Cloud card.
+Clean up the Industries carousel: remove redundant chrome, simplify card content, calm the motifs, and keep drag-to-scroll as the only interaction.
 
-## Changes
+## Changes — `src/sections/home/_shared/IndustriesCarousel.tsx`
 
-### 1. `DataMotif.tsx`
-- Anchor field bottom-right (not full-card bleed).
-- Shrink the dot grid: fewer columns/rows or smaller cell size so the cluster reads as a corner accent, not a full-card pattern.
-- Tighten the radial halo so it stays in the lower-right quadrant.
+### Remove
+- The Prev/Next arrow buttons and their wrapper at the bottom of the carousel.
+- The "01 · Industry" eyebrow row at the top of each card (redundant — the section heading already says "Industries").
+- The regulation chip in the top-right (HIPAA · HITECH, etc.) — feels like noise on top of the motif.
+- The `canPrev` / `canNext` state and `scrollByCards` helper (no longer used).
 
-### 2. `AutomationMotif.tsx`
-- Pull the workflow graph down and to the right: shift all node coordinates so the leftmost branches start mid-card vertically (around y=140+) instead of y=70.
-- Drop the faint horizontal grid lines (they reach across the whole card and crowd the title).
-- Keep nodes/edges/arrowheads, just smaller bounding box.
+### Keep
+- Drag-to-scroll with click-suppression on real drag (current behavior).
+- Soft 3D tilt based on distance from center (±10°).
+- Hover: lift + cyan border glow.
+- The "Explore →" affordance that fades in on hover.
 
-### 3. `SecurityMotif.tsx`
-- Remove the stacked chevron arcs entirely.
-- Keep only the padlock + dashed pulse halo, anchored bottom-right.
-- Reduce padlock scale slightly so it sits cleanly in the corner.
+### Card layout
+- Center-aligned text block, vertically centered in the card.
+- Order: title (large) → outcome (small, muted, max 3 lines) → "Explore →" (hover-only, centered).
+- Slightly tighter card height (e.g. 240px) so the rail feels lighter.
 
-### 4. `CloudMotif.tsx` (Hybrid Cloud)
-- Replace the scattered short-line burst with the chevron stack previously on Security.
-- Anchor chevrons bottom-right of a 320 viewBox; fan upward; primary cyan only; staggered draw-in via existing `flip-motif-chevron` class.
-
-### 5. `index.css` — `.flip-motif-svg`
-- Reduce default size so motifs don't push into the title area:
-  - `width: 70%` (was 92%)
-  - `height: 78%` (was 100%)
-  - Keep right/bottom anchor.
-- Strengthen the left-side text mask (e.g., transparent up to 36–40%) so any overflow still fades cleanly.
+### Motif intensity (lighter & slower)
+For each motif (`MotifWaves`, `MotifNodes`, `MotifGrid`, `MotifBars`, `MotifPulse`, `MotifChevrons`):
+- Reduce element counts by ~40% (fewer waves/nodes/bars/chevrons).
+- Drop max opacity to ~0.35 (was 0.5–0.78).
+- Strengthen the radial halo falloff so the motif fades more aggressively at the edges and behind the centered text.
+- Add a soft full-card gradient overlay (`from-background via-background/90 to-background/70`) so text stays crisp on top of motifs.
 
 ## Out of scope
-
-- No changes to AI motif (user is happy with it).
-- No copy/back-face changes.
-- No new dependencies, no animation timing changes beyond reusing existing keyframes.
+- No copy changes to `INDUSTRIES` content.
+- No changes to flip-lab motifs or other home sections.
+- No new dependencies.
