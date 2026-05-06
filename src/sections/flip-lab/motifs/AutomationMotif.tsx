@@ -1,63 +1,118 @@
 /**
- * Automation motif — concentric pulsing rings + a small orbiting node.
- * Slow rotation idle; orbit speeds up on hover.
+ * Automation & FinOps motif — branching workflow nodes that converge into
+ * a single optimized stream. Reads as "automate + optimize", not just orbit.
  */
-const RINGS = 7;
+
+type Node = { x: number; y: number; r: number; o: number };
+
+// Tree-like graph anchored bottom-right. Three input branches collapse into
+// a single trunk node at the corner.
+const NODES: Node[] = [
+  // top-left inputs
+  { x: 60, y: 70, r: 4, o: 0.5 },
+  { x: 60, y: 130, r: 3.4, o: 0.45 },
+  { x: 60, y: 195, r: 3.8, o: 0.55 },
+  // mid junction
+  { x: 150, y: 110, r: 5, o: 0.7 },
+  { x: 150, y: 200, r: 4.6, o: 0.65 },
+  // pre-trunk
+  { x: 230, y: 160, r: 5.6, o: 0.85 },
+  // trunk + outputs near corner
+  { x: 290, y: 230, r: 7, o: 1 },
+  { x: 290, y: 290, r: 4.4, o: 0.7 },
+];
+
+const EDGES: Array<[number, number]> = [
+  [0, 3],
+  [1, 3],
+  [1, 4],
+  [2, 4],
+  [3, 5],
+  [4, 5],
+  [5, 6],
+  [6, 7],
+];
 
 const AutomationMotif = () => (
   <svg
-    viewBox="0 0 280 280"
-    preserveAspectRatio="xMaxYMax meet"
+    viewBox="0 0 320 320"
+    preserveAspectRatio="xMaxYMax slice"
     className="flip-motif-svg"
     aria-hidden="true"
   >
-    <g
-      fill="none"
-      stroke="hsl(var(--primary))"
-      style={{ transformOrigin: "210px 210px" }}
-    >
-      {Array.from({ length: RINGS }).map((_, i) => {
-        const r = 28 + i * 16;
-        const opacity = 0.65 - i * 0.07;
-        // dashed arc, each ring a different gap pattern
-        const dash = `${20 + i * 4} ${8 + i * 3}`;
+    <defs>
+      <radialGradient id="auto-glow" cx="100%" cy="100%" r="75%">
+        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.22" />
+        <stop offset="70%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+      </radialGradient>
+    </defs>
+    <rect width="320" height="320" fill="url(#auto-glow)" />
+
+    {/* faint grid hints */}
+    <g stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.18">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <line key={`g${i}`} x1={0} y1={50 + i * 45} x2={320} y2={50 + i * 45} strokeDasharray="2 8" />
+      ))}
+    </g>
+
+    {/* edges with directional arrowheads */}
+    <defs>
+      <marker
+        id="auto-arrow"
+        viewBox="0 0 10 10"
+        refX="9"
+        refY="5"
+        markerWidth="5"
+        markerHeight="5"
+        orient="auto-start-reverse"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="hsl(var(--primary))" opacity="0.85" />
+      </marker>
+    </defs>
+    <g stroke="hsl(var(--primary))" fill="none" strokeLinecap="round">
+      {EDGES.map(([a, b], i) => {
+        const A = NODES[a];
+        const B = NODES[b];
+        // gentle quadratic curve
+        const mx = (A.x + B.x) / 2;
+        const my = (A.y + B.y) / 2 - 18;
         return (
-          <circle
-            key={i}
-            cx={210}
-            cy={210}
-            r={r}
-            opacity={opacity}
-            strokeWidth={1.25}
-            strokeDasharray={dash}
-            className="flip-motif-ring"
-            style={{ animationDelay: `${i * 120}ms` }}
+          <path
+            key={`e${i}`}
+            d={`M ${A.x} ${A.y} Q ${mx} ${my} ${B.x} ${B.y}`}
+            strokeWidth={1.3}
+            opacity={0.45 + i * 0.04}
+            markerEnd="url(#auto-arrow)"
+            className="flip-motif-line"
+            style={{ animationDelay: `${i * 90}ms` }}
           />
         );
       })}
     </g>
-    {/* orbit dot */}
-    <g
-      style={{ transformOrigin: "210px 210px" }}
-      className="flip-motif-orbit"
-    >
-      <circle cx={210} cy={130} r={4.5} fill="hsl(var(--primary))" />
-      <circle
-        cx={210}
-        cy={130}
-        r={9}
-        fill="none"
-        stroke="hsl(var(--primary))"
-        strokeWidth={1}
-        opacity={0.4}
-      />
+
+    {/* nodes */}
+    <g fill="hsl(var(--primary))">
+      {NODES.map((n, i) => (
+        <g
+          key={`n${i}`}
+          className="flip-motif-dot"
+          style={{ animationDelay: `${i * 60}ms`, transformOrigin: `${n.x}px ${n.y}px` }}
+        >
+          <circle cx={n.x} cy={n.y} r={n.r * 2.4} opacity={n.o * 0.18} />
+          <circle cx={n.x} cy={n.y} r={n.r} opacity={n.o} />
+        </g>
+      ))}
     </g>
-    {/* center node */}
+
+    {/* trunk pulse halo */}
     <circle
-      cx={210}
-      cy={210}
-      r={3.5}
-      fill="hsl(var(--primary))"
+      cx={290}
+      cy={230}
+      r={16}
+      fill="none"
+      stroke="hsl(var(--primary))"
+      strokeWidth={1.2}
+      opacity={0.55}
       className="flip-motif-pulse-center"
     />
   </svg>
