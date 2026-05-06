@@ -99,8 +99,8 @@ const AutomationMotif = () => (
 
     {/* trunk pulse halo */}
     <circle
-      cx={290}
-      cy={230}
+      cx={295}
+      cy={270}
       r={16}
       fill="none"
       stroke="hsl(var(--primary))"
