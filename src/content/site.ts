@@ -64,7 +64,7 @@ export type Customer = { name: string; url: string; logo?: string; logoClass?: s
 
 export const CUSTOMERS: Customer[] = [
   { name: "Johnson & Johnson", url: "https://www.jnj.com", logo: "/logos/johnson-and-johnson.png" },
-  { name: "Sony Pictures", url: "https://www.sonypictures.com", logo: "/logos/sony-pictures.png" },
+  { name: "Sony Pictures", url: "https://www.sonypictures.com", logo: "/logos/sony-pictures.png", logoClass: "h-14 md:h-16" },
   { name: "Comcast / Peacock", url: "https://www.peacocktv.com", logo: "/logos/comcast-peacock.png" },
   { name: "Johns Hopkins Medicine", url: "https://www.hopkinsmedicine.org", logo: "/logos/johns-hopkins.png" },
   { name: "Princeton University", url: "https://www.princeton.edu", logo: "/logos/princeton-university.png" },
@@ -80,9 +80,9 @@ export const CUSTOMERS: Customer[] = [
   { name: "MISO Energy", url: "https://www.misoenergy.org", logo: "/logos/miso-energy.png" },
   { name: "PURE Insurance", url: "https://www.pureinsurance.com", logo: "/logos/pure-insurance.png" },
   { name: "National General Insurance", url: "https://www.nationalgeneral.com", logo: "/logos/national-general.png" },
-  { name: "Hamilton Beach", url: "https://www.hamiltonbeach.com", logo: "/logos/hamilton-beach.png" },
+  { name: "Hamilton Beach", url: "https://www.hamiltonbeach.com", logo: "/logos/hamilton-beach.png", logoClass: "h-14 md:h-16" },
   { name: "Burlington", url: "https://www.burlington.com", logo: "/logos/burlington.png" },
-  { name: "White Cap", url: "https://www.whitecap.com", logo: "/logos/white-cap.png" },
+  { name: "White Cap", url: "https://www.whitecap.com", logo: "/logos/white-cap.png", logoClass: "h-14 md:h-16" },
   { name: "KenSeal", url: "https://www.kenseal.com", logo: "/logos/kenseal.png" },
   { name: "The Kennedy Center", url: "https://www.kennedy-center.org", logo: "/logos/kennedy-center.png" },
   { name: "VCU", url: "https://www.vcu.edu", logo: "/logos/vcu.png" },
