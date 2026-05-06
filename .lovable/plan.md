@@ -1,52 +1,52 @@
 ## Goal
 
-Replace the 5 animated SVG motifs on the Flip-Lab cards with a cohesive, on-brand set of AI-generated plexus/neural-node illustrations. White-theme cards stay as they are; the graphics sit cleanly inside.
+Apply the Codepen #1 "Hover Glow Effect" to every **Talk to an expert** CTA across the site, on-brand: cyan button face, animated cyan→soft blue→violet halo that fades in on hover.
 
-## Visual direction (shared across all 5)
+## Visual spec
 
-- Subject built **entirely from interconnected nodes (filled circles) and thin straight lines** — same plexus pattern as the brain reference.
-- **Monochrome brand cyan** (`hsl(195 100% 50%)`) with a soft cyan glow halo behind the densest cluster of nodes.
-- **Transparent PNG**, square 1024×1024, anchored bottom-right of the card with the same left-fade mask we already use.
-- All 5 share identical line weight, node sizing rhythm, and density so the set reads as one system.
+- **Resting state:** solid cyan (`hsl(var(--primary))` = #00B3E3) background, white text, rounded — same silhouette as today, no glow visible.
+- **Hover state:** a softly blurred animated halo appears around the button (≈4px outset). Halo gradient cycles through `#00B3E3 → #4A8BFF → #7A4DFF → #00B3E3` (cyan → soft blue → violet → loop), `background-size: 400%`, sliding via keyframes over ~8s. Halo fades in over 300ms.
+- **Inside the halo:** the cyan button face stays crisp (an inner solid layer covers the gradient center, only the blurred edges leak out).
+- **Reduced motion:** respect `prefers-reduced-motion` — show a static soft cyan glow on hover, no animation.
 
-## The 5 graphics
+## Files touched
 
-| Card | Subject |
-|---|---|
-| AI & Generative | Side-profile human brain (per reference) |
-| Data & Analytics | Stacked database server / cylinder rack |
-| Automation & FinOps | Two interlocking gears |
-| Security & Compliance | Faceted shield with central core |
-| Hybrid Cloud | Stacked database (re-use the Data subject as the user requested) |
+1. **`tailwind.config.ts`** — add `keyframes.glow-shift` (`background-position 0% → 400% → 0%`) and `animation['glow-shift']: 'glow-shift 8s linear infinite'`.
+2. **`src/index.css`** — add a `.btn-glow` utility class implementing the layered `::before` (animated gradient, blurred, opacity 0 → 1 on hover) and `::after` (solid cyan face) pattern. Uses HSL brand tokens, no raw hex outside the gradient stops.
+3. **CTA call sites** — append `btn-glow` to the className of the "Talk to an expert" button at every site-wide instance:
+   - `src/layout/Header.tsx` (desktop + mobile)
+   - `src/sections/home/HeroSection.tsx`
+   - `src/sections/home/FinalCtaSection.tsx` (the actual button under the heading)
+   - `src/sections/products/ProductHeroSection.tsx`
+   - `src/sections/products/ProductCtaSection.tsx`
+   - `src/sections/solutions/PracticesListSection.tsx`
+   - `src/pages/NotFound.tsx`
 
-## Implementation
+   Skipped (not buttons, just copy): the heading text in `FinalCtaSection`, page metadata in `Contact.tsx`.
 
-### 1. Generate 5 transparent PNGs
-Use `imagegen--generate_image` (premium, transparent_background=true), saved to:
-- `src/assets/flip-lab/plexus-brain.png`
-- `src/assets/flip-lab/plexus-database.png`
-- `src/assets/flip-lab/plexus-gears.png`
-- `src/assets/flip-lab/plexus-shield.png`
-- `src/assets/flip-lab/plexus-cloud.png` (same database subject, different seed/composition)
+## Technical details
 
-Each prompt uses a shared base style block to lock consistency:
-> "Minimalist plexus network illustration of [SUBJECT]. Built entirely from small filled circular nodes connected by thin straight lines forming a wireframe mesh. Monochrome cyan color #00B3E3 with a soft cyan glow halo. Clean vector look, no shading, no extra elements. On a solid white background. Centered composition, square format."
+The `.btn-glow` class follows the Kocsten Codepen pattern adapted to our stack:
 
-### 2. Replace the motifs
-- Delete the 5 SVG components in `src/sections/flip-lab/motifs/` (AiMotif, DataMotif, AutomationMotif, SecurityMotif, CloudMotif).
-- Create a single `PlexusMotif.tsx` that takes an `image` prop and renders the PNG inside the existing `.flip-motif-svg` slot — fixed size, bottom-right anchored, left fade mask preserved.
-- Update `src/pages/FlipLab.tsx` to import the 5 PNGs and pass each to `<PlexusMotif image={...} />`.
+```text
+.btn-glow              → position: relative; isolate; overflow visible; z-index: 0
+.btn-glow::before      → inset: -3px; border-radius: inherit; z-index: -1;
+                         background: linear-gradient(45deg, cyan, blue, violet, cyan);
+                         background-size: 400%; filter: blur(6px); opacity: 0;
+                         transition: opacity 300ms; animation: glow-shift 8s linear infinite (paused)
+.btn-glow:hover::before→ opacity: 1; animation-play-state: running
+.btn-glow::after       → inset: 0; border-radius: inherit; z-index: -1;
+                         background: hsl(var(--primary))   ← keeps the face solid cyan
+@media (prefers-reduced-motion: reduce)
+                       → ::before uses static radial cyan glow, no keyframes
+```
 
-### 3. Cleanup
-- Remove the now-unused motif keyframes (`flip-motif-line-drift`, `flip-motif-dot-bloom`, `flip-motif-orbit`, `flip-motif-pulse-soft`, `flip-motif-chevron-draw`, `flip-motif-shard-in`, `flip-motif-line`, `flip-motif-dot`, `flip-motif-ring`, `flip-motif-orbit`, `flip-motif-pulse-center`, `flip-motif-chevron`, `flip-motif-shard`, `flip-motif-lock`) from `src/index.css`.
-- Keep `.flip-motif-mask` and `.flip-motif-svg` (still used).
+Because shadcn `Button` already has `bg-primary` and rounded corners, `.btn-glow` only adds the halo machinery — no visual change at rest. The class works whether `asChild` wraps a `<Link>` or not, since the pseudo-elements attach to the rendered button element.
+
+No changes to `src/components/ui/button.tsx` (per CLAUDE.md: don't touch shadcn primitives).
 
 ## Out of scope
 
-- No layout/copy changes to cards.
-- No changes outside `/flip-lab`.
-- Animations: the new images are static. Hover still flips the card to the back face — that's the only motion. (If you want a subtle idle drift later, easy to add.)
-
-## Recommendation
-
-Generate at **premium** quality with `transparent_background: true`. Premium handles fine-line repetition (which plexus art needs) much better than fast/standard, and transparency means we can drop the same asset onto any future dark-themed card without re-rendering.
+- Other CTAs ("Explore solutions", "View case study", etc.) — unchanged.
+- Color-token changes — palette stays as defined in `BRAND.md`.
+- Animation on focus-visible (keyboard) — current focus ring is sufficient; can be added later if desired.

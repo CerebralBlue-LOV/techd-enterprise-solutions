@@ -25,7 +25,7 @@ export const ProductCtaSection = ({ practice, product }: Props) => (
             organizations. Tell us your challenge.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="btn-glow">
               <Link to="/contact">
                 Get in touch <ArrowRight className="ml-1" />
               </Link>
