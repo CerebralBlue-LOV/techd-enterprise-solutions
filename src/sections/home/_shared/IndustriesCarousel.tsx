@@ -232,10 +232,6 @@ const IndustryCard = ({ ind, index, containerRef, scrollTick }: CardProps) => {
           <p className="mt-2 text-xs font-light leading-relaxed text-muted-foreground line-clamp-3">
             {ind.outcome}
           </p>
-          <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            Explore
-            <ChevronRight className="h-3 w-3" />
-          </span>
         </div>
       </div>
     </Link>
