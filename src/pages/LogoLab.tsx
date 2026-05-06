@@ -22,28 +22,77 @@ const LogoLab = () => {
     0,
   );
 
-  const handleSave = async () => {
+  const buildPatchedFile = (sourceText: string) => {
+    let src = sourceText;
+    for (const c of CUSTOMERS) {
+      const next = edits[c.name];
+      const current = c.logoClass ?? null;
+      if (next === current) continue;
+
+      const escName = c.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const objRe = new RegExp(`\\{[^{}]*name:\\s*"${escName}"[^{}]*\\}`, "m");
+      const m = src.match(objRe);
+      if (!m) continue;
+      const orig = m[0];
+      let updated = orig;
+      const hasClass = /logoClass:\s*"[^"]*"/.test(updated);
+
+      if (next && next.length > 0) {
+        if (hasClass) {
+          updated = updated.replace(/logoClass:\s*"[^"]*"/, `logoClass: "${next}"`);
+        } else {
+          updated = updated.replace(/\s*\}\s*$/, `, logoClass: "${next}" }`);
+        }
+      } else if (hasClass) {
+        updated = updated.replace(/,\s*logoClass:\s*"[^"]*"/, "");
+      }
+      if (updated !== orig) src = src.replace(orig, updated);
+    }
+    return src;
+  };
+
+  const handleDownload = async () => {
     setSaving(true);
     setMessage(null);
     try {
-      const payload = CUSTOMERS.filter(
-        (c) => edits[c.name] !== (c.logoClass ?? null),
-      ).map((c) => ({ name: c.name, logoClass: edits[c.name] }));
-
-      const res = await fetch("/__lab/save-logo-sizes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error(await res.text());
-      const body = await res.json();
-      setMessage(`Saved ${body.changed} change(s). Reloading…`);
-      setTimeout(() => window.location.reload(), 600);
+      const res = await fetch("/src/content/site.ts?raw");
+      if (!res.ok) throw new Error("Could not read site.ts");
+      const text = await res.text();
+      const patched = buildPatchedFile(text);
+      const blob = new Blob([patched], { type: "text/typescript" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "site.ts";
+      a.click();
+      URL.revokeObjectURL(url);
+      setMessage(`Downloaded site.ts with ${dirtyCount} change(s). Replace src/content/site.ts with this file.`);
     } catch (err) {
       setMessage(`Error: ${String(err)}`);
+    } finally {
       setSaving(false);
     }
   };
+
+  const handleCopyDiff = async () => {
+    setSaving(true);
+    setMessage(null);
+    try {
+      const lines = CUSTOMERS.filter((c) => edits[c.name] !== (c.logoClass ?? null))
+        .map((c) => {
+          const v = edits[c.name];
+          return v ? `  ${c.name}: logoClass: "${v}"` : `  ${c.name}: (remove logoClass)`;
+        })
+        .join("\n");
+      await navigator.clipboard.writeText(lines);
+      setMessage(`Copied ${dirtyCount} change(s) to clipboard.`);
+    } catch (err) {
+      setMessage(`Error: ${String(err)}`);
+    } finally {
+      setSaving(false);
+    }
+  };
+
 
   const handleReset = () => setEdits(initial);
 
