@@ -1,11 +1,6 @@
 import Layout from "@layout/Layout";
 import FlipCard from "@/sections/flip-lab/FlipCard";
-import PlexusMotif from "@/sections/flip-lab/PlexusMotif";
-import plexusBrain from "@/assets/flip-lab/plexus-brain.webp";
-import plexusDatabase from "@/assets/flip-lab/plexus-database.webp";
-import plexusGears from "@/assets/flip-lab/plexus-gears.webp";
-import plexusShield from "@/assets/flip-lab/plexus-shield.webp";
-import plexusCloud from "@/assets/flip-lab/plexus-cloud.webp";
+import PlexusShapeMotif from "@/sections/flip-lab/PlexusShapeMotif";
 
 const cards = [
   {
@@ -17,7 +12,7 @@ const cards = [
       "Watsonx, RAG pipelines, evaluation harnesses, and policy guardrails. We put generative AI in front of customers and employees safely — grounded in your governed data, observable in production, and defensible to legal, risk, and compliance.",
     chips: ["Watsonx", "RAG", "Guardrails", "Evals", "LLMOps"],
     ctaLabel: "Explore AI",
-    motif: <PlexusMotif image={plexusBrain} alt="Neural plexus brain" />,
+    motif: <PlexusShapeMotif shape="brain" />,
   },
   {
     eyebrow: "Data & Analytics",
@@ -28,7 +23,7 @@ const cards = [
       "Db2, lakehouse architectures, lineage, and governance. We modernize data estates so analytics and AI stand up to audit, scale across business units, and deliver answers your executives actually trust.",
     chips: ["Db2", "Lakehouse", "Lineage", "Governance", "Quality"],
     ctaLabel: "Explore Data",
-    motif: <PlexusMotif image={plexusDatabase} alt="Neural plexus database" />,
+    motif: <PlexusShapeMotif shape="database" />,
   },
   {
     eyebrow: "Automation & FinOps",
@@ -39,7 +34,7 @@ const cards = [
       "Apptio, Turbonomic, and Instana deployed end-to-end. See every workload and dollar, cut cloud waste, automate change, and free engineers from the repetitive work that drains your roadmap.",
     chips: ["Apptio", "Turbonomic", "Instana", "FinOps", "AIOps"],
     ctaLabel: "Explore Automation",
-    motif: <PlexusMotif image={plexusGears} alt="Neural plexus gears" />,
+    motif: <PlexusShapeMotif shape="gears" />,
   },
   {
     eyebrow: "Security & Compliance",
@@ -50,7 +45,7 @@ const cards = [
       "Guardium, QRadar, identity, and zero-trust patterns hardened on real Fortune 500 environments. We help regulated organizations protect crown-jewel data, satisfy auditors, and respond to incidents with confidence.",
     chips: ["Guardium", "QRadar", "Zero Trust", "IAM", "SOC"],
     ctaLabel: "Explore Security",
-    motif: <PlexusMotif image={plexusShield} alt="Neural plexus shield" />,
+    motif: <PlexusShapeMotif shape="shield" />,
   },
   {
     eyebrow: "Hybrid Cloud",
@@ -61,7 +56,7 @@ const cards = [
       "OpenShift, Power, and IBM Cloud delivered as one architecture. Modern infrastructure that respects existing investments, gives platform teams control, and lets product teams ship without waiting on tickets.",
     chips: ["OpenShift", "Power", "IBM Cloud", "Kubernetes", "Edge"],
     ctaLabel: "Explore Cloud",
-    motif: <PlexusMotif image={plexusCloud} alt="Neural plexus cloud" />,
+    motif: <PlexusShapeMotif shape="cloud" />,
   },
 ];
 
@@ -72,11 +67,11 @@ const FlipLab = () => (
         Internal · Flip-card lab
       </p>
       <h1 className="mt-3 text-4xl font-bold text-secondary">
-        Solution cards — flip prototype
+        Solution cards — animated vector plexus
       </h1>
       <p className="mt-3 max-w-2xl text-base font-light text-muted-foreground">
-        Hover any card to flip and reveal a per-practice animated motif. Brand
-        palette only — primary cyan, secondary, muted, border.
+        Each motif is a true SVG plexus that draws itself in and pulses
+        continuously — fully vector, scalable, and themeable via brand tokens.
       </p>
 
       <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
