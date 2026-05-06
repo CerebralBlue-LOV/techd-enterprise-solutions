@@ -19,7 +19,8 @@ export function saveLogoSizesPlugin(): Plugin {
     name: "save-logo-sizes",
     apply: "serve",
     configureServer(server) {
-      server.middlewares.use("/__lab/save-logo-sizes", async (req, res) => {
+      return () => {
+        server.middlewares.use("/__lab/save-logo-sizes", async (req, res) => {
         if (req.method !== "POST") {
           res.statusCode = 405;
           res.end("Method Not Allowed");
@@ -75,7 +76,8 @@ export function saveLogoSizesPlugin(): Plugin {
             res.end(String(err));
           }
         });
-      });
+        });
+      };
     },
   };
 }
