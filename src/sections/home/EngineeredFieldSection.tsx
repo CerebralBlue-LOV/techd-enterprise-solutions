@@ -93,7 +93,7 @@ export const EngineeredFieldSection = () => (
               Co-authored by Scott Nichols, Senior Developer Analyst at TechD,
               and Garrett Rowe, President of Cerebral Blue.
             </p>
-            <div className="relative mt-8">
+            <div className="relative mt-8 flex justify-center">
               <Button
                 asChild
                 className="group relative overflow-hidden bg-primary text-primary-foreground shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_14px_50px_-10px_hsl(var(--primary)/0.75)]"
