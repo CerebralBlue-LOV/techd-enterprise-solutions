@@ -248,7 +248,7 @@
     transform: rotateY(180deg);
   }
   .solution-card[data-hover="true"] .solution-card-beam {
-    opacity: 0.7;
+    opacity: 0.95;
   }
 }
 .solution-card[data-featured="true"] .solution-card-beam {
