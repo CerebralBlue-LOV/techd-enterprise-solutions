@@ -28,7 +28,7 @@ const cards = [
       "Db2, lakehouse architectures, lineage, and governance. We modernize data estates so analytics and AI stand up to audit, scale across business units, and deliver answers your executives actually trust.",
     chips: ["Db2", "Lakehouse", "Lineage", "Governance", "Quality"],
     ctaLabel: "Explore Data",
-    motif: <DataMotif />,
+    motif: <PlexusMotif image={plexusDatabase} alt="Neural plexus database" />,
   },
   {
     eyebrow: "Automation & FinOps",
@@ -39,7 +39,7 @@ const cards = [
       "Apptio, Turbonomic, and Instana deployed end-to-end. See every workload and dollar, cut cloud waste, automate change, and free engineers from the repetitive work that drains your roadmap.",
     chips: ["Apptio", "Turbonomic", "Instana", "FinOps", "AIOps"],
     ctaLabel: "Explore Automation",
-    motif: <AutomationMotif />,
+    motif: <PlexusMotif image={plexusGears} alt="Neural plexus gears" />,
   },
   {
     eyebrow: "Security & Compliance",
@@ -50,7 +50,7 @@ const cards = [
       "Guardium, QRadar, identity, and zero-trust patterns hardened on real Fortune 500 environments. We help regulated organizations protect crown-jewel data, satisfy auditors, and respond to incidents with confidence.",
     chips: ["Guardium", "QRadar", "Zero Trust", "IAM", "SOC"],
     ctaLabel: "Explore Security",
-    motif: <SecurityMotif />,
+    motif: <PlexusMotif image={plexusShield} alt="Neural plexus shield" />,
   },
   {
     eyebrow: "Hybrid Cloud",
@@ -61,7 +61,7 @@ const cards = [
       "OpenShift, Power, and IBM Cloud delivered as one architecture. Modern infrastructure that respects existing investments, gives platform teams control, and lets product teams ship without waiting on tickets.",
     chips: ["OpenShift", "Power", "IBM Cloud", "Kubernetes", "Edge"],
     ctaLabel: "Explore Cloud",
-    motif: <CloudMotif />,
+    motif: <PlexusMotif image={plexusCloud} alt="Neural plexus cloud" />,
   },
 ];
 
