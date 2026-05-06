@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { INDUSTRIES, type Industry } from "@content/industries";
 
 /**
- * IndustriesCarousel — light-theme horizontal card rail.
- * Drag-to-scroll only (no arrow controls). Soft 3D tilt based on distance
- * from center. Centered text on each card with quiet primary motifs behind.
+ * IndustriesCarousel — 3D stacked-deck presentation.
+ * The active card sits in front; the next few peek behind with progressive
+ * scale / translate / opacity. Auto-advances; pauses on hover/focus.
+ * Controls: click peek card, drag/swipe, ←/→ keys, dot indicators.
  */
 
-// ---------- Per-industry motifs — light, soft, primary-only ----------
+// ---------- Per-industry motifs (reused) ----------
 
 type MotifProps = { id: string };
 
@@ -16,7 +18,7 @@ const MotifGrid = ({ id }: MotifProps) => (
   <svg viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
     <defs>
       <radialGradient id={`g-${id}`} cx="50%" cy="50%" r="55%">
-        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.12" />
+        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
         <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
       </radialGradient>
     </defs>
@@ -36,7 +38,7 @@ const MotifWaves = ({ id }: MotifProps) => (
   <svg viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
     <defs>
       <radialGradient id={`g-${id}`} cx="50%" cy="50%" r="55%">
-        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.12" />
+        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
         <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
       </radialGradient>
     </defs>
@@ -73,7 +75,7 @@ const MotifNodes = ({ id }: MotifProps) => {
     <svg viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
       <defs>
         <radialGradient id={`g-${id}`} cx="50%" cy="50%" r="55%">
-          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.12" />
+          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
           <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
         </radialGradient>
       </defs>
@@ -99,21 +101,14 @@ const MotifPulse = ({ id }: MotifProps) => (
   <svg viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
     <defs>
       <radialGradient id={`g-${id}`} cx="50%" cy="50%" r="55%">
-        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.12" />
+        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
         <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
       </radialGradient>
     </defs>
     <rect width="400" height="360" fill={`url(#g-${id})`} />
     <g fill="none" stroke="hsl(var(--primary))" strokeLinecap="round">
       {Array.from({ length: 8 }).map((_, i) => (
-        <circle
-          key={i}
-          cx={200}
-          cy={180}
-          r={26 + i * 22}
-          strokeWidth={0.7}
-          opacity={0.3 - i * 0.028}
-        />
+        <circle key={i} cx={200} cy={180} r={26 + i * 22} strokeWidth={0.7} opacity={0.3 - i * 0.028} />
       ))}
     </g>
   </svg>
@@ -123,7 +118,7 @@ const MotifBars = ({ id }: MotifProps) => (
   <svg viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
     <defs>
       <radialGradient id={`g-${id}`} cx="50%" cy="50%" r="55%">
-        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.12" />
+        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
         <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
       </radialGradient>
     </defs>
@@ -134,15 +129,7 @@ const MotifBars = ({ id }: MotifProps) => (
         const h = 24 + Math.abs(Math.sin(i * 0.7)) * 200;
         const op = 0.14 + Math.abs(Math.sin(i * 0.35)) * 0.28;
         return (
-          <line
-            key={i}
-            x1={x}
-            y1={180 - h / 2}
-            x2={x}
-            y2={180 + h / 2}
-            strokeWidth={1.4}
-            opacity={op}
-          />
+          <line key={i} x1={x} y1={180 - h / 2} x2={x} y2={180 + h / 2} strokeWidth={1.4} opacity={op} />
         );
       })}
     </g>
@@ -153,7 +140,7 @@ const MotifChevrons = ({ id }: MotifProps) => (
   <svg viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
     <defs>
       <radialGradient id={`g-${id}`} cx="50%" cy="50%" r="55%">
-        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.12" />
+        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
         <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
       </radialGradient>
     </defs>
@@ -182,250 +169,215 @@ const MOTIFS = [MotifWaves, MotifNodes, MotifGrid, MotifBars, MotifPulse, MotifC
 interface CardProps {
   ind: Industry;
   index: number;
-  containerRef: React.RefObject<HTMLDivElement>;
-  scrollTick: number;
+  depth: number; // 0 = active, 1.. peek
+  isActive: boolean;
+  total: number;
+  onActivate: () => void;
+  reducedMotion: boolean;
 }
 
-const IndustryCard = ({ ind, index, containerRef, scrollTick }: CardProps) => {
-  const ref = useRef<HTMLAnchorElement | null>(null);
-  const [tilt, setTilt] = useState(0);
+const StackedCard = ({ ind, index, depth, isActive, total, onActivate, reducedMotion }: CardProps) => {
   const Motif = MOTIFS[index % MOTIFS.length];
 
-  useEffect(() => {
-    const el = ref.current;
-    const wrap = containerRef.current;
-    if (!el || !wrap) return;
-    const cardRect = el.getBoundingClientRect();
-    const wrapRect = wrap.getBoundingClientRect();
-    const cardCenter = cardRect.left + cardRect.width / 2;
-    const wrapCenter = wrapRect.left + wrapRect.width / 2;
-    const delta = (cardCenter - wrapCenter) / wrapRect.width;
-    const next = Math.max(-10, Math.min(10, delta * 18));
-    setTilt(next);
-  }, [scrollTick, containerRef]);
+  // Visual depth tiers (cap at 3). depth >= 4 = hidden.
+  const d = Math.min(depth, 4);
+  const visible = d <= 3;
+
+  const scale = [1, 0.94, 0.88, 0.82, 0.78][d];
+  const translateY = [0, 18, 34, 48, 60][d];
+  const opacity = visible ? [1, 0.75, 0.45, 0.22, 0][d] : 0;
+  const blur = d >= 2 ? `blur(${(d - 1) * 1.2}px)` : "none";
+  const zIndex = total - d;
+
+  const transform = reducedMotion
+    ? "none"
+    : `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isActive) {
+      e.preventDefault();
+      onActivate();
+    }
+  };
 
   return (
-    <Link
-      ref={ref}
-      to={`/industries#${ind.id}`}
-      className="group relative block shrink-0 snap-center"
+    <div
+      className="absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
       style={{
-        width: "clamp(260px, 30vw, 340px)",
-        perspective: "1400px",
+        transform,
+        opacity,
+        zIndex,
+        filter: reducedMotion ? "none" : blur,
+        pointerEvents: visible && d <= 1 ? "auto" : "none",
       }}
+      aria-hidden={!isActive}
     >
-      <div
-        className="relative h-[240px] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_8px_20px_-16px_hsl(var(--primary)/0.18)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-[0_10px_24px_-18px_hsl(var(--primary)/0.28)]"
-        style={{
-          transform: `rotateY(${tilt}deg)`,
-          transformStyle: "preserve-3d",
-        }}
+      <Link
+        to={`/industries#${ind.id}`}
+        onClick={handleClick}
+        tabIndex={isActive ? 0 : -1}
+        className="group relative block h-full w-full overflow-hidden rounded-2xl border border-border bg-background shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4),0_8px_20px_-16px_hsl(var(--primary)/0.18)]"
       >
         <Motif id={ind.id} />
-
-        {/* Soft full-card legibility scrim */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background/95" />
 
-        <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-          <h3 className="text-xl font-bold leading-tight text-secondary">{ind.name}</h3>
-          <p className="mt-2 text-xs font-light leading-relaxed text-muted-foreground line-clamp-3">
-            {ind.outcome}
+        <div className="relative flex h-full flex-col items-center justify-center px-8 text-center">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+            {ind.regulation}
           </p>
+          <h3 className="mt-3 text-2xl font-bold leading-tight text-secondary md:text-3xl">
+            {ind.name}
+          </h3>
+          {isActive && (
+            <>
+              <p className="mt-4 max-w-md text-sm font-light leading-relaxed text-muted-foreground line-clamp-3">
+                {ind.outcome}
+              </p>
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-primary transition-transform duration-200 group-hover:translate-x-0.5">
+                See industry
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            </>
+          )}
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
-// ---------- Carousel ----------
+// ---------- Deck ----------
 
 export const IndustriesCarousel = () => {
-  const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [tick, setTick] = useState(0);
-  const dragState = useRef<{
-    down: boolean;
-    startX: number;
-    scroll: number;
-    moved: boolean;
-    lastX: number;
-    lastT: number;
-    velocity: number;
-  }>({ down: false, startX: 0, scroll: 0, moved: false, lastX: 0, lastT: 0, velocity: 0 });
-  const momentumRaf = useRef<number | null>(null);
+  const N = INDUSTRIES.length;
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const dragRef = useRef<{ down: boolean; startX: number; dx: number }>({
+    down: false,
+    startX: 0,
+    dx: 0,
+  });
 
-  const updateState = useCallback(() => setTick((t) => t + 1), []);
+  const next = useCallback(() => setActive((i) => (i + 1) % N), [N]);
+  const prev = useCallback(() => setActive((i) => (i - 1 + N) % N), [N]);
 
-  const cancelMomentum = () => {
-    if (momentumRaf.current != null) {
-      cancelAnimationFrame(momentumRaf.current);
-      momentumRaf.current = null;
-    }
-  };
-
-  const startMomentum = useCallback(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    let v = dragState.current.velocity; // px per ms
-    if (Math.abs(v) < 0.05) return;
-    const step = () => {
-      if (!el) return;
-      el.scrollLeft -= v * 16;
-      v *= 0.94;
-      if (Math.abs(v) > 0.05) {
-        momentumRaf.current = requestAnimationFrame(step);
-      } else {
-        momentumRaf.current = null;
-      }
-    };
-    momentumRaf.current = requestAnimationFrame(step);
+  // Reduced motion
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Scroll listener for tilt updates
+  // Auto-advance
   useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(updateState);
+    if (paused || reducedMotion) return;
+    const id = window.setInterval(next, 6000);
+    const onVis = () => {
+      if (document.hidden) window.clearInterval(id);
     };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    updateState();
+    document.addEventListener("visibilitychange", onVis);
     return () => {
-      el.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(raf);
+      window.clearInterval(id);
+      document.removeEventListener("visibilitychange", onVis);
     };
-  }, [updateState]);
+  }, [paused, reducedMotion, next]);
 
-  // Edge-hover auto-scroll. Cursor near left/right edge → pan that way.
-  // Tracks the cursor on `window` so a stationary pointer still scrolls.
-  useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    let raf = 0;
-    let mouseX: number | null = null;
-    let mouseY: number | null = null;
-
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
-      if (mouseX == null || mouseY == null || dragState.current.down) return;
-      const rect = el.getBoundingClientRect();
-      // Only act when the cursor is vertically within the rail
-      if (mouseY < rect.top || mouseY > rect.bottom) return;
-      if (mouseX < rect.left || mouseX > rect.right) return;
-      const zone = 200; // wider sensitivity zone (px)
-      const distLeft = mouseX - rect.left;
-      const distRight = rect.right - mouseX;
-      const maxSpeed = 12; // ~720px/s at 60fps
-      let speed = 0;
-      if (distLeft < zone) {
-        const t = 1 - distLeft / zone; // 0..1
-        speed = -(0.25 + t * 0.75) * maxSpeed;
-      } else if (distRight < zone) {
-        const t = 1 - distRight / zone;
-        speed = (0.25 + t * 0.75) * maxSpeed;
-      }
-      if (speed !== 0) el.scrollLeft += speed;
-    };
-
-    const onMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    };
-
-    window.addEventListener("mousemove", onMove);
-    raf = requestAnimationFrame(tick);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    const el = wrapRef.current;
-    if (!el) return;
-    cancelMomentum();
-    dragState.current = {
-      down: true,
-      startX: e.pageX,
-      scroll: el.scrollLeft,
-      moved: false,
-      lastX: e.pageX,
-      lastT: performance.now(),
-      velocity: 0,
-    };
-    el.classList.add("cursor-grabbing");
-  };
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!dragState.current.down) return;
-    const el = wrapRef.current;
-    if (!el) return;
-    const dx = e.pageX - dragState.current.startX;
-    if (Math.abs(dx) > 5) dragState.current.moved = true;
-    el.scrollLeft = dragState.current.scroll - dx;
-    const now = performance.now();
-    const dt = now - dragState.current.lastT;
-    if (dt > 0) {
-      // velocity in px/ms (positive = moving cursor right => scrollLeft decreases)
-      dragState.current.velocity = (e.pageX - dragState.current.lastX) / dt;
-    }
-    dragState.current.lastX = e.pageX;
-    dragState.current.lastT = now;
-  };
-  const stopDrag = () => {
-    if (!dragState.current.down) return;
-    dragState.current.down = false;
-    wrapRef.current?.classList.remove("cursor-grabbing");
-    startMomentum();
-  };
-  const onClickCapture = (e: React.MouseEvent) => {
-    if (dragState.current.moved) {
+  // Keyboard
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight") {
       e.preventDefault();
-      e.stopPropagation();
-      dragState.current.moved = false;
+      next();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      prev();
+    }
+  };
+
+  // Drag / swipe
+  const onPointerDown = (e: React.PointerEvent) => {
+    dragRef.current = { down: true, startX: e.clientX, dx: 0 };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!dragRef.current.down) return;
+    dragRef.current.dx = e.clientX - dragRef.current.startX;
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (!dragRef.current.down) return;
+    const dx = dragRef.current.dx;
+    dragRef.current.down = false;
+    if (Math.abs(dx) > 60) {
+      if (dx < 0) next();
+      else prev();
+      // Suppress the click that follows on the active <Link>
+      const target = e.target as HTMLElement;
+      const link = target.closest("a");
+      if (link) {
+        const blocker = (ev: Event) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          link.removeEventListener("click", blocker, true);
+        };
+        link.addEventListener("click", blocker, true);
+      }
     }
   };
 
   return (
-    <div className="relative">
+    <div
+      className="relative mx-auto w-full max-w-[560px]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <div
-        ref={wrapRef}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={stopDrag}
-        onMouseLeave={stopDrag}
-        onClickCapture={onClickCapture}
-        className="flex cursor-grab snap-x snap-proximity gap-5 overflow-x-auto overflow-y-hidden py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-        style={{ paddingInline: "max(1.5rem, calc((100% - 1200px) / 2))" }}
+        role="group"
+        aria-roledescription="carousel"
+        aria-label="Industries"
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        className="relative h-[340px] cursor-grab touch-pan-y select-none outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-2xl md:h-[360px]"
+        style={{ perspective: "1400px" }}
       >
+        {INDUSTRIES.map((ind, i) => {
+          const depth = (i - active + N) % N;
+          return (
+            <StackedCard
+              key={ind.id}
+              ind={ind}
+              index={i}
+              depth={depth}
+              isActive={depth === 0}
+              total={N}
+              onActivate={() => setActive(i)}
+              reducedMotion={reducedMotion}
+            />
+          );
+        })}
+      </div>
+
+      {/* Dots */}
+      <div className="mt-6 flex items-center justify-center gap-2">
         {INDUSTRIES.map((ind, i) => (
-          <IndustryCard
+          <button
             key={ind.id}
-            ind={ind}
-            index={i}
-            containerRef={wrapRef}
-            scrollTick={tick}
+            type="button"
+            aria-label={`Go to ${ind.name}`}
+            aria-current={i === active}
+            onClick={() => setActive(i)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === active ? "w-6 bg-primary" : "w-1.5 bg-muted-foreground/40 hover:bg-muted-foreground/70"
+            }`}
           />
         ))}
       </div>
-
-      <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background via-background/80 to-transparent transition-opacity duration-300"
-        style={{ opacity: (wrapRef.current?.scrollLeft ?? 0) > 8 ? 1 : 0 }}
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background via-background/80 to-transparent transition-opacity duration-300"
-        style={{
-          opacity:
-            wrapRef.current &&
-            wrapRef.current.scrollLeft >=
-              wrapRef.current.scrollWidth - wrapRef.current.clientWidth - 8
-              ? 0
-              : 1,
-        }}
-      />
     </div>
   );
 };
