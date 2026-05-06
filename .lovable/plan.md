@@ -1,94 +1,86 @@
+# Solution Cards v3 — Full Flip + Animated Border Beam
 
-# Solutions Cards v2 — Particle Motifs + Slide-Up Reveal
+Inspired by the Uiverse reference, but softer, slower, and on-brand.
 
-Upgrade the five Home Solutions cards: replace flat SVG motifs with real particle/three.js mini-scenes (in the same family as our globe / field / orbit), add a slide-up info panel on hover, and remove the "Learn more →" arrow pattern across the site.
+## 1. Remove particle scenes
 
-## What changes
+- Delete `src/sections/home/_shared/cards/` directory entirely (all 5 scene files + `CardParticleCanvas.tsx` + `index.ts`).
+- Remove `lazy` imports, `Suspense`, and `SCENE_MAP` from `SolutionsGridSection.tsx`.
+- Drop the `scene` prop from `SolutionCard`.
+- Remove the top "scene zone" (the 160px canvas band) from the front face — the front becomes pure content with breathing room.
 
-### 1. Per-card particle motifs (three.js)
+## 2. Full-card flip (slow, soft)
 
-Each card gets its own small `<Canvas>` mounted in the 140px header zone, sharing the look and feel of `ParticleGlobe`, `HeroParticleField`, and `ParticleOrbit`. All scenes use cyan `#00B3E3` + soft cyan highlights, transparent background, additive blending on highlights — same visual DNA as the hero.
+The whole card flips, not the inner content.
 
-| Practice | Particle scene |
-|---|---|
-| AI & Generative | **Neural cloud** — ~600 particles forming a soft brain/blob; bright nodes pulse and short connecting filaments draw between nearest neighbors. Slight breathing motion. |
-| Data & Analytics | **Particle grid plane** — ~700 particles on a tilted grid; a wave of brightness travels diagonally across; ~30 highlight nodes pulse like data points. |
-| Automation | **Particle flow stream** — ~500 particles streaming left-to-right along a sine path with a fast-moving bright "packet" that recycles. |
-| Security | **Particle shield dome** — ~600 particles on a half-sphere; subtle ripples emanate from a center node when "armed"; cursor proximity intensifies the ripple. |
-| Hybrid Cloud | **Mini orbit** — scaled-down `ParticleOrbit` (~600 particles), no cursor push, slow breathing only. Reuses existing math. |
+- Outer wrapper `.solution-card` keeps perspective (`perspective: 1200px`) and has no background.
+- Inner `.solution-card-inner` is the flipping element: `transform-style: preserve-3d`, `transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1)` (slow, eased).
+- On hover (`data-hover="true"`): `transform: rotateY(180deg)`.
+- `.solution-card-front` and `.solution-card-back` are absolutely positioned, both with `backface-visibility: hidden`.
+- Back is pre-rotated `rotateY(180deg)`.
+- Tilt-on-cursor effect is removed — flip is the only hover transform.
+- `prefers-reduced-motion`: replace flip with a 250ms cross-fade between front and back.
+- Touch devices (`hover: none`): no flip; show front only (back content is reachable via the link target page).
 
-Shared concerns:
-- All five scenes share one tiny base component (`CardParticleCanvas`) that handles `<Canvas>` setup, dpr, transparent bg, and pause-when-offscreen.
-- ~600 particles per card × 5 cards is well within budget (hero already runs ~3000). We pause animation when the card is off-screen using `IntersectionObserver` and set `frameloop="demand"` when not hovered for non-AI cards to save GPU.
-- `prefers-reduced-motion`: render a single static frame, no animation loop.
-- Mobile (<`md`): keep the canvas but pause the loop when not in viewport; if perf is an issue we fall back to the existing SVG motifs (kept as a `StaticFallback` per scene).
+## 3. Animated border beam (cyan → white gradient)
 
-### 2. Slide-up reveal panel on hover
-
-No flip. On hover (desktop, hover-capable devices):
-
-- A panel slides up from the bottom of the card, covering ~60% of the card height, holding **3 key capabilities** + an underlined text link.
-- The motif zone stays visible above the panel; product chips remain visible behind/under the panel transition.
-- 250ms ease-out, translateY + opacity. Panel exits on `mouseleave`.
-- On touch devices the panel is always visible in a compact form (no hover state to rely on).
-- `prefers-reduced-motion`: panel cross-fades instead of sliding.
-
-Each card needs 3 capability bullets. Source: pull the first 3 entries from `solutions[i].products[0].detail.capabilities` shortened to ~5 words each, OR add a new `Solution.highlights: string[]` field (3 items) for editorial control.
-
-→ Recommendation: add `highlights: [string, string, string]` to `Solution` in `src/content/solutions.ts` and seed it with hand-picked phrases per practice. This keeps card copy tight and decoupled from the long product capability lists.
-
-### 3. Remove the arrow CTA pattern site-wide
-
-User directive: no more "Learn more →" with arrow icons.
-
-- Solutions cards: replace with **underlined text link** ("Explore AI practice", "Explore data practice", etc.) using the existing `.story-link` animated underline utility from `tailwind.config.ts`.
-- Audit and update other arrow-based CTAs on the Home page: `HeroSection`, `EngineeredFieldSection`, `WhyTechDSection`, `FinalCtaSection`. Replace `ArrowRight` icons with the `.story-link` underline pattern (or keep solid buttons without the arrow where the affordance is the button itself).
-- Buttons (filled primary CTAs like "Talk to an architect") keep their solid style but lose any inline `ArrowRight` icon.
-- Footer / nav links: already arrow-free, no change.
-
-## Files
+Achieved with a conic-gradient ring rotating behind the card surfaces.
 
 ```text
-src/sections/home/_shared/
-  cards/
-    CardParticleCanvas.tsx        (new — shared <Canvas> wrapper)
-    AINeuralScene.tsx             (new)
-    DataGridScene.tsx             (new)
-    AutomationFlowScene.tsx       (new)
-    SecurityDomeScene.tsx         (new)
-    CloudOrbitScene.tsx           (new — wraps existing orbit math, scaled)
-  SolutionCard.tsx                (edit — add slide-up reveal panel, swap CTA)
-  motifs/                         (kept as static fallback for reduced-motion)
-
-src/sections/home/SolutionsGridSection.tsx   (edit — pass highlights, scenes)
-src/content/solutions.ts                     (edit — add highlights[3] per practice)
-src/index.css                                (edit — slide-up panel keyframes)
-
-# Arrow-removal pass:
-src/sections/home/HeroSection.tsx
-src/sections/home/EngineeredFieldSection.tsx
-src/sections/home/WhyTechDSection.tsx
-src/sections/home/FinalCtaSection.tsx
+.solution-card (perspective, rounded)
+└── .solution-card-inner (preserve-3d, flips on hover)
+    ├── .solution-card-front
+    │   ├── ::before  ← rotating conic gradient (border beam)
+    │   └── .solution-card-surface (inset 1px, solid bg, holds content)
+    └── .solution-card-back
+        ├── ::before  ← same rotating conic gradient
+        └── .solution-card-surface (inset 1px, solid bg, holds content)
 ```
 
-## Technical notes
+- Beam: `conic-gradient(from 0deg, transparent 0deg, hsl(var(--primary)) 60deg, hsl(0 0% 100%) 90deg, hsl(var(--primary)) 120deg, transparent 180deg, transparent 360deg)`.
+- Animation: `@keyframes border-spin { to { transform: rotate(360deg); } }` at **8s linear infinite** (slow, calm).
+- Beam runs continuously at low opacity (~0.35) and brightens to full on hover (opacity 1).
+- The inner `.solution-card-surface` sits 1px inside the rotating layer, masking its center so only a thin animated ring is visible at the edge.
+- `prefers-reduced-motion`: animation paused; ring shows a static, dim cyan border.
 
-- One `<Canvas>` per card is acceptable on modern browsers; we cap dpr at 1.25 on cards (vs 1.5 on hero), set `frameloop="demand"` while not hovered for low-motion cards, and stop loops via `IntersectionObserver` when off-screen.
-- All scene meshes use `<bufferGeometry>` + `<pointsMaterial>` with `depthWrite={false}` and additive blending on highlights — same pattern as `ParticleOrbit`.
-- Scenes accept `{ active: boolean }` to ramp animation amplitude on hover.
-- Slide-up panel uses CSS-only animation driven by a `data-hover` attribute on the card root, set via `onMouseEnter`/`onMouseLeave`. No Framer Motion needed.
-- A11y: motif `aria-hidden`. Card remains a single `<Link>`; capability list inside reveal panel is just decorative text — main link target is the whole card.
+## 4. Card sizing — better tablet/desktop layout
 
-## Out of scope
+- Grid: `md:grid-cols-2 lg:grid-cols-3` (already correct), but increase row height for visual balance.
+- Add `min-h-[360px] lg:min-h-[400px]` to the card.
+- Increase internal padding from `p-7` to `p-8 lg:p-10`.
+- Larger heading: `text-2xl` → `text-2xl lg:text-[26px]`, with tighter leading.
+- Front face vertical rhythm: practice label (top), heading, description, product chips (pushed to bottom with `mt-auto`) — front becomes a clean editorial layout instead of capped by a graphic band.
 
-- Solutions detail page (`/solutions`).
-- New copy beyond the 3 highlights per practice (we'll draft those during implementation, you approve inline).
-- Replacing arrow CTAs on `/solutions`, `/services`, `/industries`, `/resources`, `/contact` pages — Home only this round; other pages in a follow-up if you confirm.
+## 5. Back face — short pitch + CTA
 
-## Acceptance
+Replace 3-bullet list with a concise pitch paragraph (1–2 sentences) + underlined CTA.
 
-- Each card shows a real particle scene matching the hero family, not flat SVGs.
-- Hovering a card on desktop slides up a panel with 3 capabilities + underlined text CTA, no flip, no arrow.
-- No `ArrowRight` (or any arrow icon) appears in inline CTAs on the Home page.
-- Reduced-motion users see a static motif frame and a cross-fade panel.
-- Lighthouse perf on `/` does not regress more than 4 points (5 small canvases tracked).
+- Add `pitch: string` to `Solution` type in `src/content/solutions.ts`.
+- Seed each practice with a short pitch (~140–180 chars). Examples to write:
+  - **AI**: "Production-ready generative AI grounded in your enterprise data — built on watsonx with measurable business impact, not pilots."
+  - **Data & Analytics**: …
+  - **Automation**: …
+  - **Security**: …
+  - **Hybrid Cloud**: …
+- Back face layout: small eyebrow ("Explore AI practice") → pitch paragraph (`text-base`, secondary) → underlined `.story-link` CTA aligned bottom-left.
+- `highlights` field stays in the type for future use but is unused on the home grid.
+
+## 6. Files
+
+**Edit**
+- `src/sections/home/_shared/SolutionCard.tsx` — remove `scene` prop, remove tilt logic, restructure to front/back with surface + beam, take `pitch` instead of `highlights`.
+- `src/sections/home/SolutionsGridSection.tsx` — drop scene plumbing, pass `pitch`, taller cards.
+- `src/content/solutions.ts` — add `pitch` field with copy for all 5 practices.
+- `src/index.css` — add `.solution-card-inner`, `.solution-card-face`, `.solution-card-surface`, `border-spin` keyframes, reduced-motion + touch fallbacks. Remove old `solution-card-spotlight`, slide-up reveal, and tilt CSS.
+
+**Delete**
+- `src/sections/home/_shared/cards/` (full directory: 7 files).
+
+## 7. Acceptance
+
+- Full card flips slowly (~900ms) on hover; no inner-content sliding.
+- Cyan→white beam rotates softly around the border at all times, brightens on hover.
+- Cards feel taller and more balanced on tablet (md) and desktop (lg).
+- No particle canvases anywhere; bundle drops three.js usage in this section.
+- Reduced-motion users get cross-fade + static border.
+- Touch users see static front face with full content.

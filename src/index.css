@@ -179,74 +179,103 @@
   animation-play-state: paused;
 }
 
-/* Solution cards — spotlight + tilt + motif animations */
+/* Solution cards — full-card flip + animated cyan→white border beam */
 .solution-card {
-  --mx: 50%;
-  --my: 0px;
-  --rx: 0deg;
-  --ry: 0deg;
-  border-color: hsl(var(--border));
-  perspective: 1200px;
+  perspective: 1400px;
+  transition: box-shadow 400ms ease;
+}
+.solution-card-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.solution-card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  isolation: isolate;
+}
+.solution-card-back {
+  transform: rotateY(180deg);
+}
+.solution-card-surface {
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(0.75rem - 1px);
+  background: hsl(var(--background));
+  z-index: 1;
+}
+/* Rotating conic-gradient border beam */
+.solution-card-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 500ms ease;
+  z-index: 0;
+}
+.solution-card-beam::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%) rotate(0deg);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    hsl(var(--primary) / 0.6) 50deg,
+    hsl(0 0% 100%) 90deg,
+    hsl(var(--primary) / 0.6) 130deg,
+    transparent 200deg,
+    transparent 360deg
+  );
+  animation: solution-card-beam-spin 8s linear infinite;
+}
+@keyframes solution-card-beam-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 @media (hover: hover) {
-  .solution-card:hover {
-    border-color: hsl(var(--primary));
-    box-shadow: 0 18px 50px -20px hsl(var(--primary) / 0.35);
+  .solution-card[data-hover="true"] {
+    box-shadow: 0 22px 60px -22px hsl(var(--primary) / 0.35);
   }
-  .solution-card:hover .solution-card-inner,
   .solution-card[data-hover="true"] .solution-card-inner {
     transform: rotateY(180deg);
   }
-}
-.solution-card[data-featured="true"] {
-  border-color: hsl(var(--primary));
-  box-shadow: 0 8px 30px -12px hsl(var(--primary) / 0.35);
-}
-.solution-card-inner {
-  min-height: 100%;
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
-  will-change: transform;
-}
-.solution-card[data-hover="true"] .solution-card-front,
-.solution-card[data-hover="true"] .solution-card-back {
-  pointer-events: none;
-}
-.solution-card-spotlight {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 250ms ease-out;
-  background: radial-gradient(
-    260px circle at var(--mx) var(--my),
-    hsl(var(--primary) / 0.18),
-    transparent 70%
-  );
-}
-@media (hover: hover) {
-  .solution-card:hover .solution-card-spotlight {
+  .solution-card[data-hover="true"] .solution-card-beam {
     opacity: 1;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .solution-card,
-  .solution-card-inner {
-    transform: none !important;
-  }
-  .solution-card:hover .solution-card-inner,
-  .solution-card[data-hover="true"] .solution-card-inner {
-    transform: none !important;
-  }
-  .solution-card-front,
-  .solution-card-back {
-    position: relative;
-    transform: none !important;
-    backface-visibility: visible !important;
-  }
-  .solution-card-back {
-    display: none;
-  }
+.solution-card[data-featured="true"] .solution-card-beam {
+  opacity: 0.7;
 }
+@media (prefers-reduced-motion: reduce) {
+  .solution-card-inner {
+    transition: none;
+    transform: none !important;
+  }
+  .solution-card-beam::before {
+    animation: none;
+  }
+  .solution-card-face {
+    transition: opacity 250ms ease;
+  }
+  .solution-card-back {
+    opacity: 0;
+    transform: rotateY(0deg);
+  }
+  .solution-card[data-hover="true"] .solution-card-front { opacity: 0; }
+  .solution-card[data-hover="true"] .solution-card-back { opacity: 1; }
+}
+@media (hover: none) {
+  .solution-card-back { display: none; }
+}
+
 @keyframes motif-wave {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-3px); }
