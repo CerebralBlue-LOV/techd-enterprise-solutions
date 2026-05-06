@@ -175,9 +175,9 @@
     background: linear-gradient(
       45deg,
       hsl(var(--primary)),
+      hsl(193 100% 55%),
       hsl(193 100% 65%),
-      hsl(193 100% 85%),
-      hsl(193 100% 65%),
+      hsl(193 100% 55%),
       hsl(var(--primary))
     );
     background-size: 600% 600%;
