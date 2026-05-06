@@ -21,8 +21,10 @@ export type Solution = {
   name: string;
   outcome: string;
   description: string;
-  /** 3 short capability phrases shown in the card hover reveal panel. */
+  /** 3 short capability phrases (kept for future use; not on home grid). */
   highlights: [string, string, string];
+  /** Short pitch paragraph shown on the back of the card after flip. */
+  pitch: string;
   /** Short verb phrase used as the card CTA, e.g. "Explore AI practice". */
   ctaLabel: string;
   products: Product[];
