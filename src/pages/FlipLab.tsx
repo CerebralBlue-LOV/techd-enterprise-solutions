@@ -17,7 +17,7 @@ const cards = [
       "Watsonx, RAG pipelines, evaluation harnesses, and policy guardrails. We put generative AI in front of customers and employees safely — grounded in your governed data, observable in production, and defensible to legal, risk, and compliance.",
     chips: ["Watsonx", "RAG", "Guardrails", "Evals", "LLMOps"],
     ctaLabel: "Explore AI",
-    motif: <AiMotif />,
+    motif: <PlexusMotif image={plexusBrain} alt="Neural plexus brain" />,
   },
   {
     eyebrow: "Data & Analytics",
