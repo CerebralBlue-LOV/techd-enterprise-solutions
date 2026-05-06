@@ -1,18 +1,39 @@
-/** Topographic wave lines, drawn then floating. */
-export const AiMotif = () => (
+/**
+ * AI motif — layered flowing line waves (Apple-award style).
+ * Single cyan hue, varied opacity + subtle phase animation.
+ */
+const LINES = 18;
+
+const AiMotif = () => (
   <svg
-    viewBox="0 0 200 140"
-    className="pointer-events-none absolute -bottom-2 -right-2 h-32 w-44 text-primary"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.25}
-    strokeLinecap="round"
+    viewBox="0 0 280 280"
+    preserveAspectRatio="xMaxYMax meet"
+    className="flip-motif-svg"
+    aria-hidden="true"
   >
-    <g className="flip-motif-wave">
-      <path className="flip-motif-draw-long" d="M-10 110 C 30 80, 70 130, 110 95 S 200 110, 230 80" opacity={0.85} />
-      <path className="flip-motif-draw-long" style={{ animationDelay: "120ms" }} d="M-10 90 C 30 60, 70 110, 110 75 S 200 90, 230 60" opacity={0.6} />
-      <path className="flip-motif-draw-long" style={{ animationDelay: "240ms" }} d="M-10 70 C 30 40, 70 90, 110 55 S 200 70, 230 40" opacity={0.4} />
-      <path className="flip-motif-draw-long" style={{ animationDelay: "360ms" }} d="M-10 50 C 30 20, 70 70, 110 35 S 200 50, 230 20" opacity={0.25} />
+    <g fill="none" stroke="hsl(var(--primary))" strokeLinecap="round">
+      {Array.from({ length: LINES }).map((_, i) => {
+        const t = i / (LINES - 1);
+        const yBase = 60 + t * 180;
+        const opacity = 0.18 + t * 0.55;
+        const sw = 1 + t * 0.6;
+        // Each line is a smooth S-curve with a slight per-line phase shift.
+        const d = `M -10 ${yBase}
+                   C 50 ${yBase - 30 - i * 1.2},
+                     120 ${yBase + 30 + i * 1.4},
+                     200 ${yBase - 20 - i * 0.8}
+                   S 320 ${yBase + 10 + i * 0.6}, 360 ${yBase}`;
+        return (
+          <path
+            key={i}
+            d={d}
+            strokeWidth={sw}
+            opacity={opacity}
+            className="flip-motif-line"
+            style={{ animationDelay: `${i * 80}ms` }}
+          />
+        );
+      })}
     </g>
   </svg>
 );
