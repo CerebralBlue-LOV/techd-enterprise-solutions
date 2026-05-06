@@ -313,40 +313,28 @@ const IconLab = () => (
         <div className="mt-12 space-y-8">
           <Row
             letter="A"
-            name="Light glass — soft cyan halo"
-            description="White tile, 1px border, layered cyan glow in opposite corners. Quietest of the three; reads well next to dense card content."
+            name="Light glass — corner halos (original)"
+            description="White tile, 1px border, layered cyan glow in opposite corners. The original — now with a larger glyph."
             recommended
             Style={StyleA}
           />
           <Row
-            letter="B"
-            name="Cyan-tinted glass — primary ring"
-            description="Subtle primary tint background with a 1px primary ring and diagonal cyan sweep. Strongest brand presence while staying on white-family palette."
-            Style={StyleB}
+            letter="A2"
+            name="Light glass — centered radial bloom"
+            description="Single soft radial halo behind the glyph. Most balanced and symmetrical — reads as a focused spotlight."
+            Style={StyleA2}
           />
           <Row
-            letter="C"
-            name="Mute glass — grid + cyan glow"
-            description="White tile with a faint muted-gray grid and a single corner cyan bloom. Architectural feel — useful for technical / engineering surfaces."
-            Style={StyleC}
+            letter="A3"
+            name="Light glass — top arc bloom"
+            description="Halo from above with a thin primary hairline at the top edge. Feels like a header / banner accent."
+            Style={StyleA3}
           />
           <Row
-            letter="D"
-            name="Solid secondary — flat dark tile"
-            description="Pure secondary (#56565A) tile, primary cyan glyph. No halos, no tints — strict two-color combination."
-            Style={StyleD}
-          />
-          <Row
-            letter="E"
-            name="Secondary tile — primary ring"
-            description="Pure secondary tile with a 2px primary ring and a solid primary corner square. Two colors only."
-            Style={StyleE}
-          />
-          <Row
-            letter="F"
-            name="Inverted — primary tile, secondary glyph"
-            description="Solid primary cyan tile with a secondary-gray glyph. The reverse of Style D — boldest brand presence."
-            Style={StyleF}
+            letter="A4"
+            name="Light glass — twin halos + diagonal sweep"
+            description="Stronger version of A: bigger corner halos plus a diagonal cyan sweep. Most brand presence while staying light."
+            Style={StyleA4}
           />
         </div>
 
