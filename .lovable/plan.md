@@ -1,52 +1,66 @@
-# Industries: Stacked Deck Presentation
+# Industries Active Card — Premium Hover
 
-Replace the current flat drag-carousel under "Built for regulated, complex enterprises." with a **3D stacked deck** — the active card sits in front, the next 2–3 peek behind it with progressive scale/offset/blur, and users advance via swipe, click, or auto-advance.
+Add a Uiverse-inspired hover treatment to the **active (center) card** of the industries stacked deck. Inspired by the reference, but in TechD's brand language: cyan instead of gold, restrained, no logo unfold.
 
 ## What changes
 
-- **Component:** rewrite `src/sections/home/_shared/IndustriesCarousel.tsx` as a stacked-deck. Same export name so `EngineeredFieldSection.tsx` stays untouched.
-- **Card content (active card only):** keep current `name` + `outcome`, plus add a small **"See industry →"** CTA linking to `/industries#<id>` (matches today's link target). Background cards show only title + motif, dimmed.
-- **Motifs:** reuse the existing 6 SVG motifs (Waves, Nodes, Grid, Bars, Pulse, Chevrons) — no new assets.
-- **Colors:** strictly current tokens (`primary`, `secondary`, `muted-foreground`, `border`, `background`). No new hex.
+- File: `src/sections/home/_shared/IndustriesCarousel.tsx`, only the active card branch inside `StackedCard`.
+- No new files, no new dependencies, no changes to peek cards or to the deck mechanics.
 
-## Interaction (medium motion)
+## The hover effect (3 layered moves)
 
-- **Active card** — full size, full opacity, soft cyan glow shadow, motif visible.
-- **+1 / +2 / +3 behind** — each step: scale 0.94 / 0.88 / 0.82, translateY +18px / +34px / +48px, opacity 0.7 / 0.45 / 0.25, slight blur on +2/+3.
-- **Auto-advance** every 6s, pauses on hover or focus.
-- **Controls:**
-  - Click on a peeking card → it becomes active.
-  - Swipe left/right (touch + mouse drag) → next / previous.
-  - Keyboard: ←/→ when deck is focused.
-  - Small dot indicators below (one per industry) — clickable, current is `primary`.
-- **Reduced motion** — disable auto-advance, replace 3D transforms with simple opacity crossfade.
+1. **Inset border snap**
+   - A second border sits at `inset: 14px`, color `hsl(var(--primary))`, opacity 0, rotated `4deg`, slightly scaled.
+   - On hover: opacity 1, rotation 0, scale 1. 500ms ease-in-out.
+   - Acts like a "frame inside the frame" — the signature beat from the reference.
 
-## Layout
+2. **Diagonal light sweep (the trail)**
+   - A thin diagonal cyan gradient band sweeps once across the card from top-left to bottom-right on hover-in.
+   - Implemented via a pseudo-element-style `<span>` with `bg-gradient-to-br from-transparent via-primary/25 to-transparent`, `-translate-x-full` → `translate-x-full`, `skew-x-[-12deg]`, 900ms ease-out, single-shot per hover (re-triggers via `group-hover` + transition).
+   - Same family as the existing "Read on IBM.com" button sweep, so it feels consistent.
 
-- Container height ~360px on desktop, 320px on mobile.
-- Single centered card column, max-width ~520px.
-- Dots row + a subtle "drag" hint on first view only.
+3. **Eyebrow letter-spacing expand + caption fade**
+   - The regulation eyebrow (e.g. "HIPAA · HITECH") gets `tracking-[0.2em]` → `tracking-[0.34em]` on hover, 500ms ease-out.
+   - A small "Click to explore →" microcopy line under the existing CTA fades in (opacity 0→1, +6px translateY) on hover. The existing "See industry →" CTA remains as the primary affordance.
 
-## Technical notes
+Plus: card lifts `-translate-y-1` and shadow deepens (`shadow-[0_28px_70px_-30px_hsl(var(--primary)/0.55)]`) on hover, replacing the current static shadow.
+
+## Constraints respected
+
+- Only the active card (`isActive === true`) gets the hover layers — peek cards stay quiet.
+- All colors via tokens (`primary`, `secondary`, `muted-foreground`, `border`, `background`). No new hex.
+- All transitions use existing easing patterns (`ease-out`, `cubic-bezier(0.22, 1, 0.36, 1)`).
+- `prefers-reduced-motion`: skip rotation, skew, sweep, and translate. Keep only opacity changes and the border showing instantly.
+- Pointer behavior unchanged — drag-to-swipe and click-to-activate continue to work because the new layers are `pointer-events-none`.
+
+## Technical sketch
 
 ```text
-Deck state: activeIndex (number), isPaused (bool)
-Render: INDUSTRIES.map((ind, i) => {
-  const offset = (i - activeIndex + N) % N  // 0 = active, 1..N-1 behind
-  const depth = Math.min(offset, 3)         // cap visible depth
-  style = transforms keyed off `depth`
-  zIndex = N - depth
-  pointerEvents = depth <= 1 ? 'auto' : 'none'
-}
+<Link className="group ...">
+  {/* existing motif + scrim + content */}
+
+  {isActive && (
+    <>
+      {/* 1. Inset frame */}
+      <span aria-hidden
+            className="pointer-events-none absolute inset-[14px] rounded-xl border
+                       border-primary opacity-0 rotate-[4deg] scale-[0.98]
+                       transition-all duration-500 ease-in-out
+                       group-hover:opacity-100 group-hover:rotate-0 group-hover:scale-100" />
+
+      {/* 2. Diagonal sweep */}
+      <span aria-hidden
+            className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-12deg]
+                       bg-gradient-to-br from-transparent via-primary/25 to-transparent
+                       transition-transform duration-[900ms] ease-out
+                       group-hover:translate-x-full" />
+    </>
+  )}
+</Link>
 ```
 
-- Use Framer-style CSS transitions (transform + opacity, 500ms cubic-bezier) — no new dependency, keep the existing tailwind/CSS-only approach.
-- Drag detection reuses today's mouse/touch threshold pattern; commit to next/prev when |dx| > 60px.
-- Auto-advance via `setInterval` cleared on hover/focus/visibilitychange.
-- Keep `Link` semantics: each card is wrapped in a `<Link>` but `preventDefault` if drag moved (same guard as today).
+Eyebrow + microcopy use `group-hover:tracking-[0.34em]` and a sibling `group-hover:opacity-100` span.
 
 ## Out of scope
 
-- No change to `EngineeredFieldSection.tsx` content or to the case-study card below.
-- No change to the Solutions FlipCards above.
-- No new images or routes.
+- Peek cards visuals, stacked-deck mechanics, dot indicators (already removed), other home sections.
