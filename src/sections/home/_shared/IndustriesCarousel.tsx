@@ -299,49 +299,46 @@ export const IndustriesCarousel = () => {
     };
   }, [updateState]);
 
-  // Edge-hover auto-scroll. When the cursor is near the left/right edge of the
-  // rail, slowly pan in that direction. Speed scales with proximity to the edge.
+  // Edge-hover auto-scroll. Cursor near left/right edge → pan that way.
+  // Tracks the cursor on `window` so a stationary pointer still scrolls.
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
     let raf = 0;
-    let pointerX: number | null = null;
-    let inside = false;
+    let mouseX: number | null = null;
+    let mouseY: number | null = null;
 
     const tick = () => {
       raf = requestAnimationFrame(tick);
-      if (!inside || pointerX == null || dragState.current.down) return;
+      if (mouseX == null || mouseY == null || dragState.current.down) return;
       const rect = el.getBoundingClientRect();
-      const zone = 110; // corner-only sensitivity zone (px)
-      const distLeft = pointerX - rect.left;
-      const distRight = rect.right - pointerX;
-      const maxSpeed = 5; // ~300px/s at 60fps
+      // Only act when the cursor is vertically within the rail
+      if (mouseY < rect.top || mouseY > rect.bottom) return;
+      if (mouseX < rect.left || mouseX > rect.right) return;
+      const zone = 200; // wider sensitivity zone (px)
+      const distLeft = mouseX - rect.left;
+      const distRight = rect.right - mouseX;
+      const maxSpeed = 12; // ~720px/s at 60fps
       let speed = 0;
       if (distLeft < zone) {
         const t = 1 - distLeft / zone; // 0..1
-        speed = -(0.4 + t * 0.6) * maxSpeed; // gentle floor + slight ramp
+        speed = -(0.25 + t * 0.75) * maxSpeed;
       } else if (distRight < zone) {
         const t = 1 - distRight / zone;
-        speed = (0.4 + t * 0.6) * maxSpeed;
+        speed = (0.25 + t * 0.75) * maxSpeed;
       }
       if (speed !== 0) el.scrollLeft += speed;
     };
 
-    const onMove = (e: PointerEvent) => {
-      pointerX = e.clientX;
-      inside = true;
-    };
-    const onLeave = () => {
-      inside = false;
-      pointerX = null;
+    const onMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
 
-    el.addEventListener("pointermove", onMove);
-    el.addEventListener("pointerleave", onLeave);
+    window.addEventListener("mousemove", onMove);
     raf = requestAnimationFrame(tick);
     return () => {
-      el.removeEventListener("pointermove", onMove);
-      el.removeEventListener("pointerleave", onLeave);
+      window.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(raf);
     };
   }, []);
