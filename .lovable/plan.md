@@ -1,36 +1,54 @@
-# Goal
+# Restore webp motifs + per-card cool effects
 
-Replace the current low-quality SVGs for **database, gears (automation), shield (security), and cloud** with faithful traces of the source webps — matching the quality we just achieved for the brain.
+## Goal
 
-The brain trace worked because we used a **skeleton-based approach**: skeletonize the cyan mask, treat skeleton endpoints + junctions as nodes, walk the skeleton between nodes to get edges. This preserves the original wireframe topology instead of guessing it via Delaunay.
+Switch the FlipLab motifs back to the original webp images and remove the traced SVG versions. On hover (and subtly at rest), each card gets its own distinctive, lightweight effect — overlays/lights/particles layered on top of the static image, not transforms of the image itself.
 
-The current database SVG fails because the same parameters (cluster radius = 16px) are wrong for it — the database has tighter, more regular grid spacing than the brain, so 16px collapses neighboring nodes into blobs.
+## Scope of changes
 
-# What to do
+1. `src/pages/FlipLab.tsx`
+   - Re-import the 5 `.webp` files instead of `.svg`.
+   - Pass a new `variant` prop per card (`ai | data | automation | security | cloud`) so each motif can render a different effect.
+   - Update title/copy on the page from "SVG plexus" back to the original wording.
 
-1. **Generalize the brain script** into a single reusable trace function that takes a per-shape `cluster_radius` parameter (instead of being hard-coded to 16).
+2. `src/sections/flip-lab/PlexusMotif.tsx`
+   - Keep the static webp image + cyan glow halo (current look).
+   - Add a `variant` prop and render an extra absolutely-positioned effect layer per variant.
+   - All effects are pure CSS/SVG overlays — the `<img>` itself does NOT scale, rotate, or move.
+   - All effects respect `prefers-reduced-motion` (disabled when set).
+   - Effects intensify on the parent `[data-hover="true"]` (already set by FlipCard).
 
-2. **Per-shape tuning**: each silhouette has different node spacing in the source webp. Auto-estimate `cluster_radius` from the median spacing of detected skeleton junctions, then optionally hand-tweak. Starting estimates:
-   - database — denser grid → smaller radius (~9–11px)
-   - gears — medium spacing, lots of small features (teeth, hub) → ~10–12px
-   - shield — regular triangulated mesh → ~12–14px
-   - cloud — sparse, rounded → ~12–14px
+3. `src/index.css`
+   - Add the keyframes used by the variants (scoped under a `.flip-motif-fx-*` namespace).
 
-3. **For each shape, iterate**: trace → render SVG to PNG → side-by-side compare with the source webp → adjust `cluster_radius` and stroke/dot sizes until the silhouette and density match. Stop when the silhouette is clearly recognizable and density visually matches the source.
+4. Delete the 5 traced SVGs in `src/assets/flip-lab/plexus-*.svg` (no longer referenced).
 
-4. **Write the 4 final SVGs** to `src/assets/flip-lab/plexus-{database,gears,shield,cloud}.svg`, replacing the current ones. The brain SVG stays as-is.
+## Per-card effect (cool, not "image animation")
 
-5. **Verify in `/flip-lab`**: the existing `FlipLab.tsx` already imports the SVGs by these exact filenames, so no code changes are needed — the new files just get picked up.
+| Card | Variant | Effect |
+|---|---|---|
+| AI & Generative | `ai` | Slow conic-gradient cyan "thinking" sweep behind the brain + 3 pulsing synapse dots that fire in sequence. |
+| Data & Analytics | `data` | Vertical scanline that sweeps top→bottom every 4s + faint binary "0/1" ticker drifting left. |
+| Automation & FinOps | `automation` | Two cyan orbit rings rotating in opposite directions behind the gears + a pulsing core dot. |
+| Security & Compliance | `security` | Hex-grid SVG mask that fades in on hover + a radar-style sweep arc rotating 360° every 6s. |
+| Hybrid Cloud | `cloud` | Soft floating cyan particles (8 dots) drifting upward + a slow horizontal shimmer band across the cloud. |
 
-# Technical notes (skip if not interested)
+Common rules:
+- Layers sit between the glow halo and the `<img>`, with `mix-blend-mode: screen` and low opacity so the image stays the hero.
+- At rest: subtle (opacity ~0.25). On hover: opacity ramps to ~0.7 and animation speeds slightly up.
+- All animations are CSS keyframes (transform/opacity only) — GPU-cheap, no JS, no canvas.
+- `@media (prefers-reduced-motion: reduce)` disables the keyframes; the static decorative layer stays.
 
-- Pipeline: cyan-mask → `skimage.morphology.skeletonize` → 8-neighbor degree map → node pixels = degree==1 (endpoints) ∪ degree>=3 (junctions) → greedy radius cluster → walk skeleton between node pixels to derive edges.
-- Output: 100×100 viewBox, `<line stroke-width="0.3">` + `<circle r="0.85">`, single fill `#00B3E3` — same format as the brain SVG. Fully animatable.
-- Stroke and circle radius may also need per-shape tuning if a shape comes out too dense (thinner stroke) or too sparse (slightly larger dots).
-- No changes to `FlipLab.tsx`, `PlexusMotif.tsx`, or any CSS — purely asset replacement.
+## Out of scope
 
-# Out of scope
+- No changes to FlipCard flip behavior, copy, chips, or CTAs.
+- No changes to other pages.
+- No new dependencies (no framer-motion, no lottie, no canvas libs).
 
-- The webps themselves (kept as-is, can still be used as raster fallback).
-- The brain SVG (already good).
-- Animation work (separate task — the SVGs are ready for it once shapes are right).
+## Technical notes
+
+- Effect layers use `pointer-events-none` and `aria-hidden="true"`.
+- Particle dots are rendered as a fixed array of `<span>` with staggered `animation-delay` — no runtime randomness, deterministic SSR-safe output.
+- Hex grid + radar sweep are inline SVG in the security variant (no extra asset files).
+- Keyframes named `flip-fx-sweep`, `flip-fx-scan`, `flip-fx-orbit`, `flip-fx-radar`, `flip-fx-float`, `flip-fx-pulse` — all added once to `index.css`.
+- Variant→effect mapping lives inside `PlexusMotif.tsx` as a small switch; no new files needed.
