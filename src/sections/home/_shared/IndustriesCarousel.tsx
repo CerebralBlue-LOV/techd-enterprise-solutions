@@ -181,7 +181,8 @@ interface CardPropsExt extends CardProps {
 }
 
 const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActivate, reducedMotion }: CardPropsExt) => {
-  const Motif = MOTIFS[index % MOTIFS.length];
+  void index;
+
 
   // Visual depth tiers (cap at 3). depth >= 4 = hidden.
   const d = Math.min(depth, 4);
@@ -230,8 +231,6 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
             : "border-border shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4),0_8px_20px_-16px_hsl(var(--primary)/0.18)]"
         }`}
       >
-        <Motif id={ind.id} />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background/95" />
 
         {isActive && (
           <>
