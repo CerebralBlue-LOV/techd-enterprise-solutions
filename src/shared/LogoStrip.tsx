@@ -59,7 +59,7 @@ export const LogoStrip = () => {
       aria-label="Trusted by Fortune 500 leaders"
       className="py-10 border-y border-border bg-background"
     >
-      <p className="px-4 text-center text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground whitespace-normal md:whitespace-nowrap">
+      <p className="px-4 text-center text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground whitespace-normal lg:whitespace-nowrap">
         <span>Trusted by leaders in healthcare, media, energy &amp; the public sector</span>
         <span className="mx-3 text-primary">·</span>
         25+ years
