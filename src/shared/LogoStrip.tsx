@@ -37,7 +37,7 @@ const Row = ({
           >
             {c.logo && (
               <img
-                src={c.logo}
+                src={`${import.meta.env.BASE_URL}${c.logo.replace(/^\//, "")}`}
                 alt={c.name}
                 loading="lazy"
                 className={`${c.logoClass ?? "h-10 md:h-12"} w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
