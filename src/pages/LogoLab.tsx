@@ -127,11 +127,19 @@ const LogoLab = () => {
             </button>
             <button
               type="button"
-              onClick={handleSave}
+              onClick={handleCopyDiff}
+              disabled={dirtyCount === 0 || saving}
+              className="rounded-md border border-border px-3 py-2 text-xs font-bold text-secondary disabled:opacity-50 hover:border-primary"
+            >
+              Copy diff
+            </button>
+            <button
+              type="button"
+              onClick={handleDownload}
               disabled={dirtyCount === 0 || saving}
               className="rounded-md bg-primary px-4 py-2 text-xs font-bold text-primary-foreground disabled:opacity-50"
             >
-              {saving ? "Saving…" : "Save changes"}
+              {saving ? "Working…" : "Download site.ts"}
             </button>
           </div>
         </div>
