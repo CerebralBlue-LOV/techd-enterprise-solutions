@@ -65,15 +65,14 @@ const GlassGlyph = ({ practice, opacity = 0.55 }: { practice: string; opacity?: 
   </>
 );
 
-// ---------- Style A: Light glass on background — soft cyan halo ----------
+// ---------- Style A: Light glass on background — soft cyan halo (original) ----------
 const StyleA = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
-    {/* layered cyan glow */}
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
     <span className="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-primary/25 blur-2xl" />
     <span className="absolute -bottom-8 -right-4 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />
     <svg
       viewBox="0 0 64 64"
-      className="relative h-12 w-12 text-primary"
+      className="relative h-16 w-16 text-primary"
       fill="none"
       stroke="currentColor"
       strokeWidth={1.4}
@@ -85,6 +84,67 @@ const StyleA = ({ practice }: { practice: string }) => (
     <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
     <span className="absolute right-5 top-3 h-0.5 w-0.5 rounded-full bg-primary/50" />
     <span className="absolute bottom-3 left-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
+  </div>
+);
+
+// ---------- Style A2: Centered radial halo — single bloom behind glyph ----------
+const StyleA2 = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.22),transparent_70%)]" />
+    <svg
+      viewBox="0 0 64 64"
+      className="relative h-16 w-16 text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <GlassGlyph practice={practice} opacity={0.55} />
+    </svg>
+    <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
+  </div>
+);
+
+// ---------- Style A3: Top-arc halo — bloom from above ----------
+const StyleA3 = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute -top-10 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full bg-primary/30 blur-2xl" />
+    <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+    <svg
+      viewBox="0 0 64 64"
+      className="relative h-16 w-16 text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <GlassGlyph practice={practice} opacity={0.55} />
+    </svg>
+    <span className="absolute bottom-3 left-3 h-1 w-1 rounded-full bg-primary/70" />
+  </div>
+);
+
+// ---------- Style A4: Twin halos — top-left + bottom-right symmetry, bigger ----------
+const StyleA4 = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_12px_32px_-16px_hsl(var(--secondary)/0.45)]">
+    <span className="absolute -left-8 -top-8 h-28 w-28 rounded-full bg-primary/30 blur-2xl" />
+    <span className="absolute -bottom-10 -right-6 h-24 w-24 rounded-full bg-primary/20 blur-2xl" />
+    <span className="absolute inset-0 bg-[linear-gradient(135deg,hsl(var(--primary)/0.08),transparent_50%)]" />
+    <svg
+      viewBox="0 0 64 64"
+      className="relative h-16 w-16 text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.4}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <GlassGlyph practice={practice} opacity={0.55} />
+    </svg>
+    <span className="absolute right-3 top-3 h-1.5 w-1.5 rounded-full bg-primary" />
+    <span className="absolute bottom-3 left-3 h-1 w-1 rounded-full bg-primary/60" />
   </div>
 );
 
@@ -253,40 +313,28 @@ const IconLab = () => (
         <div className="mt-12 space-y-8">
           <Row
             letter="A"
-            name="Light glass — soft cyan halo"
-            description="White tile, 1px border, layered cyan glow in opposite corners. Quietest of the three; reads well next to dense card content."
+            name="Light glass — corner halos (original)"
+            description="White tile, 1px border, layered cyan glow in opposite corners. The original — now with a larger glyph."
             recommended
             Style={StyleA}
           />
           <Row
-            letter="B"
-            name="Cyan-tinted glass — primary ring"
-            description="Subtle primary tint background with a 1px primary ring and diagonal cyan sweep. Strongest brand presence while staying on white-family palette."
-            Style={StyleB}
+            letter="A2"
+            name="Light glass — centered radial bloom"
+            description="Single soft radial halo behind the glyph. Most balanced and symmetrical — reads as a focused spotlight."
+            Style={StyleA2}
           />
           <Row
-            letter="C"
-            name="Mute glass — grid + cyan glow"
-            description="White tile with a faint muted-gray grid and a single corner cyan bloom. Architectural feel — useful for technical / engineering surfaces."
-            Style={StyleC}
+            letter="A3"
+            name="Light glass — top arc bloom"
+            description="Halo from above with a thin primary hairline at the top edge. Feels like a header / banner accent."
+            Style={StyleA3}
           />
           <Row
-            letter="D"
-            name="Solid secondary — flat dark tile"
-            description="Pure secondary (#56565A) tile, primary cyan glyph. No halos, no tints — strict two-color combination."
-            Style={StyleD}
-          />
-          <Row
-            letter="E"
-            name="Secondary tile — primary ring"
-            description="Pure secondary tile with a 2px primary ring and a solid primary corner square. Two colors only."
-            Style={StyleE}
-          />
-          <Row
-            letter="F"
-            name="Inverted — primary tile, secondary glyph"
-            description="Solid primary cyan tile with a secondary-gray glyph. The reverse of Style D — boldest brand presence."
-            Style={StyleF}
+            letter="A4"
+            name="Light glass — twin halos + diagonal sweep"
+            description="Stronger version of A: bigger corner halos plus a diagonal cyan sweep. Most brand presence while staying light."
+            Style={StyleA4}
           />
         </div>
 
