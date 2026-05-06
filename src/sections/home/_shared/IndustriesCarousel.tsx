@@ -387,21 +387,6 @@ export const IndustriesCarousel = () => {
         })}
       </div>
 
-      {/* Dots */}
-      <div className="mt-6 flex items-center justify-center gap-2">
-        {INDUSTRIES.map((ind, i) => (
-          <button
-            key={ind.id}
-            type="button"
-            aria-label={`Go to ${ind.name}`}
-            aria-current={i === active}
-            onClick={() => setActive(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === active ? "w-6 bg-primary" : "w-1.5 bg-muted-foreground/40 hover:bg-muted-foreground/70"
-            }`}
-          />
-        ))}
-      </div>
     </div>
   );
 };
