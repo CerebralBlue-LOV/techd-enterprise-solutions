@@ -1,5 +1,4 @@
 import { Suspense, lazy } from "react";
-import { Link } from "react-router-dom";
 
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
@@ -8,7 +7,6 @@ import SectionMarker from "@shared/SectionMarker";
 import SectionBackdrop from "@shared/SectionBackdrop";
 import CaseStudyCardBackdropCyan from "@sections/home/_shared/CaseStudyCardBackdropCyan";
 import IndustriesCarousel from "@sections/home/_shared/IndustriesCarousel";
-import { INDUSTRIES } from "@content/industries";
 
 const ParticleGlobe = lazy(
   () => import("@sections/home/_shared/ParticleGlobe"),
