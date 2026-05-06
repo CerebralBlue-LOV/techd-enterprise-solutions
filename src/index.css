@@ -256,7 +256,7 @@
     transition: none;
     transform: none !important;
   }
-  .solution-card-beam::before {
+  .solution-card-beam {
     animation: none;
   }
   .solution-card-face {
