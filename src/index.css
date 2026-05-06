@@ -207,7 +207,7 @@
 }
 .solution-card-surface {
   position: absolute;
-  inset: 1px;
+  inset: 2px;
   border-radius: calc(0.75rem - 1px);
   background: hsl(var(--background));
   z-index: 1;
