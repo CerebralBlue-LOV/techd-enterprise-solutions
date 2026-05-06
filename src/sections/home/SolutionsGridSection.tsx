@@ -2,15 +2,25 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import { SOLUTIONS } from "@content/solutions";
-import SolutionCard from "./_shared/SolutionCard";
-import PracticeIcon from "./_shared/PracticeIcon";
+import FlipCard from "@/sections/flip-lab/FlipCard";
+import PlexusMotif from "@/sections/flip-lab/PlexusMotif";
+import plexusBrain from "@/assets/flip-lab/plexus-brain.png";
+import plexusDatabase from "@/assets/flip-lab/plexus-database.png";
+import plexusGears from "@/assets/flip-lab/plexus-gears.png";
+import plexusShield from "@/assets/flip-lab/plexus-shield.png";
+import plexusCloud from "@/assets/flip-lab/plexus-cloud.png";
 
-type PracticeId = "ai" | "data-analytics" | "automation" | "security" | "hybrid-cloud";
+const MOTIFS: Record<string, { image: string; alt: string; backTitle: string; footer: string }> = {
+  ai: { image: plexusBrain, alt: "Neural plexus brain", backTitle: "Production-grade AI", footer: "United States" },
+  "data-analytics": { image: plexusDatabase, alt: "Neural plexus database", backTitle: "Data foundations", footer: "United States" },
+  automation: { image: plexusGears, alt: "Neural plexus gears", backTitle: "Run smarter", footer: "Global" },
+  security: { image: plexusShield, alt: "Neural plexus shield", backTitle: "Defense in depth", footer: "Regulated industries" },
+  "hybrid-cloud": { image: plexusCloud, alt: "Neural plexus cloud", backTitle: "Anywhere, governed", footer: "United States" },
+};
 
 /**
  * Section: Home / Solutions Grid
- * Five practice cards. Front: icon + practice name + outcome only.
- * Hover flips the card; the back shows the pitch, the key products, and a CTA button.
+ * Five practice flip cards using the plexus neural-node motif system.
  */
 export const SolutionsGridSection = () => (
   <section className="section">
@@ -24,37 +34,22 @@ export const SolutionsGridSection = () => (
         />
       </Reveal>
 
-      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {SOLUTIONS.map((s, i) => {
-          const featured = s.id === "ai";
+          const m = MOTIFS[s.id];
+          if (!m) return null;
           return (
             <Reveal key={s.id} delay={i * 50}>
-              <SolutionCard
-                to={`/solutions#${s.id}`}
-                featured={featured}
-                pitch={s.pitch}
+              <FlipCard
+                eyebrow={s.name}
+                title={s.outcome}
+                footer={m.footer}
+                backTitle={m.backTitle}
+                backBody={s.pitch}
+                chips={s.products.slice(0, 5).map((p) => p.name)}
                 ctaLabel={s.ctaLabel}
-                icon={<PracticeIcon id={s.id as PracticeId} />}
-                back={
-                  <ul className="mt-6 flex flex-wrap gap-2">
-                    {s.products.slice(0, 3).map((p) => (
-                      <li
-                        key={p.name}
-                        className="rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-light text-secondary"
-                      >
-                        {p.name}
-                      </li>
-                    ))}
-                  </ul>
-                }
-              >
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                  {s.name}
-                </p>
-                <h3 className="mt-3 text-2xl leading-tight lg:text-[26px]">
-                  {s.outcome}
-                </h3>
-              </SolutionCard>
+                motif={<PlexusMotif image={m.image} alt={m.alt} />}
+              />
             </Reveal>
           );
         })}
