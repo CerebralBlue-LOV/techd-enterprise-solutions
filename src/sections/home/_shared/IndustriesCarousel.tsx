@@ -176,22 +176,30 @@ interface CardProps {
   reducedMotion: boolean;
 }
 
-const StackedCard = ({ ind, index, depth, isActive, total, onActivate, reducedMotion }: CardProps) => {
+interface CardPropsExt extends CardProps {
+  signedDepth: number; // negative = left side, positive = right side, 0 = center
+}
+
+const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActivate, reducedMotion }: CardPropsExt) => {
   const Motif = MOTIFS[index % MOTIFS.length];
 
   // Visual depth tiers (cap at 3). depth >= 4 = hidden.
   const d = Math.min(depth, 4);
   const visible = d <= 3;
+  const side = Math.sign(signedDepth); // -1 left, 0 center, +1 right
 
-  const scale = [1, 0.94, 0.88, 0.82, 0.78][d];
-  const translateY = [0, 18, 34, 48, 60][d];
-  const opacity = visible ? [1, 0.75, 0.45, 0.22, 0][d] : 0;
-  const blur = d >= 2 ? `blur(${(d - 1) * 1.2}px)` : "none";
+  const scale = [1, 0.86, 0.74, 0.64, 0.58][d];
+  // Lateral fan-out — neighbors sit to the sides, not behind.
+  const translateX = side * [0, 62, 110, 150, 180][d]; // percent of card width
+  const translateZ = -[0, 80, 160, 230, 290][d];
+  const rotateY = -side * [0, 28, 38, 44, 48][d];
+  const opacity = visible ? [1, 0.7, 0.35, 0.15, 0][d] : 0;
+  const blur = d >= 2 ? `blur(${(d - 1) * 1.4}px)` : "none";
   const zIndex = total - d;
 
   const transform = reducedMotion
     ? "none"
-    : `translate3d(0, ${translateY}px, 0) scale(${scale})`;
+    : `translate3d(${translateX}%, 0, ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
 
   const handleClick = (e: React.MouseEvent) => {
     if (!isActive) {
@@ -347,13 +355,18 @@ export const IndustriesCarousel = () => {
         style={{ perspective: "1400px" }}
       >
         {INDUSTRIES.map((ind, i) => {
-          const depth = (i - active + N) % N;
+          // Signed offset in [-N/2, N/2] so cards fan to the nearest side.
+          let signed = i - active;
+          if (signed > N / 2) signed -= N;
+          if (signed < -N / 2) signed += N;
+          const depth = Math.abs(signed);
           return (
             <StackedCard
               key={ind.id}
               ind={ind}
               index={i}
               depth={depth}
+              signedDepth={signed}
               isActive={depth === 0}
               total={N}
               onActivate={() => setActive(i)}
