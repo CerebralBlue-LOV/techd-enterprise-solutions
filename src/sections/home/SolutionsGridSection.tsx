@@ -28,6 +28,7 @@ export const SolutionsGridSection = () => (
     <div className="container-page">
       <Reveal>
         <SectionHeading
+          align="center"
           eyebrow="Solutions"
           title="Five practices. One outcome: leverage."
           subtitle="Each practice is led by senior IBM-certified practitioners with a decade-plus of enterprise delivery on watsonx, Db2, OpenShift, and the modern data stack."
