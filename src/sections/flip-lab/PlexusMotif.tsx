@@ -24,8 +24,6 @@ export const PlexusMotif = ({ image, alt = "", variant }: Props) => (
       }}
     />
 
-    <VariantFx variant={variant} />
-
     <img
       src={image}
       alt={alt}
