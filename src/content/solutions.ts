@@ -42,6 +42,8 @@ export const SOLUTIONS: Solution[] = [
       "Foundation model governance",
       "Agentic workflows in production",
     ],
+    pitch:
+      "Production-ready generative AI grounded in your enterprise data — built on watsonx with the governance, observability, and lineage your auditors expect.",
     ctaLabel: "Explore AI practice",
     products: [
       {
@@ -149,6 +151,8 @@ export const SOLUTIONS: Solution[] = [
       "Cataloged, lineage-traced data",
       "Modern BI and planning",
     ],
+    pitch:
+      "Open lakehouse, governed pipelines, and a decade-plus of Db2, Cognos, and TM1 in production — the data foundation your AI roadmap stands on.",
     ctaLabel: "Explore data practice",
     products: [
       {
@@ -333,6 +337,8 @@ export const SOLUTIONS: Solution[] = [
       "Cloud FinOps and showback",
       "AI-driven resource actions",
     ],
+    pitch:
+      "Process intelligence, RPA, and AI-powered orchestration that retire manual work across finance, operations, and customer service — measured in hours saved.",
     ctaLabel: "Explore automation practice",
     products: [
       {
@@ -433,6 +439,8 @@ export const SOLUTIONS: Solution[] = [
       "Threat detection and SOAR",
       "Audit-ready evidence trails",
     ],
+    pitch:
+      "Identity, threat detection, and data protection engineered for regulated enterprises — IBM Security and Guardium delivered by senior practitioners.",
     ctaLabel: "Explore security practice",
     products: [
       {
@@ -589,6 +597,8 @@ export const SOLUTIONS: Solution[] = [
       "Mainframe data integration",
       "Portable, policy-driven workloads",
     ],
+    pitch:
+      "OpenShift, Cloud Pak, and modern platform engineering — portable workloads across on-prem, IBM Cloud, AWS, and Azure with a single operating model.",
     ctaLabel: "Explore hybrid cloud practice",
     products: [
       {
