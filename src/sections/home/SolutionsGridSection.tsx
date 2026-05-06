@@ -3,11 +3,14 @@ import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import { SOLUTIONS } from "@content/solutions";
 import SolutionCard from "./_shared/SolutionCard";
+import PracticeIcon from "./_shared/PracticeIcon";
+
+type PracticeId = "ai" | "data-analytics" | "automation" | "security" | "hybrid-cloud";
 
 /**
  * Section: Home / Solutions Grid
- * Five practice cards. Hover flips the entire card (slow ease) and reveals a
- * short pitch + CTA on the back. A cyan→white beam rotates around the border.
+ * Five practice cards. Front: icon + practice name + outcome only.
+ * Hover flips the card; the back shows the pitch, the key products, and a CTA button.
  */
 export const SolutionsGridSection = () => (
   <section className="section">
@@ -31,6 +34,19 @@ export const SolutionsGridSection = () => (
                 featured={featured}
                 pitch={s.pitch}
                 ctaLabel={s.ctaLabel}
+                icon={<PracticeIcon id={s.id as PracticeId} />}
+                back={
+                  <ul className="mt-6 flex flex-wrap gap-2">
+                    {s.products.slice(0, 3).map((p) => (
+                      <li
+                        key={p.name}
+                        className="rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-[11px] font-light text-secondary"
+                      >
+                        {p.name}
+                      </li>
+                    ))}
+                  </ul>
+                }
               >
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                   {s.name}
@@ -38,24 +54,6 @@ export const SolutionsGridSection = () => (
                 <h3 className="mt-3 text-2xl leading-tight lg:text-[26px]">
                   {s.outcome}
                 </h3>
-                <p className="mt-4 text-sm font-light text-muted-foreground">
-                  {s.description}
-                </p>
-                <ul className="mt-auto flex flex-wrap gap-2 pt-6">
-                  {s.products.slice(0, 3).map((p) => (
-                    <li
-                      key={p.name}
-                      className={
-                        "rounded-full border px-3 py-1 text-[11px] font-light " +
-                        (featured
-                          ? "border-primary/40 bg-primary/5 text-secondary"
-                          : "border-border text-muted-foreground")
-                      }
-                    >
-                      {p.name}
-                    </li>
-                  ))}
-                </ul>
               </SolutionCard>
             </Reveal>
           );
