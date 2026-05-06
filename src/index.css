@@ -153,14 +153,12 @@
   .btn-glow {
     position: relative;
     z-index: 0;
-    border: 1px solid hsl(0 0% 100% / 0.85);
     border-radius: var(--radius);
-    transition: transform 200ms ease-out, border-color 200ms ease-out;
+    transition: transform 200ms ease-out;
   }
   .btn-glow:hover,
   .btn-glow:focus-visible {
     transform: translateY(-2px);
-    border-color: hsl(0 0% 100%);
   }
   /* Animated cyan→blue halo (outside the button via negative inset) */
   .btn-glow::before {
