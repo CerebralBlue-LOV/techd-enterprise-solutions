@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    mode === "development" && saveLogoSizesPlugin(),
+    saveLogoSizesPlugin(),
   ].filter(Boolean),
   resolve: {
     alias: {
