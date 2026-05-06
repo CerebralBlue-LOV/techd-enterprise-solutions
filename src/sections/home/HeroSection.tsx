@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { Suspense, lazy } from "react";
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
@@ -46,9 +45,7 @@ export const HeroSection = () => (
               size="lg"
               className="transition-transform duration-200 hover:-translate-y-0.5"
             >
-              <Link to="/contact">
-                Talk to a principal <ArrowRight />
-              </Link>
+              <Link to="/contact">Talk to a principal</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
               <Link to="/solutions">See our solutions</Link>
