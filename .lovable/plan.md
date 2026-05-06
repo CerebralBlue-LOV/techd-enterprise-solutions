@@ -1,66 +1,36 @@
-# Industries Active Card — Premium Hover
+# Goal
 
-Add a Uiverse-inspired hover treatment to the **active (center) card** of the industries stacked deck. Inspired by the reference, but in TechD's brand language: cyan instead of gold, restrained, no logo unfold.
+Replace the current low-quality SVGs for **database, gears (automation), shield (security), and cloud** with faithful traces of the source webps — matching the quality we just achieved for the brain.
 
-## What changes
+The brain trace worked because we used a **skeleton-based approach**: skeletonize the cyan mask, treat skeleton endpoints + junctions as nodes, walk the skeleton between nodes to get edges. This preserves the original wireframe topology instead of guessing it via Delaunay.
 
-- File: `src/sections/home/_shared/IndustriesCarousel.tsx`, only the active card branch inside `StackedCard`.
-- No new files, no new dependencies, no changes to peek cards or to the deck mechanics.
+The current database SVG fails because the same parameters (cluster radius = 16px) are wrong for it — the database has tighter, more regular grid spacing than the brain, so 16px collapses neighboring nodes into blobs.
 
-## The hover effect (3 layered moves)
+# What to do
 
-1. **Inset border snap**
-   - A second border sits at `inset: 14px`, color `hsl(var(--primary))`, opacity 0, rotated `4deg`, slightly scaled.
-   - On hover: opacity 1, rotation 0, scale 1. 500ms ease-in-out.
-   - Acts like a "frame inside the frame" — the signature beat from the reference.
+1. **Generalize the brain script** into a single reusable trace function that takes a per-shape `cluster_radius` parameter (instead of being hard-coded to 16).
 
-2. **Diagonal light sweep (the trail)**
-   - A thin diagonal cyan gradient band sweeps once across the card from top-left to bottom-right on hover-in.
-   - Implemented via a pseudo-element-style `<span>` with `bg-gradient-to-br from-transparent via-primary/25 to-transparent`, `-translate-x-full` → `translate-x-full`, `skew-x-[-12deg]`, 900ms ease-out, single-shot per hover (re-triggers via `group-hover` + transition).
-   - Same family as the existing "Read on IBM.com" button sweep, so it feels consistent.
+2. **Per-shape tuning**: each silhouette has different node spacing in the source webp. Auto-estimate `cluster_radius` from the median spacing of detected skeleton junctions, then optionally hand-tweak. Starting estimates:
+   - database — denser grid → smaller radius (~9–11px)
+   - gears — medium spacing, lots of small features (teeth, hub) → ~10–12px
+   - shield — regular triangulated mesh → ~12–14px
+   - cloud — sparse, rounded → ~12–14px
 
-3. **Eyebrow letter-spacing expand + caption fade**
-   - The regulation eyebrow (e.g. "HIPAA · HITECH") gets `tracking-[0.2em]` → `tracking-[0.34em]` on hover, 500ms ease-out.
-   - A small "Click to explore →" microcopy line under the existing CTA fades in (opacity 0→1, +6px translateY) on hover. The existing "See industry →" CTA remains as the primary affordance.
+3. **For each shape, iterate**: trace → render SVG to PNG → side-by-side compare with the source webp → adjust `cluster_radius` and stroke/dot sizes until the silhouette and density match. Stop when the silhouette is clearly recognizable and density visually matches the source.
 
-Plus: card lifts `-translate-y-1` and shadow deepens (`shadow-[0_28px_70px_-30px_hsl(var(--primary)/0.55)]`) on hover, replacing the current static shadow.
+4. **Write the 4 final SVGs** to `src/assets/flip-lab/plexus-{database,gears,shield,cloud}.svg`, replacing the current ones. The brain SVG stays as-is.
 
-## Constraints respected
+5. **Verify in `/flip-lab`**: the existing `FlipLab.tsx` already imports the SVGs by these exact filenames, so no code changes are needed — the new files just get picked up.
 
-- Only the active card (`isActive === true`) gets the hover layers — peek cards stay quiet.
-- All colors via tokens (`primary`, `secondary`, `muted-foreground`, `border`, `background`). No new hex.
-- All transitions use existing easing patterns (`ease-out`, `cubic-bezier(0.22, 1, 0.36, 1)`).
-- `prefers-reduced-motion`: skip rotation, skew, sweep, and translate. Keep only opacity changes and the border showing instantly.
-- Pointer behavior unchanged — drag-to-swipe and click-to-activate continue to work because the new layers are `pointer-events-none`.
+# Technical notes (skip if not interested)
 
-## Technical sketch
+- Pipeline: cyan-mask → `skimage.morphology.skeletonize` → 8-neighbor degree map → node pixels = degree==1 (endpoints) ∪ degree>=3 (junctions) → greedy radius cluster → walk skeleton between node pixels to derive edges.
+- Output: 100×100 viewBox, `<line stroke-width="0.3">` + `<circle r="0.85">`, single fill `#00B3E3` — same format as the brain SVG. Fully animatable.
+- Stroke and circle radius may also need per-shape tuning if a shape comes out too dense (thinner stroke) or too sparse (slightly larger dots).
+- No changes to `FlipLab.tsx`, `PlexusMotif.tsx`, or any CSS — purely asset replacement.
 
-```text
-<Link className="group ...">
-  {/* existing motif + scrim + content */}
+# Out of scope
 
-  {isActive && (
-    <>
-      {/* 1. Inset frame */}
-      <span aria-hidden
-            className="pointer-events-none absolute inset-[14px] rounded-xl border
-                       border-primary opacity-0 rotate-[4deg] scale-[0.98]
-                       transition-all duration-500 ease-in-out
-                       group-hover:opacity-100 group-hover:rotate-0 group-hover:scale-100" />
-
-      {/* 2. Diagonal sweep */}
-      <span aria-hidden
-            className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-12deg]
-                       bg-gradient-to-br from-transparent via-primary/25 to-transparent
-                       transition-transform duration-[900ms] ease-out
-                       group-hover:translate-x-full" />
-    </>
-  )}
-</Link>
-```
-
-Eyebrow + microcopy use `group-hover:tracking-[0.34em]` and a sibling `group-hover:opacity-100` span.
-
-## Out of scope
-
-- Peek cards visuals, stacked-deck mechanics, dot indicators (already removed), other home sections.
+- The webps themselves (kept as-is, can still be used as raster fallback).
+- The brain SVG (already good).
+- Animation work (separate task — the SVGs are ready for it once shapes are right).
