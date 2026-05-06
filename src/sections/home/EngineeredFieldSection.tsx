@@ -52,12 +52,12 @@ export const EngineeredFieldSection = () => (
       <SectionMarker page="Home" name="Featured Case Study" />
       <div className="container-page">
         <Reveal>
-          <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16">
+          <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16 text-center">
             <CaseStudyCardBackdropCyan />
             <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">
               Featured Case · Published by IBM
             </p>
-            <h2 className="relative mt-4 max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
+            <h2 className="relative mt-4 mx-auto max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
               A US family-owned retailer rebuilt online shopping on IBM Db2,
               watsonx Assistant, and NeuralSeek.
             </h2>
