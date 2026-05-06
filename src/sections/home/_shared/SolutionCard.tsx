@@ -47,7 +47,7 @@ export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, back, childr
         {/* BACK */}
         <div className="solution-card-face solution-card-back">
           <span aria-hidden="true" className="solution-card-beam" />
-          <div className="solution-card-surface flex h-full flex-col justify-between p-8 lg:p-10">
+          <div className="solution-card-surface flex h-full flex-col justify-between p-7 lg:p-8">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 {ctaLabel}
