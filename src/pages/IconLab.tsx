@@ -138,15 +138,13 @@ const StyleC = ({ practice }: { practice: string }) => (
   </div>
 );
 
-// ---------- Style D: Dark secondary tile — cyan halo ----------
+// ---------- Style D: Solid secondary tile — flat, primary glyph ----------
+// Pure bg-secondary (#56565A). No halos / blurs that tint the surface.
 const StyleD = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-2xl bg-secondary ring-1 ring-secondary shadow-[0_12px_30px_-14px_hsl(var(--secondary)/0.6)]">
-    <span className="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-primary/40 blur-2xl" />
-    <span className="absolute -bottom-8 -right-4 h-20 w-20 rounded-full bg-primary/25 blur-2xl" />
-    <span className="absolute inset-0 bg-[linear-gradient(180deg,hsl(var(--primary)/0.08),transparent_60%)]" />
+  <div className="relative grid h-24 w-24 place-items-center rounded-2xl bg-secondary shadow-[0_10px_24px_-14px_hsl(var(--secondary)/0.6)]">
     <svg
       viewBox="0 0 64 64"
-      className="relative h-12 w-12 text-primary"
+      className="h-12 w-12 text-primary"
       fill="none"
       stroke="currentColor"
       strokeWidth={1.4}
@@ -156,58 +154,42 @@ const StyleD = ({ practice }: { practice: string }) => (
       <GlassGlyph practice={practice} opacity={0.55} />
     </svg>
     <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
-    <span className="absolute right-5 top-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
-    <span className="absolute bottom-3 left-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
   </div>
 );
 
-// ---------- Style E: Dark gradient tile — primary ring ----------
+// ---------- Style E: Secondary tile — primary ring + corner accent ----------
 const StyleE = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-2xl bg-secondary ring-1 ring-primary/50 shadow-[0_10px_28px_-12px_hsl(var(--primary)/0.55)]">
-    <span className="absolute inset-0 bg-[linear-gradient(135deg,hsl(var(--primary)/0.35),transparent_55%)]" />
-    <span className="absolute -top-6 right-0 h-20 w-20 rounded-full bg-primary/30 blur-2xl" />
-    <span className="absolute inset-x-0 bottom-0 h-px bg-primary/40" />
+  <div className="relative grid h-24 w-24 place-items-center rounded-2xl bg-secondary ring-2 ring-primary shadow-[0_10px_24px_-14px_hsl(var(--primary)/0.5)]">
     <svg
       viewBox="0 0 64 64"
-      className="relative h-12 w-12 text-primary"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.4}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <GlassGlyph practice={practice} opacity={0.6} />
-    </svg>
-    <span className="absolute bottom-2 right-2 h-3 w-3 rounded-sm border border-primary/70" />
-  </div>
-);
-
-// ---------- Style F: Dark tile — primary grid + cyan corner bloom ----------
-const StyleF = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-2xl bg-secondary ring-1 ring-primary/30">
-    <span
-      className="absolute inset-0 opacity-25"
-      style={{
-        backgroundImage:
-          "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)",
-        backgroundSize: "10px 10px",
-      }}
-    />
-    <span className="absolute -right-6 -bottom-6 h-24 w-24 rounded-full bg-primary/40 blur-2xl" />
-    <span className="absolute -left-4 -top-4 h-16 w-16 rounded-full bg-primary/15 blur-2xl" />
-    <svg
-      viewBox="0 0 64 64"
-      className="relative h-12 w-12 text-primary"
+      className="h-12 w-12 text-primary"
       fill="none"
       stroke="currentColor"
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <GlassGlyph practice={practice} opacity={0.55} />
+      <GlassGlyph practice={practice} opacity={0.6} />
     </svg>
-    <span className="absolute top-2.5 left-2.5 h-1 w-1 rounded-full bg-primary" />
-    <span className="absolute top-2.5 left-5 h-0.5 w-0.5 rounded-full bg-primary/60" />
+    <span className="absolute bottom-2 right-2 h-3 w-3 rounded-sm bg-primary" />
+  </div>
+);
+
+// ---------- Style F: Solid primary tile — secondary glyph ----------
+const StyleF = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-24 w-24 place-items-center rounded-2xl bg-primary shadow-[0_10px_24px_-14px_hsl(var(--primary)/0.55)]">
+    <svg
+      viewBox="0 0 64 64"
+      className="h-12 w-12 text-secondary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <GlassGlyph practice={practice} opacity={0.7} />
+    </svg>
+    <span className="absolute bottom-2 right-2 h-1.5 w-1.5 rounded-full bg-secondary" />
   </div>
 );
 
@@ -290,20 +272,20 @@ const IconLab = () => (
           />
           <Row
             letter="D"
-            name="Dark glass — secondary tile + cyan halo"
-            description="Dark secondary-gray tile with layered cyan halos in opposite corners. The dark Style A — closest to the Supabase reference while staying strictly on TechD palette."
+            name="Solid secondary — flat dark tile"
+            description="Pure secondary (#56565A) tile, primary cyan glyph. No halos, no tints — strict two-color combination."
             Style={StyleD}
           />
           <Row
             letter="E"
-            name="Dark gradient — primary ring"
-            description="Dark tile with a diagonal cyan sweep, primary ring, and bottom rim highlight. Strongest brand presence; works as a hero accent on dark sections."
+            name="Secondary tile — primary ring"
+            description="Pure secondary tile with a 2px primary ring and a solid primary corner square. Two colors only."
             Style={StyleE}
           />
           <Row
             letter="F"
-            name="Dark grid — muted lines + cyan bloom"
-            description="Dark tile with a faint muted grid and a single cyan corner bloom. Architectural / technical feel — pairs with engineering content on dark surfaces."
+            name="Inverted — primary tile, secondary glyph"
+            description="Solid primary cyan tile with a secondary-gray glyph. The reverse of Style D — boldest brand presence."
             Style={StyleF}
           />
         </div>
