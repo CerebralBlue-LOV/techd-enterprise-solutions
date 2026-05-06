@@ -31,10 +31,14 @@ export const FinalCtaSection = () => (
               <Button
                 asChild
                 size="lg"
-                className="btn-glow bg-primary text-primary-foreground"
+                className="btn-glow group relative overflow-hidden bg-primary text-primary-foreground"
               >
                 <Link to="/contact">
-                  Start the conversation
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                  />
+                  <span className="relative">Start the conversation</span>
                 </Link>
               </Button>
             </div>
