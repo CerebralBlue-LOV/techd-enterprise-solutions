@@ -139,7 +139,11 @@
     @apply transition-[transform,box-shadow,border-color] duration-200 ease-out border border-border bg-card;
   }
   .card-hover:hover {
-    @apply -translate-y-0.5 border-primary shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.25)];
+    @apply -translate-y-0.5;
+    border-color: hsl(var(--primary) / 0.55);
+    box-shadow:
+      0 8px 32px -8px hsl(var(--primary) / 0.18),
+      inset 0 0 0 1px hsl(var(--primary) / 0.12);
   }
 }
 
