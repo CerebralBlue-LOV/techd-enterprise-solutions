@@ -1,86 +1,66 @@
-# Solution Cards v3 — Full Flip + Animated Border Beam
+## Goal
 
-Inspired by the Uiverse reference, but softer, slower, and on-brand.
+Create a dedicated lab page at `/flip-lab` to prototype a new generation of solution cards. The cards reuse the proven flip-on-hover pattern but introduce a cleaner layout inspired by the reference image: a colored icon tile in the top-left, a small label, a bold title, a footer line, and a decorative animated motif on the back of the card.
 
-## 1. Remove particle scenes
+This is a sandbox page — once we like the result, we'll port the winning version onto the real Solutions section.
 
-- Delete `src/sections/home/_shared/cards/` directory entirely (all 5 scene files + `CardParticleCanvas.tsx` + `index.ts`).
-- Remove `lazy` imports, `Suspense`, and `SCENE_MAP` from `SolutionsGridSection.tsx`.
-- Drop the `scene` prop from `SolutionCard`.
-- Remove the top "scene zone" (the 160px canvas band) from the front face — the front becomes pure content with breathing room.
+## Scope
 
-## 2. Full-card flip (slow, soft)
+- New route only. No changes to the existing `/icon-lab` page or to the live `SolutionCard` on the homepage.
+- Five test cards, one per practice: AI & Generative, Data & Analytics, Automation, Security, Hybrid Cloud.
 
-The whole card flips, not the inner content.
+## Visual direction
 
-- Outer wrapper `.solution-card` keeps perspective (`perspective: 1200px`) and has no background.
-- Inner `.solution-card-inner` is the flipping element: `transform-style: preserve-3d`, `transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1)` (slow, eased).
-- On hover (`data-hover="true"`): `transform: rotateY(180deg)`.
-- `.solution-card-front` and `.solution-card-back` are absolutely positioned, both with `backface-visibility: hidden`.
-- Back is pre-rotated `rotateY(180deg)`.
-- Tilt-on-cursor effect is removed — flip is the only hover transform.
-- `prefers-reduced-motion`: replace flip with a 250ms cross-fade between front and back.
-- Touch devices (`hover: none`): no flip; show front only (back content is reachable via the link target page).
+- Light cards on the page background, brand palette only.
+- Square-ish icon tile (top-left) with `bg-primary/10` fill, `text-primary` icon, rounded corners, soft inner highlight.
+- Top-right meta line (small uppercase label, e.g. "Featured" / date-style tag — TBD copy).
+- Eyebrow label in cyan uppercase tracking.
+- Bold title in `text-secondary`.
+- Footer line in muted gray (e.g. "United States", or a short region/sector tag).
+- Simple 1px border using `--border`, hover lifts to `border-primary` + soft cyan shadow.
 
-## 3. Animated border beam (cyan → white gradient)
+## Flip behavior
 
-Achieved with a conic-gradient ring rotating behind the card surfaces.
+- Reuse the exact mechanism from `SolutionCard.tsx`: `perspective`, `transform-style: preserve-3d`, `rotateY(180deg)` on hover, `backface-visibility: hidden` on each face.
+- 900ms cubic-bezier easing (matches existing site rhythm).
+- `data-hover` toggled via `onMouseEnter` / `onMouseLeave` so it works on touch fallback too.
+- Reduced-motion: cross-fade instead of flipping.
 
-```text
-.solution-card (perspective, rounded)
-└── .solution-card-inner (preserve-3d, flips on hover)
-    ├── .solution-card-front
-    │   ├── ::before  ← rotating conic gradient (border beam)
-    │   └── .solution-card-surface (inset 1px, solid bg, holds content)
-    └── .solution-card-back
-        ├── ::before  ← same rotating conic gradient
-        └── .solution-card-surface (inset 1px, solid bg, holds content)
-```
+## Per-card SVG motifs (the key new piece)
 
-- Beam: `conic-gradient(from 0deg, transparent 0deg, hsl(var(--primary)) 60deg, hsl(0 0% 100%) 90deg, hsl(var(--primary)) 120deg, transparent 180deg, transparent 360deg)`.
-- Animation: `@keyframes border-spin { to { transform: rotate(360deg); } }` at **8s linear infinite** (slow, calm).
-- Beam runs continuously at low opacity (~0.35) and brightens to full on hover (opacity 1).
-- The inner `.solution-card-surface` sits 1px inside the rotating layer, masking its center so only a thin animated ring is visible at the edge.
-- `prefers-reduced-motion`: animation paused; ring shows a static, dim cyan border.
+Each card back gets its own animated SVG motif, anchored bottom-right, only animating while the card is hovered. Loose interpretations of the reference, all using brand cyan (`hsl(var(--primary))`) at varied opacities:
 
-## 4. Card sizing — better tablet/desktop layout
+| Card | Motif | Animation |
+|---|---|---|
+| AI & Generative | Layered topographic wave lines | `motif-draw-long` stroke-dashoffset reveal, then gentle `motif-wave` translateY loop |
+| Data & Analytics | Cluster of dots with pulsing nodes | `motif-pulse` on selected dots, staggered delays |
+| Automation | Diagonal stripe field | Stripes slide in left→right, then slow continuous drift |
+| Security | Concentric rotating arcs | `motif-spin-slow` + `motif-spin-rev` on inner ring |
+| Hybrid Cloud | Scattered dashes / sparkles | Sequential fade-in scatter, subtle float loop |
 
-- Grid: `md:grid-cols-2 lg:grid-cols-3` (already correct), but increase row height for visual balance.
-- Add `min-h-[360px] lg:min-h-[400px]` to the card.
-- Increase internal padding from `p-7` to `p-8 lg:p-10`.
-- Larger heading: `text-2xl` → `text-2xl lg:text-[26px]`, with tighter leading.
-- Front face vertical rhythm: practice label (top), heading, description, product chips (pushed to bottom with `mt-auto`) — front becomes a clean editorial layout instead of capped by a graphic band.
+Most of the keyframes already exist in `src/index.css` (`motif-wave`, `motif-pulse`, `motif-draw`, `motif-draw-long`, `motif-spin`). We'll add a `motif-stripe-slide` keyframe for Automation and a `motif-scatter` staggered fade for Hybrid Cloud.
 
-## 5. Back face — short pitch + CTA
+## Files
 
-Replace 3-bullet list with a concise pitch paragraph (1–2 sentences) + underlined CTA.
+**New**
+- `src/pages/FlipLab.tsx` — page shell, intro, 5-card grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
+- `src/sections/flip-lab/FlipCard.tsx` — the new card component (front + back faces, motif slot prop).
+- `src/sections/flip-lab/motifs/` — one small component per practice (`AiMotif.tsx`, `DataMotif.tsx`, `AutomationMotif.tsx`, `SecurityMotif.tsx`, `CloudMotif.tsx`). Pure SVG, no deps.
 
-- Add `pitch: string` to `Solution` type in `src/content/solutions.ts`.
-- Seed each practice with a short pitch (~140–180 chars). Examples to write:
-  - **AI**: "Production-ready generative AI grounded in your enterprise data — built on watsonx with measurable business impact, not pilots."
-  - **Data & Analytics**: …
-  - **Automation**: …
-  - **Security**: …
-  - **Hybrid Cloud**: …
-- Back face layout: small eyebrow ("Explore AI practice") → pitch paragraph (`text-base`, secondary) → underlined `.story-link` CTA aligned bottom-left.
-- `highlights` field stays in the type for future use but is unused on the home grid.
+**Edited**
+- `src/app/routes.tsx` — register `/flip-lab` route.
+- `src/index.css` — append two new keyframes (`motif-stripe-slide`, `motif-scatter`) and the `.flip-card-*` class block (mirrors `.solution-card-*` but without the rotating beam — just clean borders).
 
-## 6. Files
+## Out of scope
 
-**Edit**
-- `src/sections/home/_shared/SolutionCard.tsx` — remove `scene` prop, remove tilt logic, restructure to front/back with surface + beam, take `pitch` instead of `highlights`.
-- `src/sections/home/SolutionsGridSection.tsx` — drop scene plumbing, pass `pitch`, taller cards.
-- `src/content/solutions.ts` — add `pitch` field with copy for all 5 practices.
-- `src/index.css` — add `.solution-card-inner`, `.solution-card-face`, `.solution-card-surface`, `border-spin` keyframes, reduced-motion + touch fallbacks. Remove old `solution-card-spotlight`, slide-up reveal, and tilt CSS.
+- No nav link to `/flip-lab` (lab page, accessed by URL like `/icon-lab`).
+- No copy polish — placeholder titles per practice.
+- Not wiring this into Solutions section; that's a follow-up once we approve the look.
 
-**Delete**
-- `src/sections/home/_shared/cards/` (full directory: 7 files).
+## Acceptance check
 
-## 7. Acceptance
-
-- Full card flips slowly (~900ms) on hover; no inner-content sliding.
-- Cyan→white beam rotates softly around the border at all times, brightens on hover.
-- Cards feel taller and more balanced on tablet (md) and desktop (lg).
-- No particle canvases anywhere; bundle drops three.js usage in this section.
-- Reduced-motion users get cross-fade + static border.
-- Touch users see static front face with full content.
+- Visit `/flip-lab` → see 5 cards in the brand palette.
+- Hover a card → flips smoothly; motif on the back animates.
+- Mouse out → flips back, motif resets.
+- `prefers-reduced-motion` → cross-fade only, no spinning motifs.
+- No off-palette colors anywhere.
