@@ -65,7 +65,7 @@ export type Customer = { name: string; url: string; logo?: string; logoClass?: s
 export const CUSTOMERS: Customer[] = [
   { name: "Johnson & Johnson", url: "https://www.jnj.com", logo: "/logos/johnson-and-johnson.png" },
   { name: "Sony Pictures", url: "https://www.sonypictures.com", logo: "/logos/sony-pictures.png", logoClass: "h-14 md:h-16" },
-  { name: "Comcast / Peacock", url: "https://www.peacocktv.com", logo: "/logos/comcast-peacock.png" },
+  { name: "Comcast / Peacock", url: "https://www.peacocktv.com", logo: "/logos/comcast-peacock.svg" },
   { name: "Johns Hopkins Medicine", url: "https://www.hopkinsmedicine.org", logo: "/logos/johns-hopkins.png" },
   { name: "Princeton University", url: "https://www.princeton.edu", logo: "/logos/princeton-university.png" },
   { name: "DHS", url: "https://www.dhs.gov", logo: "/logos/dhs.svg" },
