@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Featured Case Study backdrop — dark neutral base with a cursor-reactive
- * cyan spotlight + faint grid that only lights up near the pointer.
- * On-brand: cyan as accent on a dark surface, not as the surface itself.
+ * Featured Case Study backdrop — neutral gray gradient anchored on the
+ * brand `secondary` token. On hover, the surface fades to transparent
+ * around the cursor, revealing the page's own grid through the card so
+ * the grid lines stay aligned with the rest of the section.
  */
 export const CaseStudyCardBackdropCyan = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -42,54 +43,34 @@ export const CaseStudyCardBackdropCyan = () => {
       ref={ref}
       aria-hidden="true"
       className="pointer-events-none absolute inset-0"
-      style={{ transition: "opacity 600ms ease" }}
     >
-      {/* Gray diagonal gradient base (top-left → bottom-right) */}
+      {/* Brand-aligned gray gradient base.
+          Anchored on secondary (#56565A) — same hue family, ±6% lightness. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, hsl(220 10% 14%) 0%, hsl(220 9% 19%) 55%, hsl(220 8% 24%) 100%)",
+            "linear-gradient(135deg, hsl(240 3% 28%) 0%, hsl(240 3% 34%) 55%, hsl(240 3% 40%) 100%)",
+          WebkitMaskImage:
+            "radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), transparent 0%, black 70%)",
+          maskImage:
+            "radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), transparent 0%, black 70%)",
+          transition: "-webkit-mask-image 200ms ease, mask-image 200ms ease",
         }}
       />
-
-      {/* Cursor-revealed grid — neutral white, no cyan */}
+      {/* Fallback solid layer so non-hover state stays opaque even if mask
+          var hasn't been read yet. Disabled when --hover=1 via opacity. */}
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(hsl(0 0% 100% / 0.18) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100% / 0.18) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-          WebkitMaskImage:
-            "radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), black, transparent 70%)",
-          maskImage:
-            "radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), black, transparent 70%)",
-          opacity: "calc(var(--hover, 0) * 0.7)",
-          transition: "opacity 500ms ease",
+          background:
+            "linear-gradient(135deg, hsl(240 3% 28%) 0%, hsl(240 3% 34%) 55%, hsl(240 3% 40%) 100%)",
+          opacity: "calc(1 - var(--hover, 0))",
+          transition: "opacity 200ms ease",
         }}
       />
 
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `
-            radial-gradient(1px 1px at 20% 30%, hsl(0 0% 100% / 0.7), transparent 50%),
-            radial-gradient(1px 1px at 70% 15%, hsl(195 100% 85% / 0.55), transparent 50%),
-            radial-gradient(1.5px 1.5px at 45% 55%, hsl(0 0% 100% / 0.4), transparent 50%),
-            radial-gradient(1px 1px at 85% 40%, hsl(0 0% 100% / 0.45), transparent 50%),
-            radial-gradient(1px 1px at 10% 70%, hsl(195 100% 85% / 0.3), transparent 50%),
-            radial-gradient(1.5px 1.5px at 60% 25%, hsl(0 0% 100% / 0.55), transparent 50%)
-          `,
-          backgroundSize:
-            "240px 240px, 200px 200px, 320px 320px, 180px 180px, 280px 280px, 220px 220px",
-          WebkitMaskImage:
-            "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
-          maskImage:
-            "linear-gradient(180deg, black 0%, black 30%, transparent 60%)",
-        }}
-      />
-
-      {/* Top cyan rim light */}
+      {/* Top cyan rim light — sole brand accent on the surface */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
     </div>
   );
