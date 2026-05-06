@@ -198,9 +198,6 @@
   -webkit-backface-visibility: hidden;
   isolation: isolate;
 }
-.solution-card-front {
-  position: relative; /* gives the inner its size */
-}
 .solution-card-back {
   transform: rotateY(180deg);
 }
