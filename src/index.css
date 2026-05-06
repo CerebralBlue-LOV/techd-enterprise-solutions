@@ -374,3 +374,113 @@
 .flip-card[data-hover="true"] .flip-motif-scatter {
   animation: flip-motif-scatter 500ms ease-out forwards;
 }
+
+/* Front-face motif container — fills the card; SVG anchors bottom-right.
+   A horizontal mask fades the motif into transparent on the left so the
+   text column stays readable. */
+.flip-motif-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 38%, black 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 38%, black 100%);
+}
+.flip-motif-svg {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 78%;
+  height: 86%;
+}
+
+/* Per-motif animations (front-face, idle + hover) */
+@keyframes flip-motif-line-drift {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(6px); }
+}
+@keyframes flip-motif-dot-bloom {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes flip-motif-orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes flip-motif-pulse-soft {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.6); opacity: 0.5; }
+}
+@keyframes flip-motif-chevron-draw {
+  from { stroke-dashoffset: 600; opacity: 0; }
+  to   { stroke-dashoffset: 0;   opacity: 1; }
+}
+@keyframes flip-motif-shard-in {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: var(--shard-o, 1); transform: scale(1); }
+}
+
+/* AI — wave lines drift slowly always; a touch faster on hover */
+.flip-motif-line {
+  animation: flip-motif-line-drift 7s ease-in-out infinite;
+}
+.flip-card[data-hover="true"] .flip-motif-line {
+  animation-duration: 3.6s;
+}
+
+/* Data — dots bloom in on mount, gentle scale on hover */
+.flip-motif-dot {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: flip-motif-dot-bloom 700ms ease-out backwards;
+}
+.flip-card[data-hover="true"] .flip-motif-dot {
+  animation: flip-motif-pulse-soft 2.4s ease-in-out infinite;
+}
+
+/* Automation — orbit dot rotates always; rings pulse on hover */
+.flip-motif-orbit {
+  animation: flip-motif-orbit 14s linear infinite;
+  transform-origin: 210px 210px;
+}
+.flip-card[data-hover="true"] .flip-motif-orbit {
+  animation-duration: 6s;
+}
+.flip-motif-pulse-center {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: flip-motif-pulse-soft 2.6s ease-in-out infinite;
+}
+.flip-motif-ring {
+  transform-origin: 210px 210px;
+}
+.flip-card[data-hover="true"] .flip-motif-ring {
+  animation: flip-motif-orbit 30s linear infinite;
+}
+
+/* Security — chevrons draw in on hover */
+.flip-motif-chevron {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 0;
+}
+.flip-card[data-hover="true"] .flip-motif-chevron {
+  animation: flip-motif-chevron-draw 900ms ease-out backwards;
+}
+
+/* Cloud — shards staggered in on mount, jitter on hover */
+.flip-motif-shard {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: flip-motif-shard-in 600ms ease-out backwards;
+}
+.flip-card[data-hover="true"] .flip-motif-shard {
+  animation: flip-motif-pulse-soft 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-motif-line,
+  .flip-motif-dot,
+  .flip-motif-orbit,
+  .flip-motif-pulse-center,
+  .flip-motif-ring,
+  .flip-motif-chevron,
+  .flip-motif-shard {
+    animation: none !important;
+  }
+}
