@@ -112,6 +112,11 @@ const Orbit = ({ animate }: { animate: boolean }) => {
       raycaster.setFromCamera(ndc, camera);
       const hit = new THREE.Vector3();
       if (raycaster.ray.intersectPlane(plane, hit)) {
+        // Snap smooth position on first entry so particles react immediately
+        // instead of waiting ~1.5s for the lerp to travel from (999,999).
+        if (pointerActiveTarget.current === 0) {
+          pointerSmooth.current.copy(hit);
+        }
         pointer.current.copy(hit);
         pointerActiveTarget.current = 1;
       }
@@ -135,7 +140,7 @@ const Orbit = ({ animate }: { animate: boolean }) => {
     pointerActive.current = THREE.MathUtils.lerp(
       pointerActive.current,
       pointerActiveTarget.current,
-      Math.min(1, delta * 3),
+      Math.min(1, delta * 8),
     );
     const px = pointerSmooth.current.x;
     const py = pointerSmooth.current.y;

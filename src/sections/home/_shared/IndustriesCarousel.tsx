@@ -243,7 +243,7 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
         )}
 
         <div className="relative flex h-full flex-col items-center justify-center px-8 text-center">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary transition-[letter-spacing] duration-[900ms] ease-out group-hover:tracking-[0.34em]">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary transition-[letter-spacing] duration-300 ease-out group-hover:tracking-[0.34em]">
             {ind.regulation}
           </p>
           <h3 className="mt-3 text-2xl font-bold leading-tight text-secondary md:text-3xl">
@@ -258,7 +258,7 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
                 See industry
                 <ArrowRight className="h-4 w-4" />
               </span>
-              <span className="mt-2 translate-y-1.5 text-[10px] font-bold uppercase tracking-[0.28em] text-muted-foreground/70 opacity-0 transition-all duration-[900ms] ease-out group-hover:translate-y-0 group-hover:opacity-100">
+              <span className="mt-2 translate-y-1.5 text-[10px] font-bold uppercase tracking-[0.28em] text-muted-foreground/70 opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                 Click to explore
               </span>
             </>

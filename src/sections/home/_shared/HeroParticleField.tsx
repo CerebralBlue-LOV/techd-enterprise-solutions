@@ -113,7 +113,12 @@ const Field = ({ animate }: { animate: boolean }) => {
         const lz = local.z;
         local.y = ly * cosA + lz * sinA;
         local.z = -ly * sinA + lz * cosA;
-        pointerWorld.current.set(local.x, 0, local.z);
+        const pos = new THREE.Vector3(local.x, 0, local.z);
+        // Snap smooth position on first entry so the hill appears immediately.
+        if (pointerActiveTarget.current === 0) {
+          pointerSmoothed.current.copy(pos);
+        }
+        pointerWorld.current.copy(pos);
         pointerActiveTarget.current = 1;
       }
     };
@@ -139,13 +144,13 @@ const Field = ({ animate }: { animate: boolean }) => {
     pointerActive.current = THREE.MathUtils.lerp(
       pointerActive.current,
       pointerActiveTarget.current,
-      Math.min(1, delta * 2),
+      Math.min(1, delta * 3.5),
     );
 
     const px = pointerSmoothed.current.x;
     const pz = pointerSmoothed.current.z;
-    const RIPPLE_RADIUS = 2.0;
-    const RIPPLE_AMP = 0.45 * pointerActive.current;
+    const RIPPLE_RADIUS = 3.2;
+    const RIPPLE_AMP = 0.65 * pointerActive.current;
     const r2 = RIPPLE_RADIUS * RIPPLE_RADIUS;
 
     for (let i = 0; i < livePositions.length; i += 3) {
@@ -162,7 +167,7 @@ const Field = ({ animate }: { animate: boolean }) => {
         const dz = z - pz;
         const d2 = dx * dx + dz * dz;
         if (d2 < r2 * 2) {
-          const falloff = Math.exp(-d2 / (r2 * 0.5));
+          const falloff = Math.exp(-d2 / (r2 * 0.8));
           // Pure positive bump (a hill) — no oscillating wave term so it
           // doesn't push particles down or flicker.
           y += RIPPLE_AMP * falloff;
