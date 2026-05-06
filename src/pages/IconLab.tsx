@@ -555,19 +555,40 @@ const IconLab = () => {
               description="Icon shape rendered with cyan dots — echoes the hero particle field. Strong identity, but legibility drops at small sizes (icons must stay ≥56px)."
               Style={Style5}
             />
+            <Row
+              num={6}
+              name="3D wireframe (live)"
+              description="Real Three.js geometry — wireframe primitives floating in space, with cyan accent points and a slow auto-rotation. Distinct, premium, but heavy if used on every card."
+              Style={Style6}
+            />
+            <Row
+              num={7}
+              name="3D solid (live)"
+              description="Soft-shaded solid 3D forms with rim lighting and a brand-cyan tint. Product-marketing energy (Linear / Vercel / Apple landing). Best as one or two hero accents, not 5×."
+              recommended
+              Style={Style7}
+            />
+            <Row
+              num={8}
+              name="Glass tile (Supabase-style)"
+              description="Dark slate tile with a thin cyan vector glyph and soft radial glow — directly inspired by the reference image you sent. Strong product-card identity."
+              recommended
+              Style={Style8}
+            />
           </div>
 
           <div className="mt-16 rounded-xl border-2 border-primary/30 bg-primary/[0.03] p-8">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">My recommendation</p>
-            <h2 className="mt-3 text-3xl font-bold">Style 2 (Duotone tile) on cards · Style 5 (Particle) for hero accents</h2>
+            <h2 className="mt-3 text-3xl font-bold">Style 8 (Glass tile) for solution cards · Style 7 (3D solid) for hero accents</h2>
             <p className="mt-4 max-w-3xl text-base font-light text-secondary">
-              Style 2 is the workhorse: strong brand presence, scales to 40–56px without losing
-              identity, and pairs cleanly with the rotating border beam on the solution cards.
-              Reserve Style 5 (particle composition) for larger marquee placements — the hero,
-              section dividers, or a "Why TechD" feature — where it can echo the particle field
-              without competing with body content. Style 1 stays available for utility surfaces
-              (footer, dropdown menus, inline content). Style 3 and Style 4 are too loud for
-              repeated use across a 5-card grid.
+              The reference you sent (Supabase Vector card) maps almost exactly to <strong>Style 8</strong>:
+              dark slate tile, thin cyan vector glyph, soft radial glow, micro accent dots. It carries
+              clear product identity at the card scale and pairs cleanly with the rotating border beam.
+              Reserve <strong>Style 7</strong> (live 3D solids) for one or two marquee placements — hero
+              eyebrow, "Why TechD" feature, or a Resources hero — where motion earns its weight. Use
+              <strong> Style 2</strong> (duotone tile) as a fallback for utility surfaces (footer, nav, in-line
+              content). Avoid running 5 × Three.js canvases inside the solution grid — the bundle and
+              CPU cost is real.
             </p>
           </div>
 
