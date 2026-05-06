@@ -6,6 +6,7 @@ interface Props {
   featured?: boolean;
   pitch: string;
   ctaLabel: string;
+  icon?: ReactNode;
   children: ReactNode;
 }
 
@@ -13,7 +14,7 @@ interface Props {
  * SolutionCard — full-card flip on hover with a slow rotating cyan→white
  * border beam. Front holds practice content; back holds a short pitch + CTA.
  */
-export const SolutionCard = ({ to, featured, pitch, ctaLabel, children }: Props) => {
+export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, children }: Props) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -35,6 +36,7 @@ export const SolutionCard = ({ to, featured, pitch, ctaLabel, children }: Props)
                 Featured
               </span>
             )}
+            {icon && <div className="mb-6">{icon}</div>}
             {children}
           </div>
         </div>
@@ -51,8 +53,11 @@ export const SolutionCard = ({ to, featured, pitch, ctaLabel, children }: Props)
                 {pitch}
               </p>
             </div>
-            <span className="story-link mt-8 inline-block text-sm font-bold text-primary">
+            <span className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)] transition-transform duration-200 group-hover:translate-x-0.5">
               {ctaLabel}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
             </span>
           </div>
         </div>
