@@ -18,7 +18,7 @@ export const ProductCtaSection = ({ practice, product }: Props) => (
         <div className="rounded-2xl border border-border bg-card p-10 md:p-14 text-center max-w-2xl mx-auto">
           <p className="eyebrow mb-4">Ready to get started?</p>
           <h2 className="text-3xl md:text-4xl leading-[1.1]">
-            Talk to a {practice.name} principal
+            Talk to an expert
           </h2>
           <p className="mt-5 text-base font-light text-muted-foreground">
             Our senior engineers have shipped {product.name} in production for Fortune 500

@@ -42,7 +42,7 @@ export const ProductHeroSection = ({ practice, product }: Props) => (
           <div className="mt-8 flex flex-wrap gap-4">
             <Button asChild>
               <Link to="/contact">
-                Talk to a principal <ArrowRight className="ml-1" />
+                Talk to an expert <ArrowRight className="ml-1" />
               </Link>
             </Button>
             <Button asChild variant="outline">

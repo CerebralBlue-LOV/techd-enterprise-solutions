@@ -21,7 +21,7 @@ export const FinalCtaSection = () => (
           <div className="relative">
             <p className="eyebrow">Ready to talk?</p>
             <h2 className="mt-4 text-4xl md:text-5xl max-w-2xl mx-auto leading-[1.05] text-white">
-              Talk to a TechD principal.
+              Talk to an expert.
             </h2>
             <p className="mt-5 max-w-xl mx-auto text-lg font-light text-white/75">
               30-minute conversation. No sales pass-through, no slide deck. Just

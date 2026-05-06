@@ -68,7 +68,7 @@ const Contact = () => {
     <Layout>
       <SEO
         title="Contact — TechD"
-        description="Talk to a TechD principal about your AI, data, security, or cloud program."
+        description="Talk to an expert about your AI, data, security, or cloud program."
       />
 
       <section className="relative overflow-hidden">
@@ -79,7 +79,7 @@ const Contact = () => {
             <SectionHeading
               as="h1"
               eyebrow="Contact"
-              title="Talk to a principal."
+              title="Talk to an expert."
               subtitle="No SDR queue. No discovery call routing. Tell us what you're trying to ship and we'll match you with the right senior practitioner."
             />
           </Reveal>

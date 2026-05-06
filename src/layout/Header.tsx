@@ -89,7 +89,7 @@ export const Header = () => {
             asChild
             className="hidden md:inline-flex transition-transform duration-200 hover:-translate-y-0.5"
           >
-            <Link to="/contact">Talk to an Expert</Link>
+            <Link to="/contact">Talk to an expert</Link>
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -133,7 +133,7 @@ export const Header = () => {
                 ))}
               </nav>
               <Button asChild className="mt-6 w-full">
-                <Link to="/contact">Talk to an Expert</Link>
+                <Link to="/contact">Talk to an expert</Link>
               </Button>
             </SheetContent>
           </Sheet>
