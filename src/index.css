@@ -296,3 +296,81 @@
     animation: none !important;
   }
 }
+
+/* ---------- Flip-Lab card (light theme, simple border, animated motifs) ---------- */
+.flip-card {
+  perspective: 1400px;
+  transition: box-shadow 300ms ease;
+}
+.flip-card-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.flip-card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+@media (hover: hover) {
+  .flip-card[data-hover="true"] .flip-card-face {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 18px 40px -22px hsl(var(--primary) / 0.3);
+  }
+  .flip-card[data-hover="true"] .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-card-inner { transition: none; transform: none !important; }
+  .flip-card-face { transition: opacity 250ms ease; }
+  .flip-card-back { opacity: 0; transform: rotateY(0deg); }
+  .flip-card[data-hover="true"] .flip-card-front { opacity: 0; }
+  .flip-card[data-hover="true"] .flip-card-back  { opacity: 1; }
+}
+@media (hover: none) {
+  .flip-card-back { display: none; }
+}
+
+/* Motif keyframes (flip-lab scoped) */
+@keyframes flip-motif-stripe-slide {
+  from { transform: translateX(-30px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+@keyframes flip-motif-scatter {
+  from { opacity: 0; transform: translateY(6px) scale(0.6); }
+  to   { opacity: 0.7; transform: translateY(0) scale(1); }
+}
+
+.flip-motif-draw-long { stroke-dasharray: 600; stroke-dashoffset: 600; }
+.flip-card[data-hover="true"] .flip-motif-draw-long {
+  animation: motif-draw-long 1.4s ease-out forwards;
+}
+.flip-card[data-hover="true"] .flip-motif-wave {
+  animation: motif-wave 3.2s ease-in-out 1.2s infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.flip-motif-pulse { transform-origin: center; transform-box: fill-box; opacity: 0; }
+.flip-card[data-hover="true"] .flip-motif-pulse {
+  animation: motif-pulse 1.8s ease-in-out infinite;
+}
+.flip-motif-stripe { opacity: 0; }
+.flip-card[data-hover="true"] .flip-motif-stripe {
+  animation: flip-motif-stripe-slide 600ms ease-out forwards;
+}
+.flip-motif-spin-slow { animation: motif-spin 18s linear infinite; }
+.flip-motif-spin-rev  { animation: motif-spin 22s linear infinite reverse; }
+.flip-motif-scatter { opacity: 0; }
+.flip-card[data-hover="true"] .flip-motif-scatter {
+  animation: flip-motif-scatter 500ms ease-out forwards;
+}

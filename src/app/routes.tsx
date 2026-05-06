@@ -8,6 +8,7 @@ import Resources from "@pages/Resources";
 import Contact from "@pages/Contact";
 import NotFound from "@pages/NotFound";
 import IconLab from "@pages/IconLab";
+import FlipLab from "@pages/FlipLab";
 
 /**
  * Central route table. Add new routes here above the catch-all "*".
@@ -24,6 +25,7 @@ export const AppRoutes = () => (
     <Route path="/resources" element={<Resources />} />
     <Route path="/contact" element={<Contact />} />
     <Route path="/icon-lab" element={<IconLab />} />
+    <Route path="/flip-lab" element={<FlipLab />} />
     {/* Catch-all — must stay last. */}
     <Route path="*" element={<NotFound />} />
   </Routes>
