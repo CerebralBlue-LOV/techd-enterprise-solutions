@@ -44,29 +44,19 @@ export const CaseStudyCardBackdropCyan = () => {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0"
     >
-      {/* Brand-aligned gray gradient base.
-          Anchored on secondary (#56565A) — same hue family, ±6% lightness. */}
+      {/* Brand-aligned gray gradient base. Anchored near the `secondary`
+          token — same neutral hue family. On hover, a soft hole opens
+          around the cursor so the page's own grid shows through, perfectly
+          aligned (we are not drawing our own grid). */}
       <div
         className="absolute inset-0"
         style={{
           background:
             "linear-gradient(135deg, hsl(240 3% 28%) 0%, hsl(240 3% 34%) 55%, hsl(240 3% 40%) 100%)",
           WebkitMaskImage:
-            "radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), transparent 0%, black 70%)",
+            "radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,0,0,calc(1 - var(--hover, 0) * 0.85)) 0px, black calc(220px + var(--hover, 0) * 0px))",
           maskImage:
-            "radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), transparent 0%, black 70%)",
-          transition: "-webkit-mask-image 200ms ease, mask-image 200ms ease",
-        }}
-      />
-      {/* Fallback solid layer so non-hover state stays opaque even if mask
-          var hasn't been read yet. Disabled when --hover=1 via opacity. */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, hsl(240 3% 28%) 0%, hsl(240 3% 34%) 55%, hsl(240 3% 40%) 100%)",
-          opacity: "calc(1 - var(--hover, 0))",
-          transition: "opacity 200ms ease",
+            "radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,0,0,calc(1 - var(--hover, 0) * 0.85)) 0px, black 220px)",
         }}
       />
 
