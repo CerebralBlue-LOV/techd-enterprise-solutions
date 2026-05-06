@@ -212,26 +212,27 @@
   background: hsl(var(--background));
   z-index: 1;
 }
-/* Soft sweeping gray→cyan beam (no hard edges, no white) */
+/* Soft sweeping gray→cyan beam — covers full perimeter (top to bottom) */
 .solution-card-beam {
   position: absolute;
   content: "";
   display: block;
-  width: 220%;
-  height: 220%;
+  width: 320%;
+  height: 320%;
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    hsl(var(--muted) / 0.35) 60deg,
-    hsl(var(--primary) / 0.55) 110deg,
-    hsl(var(--muted) / 0.35) 160deg,
-    transparent 220deg,
+    hsl(var(--muted) / 0.4) 50deg,
+    hsl(var(--primary) / 0.95) 110deg,
+    hsl(var(--primary) / 0.7) 140deg,
+    hsl(var(--muted) / 0.4) 180deg,
+    transparent 240deg,
     transparent 360deg
   );
-  filter: blur(6px);
+  filter: blur(8px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.35;
+  opacity: 0.6;
   transition: opacity 600ms ease;
   animation: solution-card-beam-spin 14s linear infinite;
 }
