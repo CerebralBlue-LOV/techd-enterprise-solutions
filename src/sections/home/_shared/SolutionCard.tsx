@@ -53,6 +53,7 @@ export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, back, childr
               <p className="mt-6 text-base font-light leading-relaxed text-secondary">
                 {pitch}
               </p>
+              {back}
             </div>
             <span className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)] transition-transform duration-200 group-hover:translate-x-0.5">
               {ctaLabel}
