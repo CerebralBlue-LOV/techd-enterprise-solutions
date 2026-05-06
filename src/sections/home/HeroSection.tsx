@@ -40,7 +40,7 @@ export const HeroSection = () => (
             organizations — on IBM watsonx, Db2, and the open stack around them.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Button asChild size="lg" className="btn-glow border border-primary">
+            <Button asChild size="lg" className="btn-glow">
               <Link to="/contact">Talk to an expert</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
