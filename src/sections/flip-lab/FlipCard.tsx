@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
   eyebrow: string;
@@ -9,11 +10,13 @@ interface Props {
   chips: string[];
   ctaLabel: string;
   motif: ReactNode;
+  to?: string;
 }
 
 /**
  * FlipCard — front shows eyebrow + title (top-left) with a cyan motif.
  * Back shows backTitle, body, chips, and a CTA (no eyebrow, no arrow).
+ * If `to` is provided, the whole card becomes a link.
  */
 export const FlipCard = ({
   eyebrow,
@@ -24,16 +27,24 @@ export const FlipCard = ({
   chips,
   ctaLabel,
   motif,
+  to,
 }: Props) => {
   const [hover, setHover] = useState(false);
+  const commonProps = {
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    "data-hover": hover ? "true" : undefined,
+    className: "flip-card relative block h-full min-h-[340px] rounded-xl",
+  };
+  const Inner = to ? (
+    <Link to={to} {...commonProps}>
+      {/* placeholder — replaced below */}
+    </Link>
+  ) : null;
+  void Inner;
 
-  return (
-    <div
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      data-hover={hover ? "true" : undefined}
-      className="flip-card relative block h-full min-h-[340px] rounded-xl"
-    >
+  return to ? (
+    <Link to={to} {...commonProps}>
       <div className="flip-card-inner relative h-full w-full">
         {/* FRONT */}
         <div className="flip-card-face flip-card-front">
