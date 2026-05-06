@@ -429,6 +429,7 @@ export const IndustriesCarousel = () => {
               : 1,
         }}
       />
+    </div>
   );
 };
 
