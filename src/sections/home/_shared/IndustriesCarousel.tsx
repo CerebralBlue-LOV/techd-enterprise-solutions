@@ -216,7 +216,7 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
         opacity,
         zIndex,
         filter: reducedMotion ? "none" : blur,
-        pointerEvents: visible && d <= 1 ? "auto" : "none",
+        pointerEvents: visible && d <= 2 ? "auto" : "none",
       }}
       aria-hidden={!isActive}
     >
