@@ -306,11 +306,22 @@ export const IndustriesCarousel = () => {
   // Drag / swipe
   const onPointerDown = (e: React.PointerEvent) => {
     dragRef.current = { down: true, startX: e.clientX, dx: 0 };
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    // Do NOT capture the pointer here — that would steal clicks from the
+    // inner <Link>. We only capture once a real drag is detected.
   };
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragRef.current.down) return;
     dragRef.current.dx = e.clientX - dragRef.current.startX;
+    if (Math.abs(dragRef.current.dx) > 8) {
+      const el = e.currentTarget as HTMLElement;
+      if (!el.hasPointerCapture(e.pointerId)) {
+        try {
+          el.setPointerCapture(e.pointerId);
+        } catch {
+          /* ignore */
+        }
+      }
+    }
   };
   const onPointerUp = (e: React.PointerEvent) => {
     if (!dragRef.current.down) return;
