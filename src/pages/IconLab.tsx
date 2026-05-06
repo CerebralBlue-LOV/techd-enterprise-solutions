@@ -65,15 +65,14 @@ const GlassGlyph = ({ practice, opacity = 0.55 }: { practice: string; opacity?: 
   </>
 );
 
-// ---------- Style A: Light glass on background — soft cyan halo ----------
+// ---------- Style A: Light glass on background — soft cyan halo (original) ----------
 const StyleA = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
-    {/* layered cyan glow */}
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
     <span className="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-primary/25 blur-2xl" />
     <span className="absolute -bottom-8 -right-4 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />
     <svg
       viewBox="0 0 64 64"
-      className="relative h-12 w-12 text-primary"
+      className="relative h-16 w-16 text-primary"
       fill="none"
       stroke="currentColor"
       strokeWidth={1.4}
@@ -85,6 +84,67 @@ const StyleA = ({ practice }: { practice: string }) => (
     <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
     <span className="absolute right-5 top-3 h-0.5 w-0.5 rounded-full bg-primary/50" />
     <span className="absolute bottom-3 left-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
+  </div>
+);
+
+// ---------- Style A2: Centered radial halo — single bloom behind glyph ----------
+const StyleA2 = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.22),transparent_70%)]" />
+    <svg
+      viewBox="0 0 64 64"
+      className="relative h-16 w-16 text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <GlassGlyph practice={practice} opacity={0.55} />
+    </svg>
+    <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
+  </div>
+);
+
+// ---------- Style A3: Top-arc halo — bloom from above ----------
+const StyleA3 = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_10px_30px_-18px_hsl(var(--secondary)/0.4)]">
+    <span className="absolute -top-10 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full bg-primary/30 blur-2xl" />
+    <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+    <svg
+      viewBox="0 0 64 64"
+      className="relative h-16 w-16 text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <GlassGlyph practice={practice} opacity={0.55} />
+    </svg>
+    <span className="absolute bottom-3 left-3 h-1 w-1 rounded-full bg-primary/70" />
+  </div>
+);
+
+// ---------- Style A4: Twin halos — top-left + bottom-right symmetry, bigger ----------
+const StyleA4 = ({ practice }: { practice: string }) => (
+  <div className="relative grid h-28 w-28 place-items-center overflow-hidden rounded-2xl bg-background ring-1 ring-border shadow-[0_12px_32px_-16px_hsl(var(--secondary)/0.45)]">
+    <span className="absolute -left-8 -top-8 h-28 w-28 rounded-full bg-primary/30 blur-2xl" />
+    <span className="absolute -bottom-10 -right-6 h-24 w-24 rounded-full bg-primary/20 blur-2xl" />
+    <span className="absolute inset-0 bg-[linear-gradient(135deg,hsl(var(--primary)/0.08),transparent_50%)]" />
+    <svg
+      viewBox="0 0 64 64"
+      className="relative h-16 w-16 text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.4}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <GlassGlyph practice={practice} opacity={0.55} />
+    </svg>
+    <span className="absolute right-3 top-3 h-1.5 w-1.5 rounded-full bg-primary" />
+    <span className="absolute bottom-3 left-3 h-1 w-1 rounded-full bg-primary/60" />
   </div>
 );
 
