@@ -355,13 +355,18 @@ export const IndustriesCarousel = () => {
         style={{ perspective: "1400px" }}
       >
         {INDUSTRIES.map((ind, i) => {
-          const depth = (i - active + N) % N;
+          // Signed offset in [-N/2, N/2] so cards fan to the nearest side.
+          let signed = i - active;
+          if (signed > N / 2) signed -= N;
+          if (signed < -N / 2) signed += N;
+          const depth = Math.abs(signed);
           return (
             <StackedCard
               key={ind.id}
               ind={ind}
               index={i}
               depth={depth}
+              signedDepth={signed}
               isActive={depth === 0}
               total={N}
               onActivate={() => setActive(i)}
