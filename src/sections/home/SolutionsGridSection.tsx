@@ -1,15 +1,29 @@
-import { ArrowRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import { SOLUTIONS } from "@content/solutions";
+import { Suspense, lazy } from "react";
 import SolutionCard from "./_shared/SolutionCard";
-import { SOLUTION_MOTIFS } from "./_shared/motifs";
+
+// Lazy-load each particle scene so the 5 canvases don't block initial paint.
+const AIScene = lazy(() => import("./_shared/cards/AINeuralScene"));
+const DataScene = lazy(() => import("./_shared/cards/DataGridScene"));
+const AutoScene = lazy(() => import("./_shared/cards/AutomationFlowScene"));
+const SecScene = lazy(() => import("./_shared/cards/SecurityDomeScene"));
+const CloudScene = lazy(() => import("./_shared/cards/CloudOrbitScene"));
+
+const SCENE_MAP: Record<string, React.LazyExoticComponent<React.FC<{ active?: boolean }>>> = {
+  ai: AIScene,
+  "data-analytics": DataScene,
+  automation: AutoScene,
+  security: SecScene,
+  "hybrid-cloud": CloudScene,
+};
 
 /**
  * Section: Home / Solutions Grid
- * Five practice cards with unique animated SVG motifs, cursor-following
- * spotlight, and a subtle 3D tilt on hover. No icons, no flips.
+ * Five practice cards with three.js particle scenes, slide-up reveal panel
+ * holding 3 key capabilities, and an underlined-text CTA. No icons. No flips.
  */
 export const SolutionsGridSection = () => (
   <section className="section">
@@ -25,14 +39,22 @@ export const SolutionsGridSection = () => (
 
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {SOLUTIONS.map((s, i) => {
-          const Motif = SOLUTION_MOTIFS[s.id];
+          const Scene = SCENE_MAP[s.id];
           const featured = s.id === "ai";
           return (
             <Reveal key={s.id} delay={i * 50}>
               <SolutionCard
                 to={`/solutions#${s.id}`}
                 featured={featured}
-                motif={Motif ? <Motif featured={featured} /> : null}
+                highlights={s.highlights}
+                ctaLabel={s.ctaLabel}
+                scene={(active) =>
+                  Scene ? (
+                    <Suspense fallback={null}>
+                      <Scene active={active} />
+                    </Suspense>
+                  ) : null
+                }
               >
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                   {s.name}
@@ -56,10 +78,6 @@ export const SolutionsGridSection = () => (
                     </li>
                   ))}
                 </ul>
-                <span className="mt-7 inline-flex items-center gap-1 text-sm font-bold text-primary">
-                  Learn more{" "}
-                  <ArrowRight className="!size-4 transition-transform group-hover:translate-x-0.5" />
-                </span>
               </SolutionCard>
             </Reveal>
           );
