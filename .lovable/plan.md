@@ -1,66 +1,72 @@
 ## Goal
 
-Create a dedicated lab page at `/flip-lab` to prototype a new generation of solution cards. The cards reuse the proven flip-on-hover pattern but introduce a cleaner layout inspired by the reference image: a colored icon tile in the top-left, a small label, a bold title, a footer line, and a decorative animated motif on the back of the card.
+Internal sandbox at `/logo-lab` to QA every customer logo used by the homepage `LogoStrip` ("Trusted by Fortune 500 leaders"). Lets you:
 
-This is a sandbox page — once we like the result, we'll port the winning version onto the real Solutions section.
+- See each logo at the exact size it renders in the marquee.
+- Resize each logo via discrete Tailwind heights.
+- Persist changes by writing the updated `logoClass` directly back into `src/content/site.ts`.
+- Flag any logo whose file is missing or fails to load.
 
-## Scope
+## Data source
 
-- New route only. No changes to the existing `/icon-lab` page or to the live `SolutionCard` on the homepage.
-- Five test cards, one per practice: AI & Generative, Data & Analytics, Automation, Security, Hybrid Cloud.
+Reads `CUSTOMERS` from `src/content/site.ts`. The lab edits only the `logoClass` field per entry. Order, names, URLs, and image paths are not touched.
 
-## Visual direction
+## UX
 
-- Light cards on the page background, brand palette only.
-- Square-ish icon tile (top-left) with `bg-primary/10` fill, `text-primary` icon, rounded corners, soft inner highlight.
-- Top-right meta line (small uppercase label, e.g. "Featured" / date-style tag — TBD copy).
-- Eyebrow label in cyan uppercase tracking.
-- Bold title in `text-secondary`.
-- Footer line in muted gray (e.g. "United States", or a short region/sector tag).
-- Simple 1px border using `--border`, hover lifts to `border-primary` + soft cyan shadow.
+Single page, grid of tiles (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
 
-## Flip behavior
+Each tile shows:
+- Logo rendered with the same classes used in the marquee (`object-contain`, lazy load) on a white card matching the live section.
+- Below the logo: customer name + URL.
+- A size selector — segmented buttons for: `h-6`, `h-7`, `h-8`, `h-9`, `h-10`, `h-12`, `h-14`, `h-16`, `h-20`, `h-24` (each pair as `h-X md:h-Y`, matching the current convention; one click selects a preset that maps to the existing pattern).
+- Status pill: `OK`, `Missing file` (no `logo` field), or `Broken` (img `onError`).
 
-- Reuse the exact mechanism from `SolutionCard.tsx`: `perspective`, `transform-style: preserve-3d`, `rotateY(180deg)` on hover, `backface-visibility: hidden` on each face.
-- 900ms cubic-bezier easing (matches existing site rhythm).
-- `data-hover` toggled via `onMouseEnter` / `onMouseLeave` so it works on touch fallback too.
-- Reduced-motion: cross-fade instead of flipping.
+Top of the page:
+- Title + short instructions.
+- Two buttons: **Save changes** (writes to `site.ts` via dev endpoint) and **Reset** (revert local edits to file values).
+- A counter "N unsaved changes".
 
-## Per-card SVG motifs (the key new piece)
+No marquee preview, no grayscale toggle, no reorder — out of scope per your answers.
 
-Each card back gets its own animated SVG motif, anchored bottom-right, only animating while the card is hovered. Loose interpretations of the reference, all using brand cyan (`hsl(var(--primary))`) at varied opacities:
+## Saving (dev-only)
 
-| Card | Motif | Animation |
-|---|---|---|
-| AI & Generative | Layered topographic wave lines | `motif-draw-long` stroke-dashoffset reveal, then gentle `motif-wave` translateY loop |
-| Data & Analytics | Cluster of dots with pulsing nodes | `motif-pulse` on selected dots, staggered delays |
-| Automation | Diagonal stripe field | Stripes slide in left→right, then slow continuous drift |
-| Security | Concentric rotating arcs | `motif-spin-slow` + `motif-spin-rev` on inner ring |
-| Hybrid Cloud | Scattered dashes / sparkles | Sequential fade-in scatter, subtle float loop |
+Vite dev plugin exposing a single endpoint `POST /__lab/save-logo-sizes`:
+- Body: `[{ name: string, logoClass: string | null }]`
+- Reads `src/content/site.ts`, finds each `{ name: "..." }` entry, and updates/inserts/removes its `logoClass: "..."` field. Preserves all other fields and surrounding formatting.
+- Implementation: a small AST-free string replace driven by a regex anchored on `name: "<exact name>"` within the same object literal — robust enough for this file, which is hand-maintained and uniformly formatted.
 
-Most of the keyframes already exist in `src/index.css` (`motif-wave`, `motif-pulse`, `motif-draw`, `motif-draw-long`, `motif-spin`). We'll add a `motif-stripe-slide` keyframe for Automation and a `motif-scatter` staggered fade for Hybrid Cloud.
+The plugin is registered in `vite.config.ts` only when `mode === "development"`. It does nothing in production builds, so the lab cannot be used to mutate a deployed site. The endpoint is unauthenticated but only reachable from the local dev server.
+
+The lab page calls this endpoint, then reloads `CUSTOMERS` (full page reload is fine — it's a lab).
+
+## Missing/broken detection
+
+- "Missing file" — entry has no `logo` field.
+- "Broken" — `<img onError>` fires; the tile flips to a red-bordered state with the attempted path so you can fix the filename.
+- Server-side existence check is not needed; the browser's load failure is the source of truth.
 
 ## Files
 
 **New**
-- `src/pages/FlipLab.tsx` — page shell, intro, 5-card grid (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`).
-- `src/sections/flip-lab/FlipCard.tsx` — the new card component (front + back faces, motif slot prop).
-- `src/sections/flip-lab/motifs/` — one small component per practice (`AiMotif.tsx`, `DataMotif.tsx`, `AutomationMotif.tsx`, `SecurityMotif.tsx`, `CloudMotif.tsx`). Pure SVG, no deps.
+- `src/pages/LogoLab.tsx` — page shell, save/reset bar, grid.
+- `src/sections/logo-lab/LogoTile.tsx` — single-logo card with size selector and status pill.
+- `src/sections/logo-lab/sizePresets.ts` — the discrete height presets (label + className).
+- `vite-plugins/save-logo-sizes.ts` — dev-only Vite plugin handling `POST /__lab/save-logo-sizes`.
 
 **Edited**
-- `src/app/routes.tsx` — register `/flip-lab` route.
-- `src/index.css` — append two new keyframes (`motif-stripe-slide`, `motif-scatter`) and the `.flip-card-*` class block (mirrors `.solution-card-*` but without the rotating beam — just clean borders).
+- `src/app/routes.tsx` — register `/logo-lab` route.
+- `vite.config.ts` — load the plugin in dev mode only.
 
-## Out of scope
-
-- No nav link to `/flip-lab` (lab page, accessed by URL like `/icon-lab`).
-- No copy polish — placeholder titles per practice.
-- Not wiring this into Solutions section; that's a follow-up once we approve the look.
+No nav link added (lab page, accessed by URL).
 
 ## Acceptance check
 
-- Visit `/flip-lab` → see 5 cards in the brand palette.
-- Hover a card → flips smoothly; motif on the back animates.
-- Mouse out → flips back, motif resets.
-- `prefers-reduced-motion` → cross-fade only, no spinning motifs.
-- No off-palette colors anywhere.
+- Visit `/logo-lab` → grid of every customer with current size highlighted.
+- Click a different size on any tile → preview updates immediately, header shows "1 unsaved change".
+- Click **Save** → `src/content/site.ts` is rewritten, the dev server hot-reloads, the homepage marquee shows the new sizes.
+- Visit `/` → `LogoStrip` reflects the saved sizes.
+- A logo with a missing or wrong file shows a red status pill.
+
+## Out of scope
+
+- No production save path. No auth. No reorder/disable. No background or grayscale toggle. No marquee preview. No image upload.
