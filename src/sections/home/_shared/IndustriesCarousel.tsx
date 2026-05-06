@@ -225,7 +225,7 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
         to={`/industries#${ind.id}`}
         onClick={handleClick}
         tabIndex={isActive ? 0 : -1}
-        className={`group relative block h-full w-full overflow-hidden rounded-2xl border bg-background transition-all duration-[900ms] ease-out ${
+        className={`group relative block h-full w-full overflow-hidden rounded-2xl border bg-background transition-[transform,box-shadow,border-color] duration-300 ease-out ${
           isActive
             ? "border-border shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4),0_8px_20px_-16px_hsl(var(--primary)/0.18)] hover:-translate-y-1 hover:border-primary hover:shadow-[0_0_0_1px_hsl(var(--primary)),0_28px_70px_-30px_hsl(var(--primary)/0.6),0_10px_24px_-16px_hsl(var(--primary)/0.35)]"
             : "border-border shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4),0_8px_20px_-16px_hsl(var(--primary)/0.18)]"
@@ -234,10 +234,10 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
 
         {isActive && (
           <>
-            {/* Diagonal light sweep */}
+            {/* Diagonal light sweep — one-shot, no rewind */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-12deg] bg-gradient-to-br from-transparent via-primary/20 to-transparent transition-transform duration-[1600ms] ease-out group-hover:translate-x-full motion-reduce:hidden"
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-br from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-card-sweep motion-reduce:hidden"
             />
           </>
         )}

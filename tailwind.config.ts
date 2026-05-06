@@ -89,6 +89,10 @@ export default {
           "0%, 100%": { transform: "translateY(-6px)" },
           "50%": { transform: "translateY(6px)" },
         },
+        "card-sweep": {
+          "0%": { transform: "translateX(-100%) skewX(-12deg)" },
+          "100%": { transform: "translateX(100%) skewX(-12deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -97,6 +101,7 @@ export default {
         marquee: "marquee 45s linear infinite",
         "gradient-drift": "gradient-drift 18s ease-in-out infinite",
         float: "float 7s ease-in-out infinite",
+        "card-sweep": "card-sweep 1.4s ease-out forwards",
       },
     },
   },
