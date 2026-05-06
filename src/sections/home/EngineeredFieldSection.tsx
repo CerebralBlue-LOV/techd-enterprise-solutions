@@ -34,6 +34,7 @@ export const EngineeredFieldSection = () => (
       <div className="container-page">
         <Reveal>
           <SectionHeading
+            align="center"
             eyebrow="Industries"
             title="Built for regulated, complex enterprises."
           />
