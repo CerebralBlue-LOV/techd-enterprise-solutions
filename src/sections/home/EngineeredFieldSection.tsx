@@ -1,5 +1,4 @@
 import { Suspense, lazy } from "react";
-import { Link } from "react-router-dom";
 
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
@@ -7,7 +6,7 @@ import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import SectionBackdrop from "@shared/SectionBackdrop";
 import CaseStudyCardBackdropCyan from "@sections/home/_shared/CaseStudyCardBackdropCyan";
-import { INDUSTRIES } from "@content/industries";
+import IndustriesCarousel from "@sections/home/_shared/IndustriesCarousel";
 
 const ParticleGlobe = lazy(
   () => import("@sections/home/_shared/ParticleGlobe"),
@@ -39,21 +38,11 @@ export const EngineeredFieldSection = () => (
             title="Built for regulated, complex enterprises."
           />
         </Reveal>
-        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {INDUSTRIES.map((ind, i) => (
-            <Reveal key={ind.id} delay={i * 50}>
-              <Link
-                to={`/industries#${ind.id}`}
-                className="card-hover block h-full rounded-xl p-7 bg-background/70 backdrop-blur-sm"
-              >
-                <h3 className="text-xl">{ind.name}</h3>
-                <p className="mt-3 text-sm font-light text-muted-foreground">
-                  {ind.outcome}
-                </p>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal>
+          <div className="mt-14">
+            <IndustriesCarousel />
+          </div>
+        </Reveal>
       </div>
     </section>
 
