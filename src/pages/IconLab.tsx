@@ -232,7 +232,244 @@ const Style5 = ({ practice }: { practice: string }) => {
   );
 };
 
-// ---------- Layout helpers ----------
+// ---------- Style 6: 3D isometric wireframe (Three.js) ----------
+// Inspired by Supabase-style 3D mark — wireframe primitives floating with
+// soft cyan accent points. Each practice gets a distinct primitive.
+const Mesh3D = ({ practice }: { practice: string }) => {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((_, dt) => {
+    if (ref.current) ref.current.rotation.y += dt * 0.4;
+  });
+  const cyan = "#00B3E3";
+  const wire = "#56565A";
+
+  return (
+    <group ref={ref}>
+      {practice === "AI & Generative" && (
+        <>
+          {/* icosahedron neural core */}
+          <mesh>
+            <icosahedronGeometry args={[0.9, 1]} />
+            <meshBasicMaterial wireframe color={wire} />
+          </mesh>
+          <mesh scale={0.18}>
+            <icosahedronGeometry args={[1, 0]} />
+            <meshBasicMaterial color={cyan} />
+          </mesh>
+        </>
+      )}
+      {practice === "Data & Analytics" && (
+        <>
+          {/* stacked cylinders */}
+          {[-0.55, 0, 0.55].map((y, i) => (
+            <mesh key={i} position={[0, y, 0]}>
+              <cylinderGeometry args={[0.7, 0.7, 0.35, 24, 1, true]} />
+              <meshBasicMaterial wireframe color={wire} />
+            </mesh>
+          ))}
+          <mesh position={[0.85, 0.55, 0]} scale={0.12}>
+            <sphereGeometry args={[1, 16, 16]} />
+            <meshBasicMaterial color={cyan} />
+          </mesh>
+        </>
+      )}
+      {practice === "Automation" && (
+        <>
+          {/* torus + orbiting dot */}
+          <mesh rotation={[Math.PI / 2.5, 0, 0]}>
+            <torusGeometry args={[0.85, 0.06, 16, 64]} />
+            <meshBasicMaterial color={cyan} />
+          </mesh>
+          <mesh>
+            <octahedronGeometry args={[0.5, 0]} />
+            <meshBasicMaterial wireframe color={wire} />
+          </mesh>
+        </>
+      )}
+      {practice === "Security" && (
+        <>
+          {/* shield-like prism */}
+          <mesh rotation={[0, 0, 0]}>
+            <coneGeometry args={[0.85, 1.5, 4]} />
+            <meshBasicMaterial wireframe color={wire} />
+          </mesh>
+          <mesh position={[0, 0, 0.3]} scale={0.18}>
+            <sphereGeometry args={[1, 16, 16]} />
+            <meshBasicMaterial color={cyan} />
+          </mesh>
+        </>
+      )}
+      {practice === "Hybrid Cloud" && (
+        <>
+          {/* two intersecting boxes — hybrid */}
+          <mesh rotation={[0.4, 0.6, 0]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial wireframe color={wire} />
+          </mesh>
+          <mesh position={[0.35, 0.2, 0.2]} scale={0.55} rotation={[0.7, 0.2, 0.4]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial wireframe color={cyan} />
+          </mesh>
+        </>
+      )}
+    </group>
+  );
+};
+
+// Floating cyan particles around 3D meshes (echoes the hero particle field)
+const FloatingDots = () => {
+  const positions = useMemo(() => {
+    const arr: [number, number, number][] = [];
+    for (let i = 0; i < 14; i++) {
+      const a = (i / 14) * Math.PI * 2;
+      const r = 1.4 + Math.random() * 0.5;
+      arr.push([Math.cos(a) * r, (Math.random() - 0.5) * 1.4, Math.sin(a) * r]);
+    }
+    return arr;
+  }, []);
+  return (
+    <>
+      {positions.map((p, i) => (
+        <mesh key={i} position={p} scale={0.04 + Math.random() * 0.03}>
+          <sphereGeometry args={[1, 8, 8]} />
+          <meshBasicMaterial color="#00B3E3" />
+        </mesh>
+      ))}
+    </>
+  );
+};
+
+const Style6 = ({ practice }: { practice: string }) => (
+  <div className="h-24 w-24">
+    <Canvas camera={{ position: [0, 0, 3.4], fov: 40 }} dpr={[1, 2]}>
+      <Suspense fallback={null}>
+        <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.6}>
+          <Mesh3D practice={practice} />
+        </Float>
+        <FloatingDots />
+      </Suspense>
+    </Canvas>
+  </div>
+);
+
+// ---------- Style 7: 3D solid (matte material) ----------
+// Soft-shaded solid forms with rim light — premium, product-marketing feel.
+const Mesh3DSolid = ({ practice }: { practice: string }) => {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((_, dt) => {
+    if (ref.current) ref.current.rotation.y += dt * 0.35;
+  });
+  return (
+    <group ref={ref}>
+      {practice === "AI & Generative" && (
+        <mesh>
+          <icosahedronGeometry args={[0.9, 0]} />
+          <MeshDistortMaterial color="#00B3E3" distort={0.25} speed={1.5} roughness={0.4} metalness={0.2} />
+        </mesh>
+      )}
+      {practice === "Data & Analytics" && (
+        <group>
+          {[-0.55, 0, 0.55].map((y, i) => (
+            <mesh key={i} position={[0, y, 0]}>
+              <cylinderGeometry args={[0.7 - i * 0.05, 0.7 - i * 0.05, 0.32, 32]} />
+              <meshStandardMaterial color={i === 1 ? "#00B3E3" : "#A7A5A8"} roughness={0.5} metalness={0.1} />
+            </mesh>
+          ))}
+        </group>
+      )}
+      {practice === "Automation" && (
+        <mesh rotation={[Math.PI / 2.5, 0, 0]}>
+          <torusKnotGeometry args={[0.6, 0.18, 80, 16]} />
+          <meshStandardMaterial color="#00B3E3" roughness={0.35} metalness={0.4} />
+        </mesh>
+      )}
+      {practice === "Security" && (
+        <mesh>
+          <octahedronGeometry args={[0.95, 0]} />
+          <meshStandardMaterial color="#56565A" roughness={0.4} metalness={0.3} flatShading />
+        </mesh>
+      )}
+      {practice === "Hybrid Cloud" && (
+        <group>
+          <mesh position={[-0.3, 0, 0]}>
+            <sphereGeometry args={[0.5, 32, 32]} />
+            <meshStandardMaterial color="#A7A5A8" roughness={0.5} />
+          </mesh>
+          <mesh position={[0.3, 0, 0]}>
+            <sphereGeometry args={[0.5, 32, 32]} />
+            <meshStandardMaterial color="#00B3E3" roughness={0.4} />
+          </mesh>
+        </group>
+      )}
+    </group>
+  );
+};
+
+const Style7 = ({ practice }: { practice: string }) => (
+  <div className="h-24 w-24">
+    <Canvas camera={{ position: [0, 0, 3.2], fov: 40 }} dpr={[1, 2]}>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[3, 4, 2]} intensity={1.1} />
+      <directionalLight position={[-3, -2, -1]} intensity={0.4} color="#00B3E3" />
+      <Suspense fallback={null}>
+        <Float speed={1.2} rotationIntensity={0.3} floatIntensity={0.5}>
+          <Mesh3DSolid practice={practice} />
+        </Float>
+      </Suspense>
+    </Canvas>
+  </div>
+);
+
+// ---------- Style 8: Vector glass / glassmorphism on dark tile ----------
+// Dark slate tile with light-stroke vector + soft cyan glow. Reads premium and
+// matches the reference image (Supabase "Vector" card).
+const Style8 = ({ practice }: { practice: string }) => {
+  const stroke = "#00B3E3";
+  return (
+    <div className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-2xl bg-[#0F1115] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,179,227,0.25),transparent_60%)]" />
+      <svg viewBox="0 0 64 64" className="relative h-12 w-12" fill="none" stroke={stroke} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+        {practice === "AI & Generative" && (
+          <>
+            <path d="M32 12L50 22v20L32 52 14 42V22z" />
+            <path d="M32 12v40M14 22l36 20M50 22L14 42" opacity={0.6} />
+            <circle cx="32" cy="32" r="2.5" fill={stroke} />
+          </>
+        )}
+        {practice === "Data & Analytics" && (
+          <>
+            <path d="M32 8L52 18v28L32 56 12 46V18z" />
+            <path d="M12 18l20 10 20-10M32 28v28" opacity={0.5} />
+          </>
+        )}
+        {practice === "Automation" && (
+          <>
+            <circle cx="32" cy="32" r="14" />
+            <circle cx="32" cy="32" r="6" />
+            <path d="M32 8v10M32 46v10M8 32h10M46 32h10" opacity={0.6} />
+          </>
+        )}
+        {practice === "Security" && (
+          <>
+            <path d="M32 8l18 6v14c0 12-8 20-18 26-10-6-18-14-18-26V14z" />
+            <path d="M24 32l6 6 10-12" />
+          </>
+        )}
+        {practice === "Hybrid Cloud" && (
+          <>
+            <path d="M32 12l16 9v18l-16 9-16-9V21z" />
+            <path d="M16 21l16 9 16-9M32 30v18" opacity={0.5} />
+          </>
+        )}
+      </svg>
+      {/* corner accent dots */}
+      <span className="absolute right-3 top-3 h-1 w-1 rounded-full bg-primary" />
+      <span className="absolute bottom-3 left-3 h-0.5 w-0.5 rounded-full bg-primary/60" />
+    </div>
+  );
+};
+
+
 const Row = ({
   num,
   name,
