@@ -1,37 +1,77 @@
-## What the reference shows
+# Solutions Grid — Card Redesign
 
-The Stripe-style halo in your video has each particle drifting **outward and back along its own radius** with a unique phase. There's no rotation — the ring just slowly inhales and exhales. Outer particles travel further than inner ones, which is what makes the cloud look like it's gently breathing into space.
+Replace the generic lucide-icon cards on the Home page with a more distinctive system: unique animated SVG motifs per practice, cursor-following spotlight, and a subtle 3D tilt on hover. Light theme preserved, no flip (per M2 guidance).
 
-## Change
+## Scope
 
-Update `src/sections/home/_shared/ParticleOrbit.tsx` to animate per-particle radial drift.
+- Only `src/sections/home/SolutionsGridSection.tsx` and new motif/card primitives.
+- Solutions detail page (`/solutions`) is **not** touched.
+- No data changes in `src/content/solutions.ts`.
 
-### Per-particle params (computed once at build)
+## Visual concept
 
-For each of the 4,200 particles, store:
-- `angle` — its fixed angular position (no rotation)
-- `baseR` — its resting radius (current gaussian distribution, unchanged)
-- `amp` — drift distance: `0.08 + outwardness * 0.55 + jitter`, so outer particles travel further
-- `phase` — random `0..2π` so they don't pulse in sync
-- `speed` — `0.35..0.7` rad/s, slow and varied
+Each card keeps the current information hierarchy (eyebrow → outcome headline → description → product tags → CTA) but the top "icon block" is replaced by a **unique animated SVG motif** that fills the card header zone (~140px tall) and bleeds toward the edges.
 
-### Per-frame update (`useFrame`)
+Motifs (one per practice, all in cyan + neutral tones):
+
+| Practice | Motif |
+|---|---|
+| AI & Generative | Layered sine waves, animate amplitude on hover |
+| Data & Analytics | Dot grid with bright nodes that pulse + connecting lines that draw |
+| Automation | Sparkline / step-flow with a traveling dot |
+| Security | Shield silhouette built from a mesh, lock node lights up |
+| Hybrid Cloud | Orbiting nodes around a soft cloud shape |
+
+Featured AI card: stronger cyan glow on the motif + the existing "Featured" pill.
+
+## Interactions
+
+1. **Spotlight** — On `mousemove`, a radial cyan glow follows the cursor inside the card (CSS variables `--mx`, `--my`, masked layer at ~12% opacity).
+2. **Tilt** — Max 4° rotateX/rotateY based on cursor position, smoothed via CSS transition. Disabled below `md` and under `prefers-reduced-motion`.
+3. **Motif animation** — Triggered on hover only (waves shift, dots pulse, lines draw). Uses CSS keyframes, no JS loop.
+4. **Existing reveal-on-scroll** preserved.
+
+No flip. No content swap. The card never hides what's there.
+
+## File changes
 
 ```text
-r = baseR + sin(t * speed + phase) * amp
-x = cos(angle) * r
-y = sin(angle) * r
+src/sections/home/
+  SolutionsGridSection.tsx              (rewrite card markup)
+  _shared/
+    SolutionCard.tsx                    (new — card shell with spotlight + tilt)
+    motifs/
+      AIMotif.tsx                       (new)
+      DataMotif.tsx                     (new)
+      AutomationMotif.tsx               (new)
+      SecurityMotif.tsx                 (new)
+      CloudMotif.tsx                    (new)
+      index.ts                          (motif map by solution id)
 ```
 
-Mutate the position buffer in place, set `needsUpdate = true`. Highlights re-sample from the same indices each frame so they ride along.
+No new dependencies. Pure CSS + inline SVG. Keeps bundle flat.
 
-### Other details
+## Technical details
 
-- Switch canvas `frameloop` from `"demand"` to `"always"` (only when motion is allowed).
-- Honor `prefers-reduced-motion` — keep current static render in that case.
-- Subtle highlight opacity pulse: `0.75 + sin(t * 1.2) * 0.2`.
-- No global rotation, no z-axis motion — purely radial breathing, matching the reference.
+- Tilt + spotlight live on `SolutionCard` via a tiny `useRef` + `requestAnimationFrame` throttled `mousemove` handler. Reset on `mouseleave`.
+- Motifs accept `{ active?: boolean }` so animation can pause when the card isn't hovered (saves paint).
+- All colors via existing tokens (`--primary`, `--border`, `--muted`). No raw hex.
+- Respect `@media (prefers-reduced-motion: reduce)` — disable tilt + motif loops.
+- A11y: card remains a single `<Link>`; motif marked `aria-hidden`.
+- Mobile (<`md`): tilt off, spotlight off, motif renders as a static decorative banner.
 
-### Files
+## Out of scope
 
-- Edit: `src/sections/home/_shared/ParticleOrbit.tsx`
+- Changes to `/solutions` detail page cards.
+- Editing `src/content/solutions.ts`.
+- New copy.
+- Adding 3D libraries (three.js stays in the hero only).
+
+## Acceptance
+
+- Each of the 5 cards shows a unique geometric motif instead of a lucide icon.
+- Hovering a card on desktop produces a smooth cursor-following glow and ≤4° tilt.
+- Featured AI card retains its primary border + featured pill.
+- No layout shift; card heights match across the row.
+- Lighthouse perf on `/` does not regress more than 2 points.
+- `prefers-reduced-motion` disables tilt, spotlight stays static or off.
