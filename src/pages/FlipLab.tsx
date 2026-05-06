@@ -1,5 +1,4 @@
 import Layout from "@layout/Layout";
-import { Sparkles, Database, Workflow, ShieldCheck, Cloud } from "lucide-react";
 import FlipCard from "@/sections/flip-lab/FlipCard";
 import AiMotif from "@/sections/flip-lab/motifs/AiMotif";
 import DataMotif from "@/sections/flip-lab/motifs/DataMotif";
@@ -9,7 +8,7 @@ import CloudMotif from "@/sections/flip-lab/motifs/CloudMotif";
 
 /**
  * /flip-lab — internal sandbox for the next-generation solution card.
- * Tests flip-on-hover with per-practice animated SVG motifs on the back.
+ * Front face shows a rich cyan motif; hover flips to back with CTA.
  */
 const cards = [
   {
@@ -17,7 +16,6 @@ const cards = [
     title: "Ship trustworthy gen AI on governed enterprise data.",
     meta: "Practice 01",
     footer: "United States",
-    icon: <Sparkles size={22} strokeWidth={1.75} />,
     backTitle: "Production-grade AI",
     backBody:
       "Watsonx, RAG, evaluation, guardrails — everything needed to put gen AI in front of customers safely.",
@@ -29,7 +27,6 @@ const cards = [
     title: "Make your data AI-ready, governed, and defensible.",
     meta: "Practice 02",
     footer: "United States",
-    icon: <Database size={22} strokeWidth={1.75} />,
     backTitle: "Data foundations",
     backBody:
       "Db2, lakehouse, lineage, and governance so your analytics — and your AI — stand up to scrutiny.",
@@ -41,7 +38,6 @@ const cards = [
     title: "Observe, optimize, and eliminate manual toil.",
     meta: "Practice 03",
     footer: "Global",
-    icon: <Workflow size={22} strokeWidth={1.75} />,
     backTitle: "Run smarter",
     backBody:
       "Apptio, Turbonomic, Instana — see every workload, cut waste, and automate the boring parts.",
@@ -53,7 +49,6 @@ const cards = [
     title: "Pass audits, protect data, respond to breaches.",
     meta: "Practice 04",
     footer: "Regulated industries",
-    icon: <ShieldCheck size={22} strokeWidth={1.75} />,
     backTitle: "Defense in depth",
     backBody:
       "Guardium, QRadar, identity, and zero-trust patterns hardened on real Fortune 500 environments.",
@@ -65,7 +60,6 @@ const cards = [
     title: "Run mission workloads where they belong.",
     meta: "Practice 05",
     footer: "United States",
-    icon: <Cloud size={22} strokeWidth={1.75} />,
     backTitle: "Anywhere, governed",
     backBody:
       "OpenShift, Power, and IBM Cloud — modern infrastructure that respects your existing investments.",
