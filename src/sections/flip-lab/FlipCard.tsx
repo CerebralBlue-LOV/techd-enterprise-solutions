@@ -1,4 +1,5 @@
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, type ElementType } from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
   eyebrow: string;
@@ -9,11 +10,13 @@ interface Props {
   chips: string[];
   ctaLabel: string;
   motif: ReactNode;
+  to?: string;
 }
 
 /**
- * FlipCard — front shows eyebrow + title (top-left) with a cyan motif.
- * Back shows backTitle, body, chips, and a CTA (no eyebrow, no arrow).
+ * FlipCard — front shows eyebrow + title with a cyan motif.
+ * Back shows backTitle, body, chips, and a CTA.
+ * If `to` is provided, the whole card becomes a Link.
  */
 export const FlipCard = ({
   eyebrow,
@@ -24,11 +27,16 @@ export const FlipCard = ({
   chips,
   ctaLabel,
   motif,
+  to,
 }: Props) => {
   const [hover, setHover] = useState(false);
 
+  const Wrapper = (to ? Link : "div") as ElementType;
+  const wrapperProps: Record<string, unknown> = to ? { to } : {};
+
   return (
-    <div
+    <Wrapper
+      {...wrapperProps}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       data-hover={hover ? "true" : undefined}
@@ -90,7 +98,7 @@ export const FlipCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
