@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import CaseStudyCardBackdrop from "./_shared/CaseStudyCardBackdrop";
+import CaseStudyCardBackdropCyan from "./_shared/CaseStudyCardBackdropCyan";
 
 /**
  * Section: Home / Final CTA
@@ -16,7 +16,7 @@ export const FinalCtaSection = () => (
     <div className="container-page">
       <Reveal>
         <div className="relative overflow-hidden rounded-2xl p-10 md:p-20 text-center">
-          <CaseStudyCardBackdrop />
+          <CaseStudyCardBackdropCyan />
 
           <div className="relative">
             <p className="eyebrow">Ready to talk?</p>
