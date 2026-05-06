@@ -50,26 +50,22 @@ export const CaseStudyCardBackdropCyan = () => {
         style={{
           background:
             "linear-gradient(135deg, hsl(240 3% 28%) 0%, hsl(240 3% 34%) 55%, hsl(240 3% 40%) 100%)",
-          opacity: "calc(1 - var(--hover, 0))",
-          transition: "opacity 350ms ease",
         }}
       />
-      {/* Same gradient with a radial hole around the cursor — only visible
-          on hover. The hole reveals the page's actual grid behind the card,
-          so the grid lines stay aligned with the rest of the section. */}
+
+      {/* Subtle cursor highlight — soft lighter wash, no grid. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, hsl(240 3% 28%) 0%, hsl(240 3% 34%) 55%, hsl(240 3% 40%) 100%)",
+            "radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), hsl(0 0% 100% / 0.06), transparent 65%)",
           opacity: "var(--hover, 0)",
-          transition: "opacity 350ms ease",
-          WebkitMaskImage:
-            "radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), transparent 0%, black 75%)",
-          maskImage:
-            "radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), transparent 0%, black 75%)",
+          transition: "opacity 400ms ease",
         }}
       />
+
+      {/* Top cyan rim light — sole brand accent on the surface */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
       {/* Top cyan rim light — sole brand accent on the surface */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
