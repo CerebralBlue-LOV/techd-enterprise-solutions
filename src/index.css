@@ -153,7 +153,6 @@
   .btn-glow {
     position: relative;
     z-index: 0;
-    overflow: hidden;
     border: 1px solid hsl(0 0% 100% / 0.85);
     border-radius: var(--radius);
     transition: transform 200ms ease-out, border-color 200ms ease-out;
@@ -209,6 +208,7 @@
     transform: translateX(-110%);
     transition: transform 700ms ease-out;
     pointer-events: none;
+    clip-path: inset(0 round var(--radius));
   }
   .btn-glow:hover::after,
   .btn-glow:focus-visible::after {
