@@ -6,7 +6,7 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import SectionBackdrop from "@shared/SectionBackdrop";
-import CaseStudyCardBackdrop from "@sections/home/_shared/CaseStudyCardBackdrop";
+import CaseStudyCardBackdropCyan from "@sections/home/_shared/CaseStudyCardBackdropCyan";
 import { INDUSTRIES } from "@content/industries";
 
 const ParticleGlobe = lazy(
