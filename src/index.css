@@ -197,6 +197,7 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   isolation: isolate;
+  border: 1px solid hsl(var(--border));
 }
 .solution-card-back {
   transform: rotateY(180deg);
