@@ -44,45 +44,31 @@ export const CaseStudyCardBackdropCyan = () => {
       className="pointer-events-none absolute inset-0"
       style={{ transition: "opacity 600ms ease" }}
     >
-      {/* Dark brand base + soft static cyan glow (matches the rest of the site) */}
-      <div
-        className="absolute inset-0 bg-secondary"
-        style={{
-          backgroundImage: `
-            radial-gradient(55% 50% at 95% 5%, hsl(var(--primary) / 0.22) 0%, transparent 70%),
-            radial-gradient(60% 40% at 10% 90%, hsl(var(--primary) / 0.07) 0%, transparent 70%)
-          `,
-        }}
-      />
-
-      {/* Cursor spotlight — only visible on hover, fades smoothly */}
+      {/* Gray diagonal gradient base (top-left → bottom-right) */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), hsl(var(--primary) / 0.22), transparent 65%)",
-          opacity: "var(--hover, 0)",
-          transition: "opacity 500ms ease",
+            "linear-gradient(135deg, hsl(220 10% 14%) 0%, hsl(220 9% 19%) 55%, hsl(220 8% 24%) 100%)",
         }}
       />
 
-      {/* Faint grid revealed only around the cursor */}
+      {/* Cursor-revealed grid — neutral white, no cyan */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "linear-gradient(hsl(var(--primary) / 0.18) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.18) 1px, transparent 1px)",
+            "linear-gradient(hsl(0 0% 100% / 0.18) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100% / 0.18) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
           WebkitMaskImage:
-            "radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), black, transparent 70%)",
+            "radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), black, transparent 70%)",
           maskImage:
-            "radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), black, transparent 70%)",
-          opacity: "calc(var(--hover, 0) * 0.6)",
+            "radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), black, transparent 70%)",
+          opacity: "calc(var(--hover, 0) * 0.7)",
           transition: "opacity 500ms ease",
         }}
       />
 
-      {/* Sparse static stars in upper third (kept from original) */}
       <div
         className="absolute inset-0"
         style={{
