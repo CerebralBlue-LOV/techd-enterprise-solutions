@@ -174,14 +174,11 @@
     z-index: -1;
     background: linear-gradient(
       45deg,
-      hsl(175 90% 45%),
-      hsl(193 100% 50%),
-      hsl(200 100% 60%),
-      hsl(215 100% 60%),
-      hsl(230 95% 62%),
-      hsl(245 80% 60%),
-      hsl(193 100% 50%),
-      hsl(175 90% 45%)
+      hsl(var(--primary)),
+      hsl(193 100% 65%),
+      hsl(193 100% 85%),
+      hsl(193 100% 65%),
+      hsl(var(--primary))
     );
     background-size: 600% 600%;
     filter: blur(7px);
