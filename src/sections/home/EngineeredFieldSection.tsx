@@ -63,7 +63,7 @@ export const EngineeredFieldSection = () => (
       <div className="container-page">
         <Reveal>
           <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16">
-            <CaseStudyCardBackdrop />
+            <CaseStudyCardBackdropCyan />
             <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">
               Featured Case · Published by IBM
             </p>
