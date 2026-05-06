@@ -176,15 +176,6 @@
     animation-play-state: paused;
     pointer-events: none;
   }
-  .btn-glow::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    z-index: -1;
-    background: inherit;
-    pointer-events: none;
-  }
   .btn-glow:hover::before,
   .btn-glow:focus-visible::before {
     opacity: 1;
