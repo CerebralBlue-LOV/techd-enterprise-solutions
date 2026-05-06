@@ -79,7 +79,7 @@ const PracticeCard = ({
         <div className="mt-7 pt-6 border-t border-border">
           <Button asChild variant="link" className="px-0 text-primary">
             <Link to="/contact">
-              Talk to a {solution.name} principal <ArrowRight />
+              Talk to an expert <ArrowRight />
             </Link>
           </Button>
         </div>
