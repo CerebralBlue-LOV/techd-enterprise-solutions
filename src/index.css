@@ -221,28 +221,30 @@
   position: absolute;
   content: "";
   display: block;
-  width: 320%;
-  height: 320%;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    hsl(var(--muted) / 0.4) 50deg,
-    hsl(var(--primary) / 0.95) 110deg,
-    hsl(var(--primary) / 0.7) 140deg,
-    hsl(var(--muted) / 0.4) 180deg,
-    transparent 240deg,
+    hsl(var(--muted-foreground) / 0.5) 40deg,
+    hsl(var(--primary) / 1) 110deg,
+    hsl(var(--primary) / 0.6) 150deg,
+    hsl(var(--muted-foreground) / 0.4) 200deg,
+    transparent 280deg,
     transparent 360deg
   );
-  filter: blur(8px);
+  filter: blur(6px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.6;
+  opacity: 0.85;
   transition: opacity 600ms ease;
   animation: solution-card-beam-spin 14s linear infinite;
 }
 @keyframes solution-card-beam-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 @media (hover: hover) {
   .solution-card[data-hover="true"] {
