@@ -335,27 +335,45 @@ const IconLab = () => (
           <Row
             letter="A"
             name="Light glass — corner halos (original)"
-            description="White tile, 1px border, layered cyan glow in opposite corners. The original — now with a larger glyph."
+            description="The recommended baseline: white tile, 1px border, layered cyan glow in opposite corners."
             recommended
             Style={StyleA}
           />
           <Row
-            letter="A2"
-            name="Light glass — centered radial bloom"
-            description="Single soft radial halo behind the glyph. Most balanced and symmetrical — reads as a focused spotlight."
-            Style={StyleA2}
+            letter="A·soft"
+            name="Corner halos — soft"
+            description="Same recipe, gentler halos. For dense layouts where multiple icons sit close together."
+            Style={StyleASoft}
           />
           <Row
-            letter="A3"
-            name="Light glass — top arc bloom"
-            description="Halo from above with a thin primary hairline at the top edge. Feels like a header / banner accent."
-            Style={StyleA3}
+            letter="A·bold"
+            name="Corner halos — bold"
+            description="Same recipe, stronger halos and larger corner accents. For hero / feature placements."
+            Style={StyleABold}
           />
           <Row
-            letter="A4"
-            name="Light glass — twin halos + diagonal sweep"
-            description="Stronger version of A: bigger corner halos plus a diagonal cyan sweep. Most brand presence while staying light."
-            Style={StyleA4}
+            letter="A·mirror"
+            name="Corner halos — mirrored"
+            description="Halos flipped to top-right + bottom-left. Useful when paired next to the original for visual rhythm."
+            Style={StyleAMirror}
+          />
+          <Row
+            letter="A·rounded"
+            name="Corner halos — rounded-3xl"
+            description="Softer pill-rounded tile. Friendlier feel, same halo recipe."
+            Style={StyleARounded}
+          />
+          <Row
+            letter="A·square"
+            name="Corner halos — sharper corners + primary ring"
+            description="Tighter rounded-lg with a faint primary ring instead of border. More architectural."
+            Style={StyleASquare}
+          />
+          <Row
+            letter="A·thick"
+            name="Corner halos — thicker glyph stroke"
+            description="Same tile, glyph stroke bumped to 2px. Reads heavier — better at small sizes."
+            Style={StyleAThick}
           />
         </div>
 
