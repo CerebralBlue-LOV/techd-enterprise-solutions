@@ -6,7 +6,7 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import SectionBackdrop from "@shared/SectionBackdrop";
-import CaseStudyCardBackdrop from "@sections/home/_shared/CaseStudyCardBackdrop";
+import CaseStudyCardBackdropCyan from "@sections/home/_shared/CaseStudyCardBackdropCyan";
 import { INDUSTRIES } from "@content/industries";
 
 const ParticleGlobe = lazy(
@@ -63,7 +63,7 @@ export const EngineeredFieldSection = () => (
       <div className="container-page">
         <Reveal>
           <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16">
-            <CaseStudyCardBackdrop />
+            <CaseStudyCardBackdropCyan />
             <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">
               Featured Case · Published by IBM
             </p>
