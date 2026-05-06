@@ -312,16 +312,17 @@ export const IndustriesCarousel = () => {
       raf = requestAnimationFrame(tick);
       if (!inside || pointerX == null || dragState.current.down) return;
       const rect = el.getBoundingClientRect();
-      const zone = Math.min(180, rect.width * 0.22); // edge sensitivity zone
+      const zone = 110; // corner-only sensitivity zone (px)
       const distLeft = pointerX - rect.left;
       const distRight = rect.right - pointerX;
+      const maxSpeed = 5; // ~300px/s at 60fps
       let speed = 0;
       if (distLeft < zone) {
         const t = 1 - distLeft / zone; // 0..1
-        speed = -t * t * 9; // ease-in, max 9px/frame
+        speed = -(0.4 + t * 0.6) * maxSpeed; // gentle floor + slight ramp
       } else if (distRight < zone) {
         const t = 1 - distRight / zone;
-        speed = t * t * 9;
+        speed = (0.4 + t * 0.6) * maxSpeed;
       }
       if (speed !== 0) el.scrollLeft += speed;
     };
