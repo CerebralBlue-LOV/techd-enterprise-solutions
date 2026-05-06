@@ -48,21 +48,21 @@ export const FlipCard = ({
             </div>
 
             <div className="relative flex h-full flex-col">
-              <div className="flex items-start justify-end">
-                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                  {meta}
-                </span>
-              </div>
-              <div className="mt-auto max-w-[70%]">
+              <div className="max-w-[70%]">
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
                   {eyebrow}
                 </p>
                 <h3 className="mt-2 text-xl font-bold leading-snug text-secondary">
                   {title}
                 </h3>
-                <p className="mt-6 text-xs font-light uppercase tracking-[0.18em] text-muted-foreground">
+              </div>
+              <div className="mt-auto flex items-end justify-between gap-3">
+                <p className="text-xs font-light uppercase tracking-[0.18em] text-muted-foreground">
                   {footer}
                 </p>
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  {meta}
+                </span>
               </div>
             </div>
           </div>
