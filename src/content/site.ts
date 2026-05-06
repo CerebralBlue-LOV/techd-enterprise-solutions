@@ -83,7 +83,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "Hamilton Beach", url: "https://www.hamiltonbeach.com", logo: "/logos/hamilton-beach.png", logoClass: "h-14 md:h-16" },
   { name: "Burlington", url: "https://www.burlington.com", logo: "/logos/burlington.png" },
   { name: "White Cap", url: "https://www.whitecap.com", logo: "/logos/white-cap.png", logoClass: "h-14 md:h-16" },
-  { name: "KenSeal", url: "https://www.kenseal.com", logo: "/logos/kenseal.png" },
+  
   { name: "The Kennedy Center", url: "https://www.kennedy-center.org", logo: "/logos/kennedy-center.png" },
   { name: "VCU", url: "https://www.vcu.edu", logo: "/logos/vcu.png" },
 ];
