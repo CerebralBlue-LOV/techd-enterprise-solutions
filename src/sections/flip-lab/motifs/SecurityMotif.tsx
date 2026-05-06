@@ -1,10 +1,7 @@
 /**
- * Security motif — bold padlock icon framed by stacked chevron arcs.
- * Larger, more iconic; chevrons draw in, lock body sits in the corner.
+ * Security motif — bold padlock anchored bottom-right with a dashed
+ * pulse halo. Chevrons removed (moved to Hybrid Cloud).
  */
-
-const CHEVRONS = 6;
-
 const SecurityMotif = () => (
   <svg
     viewBox="0 0 320 320"
@@ -20,76 +17,30 @@ const SecurityMotif = () => (
     </defs>
     <rect width="320" height="320" fill="url(#sec-glow)" />
 
-    {/* Stacked chevrons fanning up from the corner */}
+    {/* Padlock */}
     <g
-      fill="none"
-      stroke="hsl(var(--primary))"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {Array.from({ length: CHEVRONS }).map((_, i) => {
-        const offset = i * 26;
-        const opacity = 0.85 - i * 0.11;
-        const sw = 11 - i * 0.9;
-        const d = `M ${60 - offset * 0.4} ${300}
-                   L ${210 - offset * 0.2} ${150 - offset}
-                   L ${360 + offset * 0.2} ${300}`;
-        return (
-          <path
-            key={i}
-            d={d}
-            strokeWidth={sw}
-            opacity={opacity}
-            className="flip-motif-chevron"
-            style={{ animationDelay: `${i * 100}ms` }}
-          />
-        );
-      })}
-    </g>
-
-    {/* Padlock — bold, anchored center-bottom-right */}
-    <g
-      transform="translate(200 170)"
+      transform="translate(220 200)"
       stroke="hsl(var(--primary))"
       fill="hsl(var(--primary))"
       className="flip-motif-lock"
     >
-      {/* shackle */}
       <path
-        d="M -28 -8 V -28 a 28 28 0 0 1 56 0 V -8"
+        d="M -24 -6 V -24 a 24 24 0 0 1 48 0 V -6"
         fill="none"
-        strokeWidth={9}
+        strokeWidth={8}
         strokeLinecap="round"
         opacity={0.95}
       />
-      {/* body */}
-      <rect
-        x={-40}
-        y={-8}
-        width={80}
-        height={66}
-        rx={8}
-        ry={8}
-        opacity={0.95}
-        stroke="none"
-      />
-      {/* keyhole */}
-      <circle cx={0} cy={18} r={6} fill="hsl(var(--background))" />
-      <rect
-        x={-2.5}
-        y={18}
-        width={5}
-        height={18}
-        fill="hsl(var(--background))"
-        rx={1.5}
-      />
+      <rect x={-34} y={-6} width={68} height={56} rx={7} ry={7} opacity={0.95} stroke="none" />
+      <circle cx={0} cy={18} r={5.5} fill="hsl(var(--background))" />
+      <rect x={-2.2} y={18} width={4.4} height={16} fill="hsl(var(--background))" rx={1.4} />
     </g>
 
-    {/* outer halo ring around lock */}
+    {/* Halo pulse */}
     <circle
-      cx={200}
-      cy={195}
-      r={86}
+      cx={220}
+      cy={222}
+      r={74}
       fill="none"
       stroke="hsl(var(--primary))"
       strokeWidth={1}

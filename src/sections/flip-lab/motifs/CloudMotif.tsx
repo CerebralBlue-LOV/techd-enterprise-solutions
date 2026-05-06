@@ -1,57 +1,48 @@
 /**
- * Cloud motif — scattered tilted line-segment burst (TikTok-award style).
- * Short cyan strokes at varied lengths/angles, fade-in stagger.
+ * Hybrid Cloud motif — stacked chevron arcs fanning up from the corner.
+ * Single cyan hue, varied stroke width + opacity, staggered draw-in.
  */
-type Stroke = { x: number; y: number; len: number; angle: number; o: number; w: number };
-
-const seed = (n: number) => {
-  // Tiny deterministic pseudo-random so layout doesn't shift between renders.
-  const x = Math.sin(n * 9301 + 49297) * 233280;
-  return x - Math.floor(x);
-};
-
-const COUNT = 70;
-const strokes: Stroke[] = Array.from({ length: COUNT }).map((_, i) => {
-  const r1 = seed(i + 1);
-  const r2 = seed(i + 100);
-  const r3 = seed(i + 200);
-  const r4 = seed(i + 300);
-  // cluster around bottom-right with falloff
-  const cx = 200 + (r1 - 0.5) * 160;
-  const cy = 200 + (r2 - 0.5) * 160;
-  const dist = Math.hypot(cx - 210, cy - 210) / 120;
-  return {
-    x: cx,
-    y: cy,
-    len: 8 + r3 * 22,
-    angle: r4 * 360,
-    o: Math.max(0.15, 0.85 - dist * 0.7),
-    w: 1.4 + r3 * 1.4,
-  };
-});
+const CHEVRONS = 6;
 
 const CloudMotif = () => (
   <svg
-    viewBox="0 0 280 280"
-    preserveAspectRatio="xMaxYMax meet"
+    viewBox="0 0 320 320"
+    preserveAspectRatio="xMaxYMax slice"
     className="flip-motif-svg"
     aria-hidden="true"
   >
-    <g stroke="hsl(var(--primary))" strokeLinecap="round" fill="none">
-      {strokes.map((s, i) => (
-        <line
-          key={i}
-          x1={s.x - s.len / 2}
-          y1={s.y}
-          x2={s.x + s.len / 2}
-          y2={s.y}
-          strokeWidth={s.w}
-          opacity={s.o}
-          transform={`rotate(${s.angle} ${s.x} ${s.y})`}
-          className="flip-motif-shard"
-          style={{ animationDelay: `${(i % 24) * 35}ms` }}
-        />
-      ))}
+    <defs>
+      <radialGradient id="cloud-glow" cx="100%" cy="100%" r="75%">
+        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.22" />
+        <stop offset="70%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+      </radialGradient>
+    </defs>
+    <rect width="320" height="320" fill="url(#cloud-glow)" />
+
+    <g
+      fill="none"
+      stroke="hsl(var(--primary))"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {Array.from({ length: CHEVRONS }).map((_, i) => {
+        const offset = i * 26;
+        const opacity = 0.85 - i * 0.11;
+        const sw = 11 - i * 0.9;
+        const d = `M ${60 - offset * 0.4} ${300}
+                   L ${210 - offset * 0.2} ${150 - offset}
+                   L ${360 + offset * 0.2} ${300}`;
+        return (
+          <path
+            key={i}
+            d={d}
+            strokeWidth={sw}
+            opacity={opacity}
+            className="flip-motif-chevron"
+            style={{ animationDelay: `${i * 100}ms` }}
+          />
+        );
+      })}
     </g>
   </svg>
 );
