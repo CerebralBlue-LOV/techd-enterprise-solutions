@@ -197,7 +197,9 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   isolation: isolate;
-  border: 1px solid hsl(var(--border));
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .solution-card-back {
   transform: rotateY(180deg);
@@ -209,37 +211,31 @@
   background: hsl(var(--background));
   z-index: 1;
 }
-/* Rotating conic-gradient border beam */
+/* Rotating linear-gradient beam (Uiverse-style) */
 .solution-card-beam {
   position: absolute;
-  inset: 0;
-  border-radius: 0.75rem;
-  pointer-events: none;
-  opacity: 0.7;
-  transition: opacity 500ms ease;
-  z-index: 0;
-}
-.solution-card-beam::before {
   content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200%;
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%) rotate(0deg);
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    hsl(var(--primary) / 0.6) 50deg,
-    hsl(0 0% 100%) 90deg,
-    hsl(var(--primary) / 0.6) 130deg,
-    transparent 200deg,
-    transparent 360deg
+  display: block;
+  width: 60%;
+  height: 160%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--primary)),
+    hsl(var(--primary)),
+    hsl(var(--primary)),
+    hsl(var(--primary)),
+    transparent
   );
-  animation: solution-card-beam-spin 8s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+  transition: opacity 400ms ease;
+  animation: solution-card-beam-spin 5s linear infinite;
 }
 @keyframes solution-card-beam-spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  0% { transform: rotateZ(0deg); }
+  100% { transform: rotateZ(360deg); }
 }
 @media (hover: hover) {
   .solution-card[data-hover="true"] {
@@ -260,7 +256,7 @@
     transition: none;
     transform: none !important;
   }
-  .solution-card-beam::before {
+  .solution-card-beam {
     animation: none;
   }
   .solution-card-face {
