@@ -87,7 +87,7 @@ export const Header = () => {
         <div className="flex items-center gap-2">
           <Button
             asChild
-            className="hidden md:inline-flex transition-transform duration-200 hover:-translate-y-0.5"
+            className="btn-glow hidden md:inline-flex transition-transform duration-200 hover:-translate-y-0.5"
           >
             <Link to="/contact">Talk to an expert</Link>
           </Button>
@@ -132,7 +132,7 @@ export const Header = () => {
                   </div>
                 ))}
               </nav>
-              <Button asChild className="mt-6 w-full">
+              <Button asChild className="btn-glow mt-6 w-full">
                 <Link to="/contact">Talk to an expert</Link>
               </Button>
             </SheetContent>
