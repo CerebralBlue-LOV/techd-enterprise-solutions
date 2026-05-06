@@ -6,8 +6,8 @@ import CaseStudyCardBackdrop from "./_shared/CaseStudyCardBackdrop";
 
 /**
  * Section: Home / Final CTA
- * Reuses the Featured Case Study card styling (teal→navy gradient + starfield
- * + cyan rim light) for visual continuity with the Engineered Field section.
+ * Reuses the Featured Case Study card styling (brand secondary + cyan glow)
+ * for visual continuity with the Engineered Field section.
  * Order: 7 of 7 on the Home page.
  */
 export const FinalCtaSection = () => (
@@ -20,10 +20,10 @@ export const FinalCtaSection = () => (
 
           <div className="relative">
             <p className="eyebrow">Ready to talk?</p>
-            <h2 className="mt-4 text-4xl md:text-5xl max-w-2xl mx-auto leading-[1.05] text-primary-foreground">
+            <h2 className="mt-4 text-4xl md:text-5xl max-w-2xl mx-auto leading-[1.05] text-white">
               Talk to a TechD principal.
             </h2>
-            <p className="mt-5 max-w-xl mx-auto text-lg font-light text-primary-foreground/75">
+            <p className="mt-5 max-w-xl mx-auto text-lg font-light text-white/75">
               30-minute conversation. No sales pass-through, no slide deck. Just
               engineering.
             </p>
@@ -31,13 +31,12 @@ export const FinalCtaSection = () => (
               <Button
                 asChild
                 size="lg"
-                className="group relative overflow-hidden border border-primary/30 bg-gradient-to-r from-[hsl(220_50%_8%)] via-[hsl(210_45%_14%)] to-[hsl(220_50%_8%)] text-primary-foreground shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_14px_50px_-10px_hsl(var(--primary)/0.75)]"
+                className="group relative overflow-hidden bg-primary text-primary-foreground shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_14px_50px_-10px_hsl(var(--primary)/0.75)]"
               >
                 <Link to="/contact">
-                  {/* Sheen */}
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
                   />
                   <span className="relative">Start the conversation</span>
                 </Link>

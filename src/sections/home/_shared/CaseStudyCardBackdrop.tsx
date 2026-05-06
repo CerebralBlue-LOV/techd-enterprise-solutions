@@ -2,7 +2,7 @@
  * Decorative backdrop layers for the Featured Case Study card.
  *
  * Composition (back → front):
- *   1. <CardSurface>    — teal→navy vertical gradient + top-right cyan spotlight
+ *   1. <CardSurface>    — brand secondary (dark gray) base + primary cyan spotlight glows
  *   2. <CardStarfield>  — sparse stars masked to the upper third
  *   3. <CardRimLight>   — 1px cyan gradient line along the top edge
  *
@@ -11,18 +11,15 @@
  * `relative` (or any positioned class) to layer on top.
  */
 
-/** Teal-to-navy gradient base with a soft cyan spotlight in the top-right. */
+/** Brand secondary (dark gray) base with a soft primary cyan spotlight in the top-right. */
 export const CardSurface = () => (
   <div
     aria-hidden="true"
-    className="pointer-events-none absolute inset-0"
+    className="pointer-events-none absolute inset-0 bg-secondary"
     style={{
       backgroundImage: `
-        radial-gradient(55% 50% at 95% 5%, hsl(185 90% 55% / 0.45) 0%, transparent 70%),
-        linear-gradient(180deg,
-          hsl(190 65% 25%) 0%,
-          hsl(205 55% 15%) 35%,
-          hsl(220 50% 7%)  100%)
+        radial-gradient(55% 50% at 95% 5%, hsl(var(--primary) / 0.25) 0%, transparent 70%),
+        radial-gradient(60% 40% at 10% 90%, hsl(var(--primary) / 0.08) 0%, transparent 70%)
       `,
     }}
   />
