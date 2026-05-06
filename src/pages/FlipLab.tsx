@@ -1,11 +1,11 @@
 import Layout from "@layout/Layout";
 import FlipCard from "@/sections/flip-lab/FlipCard";
 import PlexusMotif from "@/sections/flip-lab/PlexusMotif";
-import plexusBrain from "@/assets/flip-lab/plexus-brain.png";
-import plexusDatabase from "@/assets/flip-lab/plexus-database.png";
-import plexusGears from "@/assets/flip-lab/plexus-gears.png";
-import plexusShield from "@/assets/flip-lab/plexus-shield.png";
-import plexusCloud from "@/assets/flip-lab/plexus-cloud.png";
+import plexusBrain from "@/assets/flip-lab/plexus-brain.webp";
+import plexusDatabase from "@/assets/flip-lab/plexus-database.webp";
+import plexusGears from "@/assets/flip-lab/plexus-gears.webp";
+import plexusShield from "@/assets/flip-lab/plexus-shield.webp";
+import plexusCloud from "@/assets/flip-lab/plexus-cloud.webp";
 
 const cards = [
   {
