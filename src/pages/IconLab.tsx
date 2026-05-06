@@ -288,6 +288,24 @@ const IconLab = () => (
             description="White tile with a faint muted-gray grid and a single corner cyan bloom. Architectural feel — useful for technical / engineering surfaces."
             Style={StyleC}
           />
+          <Row
+            letter="D"
+            name="Dark glass — secondary tile + cyan halo"
+            description="Dark secondary-gray tile with layered cyan halos in opposite corners. The dark Style A — closest to the Supabase reference while staying strictly on TechD palette."
+            Style={StyleD}
+          />
+          <Row
+            letter="E"
+            name="Dark gradient — primary ring"
+            description="Dark tile with a diagonal cyan sweep, primary ring, and bottom rim highlight. Strongest brand presence; works as a hero accent on dark sections."
+            Style={StyleE}
+          />
+          <Row
+            letter="F"
+            name="Dark grid — muted lines + cyan bloom"
+            description="Dark tile with a faint muted grid and a single cyan corner bloom. Architectural / technical feel — pairs with engineering content on dark surfaces."
+            Style={StyleF}
+          />
         </div>
 
         <div className="mt-16 rounded-xl border-2 border-primary/30 bg-primary/[0.03] p-8">
