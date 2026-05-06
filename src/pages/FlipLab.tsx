@@ -6,63 +6,59 @@ import AutomationMotif from "@/sections/flip-lab/motifs/AutomationMotif";
 import SecurityMotif from "@/sections/flip-lab/motifs/SecurityMotif";
 import CloudMotif from "@/sections/flip-lab/motifs/CloudMotif";
 
-/**
- * /flip-lab — internal sandbox for the next-generation solution card.
- * Front face shows a rich cyan motif; hover flips to back with CTA.
- */
 const cards = [
   {
     eyebrow: "AI & Generative",
     title: "Ship trustworthy gen AI on governed enterprise data.",
-    meta: "Practice 01",
     footer: "United States",
     backTitle: "Production-grade AI",
     backBody:
-      "Watsonx, RAG, evaluation, guardrails — everything needed to put gen AI in front of customers safely.",
+      "Watsonx, RAG pipelines, evaluation harnesses, and policy guardrails. We put generative AI in front of customers and employees safely — grounded in your governed data, observable in production, and defensible to legal, risk, and compliance.",
+    chips: ["Watsonx", "RAG", "Guardrails", "Evals", "LLMOps"],
     ctaLabel: "Explore AI",
     motif: <AiMotif />,
   },
   {
     eyebrow: "Data & Analytics",
     title: "Make your data AI-ready, governed, and defensible.",
-    meta: "Practice 02",
     footer: "United States",
     backTitle: "Data foundations",
     backBody:
-      "Db2, lakehouse, lineage, and governance so your analytics — and your AI — stand up to scrutiny.",
+      "Db2, lakehouse architectures, lineage, and governance. We modernize data estates so analytics and AI stand up to audit, scale across business units, and deliver answers your executives actually trust.",
+    chips: ["Db2", "Lakehouse", "Lineage", "Governance", "Quality"],
     ctaLabel: "Explore Data",
     motif: <DataMotif />,
   },
   {
     eyebrow: "Automation & FinOps",
     title: "Observe, optimize, and eliminate manual toil.",
-    meta: "Practice 03",
     footer: "Global",
     backTitle: "Run smarter",
     backBody:
-      "Apptio, Turbonomic, Instana — see every workload, cut waste, and automate the boring parts.",
+      "Apptio, Turbonomic, and Instana deployed end-to-end. See every workload and dollar, cut cloud waste, automate change, and free engineers from the repetitive work that drains your roadmap.",
+    chips: ["Apptio", "Turbonomic", "Instana", "FinOps", "AIOps"],
     ctaLabel: "Explore Automation",
     motif: <AutomationMotif />,
   },
   {
     eyebrow: "Security & Compliance",
     title: "Pass audits, protect data, respond to breaches.",
-    meta: "Practice 04",
     footer: "Regulated industries",
     backTitle: "Defense in depth",
     backBody:
-      "Guardium, QRadar, identity, and zero-trust patterns hardened on real Fortune 500 environments.",
+      "Guardium, QRadar, identity, and zero-trust patterns hardened on real Fortune 500 environments. We help regulated organizations protect crown-jewel data, satisfy auditors, and respond to incidents with confidence.",
+    chips: ["Guardium", "QRadar", "Zero Trust", "IAM", "SOC"],
     ctaLabel: "Explore Security",
     motif: <SecurityMotif />,
   },
   {
     eyebrow: "Hybrid Cloud",
     title: "Run mission workloads where they belong.",
-    meta: "Practice 05",
     footer: "United States",
     backTitle: "Anywhere, governed",
     backBody:
-      "OpenShift, Power, and IBM Cloud — modern infrastructure that respects your existing investments.",
+      "OpenShift, Power, and IBM Cloud delivered as one architecture. Modern infrastructure that respects existing investments, gives platform teams control, and lets product teams ship without waiting on tickets.",
+    chips: ["OpenShift", "Power", "IBM Cloud", "Kubernetes", "Edge"],
     ctaLabel: "Explore Cloud",
     motif: <CloudMotif />,
   },
