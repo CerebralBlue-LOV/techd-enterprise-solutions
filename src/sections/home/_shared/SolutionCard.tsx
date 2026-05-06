@@ -31,14 +31,16 @@ export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, back, childr
         {/* FRONT */}
         <div className="solution-card-face solution-card-front">
           <span aria-hidden="true" className="solution-card-beam" />
-          <div className="solution-card-surface flex h-full flex-col p-8 lg:p-10">
+          <div className="solution-card-surface flex h-full flex-col p-7 lg:p-8">
             {featured && (
               <span className="absolute right-5 top-5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
                 Featured
               </span>
             )}
-            {icon && <div className="mb-6">{icon}</div>}
-            {children}
+            <div className="flex h-full flex-col justify-center gap-5">
+              {icon}
+              <div>{children}</div>
+            </div>
           </div>
         </div>
 
