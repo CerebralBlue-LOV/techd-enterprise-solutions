@@ -112,6 +112,29 @@
     @apply text-xs font-bold uppercase tracking-[0.18em] text-primary;
   }
 
+  /* Animated underline link, used in place of arrow CTAs. */
+  .story-link {
+    @apply relative;
+  }
+  .story-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: hsl(var(--primary));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 300ms ease-out;
+  }
+  .story-link:hover::after,
+  .group:hover .story-link::after,
+  [data-hover="true"] .story-link::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
   .card-hover {
     @apply transition-[transform,box-shadow,border-color] duration-200 ease-out border border-border bg-card;
   }
