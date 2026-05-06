@@ -224,13 +224,32 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
         to={`/industries#${ind.id}`}
         onClick={handleClick}
         tabIndex={isActive ? 0 : -1}
-        className="group relative block h-full w-full overflow-hidden rounded-2xl border border-border bg-background shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4),0_8px_20px_-16px_hsl(var(--primary)/0.18)]"
+        className={`group relative block h-full w-full overflow-hidden rounded-2xl border border-border bg-background transition-all duration-500 ease-out ${
+          isActive
+            ? "shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4),0_8px_20px_-16px_hsl(var(--primary)/0.18)] hover:-translate-y-1 hover:shadow-[0_28px_70px_-30px_hsl(var(--primary)/0.55),0_10px_24px_-16px_hsl(var(--primary)/0.28)]"
+            : "shadow-[0_20px_60px_-30px_hsl(var(--primary)/0.4),0_8px_20px_-16px_hsl(var(--primary)/0.18)]"
+        }`}
       >
         <Motif id={ind.id} />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background/95" />
 
+        {isActive && (
+          <>
+            {/* Inset frame snap */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-[14px] rounded-xl border border-primary opacity-0 rotate-[4deg] scale-[0.98] transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:rotate-0 group-hover:scale-100 motion-reduce:rotate-0 motion-reduce:scale-100 motion-reduce:transition-opacity"
+            />
+            {/* Diagonal light sweep */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-12deg] bg-gradient-to-br from-transparent via-primary/25 to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-full motion-reduce:hidden"
+            />
+          </>
+        )}
+
         <div className="relative flex h-full flex-col items-center justify-center px-8 text-center">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary transition-[letter-spacing] duration-500 ease-out group-hover:tracking-[0.34em]">
             {ind.regulation}
           </p>
           <h3 className="mt-3 text-2xl font-bold leading-tight text-secondary md:text-3xl">
@@ -244,6 +263,9 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
               <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-primary transition-transform duration-200 group-hover:translate-x-0.5">
                 See industry
                 <ArrowRight className="h-4 w-4" />
+              </span>
+              <span className="mt-2 translate-y-1.5 text-[10px] font-bold uppercase tracking-[0.28em] text-muted-foreground/70 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+                Click to explore
               </span>
             </>
           )}
