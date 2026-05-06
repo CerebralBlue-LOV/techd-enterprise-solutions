@@ -215,7 +215,7 @@ const IndustryCard = ({ ind, index, containerRef, scrollTick }: CardProps) => {
       }}
     >
       <div
-        className="relative h-[240px] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_18px_40px_-24px_hsl(var(--primary)/0.2)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.4)]"
+        className="relative h-[240px] overflow-hidden rounded-2xl border border-border bg-background shadow-[0_8px_20px_-16px_hsl(var(--primary)/0.18)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-[0_10px_24px_-18px_hsl(var(--primary)/0.28)]"
         style={{
           transform: `rotateY(${tilt}deg)`,
           transformStyle: "preserve-3d",
