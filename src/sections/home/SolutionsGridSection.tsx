@@ -1,33 +1,15 @@
-import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Bot,
-  Cloud,
-  Database,
-  Lock,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import { SOLUTIONS } from "@content/solutions";
-
-/** Map of solution id → lucide icon. Kept colocated with the section that uses it. */
-const SOLUTION_ICONS: Record<string, typeof Bot> = {
-  ai: Bot,
-  "data-analytics": Database,
-  automation: Sparkles,
-  security: Lock,
-  "hybrid-cloud": Cloud,
-};
+import SolutionCard from "./_shared/SolutionCard";
+import { SOLUTION_MOTIFS } from "./_shared/motifs";
 
 /**
  * Section: Home / Solutions Grid
- * Purpose: Showcase the five practice areas as clickable cards.
- * Order:   3 of 7 on the Home page.
- * Data:    @content/solutions (SOLUTIONS array).
- * Notes:   The "ai" card is featured (primary border + ring).
- *          Each card links to /solutions#<id> for in-page navigation.
+ * Five practice cards with unique animated SVG motifs, cursor-following
+ * spotlight, and a subtle 3D tilt on hover. No icons, no flips.
  */
 export const SolutionsGridSection = () => (
   <section className="section">
@@ -41,38 +23,18 @@ export const SolutionsGridSection = () => (
         />
       </Reveal>
 
-      {/* Card grid — 3-up on lg, 2-up on md, single column on mobile. */}
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {SOLUTIONS.map((s, i) => {
-          const Icon = SOLUTION_ICONS[s.id] ?? Sparkles;
+          const Motif = SOLUTION_MOTIFS[s.id];
           const featured = s.id === "ai";
           return (
             <Reveal key={s.id} delay={i * 50}>
-              <Link
+              <SolutionCard
                 to={`/solutions#${s.id}`}
-                className={
-                  "group relative block h-full rounded-xl p-7 border transition-all duration-300 hover:-translate-y-0.5 " +
-                  (featured
-                    ? "bg-background border-primary ring-1 ring-primary/20 shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.35)] hover:shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.5)]"
-                    : "bg-background border-border hover:border-primary hover:shadow-lg")
-                }
+                featured={featured}
+                motif={Motif ? <Motif featured={featured} /> : null}
               >
-                {featured && (
-                  <span className="absolute right-5 top-5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
-                    Featured
-                  </span>
-                )}
-                <div
-                  className={
-                    "inline-flex h-14 w-14 items-center justify-center rounded-xl border transition-colors duration-300 " +
-                    (featured
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-border bg-muted/50 text-secondary group-hover:border-primary group-hover:bg-primary/10 group-hover:text-primary")
-                  }
-                >
-                  <Icon className="!size-6" strokeWidth={1.5} />
-                </div>
-                <p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                   {s.name}
                 </p>
                 <h3 className="mt-3 text-2xl leading-tight">{s.outcome}</h3>
@@ -98,7 +60,7 @@ export const SolutionsGridSection = () => (
                   Learn more{" "}
                   <ArrowRight className="!size-4 transition-transform group-hover:translate-x-0.5" />
                 </span>
-              </Link>
+              </SolutionCard>
             </Reveal>
           );
         })}

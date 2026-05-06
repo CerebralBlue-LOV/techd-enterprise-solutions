@@ -156,6 +156,74 @@
   animation-play-state: paused;
 }
 
+/* Solution cards — spotlight + tilt + motif animations */
+.solution-card {
+  --mx: 50%;
+  --my: 0px;
+  --rx: 0deg;
+  --ry: 0deg;
+  border-color: hsl(var(--border));
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+}
+@media (hover: hover) {
+  .solution-card:hover {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 18px 50px -20px hsl(var(--primary) / 0.35);
+  }
+}
+.solution-card[data-featured="true"] {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 8px 30px -12px hsl(var(--primary) / 0.35);
+}
+.solution-card-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    hsl(var(--primary) / 0.18),
+    transparent 70%
+  );
+}
+@media (hover: hover) {
+  .solution-card:hover .solution-card-spotlight {
+    opacity: 1;
+  }
+}
+
+/* Motif keyframes */
+@keyframes motif-wave {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@keyframes motif-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.4); }
+}
+@keyframes motif-draw {
+  from { stroke-dashoffset: 200; opacity: 0; }
+  to   { stroke-dashoffset: 0;   opacity: 1; }
+}
+@keyframes motif-draw-long {
+  from { stroke-dashoffset: 600; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes motif-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.motif-wave { transform-origin: center; transform-box: fill-box; }
+.solution-card:hover .motif-wave { animation: motif-wave 2.4s ease-in-out infinite; }
+.solution-card:hover .motif-pulse { animation: motif-pulse 1.8s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+.motif-draw { stroke-dashoffset: 200; }
+.solution-card:hover .motif-draw { animation: motif-draw 1.2s ease-out forwards; }
+.motif-draw-long { stroke-dashoffset: 600; }
+.solution-card:hover .motif-draw-long { animation: motif-draw-long 1.6s ease-out forwards; }
+.motif-spin-slow { transform-origin: center; animation: motif-spin 14s linear infinite; }
+.motif-spin-rev  { transform-origin: center; animation: motif-spin 18s linear infinite reverse; }
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
