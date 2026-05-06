@@ -1,4 +1,4 @@
-import Layout from "@shared/Layout";
+import Layout from "@layout/Layout";
 
 /**
  * /icon-lab — temporary internal page exploring icon styles for the 5 practices.
