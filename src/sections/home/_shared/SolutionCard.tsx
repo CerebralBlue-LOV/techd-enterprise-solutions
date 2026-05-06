@@ -25,27 +25,29 @@ export const SolutionCard = ({ to, featured, pitch, ctaLabel, icon, back, childr
       onMouseLeave={() => setActive(false)}
       data-featured={featured ? "true" : undefined}
       data-hover={active ? "true" : undefined}
-      className="solution-card group relative block h-full min-h-[440px] lg:min-h-[480px] rounded-xl"
+      className="solution-card group relative block h-full min-h-[320px] lg:min-h-[340px] rounded-xl"
     >
       <div className="solution-card-inner relative h-full w-full">
         {/* FRONT */}
         <div className="solution-card-face solution-card-front">
           <span aria-hidden="true" className="solution-card-beam" />
-          <div className="solution-card-surface flex h-full flex-col p-8 lg:p-10">
+          <div className="solution-card-surface flex h-full flex-col p-7 lg:p-8">
             {featured && (
               <span className="absolute right-5 top-5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
                 Featured
               </span>
             )}
-            {icon && <div className="mb-6">{icon}</div>}
-            {children}
+            <div className="flex h-full flex-col justify-center gap-5">
+              {icon}
+              <div>{children}</div>
+            </div>
           </div>
         </div>
 
         {/* BACK */}
         <div className="solution-card-face solution-card-back">
           <span aria-hidden="true" className="solution-card-beam" />
-          <div className="solution-card-surface flex h-full flex-col justify-between p-8 lg:p-10">
+          <div className="solution-card-surface flex h-full flex-col justify-between p-7 lg:p-8">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 {ctaLabel}
