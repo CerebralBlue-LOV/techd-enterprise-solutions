@@ -207,7 +207,6 @@
   inset: 1px;
   border-radius: calc(0.75rem - 1px);
   background: hsl(var(--background));
-  border: 1px solid hsl(var(--border));
   z-index: 1;
 }
 /* Rotating conic-gradient border beam */
