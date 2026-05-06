@@ -183,11 +183,11 @@
       hsl(193 100% 50%),
       hsl(175 90% 45%)
     );
-    background-size: 400% 400%;
-    filter: blur(6px);
+    background-size: 600% 600%;
+    filter: blur(7px);
     opacity: 0;
     transition: opacity 300ms ease-in-out;
-    animation: btn-glow-shift 8s linear infinite;
+    animation: btn-glow-shift 12s ease-in-out infinite;
     pointer-events: none;
   }
   .btn-glow:hover::before,
