@@ -31,7 +31,7 @@ const Row = ({
             rel="noopener noreferrer"
             title={c.name}
             aria-label={c.name}
-            className="group shrink-0 flex items-center"
+            className="group shrink-0 flex flex-col items-center gap-2"
             aria-hidden={i >= items.length ? "true" : undefined}
             tabIndex={i >= items.length ? -1 : 0}
           >
@@ -40,9 +40,12 @@ const Row = ({
                 src={c.logo}
                 alt={c.name}
                 loading="lazy"
-                className="h-12 md:h-14 w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+                className={`${c.logoClass ?? "h-10 md:h-12"} w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
               />
             )}
+            <span className="whitespace-nowrap text-[11px] md:text-xs font-light tracking-wide text-muted-foreground transition-colors group-hover:text-primary">
+              {c.name}
+            </span>
           </a>
         ))}
       </div>
@@ -56,14 +59,14 @@ export const LogoStrip = () => {
       aria-label="Trusted by Fortune 500 leaders"
       className="py-10 border-y border-border bg-background"
     >
-      <p className="px-4 text-center text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground whitespace-normal lg:whitespace-nowrap">
+      <p className="px-4 text-center text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground whitespace-normal md:whitespace-nowrap">
         <span>Trusted by leaders in healthcare, media, energy &amp; the public sector</span>
         <span className="mx-3 text-primary">·</span>
-        <span className="inline-block">25+ years</span>
+        25+ years
         <span className="mx-3 text-primary">·</span>
-        <span className="inline-block">Fortune 500 clients</span>
+        Fortune 500 clients
         <span className="mx-3 text-primary">·</span>
-        <span className="inline-block">6 regulated industries</span>
+        6 regulated industries
       </p>
 
       <div className="mt-8">
