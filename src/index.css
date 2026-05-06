@@ -145,6 +145,64 @@
       0 8px 32px -8px hsl(var(--primary) / 0.18),
       inset 0 0 0 1px hsl(var(--primary) / 0.12);
   }
+
+  /* Animated cyan→blue→violet halo glow on hover.
+     Apply to any button/link; preserves the underlying face (e.g. cyan).
+     Pattern adapted from Kocsten's "Hover Glow Effect" Codepen, rebrand-safe. */
+  .btn-glow {
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+  }
+  .btn-glow::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    z-index: -2;
+    background: linear-gradient(
+      45deg,
+      hsl(193 100% 50%),
+      hsl(215 95% 62%),
+      hsl(265 85% 65%),
+      hsl(215 95% 62%),
+      hsl(193 100% 50%)
+    );
+    background-size: 400% 400%;
+    filter: blur(7px);
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+    animation: btn-glow-shift 8s linear infinite;
+    animation-play-state: paused;
+    pointer-events: none;
+  }
+  .btn-glow::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    background: inherit;
+    pointer-events: none;
+  }
+  .btn-glow:hover::before,
+  .btn-glow:focus-visible::before {
+    opacity: 1;
+    animation-play-state: running;
+  }
+}
+
+@keyframes btn-glow-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-glow::before {
+    animation: none !important;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.6), transparent 70%);
+  }
 }
 
 /* Reveal-on-scroll */
