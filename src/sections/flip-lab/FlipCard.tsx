@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, type ElementType } from "react";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -14,9 +14,9 @@ interface Props {
 }
 
 /**
- * FlipCard — front shows eyebrow + title (top-left) with a cyan motif.
- * Back shows backTitle, body, chips, and a CTA (no eyebrow, no arrow).
- * If `to` is provided, the whole card becomes a link.
+ * FlipCard — front shows eyebrow + title with a cyan motif.
+ * Back shows backTitle, body, chips, and a CTA.
+ * If `to` is provided, the whole card becomes a Link.
  */
 export const FlipCard = ({
   eyebrow,
@@ -30,21 +30,18 @@ export const FlipCard = ({
   to,
 }: Props) => {
   const [hover, setHover] = useState(false);
-  const commonProps = {
-    onMouseEnter: () => setHover(true),
-    onMouseLeave: () => setHover(false),
-    "data-hover": hover ? "true" : undefined,
-    className: "flip-card relative block h-full min-h-[340px] rounded-xl",
-  };
-  const Inner = to ? (
-    <Link to={to} {...commonProps}>
-      {/* placeholder — replaced below */}
-    </Link>
-  ) : null;
-  void Inner;
 
-  return to ? (
-    <Link to={to} {...commonProps}>
+  const Wrapper = (to ? Link : "div") as ElementType;
+  const wrapperProps: Record<string, unknown> = to ? { to } : {};
+
+  return (
+    <Wrapper
+      {...wrapperProps}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      data-hover={hover ? "true" : undefined}
+      className="flip-card relative block h-full min-h-[340px] rounded-xl"
+    >
       <div className="flip-card-inner relative h-full w-full">
         {/* FRONT */}
         <div className="flip-card-face flip-card-front">
@@ -101,7 +98,7 @@ export const FlipCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
