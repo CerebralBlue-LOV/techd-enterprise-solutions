@@ -583,153 +583,135 @@
 }
 
 /* ============================================================
-   Flip-card variant effect layers (PlexusMotif)
-   Static webp + animated cyan overlay per practice variant.
+   Flip-card variant effect layers (PlexusMotif) — v2
    ============================================================ */
 .flip-fx-layer {
   overflow: hidden;
   border-radius: inherit;
-  opacity: 0.55;
-  transition: opacity 400ms ease;
+  opacity: 0.45;
+  transition: opacity 500ms ease;
   mix-blend-mode: screen;
 }
-.flip-card[data-hover="true"] .flip-fx-layer { opacity: 0.95; }
+.flip-card[data-hover="true"] .flip-fx-layer { opacity: 1; }
 
-/* --- AI: thinking sweep + synapse pulses --- */
-.flip-fx-ai-sweep {
-  position: absolute; inset: -20%;
-  background: conic-gradient(from 0deg,
-    transparent 0deg,
-    hsl(var(--primary) / 0.55) 40deg,
-    transparent 90deg,
-    transparent 360deg);
-  filter: blur(14px);
-  animation: flip-fx-sweep 7s linear infinite;
-}
-.flip-fx-synapse {
+/* --- AI: thought-wave concentric rings --- */
+.flip-fx-ai .flip-fx-ring {
   position: absolute;
-  width: 8px; height: 8px; border-radius: 9999px;
-  background: hsl(var(--primary));
-  box-shadow: 0 0 12px 2px hsl(var(--primary) / 0.8);
+  top: 60%; right: 30%;
+  width: 30px; height: 30px;
+  margin: -15px -15px 0 0;
+  border-radius: 9999px;
+  border: 1.5px solid hsl(var(--primary));
   opacity: 0;
-  animation: flip-fx-pulse 2.4s ease-in-out infinite;
+  animation: flip-fx-ripple 3.9s ease-out infinite;
 }
-@keyframes flip-fx-sweep { to { transform: rotate(360deg); } }
-@keyframes flip-fx-pulse {
-  0%, 100% { opacity: 0; transform: scale(0.6); }
-  50%      { opacity: 1; transform: scale(1.15); }
-}
-
-/* --- DATA: scanline + binary ticker --- */
-.flip-fx-data-scan {
-  position: absolute; left: 0; right: 0; top: 0; height: 14%;
-  background: linear-gradient(to bottom,
-    transparent,
-    hsl(var(--primary) / 0.55),
-    transparent);
-  filter: blur(2px);
-  animation: flip-fx-scan 4s linear infinite;
-}
-.flip-fx-data-ticker {
-  position: absolute; bottom: 8%; right: -10%;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 9px; letter-spacing: 0.25em;
-  color: hsl(var(--primary) / 0.9);
-  white-space: nowrap;
-  animation: flip-fx-ticker 14s linear infinite;
-}
-@keyframes flip-fx-scan {
-  0%   { transform: translateY(-20%); }
-  100% { transform: translateY(720%); }
-}
-@keyframes flip-fx-ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-60%); }
+@keyframes flip-fx-ripple {
+  0%   { transform: scale(0.3); opacity: 0; }
+  20%  { opacity: 0.8; }
+  100% { transform: scale(5);   opacity: 0; }
 }
 
-/* --- AUTOMATION: dual orbit rings + core --- */
-.flip-fx-orbit-ring {
+/* --- DATA: equalizer bars --- */
+.flip-fx-eq {
+  position: absolute;
+  right: 8%; bottom: 12%;
+  display: flex; align-items: flex-end; gap: 4px;
+  height: 38%;
+}
+.flip-fx-eq span {
+  display: block;
+  width: 5px;
+  background: linear-gradient(to top, hsl(var(--primary)), hsl(var(--primary) / 0.3));
+  border-radius: 2px;
+  height: 30%;
+  box-shadow: 0 0 6px hsl(var(--primary) / 0.6);
+  animation: flip-fx-eq 1.4s ease-in-out infinite;
+}
+@keyframes flip-fx-eq {
+  0%, 100% { height: 20%; }
+  50%      { height: 95%; }
+}
+
+/* --- AUTOMATION: dashed ring + traveling spark --- */
+.flip-fx-cog-ring {
   position: absolute; top: 50%; left: 50%;
+  width: 60%; height: 60%;
   border-radius: 9999px;
-  border: 1px dashed hsl(var(--primary) / 0.7);
+  border: 1.5px dashed hsl(var(--primary) / 0.7);
   transform: translate(-50%, -50%);
+  animation: flip-fx-spin 18s linear infinite;
 }
-.flip-fx-orbit-a {
-  width: 70%; height: 70%;
-  animation: flip-fx-orbit 16s linear infinite;
-}
-.flip-fx-orbit-b {
-  width: 45%; height: 45%;
-  border-style: dotted;
-  animation: flip-fx-orbit 11s linear infinite reverse;
-}
-.flip-fx-orbit-core {
+.flip-fx-cog-spark {
   position: absolute; top: 50%; left: 50%;
-  width: 10px; height: 10px; border-radius: 9999px;
-  background: hsl(var(--primary));
-  box-shadow: 0 0 18px 4px hsl(var(--primary) / 0.7);
+  width: 60%; height: 60%;
   transform: translate(-50%, -50%);
-  animation: flip-fx-pulse 2.6s ease-in-out infinite;
+  animation: flip-fx-spin 4s linear infinite;
 }
-@keyframes flip-fx-orbit { to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-/* --- SECURITY: hex grid + radar sweep --- */
-.flip-fx-hex-grid {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  opacity: 0.4;
-}
-.flip-fx-radar {
-  position: absolute; top: 50%; left: 50%;
-  width: 110%; height: 110%;
-  transform: translate(-50%, -50%);
-  background: conic-gradient(from 0deg,
-    hsl(var(--primary) / 0.55) 0deg,
-    transparent 60deg,
-    transparent 360deg);
+.flip-fx-cog-spark > span {
+  position: absolute; top: -4px; left: 50%;
+  width: 8px; height: 8px; margin-left: -4px;
   border-radius: 9999px;
-  filter: blur(6px);
-  animation: flip-fx-sweep 6s linear infinite;
+  background: hsl(var(--primary));
+  box-shadow: 0 0 12px 3px hsl(var(--primary) / 0.9);
+}
+@keyframes flip-fx-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* --- SECURITY: corner brackets + diamond pulse --- */
+.flip-fx-bracket {
+  position: absolute;
+  width: 22px; height: 22px;
+  border: 2px solid hsl(var(--primary));
+  opacity: 0;
+  animation: flip-fx-bracket-in 3s ease-in-out infinite;
+}
+.flip-fx-bracket-tl { top: 12%; left: 14%; border-right: 0; border-bottom: 0; }
+.flip-fx-bracket-tr { top: 12%; right: 14%; border-left: 0; border-bottom: 0; }
+.flip-fx-bracket-bl { bottom: 12%; left: 14%; border-right: 0; border-top: 0; }
+.flip-fx-bracket-br { bottom: 12%; right: 14%; border-left: 0; border-top: 0; }
+@keyframes flip-fx-bracket-in {
+  0%, 100% { opacity: 0; transform: scale(1.3); }
+  40%, 70% { opacity: 0.95; transform: scale(1); }
+}
+.flip-fx-diamond {
+  position: absolute; top: 50%; left: 50%;
+  width: 14px; height: 14px;
+  margin: -7px 0 0 -7px;
+  background: hsl(var(--primary));
+  transform: rotate(45deg);
+  box-shadow: 0 0 18px 4px hsl(var(--primary) / 0.8);
+  opacity: 0;
+  animation: flip-fx-diamond 3s ease-in-out infinite;
+}
+@keyframes flip-fx-diamond {
+  0%, 100% { opacity: 0; transform: rotate(45deg) scale(0.4); }
+  50%      { opacity: 1; transform: rotate(45deg) scale(1); }
 }
 
-/* --- CLOUD: shimmer band + floating particles --- */
-.flip-fx-shimmer {
-  position: absolute; left: -40%; right: -40%; top: 40%;
-  height: 18%;
-  background: linear-gradient(90deg,
-    transparent,
-    hsl(var(--primary) / 0.4),
-    transparent);
-  filter: blur(8px);
-  animation: flip-fx-shimmer 5s ease-in-out infinite;
+/* --- CLOUD: drifting gradient mist blobs --- */
+.flip-fx-mist {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(22px);
+  background: radial-gradient(circle, hsl(var(--primary) / 0.7), transparent 70%);
 }
-.flip-fx-particle {
-  position: absolute; bottom: -6px;
-  width: 5px; height: 5px; border-radius: 9999px;
-  background: hsl(var(--primary));
-  box-shadow: 0 0 8px 1px hsl(var(--primary) / 0.7);
-  animation: flip-fx-float 6s ease-in-out infinite;
+.flip-fx-mist-a {
+  width: 70%; height: 70%; top: 10%; left: -10%;
+  animation: flip-fx-drift 11s ease-in-out infinite;
 }
-@keyframes flip-fx-shimmer {
-  0%, 100% { transform: translateX(0); opacity: 0.4; }
-  50%      { transform: translateX(20%); opacity: 0.9; }
+.flip-fx-mist-b {
+  width: 55%; height: 55%; bottom: -10%; right: 5%;
+  animation: flip-fx-drift 14s ease-in-out infinite reverse;
 }
-@keyframes flip-fx-float {
-  0%   { transform: translateY(0)     scale(0.6); opacity: 0; }
-  20%  { opacity: 1; }
-  100% { transform: translateY(-180px) scale(1);   opacity: 0; }
+.flip-fx-mist-c {
+  width: 40%; height: 40%; top: 30%; right: -5%;
+  animation: flip-fx-drift 9s ease-in-out infinite;
+  animation-delay: -3s;
+}
+@keyframes flip-fx-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(12%, -8%) scale(1.15); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flip-fx-ai-sweep,
-  .flip-fx-synapse,
-  .flip-fx-data-scan,
-  .flip-fx-data-ticker,
-  .flip-fx-orbit-ring,
-  .flip-fx-orbit-core,
-  .flip-fx-radar,
-  .flip-fx-shimmer,
-  .flip-fx-particle {
-    animation: none !important;
-  }
+  .flip-fx-layer * { animation: none !important; }
 }
