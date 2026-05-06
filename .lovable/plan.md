@@ -1,37 +1,9 @@
-## What the reference shows
+## Plan: uniform logo strip, no names
 
-The Stripe-style halo in your video has each particle drifting **outward and back along its own radius** with a unique phase. There's no rotation — the ring just slowly inhales and exhales. Outer particles travel further than inner ones, which is what makes the cloud look like it's gently breathing into space.
+**1. `src/shared/LogoStrip.tsx`** — drop the `<span>` company name beneath each logo, switch the link from `flex-col` to a single-row `flex items-center`, and use one fixed size class (`h-12 md:h-14`) for every logo, ignoring per-item `logoClass` overrides so all logos render identically sized.
 
-## Change
+**2. `src/content/site.ts`** — strip every `logoClass` override from the `CUSTOMERS` array (J&J, Sony Pictures, Temple Health, Sony Interactive, Hamilton Beach, White Cap, VCU) so nothing forces a size variation. Keep the `logoClass` field in the `Customer` type for future flexibility but unused.
 
-Update `src/sections/home/_shared/ParticleOrbit.tsx` to animate per-particle radial drift.
+This makes Hamilton Beach and White Cap larger (they were `h-14 md:h-16` capped — now `h-12 md:h-14` applied to ALL logos uniformly, so visually they'll match Princeton, Comcast, etc., which is bigger than what they appeared next to those before since the strip is now name-free with more breathing room).
 
-### Per-particle params (computed once at build)
-
-For each of the 4,200 particles, store:
-- `angle` — its fixed angular position (no rotation)
-- `baseR` — its resting radius (current gaussian distribution, unchanged)
-- `amp` — drift distance: `0.08 + outwardness * 0.55 + jitter`, so outer particles travel further
-- `phase` — random `0..2π` so they don't pulse in sync
-- `speed` — `0.35..0.7` rad/s, slow and varied
-
-### Per-frame update (`useFrame`)
-
-```text
-r = baseR + sin(t * speed + phase) * amp
-x = cos(angle) * r
-y = sin(angle) * r
-```
-
-Mutate the position buffer in place, set `needsUpdate = true`. Highlights re-sample from the same indices each frame so they ride along.
-
-### Other details
-
-- Switch canvas `frameloop` from `"demand"` to `"always"` (only when motion is allowed).
-- Honor `prefers-reduced-motion` — keep current static render in that case.
-- Subtle highlight opacity pulse: `0.75 + sin(t * 1.2) * 0.2`.
-- No global rotation, no z-axis motion — purely radial breathing, matching the reference.
-
-### Files
-
-- Edit: `src/sections/home/_shared/ParticleOrbit.tsx`
+Note: with all logos forced to the same height, logos with extra padding/whitespace baked into the artwork (J&J, VCU were shrunk for that reason) may visually appear smaller than peers. If that becomes an issue after seeing it live, we can crop those specific PNGs rather than re-introducing per-logo size overrides.
