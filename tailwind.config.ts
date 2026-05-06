@@ -101,7 +101,7 @@ export default {
         marquee: "marquee 45s linear infinite",
         "gradient-drift": "gradient-drift 18s ease-in-out infinite",
         float: "float 7s ease-in-out infinite",
-        "card-sweep": "card-sweep 0.5s ease-out forwards",
+        "card-sweep": "card-sweep 0.3s ease-out forwards",
       },
     },
   },
