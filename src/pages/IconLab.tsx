@@ -714,6 +714,25 @@ const IconLab = () => {
               recommended
               Style={Style8}
             />
+            <Row
+              num={9}
+              name="Refined glass — denser glyph"
+              description="Same DNA as Style 8 but tightened: secondary-gray tile (on-palette), cleaner inner ring, layered cyan glow, denser glyph geometry, refined micro-dots. Pure brand tokens — no off-palette colors."
+              recommended
+              Style={Style9}
+            />
+            <Row
+              num={10}
+              name="Bordered glass — cyan ring"
+              description="Glass tile wrapped in a 1px primary ring with a soft cyan drop-shadow and diagonal sweep. Slightly bolder presence — useful when the icon needs to anchor a card without competing with the title."
+              Style={Style10}
+            />
+            <Row
+              num={11}
+              name="Light glass — inverted"
+              description="White tile with subtle muted grid, cyan corner glow, and primary glyph. Same family but works on light surfaces — solves the case where dark tiles feel heavy in a content-dense card."
+              Style={Style11}
+            />
           </div>
 
           <div className="mt-16 rounded-xl border-2 border-primary/30 bg-primary/[0.03] p-8">
