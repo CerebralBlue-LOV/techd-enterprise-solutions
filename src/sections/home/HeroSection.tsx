@@ -43,7 +43,7 @@ export const HeroSection = () => (
             <Button
               asChild
               size="lg"
-              className="transition-transform duration-200 hover:-translate-y-0.5"
+              className="border border-primary transition-transform duration-200 hover:-translate-y-0.5"
             >
               <Link to="/contact">Talk to a principal</Link>
             </Button>
