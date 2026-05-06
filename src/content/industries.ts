@@ -10,7 +10,7 @@ export const INDUSTRIES: Industry[] = [
     id: "healthcare",
     name: "Healthcare & Life Sciences",
     outcome:
-      "HIPAA-grade data platforms and clinical knowledge agents. Trusted by Johns Hopkins Medicine, CHOP, Jefferson Health, Temple Health, Genesis HealthCare, Memorial Sloan Kettering, and Quest Diagnostics.",
+      "HIPAA-grade data platforms and clinical knowledge agents. Trusted by Johns Hopkins Medicine, CHOP, Jefferson Health, Temple Health, and Genesis HealthCare.",
     examples: [
       "Clinical knowledge agents",
       "HIPAA-grade data platforms",
@@ -28,7 +28,7 @@ export const INDUSTRIES: Industry[] = [
     id: "insurance",
     name: "Insurance",
     outcome:
-      "Underwriting copilots, claims acceleration, actuarial analytics. Trusted by PURE Insurance, National General, and Affinion.",
+      "Underwriting copilots, claims acceleration, actuarial analytics. Trusted by PURE Insurance and National General.",
     examples: ["Claims automation", "Underwriting copilots", "Actuarial analytics"],
   },
   {
@@ -42,14 +42,14 @@ export const INDUSTRIES: Industry[] = [
     id: "education",
     name: "Higher Education & Research",
     outcome:
-      "Research computing, identity, and student data platforms. Trusted by Princeton, Johns Hopkins, Villanova, Smith College, VCU Health, and Temple.",
+      "Research computing, identity, and student data platforms. Trusted by Princeton University and VCU.",
     examples: ["Research computing", "Identity and SSO", "Student data platforms"],
   },
   {
     id: "public",
     name: "Public Sector",
     outcome:
-      "Auditable AI and modernized records for mission delivery. Trusted by DHS, the City of Philadelphia, and L3Harris.",
+      "Auditable AI and modernized records for mission delivery. Trusted by DHS and L3Harris.",
     examples: ["Citizen services AI", "FedRAMP-aligned cloud", "Records modernization"],
   },
 ];

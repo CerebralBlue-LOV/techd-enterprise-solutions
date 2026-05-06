@@ -4,7 +4,9 @@ Operational context for Claude Code. Loaded every session. Keep tight.
 
 ## What this is
 
-Marketing website rebuild for **TechD** (IBM Platinum Business Partner serving Fortune 500 clients: J&J, Comcast, Sony, Princeton, Johns Hopkins). Replacing a compromised WordPress site. Live by end of week.
+Marketing website rebuild for **TechD** (IBM Platinum Business Partner serving Fortune 500 clients: J&J, Comcast, Sony, Princeton, Johns Hopkins). Replacing a compromised WordPress site.
+
+**Status: Not live.** The site is still in development. Do not assume the staging URL reflects the final state or that any deadline has passed.
 
 **Staging URL:** `cerebralblue-lov.github.io/techd-enterprise-solutions/`
 
