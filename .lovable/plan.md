@@ -1,52 +1,52 @@
-## Goal
+# Industries: Stacked Deck Presentation
 
-Apply the Codepen #1 "Hover Glow Effect" to every **Talk to an expert** CTA across the site, on-brand: cyan button face, animated cyan→soft blue→violet halo that fades in on hover.
+Replace the current flat drag-carousel under "Built for regulated, complex enterprises." with a **3D stacked deck** — the active card sits in front, the next 2–3 peek behind it with progressive scale/offset/blur, and users advance via swipe, click, or auto-advance.
 
-## Visual spec
+## What changes
 
-- **Resting state:** solid cyan (`hsl(var(--primary))` = #00B3E3) background, white text, rounded — same silhouette as today, no glow visible.
-- **Hover state:** a softly blurred animated halo appears around the button (≈4px outset). Halo gradient cycles through `#00B3E3 → #4A8BFF → #7A4DFF → #00B3E3` (cyan → soft blue → violet → loop), `background-size: 400%`, sliding via keyframes over ~8s. Halo fades in over 300ms.
-- **Inside the halo:** the cyan button face stays crisp (an inner solid layer covers the gradient center, only the blurred edges leak out).
-- **Reduced motion:** respect `prefers-reduced-motion` — show a static soft cyan glow on hover, no animation.
+- **Component:** rewrite `src/sections/home/_shared/IndustriesCarousel.tsx` as a stacked-deck. Same export name so `EngineeredFieldSection.tsx` stays untouched.
+- **Card content (active card only):** keep current `name` + `outcome`, plus add a small **"See industry →"** CTA linking to `/industries#<id>` (matches today's link target). Background cards show only title + motif, dimmed.
+- **Motifs:** reuse the existing 6 SVG motifs (Waves, Nodes, Grid, Bars, Pulse, Chevrons) — no new assets.
+- **Colors:** strictly current tokens (`primary`, `secondary`, `muted-foreground`, `border`, `background`). No new hex.
 
-## Files touched
+## Interaction (medium motion)
 
-1. **`tailwind.config.ts`** — add `keyframes.glow-shift` (`background-position 0% → 400% → 0%`) and `animation['glow-shift']: 'glow-shift 8s linear infinite'`.
-2. **`src/index.css`** — add a `.btn-glow` utility class implementing the layered `::before` (animated gradient, blurred, opacity 0 → 1 on hover) and `::after` (solid cyan face) pattern. Uses HSL brand tokens, no raw hex outside the gradient stops.
-3. **CTA call sites** — append `btn-glow` to the className of the "Talk to an expert" button at every site-wide instance:
-   - `src/layout/Header.tsx` (desktop + mobile)
-   - `src/sections/home/HeroSection.tsx`
-   - `src/sections/home/FinalCtaSection.tsx` (the actual button under the heading)
-   - `src/sections/products/ProductHeroSection.tsx`
-   - `src/sections/products/ProductCtaSection.tsx`
-   - `src/sections/solutions/PracticesListSection.tsx`
-   - `src/pages/NotFound.tsx`
+- **Active card** — full size, full opacity, soft cyan glow shadow, motif visible.
+- **+1 / +2 / +3 behind** — each step: scale 0.94 / 0.88 / 0.82, translateY +18px / +34px / +48px, opacity 0.7 / 0.45 / 0.25, slight blur on +2/+3.
+- **Auto-advance** every 6s, pauses on hover or focus.
+- **Controls:**
+  - Click on a peeking card → it becomes active.
+  - Swipe left/right (touch + mouse drag) → next / previous.
+  - Keyboard: ←/→ when deck is focused.
+  - Small dot indicators below (one per industry) — clickable, current is `primary`.
+- **Reduced motion** — disable auto-advance, replace 3D transforms with simple opacity crossfade.
 
-   Skipped (not buttons, just copy): the heading text in `FinalCtaSection`, page metadata in `Contact.tsx`.
+## Layout
 
-## Technical details
+- Container height ~360px on desktop, 320px on mobile.
+- Single centered card column, max-width ~520px.
+- Dots row + a subtle "drag" hint on first view only.
 
-The `.btn-glow` class follows the Kocsten Codepen pattern adapted to our stack:
+## Technical notes
 
 ```text
-.btn-glow              → position: relative; isolate; overflow visible; z-index: 0
-.btn-glow::before      → inset: -3px; border-radius: inherit; z-index: -1;
-                         background: linear-gradient(45deg, cyan, blue, violet, cyan);
-                         background-size: 400%; filter: blur(6px); opacity: 0;
-                         transition: opacity 300ms; animation: glow-shift 8s linear infinite (paused)
-.btn-glow:hover::before→ opacity: 1; animation-play-state: running
-.btn-glow::after       → inset: 0; border-radius: inherit; z-index: -1;
-                         background: hsl(var(--primary))   ← keeps the face solid cyan
-@media (prefers-reduced-motion: reduce)
-                       → ::before uses static radial cyan glow, no keyframes
+Deck state: activeIndex (number), isPaused (bool)
+Render: INDUSTRIES.map((ind, i) => {
+  const offset = (i - activeIndex + N) % N  // 0 = active, 1..N-1 behind
+  const depth = Math.min(offset, 3)         // cap visible depth
+  style = transforms keyed off `depth`
+  zIndex = N - depth
+  pointerEvents = depth <= 1 ? 'auto' : 'none'
+}
 ```
 
-Because shadcn `Button` already has `bg-primary` and rounded corners, `.btn-glow` only adds the halo machinery — no visual change at rest. The class works whether `asChild` wraps a `<Link>` or not, since the pseudo-elements attach to the rendered button element.
-
-No changes to `src/components/ui/button.tsx` (per CLAUDE.md: don't touch shadcn primitives).
+- Use Framer-style CSS transitions (transform + opacity, 500ms cubic-bezier) — no new dependency, keep the existing tailwind/CSS-only approach.
+- Drag detection reuses today's mouse/touch threshold pattern; commit to next/prev when |dx| > 60px.
+- Auto-advance via `setInterval` cleared on hover/focus/visibilitychange.
+- Keep `Link` semantics: each card is wrapped in a `<Link>` but `preventDefault` if drag moved (same guard as today).
 
 ## Out of scope
 
-- Other CTAs ("Explore solutions", "View case study", etc.) — unchanged.
-- Color-token changes — palette stays as defined in `BRAND.md`.
-- Animation on focus-visible (keyboard) — current focus ring is sufficient; can be added later if desired.
+- No change to `EngineeredFieldSection.tsx` content or to the case-study card below.
+- No change to the Solutions FlipCards above.
+- No new images or routes.
