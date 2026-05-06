@@ -200,42 +200,44 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: hsl(var(--border));
 }
 .solution-card-back {
   transform: rotateY(180deg);
 }
 .solution-card-surface {
   position: absolute;
-  inset: 1.5px;
+  inset: 1px;
   border-radius: calc(0.75rem - 1px);
   background: hsl(var(--background));
   z-index: 1;
 }
-/* Rotating linear-gradient beam (Uiverse-style) */
+/* Soft sweeping gray→cyan beam (no hard edges, no white) */
 .solution-card-beam {
   position: absolute;
   content: "";
   display: block;
-  width: 60%;
-  height: 160%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    hsl(var(--primary)),
-    hsl(var(--primary)),
-    hsl(var(--primary)),
-    hsl(var(--primary)),
-    transparent
+  width: 220%;
+  height: 220%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    hsl(var(--muted) / 0.35) 60deg,
+    hsl(var(--primary) / 0.55) 110deg,
+    hsl(var(--muted) / 0.35) 160deg,
+    transparent 220deg,
+    transparent 360deg
   );
+  filter: blur(6px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.55;
-  transition: opacity 400ms ease;
-  animation: solution-card-beam-spin 5s linear infinite;
+  opacity: 0.35;
+  transition: opacity 600ms ease;
+  animation: solution-card-beam-spin 14s linear infinite;
 }
 @keyframes solution-card-beam-spin {
-  0% { transform: rotateZ(0deg); }
-  100% { transform: rotateZ(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 @media (hover: hover) {
   .solution-card[data-hover="true"] {
