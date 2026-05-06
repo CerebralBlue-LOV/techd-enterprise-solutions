@@ -182,14 +182,14 @@ const StyleE = ({ practice }: { practice: string }) => (
   </div>
 );
 
-// ---------- Style F: Dark tile — muted grid + cyan corner bloom ----------
+// ---------- Style F: Dark tile — primary grid + cyan corner bloom ----------
 const StyleF = ({ practice }: { practice: string }) => (
-  <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-2xl bg-secondary ring-1 ring-muted/40">
+  <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-2xl bg-secondary ring-1 ring-primary/30">
     <span
-      className="absolute inset-0 opacity-20"
+      className="absolute inset-0 opacity-25"
       style={{
         backgroundImage:
-          "linear-gradient(hsl(var(--muted)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--muted)) 1px, transparent 1px)",
+          "linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)",
         backgroundSize: "10px 10px",
       }}
     />
