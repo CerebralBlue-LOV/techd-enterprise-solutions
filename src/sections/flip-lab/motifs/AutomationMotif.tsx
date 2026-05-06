@@ -5,21 +5,21 @@
 
 type Node = { x: number; y: number; r: number; o: number };
 
-// Tree-like graph anchored bottom-right. Three input branches collapse into
-// a single trunk node at the corner.
+// Tree-like graph anchored bottom-right. Compact bounding box so it stays
+// in the corner and doesn't crowd the title.
 const NODES: Node[] = [
-  // top-left inputs
-  { x: 60, y: 70, r: 4, o: 0.5 },
-  { x: 60, y: 130, r: 3.4, o: 0.45 },
-  { x: 60, y: 195, r: 3.8, o: 0.55 },
+  // inputs (mid-left)
+  { x: 130, y: 170, r: 3.6, o: 0.5 },
+  { x: 130, y: 215, r: 3.2, o: 0.45 },
+  { x: 130, y: 260, r: 3.6, o: 0.55 },
   // mid junction
-  { x: 150, y: 110, r: 5, o: 0.7 },
-  { x: 150, y: 200, r: 4.6, o: 0.65 },
+  { x: 195, y: 195, r: 4.6, o: 0.7 },
+  { x: 195, y: 250, r: 4.2, o: 0.65 },
   // pre-trunk
-  { x: 230, y: 160, r: 5.6, o: 0.85 },
+  { x: 250, y: 222, r: 5.2, o: 0.85 },
   // trunk + outputs near corner
-  { x: 290, y: 230, r: 7, o: 1 },
-  { x: 290, y: 290, r: 4.4, o: 0.7 },
+  { x: 295, y: 270, r: 6.4, o: 1 },
+  { x: 295, y: 305, r: 4, o: 0.7 },
 ];
 
 const EDGES: Array<[number, number]> = [
@@ -41,19 +41,12 @@ const AutomationMotif = () => (
     aria-hidden="true"
   >
     <defs>
-      <radialGradient id="auto-glow" cx="100%" cy="100%" r="75%">
+      <radialGradient id="auto-glow" cx="100%" cy="100%" r="60%">
         <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.22" />
         <stop offset="70%" stopColor="hsl(var(--primary))" stopOpacity="0" />
       </radialGradient>
     </defs>
     <rect width="320" height="320" fill="url(#auto-glow)" />
-
-    {/* faint grid hints */}
-    <g stroke="hsl(var(--primary))" strokeWidth="0.5" opacity="0.18">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <line key={`g${i}`} x1={0} y1={50 + i * 45} x2={320} y2={50 + i * 45} strokeDasharray="2 8" />
-      ))}
-    </g>
 
     {/* edges with directional arrowheads */}
     <defs>
