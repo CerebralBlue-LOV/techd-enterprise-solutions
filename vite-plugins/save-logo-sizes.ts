@@ -76,7 +76,7 @@ export function saveLogoSizesPlugin(): Plugin {
             res.end(String(err));
           }
         });
-      });
+      };
     },
   };
 }
