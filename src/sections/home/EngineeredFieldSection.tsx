@@ -34,7 +34,6 @@ export const EngineeredFieldSection = () => (
       <div className="container-page">
         <Reveal>
           <SectionHeading
-            align="center"
             eyebrow="Industries"
             title="Built for regulated, complex enterprises."
           />
@@ -52,12 +51,12 @@ export const EngineeredFieldSection = () => (
       <SectionMarker page="Home" name="Featured Case Study" />
       <div className="container-page">
         <Reveal>
-          <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16 text-center">
+          <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16">
             <CaseStudyCardBackdropCyan />
             <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">
               Featured Case · Published by IBM
             </p>
-            <h2 className="relative mt-4 mx-auto max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
+            <h2 className="relative mt-4 max-w-3xl text-4xl md:text-5xl text-white leading-[1.05]">
               A US family-owned retailer rebuilt online shopping on IBM Db2,
               watsonx Assistant, and NeuralSeek.
             </h2>
@@ -89,11 +88,11 @@ export const EngineeredFieldSection = () => (
                 </p>
               </div>
             </div>
-            <p className="relative mt-10 mx-auto max-w-3xl text-sm font-light text-white/60">
+            <p className="relative mt-10 max-w-3xl text-sm font-light text-white/60">
               Co-authored by Scott Nichols, Senior Developer Analyst at TechD,
               and Garrett Rowe, President of Cerebral Blue.
             </p>
-            <div className="relative mt-8 flex justify-center">
+            <div className="relative mt-8">
               <Button
                 asChild
                 className="group relative overflow-hidden bg-primary text-primary-foreground shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_14px_50px_-10px_hsl(var(--primary)/0.75)]"
