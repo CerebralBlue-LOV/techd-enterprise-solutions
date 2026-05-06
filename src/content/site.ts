@@ -63,7 +63,7 @@ export const NAV: NavItem[] = [
 export type Customer = { name: string; url: string; logo?: string; logoClass?: string };
 
 export const CUSTOMERS: Customer[] = [
-  { name: "Johnson & Johnson", url: "https://www.jnj.com", logo: "/logos/johnson-and-johnson.png" },
+  { name: "Johnson & Johnson", url: "https://www.jnj.com", logo: "/logos/johnson-and-johnson.png", logoClass: "h-6 md:h-7" },
   { name: "Sony Pictures", url: "https://www.sonypictures.com", logo: "/logos/sony-pictures.png", logoClass: "h-14 md:h-16" },
   { name: "Comcast / Peacock", url: "https://www.peacocktv.com", logo: "/logos/comcast-peacock.svg" },
   { name: "Johns Hopkins Medicine", url: "https://www.hopkinsmedicine.org", logo: "/logos/johns-hopkins.png" },
@@ -85,5 +85,5 @@ export const CUSTOMERS: Customer[] = [
   { name: "White Cap", url: "https://www.whitecap.com", logo: "/logos/white-cap.png", logoClass: "h-14 md:h-16" },
   
   { name: "The Kennedy Center", url: "https://www.kennedy-center.org", logo: "/logos/kennedy-center.png" },
-  { name: "VCU", url: "https://www.vcu.edu", logo: "/logos/vcu.png" },
+  { name: "VCU", url: "https://www.vcu.edu", logo: "/logos/vcu.png", logoClass: "h-8 md:h-9" },
 ];
