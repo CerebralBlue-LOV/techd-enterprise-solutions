@@ -71,3 +71,4 @@ Custom components (Header, Footer, Hero, etc.) live in `src/components/`.
 
 **Blocker:** Logo files are needed from the product owner before the site can launch. This is flagged as a dependency in the Project Overview page.
 
+bump
