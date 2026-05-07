@@ -84,9 +84,10 @@ const Honeycomb = ({
           let strokeOpacity = 0.55;
           if (cursor) {
             const d = Math.hypot(cell.cx - cursor.x, cell.cy - cursor.y);
-            if (d < FALLOFF) {
-              const t = 1 - d / FALLOFF;
-              strokeOpacity = 0.55 * (1 - t * t);
+            const STROKE_FALLOFF = FALLOFF * 1.6;
+            if (d < STROKE_FALLOFF) {
+              const t = 1 - d / STROKE_FALLOFF;
+              strokeOpacity = Math.max(0, 0.55 * (1 - t * 1.8));
             }
           }
           return (
