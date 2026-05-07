@@ -70,7 +70,7 @@ const Honeycomb = ({
               <path
                 key={`f${i}`}
                 d={cell.d}
-                fill="hsl(var(--secondary))"
+                fill="hsl(0 0% 100%)"
                 opacity={opacity}
               />
             );
