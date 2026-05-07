@@ -66,7 +66,7 @@ const ModularBlocks = ({
               const eased = t * t;
               opacity = BASE_OPACITY + (HIT_OPACITY - BASE_OPACITY) * eased;
               scale = 1 + (MAX_SCALE - 1) * eased;
-              fill = `hsl(var(--primary) / ${opacity.toFixed(3)})`;
+              fill = `hsl(var(--muted-foreground) / ${opacity.toFixed(3)})`;
             }
           }
           const size = BLOCK * scale;
