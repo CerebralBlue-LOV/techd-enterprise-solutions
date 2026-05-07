@@ -1,54 +1,79 @@
-# Restore webp motifs + per-card cool effects
+# Plan: Scrape techd.com/services and produce SERVICES-AUDIT.md
 
-## Goal
+Mirror the approach already used for `SOLUTIONS-AUDIT.md` and `INDUSTRIES-AUDIT.md`: crawl the live techd.com Services area, catalog every menu item and sub-page, then output a single markdown audit doc to `docs/SERVICES-AUDIT.md`.
 
-Switch the FlipLab motifs back to the original webp images and remove the traced SVG versions. On hover (and subtly at rest), each card gets its own distinctive, lightweight effect — overlays/lights/particles layered on top of the static image, not transforms of the image itself.
+## Scope (from the live techd.com Services nav)
 
-## Scope of changes
+Top-level items to audit (This are placeholder values, review them carefully):
 
-1. `src/pages/FlipLab.tsx`
-   - Re-import the 5 `.webp` files instead of `.svg`.
-   - Pass a new `variant` prop per card (`ai | data | automation | security | cloud`) so each motif can render a different effect.
-   - Update title/copy on the page from "SVG plexus" back to the original wording.
+1. **Strategy & Consulting** — has sub-menu
+  - Solution Design
+  - Implementation
+  - Field Services
+  - Lifecycle Services
+  - Customer Success
+  - (verify any additional sub-items found during crawl)
+2. **TechD and IBM** — flat
+3. **AI and Data Assessment** — has sub-menu (verify children during crawl)
+4. **Technology Expertise** — flat
+5. **Training** — flat
 
-2. `src/sections/flip-lab/PlexusMotif.tsx`
-   - Keep the static webp image + cyan glow halo (current look).
-   - Add a `variant` prop and render an extra absolutely-positioned effect layer per variant.
-   - All effects are pure CSS/SVG overlays — the `<img>` itself does NOT scale, rotate, or move.
-   - All effects respect `prefers-reduced-motion` (disabled when set).
-   - Effects intensify on the parent `[data-hover="true"]` (already set by FlipCard).
+Anything not in this list that appears in the live Services mega-menu gets added during the crawl, not silently dropped.
 
-3. `src/index.css`
-   - Add the keyframes used by the variants (scoped under a `.flip-motif-fx-*` namespace).
+## How we'll scrape
 
-4. Delete the 5 traced SVGs in `src/assets/flip-lab/plexus-*.svg` (no longer referenced).
+Use **Firecrawl** (already documented in our connectors knowledge). Two-step pattern:
 
-## Per-card effect (cool, not "image animation")
+1. **Map** `https://techd.com` filtered to service-related URLs to discover every page under the Services area.
+  - `firecrawl.map(url, { search: "service", limit: 500 })`
+  - Plus targeted maps for each known section slug.
+2. **Scrape** each discovered page as markdown.
+  - `firecrawl.scrape(url, { formats: ["markdown"], onlyMainContent: true })`
 
-| Card | Variant | Effect |
-|---|---|---|
-| AI & Generative | `ai` | Slow conic-gradient cyan "thinking" sweep behind the brain + 3 pulsing synapse dots that fire in sequence. |
-| Data & Analytics | `data` | Vertical scanline that sweeps top→bottom every 4s + faint binary "0/1" ticker drifting left. |
-| Automation & FinOps | `automation` | Two cyan orbit rings rotating in opposite directions behind the gears + a pulsing core dot. |
-| Security & Compliance | `security` | Hex-grid SVG mask that fades in on hover + a radar-style sweep arc rotating 360° every 6s. |
-| Hybrid Cloud | `cloud` | Soft floating cyan particles (8 dots) drifting upward + a slow horizontal shimmer band across the cloud. |
+Run as a one-off Node script in `/tmp/scrape-services.ts` (not committed). Output raw markdown to `/tmp/techd-services/*.md` for reference, then hand-curate the audit doc from those files.
 
-Common rules:
-- Layers sit between the glow halo and the `<img>`, with `mix-blend-mode: screen` and low opacity so the image stays the hero.
-- At rest: subtle (opacity ~0.25). On hover: opacity ramps to ~0.7 and animation speeds slightly up.
-- All animations are CSS keyframes (transform/opacity only) — GPU-cheap, no JS, no canvas.
-- `@media (prefers-reduced-motion: reduce)` disables the keyframes; the static decorative layer stays.
+Alternative if Firecrawl isn't connected: fall back to `code--fetch_website` per URL. Slower but no connector dependency.
 
-## Out of scope
+## Deliverable: `docs/SERVICES-AUDIT.md`
 
-- No changes to FlipCard flip behavior, copy, chips, or CTAs.
-- No changes to other pages.
-- No new dependencies (no framer-motion, no lottie, no canvas libs).
+Same shape as `SOLUTIONS-AUDIT.md`:
 
-## Technical notes
+- Header block (Source, Audited date, Purpose)
+- "How to use" + status legend (✅ / ⚠️ / ❌ / 🔄)
+- One numbered section per top-level Services menu item
+- For sections with sub-menus → table (Sub Menu Name | Page Name | Link | Status)
+- For flat sections → inline summary paragraph + key offerings
+- Per-section "Note" callouts where TechD-specific decisions are needed (e.g. "Field Services overlaps with Managed Services in our new IA — pick one home")
 
-- Effect layers use `pointer-events-none` and `aria-hidden="true"`.
-- Particle dots are rendered as a fixed array of `<span>` with staggered `animation-delay` — no runtime randomness, deterministic SSR-safe output.
-- Hex grid + radar sweep are inline SVG in the security variant (no extra asset files).
-- Keyframes named `flip-fx-sweep`, `flip-fx-scan`, `flip-fx-orbit`, `flip-fx-radar`, `flip-fx-float`, `flip-fx-pulse` — all added once to `index.css`.
-- Variant→effect mapping lives inside `PlexusMotif.tsx` as a small switch; no new files needed.
+## Status assessment per item
+
+For each scraped page, capture:
+
+- Does the offering still map to a current IBM/TechD service line in 2026?
+- Is the page copy generic boilerplate or substantive (drives whether we rewrite or reuse)?
+- Cross-reference against `src/content/services.ts` (today: Advisory, Implementation, Managed Services, Training) — flag gaps and duplicates.
+
+## Steps
+
+1. Connect Firecrawl via `standard_connectors--connect` (if not already linked).
+2. Write `/tmp/scrape-services.ts`: map → scrape → save markdown per URL.
+3. Run script, review raw output in `/tmp/techd-services/`.
+4. Hand-write `docs/SERVICES-AUDIT.md` using the SOLUTIONS-AUDIT template.
+5. Add a short "Gaps vs current `src/content/services.ts`" section at the bottom so the refactor we discussed has a clear input.
+
+## Out of scope (explicitly)
+
+- Resources, Demos, About Us — you mentioned them but said "first" services, so those are follow-up audits using the same playbook.
+- No code changes to the app in this pass. Audit doc only.
+- No content rewrites. We catalog first, decide second.
+
+## Open questions
+
+1. **Firecrawl connection** — OK to connect it now if not already linked? (Required for the map+scrape approach; otherwise we use `fetch_website` page-by-page.)
+2. **Output location** — `docs/SERVICES-AUDIT.md` to match the existing pattern, correct? (you know what create a folder docs/audit/(here the services-audit once you finish everithing jsut re-locate others audits files))
+3. **Depth** — for "Strategy & Consulting", scrape only the 5 named sub-pages, or recursively follow any deeper links found there?(also revierw the information for each page)  
+  
+Important:  
+  
+
+  Why do we want to do this specific scrape? Because we want to know if the information is old, is not old. So we need to, um, review if the information it is... You know, like we need to ma-- we need to do information for 2026. If you need to, I don't know, review another pages like, uh, maybe, I don't know, their pages, you, you, you can, for example, IBM. You can review on IBM, um, IBM 2026 page, and you h- you need to let me know, or yeah, you need to review if that information is old or if the information is deprecated or something like that. But what we need to do is review the information. That's what I... We're doing the scrape
