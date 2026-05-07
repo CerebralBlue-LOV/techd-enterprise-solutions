@@ -65,12 +65,12 @@ const Honeycomb = ({
             const d = Math.hypot(cell.cx - cursor.x, cell.cy - cursor.y);
             if (d > FALLOFF) return null;
             const t = 1 - d / FALLOFF;
-            const opacity = (t * t * 0.18).toFixed(3);
+            const opacity = (t * t * 0.55).toFixed(3);
             return (
               <path
                 key={`f${i}`}
                 d={cell.d}
-                fill="hsl(0 0% 100%)"
+                fill="hsl(var(--secondary))"
                 opacity={opacity}
               />
             );
