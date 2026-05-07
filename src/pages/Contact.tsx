@@ -27,7 +27,6 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import SectionMarker from "@shared/SectionMarker";
-import LogoStrip from "@shared/LogoStrip";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Required").max(100),
@@ -83,77 +82,6 @@ const Contact = () => {
               title="Talk to an expert."
               subtitle="No SDR queue. No discovery call routing. Tell us what you're trying to ship and we'll match you with the right senior practitioner."
             />
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="about" className="pb-16 scroll-mt-24">
-        <SectionMarker page="Contact" name="About TechD" />
-        <div className="container-page">
-          <Reveal>
-            <div className="grid gap-10 lg:grid-cols-2 rounded-xl border border-border p-8 md:p-12">
-              <div>
-                <p className="eyebrow">About TechD</p>
-                <h2 className="mt-3 text-3xl leading-tight">IBM's partner for regulated enterprise delivery.</h2>
-                <p className="mt-4 text-base font-light text-muted-foreground">
-                  TechD has helped Fortune 500 organizations turn data into trustworthy AI since 2009. We design, build, and run secure AI, data, and hybrid cloud systems for healthcare, media, energy, and public sector enterprises — on IBM watsonx, Db2, and the open stack around them.
-                </p>
-                <p className="mt-3 text-base font-light text-muted-foreground">
-                  Headquartered in Miami, FL. Delivering across the US and Canada.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <div className="rounded-lg border border-border p-5">
-                  <p className="text-xs font-bold uppercase tracking-widest text-primary">Founder &amp; President</p>
-                  <p className="mt-1 text-sm font-light text-muted-foreground">Co-founded TechD in 2009. 15+ years of IBM Cognos, TM1, and enterprise data warehousing delivery.</p>
-                </div>
-                <div className="rounded-lg border border-border p-5">
-                  <p className="text-xs font-bold uppercase tracking-widest text-primary">VP of AI &amp; Managing Partner</p>
-                  <p className="mt-1 text-sm font-light text-muted-foreground">Joined TechD after 15 years at IBM in Data &amp; AI sales and engineering. AI practice lead.</p>
-                </div>
-                <div className="rounded-lg border border-border p-5">
-                  <p className="text-xs font-bold uppercase tracking-widest text-primary">VP of Delivery</p>
-                  <p className="mt-1 text-sm font-light text-muted-foreground">Oversees implementation and managed services delivery across all client engagements.</p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="ibm" className="pb-16 scroll-mt-24">
-        <SectionMarker page="Contact" name="IBM Partnership" />
-        <div className="container-page">
-          <Reveal>
-            <div className="rounded-2xl border border-border p-8 md:p-12">
-              <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-                <div>
-                  <p className="eyebrow">IBM Partnership</p>
-                  <h2 className="mt-3 text-3xl leading-tight">
-                    Platinum. IBM's highest partner classification.
-                  </h2>
-                  <p className="mt-4 text-base font-light text-muted-foreground">
-                    IBM Platinum Business Partner status is reserved for partners with the deepest technical certifications, the broadest client delivery track record, and direct relationships with IBM product engineering teams. TechD has held Platinum status since 2009.
-                  </p>
-                  <p className="mt-3 text-base font-light text-muted-foreground">
-                    That means direct access to watsonx, IBM Z, Red Hat OpenShift, and IBM Security engineering — and early participation in IBM beta programs before products reach general availability.
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 gap-4 content-start">
-                  {[
-                    { label: "Data & AI",          detail: "watsonx, Db2, Cognos, Planning Analytics, DataStage, Netezza, SPSS" },
-                    { label: "Security",            detail: "Guardium, QRadar, Resilient — data protection and threat detection" },
-                    { label: "Hybrid Cloud",        detail: "IBM Cloud, Red Hat OpenShift, IBM Z integration" },
-                    { label: "Automation & FinOps", detail: "Apptio, Instana, Turbonomic" },
-                  ].map((spec) => (
-                    <div key={spec.label} className="rounded-xl border border-border p-4">
-                      <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary">{spec.label}</p>
-                      <p className="mt-1.5 text-xs font-light text-muted-foreground leading-relaxed">{spec.detail}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </Reveal>
         </div>
       </section>
@@ -277,15 +205,6 @@ const Contact = () => {
               </form>
             </Form>
           </Reveal>
-        </div>
-      </section>
-      <section id="customers" className="pb-24 scroll-mt-24">
-        <SectionMarker page="Contact" name="Customers" />
-        <div className="container-page">
-          <Reveal>
-            <p className="eyebrow mb-6">Trusted by regulated enterprises</p>
-          </Reveal>
-          <LogoStrip />
         </div>
       </section>
     </Layout>

@@ -6,6 +6,11 @@ import NotFound from "@pages/NotFound";
 import IconLab from "@pages/IconLab";
 import LogoLab from "@pages/LogoLab";
 
+// Company
+import About from "@pages/company/About";
+import IBMPartnership from "@pages/company/IBMPartnership";
+import Customers from "@pages/company/Customers";
+
 // Solutions
 import AIGenerative from "@pages/solutions/AIGenerative";
 import DataAnalytics from "@pages/solutions/DataAnalytics";
@@ -88,6 +93,12 @@ export const AppRoutes = () => (
     <Route path="/resources/blog/:slug" element={<BlogDetail />} />
     <Route path="/resources/webinars" element={<Webinars />} />
     <Route path="/resources/events" element={<Events />} />
+
+    {/* Company */}
+    <Route path="/company" element={<Navigate to="/company/about" replace />} />
+    <Route path="/company/about" element={<About />} />
+    <Route path="/company/ibm-partnership" element={<IBMPartnership />} />
+    <Route path="/company/customers" element={<Customers />} />
 
     <Route path="/contact" element={<Contact />} />
     <Route path="/icon-lab" element={<IconLab />} />
