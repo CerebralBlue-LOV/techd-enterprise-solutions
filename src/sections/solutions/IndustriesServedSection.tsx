@@ -23,7 +23,7 @@ export const IndustriesServedSection = ({ practice }: Props) => {
     .filter((x): x is { ind: (typeof INDUSTRIES)[number]; proof: string } => Boolean(x));
 
   return (
-    <section className="section">
+    <section id="industries" className="section scroll-mt-24">
       <SectionMarker page={`Solutions / ${practice.name}`} name="Industries served" />
       <div className="container-page">
         <Reveal>

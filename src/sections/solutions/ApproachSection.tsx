@@ -13,7 +13,7 @@ export const ApproachSection = ({ practice }: Props) => {
   if (!extras?.approach?.length) return null;
 
   return (
-    <section className="section bg-muted/30">
+    <section id="approach" className="section bg-muted/30 scroll-mt-24">
       <SectionMarker page={`Solutions / ${practice.name}`} name="Approach" />
       <div className="container-page">
         <Reveal>
