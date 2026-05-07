@@ -32,7 +32,7 @@ export type Solution = {
 
 export const SOLUTIONS: Solution[] = [
   {
-    id: "ai",
+    id: "ai-generative",
     name: "AI & Generative Solutions",
     outcome: "Ship trustworthy gen AI on top of governed enterprise data.",
     description:
@@ -327,7 +327,7 @@ export const SOLUTIONS: Solution[] = [
   },
 
   {
-    id: "automation",
+    id: "automation-finops",
     name: "Automation & FinOps",
     outcome: "Observe everything, optimize spend, and eliminate manual toil.",
     description:
@@ -429,7 +429,7 @@ export const SOLUTIONS: Solution[] = [
   },
 
   {
-    id: "security",
+    id: "security-compliance",
     name: "Security & Compliance",
     outcome: "Pass the audit. Protect the data. Respond to the breach.",
     description:
