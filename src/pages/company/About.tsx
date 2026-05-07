@@ -3,8 +3,7 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import PracticeHeroBackdrop from "@sections/solutions/_components/PracticeHeroBackdrop";
-import { useEffect, useRef, useState } from "react";
+import RingsHeroBackdrop from "@shared/RingsHeroBackdrop";
 
 const LEADERSHIP = [
   {
