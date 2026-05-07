@@ -5,7 +5,7 @@ import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import GeometricAccent from "@shared/GeometricAccent";
+import SonarHeroBackdrop from "@shared/SonarHeroBackdrop";
 import NotFound from "@pages/NotFound";
 import { RESOURCES } from "@content/resources";
 
@@ -27,7 +27,7 @@ const BlogDetail = () => {
       {/* Hero */}
       <section className="relative overflow-hidden min-h-[35vh] flex items-center">
         <SectionMarker page="Resources / Blog" name="Detail Hero" />
-        <GeometricAccent />
+        <SonarHeroBackdrop />
         <div className="container-page relative z-10 pt-20 pb-16 md:pt-28 md:pb-20">
           <Reveal>
             <Link

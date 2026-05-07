@@ -3,8 +3,7 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import PracticeHeroBackdrop from "@sections/solutions/_components/PracticeHeroBackdrop";
-import { useEffect, useRef, useState } from "react";
+import RingsHeroBackdrop from "@shared/RingsHeroBackdrop";
 
 const SPECIALIZATIONS = [
   {
@@ -45,31 +44,6 @@ const WHAT_PLATINUM_MEANS = [
 ];
 
 const IBMPartnership = () => {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null);
-  const rafRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const onMove = (e: MouseEvent) => {
-      const rect = node.getBoundingClientRect();
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() =>
-        setCursor({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-      );
-    };
-    const onLeave = () => setCursor(null);
-    node.addEventListener("mousemove", onMove);
-    node.addEventListener("mouseleave", onLeave);
-    return () => {
-      node.removeEventListener("mousemove", onMove);
-      node.removeEventListener("mouseleave", onLeave);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
   return (
     <Layout>
       <SEO
@@ -79,11 +53,10 @@ const IBMPartnership = () => {
 
       {/* Hero */}
       <section
-        ref={sectionRef}
         className="relative overflow-hidden min-h-[50vh] flex items-center"
       >
         <SectionMarker page="Company / IBM Partnership" name="Hero" />
-        <PracticeHeroBackdrop cursor={cursor} />
+        <RingsHeroBackdrop />
         <div className="container-page relative z-10 pt-16 pb-12 md:pt-20 md:pb-16">
           <Reveal>
             <div className="max-w-4xl">
