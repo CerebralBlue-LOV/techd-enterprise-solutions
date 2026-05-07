@@ -19,12 +19,8 @@ export const ProductHeroSection = ({ practice, product }: Props) => (
       <Reveal>
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1.5 text-xs text-muted-foreground">
-          <Link to="/solutions" className="hover:text-primary transition-colors">
-            Solutions
-          </Link>
-          <ChevronRight className="size-3 shrink-0" />
           <Link
-            to={`/solutions#${practice.id}`}
+            to={`/solutions/${practice.id}`}
             className="hover:text-primary transition-colors"
           >
             {practice.name}
@@ -46,7 +42,7 @@ export const ProductHeroSection = ({ practice, product }: Props) => (
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link to={`/solutions#${practice.id}`}>
+              <Link to={`/solutions/${practice.id}`}>
                 View all {practice.name} products
               </Link>
             </Button>

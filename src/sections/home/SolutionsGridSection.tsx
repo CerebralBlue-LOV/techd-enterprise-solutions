@@ -11,10 +11,10 @@ import plexusShield from "@/assets/flip-lab/plexus-shield.webp";
 import plexusCloud from "@/assets/flip-lab/plexus-cloud.webp";
 
 const MOTIFS: Record<string, { image: string; alt: string; backTitle: string; footer: string; variant: MotifVariant }> = {
-  ai: { image: plexusBrain, alt: "Neural plexus brain", backTitle: "Production-grade AI", footer: "United States", variant: "ai" },
+  "ai-generative": { image: plexusBrain, alt: "Neural plexus brain", backTitle: "Production-grade AI", footer: "United States", variant: "ai" },
   "data-analytics": { image: plexusDatabase, alt: "Neural plexus database", backTitle: "Data foundations", footer: "United States", variant: "data" },
-  automation: { image: plexusGears, alt: "Neural plexus gears", backTitle: "Run smarter", footer: "Global", variant: "automation" },
-  security: { image: plexusShield, alt: "Neural plexus shield", backTitle: "Defense in depth", footer: "Regulated industries", variant: "security" },
+  "automation-finops": { image: plexusGears, alt: "Neural plexus gears", backTitle: "Run smarter", footer: "Global", variant: "automation" },
+  "security-compliance": { image: plexusShield, alt: "Neural plexus shield", backTitle: "Defense in depth", footer: "Regulated industries", variant: "security" },
   "hybrid-cloud": { image: plexusCloud, alt: "Neural plexus cloud", backTitle: "Anywhere, governed", footer: "United States", variant: "cloud" },
 };
 
@@ -41,7 +41,7 @@ export const SolutionsGridSection = () => (
           return (
             <Reveal key={s.id} delay={i * 50}>
               <FlipCard
-                to={`/solutions#${s.id}`}
+                to={`/solutions/${s.id}`}
                 eyebrow={s.name}
                 title={s.outcome}
                 footer={m.footer}

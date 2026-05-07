@@ -1,62 +1,93 @@
-# Plan: Audit techd.com Demos + About Us → `docs/audit/`
+# IA Restructure — Routing & Page Scaffolds
 
-Same playbook as Services and Resources. Two small audit docs in `docs/audit/`, one per area, since they're unrelated content domains and folding them together would be confusing later. Both should be fast — combined inventory is ~5 pages.
+Scope: information architecture, routing, navigation config, and empty page scaffolds only. No copy, no design work. Each new page gets a future per-page plan.
 
-## What the live site actually has (verified with `fetch_website`)
+## New URL structure (nested, parent removed)
 
-**Demos (`/demos/`):** 🚫 Broken. Returns the WordPress "It looks like nothing was found at this location" fallback — same dead-page pattern we hit on `/services/techd-managed-services/` and `/webinars/`. **There is no Demos section on the live techd.com.** The "Featured Clients" logo strip is the only thing that renders.
+Top-level nav labels (`Solutions`, `Services`, `Industries`, `Resources`) become **dropdown triggers only** — they no longer route anywhere. `Company` stays as-is for now (separate decision pending in `ABOUT-AUDIT.md`).
 
-**About Us:** Three sibling pages, no proper hub:
-- `/about-us/` — basically empty. One-line tagline ("dedicated to helping organizations gain truth from their data") + Contact CTA + clients strip. No real about content.
-- `/our-story/` — substantive (~261 lines). Company description, IBM Platinum since 2009, Miami HQ, mission statement, solutions overview.
-- `/depth-of-experience/` — substantive (~138 lines). Team capabilities, then **management team profiles** (Marc Martina / President + others). This is the only place on the live site that names people.
+```text
+Solutions/  (no /solutions page)
+  /solutions/ai-generative
+  /solutions/data-analytics
+  /solutions/automation-finops
+  /solutions/security-compliance
+  /solutions/hybrid-cloud
+  /solutions/:practice/:product   (existing product detail — kept)
 
-> **Homepage is unrecoverable.** `https://techd.com/` returns the SEO-cloaking spam payload ("Betzoid's Guide to the Leading Kenyan Betting Sites for 2024") documented in `docs/SPAM-REPORT.md`. Confirms again: do not migrate the homepage. About-Us audit ignores it.
+Services/  (no /services page)
+  /services/advisory
+  /services/implementation
+  /services/managed-services
+  /services/training
 
-## Scope
+Industries/  (no /industries page)
+  /industries/healthcare
+  /industries/media-entertainment
+  /industries/insurance
+  /industries/energy-utilities
+  /industries/higher-education
+  /industries/public-sector
 
-### Audit doc 1 — `docs/audit/DEMOS-AUDIT.md` (≤1 page)
+Resources/  (no /resources page)
+  /resources/case-studies
+  /resources/blog
+  /resources/webinars
+  /resources/events
+```
 
-Single-page write-up. Confirms:
-- The `/demos/` URL exists in the WordPress install but the page is broken (WP 404 fallback, no content, no items in the feed).
-- No Demos appear anywhere else in the live mega-menu, sub-nav, or sitemap.
-- Migration scope: **0 assets**. If the new site needs Demos, it's a from-scratch build (live walkthroughs of TechD/IBM/NeuralSeek joint demos, recorded product tours, sandbox links), not a migration.
-- Recommendation on whether to even include a Demos route in the new IA, or fold it into Resources → Webinars.
+Practice slugs change from `/solutions/ai` to `/solutions/ai-generative` etc. — more descriptive, SEO-friendly. Existing `ProductDetail` route updates to `/solutions/:practice/:product` with new practice slugs.
 
-### Audit doc 2 — `docs/audit/ABOUT-AUDIT.md`
+## Work breakdown
 
-Curated catalog of the 3 About-area pages, same template as `SERVICES-AUDIT.md`:
+1. **Update `src/content/site.ts` NAV**
+   - Remove `href` from top-level Solutions/Services/Industries/Resources (or set to `#` and treat as non-navigable trigger).
+   - Update child `href`s to new nested paths above.
 
-- Header block + status legend (✅ keep / ⚠️ refresh / ❌ drop) + copy-quality flag (📄 substantive / 🪶 thin / 🚫 broken).
-- Inventory table: page | URL | status | copy summary | gotchas.
-- Per-page fact-check against `docs/COPY-SOURCE.md` (the homepage source-of-truth that already flagged stale claims like "Premier" tier, Wayne PA HQ, "25+ years" math, CogSuite, Watson Assistant pre-watsonx).
-- **Management team section gets special handling.** Names of executives are sensitive in a public repo (`CLAUDE.md` rule: "No personal names ... in any file"). The audit will *count* the named execs and note their titles, but **will not write the names into the audit doc**. Decision item for the user: do we re-publish the team section on the new site or drop it (current `/contact` scaffold collapses About into Contact and doesn't list people).
-- Cross-reference against current code: the new site has **no `/about` route** by design (Day 2 decision in `docs/CONTENT-AUDIT.md`: about pages fold into `/contact`). Audit confirms whether that decision still holds after seeing the live About copy, or if there's enough substance in `/our-story` to justify a dedicated `/about` page.
+2. **Update `src/layout/Header.tsx`**
+   - Make top-level dropdown triggers non-clickable (open menu only, no navigation).
+   - Mobile nav: top-level becomes accordion header, not link.
 
-## Status assessment per item
+3. **Update `src/app/routes.tsx`**
+   - Remove `/solutions`, `/services`, `/industries`, `/resources` routes.
+   - Add 5 solution practice routes, 4 services, 6 industries, 4 resources.
+   - Keep `/solutions/:practice/:product` (update slug values where needed).
 
-For each About page capture:
+4. **Create page scaffolds** (one file each, identical minimal structure: `Layout` + `SEO` + placeholder `<section>` with H1 and "Coming soon" body):
+   - `src/pages/solutions/AIGenerative.tsx`, `DataAnalytics.tsx`, `AutomationFinOps.tsx`, `SecurityCompliance.tsx`, `HybridCloud.tsx`
+   - `src/pages/services/Advisory.tsx`, `Implementation.tsx`, `ManagedServices.tsx`, `Training.tsx`
+   - `src/pages/industries/Healthcare.tsx`, `MediaEntertainment.tsx`, `Insurance.tsx`, `EnergyUtilities.tsx`, `HigherEducation.tsx`, `PublicSector.tsx`
+   - `src/pages/resources/CaseStudies.tsx`, `Blog.tsx`, `Webinars.tsx`, `Events.tsx`
 
-- **Stale claims** — IBM tier ("Gold" / "Premier" / "Platinum"), HQ location, founding year, tenure math ("25+ years" was wrong on the homepage), product references (Cognos generations, CP4D vs. watsonx).
-- **Substantive vs. boilerplate.**
-- **People mentioned** — count only, not names.
-- **Reusable snippets** — short paragraphs that could lift into the new site's `/contact` hero or a future `/about` page.
+5. **Delete old parent pages**
+   - `src/pages/Solutions.tsx`, `Services.tsx`, `Industries.tsx`, `Resources.tsx`
+   - Their `src/sections/<page>/` section files stay temporarily — many will be reused inside new child pages (per-page plans will harvest them).
 
-## Deliverables
+6. **Redirect map** — append to `docs/REDIRECT-MAP.md`:
+   - `/solutions` → `/solutions/ai-generative`
+   - `/services` → `/services/advisory`
+   - `/industries` → `/industries/healthcare`
+   - `/resources` → `/resources/case-studies`
+   - Old `/solutions/ai/*` product URLs → new `/solutions/ai-generative/*` (and same pattern for any other renamed practice slugs).
+   - Implemented as React Router `<Navigate>` entries in `routes.tsx`.
 
-- `docs/audit/DEMOS-AUDIT.md` — ~30 lines, one finding ("page is dead, nothing to migrate, decide whether to keep the route").
-- `docs/audit/ABOUT-AUDIT.md` — ~80–120 lines, follows `SERVICES-AUDIT.md` shape, ends with "Gaps vs. current `/contact` scaffold and `docs/COPY-SOURCE.md`" section.
-- No code changes. No content rewrites. Audit only.
+7. **Update `docs/audit/` and `.lovable/plan.md`** with the new IA decision so it's captured for the next session.
 
-## Out of scope
+## Out of scope (follow-up plans)
 
-- Re-fetching the homepage spam payload (already documented in `docs/SPAM-REPORT.md`).
-- Writing actual About copy (separate task — input is `docs/COPY-SOURCE.md`).
-- Building a `/demos` route or `/about` route (separate task, after the user decides).
-- Names of TechD executives — referenced as roles only.
+- Page content, copy, hero design, sections for any of the 19 new pages.
+- Company/About decision (handled separately per `ABOUT-AUDIT.md`).
+- Actual case study / blog / webinar / event content.
 
-## Open questions
+## Recommendations
 
-1. **Two files vs. one combined?** Defaulting to two (`DEMOS-AUDIT.md` + `ABOUT-AUDIT.md`) since the topics are unrelated. Want them merged into one `ABOUT-DEMOS-AUDIT.md` instead?
-2. **Management team names** — keep them out of the audit doc per the public-repo rule, correct? (We can list roles, count people, and call out that the source pages name them.)
-3. **`/demos` route in new IA** — recommend dropping it (no source content, no clear product offering for demos right now), or keep a stub for future use?
+- **Hide Blog and Webinars from nav for now** — scaffolds exist at the URLs (so we can link to them later), but nav only shows Case Studies and Events until there's content. Avoids "Coming soon" looking bad in the dropdown. *(Confirm or override.)*
+- **Use a shared `PlaceholderPage` component** for all 19 scaffolds to keep them one-line each and easy to replace.
+- **Keep practice slugs descriptive** (`ai-generative` not `ai`) so URLs stand alone in search results.
+
+
+---
+
+## Status — 2026-05-07
+
+IA restructure implemented. Top-level Solutions/Services/Industries/Resources are dropdown triggers only; each child has its own route + scaffold (`src/pages/{section}/*.tsx` using `_PlaceholderPage`). Practice slugs renamed (`ai-generative`, `automation-finops`, `security-compliance`); industry slugs renamed (`media-entertainment`, `energy-utilities`, `higher-education`, `public-sector`). Legacy paths redirect via `<Navigate>` in `routes.tsx`. Blog and Webinars routes exist but hidden from nav. Per-page content plans pending.

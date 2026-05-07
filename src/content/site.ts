@@ -1,61 +1,57 @@
 export type NavItem = {
   label: string;
-  href: string;
+  /** Optional href. Top-level dropdown labels omit href and act as menu triggers only. */
+  href?: string;
   children?: { label: string; href: string; description?: string }[];
 };
 
 export const NAV: NavItem[] = [
   {
     label: "Solutions",
-    href: "/solutions",
     children: [
-      { label: "AI & Generative Solutions",     href: "/solutions#ai",            description: "watsonx.ai, watsonx Assistant, NeuralSeek, IBM Knowledge Catalog." },
-      { label: "Data & Analytics",              href: "/solutions#data-analytics", description: "Db2, watsonx.data, DataStage, Cognos Analytics, Planning Analytics." },
-      { label: "Automation & FinOps",           href: "/solutions#automation",    description: "IBM Apptio, Instana, Turbonomic." },
-      { label: "Security & Compliance",         href: "/solutions#security",      description: "Guardium, QRadar, Resilient, MDM, Data Replication." },
-      { label: "Hybrid Cloud & Infrastructure", href: "/solutions#hybrid-cloud",  description: "IBM Cloud, Red Hat OpenShift, mainframe integration." },
+      { label: "AI & Generative Solutions",     href: "/solutions/ai-generative",       description: "watsonx.ai, watsonx Assistant, NeuralSeek, IBM Knowledge Catalog." },
+      { label: "Data & Analytics",              href: "/solutions/data-analytics",      description: "Db2, watsonx.data, DataStage, Cognos Analytics, Planning Analytics." },
+      { label: "Automation & FinOps",           href: "/solutions/automation-finops",   description: "IBM Apptio, Instana, Turbonomic." },
+      { label: "Security & Compliance",         href: "/solutions/security-compliance", description: "Guardium, QRadar, Resilient, MDM, Data Replication." },
+      { label: "Hybrid Cloud & Infrastructure", href: "/solutions/hybrid-cloud",        description: "IBM Cloud, Red Hat OpenShift, mainframe integration." },
     ],
   },
   {
     label: "Industries",
-    href: "/industries",
     children: [
-      { label: "Healthcare & Life Sciences", href: "/industries#healthcare" },
-      { label: "Media & Entertainment", href: "/industries#media" },
-      { label: "Insurance", href: "/industries#insurance" },
-      { label: "Energy & Utilities", href: "/industries#energy" },
-      { label: "Higher Education & Research", href: "/industries#education" },
-      { label: "Public Sector", href: "/industries#public" },
+      { label: "Healthcare & Life Sciences",  href: "/industries/healthcare" },
+      { label: "Media & Entertainment",       href: "/industries/media-entertainment" },
+      { label: "Insurance",                   href: "/industries/insurance" },
+      { label: "Energy & Utilities",          href: "/industries/energy-utilities" },
+      { label: "Higher Education & Research", href: "/industries/higher-education" },
+      { label: "Public Sector",               href: "/industries/public-sector" },
     ],
   },
   {
     label: "Services",
-    href: "/services",
     children: [
-      { label: "Advisory", href: "/services#advisory" },
-      { label: "Implementation", href: "/services#implementation" },
-      { label: "Managed Services", href: "/services#managed" },
-      { label: "Training", href: "/services#training" },
+      { label: "Advisory",          href: "/services/advisory" },
+      { label: "Implementation",    href: "/services/implementation" },
+      { label: "Managed Services",  href: "/services/managed-services" },
+      { label: "Training",          href: "/services/training" },
     ],
   },
   {
     label: "Resources",
-    href: "/resources",
     children: [
-      { label: "Case Studies", href: "/resources?tab=case-studies" },
-      { label: "Blog", href: "/resources?tab=blog" },
-      { label: "Webinars", href: "/resources?tab=webinars" },
-      { label: "Events", href: "/resources?tab=events" },
+      { label: "Case Studies", href: "/resources/case-studies" },
+      { label: "Events",       href: "/resources/events" },
+      // Blog and Webinars exist as routes but are hidden from nav until content is ready.
     ],
   },
   {
     label: "Company",
     href: "/contact",
     children: [
-      { label: "About", href: "/contact#about" },
+      { label: "About",           href: "/contact#about" },
       { label: "IBM Partnership", href: "/contact#ibm" },
-      { label: "Customers", href: "/contact#customers" },
-      { label: "Contact", href: "/contact" },
+      { label: "Customers",       href: "/contact#customers" },
+      { label: "Contact",         href: "/contact" },
     ],
   },
 ];

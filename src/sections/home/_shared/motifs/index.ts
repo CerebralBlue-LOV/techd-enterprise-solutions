@@ -5,9 +5,9 @@ import SecurityMotif from "./SecurityMotif";
 import CloudMotif from "./CloudMotif";
 
 export const SOLUTION_MOTIFS: Record<string, React.FC<{ featured?: boolean }>> = {
-  ai: AIMotif,
+  "ai-generative": AIMotif,
   "data-analytics": DataMotif,
-  automation: AutomationMotif,
-  security: SecurityMotif,
+  "automation-finops": AutomationMotif,
+  "security-compliance": SecurityMotif,
   "hybrid-cloud": CloudMotif,
 };

@@ -69,7 +69,7 @@ export const Header = () => {
                       </ul>
                     </NavigationMenuContent>
                   </>
-                ) : (
+                ) : item.href ? (
                   <NavigationMenuLink asChild>
                     <Link
                       to={item.href}
@@ -78,7 +78,7 @@ export const Header = () => {
                       {item.label}
                     </Link>
                   </NavigationMenuLink>
-                )}
+                ) : null}
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>
@@ -106,12 +106,16 @@ export const Header = () => {
               <nav className="flex flex-col gap-1">
                 {NAV.map((item) => (
                   <div key={item.label} className="py-2 border-b border-border">
-                    <Link
-                      to={item.href}
-                      className="block text-base font-bold text-secondary hover:text-primary"
-                    >
-                      {item.label}
-                    </Link>
+                    {item.href ? (
+                      <Link
+                        to={item.href}
+                        className="block text-base font-bold text-secondary hover:text-primary"
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <p className="text-base font-bold text-secondary">{item.label}</p>
+                    )}
                     {item.children && (
                       <ul className="mt-2 space-y-1.5 pl-3">
                         {item.children.map((c) => (
