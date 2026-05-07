@@ -338,7 +338,7 @@ export const SOLUTIONS: Solution[] = [
       "AI-driven resource actions",
     ],
     pitch:
-      "Process intelligence, RPA, and AI-powered orchestration that retire manual work across finance, operations, and customer service — measured in hours saved.",
+      "Full-stack observability, AI-driven resource optimization, and Technology Business Management — so IT leaders can see everything, cut waste, and prove the value of every dollar spent.",
     ctaLabel: "Explore automation practice",
     products: [
       {

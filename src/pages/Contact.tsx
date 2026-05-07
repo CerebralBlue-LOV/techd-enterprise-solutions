@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import SectionMarker from "@shared/SectionMarker";
+import LogoStrip from "@shared/LogoStrip";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Required").max(100),
@@ -86,6 +87,36 @@ const Contact = () => {
         </div>
       </section>
 
+      <section id="about" className="pb-16 scroll-mt-24">
+        <SectionMarker page="Contact" name="About TechD" />
+        <div className="container-page">
+          <Reveal>
+            <div className="grid gap-10 lg:grid-cols-2 rounded-xl border border-border p-8 md:p-12">
+              <div>
+                <p className="eyebrow">About TechD</p>
+                <h2 className="mt-3 text-3xl leading-tight">IBM's partner for regulated enterprise delivery.</h2>
+                <p className="mt-4 text-base font-light text-muted-foreground">
+                  TechD has helped Fortune 500 organizations turn data into trustworthy AI since 2009. We design, build, and run secure AI, data, and hybrid cloud systems for healthcare, media, energy, and public sector enterprises — on IBM watsonx, Db2, and the open stack around them.
+                </p>
+                <p className="mt-3 text-base font-light text-muted-foreground">
+                  Headquartered in Miami, FL. Delivering across the US and Canada.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <div className="rounded-lg border border-border p-5">
+                  <p className="text-xs font-bold uppercase tracking-widest text-primary">Founder &amp; President</p>
+                  <p className="mt-1 text-sm font-light text-muted-foreground">Co-founded TechD in 2009. 15+ years of IBM Cognos, TM1, and enterprise data warehousing delivery.</p>
+                </div>
+                <div className="rounded-lg border border-border p-5">
+                  <p className="text-xs font-bold uppercase tracking-widest text-primary">VP of AI &amp; Managing Partner</p>
+                  <p className="mt-1 text-sm font-light text-muted-foreground">Joined TechD after 15 years at IBM in Data &amp; AI sales and engineering. Our AI practice lead.</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="pb-24">
         <SectionMarker page="Contact" name="Contact Info + Form" />
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.4fr]">
@@ -94,9 +125,9 @@ const Contact = () => {
               <div>
                 <h2 className="text-xl">Where to find us</h2>
                 <ul className="mt-4 space-y-3 text-sm font-light text-muted-foreground">
-                  <li className="flex gap-3"><Mail className="size-4 mt-0.5 text-primary shrink-0" /> hello@techd.example</li>
-                  <li className="flex gap-3"><Phone className="size-4 mt-0.5 text-primary shrink-0" /> +1 (212) 555-0142</li>
-                  <li className="flex gap-3"><MapPin className="size-4 mt-0.5 text-primary shrink-0" /> Offices in NYC · Boston · Princeton</li>
+                  <li className="flex gap-3"><Mail className="size-4 mt-0.5 text-primary shrink-0" /> (real email needed)</li>
+                  <li className="flex gap-3"><Phone className="size-4 mt-0.5 text-primary shrink-0" /> (real phone needed)</li>
+                  <li className="flex gap-3"><MapPin className="size-4 mt-0.5 text-primary shrink-0" /> Miami, FL · (confirm additional offices)</li>
                 </ul>
               </div>
 
@@ -218,6 +249,15 @@ const Contact = () => {
               </form>
             </Form>
           </Reveal>
+        </div>
+      </section>
+      <section id="customers" className="pb-24 scroll-mt-24">
+        <SectionMarker page="Contact" name="Customers" />
+        <div className="container-page">
+          <Reveal>
+            <p className="eyebrow mb-6">Trusted by regulated enterprises</p>
+          </Reveal>
+          <LogoStrip />
         </div>
       </section>
     </Layout>
