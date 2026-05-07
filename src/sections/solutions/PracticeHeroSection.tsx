@@ -1,6 +1,6 @@
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import GeometricAccent from "@shared/GeometricAccent";
+import HeroBackdrop from "@/sections/home/_shared/HeroBackdrop";
 import { type Solution } from "@content/solutions";
 
 interface Props {
