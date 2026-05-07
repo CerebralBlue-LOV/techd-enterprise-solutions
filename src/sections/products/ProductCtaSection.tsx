@@ -31,7 +31,7 @@ export const ProductCtaSection = ({ practice, product }: Props) => (
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link to={`/solutions#${practice.id}`}>
+              <Link to={`/solutions/${practice.id}`}>
                 Explore {practice.name}
               </Link>
             </Button>

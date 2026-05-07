@@ -222,7 +222,7 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
       aria-hidden={!isActive}
     >
       <Link
-        to={`/industries#${ind.id}`}
+        to={`/industries/${ind.id}`}
         onClick={handleClick}
         tabIndex={isActive ? 0 : -1}
         className={`group relative block h-full w-full overflow-hidden rounded-2xl border bg-background transition-[transform,box-shadow,border-color] duration-100 ease-out ${
