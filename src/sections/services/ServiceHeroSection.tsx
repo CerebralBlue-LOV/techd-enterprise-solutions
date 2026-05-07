@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import PracticeHeroBackdrop from "@sections/solutions/_components/PracticeHeroBackdrop";
+import ServiceHeroBackdrop from "./_components/ServiceHeroBackdrop";
 import { type Service } from "@content/services";
 import { SERVICES_EXTRAS } from "@content/services-extras";
 
@@ -54,7 +54,7 @@ export const ServiceHeroSection = ({ service }: Props) => {
       className="relative overflow-hidden min-h-[50vh] flex items-center"
     >
       <SectionMarker page={`Services / ${service.name}`} name="Hero" />
-      <PracticeHeroBackdrop cursor={cursor} />
+      <ServiceHeroBackdrop cursor={cursor} />
       <div className="container-page relative z-10 pt-16 pb-12 md:pt-20 md:pb-16">
         <Reveal>
           <div className="max-w-4xl">
