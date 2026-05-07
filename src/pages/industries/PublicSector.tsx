@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const PublicSector = () => (
-  <PlaceholderPage eyebrow="Industries" title="Public Sector" />
-);
-
+import IndustryPage from "./_IndustryPage";
+const PublicSector = () => <IndustryPage industryId="public-sector" />;
 export default PublicSector;

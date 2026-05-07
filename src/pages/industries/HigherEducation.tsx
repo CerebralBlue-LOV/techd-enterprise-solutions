@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const HigherEducation = () => (
-  <PlaceholderPage eyebrow="Industries" title="Higher Education & Research" />
-);
-
+import IndustryPage from "./_IndustryPage";
+const HigherEducation = () => <IndustryPage industryId="higher-education" />;
 export default HigherEducation;

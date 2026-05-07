@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const Healthcare = () => (
-  <PlaceholderPage eyebrow="Industries" title="Healthcare & Life Sciences" />
-);
-
+import IndustryPage from "./_IndustryPage";
+const Healthcare = () => <IndustryPage industryId="healthcare" />;
 export default Healthcare;

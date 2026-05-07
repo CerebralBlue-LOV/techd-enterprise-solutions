@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const EnergyUtilities = () => (
-  <PlaceholderPage eyebrow="Industries" title="Energy & Utilities" />
-);
-
+import IndustryPage from "./_IndustryPage";
+const EnergyUtilities = () => <IndustryPage industryId="energy-utilities" />;
 export default EnergyUtilities;

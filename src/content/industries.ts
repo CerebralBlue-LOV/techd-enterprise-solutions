@@ -20,6 +20,7 @@ export const INDUSTRIES: Industry[] = [
       "Jefferson Health",
       "Temple Health",
       "Genesis HealthCare",
+      "Johnson & Johnson",
     ],
     examples: [
       "Clinical knowledge agents",
