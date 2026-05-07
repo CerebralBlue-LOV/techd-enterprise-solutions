@@ -15,18 +15,15 @@ const ANCHORS = [
   { href: "#approach", label: "Approach" },
 ];
 
-type Ripple = { id: number; x: number; y: number };
-
 /**
  * Section: Practice Hero — editorial typographic
  * Compact (~50vh), no image, no CTAs. H1 = practice.outcome.
- * Cursor-driven ripple effect on the engineered grid backdrop.
+ * Cursor causes a subtle radial bulge in the SVG grid (lens effect).
  */
 export const PracticeHeroSection = ({ practice }: Props) => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [ripples, setRipples] = useState<Ripple[]>([]);
-  const lastEmit = useRef(0);
-  const idRef = useRef(0);
+  const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -34,20 +31,21 @@ export const PracticeHeroSection = ({ practice }: Props) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const onMove = (e: MouseEvent) => {
-      const now = performance.now();
-      if (now - lastEmit.current < 140) return;
-      lastEmit.current = now;
       const rect = node.getBoundingClientRect();
-      const id = ++idRef.current;
-      const ripple = { id, x: e.clientX - rect.left, y: e.clientY - rect.top };
-      setRipples((prev) => [...prev.slice(-5), ripple]);
-      window.setTimeout(() => {
-        setRipples((prev) => prev.filter((r) => r.id !== id));
-      }, 1400);
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => setCursor({ x, y }));
     };
+    const onLeave = () => setCursor(null);
 
     node.addEventListener("mousemove", onMove);
-    return () => node.removeEventListener("mousemove", onMove);
+    node.addEventListener("mouseleave", onLeave);
+    return () => {
+      node.removeEventListener("mousemove", onMove);
+      node.removeEventListener("mouseleave", onLeave);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   return (
@@ -56,7 +54,7 @@ export const PracticeHeroSection = ({ practice }: Props) => {
       className="relative overflow-hidden min-h-[50vh] flex items-center"
     >
       <SectionMarker page={`Solutions / ${practice.name}`} name="Hero" />
-      <PracticeHeroBackdrop ripples={ripples} />
+      <PracticeHeroBackdrop cursor={cursor} />
       <div className="container-page relative z-10 pt-16 pb-12 md:pt-20 md:pb-16">
         <Reveal>
           <div className="max-w-4xl">
