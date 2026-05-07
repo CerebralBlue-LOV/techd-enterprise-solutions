@@ -32,7 +32,7 @@ If unsure whether something is sensitive, leave it out of the commit.
 | Forms | react-hook-form + zod |
 | 3D / Hero | three.js + @react-three/fiber + @react-three/drei |
 | Hosting | GitHub Pages (served from `/techd-enterprise-solutions/`) |
-| CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) |
+| CI/CD | GitHub Actions (`.github/workflows/deploy.yml` + `sync-to-clickup.yml`) |
 | Contact backend | Cloudflare Worker (Day 4 deliverable — not built yet) |
 | Design tool | Lovable (bidirectional sync with `main`) |
 
@@ -48,16 +48,39 @@ If unsure whether something is sensitive, leave it out of the commit.
 
 ```
 src/
+  app/              # App shell, route table (App.tsx, routes.tsx)
   components/       # Shared components (Header, Footer, Layout, Reveal, SEO, etc.)
   components/ui/    # shadcn/ui primitives — DO NOT touch
-  content/          # Typed TS data modules (site.ts, solutions.ts, industries.ts, services.ts, resources.ts)
-  pages/            # Route-level components (Index, Solutions, Industries, Services, Resources, Contact, NotFound)
+  content/          # Typed TS data modules (see Content files below)
+  pages/            # Route-level components
+    Home.tsx
+    Contact.tsx
+    NotFound.tsx
+    ProductDetail.tsx
+    solutions/      # AIGenerative, DataAnalytics, AutomationFinOps, SecurityCompliance, HybridCloud, _PracticePage
+    services/       # Advisory, Implementation, ManagedServices, Training
+    industries/     # Healthcare, MediaEntertainment, Insurance, EnergyUtilities, HigherEducation, PublicSector
+    resources/      # CaseStudies, Blog, Webinars, Events
+  sections/         # Section-level components organized by page (solutions/, etc.)
   hooks/            # use-mobile, use-toast
   lib/              # utils.ts
 docs/               # All project documentation (PRD, DECISIONS, GRAND, PROGRESS, BRAND, etc.)
+clickup-docs/       # Markdown files synced to ClickUp docs on every push to main
 public/             # robots.txt, favicon, placeholder assets
-.github/workflows/  # deploy.yml — GitHub Actions CI/CD
+.github/workflows/  # deploy.yml (GitHub Pages CI/CD), sync-to-clickup.yml (ClickUp doc sync)
 ```
+
+## Content files (`src/content/`)
+
+| File | Contents |
+|---|---|
+| `site.ts` | Nav items, footer copy, contact details |
+| `solutions.ts` | Solutions list with titles, descriptions, icons, slugs |
+| `solutions-extras.ts` | Extended content for practice pages (outcomes, products, approach, etc.) |
+| `practice-motifs.ts` | Visual motif/accent data per practice |
+| `industries.ts` | Industry list with names and icons |
+| `services.ts` | Services list |
+| `resources.ts` | Resources hub entries |
 
 ## Code conventions
 
@@ -94,21 +117,55 @@ Stripe / Linear / Vercel / Anthropic. Quiet, confident, typography-led, generous
 - **Never:** parallax, scroll-jacking, typewriter effects, animated cursors, page transitions
 - Always respect `prefers-reduced-motion`
 
-## Pages in scope (P0)
+## Route table
 
-| Route | Component | Status |
-|---|---|---|
-| `/` | `src/pages/Index.tsx` | In progress |
-| `/solutions` | `src/pages/Solutions.tsx` | Scaffold |
-| `/industries` | `src/pages/Industries.tsx` | Scaffold |
-| `/services` | `src/pages/Services.tsx` | Scaffold |
-| `/resources` | `src/pages/Resources.tsx` | Scaffold |
-| `/contact` | `src/pages/Contact.tsx` | Scaffold |
-| `*` | `src/pages/NotFound.tsx` | Done |
+**IA model:** Top-level `/solutions`, `/services`, `/industries`, `/resources` redirect to their first child — they are not standalone pages. Each child has its own full page.
+
+| Route | Component |
+|---|---|
+| `/` | `Home.tsx` |
+| `/solutions` | → redirects to `/solutions/ai-generative` |
+| `/solutions/ai-generative` | `solutions/AIGenerative.tsx` |
+| `/solutions/data-analytics` | `solutions/DataAnalytics.tsx` |
+| `/solutions/automation-finops` | `solutions/AutomationFinOps.tsx` |
+| `/solutions/security-compliance` | `solutions/SecurityCompliance.tsx` |
+| `/solutions/hybrid-cloud` | `solutions/HybridCloud.tsx` |
+| `/solutions/:practice/:product` | `ProductDetail.tsx` |
+| `/services` | → redirects to `/services/advisory` |
+| `/services/advisory` | `services/Advisory.tsx` |
+| `/services/implementation` | `services/Implementation.tsx` |
+| `/services/managed-services` | `services/ManagedServices.tsx` |
+| `/services/training` | `services/Training.tsx` |
+| `/industries` | → redirects to `/industries/healthcare` |
+| `/industries/healthcare` | `industries/Healthcare.tsx` |
+| `/industries/media-entertainment` | `industries/MediaEntertainment.tsx` |
+| `/industries/insurance` | `industries/Insurance.tsx` |
+| `/industries/energy-utilities` | `industries/EnergyUtilities.tsx` |
+| `/industries/higher-education` | `industries/HigherEducation.tsx` |
+| `/industries/public-sector` | `industries/PublicSector.tsx` |
+| `/resources` | → redirects to `/resources/case-studies` |
+| `/resources/case-studies` | `resources/CaseStudies.tsx` |
+| `/resources/blog` | `resources/Blog.tsx` |
+| `/resources/webinars` | `resources/Webinars.tsx` |
+| `/resources/events` | `resources/Events.tsx` |
+| `/contact` | `Contact.tsx` |
+| `*` | `NotFound.tsx` |
 
 ## What is deferred (do not build)
 
-CMS integration · real CRM-routed form · dark mode · ROI calculator · individual solution/industry/service detail pages · multi-language · full WCAG 2.2 AA audit · third-party pen test · 6 approved case studies.
+CMS integration · real CRM-routed form · dark mode · ROI calculator · multi-language · full WCAG 2.2 AA audit · third-party pen test · 6 approved case studies.
+
+## ClickUp doc sync
+
+Markdown files in `clickup-docs/` are automatically pushed to ClickUp on every commit to `main` that touches those files. The workflow is `.github/workflows/sync-to-clickup.yml`. IDs are stored in the `CLICKUP_SYNC_CONFIG` GitHub secret.
+
+| File | ClickUp doc |
+|---|---|
+| `clickup-docs/brand-guidelines.md` | Brand Guidelines Summary |
+| `clickup-docs/decisions.md` | Architectural Decisions |
+| `clickup-docs/deferred.md` | Deferred Items |
+| `clickup-docs/page-status.md` | Page Status by Route |
+| `clickup-docs/project-overview.md` | Project Overview |
 
 ## When you're unsure
 
