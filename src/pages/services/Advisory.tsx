@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const Advisory = () => (
-  <PlaceholderPage eyebrow="Services" title="Advisory" />
-);
-
+import ServicePage from "./_ServicePage";
+const Advisory = () => <ServicePage serviceId="advisory" />;
 export default Advisory;

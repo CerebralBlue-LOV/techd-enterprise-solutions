@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const Implementation = () => (
-  <PlaceholderPage eyebrow="Services" title="Implementation" />
-);
-
+import ServicePage from "./_ServicePage";
+const Implementation = () => <ServicePage serviceId="implementation" />;
 export default Implementation;

@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const ManagedServices = () => (
-  <PlaceholderPage eyebrow="Services" title="Managed Services" />
-);
-
+import ServicePage from "./_ServicePage";
+const ManagedServices = () => <ServicePage serviceId="managed" />;
 export default ManagedServices;
