@@ -37,28 +37,6 @@ export const PracticeHeroSection = ({ practice }: Props) => (
             {practice.outcome}
           </h1>
 
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 80 4"
-            className="mt-6 h-[3px] w-20 overflow-visible"
-          >
-            <line
-              x1="0"
-              y1="2"
-              x2="80"
-              y2="2"
-              stroke="hsl(var(--primary))"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeDasharray="80"
-              strokeDashoffset="80"
-              style={{
-                animation: "practice-stroke-draw 900ms cubic-bezier(.2,.8,.2,1) 200ms forwards",
-              }}
-            />
-          </svg>
-          <style>{`@keyframes practice-stroke-draw { to { stroke-dashoffset: 0; } }`}</style>
-
           <p className="mt-6 max-w-2xl text-lg md:text-xl font-light text-muted-foreground leading-relaxed">
             {practice.description}
           </p>
