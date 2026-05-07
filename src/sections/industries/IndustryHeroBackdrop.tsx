@@ -17,44 +17,54 @@ const IsoFloor = ({
 
   // Vanishing point sits above and slightly right of center.
   const vp = { x: width * 0.55, y: height * 0.18 };
-  // Floor starts at this Y (everything below recedes upward toward vp).
   const horizonY = height * 0.45;
 
-  // Spotlight radius for the cursor reveal effect.
   const SPOT_RADIUS = 240;
-
-  // Brightness for a path: nearest point on its centroid toward cursor.
   const brightness = (cx: number, cy: number) => {
     if (!cursor) return 0;
     const d = Math.hypot(cx - cursor.x, cy - cursor.y);
     if (d > SPOT_RADIUS) return 0;
     const t = 1 - d / SPOT_RADIUS;
-    return t * t; // 0..1
+    return t * t;
   };
 
-  // 1. Receding "depth" lines — from base of floor to vanishing point.
-  // Spaced along the bottom edge.
-  const COLS = 22;
+  // Build a uniform "floor" grid then project every point with the same
+  // mapping (lerp from base point to vanishing point). This guarantees
+  // depth lines and rungs share endpoints exactly.
+  const COLS = 24; // columns across the floor (-COLS/2 .. +COLS/2)
+  const ROWS = 14; // depth rows from base (t=0) to horizon (t=1)
+  const baseSpread = width * 1.6; // how wide the floor is at the front
+
+  const projectColumn = (i: number, t: number) => {
+    const baseX = vp.x + ((i / COLS) - 0.5) * baseSpread;
+    const baseY = height;
+    return {
+      x: baseX + (vp.x - baseX) * t,
+      y: baseY + (vp.y - baseY) * t,
+    };
+  };
+
+  // Non-linear depth so rungs compress near the horizon (perspective feel).
+  const depthT = (j: number) => Math.pow(j / ROWS, 1.7);
+
+  // Depth (vertical) lines: each column from t=0 to t=1.
   const depthLines = Array.from({ length: COLS + 1 }, (_, i) => {
-    const baseX = (i / COLS) * width * 1.6 - width * 0.3; // wider than viewport
-    const cx = (baseX + vp.x) / 2;
-    const cy = (height + vp.y) / 2;
-    return { x1: baseX, y1: height, x2: vp.x, y2: vp.y, b: brightness(cx, cy) };
+    const a = projectColumn(i, 0);
+    const b = projectColumn(i, 1);
+    const cx = (a.x + b.x) / 2;
+    const cy = (a.y + b.y) / 2;
+    return { a, b, br: brightness(cx, cy) };
   });
 
-  // 2. Horizontal "rung" lines — get closer together as they approach the vanishing point.
-  // Use a non-linear t so spacing compresses near the horizon.
-  const ROWS = 14;
-  const rungs = Array.from({ length: ROWS }, (_, i) => {
-    const t = (i + 1) / (ROWS + 1);
-    // Ease so that t near 1 is closer to vp (compressed).
-    const eased = Math.pow(t, 1.8);
-    const y = height - eased * (height - vp.y);
-    // Width of the rung shrinks toward vp.
-    const halfWidth = (1 - eased) * width * 0.9 + eased * 20;
-    const x1 = vp.x - halfWidth;
-    const x2 = vp.x + halfWidth;
-    return { x1, y1: y, x2, y2: y, b: brightness(vp.x, y) };
+  // Rungs (horizontal lines): at each depth t, span from leftmost to
+  // rightmost column. Endpoints come from the same projection.
+  const rungs = Array.from({ length: ROWS }, (_, j) => {
+    const t = depthT(j + 1);
+    const left = projectColumn(0, t);
+    const right = projectColumn(COLS, t);
+    const cx = (left.x + right.x) / 2;
+    const cy = left.y;
+    return { a: left, b: right, br: brightness(cx, cy) };
   });
 
   return (
@@ -65,7 +75,6 @@ const IsoFloor = ({
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="none"
       style={{
-        // Fade the top/edges so the grid feels like it dissolves into the page.
         WebkitMaskImage:
           "linear-gradient(to top, black 25%, rgba(0,0,0,0.6) 60%, transparent 95%)",
         maskImage:
@@ -73,7 +82,6 @@ const IsoFloor = ({
       }}
     >
       <defs>
-        {/* Soft floor wash to seat the grid */}
         <linearGradient id="iso-floor-wash" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0%" stopColor="hsl(var(--primary) / 0.05)" />
           <stop offset="100%" stopColor="hsl(var(--primary) / 0)" />
@@ -92,23 +100,23 @@ const IsoFloor = ({
         {depthLines.map((l, i) => (
           <line
             key={`d${i}`}
-            x1={l.x1}
-            y1={l.y1}
-            x2={l.x2}
-            y2={l.y2}
-            stroke={`hsl(var(--border) / ${(0.45 + l.b * 0.55).toFixed(3)})`}
-            strokeWidth={0.7 + l.b * 1.1}
+            x1={l.a.x}
+            y1={l.a.y}
+            x2={l.b.x}
+            y2={l.b.y}
+            stroke={`hsl(var(--border) / ${(0.4 + l.br * 0.6).toFixed(3)})`}
+            strokeWidth={0.7 + l.br * 1.1}
           />
         ))}
         {rungs.map((r, i) => (
           <line
             key={`r${i}`}
-            x1={r.x1}
-            y1={r.y1}
-            x2={r.x2}
-            y2={r.y2}
-            stroke={`hsl(var(--border) / ${(0.45 + r.b * 0.55).toFixed(3)})`}
-            strokeWidth={0.7 + r.b * 1.1}
+            x1={r.a.x}
+            y1={r.a.y}
+            x2={r.b.x}
+            y2={r.b.y}
+            stroke={`hsl(var(--border) / ${(0.4 + r.br * 0.6).toFixed(3)})`}
+            strokeWidth={0.7 + r.br * 1.1}
           />
         ))}
       </g>
