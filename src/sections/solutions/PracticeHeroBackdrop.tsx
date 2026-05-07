@@ -6,9 +6,9 @@ interface Props {
 }
 
 const SPACING = 48;       // grid cell size
-const SEGMENT = 12;       // line subdivision (smaller = smoother curve, heavier)
-const RADIUS = 110;       // bulge radius in px (subtle)
-const STRENGTH = 10;      // max displacement in px (subtle)
+const SEGMENT = 8;        // line subdivision (smaller = smoother curve)
+const RADIUS = 200;       // bulge radius in px
+const STRENGTH = 28;      // max displacement in px
 
 /**
  * SVG grid that bulges outward radially around the cursor (lens effect).
