@@ -84,3 +84,10 @@ Practice slugs change from `/solutions/ai` to `/solutions/ai-generative` etc. �
 - **Hide Blog and Webinars from nav for now** — scaffolds exist at the URLs (so we can link to them later), but nav only shows Case Studies and Events until there's content. Avoids "Coming soon" looking bad in the dropdown. *(Confirm or override.)*
 - **Use a shared `PlaceholderPage` component** for all 19 scaffolds to keep them one-line each and easy to replace.
 - **Keep practice slugs descriptive** (`ai-generative` not `ai`) so URLs stand alone in search results.
+
+
+---
+
+## Status — 2026-05-07
+
+IA restructure implemented. Top-level Solutions/Services/Industries/Resources are dropdown triggers only; each child has its own route + scaffold (`src/pages/{section}/*.tsx` using `_PlaceholderPage`). Practice slugs renamed (`ai-generative`, `automation-finops`, `security-compliance`); industry slugs renamed (`media-entertainment`, `energy-utilities`, `higher-education`, `public-sector`). Legacy paths redirect via `<Navigate>` in `routes.tsx`. Blog and Webinars routes exist but hidden from nav. Per-page content plans pending.
