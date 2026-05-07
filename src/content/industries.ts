@@ -28,7 +28,7 @@ export const INDUSTRIES: Industry[] = [
     ],
   },
   {
-    id: "media",
+    id: "media-entertainment",
     name: "Media & Entertainment",
     regulation: "CCPA · SOC 2",
     outcome:
@@ -46,7 +46,7 @@ export const INDUSTRIES: Industry[] = [
     examples: ["Claims automation", "Underwriting copilots", "Actuarial analytics"],
   },
   {
-    id: "energy",
+    id: "energy-utilities",
     name: "Energy & Utilities",
     regulation: "NERC-CIP · FERC",
     outcome:
@@ -55,7 +55,7 @@ export const INDUSTRIES: Industry[] = [
     examples: ["Grid analytics", "Asset performance", "OT/IT security"],
   },
   {
-    id: "education",
+    id: "higher-education",
     name: "Higher Education & Research",
     regulation: "FERPA · FISMA",
     outcome:
@@ -64,7 +64,7 @@ export const INDUSTRIES: Industry[] = [
     examples: ["Research computing", "Identity and SSO", "Student data platforms"],
   },
   {
-    id: "public",
+    id: "public-sector",
     name: "Public Sector",
     regulation: "FedRAMP · FISMA",
     outcome:
