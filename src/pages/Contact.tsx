@@ -109,7 +109,48 @@ const Contact = () => {
                 </div>
                 <div className="rounded-lg border border-border p-5">
                   <p className="text-xs font-bold uppercase tracking-widest text-primary">VP of AI &amp; Managing Partner</p>
-                  <p className="mt-1 text-sm font-light text-muted-foreground">Joined TechD after 15 years at IBM in Data &amp; AI sales and engineering. Our AI practice lead.</p>
+                  <p className="mt-1 text-sm font-light text-muted-foreground">Joined TechD after 15 years at IBM in Data &amp; AI sales and engineering. AI practice lead.</p>
+                </div>
+                <div className="rounded-lg border border-border p-5">
+                  <p className="text-xs font-bold uppercase tracking-widest text-primary">VP of Delivery</p>
+                  <p className="mt-1 text-sm font-light text-muted-foreground">Oversees implementation and managed services delivery across all client engagements.</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section id="ibm" className="pb-16 scroll-mt-24">
+        <SectionMarker page="Contact" name="IBM Partnership" />
+        <div className="container-page">
+          <Reveal>
+            <div className="rounded-2xl border border-border p-8 md:p-12">
+              <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+                <div>
+                  <p className="eyebrow">IBM Partnership</p>
+                  <h2 className="mt-3 text-3xl leading-tight">
+                    Platinum. IBM's highest partner classification.
+                  </h2>
+                  <p className="mt-4 text-base font-light text-muted-foreground">
+                    IBM Platinum Business Partner status is reserved for partners with the deepest technical certifications, the broadest client delivery track record, and direct relationships with IBM product engineering teams. TechD has held Platinum status since 2009.
+                  </p>
+                  <p className="mt-3 text-base font-light text-muted-foreground">
+                    That means direct access to watsonx, IBM Z, Red Hat OpenShift, and IBM Security engineering — and early participation in IBM beta programs before products reach general availability.
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-4 content-start">
+                  {[
+                    { label: "Data & AI",          detail: "watsonx, Db2, Cognos, Planning Analytics, DataStage, Netezza, SPSS" },
+                    { label: "Security",            detail: "Guardium, QRadar, Resilient — data protection and threat detection" },
+                    { label: "Hybrid Cloud",        detail: "IBM Cloud, Red Hat OpenShift, IBM Z integration" },
+                    { label: "Automation & FinOps", detail: "Apptio, Instana, Turbonomic" },
+                  ].map((spec) => (
+                    <div key={spec.label} className="rounded-xl border border-border p-4">
+                      <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary">{spec.label}</p>
+                      <p className="mt-1.5 text-xs font-light text-muted-foreground leading-relaxed">{spec.detail}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -125,23 +166,10 @@ const Contact = () => {
               <div>
                 <h2 className="text-xl">Where to find us</h2>
                 <ul className="mt-4 space-y-3 text-sm font-light text-muted-foreground">
-                  <li className="flex gap-3"><Mail className="size-4 mt-0.5 text-primary shrink-0" /> (real email needed)</li>
-                  <li className="flex gap-3"><Phone className="size-4 mt-0.5 text-primary shrink-0" /> (real phone needed)</li>
-                  <li className="flex gap-3"><MapPin className="size-4 mt-0.5 text-primary shrink-0" /> Miami, FL · (confirm additional offices)</li>
+                  <li className="flex gap-3"><Mail className="size-4 mt-0.5 text-primary shrink-0" /> Contact details available at launch</li>
+                  <li className="flex gap-3"><Phone className="size-4 mt-0.5 text-primary shrink-0" /> Contact details available at launch</li>
+                  <li className="flex gap-3"><MapPin className="size-4 mt-0.5 text-primary shrink-0" /> Miami, FL</li>
                 </ul>
-              </div>
-
-              <div id="ibm" className="rounded-xl border border-border p-5">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-md bg-secondary text-background grid place-items-center text-sm font-bold">IBM</div>
-                  <div className="leading-tight">
-                    <div className="text-xs font-bold uppercase tracking-wider text-primary">Platinum</div>
-                    <div className="text-sm font-bold text-secondary">Business Partner</div>
-                  </div>
-                </div>
-                <p className="mt-3 text-sm font-light text-muted-foreground">
-                  IBM's highest partner tier. Direct access to watsonx, Z, and OpenShift engineering.
-                </p>
               </div>
             </div>
           </Reveal>
