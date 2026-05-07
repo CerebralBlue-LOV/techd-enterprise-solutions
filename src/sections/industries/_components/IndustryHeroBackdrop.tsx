@@ -4,67 +4,47 @@ interface Props {
   cursor: { x: number; y: number } | null;
 }
 
+const SIZE = 28; // hex circumradius (px)
+const W = Math.sqrt(3) * SIZE; // pointy-top hex width
+const H = 2 * SIZE;
+const V_STEP = H * 0.75;
+
+const hexPath = (cx: number, cy: number) => {
+  const pts: string[] = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI / 3) * i - Math.PI / 2;
+    const x = cx + SIZE * Math.cos(a);
+    const y = cy + SIZE * Math.sin(a);
+    pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+  }
+  return `M${pts.join(" L")} Z`;
+};
+
 /**
- * One-point perspective floor grid (reference: classic "tron floor").
- * Depth lines converge to a centered vanishing point on the horizon.
- * Horizontal rungs are perfectly horizontal and compress toward the horizon.
- * Lines brighten/thicken in a soft spotlight around the cursor.
+ * Hexagonal honeycomb. Cells near the cursor softly fill with the primary tint;
+ * the closest cell fills strongest, neighbors taper off.
  */
-const PerspectiveFloor = ({
+const Honeycomb = ({
   cursor,
   width,
   height,
 }: Props & { width: number; height: number }) => {
   if (width === 0 || height === 0) return null;
 
-  // Centered vanishing point sitting on a horizon line.
-  const horizonY = height * 0.42;
-  const vp = { x: width * 0.5, y: horizonY };
+  const cols = Math.ceil(width / W) + 2;
+  const rows = Math.ceil(height / V_STEP) + 2;
 
-  const COLS = 24;                 // depth lines (left + right of vp combined)
-  const ROWS = 16;                 // horizontal rungs from bottom to horizon
-  const baseHalf = width * 0.85;   // half-width of the floor at the front edge
-  const SPOT = 220;
+  const FALLOFF = SIZE * 2.6; // distance at which fill fades out
 
-  const brightness = (cx: number, cy: number) => {
-    if (!cursor) return 0;
-    const d = Math.hypot(cx - cursor.x, cy - cursor.y);
-    if (d > SPOT) return 0;
-    const t = 1 - d / SPOT;
-    return t * t;
-  };
-
-  // Depth lines: from the bottom edge spaced uniformly across the floor base,
-  // converging to the vanishing point.
-  const depthLines = Array.from({ length: COLS + 1 }, (_, i) => {
-    const baseX = vp.x + ((i / COLS) - 0.5) * 2 * baseHalf;
-    const cx = (baseX + vp.x) / 2;
-    const cy = (height + vp.y) / 2;
-    return {
-      x1: baseX, y1: height,
-      x2: vp.x,  y2: vp.y,
-      br: brightness(cx, cy),
-    };
-  });
-
-  // Horizontal rungs: perfectly horizontal lines that span the floor width
-  // at each depth. Spacing follows perspective (closer together near horizon).
-  // Use the standard 1/(N - i*k) progression so it reads as "even-spaced floor
-  // tiles" projected into perspective.
-  const rungs = Array.from({ length: ROWS }, (_, i) => {
-    const t = (i + 1) / (ROWS + 1);
-    // Eased so spacing visibly compresses near the horizon.
-    const eased = Math.pow(t, 1.6);
-    const y = height - eased * (height - horizonY);
-    // Width of the visible rung shrinks linearly with eased depth — matches
-    // where the leftmost/rightmost depth lines actually are at this y.
-    const halfWidth = (1 - eased) * baseHalf;
-    return {
-      x1: vp.x - halfWidth, y1: y,
-      x2: vp.x + halfWidth, y2: y,
-      br: brightness(vp.x, y),
-    };
-  });
+  const cells: Array<{ d: string; cx: number; cy: number }> = [];
+  for (let r = -1; r < rows; r++) {
+    const offset = r % 2 === 0 ? 0 : W / 2;
+    for (let c = -1; c < cols; c++) {
+      const cx = c * W + offset;
+      const cy = r * V_STEP;
+      cells.push({ d: hexPath(cx, cy), cx, cy });
+    }
+  }
 
   return (
     <svg
@@ -74,30 +54,50 @@ const PerspectiveFloor = ({
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="none"
       style={{
-        // Fade upward into the page — keep the floor solid at the bottom.
-        WebkitMaskImage:
-          "linear-gradient(to top, black 30%, rgba(0,0,0,0.55) 65%, transparent 95%)",
-        maskImage:
-          "linear-gradient(to top, black 30%, rgba(0,0,0,0.55) 65%, transparent 95%)",
+        WebkitMaskImage: "radial-gradient(80% 90% at 50% 40%, black 35%, transparent 88%)",
+        maskImage: "radial-gradient(80% 90% at 50% 40%, black 35%, transparent 88%)",
       }}
     >
-      <g fill="none" strokeLinecap="round">
-        {depthLines.map((l, i) => (
-          <line
-            key={`d${i}`}
-            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-            stroke={`hsl(var(--border) / ${(0.45 + l.br * 0.5).toFixed(3)})`}
-            strokeWidth={0.7 + l.br * 1.0}
-          />
-        ))}
-        {rungs.map((r, i) => (
-          <line
-            key={`r${i}`}
-            x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2}
-            stroke={`hsl(var(--border) / ${(0.45 + r.br * 0.5).toFixed(3)})`}
-            strokeWidth={0.7 + r.br * 1.0}
-          />
-        ))}
+      {/* Fills (under strokes) */}
+      {cursor && (
+        <g>
+          {cells.map((cell, i) => {
+            const d = Math.hypot(cell.cx - cursor.x, cell.cy - cursor.y);
+            if (d > FALLOFF) return null;
+            const t = 1 - d / FALLOFF;
+            const opacity = (t * t).toFixed(3);
+            return (
+              <path
+                key={`f${i}`}
+                d={cell.d}
+                fill="hsl(0 0% 100%)"
+                opacity={opacity}
+              />
+            );
+          })}
+        </g>
+      )}
+
+      {/* Strokes — fade out near cursor */}
+      <g fill="none" strokeWidth={1} strokeLinejoin="round">
+        {cells.map((cell, i) => {
+          let strokeOpacity = 0.55;
+          if (cursor) {
+            const d = Math.hypot(cell.cx - cursor.x, cell.cy - cursor.y);
+            const STROKE_FALLOFF = FALLOFF * 1.6;
+            if (d < STROKE_FALLOFF) {
+              const t = 1 - d / STROKE_FALLOFF;
+              strokeOpacity = Math.max(0, 0.55 * (1 - t * 1.8));
+            }
+          }
+          return (
+            <path
+              key={`s${i}`}
+              d={cell.d}
+              stroke={`hsl(var(--border) / ${strokeOpacity.toFixed(3)})`}
+            />
+          );
+        })}
       </g>
     </svg>
   );
@@ -127,7 +127,7 @@ export const IndustryHeroBackdrop = ({ cursor }: BackdropProps) => {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <PerspectiveFloor cursor={cursor} width={size.w} height={size.h} />
+      <Honeycomb cursor={cursor} width={size.w} height={size.h} />
 
       {/* Gradient wash (matches solutions hero) */}
       <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
