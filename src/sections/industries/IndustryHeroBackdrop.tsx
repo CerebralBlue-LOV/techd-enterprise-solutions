@@ -5,66 +5,65 @@ interface Props {
 }
 
 /**
- * Isometric "3D floor" grid receding to a vanishing point near the top.
- * Lines brighten near the cursor (spotlight reveal) — no color shift.
+ * One-point perspective floor grid (reference: classic "tron floor").
+ * Depth lines converge to a centered vanishing point on the horizon.
+ * Horizontal rungs are perfectly horizontal and compress toward the horizon.
+ * Lines brighten/thicken in a soft spotlight around the cursor.
  */
-const IsoFloor = ({
+const PerspectiveFloor = ({
   cursor,
   width,
   height,
 }: Props & { width: number; height: number }) => {
   if (width === 0 || height === 0) return null;
 
-  // Vanishing point sits above and slightly right of center.
-  const vp = { x: width * 0.55, y: height * 0.18 };
-  const horizonY = height * 0.45;
+  // Centered vanishing point sitting on a horizon line.
+  const horizonY = height * 0.42;
+  const vp = { x: width * 0.5, y: horizonY };
 
-  const SPOT_RADIUS = 240;
+  const COLS = 24;                 // depth lines (left + right of vp combined)
+  const ROWS = 16;                 // horizontal rungs from bottom to horizon
+  const baseHalf = width * 0.85;   // half-width of the floor at the front edge
+  const SPOT = 220;
+
   const brightness = (cx: number, cy: number) => {
     if (!cursor) return 0;
     const d = Math.hypot(cx - cursor.x, cy - cursor.y);
-    if (d > SPOT_RADIUS) return 0;
-    const t = 1 - d / SPOT_RADIUS;
+    if (d > SPOT) return 0;
+    const t = 1 - d / SPOT;
     return t * t;
   };
 
-  // Build a uniform "floor" grid then project every point with the same
-  // mapping (lerp from base point to vanishing point). This guarantees
-  // depth lines and rungs share endpoints exactly.
-  const COLS = 24; // columns across the floor (-COLS/2 .. +COLS/2)
-  const ROWS = 14; // depth rows from base (t=0) to horizon (t=1)
-  const baseSpread = width * 1.6; // how wide the floor is at the front
-
-  const projectColumn = (i: number, t: number) => {
-    const baseX = vp.x + ((i / COLS) - 0.5) * baseSpread;
-    const baseY = height;
-    return {
-      x: baseX + (vp.x - baseX) * t,
-      y: baseY + (vp.y - baseY) * t,
-    };
-  };
-
-  // Non-linear depth so rungs compress near the horizon (perspective feel).
-  const depthT = (j: number) => Math.pow(j / ROWS, 1.7);
-
-  // Depth (vertical) lines: each column from t=0 to t=1.
+  // Depth lines: from the bottom edge spaced uniformly across the floor base,
+  // converging to the vanishing point.
   const depthLines = Array.from({ length: COLS + 1 }, (_, i) => {
-    const a = projectColumn(i, 0);
-    const b = projectColumn(i, 1);
-    const cx = (a.x + b.x) / 2;
-    const cy = (a.y + b.y) / 2;
-    return { a, b, br: brightness(cx, cy) };
+    const baseX = vp.x + ((i / COLS) - 0.5) * 2 * baseHalf;
+    const cx = (baseX + vp.x) / 2;
+    const cy = (height + vp.y) / 2;
+    return {
+      x1: baseX, y1: height,
+      x2: vp.x,  y2: vp.y,
+      br: brightness(cx, cy),
+    };
   });
 
-  // Rungs (horizontal lines): at each depth t, span from leftmost to
-  // rightmost column. Endpoints come from the same projection.
-  const rungs = Array.from({ length: ROWS }, (_, j) => {
-    const t = depthT(j + 1);
-    const left = projectColumn(0, t);
-    const right = projectColumn(COLS, t);
-    const cx = (left.x + right.x) / 2;
-    const cy = left.y;
-    return { a: left, b: right, br: brightness(cx, cy) };
+  // Horizontal rungs: perfectly horizontal lines that span the floor width
+  // at each depth. Spacing follows perspective (closer together near horizon).
+  // Use the standard 1/(N - i*k) progression so it reads as "even-spaced floor
+  // tiles" projected into perspective.
+  const rungs = Array.from({ length: ROWS }, (_, i) => {
+    const t = (i + 1) / (ROWS + 1);
+    // Eased so spacing visibly compresses near the horizon.
+    const eased = Math.pow(t, 1.6);
+    const y = height - eased * (height - horizonY);
+    // Width of the visible rung shrinks linearly with eased depth — matches
+    // where the leftmost/rightmost depth lines actually are at this y.
+    const halfWidth = (1 - eased) * baseHalf;
+    return {
+      x1: vp.x - halfWidth, y1: y,
+      x2: vp.x + halfWidth, y2: y,
+      br: brightness(vp.x, y),
+    };
   });
 
   return (
@@ -75,48 +74,28 @@ const IsoFloor = ({
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="none"
       style={{
+        // Fade upward into the page — keep the floor solid at the bottom.
         WebkitMaskImage:
-          "linear-gradient(to top, black 25%, rgba(0,0,0,0.6) 60%, transparent 95%)",
+          "linear-gradient(to top, black 30%, rgba(0,0,0,0.55) 65%, transparent 95%)",
         maskImage:
-          "linear-gradient(to top, black 25%, rgba(0,0,0,0.6) 60%, transparent 95%)",
+          "linear-gradient(to top, black 30%, rgba(0,0,0,0.55) 65%, transparent 95%)",
       }}
     >
-      <defs>
-        <linearGradient id="iso-floor-wash" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="hsl(var(--primary) / 0.05)" />
-          <stop offset="100%" stopColor="hsl(var(--primary) / 0)" />
-        </linearGradient>
-      </defs>
-
-      <rect
-        x="0"
-        y={horizonY}
-        width={width}
-        height={height - horizonY}
-        fill="url(#iso-floor-wash)"
-      />
-
       <g fill="none" strokeLinecap="round">
         {depthLines.map((l, i) => (
           <line
             key={`d${i}`}
-            x1={l.a.x}
-            y1={l.a.y}
-            x2={l.b.x}
-            y2={l.b.y}
-            stroke={`hsl(var(--border) / ${(0.4 + l.br * 0.6).toFixed(3)})`}
-            strokeWidth={0.7 + l.br * 1.1}
+            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+            stroke={`hsl(var(--border) / ${(0.45 + l.br * 0.5).toFixed(3)})`}
+            strokeWidth={0.7 + l.br * 1.0}
           />
         ))}
         {rungs.map((r, i) => (
           <line
             key={`r${i}`}
-            x1={r.a.x}
-            y1={r.a.y}
-            x2={r.b.x}
-            y2={r.b.y}
-            stroke={`hsl(var(--border) / ${(0.4 + r.br * 0.6).toFixed(3)})`}
-            strokeWidth={0.7 + r.br * 1.1}
+            x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2}
+            stroke={`hsl(var(--border) / ${(0.45 + r.br * 0.5).toFixed(3)})`}
+            strokeWidth={0.7 + r.br * 1.0}
           />
         ))}
       </g>
@@ -148,7 +127,7 @@ export const IndustryHeroBackdrop = ({ cursor }: BackdropProps) => {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <IsoFloor cursor={cursor} width={size.w} height={size.h} />
+      <PerspectiveFloor cursor={cursor} width={size.w} height={size.h} />
 
       {/* Gradient wash (matches solutions hero) */}
       <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
