@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const MediaEntertainment = () => (
-  <PlaceholderPage eyebrow="Industries" title="Media & Entertainment" />
-);
-
+import IndustryPage from "./_IndustryPage";
+const MediaEntertainment = () => <IndustryPage industryId="media-entertainment" />;
 export default MediaEntertainment;

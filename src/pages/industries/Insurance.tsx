@@ -1,7 +1,3 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
-
-const Insurance = () => (
-  <PlaceholderPage eyebrow="Industries" title="Insurance" />
-);
-
+import IndustryPage from "./_IndustryPage";
+const Insurance = () => <IndustryPage industryId="insurance" />;
 export default Insurance;
