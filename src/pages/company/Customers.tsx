@@ -3,10 +3,9 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import PracticeHeroBackdrop from "@sections/solutions/_components/PracticeHeroBackdrop";
+import RingsHeroBackdrop from "@shared/RingsHeroBackdrop";
 import LogoStrip from "@shared/LogoStrip";
 import { CUSTOMERS } from "@content/site";
-import { useEffect, useRef, useState } from "react";
 
 const INDUSTRY_GROUPS = [
   {
