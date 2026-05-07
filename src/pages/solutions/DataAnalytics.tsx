@@ -1,11 +1,5 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
+import PracticePage from "./_PracticePage";
 
-const DataAnalytics = () => (
-  <PlaceholderPage
-    eyebrow="Solutions"
-    title="Data & Analytics"
-    subtitle="Make your data AI-ready, governed, and defensible."
-  />
-);
+const DataAnalytics = () => <PracticePage practiceId="data-analytics" />;
 
 export default DataAnalytics;

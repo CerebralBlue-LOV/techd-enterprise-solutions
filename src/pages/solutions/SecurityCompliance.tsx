@@ -1,11 +1,5 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
+import PracticePage from "./_PracticePage";
 
-const SecurityCompliance = () => (
-  <PlaceholderPage
-    eyebrow="Solutions"
-    title="Security & Compliance"
-    subtitle="Pass the audit. Protect the data. Respond to the breach."
-  />
-);
+const SecurityCompliance = () => <PracticePage practiceId="security-compliance" />;
 
 export default SecurityCompliance;
