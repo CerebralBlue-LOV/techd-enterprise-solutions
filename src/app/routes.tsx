@@ -29,7 +29,9 @@ import PublicSector from "@pages/industries/PublicSector";
 
 // Resources
 import CaseStudies from "@pages/resources/CaseStudies";
+import CaseStudyDetail from "@pages/resources/CaseStudyDetail";
 import Blog from "@pages/resources/Blog";
+import BlogDetail from "@pages/resources/BlogDetail";
 import Webinars from "@pages/resources/Webinars";
 import Events from "@pages/resources/Events";
 
@@ -81,7 +83,9 @@ export const AppRoutes = () => (
     {/* Resources */}
     <Route path="/resources" element={<Navigate to="/resources/case-studies" replace />} />
     <Route path="/resources/case-studies" element={<CaseStudies />} />
+    <Route path="/resources/case-studies/:slug" element={<CaseStudyDetail />} />
     <Route path="/resources/blog" element={<Blog />} />
+    <Route path="/resources/blog/:slug" element={<BlogDetail />} />
     <Route path="/resources/webinars" element={<Webinars />} />
     <Route path="/resources/events" element={<Events />} />
 

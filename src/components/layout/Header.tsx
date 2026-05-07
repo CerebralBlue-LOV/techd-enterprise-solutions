@@ -62,6 +62,11 @@ export const Header = () => {
                                     {c.description}
                                   </div>
                                 )}
+                                {c.latest && (
+                                  <div className="mt-1 text-xs text-muted-foreground/50">
+                                    Latest: {c.latest}
+                                  </div>
+                                )}
                               </Link>
                             </NavigationMenuLink>
                           </li>

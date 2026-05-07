@@ -2,7 +2,7 @@ export type NavItem = {
   label: string;
   /** Optional href. Top-level dropdown labels omit href and act as menu triggers only. */
   href?: string;
-  children?: { label: string; href: string; description?: string }[];
+  children?: { label: string; href: string; description?: string; latest?: string }[];
 };
 
 export const NAV: NavItem[] = [
@@ -39,9 +39,9 @@ export const NAV: NavItem[] = [
   {
     label: "Resources",
     children: [
-      { label: "Case Studies", href: "/resources/case-studies" },
-      { label: "Events",       href: "/resources/events" },
-      // Blog and Webinars exist as routes but are hidden from nav until content is ready.
+      { label: "Case Studies", href: "/resources/case-studies", description: "Client stories from named enterprise engagements.", latest: "2025" },
+      { label: "Blog",         href: "/resources/blog",         description: "Insights on AI, data governance, and enterprise architecture." },
+      // Webinars and Events exist as routes but are hidden from nav until content is confirmed ready.
     ],
   },
   {

@@ -1,5 +1,87 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@ui/button";
+import Layout from "@layout/Layout";
+import SEO from "@seo/SEO";
+import Reveal from "@shared/Reveal";
+import SectionHeading from "@shared/SectionHeading";
+import SectionMarker from "@shared/SectionMarker";
+import GeometricAccent from "@shared/GeometricAccent";
+import { RESOURCES } from "@content/resources";
 
-const Blog = () => <PlaceholderPage eyebrow="Resources" title="Blog" />;
+const posts = RESOURCES.filter((r) => r.type === "blog" && !r.draft);
+
+const Blog = () => (
+  <Layout>
+    <SEO
+      title="Blog — TechD"
+      description="Insights on enterprise AI, data governance, security, and the IBM stack — from the TechD team."
+    />
+
+    {/* Hero */}
+    <section className="relative overflow-hidden min-h-[40vh] flex items-center">
+      <SectionMarker page="Resources / Blog" name="Hero" />
+      <GeometricAccent />
+      <div className="container-page relative z-10 pt-20 pb-16 md:pt-28 md:pb-20">
+        <Reveal>
+          <SectionHeading
+            as="h1"
+            eyebrow="Resources / Blog"
+            title="Thinking out loud on enterprise AI."
+            subtitle="Practical takes on governance, data architecture, and the IBM stack — from practitioners who ship."
+          />
+        </Reveal>
+      </div>
+    </section>
+
+    {/* Card grid / empty state */}
+    <section className="section bg-muted/30">
+      <SectionMarker page="Resources / Blog" name="List" />
+      <div className="container-page">
+        {posts.length === 0 ? (
+          <Reveal>
+            <div className="max-w-md">
+              <p className="text-lg font-light text-muted-foreground leading-relaxed">
+                Posts coming soon. In the meantime, reach out directly — our architects are
+                happy to talk through what you're working on.
+              </p>
+              <div className="mt-6">
+                <Button asChild variant="outline">
+                  <Link to="/contact">Get in touch</Link>
+                </Button>
+              </div>
+            </div>
+          </Reveal>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((r, i) => (
+              <Reveal key={r.id} delay={i * 60}>
+                <Link
+                  to={`/resources/blog/${r.slug}`}
+                  className="card-hover group block h-full rounded-xl p-6"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-base font-bold text-secondary leading-snug">
+                      {r.title}
+                    </h3>
+                    <ArrowRight className="mt-1 size-4 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
+                    {r.summary}
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 text-xs text-muted-foreground/60">
+                    {r.author && <span>{r.author}</span>}
+                    {r.author && <span>·</span>}
+                    <span>{r.date}</span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </Layout>
+);
 
 export default Blog;
