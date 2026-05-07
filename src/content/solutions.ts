@@ -110,6 +110,34 @@ export const SOLUTIONS: Solution[] = [
         link: { kind: "external", url: "https://neuralseek.com" },
       },
       {
+        name: "IBM SPSS Modeler",
+        tagline: "Build and deploy predictive models on enterprise data — without writing a line of code.",
+        description:
+          "IBM SPSS Modeler is a visual predictive analytics platform for building, evaluating, and deploying machine learning models — from classical regression and decision trees to neural networks — on structured enterprise data.",
+        link: { kind: "internal", slug: "ibm-spss-modeler" },
+        detail: {
+          overview: [
+            "IBM SPSS Modeler is IBM's visual machine learning and predictive analytics workbench. It provides a drag-and-drop interface for data preparation, model building, evaluation, and scoring — covering a broad algorithm library from logistic regression and gradient boosting to deep learning and text analytics. Models can be deployed as REST APIs, integrated into batch scoring pipelines, or published into Watson Studio.",
+            "TechD uses SPSS Modeler for clients who need production predictive models without a dedicated data science engineering team. Our engagements span healthcare readmission prediction, insurance claims propensity modeling, and workforce attrition forecasting — using the SPSS node library to iterate quickly and deploy via Cloud Pak for Data.",
+          ],
+          capabilities: [
+            "Visual ML workflow: data prep, modeling, evaluation, and deployment nodes",
+            "Algorithm breadth — regression, decision trees, SVM, neural networks, time series, text analytics",
+            "In-database scoring push-down for Db2, Netezza, and cloud data warehouses",
+            "SPSS Modeler as a Service on IBM Cloud Pak for Data — no on-premises install required",
+            "Model management and batch scoring integration with Watson Studio",
+            "Automated model building — AutoML for rapid baseline comparison across algorithm families",
+            "Python and R extension nodes for custom algorithm integration",
+          ],
+          useCases: [
+            "Healthcare readmission and chronic disease risk prediction",
+            "Insurance claims propensity and fraud detection scoring",
+            "Workforce attrition and HR analytics modeling",
+            "Customer churn and lifetime value modeling for media and financial services",
+          ],
+        },
+      },
+      {
         name: "IBM Knowledge Catalog",
         tagline: "Find, trust, and govern every data asset across your enterprise.",
         description:
@@ -240,6 +268,34 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
+        name: "IBM Netezza Performance Server",
+        tagline: "Purpose-built MPP analytics that delivers sub-second results on petabyte-scale datasets.",
+        description:
+          "IBM Netezza Performance Server is IBM's high-throughput analytics appliance — massively parallel processing and FPGA-accelerated query execution for clients where BI query performance is the bottleneck, on-premises or on IBM Cloud.",
+        link: { kind: "internal", slug: "ibm-netezza" },
+        detail: {
+          overview: [
+            "IBM Netezza Performance Server is a purpose-built data warehouse and analytics appliance designed for extreme query performance at scale. Its massively parallel processing (MPP) architecture and FPGA-based query accelerators deliver sub-second results on datasets that would take minutes in general-purpose databases. Netezza is available as an on-premises appliance (NPS 1000) and as a managed service on IBM Cloud.",
+            "TechD deploys Netezza for clients with heavy analytical query workloads — particularly in media, insurance, and healthcare — where BI platform performance is the bottleneck. Our engagements include appliance sizing and installation, schema design for MPP workloads, Cognos Analytics integration, and migrations from legacy Teradata and Sybase IQ environments.",
+          ],
+          capabilities: [
+            "Massively parallel processing — queries distributed across hundreds of processing nodes",
+            "FPGA-accelerated scan and compression for sub-second large-dataset queries",
+            "In-database analytics — run Python and R models directly against the data",
+            "Netezza on IBM Cloud — SaaS deployment with zero infrastructure management",
+            "Native Cognos Analytics integration as a high-performance BI data source",
+            "Transparent data encryption and row-level security for sensitive datasets",
+            "Migration support from Teradata, Sybase IQ, and Vertica environments",
+          ],
+          useCases: [
+            "High-frequency ad-hoc analytics for media audience and subscriber data",
+            "Actuarial and claims analytics at petabyte scale for insurance",
+            "Population health analytics for large health systems",
+            "Legacy Teradata migration to the IBM stack with performance parity",
+          ],
+        },
+      },
+      {
         name: "Cognos Analytics",
         tagline: "Self-service BI and dashboarding for the enterprise — backed by 15 years of TechD delivery.",
         description:
@@ -320,6 +376,34 @@ export const SOLUTIONS: Solution[] = [
             "IFRS 16 lease accounting consolidation",
             "Post-merger integration — rapid consolidation of acquired entities",
             "Regulatory reporting for insurance and financial services groups",
+          ],
+        },
+      },
+      {
+        name: "IBM MDM",
+        tagline: "One trusted record for every customer, product, and entity across your enterprise.",
+        description:
+          "IBM Master Data Management creates and maintains the authoritative golden record for your most critical data domains — eliminating duplicates, resolving identity, and enforcing consistency across systems.",
+        link: { kind: "internal", slug: "ibm-mdm" },
+        detail: {
+          overview: [
+            "IBM Master Data Management (MDM) is the enterprise platform for creating, governing, and distributing trusted master records across customer, product, supplier, location, and other critical data domains. It resolves entity identities probabilistically, manages hierarchies, and synchronizes the golden record back to consuming applications.",
+            "TechD implements IBM MDM for enterprises where duplicated, inconsistent, or incomplete reference data creates compliance risk, poor customer experience, or failed analytics. Our engagements span architecture design, match-merge rule development, domain model configuration, and integration with downstream CRM, ERP, and analytics systems.",
+          ],
+          capabilities: [
+            "Multi-domain MDM — customer, product, supplier, location, and custom domains",
+            "Probabilistic and deterministic match-merge for entity resolution",
+            "Hierarchy management — corporate family trees, product taxonomies",
+            "Stewardship workflow — human review queues for unresolved matches",
+            "Survivorship rules — configure which source system wins per attribute",
+            "Real-time and batch synchronization to downstream applications",
+            "Integration with IBM Knowledge Catalog for governed data lineage",
+          ],
+          useCases: [
+            "Patient identity resolution and EMPI for health systems",
+            "Customer 360 for insurance, financial services, and retail",
+            "Product master for manufacturers and distributors",
+            "Supplier consolidation and vendor de-duplication post-merger",
           ],
         },
       },
@@ -527,62 +611,6 @@ export const SOLUTIONS: Solution[] = [
           ],
         },
       },
-      {
-        name: "IBM MDM",
-        tagline: "One trusted record for every customer, product, and entity across your enterprise.",
-        description:
-          "IBM Master Data Management creates and maintains the authoritative golden record for your most critical data domains — eliminating duplicates, resolving identity, and enforcing consistency across systems.",
-        link: { kind: "internal", slug: "ibm-mdm" },
-        detail: {
-          overview: [
-            "IBM Master Data Management (MDM) is the enterprise platform for creating, governing, and distributing trusted master records across customer, product, supplier, location, and other critical data domains. It resolves entity identities probabilistically, manages hierarchies, and synchronizes the golden record back to consuming applications.",
-            "TechD implements IBM MDM for enterprises where duplicated, inconsistent, or incomplete reference data creates compliance risk, poor customer experience, or failed analytics. Our engagements span architecture design, match-merge rule development, domain model configuration, and integration with downstream CRM, ERP, and analytics systems.",
-          ],
-          capabilities: [
-            "Multi-domain MDM — customer, product, supplier, location, and custom domains",
-            "Probabilistic and deterministic match-merge for entity resolution",
-            "Hierarchy management — corporate family trees, product taxonomies",
-            "Stewardship workflow — human review queues for unresolved matches",
-            "Survivorship rules — configure which source system wins per attribute",
-            "Real-time and batch synchronization to downstream applications",
-            "Integration with IBM Knowledge Catalog for governed data lineage",
-          ],
-          useCases: [
-            "Patient identity resolution and EMPI for health systems",
-            "Customer 360 for insurance, financial services, and retail",
-            "Product master for manufacturers and distributors",
-            "Supplier consolidation and vendor de-duplication post-merger",
-          ],
-        },
-      },
-      {
-        name: "IBM Data Replication",
-        tagline: "Zero-downtime data migration and continuous replication for hybrid environments.",
-        description:
-          "IBM Data Replication (IIDR) uses log-based change data capture to replicate data between heterogeneous sources and targets with sub-second latency — and no application downtime during migration.",
-        link: { kind: "internal", slug: "ibm-data-replication" },
-        detail: {
-          overview: [
-            "IBM InfoSphere Data Replication (IIDR) is a change data capture (CDC) platform that reads database transaction logs to stream inserts, updates, and deletes to target systems in near real time. It supports migrations between heterogeneous platforms (Oracle to Db2, SQL Server to cloud), continuous replication for active-active architectures, and feeding event streams to Kafka.",
-            "TechD uses IBM Data Replication in cloud migration projects, mainframe offload programs, and hybrid integration architectures. It is a critical tool for any project requiring zero downtime during database platform transitions — the source database keeps serving production traffic while the target is built and validated.",
-          ],
-          capabilities: [
-            "Log-based CDC from Oracle, SQL Server, Db2, Informix, z/OS, and more",
-            "Heterogeneous replication — any source to any supported target",
-            "Sub-second latency for near real-time replication",
-            "Zero-downtime cutover support — run source and target in parallel",
-            "Kafka integration for event streaming architectures",
-            "Transformation and filtering rules applied in-flight",
-            "Monitoring dashboard — lag metrics, throughput, and error alerting",
-          ],
-          useCases: [
-            "Oracle to IBM Db2 cloud migration with zero production downtime",
-            "Mainframe (z/OS Db2) offload to distributed or cloud targets",
-            "Active-active replication for geographically distributed read replicas",
-            "Real-time data feeds from OLTP systems into analytics platforms",
-          ],
-        },
-      },
     ],
   },
 
@@ -682,6 +710,34 @@ export const SOLUTIONS: Solution[] = [
             "Mainframe batch offload to reduce MIPS costs and cycle time",
             "API modernization — wrapping COBOL transactions for mobile and web consumers",
             "Real-time event streaming from z/OS into event-driven microservice architectures",
+          ],
+        },
+      },
+      {
+        name: "IBM Data Replication",
+        tagline: "Zero-downtime data migration and continuous replication for hybrid environments.",
+        description:
+          "IBM Data Replication (IIDR) uses log-based change data capture to replicate data between heterogeneous sources and targets with sub-second latency — and no application downtime during migration.",
+        link: { kind: "internal", slug: "ibm-data-replication" },
+        detail: {
+          overview: [
+            "IBM InfoSphere Data Replication (IIDR) is a change data capture (CDC) platform that reads database transaction logs to stream inserts, updates, and deletes to target systems in near real time. It supports migrations between heterogeneous platforms (Oracle to Db2, SQL Server to cloud), continuous replication for active-active architectures, and feeding event streams to Kafka.",
+            "TechD uses IBM Data Replication in cloud migration projects, mainframe offload programs, and hybrid integration architectures. It is a critical tool for any project requiring zero downtime during database platform transitions — the source database keeps serving production traffic while the target is built and validated.",
+          ],
+          capabilities: [
+            "Log-based CDC from Oracle, SQL Server, Db2, Informix, z/OS, and more",
+            "Heterogeneous replication — any source to any supported target",
+            "Sub-second latency for near real-time replication",
+            "Zero-downtime cutover support — run source and target in parallel",
+            "Kafka integration for event streaming architectures",
+            "Transformation and filtering rules applied in-flight",
+            "Monitoring dashboard — lag metrics, throughput, and error alerting",
+          ],
+          useCases: [
+            "Oracle to IBM Db2 cloud migration with zero production downtime",
+            "Mainframe (z/OS Db2) offload to distributed or cloud targets",
+            "Active-active replication for geographically distributed read replicas",
+            "Real-time data feeds from OLTP systems into analytics platforms",
           ],
         },
       },
