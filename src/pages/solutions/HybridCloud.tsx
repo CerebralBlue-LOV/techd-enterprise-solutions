@@ -1,11 +1,5 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
+import PracticePage from "./_PracticePage";
 
-const HybridCloud = () => (
-  <PlaceholderPage
-    eyebrow="Solutions"
-    title="Hybrid Cloud & Infrastructure"
-    subtitle="Run mission workloads where they belong — and move them when you need to."
-  />
-);
+const HybridCloud = () => <PracticePage practiceId="hybrid-cloud" />;
 
 export default HybridCloud;

@@ -1,11 +1,5 @@
-import PlaceholderPage from "@pages/_PlaceholderPage";
+import PracticePage from "./_PracticePage";
 
-const AIGenerative = () => (
-  <PlaceholderPage
-    eyebrow="Solutions"
-    title="AI & Generative Solutions"
-    subtitle="Ship trustworthy gen AI on top of governed enterprise data — built on watsonx."
-  />
-);
+const AIGenerative = () => <PracticePage practiceId="ai-generative" />;
 
 export default AIGenerative;

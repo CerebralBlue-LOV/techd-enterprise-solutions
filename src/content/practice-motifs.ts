@@ -1,0 +1,16 @@
+import type { MotifVariant } from "@/sections/flip-lab/PlexusMotif";
+import plexusBrain from "@/assets/flip-lab/plexus-brain.webp";
+import plexusDatabase from "@/assets/flip-lab/plexus-database.webp";
+import plexusGears from "@/assets/flip-lab/plexus-gears.webp";
+import plexusShield from "@/assets/flip-lab/plexus-shield.webp";
+import plexusCloud from "@/assets/flip-lab/plexus-cloud.webp";
+
+export type PracticeMotif = { image: string; alt: string; variant: MotifVariant };
+
+export const PRACTICE_MOTIFS: Record<string, PracticeMotif> = {
+  "ai-generative":       { image: plexusBrain,    alt: "Neural plexus brain",    variant: "ai" },
+  "data-analytics":      { image: plexusDatabase, alt: "Neural plexus database", variant: "data" },
+  "automation-finops":   { image: plexusGears,    alt: "Neural plexus gears",    variant: "automation" },
+  "security-compliance": { image: plexusShield,   alt: "Neural plexus shield",   variant: "security" },
+  "hybrid-cloud":        { image: plexusCloud,    alt: "Neural plexus cloud",    variant: "cloud" },
+};
