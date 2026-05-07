@@ -293,3 +293,38 @@ GitHub Pages returns HTTP 200 for all served paths and has no redirect configura
 | `/category/webinars/` | `/resources` | 301 |
 | `/category/webinars/on-demand-webinars/` | `/resources` | 301 |
 | `/category/white-papers/` | `/resources` | 301 |
+
+---
+
+## IA restructure — internal route migration (2026-05-07)
+
+Top-level parent pages (`/solutions`, `/services`, `/industries`, `/resources`) were removed. Each child became its own page. Implemented in-app via `<Navigate>` in `src/app/routes.tsx`.
+
+| Old path | New path | Notes |
+|---|---|---|
+| `/solutions` | `/solutions/ai-generative` | Parent removed |
+| `/solutions/ai` | `/solutions/ai-generative` | Slug renamed |
+| `/solutions/automation` | `/solutions/automation-finops` | Slug renamed |
+| `/solutions/security` | `/solutions/security-compliance` | Slug renamed |
+| `/solutions/ai/:product` | `/solutions/ai-generative/:product` | Product URL update |
+| `/solutions/automation/:product` | `/solutions/automation-finops/:product` | Product URL update |
+| `/solutions/security/:product` | `/solutions/security-compliance/:product` | Product URL update |
+| `/services` | `/services/advisory` | Parent removed |
+| `/services#advisory` | `/services/advisory` | Anchor → page |
+| `/services#implementation` | `/services/implementation` | Anchor → page |
+| `/services#managed` | `/services/managed-services` | Anchor → page (+ slug) |
+| `/services#training` | `/services/training` | Anchor → page |
+| `/industries` | `/industries/healthcare` | Parent removed |
+| `/industries#healthcare` | `/industries/healthcare` | Anchor → page |
+| `/industries#media` | `/industries/media-entertainment` | Anchor → page (+ slug) |
+| `/industries#insurance` | `/industries/insurance` | Anchor → page |
+| `/industries#energy` | `/industries/energy-utilities` | Anchor → page (+ slug) |
+| `/industries#education` | `/industries/higher-education` | Anchor → page (+ slug) |
+| `/industries#public` | `/industries/public-sector` | Anchor → page (+ slug) |
+| `/resources` | `/resources/case-studies` | Parent removed |
+| `/resources?tab=case-studies` | `/resources/case-studies` | Tab → page |
+| `/resources?tab=blog` | `/resources/blog` | Tab → page |
+| `/resources?tab=webinars` | `/resources/webinars` | Tab → page |
+| `/resources?tab=events` | `/resources/events` | Tab → page |
+
+Note: `/resources/blog` and `/resources/webinars` exist as routes but are hidden from the nav dropdown until content is ready.
