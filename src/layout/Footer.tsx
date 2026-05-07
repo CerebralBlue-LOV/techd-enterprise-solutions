@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/techd-logo.webp";
 import { NAV } from "@/content/site";
+import { IBMPlatinumBadge } from "@/shared/IBMPlatinumBadge";
 
 export const Footer = () => (
   <footer className="border-t border-border bg-background">
@@ -11,15 +12,7 @@ export const Footer = () => (
           Enterprise AI, data, security, and automation for the Fortune 500.
           IBM Platinum Business Partner.
         </p>
-        <div className="mt-6 inline-flex items-center gap-3 rounded-md border border-border px-4 py-3">
-          <div className="h-8 w-8 rounded-sm bg-secondary text-background grid place-items-center text-xs font-bold">
-            IBM
-          </div>
-          <div className="leading-tight">
-            <div className="text-xs uppercase tracking-wider text-muted-foreground">Platinum</div>
-            <div className="text-sm font-bold text-secondary">Business Partner</div>
-          </div>
-        </div>
+        <IBMPlatinumBadge size="md" className="mt-6" />
       </div>
 
       {NAV.slice(0, 4).map((col) => (

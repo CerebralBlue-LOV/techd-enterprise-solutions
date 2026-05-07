@@ -2,7 +2,7 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import ParticleOrbit from "./_shared/ParticleOrbit";
-import ibmLogo from "@/assets/ibm-logo-white.png";
+import { IBMPlatinumBadge } from "@/shared/IBMPlatinumBadge";
 
 export const WhyTechDSection = () => (
   <section className="section bg-muted/40">
@@ -25,22 +25,7 @@ export const WhyTechDSection = () => (
         <Reveal delay={80}>
           <div className="relative flex aspect-square w-full max-w-[460px] mx-auto lg:mx-0 items-center justify-center">
             <ParticleOrbit />
-            <div className="relative z-20 flex flex-col items-center gap-4 rounded-2xl border border-primary/30 bg-background/90 px-8 py-7 text-center shadow-2xl shadow-primary/10 backdrop-blur-xl md:px-10 md:py-8">
-              <div className="grid h-16 w-24 place-items-center rounded-lg bg-secondary px-3">
-                <img src={ibmLogo} alt="IBM" className="h-full w-full object-contain" />
-              </div>
-              <div className="leading-tight">
-                <div className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                  Platinum
-                </div>
-                <div className="mt-1 text-xl font-bold text-secondary">
-                  Business Partner
-                </div>
-                <div className="mt-2 text-xs text-muted-foreground">
-                  15+ years · Platinum since 2009
-                </div>
-              </div>
-            </div>
+            <IBMPlatinumBadge size="lg" variant="card" showTenure className="relative z-20" />
           </div>
         </Reveal>
 
