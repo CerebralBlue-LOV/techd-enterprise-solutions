@@ -65,12 +65,12 @@ const Honeycomb = ({
             const d = Math.hypot(cell.cx - cursor.x, cell.cy - cursor.y);
             if (d > FALLOFF) return null;
             const t = 1 - d / FALLOFF;
-            const opacity = (t * t * 0.55).toFixed(3);
+            const opacity = (t * t).toFixed(3);
             return (
               <path
                 key={`f${i}`}
                 d={cell.d}
-                fill="hsl(var(--secondary))"
+                fill="hsl(0 0% 100%)"
                 opacity={opacity}
               />
             );
@@ -78,16 +78,25 @@ const Honeycomb = ({
         </g>
       )}
 
-      {/* Strokes */}
-      <g
-        fill="none"
-        stroke="hsl(var(--border) / 0.55)"
-        strokeWidth={1}
-        strokeLinejoin="round"
-      >
-        {cells.map((cell, i) => (
-          <path key={`s${i}`} d={cell.d} />
-        ))}
+      {/* Strokes — fade out near cursor */}
+      <g fill="none" strokeWidth={1} strokeLinejoin="round">
+        {cells.map((cell, i) => {
+          let strokeOpacity = 0.55;
+          if (cursor) {
+            const d = Math.hypot(cell.cx - cursor.x, cell.cy - cursor.y);
+            if (d < FALLOFF) {
+              const t = 1 - d / FALLOFF;
+              strokeOpacity = 0.55 * (1 - t * t);
+            }
+          }
+          return (
+            <path
+              key={`s${i}`}
+              d={cell.d}
+              stroke={`hsl(var(--border) / ${strokeOpacity.toFixed(3)})`}
+            />
+          );
+        })}
       </g>
     </svg>
   );
