@@ -13,7 +13,7 @@ export const WhyPracticeSection = ({ practice }: Props) => {
   if (!extras?.whyPoints?.length) return null;
 
   return (
-    <section className="section">
+    <section id="why" className="section scroll-mt-24">
       <SectionMarker page={`Solutions / ${practice.name}`} name="Why this practice" />
       <div className="container-page">
         <Reveal>
