@@ -28,6 +28,8 @@ export type Solution = {
   /** Short verb phrase used as the card CTA, e.g. "Explore AI practice". */
   ctaLabel: string;
   products: Product[];
+  /** Non-IBM tools built by Cerebral Blue that TechD also delivers in this practice. */
+  ownTools?: Product[];
 };
 
 export const SOLUTIONS: Solution[] = [
@@ -103,13 +105,6 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        name: "NeuralSeek",
-        tagline: "RAG-powered answers from your enterprise knowledge base — in seconds.",
-        description:
-          "NeuralSeek is a Cerebral Blue product that layers semantic retrieval and answer synthesis on top of your existing knowledge base, returning cited, grounded responses to complex questions.",
-        link: { kind: "external", url: "https://neuralseek.com" },
-      },
-      {
         name: "IBM SPSS Modeler",
         tagline: "Build and deploy predictive models on enterprise data — without writing a line of code.",
         description:
@@ -164,6 +159,15 @@ export const SOLUTIONS: Solution[] = [
             "Data quality scoring and remediation workflows",
           ],
         },
+      },
+    ],
+    ownTools: [
+      {
+        name: "NeuralSeek",
+        tagline: "RAG-powered answers from your enterprise knowledge base — in seconds.",
+        description:
+          "NeuralSeek is a Cerebral Blue product that layers semantic search and answer synthesis on top of your existing knowledge base, returning cited, grounded responses to complex questions — deployable alongside watsonx Assistant or as a standalone API.",
+        link: { kind: "external", url: "https://neuralseek.com" },
       },
     ],
   },
