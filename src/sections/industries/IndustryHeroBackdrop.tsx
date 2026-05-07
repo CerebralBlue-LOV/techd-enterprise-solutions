@@ -4,39 +4,45 @@ interface Props {
   cursor: { x: number; y: number } | null;
 }
 
+const SIZE = 28; // hex circumradius (px)
+const W = Math.sqrt(3) * SIZE; // pointy-top hex width
+const H = 2 * SIZE;
+const V_STEP = H * 0.75;
+
+const hexPath = (cx: number, cy: number) => {
+  const pts: string[] = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI / 3) * i - Math.PI / 2;
+    const x = cx + SIZE * Math.cos(a);
+    const y = cy + SIZE * Math.sin(a);
+    pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+  }
+  return `M${pts.join(" L")} Z`;
+};
+
 /**
- * Hexagonal honeycomb grid. Static — no cursor interaction.
- * Pointy-top hexagons tiled across the section.
+ * Hexagonal honeycomb. Cells near the cursor softly fill with the primary tint;
+ * the closest cell fills strongest, neighbors taper off.
  */
-const Honeycomb = ({ width, height }: { width: number; height: number }) => {
+const Honeycomb = ({
+  cursor,
+  width,
+  height,
+}: Props & { width: number; height: number }) => {
   if (width === 0 || height === 0) return null;
 
-  const SIZE = 28; // hex circumradius (px)
-  const w = Math.sqrt(3) * SIZE; // hex width (flat-to-flat for pointy-top)
-  const h = 2 * SIZE;            // hex height
-  const vStep = h * 0.75;        // vertical row spacing
+  const cols = Math.ceil(width / W) + 2;
+  const rows = Math.ceil(height / V_STEP) + 2;
 
-  const hexPath = (cx: number, cy: number) => {
-    const pts: string[] = [];
-    for (let i = 0; i < 6; i++) {
-      const a = (Math.PI / 3) * i - Math.PI / 2; // pointy-top
-      const x = cx + SIZE * Math.cos(a);
-      const y = cy + SIZE * Math.sin(a);
-      pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
-    }
-    return `M${pts.join(" L")} Z`;
-  };
+  const FALLOFF = SIZE * 2.6; // distance at which fill fades out
 
-  const cols = Math.ceil(width / w) + 2;
-  const rows = Math.ceil(height / vStep) + 2;
-
-  const paths: string[] = [];
+  const cells: Array<{ d: string; cx: number; cy: number }> = [];
   for (let r = -1; r < rows; r++) {
-    const offset = r % 2 === 0 ? 0 : w / 2;
+    const offset = r % 2 === 0 ? 0 : W / 2;
     for (let c = -1; c < cols; c++) {
-      const cx = c * w + offset;
-      const cy = r * vStep;
-      paths.push(hexPath(cx, cy));
+      const cx = c * W + offset;
+      const cy = r * V_STEP;
+      cells.push({ d: hexPath(cx, cy), cx, cy });
     }
   }
 
@@ -52,14 +58,35 @@ const Honeycomb = ({ width, height }: { width: number; height: number }) => {
         maskImage: "radial-gradient(80% 90% at 50% 40%, black 35%, transparent 88%)",
       }}
     >
+      {/* Fills (under strokes) */}
+      {cursor && (
+        <g>
+          {cells.map((cell, i) => {
+            const d = Math.hypot(cell.cx - cursor.x, cell.cy - cursor.y);
+            if (d > FALLOFF) return null;
+            const t = 1 - d / FALLOFF;
+            const opacity = (t * t * 0.28).toFixed(3);
+            return (
+              <path
+                key={`f${i}`}
+                d={cell.d}
+                fill="hsl(var(--primary))"
+                opacity={opacity}
+              />
+            );
+          })}
+        </g>
+      )}
+
+      {/* Strokes */}
       <g
         fill="none"
         stroke="hsl(var(--border) / 0.55)"
         strokeWidth={1}
         strokeLinejoin="round"
       >
-        {paths.map((d, i) => (
-          <path key={i} d={d} />
+        {cells.map((cell, i) => (
+          <path key={`s${i}`} d={cell.d} />
         ))}
       </g>
     </svg>
@@ -70,7 +97,7 @@ interface BackdropProps {
   cursor: { x: number; y: number } | null;
 }
 
-export const IndustryHeroBackdrop = ({ cursor: _cursor }: BackdropProps) => {
+export const IndustryHeroBackdrop = ({ cursor }: BackdropProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
 
@@ -90,7 +117,7 @@ export const IndustryHeroBackdrop = ({ cursor: _cursor }: BackdropProps) => {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <Honeycomb width={size.w} height={size.h} />
+      <Honeycomb cursor={cursor} width={size.w} height={size.h} />
 
       {/* Gradient wash (matches solutions hero) */}
       <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
