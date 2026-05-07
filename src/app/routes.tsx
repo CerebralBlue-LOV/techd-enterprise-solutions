@@ -4,7 +4,6 @@ import ProductDetail from "@pages/ProductDetail";
 import Contact from "@pages/Contact";
 import NotFound from "@pages/NotFound";
 import IconLab from "@pages/IconLab";
-import FlipLab from "@pages/FlipLab";
 import LogoLab from "@pages/LogoLab";
 
 // Solutions
@@ -88,7 +87,6 @@ export const AppRoutes = () => (
 
     <Route path="/contact" element={<Contact />} />
     <Route path="/icon-lab" element={<IconLab />} />
-    <Route path="/flip-lab" element={<FlipLab />} />
     <Route path="/logo-lab" element={<LogoLab />} />
     {/* Catch-all — must stay last. */}
     <Route path="*" element={<NotFound />} />

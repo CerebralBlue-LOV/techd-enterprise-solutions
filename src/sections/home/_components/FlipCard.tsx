@@ -13,11 +13,6 @@ interface Props {
   to?: string;
 }
 
-/**
- * FlipCard — front shows eyebrow + title with a cyan motif.
- * Back shows backTitle, body, chips, and a CTA.
- * If `to` is provided, the whole card becomes a Link.
- */
 export const FlipCard = ({
   eyebrow,
   title,

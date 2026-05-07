@@ -3,10 +3,10 @@ import { Suspense, lazy } from "react";
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import HeroBackdrop from "@sections/home/_shared/HeroBackdrop";
+import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
 
 const HeroParticleField = lazy(
-  () => import("@sections/home/_shared/HeroParticleField"),
+  () => import("@sections/home/_components/HeroParticleField"),
 );
 
 /**

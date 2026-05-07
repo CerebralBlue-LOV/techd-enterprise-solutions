@@ -8,11 +8,6 @@ interface Props {
   variant: MotifVariant;
 }
 
-/**
- * PlexusMotif — static webp image with a per-variant CSS effect layer
- * sitting between the cyan halo and the image. The image itself never
- * moves — only the overlay animates.
- */
 export const PlexusMotif = ({ image, alt = "", variant }: Props) => (
   <div className="flip-motif-svg flex items-end justify-end">
     <div
@@ -35,6 +30,5 @@ export const PlexusMotif = ({ image, alt = "", variant }: Props) => (
     />
   </div>
 );
-
 
 export default PlexusMotif;

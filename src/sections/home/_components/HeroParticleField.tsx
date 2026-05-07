@@ -284,11 +284,6 @@ export const HeroParticleField = () => {
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Debug overlay: append ?debug-hero to the URL to tint the interactive area.
-  const debug =
-    typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).has("debug-hero");
-
   return (
     <div
       aria-hidden="true"
@@ -312,16 +307,6 @@ export const HeroParticleField = () => {
       />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background to-transparent" />
-      
-
-      {debug && (
-        <>
-          <div className="pointer-events-none absolute inset-0 bg-emerald-400/15 ring-2 ring-inset ring-emerald-500/70" />
-          <div className="pointer-events-none absolute top-2 left-2 rounded bg-emerald-600 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-            Hero canvas · interactive
-          </div>
-        </>
-      )}
     </div>
   );
 };

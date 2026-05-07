@@ -43,16 +43,51 @@ npm test
 
 ```
 src/
-  components/       # Shared layout and UI components
-  components/ui/    # shadcn/ui primitives (do not edit)
-  content/          # Typed TS data modules — edit these for content changes
-  pages/            # Route-level page components
-  hooks/            # Custom React hooks
-  lib/              # Utility functions
-docs/               # Project documentation (grand plan, decisions, progress, brand)
-public/             # Static assets (robots.txt, favicon, sitemap)
-.github/workflows/  # GitHub Actions CI/CD pipeline
+  app/                    # App shell — App.tsx, routes.tsx, providers.tsx
+  assets/
+    plexus/               # Practice motif images (used on homepage + solution pages)
+  components/
+    ui/                   # shadcn/ui primitives — do not edit
+    layout/               # Header, Footer, Layout, NavLink
+    shared/               # Reveal, SectionHeading, SectionMarker, GeometricAccent,
+                          # LogoStrip, IBMPlatinumBadge, SectionBackdrop, SEO
+  content/                # Typed TS data modules — edit these for content changes
+  hooks/                  # Custom React hooks
+  lib/                    # Utility functions
+  pages/                  # Route-level page components
+    solutions/            # AIGenerative, DataAnalytics, AutomationFinOps, SecurityCompliance, HybridCloud
+    services/             # Advisory, Implementation, ManagedServices, Training
+    industries/           # Healthcare, MediaEntertainment, Insurance, EnergyUtilities, HigherEducation, PublicSector
+    resources/            # CaseStudies, Blog, Webinars, Events
+  sections/               # Page section components, organized by route
+    home/
+      _components/        # Private sub-components (FlipCard, PlexusMotif, backdrops, motifs)
+    solutions/
+      _components/        # Private sub-components (PracticeHeroBackdrop)
+    industries/
+      _components/        # Private sub-components (IndustryHeroBackdrop)
+    products/
+public/
+  logos/                  # Client logo images for the logo strip
+docs/                     # Project documentation (grand plan, decisions, progress, brand)
+.github/workflows/        # GitHub Actions CI/CD pipeline
 ```
+
+### Path aliases
+
+| Alias | Resolves to |
+|---|---|
+| `@` | `src/` |
+| `@app` | `src/app/` |
+| `@components` | `src/components/` |
+| `@layout` | `src/components/layout/` |
+| `@shared` | `src/components/shared/` |
+| `@ui` | `src/components/ui/` |
+| `@pages` | `src/pages/` |
+| `@sections` | `src/sections/` |
+| `@content` | `src/content/` |
+| `@hooks` | `src/hooks/` |
+| `@lib` | `src/lib/` |
 
 ## Pages
 

@@ -27,13 +27,14 @@
       "@app/*":      ["./src/app/*"],
       "@pages/*":    ["./src/pages/*"],
       "@sections/*": ["./src/sections/*"],
-      "@layout/*":   ["./src/layout/*"],
-      "@shared/*":   ["./src/shared/*"],
+      "@components/*": ["./src/components/*"],
+      "@layout/*":   ["./src/components/layout/*"],
+      "@shared/*":   ["./src/components/shared/*"],
       "@ui/*":       ["./src/components/ui/*"],
+      "@seo/*":      ["./src/components/shared/*"],
       "@content/*":  ["./src/content/*"],
       "@hooks/*":    ["./src/hooks/*"],
-      "@lib/*":      ["./src/lib/*"],
-      "@seo/*":      ["./src/seo/*"]
+      "@lib/*":      ["./src/lib/*"]
     }
   },
   "include": ["src"]

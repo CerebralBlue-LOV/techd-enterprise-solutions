@@ -1,9 +1,9 @@
-import type { MotifVariant } from "@/sections/flip-lab/PlexusMotif";
-import plexusBrain from "@/assets/flip-lab/plexus-brain.webp";
-import plexusDatabase from "@/assets/flip-lab/plexus-database.webp";
-import plexusGears from "@/assets/flip-lab/plexus-gears.webp";
-import plexusShield from "@/assets/flip-lab/plexus-shield.webp";
-import plexusCloud from "@/assets/flip-lab/plexus-cloud.webp";
+import type { MotifVariant } from "@sections/home/_components/PlexusMotif";
+import plexusBrain from "@/assets/plexus/plexus-brain.webp";
+import plexusDatabase from "@/assets/plexus/plexus-database.webp";
+import plexusGears from "@/assets/plexus/plexus-gears.webp";
+import plexusShield from "@/assets/plexus/plexus-shield.webp";
+import plexusCloud from "@/assets/plexus/plexus-cloud.webp";
 
 export type PracticeMotif = { image: string; alt: string; variant: MotifVariant };
 

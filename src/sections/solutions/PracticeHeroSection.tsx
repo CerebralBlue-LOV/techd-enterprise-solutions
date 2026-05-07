@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import PracticeHeroBackdrop from "./PracticeHeroBackdrop";
+import PracticeHeroBackdrop from "./_components/PracticeHeroBackdrop";
 import { type Solution } from "@content/solutions";
 
 interface Props {

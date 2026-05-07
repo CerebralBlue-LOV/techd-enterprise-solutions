@@ -48,11 +48,18 @@ If unsure whether something is sensitive, leave it out of the commit.
 
 ```
 src/
-  app/              # App shell, route table (App.tsx, routes.tsx)
-  components/       # Shared components (Header, Footer, Layout, Reveal, SEO, etc.)
-  components/ui/    # shadcn/ui primitives — DO NOT touch
-  content/          # Typed TS data modules (see Content files below)
-  pages/            # Route-level components
+  app/              # App shell, route table (App.tsx, routes.tsx, providers.tsx)
+  assets/           # Static images (logos, webps)
+  components/
+    ui/             # shadcn/ui primitives — DO NOT touch
+    layout/         # Header, Footer, Layout, NavLink  (alias: @layout)
+    shared/         # Reveal, SectionHeading, SectionMarker, GeometricAccent,
+                    # LogoStrip, IBMPlatinumBadge, SectionBackdrop, SEO
+                    # (aliases: @shared and @seo both resolve here)
+  content/          # Typed TS data modules (see Content files below)  (alias: @content)
+  hooks/            # use-mobile, use-toast  (alias: @hooks)
+  lib/              # utils.ts  (alias: @lib)
+  pages/            # Route-level components  (alias: @pages)
     Home.tsx
     Contact.tsx
     NotFound.tsx
@@ -61,9 +68,11 @@ src/
     services/       # Advisory, Implementation, ManagedServices, Training
     industries/     # Healthcare, MediaEntertainment, Insurance, EnergyUtilities, HigherEducation, PublicSector
     resources/      # CaseStudies, Blog, Webinars, Events
-  sections/         # Section-level components organized by page (solutions/, etc.)
-  hooks/            # use-mobile, use-toast
-  lib/              # utils.ts
+  sections/         # Section-level components organized by page  (alias: @sections)
+    home/
+    solutions/
+    industries/
+    products/
 docs/               # All project documentation (PRD, DECISIONS, GRAND, PROGRESS, BRAND, etc.)
 clickup-docs/       # Markdown files synced to ClickUp docs on every push to main
 public/             # robots.txt, favicon, placeholder assets
@@ -87,7 +96,8 @@ public/             # robots.txt, favicon, placeholder assets
 - TypeScript strict — no `any` unless justified with a comment.
 - Functional components only.
 - shadcn/ui components live in `src/components/ui/`. Don't recreate; extend.
-- Custom components in `src/components/`.
+- Layout shell (Header/Footer/Layout) in `src/components/layout/`.
+- Reusable shared components in `src/components/shared/`.
 - Page components in `src/pages/`.
 - Content data in `src/content/` as typed TS modules — this is what marketing edits later.
 - All colors via Tailwind tokens (`bg-primary`, `text-foreground`), never raw hex.

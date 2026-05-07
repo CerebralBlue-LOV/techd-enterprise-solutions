@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/techd-logo.webp";
 import { NAV } from "@/content/site";
-import { IBMPlatinumBadge } from "@/shared/IBMPlatinumBadge";
+import { IBMPlatinumBadge } from "@shared/IBMPlatinumBadge";
 
 export const Footer = () => (
   <footer className="border-t border-border bg-background">

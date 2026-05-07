@@ -5,11 +5,11 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import SectionBackdrop from "@shared/SectionBackdrop";
-import CaseStudyCardBackdropCyan from "@sections/home/_shared/CaseStudyCardBackdropCyan";
-import IndustriesCarousel from "@sections/home/_shared/IndustriesCarousel";
+import CaseStudyCardBackdropCyan from "@sections/home/_components/CaseStudyCardBackdropCyan";
+import IndustriesCarousel from "@sections/home/_components/IndustriesCarousel";
 
 const ParticleGlobe = lazy(
-  () => import("@sections/home/_shared/ParticleGlobe"),
+  () => import("@sections/home/_components/ParticleGlobe"),
 );
 
 /**

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import IndustryHeroBackdrop from "./IndustryHeroBackdrop";
+import IndustryHeroBackdrop from "./_components/IndustryHeroBackdrop";
 import { type Industry } from "@content/industries";
 import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 

@@ -1,8 +1,8 @@
 import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
-import ParticleOrbit from "./_shared/ParticleOrbit";
-import { IBMPlatinumBadge } from "@/shared/IBMPlatinumBadge";
+import ParticleOrbit from "./_components/ParticleOrbit";
+import { IBMPlatinumBadge } from "@shared/IBMPlatinumBadge";
 
 export const WhyTechDSection = () => (
   <section className="section bg-muted/40">

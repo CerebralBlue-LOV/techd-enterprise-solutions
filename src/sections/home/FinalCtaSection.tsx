@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import CaseStudyCardBackdropCyan from "./_shared/CaseStudyCardBackdropCyan";
+import CaseStudyCardBackdropCyan from "./_components/CaseStudyCardBackdropCyan";
 
 /**
  * Section: Home / Final CTA

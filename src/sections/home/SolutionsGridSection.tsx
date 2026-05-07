@@ -2,13 +2,13 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import { SOLUTIONS } from "@content/solutions";
-import FlipCard from "@/sections/flip-lab/FlipCard";
-import PlexusMotif, { type MotifVariant } from "@/sections/flip-lab/PlexusMotif";
-import plexusBrain from "@/assets/flip-lab/plexus-brain.webp";
-import plexusDatabase from "@/assets/flip-lab/plexus-database.webp";
-import plexusGears from "@/assets/flip-lab/plexus-gears.webp";
-import plexusShield from "@/assets/flip-lab/plexus-shield.webp";
-import plexusCloud from "@/assets/flip-lab/plexus-cloud.webp";
+import FlipCard from "@sections/home/_components/FlipCard";
+import PlexusMotif, { type MotifVariant } from "@sections/home/_components/PlexusMotif";
+import plexusBrain from "@/assets/plexus/plexus-brain.webp";
+import plexusDatabase from "@/assets/plexus/plexus-database.webp";
+import plexusGears from "@/assets/plexus/plexus-gears.webp";
+import plexusShield from "@/assets/plexus/plexus-shield.webp";
+import plexusCloud from "@/assets/plexus/plexus-cloud.webp";
 
 const MOTIFS: Record<string, { image: string; alt: string; backTitle: string; footer: string; variant: MotifVariant }> = {
   "ai-generative": { image: plexusBrain, alt: "Neural plexus brain", backTitle: "Production-grade AI", footer: "United States", variant: "ai" },
