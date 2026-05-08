@@ -81,7 +81,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "TEPSCO", url: "https://www.tepsco.co.jp", logo: "/logos/tepsco.svg", logoClass: "h-14 md:h-16" },
   { name: "New York Institute of Technology", url: "https://www.nyit.edu", logo: "/logos/nyit.svg", logoClass: "h-10 md:h-12" },
   { name: "Netcare", url: "https://www.netcare.co.za", logo: "/logos/netcare.svg", logoClass: "h-12 md:h-14" },
-  { name: "GreatDay HR", url: "https://greatdayhr.com", logo: "/logos/greatday.svg", logoClass: "h-6 md:h-7" },
+  { name: "Great Day Improvements", url: "https://greatdayimprovements.com", logo: "/logos/greatday.png", logoClass: "h-10 md:h-12" },
   { name: "Vornado Realty Trust", url: "https://www.vno.com", logo: "/logos/vornado.svg", logoClass: "h-7 md:h-8" },
   { name: "Adobe", url: "https://www.adobe.com", logo: "/logos/adobe.svg", logoClass: "h-10 md:h-12" },
   { name: "NatWest", url: "https://www.natwest.com", logo: "/logos/natwest.svg", logoClass: "h-12 md:h-14" },
