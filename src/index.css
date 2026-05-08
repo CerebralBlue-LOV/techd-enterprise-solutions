@@ -250,6 +250,9 @@
   display: flex;
   width: max-content;
   animation: marquee 45s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .marquee-reverse {
   animation: marquee-reverse 45s linear infinite;
