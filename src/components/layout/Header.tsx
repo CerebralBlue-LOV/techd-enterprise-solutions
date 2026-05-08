@@ -100,13 +100,10 @@ export const Header = () => {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[88vw] sm:w-96">
+            <SheetContent side="right" className="w-[88vw] sm:w-96 flex flex-col gap-0 overflow-y-auto">
               <SheetTitle className="sr-only">Navigation</SheetTitle>
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 pr-8">
                 <img src={logo} alt="TechD" className="h-7 w-auto" />
-                <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close menu">
-                  <X />
-                </Button>
               </div>
               <nav className="flex flex-col gap-1">
                 {NAV.map((item) => (
@@ -138,7 +135,7 @@ export const Header = () => {
                   </div>
                 ))}
               </nav>
-              <Button asChild className="btn-glow mt-6 w-full">
+              <Button asChild className="btn-glow mt-6 mb-2 w-full shrink-0">
                 <Link to="/contact">Talk to an expert</Link>
               </Button>
             </SheetContent>
