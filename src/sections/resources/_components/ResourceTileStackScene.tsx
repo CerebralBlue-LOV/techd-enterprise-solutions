@@ -5,6 +5,10 @@ import * as THREE from "three";
 interface SceneProps {
   tiltX?: number;
   tiltY?: number;
+  /** When provided, overrides the animated drift and pins the group rotation. */
+  rotationOverride?: [number, number, number];
+  /** When provided, overrides the group position. */
+  positionOverride?: [number, number, number];
 }
 
 const PRIMARY = "#00B3E3";
