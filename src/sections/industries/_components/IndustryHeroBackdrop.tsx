@@ -49,12 +49,12 @@ export const IndustryHeroBackdrop = ({ cursor }: BackdropProps) => {
         </Suspense>
       </div>
 
-      {/* Soft mask so the floor fades into the page edges */}
+      {/* Soft side/top fade — keeps the floor visible in the middle/bottom */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 30%, transparent 35%, hsl(var(--background)) 95%)",
+            "linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 35%, transparent 80%, hsl(var(--background) / 0.4) 100%), linear-gradient(to right, hsl(var(--background)) 0%, transparent 12%, transparent 88%, hsl(var(--background)) 100%)",
         }}
       />
 
