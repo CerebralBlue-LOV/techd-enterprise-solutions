@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 
-const ConstellationScene = lazy(() => import("./PracticeConstellationScene"));
+const WireframeScene = lazy(() => import("./PracticeWireframeScene"));
 
 interface BackdropProps {
   /** Kept for API compatibility — not used by the new layout. */
@@ -41,7 +41,7 @@ export const PracticeHeroBackdrop = (_: BackdropProps) => {
       {/* 2. Right-side particle constellation */}
       <div className="absolute inset-y-0 right-0 hidden md:block md:w-[60%] lg:w-[55%]">
         <Suspense fallback={null}>
-          <ConstellationScene tiltX={0} tiltY={0} />
+          <WireframeScene tiltX={0} tiltY={0} />
         </Suspense>
         {/* Edge fades — radial on the left so it blends only where the graphic sits */}
         <div
