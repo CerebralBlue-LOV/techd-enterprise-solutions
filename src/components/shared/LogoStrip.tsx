@@ -7,7 +7,10 @@ const Row = ({
   items: Customer[];
   reverse?: boolean;
 }) => {
-  const doubled = [...items, ...items];
+  // Visual padding: prepend the last 3 logos so top-tier brands (Adobe, Mercedes-Benz...)
+  // hit center-screen a few seconds into the loop instead of already drifting off-screen.
+  const padded = items.length > 3 ? [...items.slice(-3), ...items] : items;
+  const doubled = [...padded, ...padded];
   return (
     <div
       className="marquee-wrap overflow-hidden"
