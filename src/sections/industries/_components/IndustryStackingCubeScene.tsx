@@ -9,164 +9,107 @@ interface SceneProps {
 
 const PRIMARY = "#00B3E3";
 
-// Stacking-cube loop (recreated from the Dribbble "Isometric Shapes
-// Lottie Showreel" — top-left tile).
-//
-// Three wireframe cubes form a triangular base on the ground plane.
-// They never move. A middle cube descends from above and lands at the
-// centroid; a top cube follows, landing on top of it — building a small
-// 3-tier pyramid. The two upper cubes then rise back up and fade out,
-// leaving the 3 bases. Loop.
+// IndustriesFigure — wireframe tetrahedron with subdivided faces.
+// A large outer tetrahedron is rendered as edges, with an inner
+// counter-rotating subdivided tetrahedron and a smaller pulsing core
+// to add depth. All in monoline cyan, matching the rest of the site.
 
-const CUBE = 1.0;
-const GAP = 0.02;
-const STEP = CUBE + GAP;
+const SIZE = 2.6;
 
-type Vec3 = [number, number, number];
-
-// Triangular base — back-left, back-right, front. (positions chosen so
-// the centroid is a clean (cx, 0, cz) for the tower to stack onto.)
-const BASE_HOME: Vec3[] = [
-  [0, 0, 0],            // back-left
-  [STEP, 0, 0],         // back-right
-  [STEP / 2, 0, STEP],  // front-center
-];
-
-// Tower position (above the centroid of the base triangle).
-const CX = (BASE_HOME[0][0] + BASE_HOME[1][0] + BASE_HOME[2][0]) / 3;
-const CZ = (BASE_HOME[0][2] + BASE_HOME[1][2] + BASE_HOME[2][2]) / 3;
-
-const MID_HOME: Vec3 = [CX, STEP, CZ];
-const TOP_HOME: Vec3 = [CX, STEP * 2, CZ];
-
-const RISE_Y = 3.6; // where the upper cubes wait when invisible
-
-// ---------- Loop timing (seconds) ----------
-// Phase A: mid descends → top descends (staggered) → hold full pyramid
-// Phase B: top rises & fades → mid rises & fades (staggered) → hold bases
-const MID_FALL_START = 0.0;
-const MID_FALL_END   = 0.7;
-const TOP_FALL_START = 0.45;
-const TOP_FALL_END   = 1.15;
-const HOLD_FULL_END  = 1.65;
-const TOP_RISE_START = 1.65;
-const TOP_RISE_END   = 2.25;
-const MID_RISE_START = 1.95;
-const MID_RISE_END   = 2.55;
-const HOLD_BASE_END  = 3.05;
-const LOOP = HOLD_BASE_END;
-
-const ease = (t: number) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
-
-// Returns { y, opacity } for a stacker cube given its phase windows.
-function cubePhase(
-  local: number,
-  fallStart: number,
-  fallEnd: number,
-  riseStart: number,
-  riseEnd: number,
-  homeY: number,
-) {
-  if (local < fallStart) {
-    return { y: RISE_Y, opacity: 0 };
-  }
-  if (local < fallEnd) {
-    const p = ease((local - fallStart) / (fallEnd - fallStart));
-    return {
-      y: lerp(RISE_Y, homeY, p),
-      opacity: clamp01(p * 1.6),
-    };
-  }
-  if (local < riseStart) {
-    return { y: homeY, opacity: 1 };
-  }
-  if (local < riseEnd) {
-    const p = ease((local - riseStart) / (riseEnd - riseStart));
-    return {
-      y: lerp(homeY, RISE_Y, p),
-      opacity: clamp01((1 - p) * 1.6),
-    };
-  }
-  return { y: RISE_Y, opacity: 0 };
+// Build a tetrahedron with subdivided faces so each face shows an
+// internal triangle grid (more lines, denser look).
+function makeSubdividedTetraEdges(radius: number, detail: number) {
+  return new THREE.EdgesGeometry(
+    new THREE.TetrahedronGeometry(radius, detail),
+    1, // small angle so subdivision lines are kept
+  );
 }
 
-const StackingCube = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
+const IndustriesTetra = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const midRef = useRef<THREE.Group>(null);
-  const topRef = useRef<THREE.Group>(null);
-  const midMatRef = useRef<THREE.LineBasicMaterial>(null);
-  const topMatRef = useRef<THREE.LineBasicMaterial>(null);
+  const innerRef = useRef<THREE.Group>(null);
+  const coreRef = useRef<THREE.Group>(null);
+  const coreMatRef = useRef<THREE.LineBasicMaterial>(null);
 
-  const edges = useMemo(
-    () => new THREE.EdgesGeometry(new THREE.BoxGeometry(CUBE, CUBE, CUBE)),
+  const outerEdges = useMemo(() => makeSubdividedTetraEdges(SIZE, 3), []);
+  const innerEdges = useMemo(() => makeSubdividedTetraEdges(SIZE * 0.62, 2), []);
+  const coreEdges = useMemo(() => makeSubdividedTetraEdges(SIZE * 0.3, 1), []);
+  const vertexGeom = useMemo(
+    () => new THREE.TetrahedronGeometry(SIZE, 3),
     [],
   );
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y = 0.62 + tiltX * 0.1;
-      groupRef.current.rotation.x = -0.5 + tiltY * 0.06;
+      groupRef.current.rotation.y = t * 0.18 + tiltX * 0.2;
+      groupRef.current.rotation.x =
+        -0.15 + Math.sin(t * 0.22) * 0.18 + tiltY * 0.12;
+      groupRef.current.rotation.z = Math.sin(t * 0.13) * 0.05;
     }
-
-    const local = t % LOOP;
-
-    const mid = cubePhase(
-      local,
-      MID_FALL_START,
-      MID_FALL_END,
-      MID_RISE_START,
-      MID_RISE_END,
-      MID_HOME[1],
-    );
-    const top = cubePhase(
-      local,
-      TOP_FALL_START,
-      TOP_FALL_END,
-      TOP_RISE_START,
-      TOP_RISE_END,
-      TOP_HOME[1],
-    );
-
-    if (midRef.current) midRef.current.position.set(MID_HOME[0], mid.y, MID_HOME[2]);
-    if (midMatRef.current) midMatRef.current.opacity = mid.opacity;
-    if (topRef.current) topRef.current.position.set(TOP_HOME[0], top.y, TOP_HOME[2]);
-    if (topMatRef.current) topMatRef.current.opacity = top.opacity;
+    if (innerRef.current) {
+      innerRef.current.rotation.y = -t * 0.32;
+      innerRef.current.rotation.x = t * 0.18;
+    }
+    if (coreRef.current) {
+      const pulse = 0.85 + Math.sin(t * 1.6) * 0.15;
+      coreRef.current.scale.setScalar(pulse);
+    }
+    if (coreMatRef.current) {
+      coreMatRef.current.opacity = 0.55 + Math.sin(t * 1.6) * 0.2;
+    }
   });
 
   return (
-    <group
-      ref={groupRef}
-      rotation={[-0.5, 0.62, 0]}
-      position={[-(CX), -STEP * 0.6, -(CZ)]}
-    >
-      {/* Three static base cubes */}
-      {BASE_HOME.map((pos, i) => (
-        <group key={i} position={pos}>
-          <lineSegments>
-            <primitive object={edges} attach="geometry" />
-            <lineBasicMaterial color={PRIMARY} transparent opacity={0.95} depthWrite={false} />
-          </lineSegments>
-        </group>
-      ))}
+    <group ref={groupRef}>
+      {/* Outer subdivided tetrahedron — the hero shape */}
+      <lineSegments>
+        <primitive object={outerEdges} attach="geometry" />
+        <lineBasicMaterial
+          color={PRIMARY}
+          transparent
+          opacity={0.85}
+          depthWrite={false}
+        />
+      </lineSegments>
 
-      {/* Mid cube */}
-      <group ref={midRef} position={MID_HOME}>
+      {/* Vertex dots on the outer surface */}
+      <points>
+        <primitive object={vertexGeom} attach="geometry" />
+        <pointsMaterial
+          color={PRIMARY}
+          size={0.05}
+          sizeAttenuation
+          transparent
+          opacity={0.9}
+          depthWrite={false}
+        />
+      </points>
+
+      {/* Inner counter-rotating tetrahedron — adds depth and motion */}
+      <group ref={innerRef}>
         <lineSegments>
-          <primitive object={edges} attach="geometry" />
-          <lineBasicMaterial ref={midMatRef} color={PRIMARY} transparent opacity={0} depthWrite={false} />
+          <primitive object={innerEdges} attach="geometry" />
+          <lineBasicMaterial
+            color={PRIMARY}
+            transparent
+            opacity={0.45}
+            depthWrite={false}
+          />
         </lineSegments>
       </group>
 
-      {/* Top cube */}
-      <group ref={topRef} position={TOP_HOME}>
+      {/* Pulsing core */}
+      <group ref={coreRef}>
         <lineSegments>
-          <primitive object={edges} attach="geometry" />
-          <lineBasicMaterial ref={topMatRef} color={PRIMARY} transparent opacity={0} depthWrite={false} />
+          <primitive object={coreEdges} attach="geometry" />
+          <lineBasicMaterial
+            ref={coreMatRef}
+            color={PRIMARY}
+            transparent
+            opacity={0.6}
+            depthWrite={false}
+          />
         </lineSegments>
       </group>
     </group>
@@ -181,12 +124,12 @@ export const IndustryStackingCubeScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [4.5, 4.0, 5.5], fov: 32 }}
+      camera={{ position: [0, 0, 7], fov: 45 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
     >
-      <StackingCube tiltX={tiltX} tiltY={tiltY} />
+      <IndustriesTetra tiltX={tiltX} tiltY={tiltY} />
     </Canvas>
   );
 };
