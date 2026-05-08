@@ -18,8 +18,7 @@ const HEIGHTS = [2.4, 3.6, 2.8, 4.0, 3.2, 2.6];
 
 const Pillars = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const pillarRefs = useRef<(THREE.Mesh | null)[]>([]);
-  const capRefs = useRef<(THREE.Mesh | null)[]>([]);
+  const pillarRefs = useRef<(THREE.Group | null)[]>([]);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
@@ -30,18 +29,9 @@ const Pillars = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
       // Slow vertical float — top↔bottom drift
       groupRef.current.position.y = Math.sin(t * 0.35) * 0.25;
     }
-    // Subtle "breathing" — each pillar scales Y slightly out of phase.
-    pillarRefs.current.forEach((m, i) => {
-      if (!m) return;
-      const breathe = 1 + Math.sin(t * 0.6 + i * 0.7) * 0.06;
-      m.scale.y = breathe;
-      const cap = capRefs.current[i];
-      if (cap) {
-        const baseH = HEIGHTS[i];
-        cap.position.y = (baseH * breathe) / 2 + 0.04;
-        const mat = cap.material as THREE.MeshBasicMaterial;
-        mat.opacity = 0.7 + Math.sin(t * 1.2 + i * 0.9) * 0.25;
-      }
+    pillarRefs.current.forEach((group, i) => {
+      if (!group) return;
+      group.position.y = Math.sin(t * 0.55 + i * 0.45) * 0.18;
     });
   });
 
@@ -50,38 +40,16 @@ const Pillars = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
       {HEIGHTS.map((h, i) => {
         const x = (i - (PILLAR_COUNT - 1) / 2) * PILLAR_GAP;
         return (
-          <group key={i} position={[x, 0, 0]}>
-            {/* Solid pillar — semi-transparent cyan */}
-            <mesh ref={(m) => (pillarRefs.current[i] = m)}>
-              <boxGeometry args={[PILLAR_WIDTH, h, PILLAR_WIDTH]} />
-              <meshBasicMaterial
-                color={PRIMARY}
-                transparent
-                opacity={0.32}
-                depthWrite={false}
-              />
-            </mesh>
-            {/* Wireframe outline on top — defines the edges */}
+          <group key={i} position={[x, 0, 0]} ref={(group) => (pillarRefs.current[i] = group)}>
             <lineSegments>
               <edgesGeometry args={[new THREE.BoxGeometry(PILLAR_WIDTH, h, PILLAR_WIDTH)]} />
               <lineBasicMaterial
                 color={PRIMARY}
                 transparent
-                opacity={0.7}
+                opacity={0.82}
                 depthWrite={false}
               />
             </lineSegments>
-            {/* Glowing cap on top of each pillar */}
-            <mesh ref={(m) => (capRefs.current[i] = m)} position={[0, h / 2 + 0.04, 0]}>
-              <sphereGeometry args={[0.09, 16, 16]} />
-              <meshBasicMaterial
-                color={HIGHLIGHT}
-                transparent
-                opacity={0.9}
-                depthWrite={false}
-                blending={THREE.AdditiveBlending}
-              />
-            </mesh>
           </group>
         );
       })}
