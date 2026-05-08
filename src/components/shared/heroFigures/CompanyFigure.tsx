@@ -1,12 +1,20 @@
+import { Suspense, lazy } from "react";
+
+const DnaScene = lazy(
+  () => import("@/sections/company/_components/CompanyDnaScene"),
+);
+
 /**
- * CompanyFigure — placeholder. The company hero motif has not been designed
- * yet; this slot is rendered in /figure-lab so we can iterate on it.
+ * CompanyFigure — DNA double helix in wireframe lines (matches the rest
+ * of the figure system: brand cyan, transparent background, slow
+ * continuous motion). Two helical strands with rungs connecting them,
+ * rotating around the vertical axis.
  */
 export const CompanyFigure = () => (
-  <div className="absolute inset-0 flex items-center justify-center">
-    <div className="rounded-md border border-dashed border-border px-4 py-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-      Company figure — TBD
-    </div>
+  <div className="absolute inset-0">
+    <Suspense fallback={null}>
+      <DnaScene tiltX={0} tiltY={0} />
+    </Suspense>
   </div>
 );
 
