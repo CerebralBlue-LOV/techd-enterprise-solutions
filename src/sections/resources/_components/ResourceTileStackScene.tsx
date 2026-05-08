@@ -157,7 +157,12 @@ const Book = ({ tiltX = 0, tiltY = 0, rotationOverride, positionOverride }: Scen
   );
 };
 
-export const ResourceTileStackScene = ({ tiltX, tiltY }: SceneProps) => {
+export const ResourceTileStackScene = ({
+  tiltX,
+  tiltY,
+  rotationOverride,
+  positionOverride,
+}: SceneProps) => {
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -170,7 +175,12 @@ export const ResourceTileStackScene = ({ tiltX, tiltY }: SceneProps) => {
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
     >
-      <Book tiltX={tiltX} tiltY={tiltY} />
+      <Book
+        tiltX={tiltX}
+        tiltY={tiltY}
+        rotationOverride={rotationOverride}
+        positionOverride={positionOverride}
+      />
     </Canvas>
   );
 };
