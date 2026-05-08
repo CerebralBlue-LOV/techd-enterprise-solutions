@@ -9,16 +9,25 @@ interface SceneProps {
 
 const PRIMARY = "#00B3E3";
 
-// ServicesFigure — wireframe target / reticle.
-// Dense concentric rings, radial spokes, tick marks, crosshair, and an
-// orbiting tilted ring. Reads as 'precision delivery, hitting the goal'.
+// ServicesFigure — 3D wireframe target / gyro-reticle.
+// A tilted flat target (rings + spokes + tick marks + reticle brackets)
+// surrounded by two orbiting rings on offset axes, plus a tracker bead
+// circling the outer ring. Reads as 'precision delivery, hitting the goal',
+// with depth and motion that feels engineered rather than decorative.
 
-const RINGS = [2.4, 2.0, 1.55, 1.1, 0.65, 0.28];
+const RINGS: Array<{ r: number; opacity: number }> = [
+  { r: 2.4, opacity: 0.55 },
+  { r: 2.0, opacity: 0.7 },
+  { r: 1.55, opacity: 0.8 },
+  { r: 1.1, opacity: 0.9 },
+  { r: 0.65, opacity: 1 },
+  { r: 0.28, opacity: 1 },
+];
 const RING_SEG = 128;
-const SPOKES_MAJOR = 8;   // long spokes from center to outermost ring
-const SPOKES_MINOR = 24;  // short ticks on outermost ring
-const TICKS_OUTER = 72;   // tiny tick marks on outermost ring
-const ORBIT_R = 2.1;      // tilted orbiting ring radius
+const SPOKES_MAJOR = 8;
+const SPOKES_MINOR = 24;
+const TICKS_OUTER = 72;
+const ORBIT_R = 2.15;
 
 function ringSegments(pts: number[], radius: number, segments: number) {
   for (let i = 0; i < segments; i++) {
@@ -29,16 +38,13 @@ function ringSegments(pts: number[], radius: number, segments: number) {
   }
 }
 
-function buildTargetEdges(): THREE.BufferGeometry {
+// Build edges that DON'T need per-ring opacity (spokes, ticks, brackets).
+function buildReticleEdges(): THREE.BufferGeometry {
   const pts: number[] = [];
+  const rOuter = RINGS[0].r;
+  const rInner = RINGS[RINGS.length - 1].r;
 
-  // Concentric rings
-  for (const r of RINGS) ringSegments(pts, r, RING_SEG);
-
-  const rOuter = RINGS[0];
-  const rInner = RINGS[RINGS.length - 1];
-
-  // Major radial spokes (full radius, every 45°)
+  // Major radial spokes
   for (let i = 0; i < SPOKES_MAJOR; i++) {
     const a = (i / SPOKES_MAJOR) * Math.PI * 2;
     const cx = Math.cos(a);
@@ -47,19 +53,19 @@ function buildTargetEdges(): THREE.BufferGeometry {
   }
 
   // Minor radial ticks (between 2nd and outermost rings)
-  const rB = RINGS[1];
+  const rB = RINGS[1].r;
   for (let i = 0; i < SPOKES_MINOR; i++) {
-    if (i % (SPOKES_MINOR / SPOKES_MAJOR) === 0) continue; // skip where major spokes sit
+    if (i % (SPOKES_MINOR / SPOKES_MAJOR) === 0) continue;
     const a = (i / SPOKES_MINOR) * Math.PI * 2;
     const cx = Math.cos(a);
     const cy = Math.sin(a);
     pts.push(cx * rB, cy * rB, 0, cx * rOuter, cy * rOuter, 0);
   }
 
-  // Outer-edge tick marks (small protruding ticks just outside outer ring)
+  // Outer-edge tick marks
   const tickInner = rOuter;
   const tickShort = rOuter + 0.08;
-  const tickLong = rOuter + 0.18;
+  const tickLong = rOuter + 0.2;
   for (let i = 0; i < TICKS_OUTER; i++) {
     const a = (i / TICKS_OUTER) * Math.PI * 2;
     const cx = Math.cos(a);
@@ -69,74 +75,84 @@ function buildTargetEdges(): THREE.BufferGeometry {
     pts.push(cx * tickInner, cy * tickInner, 0, cx * tEnd, cy * tEnd, 0);
   }
 
-  // Crosshair: 4 segments with a small gap at center
-  const gap = RINGS[RINGS.length - 1] * 0.6;
-  const crossEnd = rOuter * 1.1;
+  // Crosshair with center gap
+  const gap = RINGS[RINGS.length - 1].r * 0.6;
+  const crossEnd = rOuter * 1.12;
   pts.push(-crossEnd, 0, 0, -gap, 0, 0);
   pts.push(gap, 0, 0, crossEnd, 0, 0);
   pts.push(0, -crossEnd, 0, 0, -gap, 0);
   pts.push(0, gap, 0, 0, crossEnd, 0);
 
-  // Reticle corner brackets at the diagonals (4 short L-marks at outermost ring)
+  // Reticle corner brackets at the diagonals
   const bracketR = rOuter * 0.92;
-  const bracketLen = 0.22;
+  const bracketLen = 0.24;
   for (let q = 0; q < 4; q++) {
     const a = Math.PI / 4 + (q * Math.PI) / 2;
     const cx = Math.cos(a);
     const cy = Math.sin(a);
     const px = cx * bracketR;
     const py = cy * bracketR;
-    // tangent direction
     const tx = -cy;
     const ty = cx;
-    // radial direction
-    const rx = cx;
-    const ry = cy;
     pts.push(px, py, 0, px + tx * bracketLen, py + ty * bracketLen, 0);
-    pts.push(px, py, 0, px + rx * bracketLen, py + ry * bracketLen, 0);
+    pts.push(px, py, 0, px - tx * bracketLen, py - ty * bracketLen, 0);
   }
+
+  // Bullseye + tiny center cross
+  ringSegments(pts, 0.1, 28);
+  pts.push(-0.06, 0, 0, 0.06, 0, 0);
+  pts.push(0, -0.06, 0, 0, 0.06, 0);
 
   const geom = new THREE.BufferGeometry();
   geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
   return geom;
 }
 
-function buildOrbitRing(): THREE.BufferGeometry {
+function buildSingleRing(radius: number, segments: number): THREE.BufferGeometry {
   const pts: number[] = [];
-  ringSegments(pts, ORBIT_R, 96);
-  // Add small tick marks every 30° for a 'gauge' feel
+  ringSegments(pts, radius, segments);
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+  return geom;
+}
+
+function buildOrbitRing(radius: number): THREE.BufferGeometry {
+  const pts: number[] = [];
+  ringSegments(pts, radius, 96);
+  // gauge ticks every 15°
   const seg = 24;
   for (let i = 0; i < seg; i++) {
     const a = (i / seg) * Math.PI * 2;
     const cx = Math.cos(a);
     const cy = Math.sin(a);
-    const len = i % 4 === 0 ? 0.16 : 0.08;
-    pts.push(cx * ORBIT_R, cy * ORBIT_R, 0, cx * (ORBIT_R + len), cy * (ORBIT_R + len), 0);
+    const len = i % 4 === 0 ? 0.16 : 0.07;
+    pts.push(cx * radius, cy * radius, 0, cx * (radius + len), cy * (radius + len), 0);
   }
   const geom = new THREE.BufferGeometry();
   geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
   return geom;
 }
 
-function buildBullseye(): THREE.BufferGeometry {
-  const pts: number[] = [];
-  ringSegments(pts, 0.1, 28);
-  // tiny inner cross
-  pts.push(-0.06, 0, 0, 0.06, 0, 0);
-  pts.push(0, -0.06, 0, 0, 0.06, 0);
-  const geom = new THREE.BufferGeometry();
-  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
-  return geom;
+function buildDiamondMarker(): THREE.BufferGeometry {
+  // Small wireframe diamond (octahedron) used as the tracker bead.
+  return new THREE.EdgesGeometry(new THREE.OctahedronGeometry(0.11, 0));
 }
 
 const Target = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
   const ringsRef = useRef<THREE.Group>(null);
-  const orbitRef = useRef<THREE.Group>(null);
+  const orbitARef = useRef<THREE.Group>(null);
+  const orbitBRef = useRef<THREE.Group>(null);
+  const trackerRef = useRef<THREE.Group>(null);
 
-  const targetGeom = useMemo(buildTargetEdges, []);
-  const orbitGeom = useMemo(buildOrbitRing, []);
-  const bullGeom = useMemo(buildBullseye, []);
+  const reticleGeom = useMemo(buildReticleEdges, []);
+  const ringGeoms = useMemo(
+    () => RINGS.map((r) => buildSingleRing(r.r, RING_SEG)),
+    []
+  );
+  const orbitAGeom = useMemo(() => buildOrbitRing(ORBIT_R), []);
+  const orbitBGeom = useMemo(() => buildOrbitRing(ORBIT_R * 0.78), []);
+  const trackerGeom = useMemo(buildDiamondMarker, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
@@ -147,36 +163,69 @@ const Target = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
     if (ringsRef.current) {
       ringsRef.current.rotation.z = t * 0.08;
     }
-    if (orbitRef.current) {
-      // Tilted ring spinning around its own axis, also slowly precessing
-      orbitRef.current.rotation.z = -t * 0.25;
-      orbitRef.current.rotation.y = 0.65 + Math.sin(t * 0.2) * 0.1;
-      orbitRef.current.rotation.x = 0.2;
+    if (orbitARef.current) {
+      orbitARef.current.rotation.z = -t * 0.28;
+      orbitARef.current.rotation.y = 0.7 + Math.sin(t * 0.2) * 0.12;
+      orbitARef.current.rotation.x = 0.18;
+    }
+    if (orbitBRef.current) {
+      orbitBRef.current.rotation.z = t * 0.42;
+      orbitBRef.current.rotation.x = -0.65 + Math.sin(t * 0.17) * 0.1;
+      orbitBRef.current.rotation.y = -0.25;
+    }
+    if (trackerRef.current) {
+      // Tracker bead orbiting the outer ring in-plane
+      const speed = 0.55;
+      const a = t * speed;
+      trackerRef.current.position.set(
+        Math.cos(a) * RINGS[0].r,
+        Math.sin(a) * RINGS[0].r,
+        0
+      );
+      trackerRef.current.rotation.y = t * 0.6;
+      trackerRef.current.rotation.x = t * 0.4;
     }
   });
 
   return (
     <group ref={groupRef}>
       <group ref={ringsRef}>
+        {/* Per-ring opacity for depth hierarchy */}
+        {RINGS.map((r, i) => (
+          <lineSegments key={i}>
+            <primitive object={ringGeoms[i]} attach="geometry" />
+            <lineBasicMaterial color={PRIMARY} transparent opacity={r.opacity} depthWrite={false} />
+          </lineSegments>
+        ))}
+
+        {/* Reticle: spokes, ticks, brackets, crosshair, bullseye */}
         <lineSegments>
-          <primitive object={targetGeom} attach="geometry" />
+          <primitive object={reticleGeom} attach="geometry" />
           <lineBasicMaterial color={PRIMARY} transparent opacity={0.85} depthWrite={false} />
         </lineSegments>
+
+        {/* Tracker bead orbits in the same plane as the rings */}
+        <group ref={trackerRef}>
+          <lineSegments>
+            <primitive object={trackerGeom} attach="geometry" />
+            <lineBasicMaterial color={PRIMARY} transparent opacity={1} depthWrite={false} />
+          </lineSegments>
+        </group>
       </group>
 
-      {/* Tilted orbiting ring for added depth and motion */}
-      <group ref={orbitRef}>
+      {/* Two orbiting tilted rings on offset axes — gyroscope feel */}
+      <group ref={orbitARef}>
         <lineSegments>
-          <primitive object={orbitGeom} attach="geometry" />
-          <lineBasicMaterial color={PRIMARY} transparent opacity={0.6} depthWrite={false} />
+          <primitive object={orbitAGeom} attach="geometry" />
+          <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
         </lineSegments>
       </group>
-
-      {/* Center bullseye, never rotates */}
-      <lineSegments>
-        <primitive object={bullGeom} attach="geometry" />
-        <lineBasicMaterial color={PRIMARY} transparent opacity={1} depthWrite={false} />
-      </lineSegments>
+      <group ref={orbitBRef}>
+        <lineSegments>
+          <primitive object={orbitBGeom} attach="geometry" />
+          <lineBasicMaterial color={PRIMARY} transparent opacity={0.45} depthWrite={false} />
+        </lineSegments>
+      </group>
     </group>
   );
 };
