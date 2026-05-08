@@ -14,12 +14,14 @@ const PRIMARY = "#00B3E3";
 // rungs (base pairs) connecting them; the whole helix rotates slowly
 // around its vertical axis.
 
-const HEIGHT = 5.0;          // vertical span of the helix
-const RADIUS = 0.95;         // helix radius
-const TURNS = 2.4;           // number of full turns over HEIGHT
-const STRAND_SEGMENTS = 220; // resolution per strand
-const RUNG_COUNT = 14;       // number of base-pair rungs
-const NODE_COUNT = 28;       // glowing nodes along each strand
+const HEIGHT = 9.0;          // vertical span of the helix (stretched)
+const RADIUS = 0.85;         // helix radius
+const TURNS = 2.6;           // full turns over HEIGHT — looser pitch
+const STRAND_SEGMENTS = 320; // resolution per strand
+const RUNG_COUNT = 22;       // base-pair rungs
+const NODE_COUNT = 44;       // nodes along each strand
+// Diagonal tilt of the whole helix (radians) — bottom-left to top-right
+const DIAGONAL_TILT = -Math.PI / 5;
 
 // Build a strand as a line of points along a helix.
 function strandPoints(phaseOffset: number) {
@@ -101,9 +103,6 @@ const Helix = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
     if (groupRef.current) {
       // Slow continuous rotation around the helix axis (Y)
       groupRef.current.rotation.y = t * 0.35 + tiltX * 0.2;
-      // A whisper of side-to-side tilt — keeps the strand silhouette alive
-      groupRef.current.rotation.z = Math.sin(t * 0.18) * 0.04 + tiltY * 0.05;
-      groupRef.current.rotation.x = -0.04 + Math.sin(t * 0.12) * 0.03;
     }
   });
 
