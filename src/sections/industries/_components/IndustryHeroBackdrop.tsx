@@ -1,14 +1,18 @@
-import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { Suspense, lazy } from "react";
+
+const RingsScene = lazy(() => import("./IndustryRingsScene"));
 
 interface BackdropProps {
-  /** Kept for API compatibility — unused by the static CSS floor. */
+  /** Kept for API compatibility. */
   cursor?: { x: number; y: number } | null;
 }
 
 /**
- * Industries hero backdrop.
- * - Pure-CSS perspective grid floor (no JS, no WebGL, no animation)
- * - Soft side/top fades and ambient gradient wash
+ * Industry hero backdrop — same pattern as Solutions:
+ *  1. Faint engineered grid
+ *  2. Right-side r3f scene (stacked rings tower)
+ *  3. Soft cyan gradient washes
+ *  4. Top vignette
  */
 export const IndustryHeroBackdrop = (_: BackdropProps) => {
   return (
@@ -16,37 +20,48 @@ export const IndustryHeroBackdrop = (_: BackdropProps) => {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      {/* CSS perspective floor */}
-      <div className="absolute inset-x-0 bottom-0 h-[70%] [perspective:600px]">
-        <div
-          className="absolute inset-0 origin-bottom"
-          style={{
-            transform: "rotateX(60deg) scale(1.6)",
-            backgroundImage:
-              "linear-gradient(to right, hsl(var(--muted-foreground) / 0.55) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--muted-foreground) / 0.55) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-            backgroundPosition: "center bottom",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0%, black 35%, black 90%, transparent 100%)",
-            maskImage:
-              "linear-gradient(to bottom, transparent 0%, black 35%, black 90%, transparent 100%)",
-          }}
-        />
-      </div>
-
-      {/* Soft side/top fade — keeps the floor visible in the middle/bottom */}
+      {/* 1. Engineered grid */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 35%, transparent 80%, hsl(var(--background) / 0.4) 100%), linear-gradient(to right, hsl(var(--background)) 0%, transparent 12%, transparent 88%, hsl(var(--background)) 100%)",
+          backgroundImage:
+            "linear-gradient(to right, hsl(var(--border) / 0.55) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.55) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+          WebkitMaskImage:
+            "radial-gradient(80% 90% at 50% 35%, black 35%, transparent 85%)",
+          maskImage:
+            "radial-gradient(80% 90% at 50% 35%, black 35%, transparent 85%)",
         }}
       />
 
-      {/* Gradient wash */}
-      <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl" />
-      <div className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl" />
+      {/* 2. Right-side rings tower */}
+      <div className="absolute inset-y-0 right-0 hidden md:block md:w-[60%] lg:w-[55%]">
+        <Suspense fallback={null}>
+          <RingsScene tiltX={0} tiltY={0} />
+        </Suspense>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 50% 70% at 0% 60%, hsl(var(--background)) 0%, hsl(var(--background) / 0.85) 35%, transparent 75%)",
+          }}
+        />
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      </div>
 
+      {/* 3. Gradient wash */}
+      <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
+      <div
+        className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl animate-gradient-drift"
+        style={{ animationDelay: "-9s" }}
+      />
+      <div
+        className="absolute bottom-0 left-[10%] h-[420px] w-[680px] rounded-full bg-background blur-3xl animate-gradient-drift"
+        style={{ animationDelay: "-4s" }}
+      />
+
+      {/* 4. Top vignette */}
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
     </div>
   );
