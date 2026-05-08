@@ -20,10 +20,10 @@ export const WhyTechDSection = () => (
         </div>
       </Reveal>
 
-      <div className="mt-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-16 md:mt-12">
+      <div className="mt-10 grid items-center gap-6 md:gap-12 lg:grid-cols-2 lg:gap-16 md:mt-12">
         {/* LEFT — orbit + IBM credential */}
         <Reveal delay={80}>
-          <div className="relative flex aspect-square w-full max-w-[460px] mx-auto lg:mx-0 items-center justify-center">
+          <div className="relative flex aspect-square w-full max-w-[320px] md:max-w-[460px] mx-auto lg:mx-0 items-center justify-center">
             <ParticleOrbit />
             <IBMPlatinumBadge size="lg" variant="card" showTenure className="relative z-20" />
           </div>
@@ -32,7 +32,7 @@ export const WhyTechDSection = () => (
         {/* RIGHT — prose description */}
         <div className="flex flex-col gap-6">
           <Reveal delay={120}>
-            <p className="text-lg font-light leading-relaxed text-secondary">
+            <p className="text-base lg:text-lg font-light leading-relaxed text-secondary">
               We're not a staffing shop.{" "}
               <span className="font-normal text-foreground">
                 Principals deliver
@@ -43,7 +43,7 @@ export const WhyTechDSection = () => (
           </Reveal>
 
           <Reveal delay={180}>
-            <p className="text-lg font-light leading-relaxed text-secondary">
+            <p className="text-base lg:text-lg font-light leading-relaxed text-secondary">
               Fifteen years building{" "}
               <span className="font-normal text-foreground">
                 auditable AI, governed data platforms,
@@ -55,7 +55,7 @@ export const WhyTechDSection = () => (
           </Reveal>
 
           <Reveal delay={240}>
-            <p className="text-lg font-light leading-relaxed text-secondary">
+            <p className="text-base lg:text-lg font-light leading-relaxed text-secondary">
               IBM-deep and{" "}
               <span className="font-normal text-foreground">
                 multi-cloud fluent
