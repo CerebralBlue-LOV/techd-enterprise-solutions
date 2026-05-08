@@ -12,15 +12,15 @@ const PRIMARY = "#00B3E3";
 // Resources figure — open wireframe book with pages fanning from
 // right to left, one at a time, then resetting. Monoline cyan.
 
-const PAGE_W = 1.7;          // page width (along X, hinged at x=0)
-const PAGE_D = 2.2;          // page depth (along Z, the spine direction)
+const PAGE_W = 2.4;          // page width (along X, hinged at x=0)
+const PAGE_D = 3.1;          // page depth (along Z, the spine direction)
 const PAGE_SUBDIV_W = 4;
 const PAGE_SUBDIV_D = 5;
 
 const PAGE_COUNT = 6;
-const FLIP_DUR = 2.4;        // seconds per page flip
-const STAGGER = 1.2;         // delay between successive flips
-const HOLD = 1.8;            // pause after all flipped
+const FLIP_DUR = 4.0;        // seconds per page flip (slowed)
+const STAGGER = 2.0;         // delay between successive flips (slowed)
+const HOLD = 3.0;            // pause after all flipped (slowed)
 const LOOP = STAGGER * (PAGE_COUNT - 1) + FLIP_DUR + HOLD;
 
 // Build a subdivided rectangular page (hinged at x=0).
@@ -91,7 +91,7 @@ const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   });
 
   return (
-    <group ref={groupRef} rotation={[-0.55, 0, 0]}>
+    <group ref={groupRef} rotation={[-0.65, 0.55, 0.15]}>
       {/* Left cover/base — pages that have already been flipped land on
           this side. Rendered flat at rotation = PI (mirrored on -X). */}
       <group rotation={[0, 0, Math.PI]}>
@@ -117,7 +117,7 @@ const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color={PRIMARY} transparent opacity={0.95} depthWrite={false} />
+        <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
       </lineSegments>
 
       {/* Flipping pages — hinged at x=0, rotated around z to swing left */}
@@ -131,7 +131,7 @@ const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
         >
           <lineSegments>
             <primitive object={pageGeom} attach="geometry" />
-            <lineBasicMaterial color={PRIMARY} transparent opacity={0.9} depthWrite={false} />
+            <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
           </lineSegments>
         </group>
       ))}
