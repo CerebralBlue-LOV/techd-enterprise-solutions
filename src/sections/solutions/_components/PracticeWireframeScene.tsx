@@ -65,17 +65,6 @@ const Wireframe = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
         />
       </mesh>
 
-      {/* Soft inner glow sphere */}
-      <mesh>
-        <sphereGeometry args={[0.45, 32, 32]} />
-        <meshBasicMaterial
-          color={HIGHLIGHT}
-          transparent
-          opacity={0.35}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
     </group>
   );
 };
