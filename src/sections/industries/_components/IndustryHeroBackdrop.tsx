@@ -50,17 +50,7 @@ export const IndustryHeroBackdrop = (_: BackdropProps) => {
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
-      {/* 3. Gradient wash */}
-      <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
-      <div
-        className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl animate-gradient-drift"
-        style={{ animationDelay: "-9s" }}
-      />
-      <div
-        className="absolute bottom-0 left-[10%] h-[420px] w-[680px] rounded-full bg-background blur-3xl animate-gradient-drift"
-        style={{ animationDelay: "-4s" }}
-      />
-
+      {/* (gradient circle washes removed for industries) */}
       {/* 4. Top vignette */}
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
     </div>
