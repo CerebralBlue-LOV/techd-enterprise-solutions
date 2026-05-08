@@ -14,8 +14,8 @@ const PRIMARY = "#00B3E3";
 // "rails" so it reads as a real 3D ring rather than a flat circle.
 // Group rotates slowly; rings sit at 120deg around the common axis.
 
-const RING_R = 1.55;       // radius of each ring (center to tube center)
-const TUBE_R = 0.15;       // tube radius (slimmer = less visual weight)
+const RING_R = 1.25;       // radius of each ring (center to tube center)
+const TUBE_R = 0.13;       // tube radius (slimmer = less visual weight)
 const RADIAL_SEG = 96;     // around the ring
 const TUBE_SEG = 8;        // around the tube (fewer = fewer wireframe lines)
 const TILT = Math.PI / 3;  // tilt of each ring out of the XY plane
