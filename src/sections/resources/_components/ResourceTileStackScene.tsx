@@ -67,7 +67,7 @@ function pageRotation(local: number, i: number): number {
   return Math.PI;
 }
 
-const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
+const Book = ({ tiltX = 0, tiltY = 0, rotationOverride, positionOverride }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
   const pageRefs = useRef<(THREE.Group | null)[]>([]);
 
@@ -76,9 +76,23 @@ const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      // Slight slow drift, matching solutions speed.
-      groupRef.current.rotation.x = -5.2 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
-      groupRef.current.rotation.y = 1 + Math.sin(t * 0.15) * 0.08 + tiltX * 0.15;
+      if (rotationOverride) {
+        groupRef.current.rotation.set(
+          rotationOverride[0],
+          rotationOverride[1],
+          rotationOverride[2],
+        );
+      } else {
+        groupRef.current.rotation.x = -5.2 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
+        groupRef.current.rotation.y = 1 + Math.sin(t * 0.15) * 0.08 + tiltX * 0.15;
+      }
+      if (positionOverride) {
+        groupRef.current.position.set(
+          positionOverride[0],
+          positionOverride[1],
+          positionOverride[2],
+        );
+      }
     }
 
     const local = t % LOOP;
