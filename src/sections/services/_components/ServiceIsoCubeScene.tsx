@@ -9,92 +9,92 @@ interface SceneProps {
 
 const PRIMARY = "#00B3E3";
 
-// ServicesFigure — wireframe arched bridge, slowly rotating.
-// Two parallel arches (front + back), cross-braced, with vertical
-// suspension cables down to a deck. Monoline cyan.
+// ServicesFigure — wireframe target / concentric rings.
+// Three concentric rings + radial spokes + center bullseye.
+// Tilted slightly so it reads as a 3D disc, with a slow rotation.
 
-const W = 4.4;            // bridge length (X)
-const H = 1.4;            // arch peak height (Y)
-const D = 0.9;            // bridge depth (Z, distance between front/back)
-const N = 16;             // segments along the arch
+const RINGS = [2.2, 1.55, 0.9];
+const SEG = 96;
+const SPOKES = 12;
 
-function archPoint(i: number): [number, number] {
-  // Parametric circular arc from (-W/2, 0) to (W/2, 0), peak (0, H).
-  // Use a half-ellipse: x = (W/2) * cos(theta), y = H * sin(theta)
-  const theta = Math.PI * (1 - i / N);
-  return [(W / 2) * Math.cos(theta), H * Math.sin(theta)];
+function ringPositions(radius: number, segments: number): number[] {
+  const pts: number[] = [];
+  for (let i = 0; i < segments; i++) {
+    const a0 = (i / segments) * Math.PI * 2;
+    const a1 = ((i + 1) / segments) * Math.PI * 2;
+    pts.push(Math.cos(a0) * radius, Math.sin(a0) * radius, 0);
+    pts.push(Math.cos(a1) * radius, Math.sin(a1) * radius, 0);
+  }
+  return pts;
 }
 
-function buildBridgeEdges(): THREE.BufferGeometry {
+function buildTargetEdges(): THREE.BufferGeometry {
   const pts: number[] = [];
-  const halfD = D / 2;
 
-  // Two arches (front z=+halfD, back z=-halfD) — polylines as segments.
-  for (const z of [halfD, -halfD]) {
-    for (let i = 0; i < N; i++) {
-      const [x0, y0] = archPoint(i);
-      const [x1, y1] = archPoint(i + 1);
-      pts.push(x0, y0, z, x1, y1, z);
-    }
+  // Concentric rings
+  for (const r of RINGS) {
+    pts.push(...ringPositions(r, SEG));
   }
 
-  // Cross-braces between front and back arches at every node + diagonals.
-  for (let i = 0; i <= N; i++) {
-    const [x, y] = archPoint(i);
-    pts.push(x, y, halfD, x, y, -halfD);
-  }
-  // Diagonal cross-bracing (truss): each segment gets an X.
-  for (let i = 0; i < N; i++) {
-    const [xa, ya] = archPoint(i);
-    const [xb, yb] = archPoint(i + 1);
-    pts.push(xa, ya, halfD, xb, yb, -halfD);
-    pts.push(xb, yb, halfD, xa, ya, -halfD);
+  // Radial spokes from inner ring out to outer ring
+  const rInner = RINGS[RINGS.length - 1];
+  const rOuter = RINGS[0];
+  for (let i = 0; i < SPOKES; i++) {
+    const a = (i / SPOKES) * Math.PI * 2;
+    const cx = Math.cos(a);
+    const cy = Math.sin(a);
+    pts.push(cx * rInner, cy * rInner, 0, cx * rOuter, cy * rOuter, 0);
   }
 
-  // Suspension cables from arch nodes down to deck (y = 0).
-  for (let i = 1; i < N; i++) {
-    const [x, y] = archPoint(i);
-    pts.push(x, y, halfD, x, 0, halfD);
-    pts.push(x, y, -halfD, x, 0, -halfD);
-  }
-
-  // Deck — rectangle outline + a few longitudinal lines.
-  const deckXs = [-W / 2, W / 2];
-  const deckZs = [-halfD, halfD];
-  // Long edges
-  pts.push(deckXs[0], 0, deckZs[0], deckXs[1], 0, deckZs[0]);
-  pts.push(deckXs[0], 0, deckZs[1], deckXs[1], 0, deckZs[1]);
-  // Short edges
-  pts.push(deckXs[0], 0, deckZs[0], deckXs[0], 0, deckZs[1]);
-  pts.push(deckXs[1], 0, deckZs[0], deckXs[1], 0, deckZs[1]);
-  // Cross ties along the deck at each arch node
-  for (let i = 1; i < N; i++) {
-    const [x] = archPoint(i);
-    pts.push(x, 0, -halfD, x, 0, halfD);
-  }
+  // Crosshair through the center, slightly past the inner ring
+  const cross = rInner * 1.15;
+  pts.push(-cross, 0, 0, cross, 0, 0);
+  pts.push(0, -cross, 0, 0, cross, 0);
 
   const geom = new THREE.BufferGeometry();
   geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
   return geom;
 }
 
-const Bridge = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
+function buildBullseye(): THREE.BufferGeometry {
+  // Tiny filled-look dot rendered as a small ring
+  const pts: number[] = [];
+  pts.push(...ringPositions(0.12, 32));
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+  return geom;
+}
+
+const Target = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const edges = useMemo(buildBridgeEdges, []);
+  const outerRef = useRef<THREE.Group>(null);
+  const edges = useMemo(buildTargetEdges, []);
+  const bull = useMemo(buildBullseye, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.15 + tiltX * 0.2;
-      groupRef.current.rotation.x = -0.18 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
+      // Disc tilt + subtle wobble from pointer
+      groupRef.current.rotation.x = -0.55 + tiltY * 0.1;
+      groupRef.current.rotation.y = Math.sin(t * 0.18) * 0.08 + tiltX * 0.18;
+    }
+    if (outerRef.current) {
+      // Slow in-plane rotation of the rings/spokes
+      outerRef.current.rotation.z = t * 0.12;
     }
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.3, 0]}>
+    <group ref={groupRef} position={[0, 0, 0]}>
+      <group ref={outerRef}>
+        <lineSegments>
+          <primitive object={edges} attach="geometry" />
+          <lineBasicMaterial color={PRIMARY} transparent opacity={0.9} depthWrite={false} />
+        </lineSegments>
+      </group>
       <lineSegments>
-        <primitive object={edges} attach="geometry" />
-        <lineBasicMaterial color={PRIMARY} transparent opacity={0.9} depthWrite={false} />
+        <primitive object={bull} attach="geometry" />
+        <lineBasicMaterial color={PRIMARY} transparent opacity={1} depthWrite={false} />
       </lineSegments>
     </group>
   );
@@ -108,12 +108,12 @@ export const ServiceIsoCubeScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0.4, 6.4], fov: 42 }}
+      camera={{ position: [0, 0, 6.6], fov: 45 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
     >
-      <Bridge tiltX={tiltX} tiltY={tiltY} />
+      <Target tiltX={tiltX} tiltY={tiltY} />
     </Canvas>
   );
 };
