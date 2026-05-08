@@ -8,11 +8,12 @@ interface SceneProps {
   tiltY: number;
 }
 
-const NODE_COUNT = 70;
+const NODE_COUNT = 90;
 const RADIUS = 4.5;
-const LINK_DIST = 1.6;
+const LINK_DIST = 1.55;
+const HIGHLIGHT_COUNT = 10;
 const PRIMARY = new THREE.Color("#00B3E3");
-const MUTED = new THREE.Color("#A7A5A8");
+const HIGHLIGHT = new THREE.Color("#7CE6FF");
 
 /** Random points inside a flattened sphere — gives a network-graph feel */
 function generateNodes(count: number, radius: number) {
@@ -120,26 +121,58 @@ const Constellation = ({ tiltX, tiltY }: SceneProps) => {
     return g;
   }, [basePositions]);
 
+  // Pick a stable subset of nodes for highlight glow
+  const highlightGeometry = useMemo(() => {
+    const idx = new Set<number>();
+    while (idx.size < HIGHLIGHT_COUNT) idx.add(Math.floor(Math.random() * NODE_COUNT));
+    const arr = Array.from(idx);
+    const pos = new Float32Array(arr.length * 3);
+    arr.forEach((i, k) => {
+      pos[k * 3] = basePositions[i * 3];
+      pos[k * 3 + 1] = basePositions[i * 3 + 1];
+      pos[k * 3 + 2] = basePositions[i * 3 + 2];
+    });
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    return g;
+  }, [basePositions]);
+
   return (
     <group ref={groupRef}>
-      <points ref={pointsRef} geometry={pointGeometry}>
-        <pointsMaterial
-          size={0.07}
+      {/* Wireframe links — cyan, very faint, matches field style */}
+      <lineSegments ref={linesRef} geometry={lineGeometry}>
+        <lineBasicMaterial
           color={PRIMARY}
           transparent
-          opacity={0.85}
+          opacity={0.18}
+          depthWrite={false}
+        />
+      </lineSegments>
+
+      {/* Particle nodes — cyan, small, semi-transparent */}
+      <points ref={pointsRef} geometry={pointGeometry}>
+        <pointsMaterial
+          size={0.05}
+          color={PRIMARY}
+          transparent
+          opacity={0.65}
           sizeAttenuation
           depthWrite={false}
         />
       </points>
-      <lineSegments ref={linesRef} geometry={lineGeometry}>
-        <lineBasicMaterial
-          color={MUTED}
+
+      {/* Highlight glowing nodes — additive blend, like the field */}
+      <points geometry={highlightGeometry}>
+        <pointsMaterial
+          size={0.18}
+          color={HIGHLIGHT}
           transparent
-          opacity={0.35}
+          opacity={0.9}
+          sizeAttenuation
           depthWrite={false}
+          blending={THREE.AdditiveBlending}
         />
-      </lineSegments>
+      </points>
     </group>
   );
 };
