@@ -8,98 +8,106 @@ interface SceneProps {
 }
 
 const PRIMARY = "#00B3E3";
-const OPACITY = 0.55;
 
-// Resources figure — a wireframe stack of bound pages that gently
-// opens like a book and closes again, on a slow continuous loop.
-// Top-down diagonal (isometric-ish) view.
+// Resources figure — open wireframe book with pages fanning from
+// right to left, one at a time, then resetting. Monoline cyan.
 
-const PAGE_W = 2.4;            // page width (along X, hinged at x=0)
-const PAGE_D = 3.1;            // page depth (along Z, the spine direction)
-const SUBDIV_W = 4;
-const SUBDIV_D = 5;
+const PAGE_W = 2.4;          // page width (along X, hinged at x=0)
+const PAGE_D = 3.1;          // page depth (along Z, the spine direction)
+const PAGE_SUBDIV_W = 4;
+const PAGE_SUBDIV_D = 5;
 
-const PAGE_COUNT = 7;          // number of pages in the stack
-const PAGE_GAP = 0.018;        // vertical spacing between stacked pages
-const OPEN_ANGLE = Math.PI * 0.92; // how far each side opens (~166°)
+const PAGE_COUNT = 6;
+const FLIP_DUR = 4.0;        // seconds per page flip (slowed)
+const STAGGER = 2.0;         // delay between successive flips (slowed)
+const HOLD = 3.0;            // pause after all flipped (slowed)
+const LOOP = STAGGER * (PAGE_COUNT - 1) + FLIP_DUR + HOLD;
 
-const CYCLE = 11;              // seconds per full open+close cycle
-const HOLD = 0.18;             // fraction of cycle held fully open
-
-// Build a subdivided rectangular page hinged at x=0.
-// Spans x: 0..PAGE_W, z: -PAGE_D/2..PAGE_D/2.
+// Build a subdivided rectangular page (hinged at x=0).
+// Rectangle spans x: 0..PAGE_W, z: -PAGE_D/2..PAGE_D/2, y=0.
 function buildPageEdges(): THREE.BufferGeometry {
   const pts: number[] = [];
-  const dx = PAGE_W / SUBDIV_W;
-  const dz = PAGE_D / SUBDIV_D;
+  const dx = PAGE_W / PAGE_SUBDIV_W;
+  const dz = PAGE_D / PAGE_SUBDIV_D;
   const z0 = -PAGE_D / 2;
 
-  for (let i = 0; i <= SUBDIV_W; i++) {
+  // vertical lines (constant x)
+  for (let i = 0; i <= PAGE_SUBDIV_W; i++) {
     const x = i * dx;
     pts.push(x, 0, z0, x, 0, z0 + PAGE_D);
   }
-  for (let j = 0; j <= SUBDIV_D; j++) {
+  // horizontal lines (constant z)
+  for (let j = 0; j <= PAGE_SUBDIV_D; j++) {
     const z = z0 + j * dz;
     pts.push(0, 0, z, PAGE_W, 0, z);
   }
 
   const geom = new THREE.BufferGeometry();
-  geom.setAttribute(
-    "position",
-    new THREE.BufferAttribute(new Float32Array(pts), 3),
-  );
+  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
   return geom;
 }
 
-// Smooth ease in/out for the open/close breathing motion.
-const easeInOut = (t: number) => 0.5 - Math.cos(Math.PI * t) / 2;
+const ease = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-// Returns 0..1..0 over the cycle with a hold near the peak.
-function breathe(t: number): number {
-  const local = (t % CYCLE) / CYCLE; // 0..1
-  const rampLen = (1 - HOLD) / 2;
-  if (local < rampLen) return easeInOut(local / rampLen);
-  if (local < rampLen + HOLD) return 1;
-  return easeInOut(1 - (local - rampLen - HOLD) / rampLen);
+// Returns the rotation around z-axis for page i at loop-local time `local`.
+// Pages start lying flat on the right (rotation = 0) and flip to the left
+// (rotation = +PI). After HOLD pause, the loop restarts.
+function pageRotation(local: number, i: number): number {
+  const start = i * STAGGER;
+  if (local < start) return 0;
+  if (local < start + FLIP_DUR) {
+    const p = ease((local - start) / FLIP_DUR);
+    return Math.PI * p;
+  }
+  return Math.PI;
 }
 
 const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const rightRefs = useRef<(THREE.Group | null)[]>([]);
-  const leftRefs = useRef<(THREE.Group | null)[]>([]);
+  const pageRefs = useRef<(THREE.Group | null)[]>([]);
 
   const pageGeom = useMemo(buildPageEdges, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      // Subtle drift around a fixed top-down diagonal pose.
-      groupRef.current.rotation.x = -0.95 + Math.sin(t * 0.12) * 0.03 + tiltY * 0.06;
-      groupRef.current.rotation.y = -0.55 + Math.sin(t * 0.15) * 0.05 + tiltX * 0.1;
-      groupRef.current.rotation.z = 0;
+      // Slight slow drift, matching solutions speed.
+      groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.08 + tiltX * 0.15;
+      groupRef.current.rotation.x = -0.55 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
     }
 
-    const k = breathe(t);
-    // Right side opens upward (negative z-rotation lifts +X side toward +Y),
-    // left side mirrors it. Pages stagger slightly so the stack fans.
+    const local = t % LOOP;
     for (let i = 0; i < PAGE_COUNT; i++) {
-      const stagger = (i / Math.max(1, PAGE_COUNT - 1)) * 0.12; // tiny lag
-      const a = OPEN_ANGLE * Math.max(0, Math.min(1, k - stagger * (1 - k)));
-
-      const right = rightRefs.current[i];
-      const left = leftRefs.current[i];
-      if (right) right.rotation.z = -a;
-      if (left) left.rotation.z = a;
+      const ref = pageRefs.current[i];
+      if (!ref) continue;
+      // tiny per-page z-offset so stacked pages don't z-fight
+      const flat = pageRotation(local, i);
+      ref.rotation.z = flat;
+      // small lift while mid-flip so it arcs slightly above the spine
+      const mid = Math.sin((flat / Math.PI) * Math.PI); // 0..1..0
+      ref.position.y = mid * 0.05;
     }
   });
 
-  // Pages share the same hinged geometry. The "left" page is the same
-  // sheet rotated 180° around z so it extends to -X from the spine.
-  const pages = Array.from({ length: PAGE_COUNT });
-
   return (
-    <group ref={groupRef} position={[0, 0.1, 0]}>
-      {/* Spine — a single line along z at x=0 */}
+    <group ref={groupRef} rotation={[-0.95, -0.6, 0]} position={[0, 0.6, 0]}>
+      {/* Left cover/base — pages that have already been flipped land on
+          this side. Rendered flat at rotation = PI (mirrored on -X). */}
+      <group rotation={[0, 0, Math.PI]}>
+        <lineSegments>
+          <primitive object={pageGeom} attach="geometry" />
+          <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
+        </lineSegments>
+      </group>
+
+      {/* Right base — base sheet on the right side. */}
+      <lineSegments>
+        <primitive object={pageGeom} attach="geometry" />
+        <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
+      </lineSegments>
+
+      {/* Spine — vertical line along z at x=0 */}
       <lineSegments>
         <bufferGeometry>
           <bufferAttribute
@@ -109,55 +117,22 @@ const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial
-          color={PRIMARY}
-          transparent
-          opacity={OPACITY}
-          depthWrite={false}
-        />
+        <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
       </lineSegments>
 
-      {/* Right-side pages, hinged at spine, opening upward */}
-      {pages.map((_, i) => (
+      {/* Flipping pages — hinged at x=0, rotated around z to swing left */}
+      {Array.from({ length: PAGE_COUNT }).map((_, i) => (
         <group
-          key={`r-${i}`}
+          key={i}
           ref={(el) => {
-            rightRefs.current[i] = el;
+            pageRefs.current[i] = el;
           }}
-          position={[0, i * PAGE_GAP, 0]}
+          position={[0, 0.001 + i * 0.002, 0]}
         >
           <lineSegments>
             <primitive object={pageGeom} attach="geometry" />
-            <lineBasicMaterial
-              color={PRIMARY}
-              transparent
-              opacity={OPACITY}
-              depthWrite={false}
-            />
+            <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
           </lineSegments>
-        </group>
-      ))}
-
-      {/* Left-side pages — same geometry, flipped to -X */}
-      {pages.map((_, i) => (
-        <group
-          key={`l-${i}`}
-          ref={(el) => {
-            leftRefs.current[i] = el;
-          }}
-          position={[0, i * PAGE_GAP, 0]}
-        >
-          <group rotation={[0, 0, Math.PI]}>
-            <lineSegments>
-              <primitive object={pageGeom} attach="geometry" />
-              <lineBasicMaterial
-                color={PRIMARY}
-                transparent
-                opacity={OPACITY}
-                depthWrite={false}
-              />
-            </lineSegments>
-          </group>
         </group>
       ))}
     </group>
