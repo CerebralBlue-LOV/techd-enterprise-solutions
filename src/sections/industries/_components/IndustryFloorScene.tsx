@@ -8,7 +8,7 @@ interface Props {
   tiltY: number; // -1..1
 }
 
-const TILT_AMOUNT = 0.08;
+const TILT_AMOUNT = 0.12;
 
 const FloorRig = ({ tiltX, tiltY }: Props) => {
   const group = useRef<THREE.Group>(null);
@@ -16,25 +16,27 @@ const FloorRig = ({ tiltX, tiltY }: Props) => {
   useFrame((_, delta) => {
     const g = group.current;
     if (!g) return;
-    // Smoothly drift the floor toward the cursor target.
     const targetY = tiltX * TILT_AMOUNT;
-    const targetX = -0.85 + tiltY * TILT_AMOUNT;
+    const targetX = tiltY * TILT_AMOUNT;
     g.rotation.y += (targetY - g.rotation.y) * Math.min(1, delta * 3);
     g.rotation.x += (targetX - g.rotation.x) * Math.min(1, delta * 3);
   });
 
   return (
-    <group ref={group} rotation={[-0.85, 0, 0]} position={[0, -0.6, 0]}>
+    <group ref={group}>
+      {/* Grid lies on XZ plane by default; camera tilt creates the perspective. */}
       <Grid
-        args={[120, 120]}
-        cellSize={0.5}
-        cellThickness={0.6}
-        cellColor="#A7A5A8"
-        sectionSize={2.5}
-        sectionThickness={1}
+        args={[200, 200]}
+        position={[0, 0, 0]}
+        cellSize={0.6}
+        cellThickness={1}
+        cellColor="#56565A"
+        sectionSize={3}
+        sectionThickness={1.5}
         sectionColor="#00B3E3"
-        fadeDistance={28}
-        fadeStrength={1.2}
+        fadeDistance={45}
+        fadeStrength={1.5}
+        fadeFrom={0}
         infiniteGrid
         followCamera={false}
       />
@@ -44,15 +46,15 @@ const FloorRig = ({ tiltX, tiltY }: Props) => {
 
 /**
  * Three.js / r3f scene for the Industries hero backdrop.
- * A perspective grid floor, tilted to recede into the horizon.
- * Brand colours only.
+ * A perspective grid floor receding into the horizon. Brand colours only.
  */
 export const IndustryFloorScene = ({ tiltX, tiltY }: Props) => (
   <Canvas
     dpr={[1, 1.5]}
     gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
-    camera={{ position: [0, 1.6, 4.5], fov: 55 }}
-    style={{ background: "transparent" }}
+    camera={{ position: [0, 2.2, 6], fov: 60 }}
+    onCreated={({ camera }) => camera.lookAt(0, 0, -8)}
+    style={{ background: "transparent", width: "100%", height: "100%" }}
   >
     <FloorRig tiltX={tiltX} tiltY={tiltY} />
   </Canvas>
