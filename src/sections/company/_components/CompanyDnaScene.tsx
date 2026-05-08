@@ -107,7 +107,10 @@ const Helix = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   });
 
   return (
-    <group ref={groupRef}>
+    // Outer wrapper applies the diagonal lean; inner group spins around the
+    // helix's own (now-tilted) Y axis.
+    <group rotation={[0, 0, DIAGONAL_TILT]}>
+      <group ref={groupRef}>
       {/* Strand A */}
       <line>
         <primitive object={strandA} attach="geometry" />
@@ -161,6 +164,7 @@ const Helix = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
           depthWrite={false}
         />
       </points>
+      </group>
     </group>
   );
 };
@@ -173,7 +177,7 @@ export const CompanyDnaScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0.2, 6.5], fov: 42 }}
+      camera={{ position: [0, 0.2, 9.5], fov: 44 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
