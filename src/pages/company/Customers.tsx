@@ -3,7 +3,7 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import RingsHeroBackdrop from "@shared/RingsHeroBackdrop";
+import CompanyHeroBackdrop from "@/sections/company/_components/CompanyHeroBackdrop";
 import LogoStrip from "@shared/LogoStrip";
 import { CUSTOMERS } from "@content/site";
 
@@ -51,7 +51,7 @@ const Customers = () => {
         className="relative overflow-hidden min-h-[50vh] flex items-center"
       >
         <SectionMarker page="Company / Customers" name="Hero" />
-        <RingsHeroBackdrop />
+        <CompanyHeroBackdrop />
         <div className="container-page relative z-10 pt-16 pb-12 md:pt-20 md:pb-16">
           <Reveal>
             <div className="max-w-4xl">

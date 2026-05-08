@@ -6,7 +6,7 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
-import HoneycombHeroBackdrop from "@shared/HoneycombHeroBackdrop";
+import ResourceHeroBackdrop from "@/sections/resources/_components/ResourceHeroBackdrop";
 import { RESOURCES } from "@content/resources";
 
 const posts = RESOURCES.filter((r) => r.type === "blog" && !r.draft);
@@ -21,7 +21,7 @@ const Blog = () => (
     {/* Hero */}
     <section className="relative overflow-hidden min-h-[40vh] flex items-center">
       <SectionMarker page="Resources / Blog" name="Hero" />
-      <HoneycombHeroBackdrop />
+      <ResourceHeroBackdrop />
       <div className="container-page relative z-10 pt-20 pb-16 md:pt-28 md:pb-20">
         <Reveal>
           <SectionHeading
