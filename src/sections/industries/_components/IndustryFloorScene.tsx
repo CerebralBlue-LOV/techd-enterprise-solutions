@@ -30,10 +30,10 @@ const FloorRig = ({ tiltX, tiltY }: Props) => {
         position={[0, 0, 0]}
         cellSize={0.6}
         cellThickness={1}
-        cellColor="#56565A"
+        cellColor="#A7A5A8"
         sectionSize={3}
         sectionThickness={1.5}
-        sectionColor="#56565A"
+        sectionColor="#A7A5A8"
         fadeDistance={45}
         fadeStrength={1.5}
         fadeFrom={0}
