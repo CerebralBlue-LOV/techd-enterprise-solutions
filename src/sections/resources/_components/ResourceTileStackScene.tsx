@@ -73,8 +73,8 @@ const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
       // Slight slow drift, matching solutions speed.
-      groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.08 + tiltX * 0.15;
-      groupRef.current.rotation.x = -0.55 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
+      groupRef.current.rotation.x = -5.2 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
+      groupRef.current.rotation.y = 1 + Math.sin(t * 0.15) * 0.08 + tiltX * 0.15;
     }
 
     const local = t % LOOP;
