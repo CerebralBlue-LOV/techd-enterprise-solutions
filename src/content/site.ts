@@ -85,7 +85,7 @@ export const CUSTOMERS: Customer[] = [
 
   // Tier 3 — strong regional / sector leaders
   { name: "Banorte", url: "https://www.banorte.com", logo: "/logos/banorte.svg", logoClass: "h-8 md:h-9" },
-  { name: "Vornado Realty Trust", url: "https://www.vno.com", logo: "/logos/vornado-wordmark.svg", logoClass: "h-7 md:h-8" },
+  { name: "Vornado Realty Trust", url: "https://www.vno.com", logo: "/logos/vornado-realty.svg", logoClass: "h-8 md:h-10" },
   { name: "Sicoob", url: "https://www.sicoob.com.br", logo: "/logos/sicoob.svg", logoClass: "h-8 md:h-9" },
   { name: "Dah Sing Bank", url: "https://www.dahsing.com", logo: "/logos/dahsing.svg", logoClass: "h-7 md:h-8" },
   { name: "Banco del Pacífico", url: "https://www.bancodelpacifico.com", logo: "/logos/banco-del-pacifico.svg", logoClass: "h-10 md:h-12" },
