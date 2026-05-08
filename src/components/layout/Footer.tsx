@@ -14,12 +14,18 @@ export const Footer = () => (
           IBM Platinum Business Partner.
         </p>
         <IBMPlatinumBadge size="md" className="mt-6" />
+        <p className="mt-4 text-sm font-light text-muted-foreground">
+          Call us:{" "}
+          <a href="tel:+18889883243" className="font-normal text-secondary hover:text-primary transition-colors">
+            888-98-TECHD (83243)
+          </a>
+        </p>
         <div className="mt-6 flex items-center gap-3">
           {[
-            { Icon: Linkedin, href: "https://www.linkedin.com/company/techd", label: "LinkedIn" },
-            { Icon: Twitter,  href: "https://twitter.com/techd",              label: "Twitter / X" },
-            { Icon: Facebook, href: "https://www.facebook.com/techd",         label: "Facebook" },
-            { Icon: Youtube,  href: "https://www.youtube.com/@techd",         label: "YouTube" },
+            { Icon: Linkedin, href: "https://www.linkedin.com/company/technology-dynamics-inc/", label: "LinkedIn" },
+            { Icon: Twitter,  href: "https://twitter.com/TECH_DYNAMICS",                          label: "Twitter / X" },
+            { Icon: Facebook, href: "https://www.facebook.com/TechDUSA/",                         label: "Facebook" },
+            { Icon: Youtube,  href: "https://www.youtube.com/channel/UCamtEDVhp_rOQSRrohmaPGA",   label: "YouTube" },
           ].map(({ Icon, href, label }) => (
             <a
               key={label}
