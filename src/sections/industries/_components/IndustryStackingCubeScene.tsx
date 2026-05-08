@@ -18,7 +18,6 @@ const INNER = 1.2;
 
 const IsoCubes = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const innerRef = useRef<THREE.Group>(null);
 
   const outerEdges = useMemo(
     () => new THREE.EdgesGeometry(new THREE.BoxGeometry(OUTER, OUTER, OUTER)),
@@ -82,18 +81,16 @@ const IsoCubes = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
         />
       </lineSegments>
 
-      {/* Inner cube — gently counter-rotates */}
-      <group ref={innerRef}>
-        <lineSegments>
-          <primitive object={innerEdges} attach="geometry" />
-          <lineBasicMaterial
-            color={PRIMARY}
-            transparent
-            opacity={0.85}
-            depthWrite={false}
-          />
-        </lineSegments>
-      </group>
+      {/* Inner cube — locked to outer so it reads as a true nested cube */}
+      <lineSegments>
+        <primitive object={innerEdges} attach="geometry" />
+        <lineBasicMaterial
+          color={PRIMARY}
+          transparent
+          opacity={0.85}
+          depthWrite={false}
+        />
+      </lineSegments>
     </group>
   );
 };
