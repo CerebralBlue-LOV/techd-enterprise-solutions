@@ -14,8 +14,8 @@ const PRIMARY = "#00B3E3";
 // "rails" so it reads as a real 3D ring rather than a flat circle.
 // Group rotates slowly; rings sit at 120deg around the common axis.
 
-const RING_R = 1.25;       // radius of each ring (center to tube center)
-const TUBE_R = 0.13;       // tube radius (slimmer = less visual weight)
+const RING_R = 1.75;       // radius of each ring (center to tube center)
+const TUBE_R = 0.18;       // tube radius (scaled proportionally)
 const RADIAL_SEG = 96;     // around the ring
 const TUBE_SEG = 8;        // around the tube (fewer = fewer wireframe lines)
 const TILT = Math.PI / 3;  // tilt of each ring out of the XY plane
@@ -79,7 +79,7 @@ export const ServiceIsoCubeScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 6.4], fov: 44 }}
+      camera={{ position: [0, 0, 6.4], fov: 52 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
