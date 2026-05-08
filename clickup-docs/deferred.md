@@ -13,7 +13,7 @@ These items are **explicitly out of scope** for the 5-day sprint. They are logge
 | Item | Target Phase | Why deferred |
 |---|---|---|
 | Individual solution/industry/service detail pages | Phase 2 | Content not fully audited; legal review needed for case studies |
-| CRM-routed contact form (Salesforce, HubSpot) | Phase 2 | API access not confirmed; basic Cloudflare Worker ships first |
+| CRM-routed contact form (Salesforce, HubSpot) | Phase 2 | API access not confirmed; basic AWS Lambda + SES form ships first |
 | Analytics (GA4, Segment, LinkedIn Insight Tag) | Phase 2 | Tracking plan not defined |
 | 6 legal-approved case studies | Phase 2 | Legal review cycle takes time |
 | OG images (1200×630, per page) | Phase 2 | Static images, not blocking staging |
@@ -35,8 +35,8 @@ Even after a successful Friday staging sign-off, these items must be resolved be
 
 1. **Logo SVG files** — typographic wordmark placeholder must be replaced
 2. **Hero copy / mission statement** — product owner sign-off required
-3. **DNS coordination** — product owner + IT must coordinate Cloudflare proxy setup and DNS cutover
-4. **301 redirect activation** — the 208-rule redirect map is built but not live yet (depends on Cloudflare proxy)
+3. **DNS coordination** — product owner + IT must coordinate proxy setup (Cloudflare or AWS CloudFront) and DNS cutover to `techd.com`
+4. **301 redirect activation** — the 208-rule redirect map is built but not live yet (GitHub Pages cannot serve 301s natively; requires a proxy layer)
 5. **WordPress server decommission** — fully compromised server must be taken offline. Needs either forensic review or explicit decision to skip
 6. **Google Search Console** — submit new site, request indexing of homepage, use GSC Removals for cached spam
 7. **WCAG accessibility pass** — recommended before public launch
@@ -48,7 +48,7 @@ Even after a successful Friday staging sign-off, these items must be resolved be
 
 | Phase | Name | When | Key deliverables |
 |---|---|---|---|
-| Phase 0–2 | This sprint | Week of 2026-05-04 | All P0 pages, contact form Worker, SEO basics, redirect map |
+| Phase 0–2 | This sprint | Week of 2026-05-04 | All P0 pages, SEO basics, redirect map |
 | Hardening | Pre-launch | TBD | DNS cutover, accessibility, pen test, logo/copy sign-off |
 | Phase 3 | Content ops | TBD | Headless CMS, blog, full case studies, Astro migration consideration |
 | Phase 4 | Lead gen | TBD | CRM integration, ROI calculator, analytics, gated content |

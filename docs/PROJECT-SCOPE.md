@@ -1,4 +1,4 @@
-# TechD Website — Grand Plan
+# TechD Website — Project Scope
 
 Full project scope, phases, and long-term vision. Read this when sprint scope feels ambiguous.
 
@@ -69,8 +69,8 @@ This project replaces it with a modern, fast marketing site. The business goal i
 **Goal:** Search-ready, form-working, QA-passing staging build.
 
 ### Deliverables
-- [ ] Cloudflare Worker: form POST → validation + rate limit → email + KV log
-- [ ] Contact form wired to Worker endpoint
+- [ ] AWS Lambda + SES: form POST → validation + rate limit → email delivery
+- [ ] Contact form wired to Lambda endpoint
 - [ ] `public/sitemap.xml` finalized with canonical URLs
 - [ ] `public/robots.txt` correct (allow all, point to sitemap)
 - [ ] OG images (1200×630) per page — static, not dynamic
@@ -138,7 +138,7 @@ These are logged here so they don't creep into sprint scope.
 ## Success criteria for staging sign-off (Friday)
 
 - [ ] All 7 pages render correctly on desktop and mobile
-- [ ] Contact form submits without error (Worker endpoint live)
+- [ ] Contact form submits without error (Lambda endpoint live)
 - [ ] No console errors in production build
 - [ ] `robots.txt` and `sitemap.xml` accessible
 - [ ] Google Search Console verification file in place (if requested)

@@ -15,7 +15,7 @@ Marketing website rebuild for **TechD** (IBM Platinum Business Partner serving F
 This repository is **public**. Before committing anything, verify:
 
 - No personal names, email addresses, or phone numbers in any file
-- No API keys, tokens, secrets, or credentials anywhere (use Cloudflare dashboard / GitHub Secrets)
+- No API keys, tokens, secrets, or credentials anywhere (use GitHub Secrets / AWS environment variables)
 - No internal Slack handles, Google Drive links, or internal URLs
 - No local filesystem paths (`~/Documents/...`, `/home/...`)
 - No client-confidential data beyond what is already public on `techd.com`
@@ -33,14 +33,14 @@ If unsure whether something is sensitive, leave it out of the commit.
 | 3D / Hero | three.js + @react-three/fiber + @react-three/drei |
 | Hosting | GitHub Pages (served from `/techd-enterprise-solutions/`) |
 | CI/CD | GitHub Actions (`.github/workflows/deploy.yml` + `sync-to-clickup.yml`) |
-| Contact backend | Cloudflare Worker (Day 4 deliverable — not built yet) |
+| Contact backend | AWS Lambda + SES (not built yet) |
 | Design tool | Lovable (bidirectional sync with `main`) |
 
 ## Working agreement
 
 - **Always `git pull` before starting work.** Lovable may have pushed changes between sessions.
 - **Lovable handles:** new components, visual iteration, design tweaks.
-- **Claude Code handles:** build config, GitHub Actions, Cloudflare Worker, SEO files, content data files in `src/content/`, brand tokens, infrastructure — anything Lovable does badly.
+- **Claude Code handles:** build config, GitHub Actions, AWS Lambda form backend, SEO files, content data files in `src/content/`, brand tokens, infrastructure — anything Lovable does badly.
 - **Don't edit a file Lovable just touched** without checking — overwrite risk when Lovable pulls.
 - **Push frequently.** Small commits, descriptive messages. Lovable must stay in sync.
 
@@ -73,7 +73,7 @@ src/
     solutions/
     industries/
     products/
-docs/               # All project documentation (PRD, DECISIONS, GRAND, PROGRESS, BRAND, etc.)
+docs/               # All project documentation (PROJECT-SCOPE, ARCHITECTURE, REDIRECT-MAP, etc.)
 clickup-docs/       # Markdown files synced to ClickUp docs on every push to main
 public/             # robots.txt, favicon, placeholder assets
 .github/workflows/  # deploy.yml (GitHub Pages CI/CD), sync-to-clickup.yml (ClickUp doc sync)
@@ -171,15 +171,14 @@ Markdown files in `clickup-docs/` are automatically pushed to ClickUp on every c
 
 | File | ClickUp doc |
 |---|---|
+| `clickup-docs/prd.md` | PRD — original scope doc from Cesar |
+| `clickup-docs/project-overview.md` | Project Overview — what was built, what's next |
+| `clickup-docs/deferred.md` | Deferred Items — what's out of scope and why |
 | `clickup-docs/brand-guidelines.md` | Brand Guidelines Summary |
-| `clickup-docs/decisions.md` | Architectural Decisions |
-| `clickup-docs/deferred.md` | Deferred Items |
-| `clickup-docs/page-status.md` | Page Status by Route |
-| `clickup-docs/project-overview.md` | Project Overview |
 
 ## When you're unsure
 
-Read `docs/GRAND.md` for full project scope, `docs/DECISIONS.md` for settled architectural decisions, `docs/progress.md` for current state. Then ask a clarifying question rather than guessing.
+Read `docs/PROJECT-SCOPE.md` for full project scope and `docs/ARCHITECTURE.md` for settled architectural decisions. Then ask a clarifying question rather than guessing.
 
 ## Git conventions
 
@@ -190,11 +189,11 @@ Read `docs/GRAND.md` for full project scope, `docs/DECISIONS.md` for settled arc
 
 - Don't suggest switching to Astro, Next.js, or any other framework. Stack is locked.
 - Don't add CMS integration. Deferred.
-- Don't build form backends in the React app. Forms POST to a Cloudflare Worker (TBD Day 4).
+- Don't build form backends in the React app. Forms POST to an AWS Lambda function (not built yet).
 - Don't add new dependencies without flagging the trade-off.
 - Don't touch `src/components/ui/` — those are shadcn defaults.
 - Don't introduce raw hex colors anywhere.
-- Don't write or apply 410 redirects (see `docs/DECISIONS.md` — spam was theme-level, not URL-based).
+- Don't write or apply 410 redirects (see `docs/ARCHITECTURE.md` — spam was theme-level, not URL-based).
 
 ---
 
@@ -202,10 +201,13 @@ Read `docs/GRAND.md` for full project scope, `docs/DECISIONS.md` for settled arc
 
 | File | When to read it |
 |---|---|
-| `docs/GRAND.md` | Full project scope, phases, and long-term vision. Read when scope is ambiguous. |
-| `docs/DECISIONS.md` | Architectural and product decisions, dated with rationale. Read when in doubt. |
-| `docs/progress.md` | Current state, day-by-day tasks, blockers. Read at session start. |
+| `docs/PROJECT-SCOPE.md` | Full project scope, phases, and long-term vision. Read when scope is ambiguous. |
+| `docs/ARCHITECTURE.md` | Architectural and product decisions, dated with rationale. Read when in doubt. |
 | `docs/BRAND.md` | Colors, fonts, voice, logo rules. Read for any visual or copy work. |
 | `docs/SPAM-REPORT.md` | What was wrong with the old site, why no 410s needed. Read if asked about redirects. |
-| `docs/CONTENT-AUDIT.md` | Per-page content status from current techd.com. Day 2 deliverable. |
-| `docs/REDIRECT-MAP.md` | Legacy URL → new URL mapping. Day 2–3 deliverable. |
+| `docs/REDIRECT-MAP.md` | Legacy URL → new URL mapping. Needed at domain cutover for 301 enforcement. |
+| `docs/rebuild/solutions.md` | IBM product naming rules and rationale for the 5-practice IA. Read before editing solutions content. |
+| `docs/rebuild/services.md` | Service line consolidation rationale. |
+| `docs/rebuild/industries.md` | Industry selection rationale (why Financial Services is out, Media & Entertainment is in). |
+| `docs/rebuild/resources.md` | Resources hub rebuild rationale. Clean slate decision. |
+| `docs/audit/` | Raw per-section audits from techd.com crawl. Reference if PM asks why something was included or excluded. |

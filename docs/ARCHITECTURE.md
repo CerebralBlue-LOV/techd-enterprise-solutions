@@ -1,4 +1,4 @@
-# Decisions log
+# Architecture decisions
 
 Architectural and product decisions, dated, with rationale. Future-me and Claude Code read this to avoid relitigating settled questions.
 
@@ -6,11 +6,33 @@ Format: most recent first.
 
 ---
 
+## 2026-05-08 — Contact form backend: AWS SES + Lambda (not Cloudflare Worker)
+
+**Decision:** The contact form will POST to an AWS Lambda function, which validates, rate-limits, and forwards via Amazon SES. Cloudflare Worker is off the table.
+
+**Why:** TechD manages AWS infrastructure, not Cloudflare. Using AWS keeps the form backend on infrastructure the team already owns and can operate.
+
+**Trade-offs accepted:** Lambda cold starts are negligible for a low-volume contact form. SES requires domain verification before sending, which must be done before the form goes live.
+
+**Replaces:** The earlier Cloudflare Worker decision (2026-05-04) — that decision is superseded by this one.
+
+---
+
+## 2026-05-08 — Hosting confirmed: GitHub Pages (supersedes PRD)
+
+**Decision:** GitHub Pages is the confirmed hosting platform. The original PRD mentioned ECS + Fargate / AWS App Runner, but Cesar confirmed GitHub Pages.
+
+**Why:** Simpler operational model for a static marketing site. Zero infra to manage. GitHub Actions CI/CD already in place and working.
+
+**Constraint:** GitHub Pages cannot serve HTTP 301 redirects natively. When the domain cutover to `techd.com` happens, a Cloudflare proxy layer (or AWS CloudFront) will be needed in front of GitHub Pages to enforce the 208 legacy URL redirects from `docs/REDIRECT-MAP.md`.
+
+---
+
 ## 2026-05-04 — Repo set to public
 
 **Decision:** Repository is public (was private initially).
 
-**Why:** GitHub Pages doesn't support private repos on the org's current GitHub plan. Approved by product owner. Site code will be public anyway when site launches. No secrets in the codebase — Cloudflare Worker secrets stay in Cloudflare dashboard.
+**Why:** GitHub Pages doesn't support private repos on the org's current GitHub plan. Approved by product owner. Site code will be public anyway when site launches. No secrets in the codebase — secrets stay in GitHub Secrets and AWS environment variables.
 
 **Trade-offs accepted:** Brand assets and placeholder copy visible to anyone with the repo URL during the build week. Acceptable.
 
@@ -56,13 +78,13 @@ Format: most recent first.
 
 ---
 
-## 2026-05-04 — Contact form: Cloudflare Worker, not in React app
+## 2026-05-04 — Contact form: separate backend, not in React app
 
-**Decision:** Form POSTs to a Cloudflare Worker (built Day 4). Worker validates, rate-limits, and forwards to email + KV log. CRM integration deferred to Phase 2.
+**Decision:** Form POSTs to a backend endpoint. Validation, rate-limiting, and email forwarding happen server-side. CRM integration deferred.
 
-**Why:** GitHub Pages is static — no backend. Cloudflare account already exists. Worker approach decouples form from CRM, making it easy to swap CRM later without touching the frontend.
+**Why:** GitHub Pages is static — no backend can run in the React app.
 
-**Day 4 deliverable. Not built yet.**
+**Superseded:** Original plan was Cloudflare Worker. Decision updated 2026-05-08 to AWS Lambda + SES. See the 2026-05-08 entry above.
 
 ---
 

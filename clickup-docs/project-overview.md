@@ -20,60 +20,61 @@ The current `techd.com` runs on a **fully compromised WordPress install** with S
 
 ---
 
-## Sprint timeline
+## Sprint summary (Week of 2026-05-04)
 
 | Day | Focus | Status |
 |---|---|---|
-| Day 1 (Mon 2026-05-04) | Foundation — repo, CI/CD, brand tokens, scaffold | ✅ Complete |
-| Day 2 (Tue 2026-05-05) | Content audit (210 pages) + redirect map | ✅ Complete |
-| Day 3 (Wed 2026-05-06) | Build pages — real content in all routes | 🟡 In progress |
-| Day 4 (Thu 2026-05-07) | Contact form (Cloudflare Worker) + SEO | ⬜ Upcoming |
-| Day 5 (Fri 2026-05-08) | QA, accessibility pass, handoff package | ⬜ Upcoming |
+| Day 1 (Mon) | Foundation — repo, CI/CD, brand tokens, scaffold | ✅ Complete |
+| Day 2 (Tue) | Content audit (210 pages) + redirect map | ✅ Complete |
+| Day 3 (Wed) | Page build — real content in all routes | ✅ Complete |
+| Day 4 (Thu) | Sub-pages, company section, resources | ✅ Complete |
+| Day 5 (Fri) | Docs cleanup, handoff | ✅ Complete |
 
 ---
 
-## What's built (as of Day 3 AM)
+## What was delivered
 
-- GitHub repo with Lovable bidirectional sync
-- GitHub Actions CI/CD → GitHub Pages deploy (auto-deploys on push to `main`)
+### Pages built
+
+| Section | Routes |
+|---|---|
+| Homepage | `/` |
+| Solutions | `/solutions/ai-generative`, `/solutions/data-analytics`, `/solutions/automation-finops`, `/solutions/security-compliance`, `/solutions/hybrid-cloud` |
+| Services | `/services/advisory`, `/services/implementation`, `/services/managed-services`, `/services/training` |
+| Industries | `/industries/healthcare`, `/industries/media-entertainment`, `/industries/insurance`, `/industries/energy-utilities`, `/industries/higher-education`, `/industries/public-sector` |
+| Resources | `/resources/case-studies`, `/resources/blog`, `/resources/webinars`, `/resources/events` |
+| Company | `/company/about`, `/company/ibm-partnership`, `/company/customers` |
+| Contact | `/contact` |
+| 404 | `*` |
+
+### Infrastructure
+
+- GitHub Actions CI/CD → auto-deploys to GitHub Pages on every push to `main`
 - Brand tokens wired (TechD cyan `#00B3E3`, Roboto Condensed font)
-- shadcn/ui design system layer
-- All 6 page routes scaffolded: `/`, `/solutions`, `/industries`, `/services`, `/resources`, `/contact`
-- `<SEO>` component on every page (meta, OG, canonical)
-- Header, Footer, Layout components
-- Hero redesign: particle field + floating glass cards
-- 210 legacy URL content audit complete (`docs/CONTENT-AUDIT.md`)
-- 208-rule redirect map built (`docs/REDIRECT-MAP.md`) — ready to deploy via Cloudflare
+- SEO component on every page (meta tags, Open Graph, canonical URLs)
+- 208-rule redirect map built and ready (`docs/REDIRECT-MAP.md`)
+- Content freshness audit complete — stale IBM product names corrected, unverifiable stats removed
+- Industry list rebalanced: "Financial Services" removed (no verified clients), "Media & Entertainment" added (Sony, Comcast confirmed)
 
 ---
 
-## Active blockers
+## What still needs to happen before public launch
 
-| Blocker | Owner | Impact |
+See the **Deferred Items** document for the full list. Key blockers:
+
+| Item | Owner | Notes |
 |---|---|---|
-| **Logo SVG files** (color + white) | Product owner to provide | Wordmark placeholder in place — can't launch with placeholder |
-| **Mission statement / hero copy approval** | Product owner to approve | Hero has placeholder until sign-off |
-| **301 redirect enforcement** | Depends on Day 4 Cloudflare Worker decision | Redirect map ready but GitHub Pages can't serve 301s |
-| **WordPress server decommission plan** | Product owner decision | Server is fully compromised — needs explicit forensic review or deliberate skip |
+| **Logo SVG files** (color + white) | Product owner | Wordmark placeholder in use — cannot launch with this |
+| **Hero copy / mission statement sign-off** | Product owner | Placeholder text in hero until approved |
+| **Contact form backend** | Engineering | AWS Lambda + SES function not yet built |
+| **301 redirect activation** | Engineering + IT | Redirect map is ready; needs Cloudflare proxy or CloudFront in front of GitHub Pages |
+| **WordPress server decommission** | Product owner decision | Fully compromised — needs forensic review or explicit decision to skip |
+| **DNS cutover to techd.com** | Product owner + IT | Coordinate timing and rollback plan |
 
 ---
 
-## Day 3 progress (content freshness audit)
+## Friday handoff
 
-- Pulled live copy from `/our-story`, `/about-us`, `/depth-of-experience` and the IBM-published TechD + NeuralSeek case study
-- Confirmed what's still true: IBM Platinum since 2009, client list (J&J, Comcast, Sony, Princeton, Johns Hopkins), Miami HQ, "gain truth from data" mission
-- Removed stale content: CogSuite references, "Watson Assistant" branding, "Premier" tier, "25+ years" math, Wayne PA HQ
-- Placeholder pharma stat block removed — replaced with real IBM-published retail case (Db2 + watsonx Assistant + NeuralSeek)
-- Industry list rebalanced: dropping unverified "Financial Services", adding "Media & Entertainment" (Sony Pictures + Sony Interactive + Comcast/Peacock)
+This staging build is **production-quality code, ready for content review and stakeholder sign-off.** It is not a public launch.
 
----
-
-## Friday delivery: what the PM should expect
-
-Friday = **staging-quality build, ready for content sign-off and stakeholder review.** Not a public launch.
-
-The handoff package will include:
-- Staging URL (all 7 pages working)
-- Contact form live via Cloudflare Worker
-- SEO basics in place (sitemap, robots.txt, OG tags)
-- A hardening list of what must be done before `techd.com` DNS cutover
+Before the site goes live at `techd.com`, a hardening phase is required. See the Deferred Items document for what that includes.
