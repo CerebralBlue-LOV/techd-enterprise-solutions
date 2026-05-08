@@ -99,9 +99,9 @@ const Pyramid = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.25 + tiltX * 0.2;
+      groupRef.current.rotation.y = t * 0.15 + tiltX * 0.2;
       groupRef.current.rotation.x =
-        -0.35 + Math.sin(t * 0.3) * 0.05 + tiltY * 0.08;
+        -0.35 + Math.sin(t * 0.1) * 0.05 + tiltY * 0.08;
     }
   });
 
