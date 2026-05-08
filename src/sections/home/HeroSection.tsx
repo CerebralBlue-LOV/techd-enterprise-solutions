@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
 import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
 
 const HeroParticleField = lazy(
