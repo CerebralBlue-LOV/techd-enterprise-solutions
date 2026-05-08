@@ -5,7 +5,7 @@ import ParticleOrbit from "./_components/ParticleOrbit";
 import { IBMPlatinumBadge } from "@shared/IBMPlatinumBadge";
 
 export const WhyTechDSection = () => (
-  <section className="section bg-muted/40 overflow-hidden">
+  <section className="section bg-muted/40">
     <SectionMarker page="Home" name="Why TechD" />
     <div className="container-page">
       {/* Heading above both columns */}
@@ -23,7 +23,7 @@ export const WhyTechDSection = () => (
       <div className="mt-10 grid items-center gap-6 md:gap-12 lg:grid-cols-2 lg:gap-16 md:mt-12">
         {/* LEFT — orbit + IBM credential */}
         <Reveal delay={80}>
-          <div className="relative flex aspect-square w-full max-w-[320px] md:max-w-[460px] mx-auto lg:mx-0 items-center justify-center overflow-hidden">
+          <div className="relative flex aspect-square w-full max-w-[320px] md:max-w-[460px] mx-auto lg:mx-0 items-center justify-center">
             <ParticleOrbit />
             <IBMPlatinumBadge size="lg" variant="card" showTenure className="relative z-20" />
           </div>
