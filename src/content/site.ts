@@ -59,6 +59,11 @@ export const NAV: NavItem[] = [
 export type Customer = { name: string; url: string; logo?: string; logoClass?: string };
 
 export const CUSTOMERS: Customer[] = [
+  // Lead-in trio (per request)
+  { name: "Admed", url: "https://www.admed.com.br", logo: "/logos/admed.svg" },
+  { name: "Great Day Improvements", url: "https://greatdayimprovements.com", logo: "/logos/greatday.png", logoClass: "h-8 md:h-9" },
+  { name: "Clip", url: "https://www.clip.mx", logo: "/logos/clip.svg", logoClass: "h-12 md:h-14" },
+
   // Tier 1 — global blue-chip enterprises (most recognizable F500 / global brands)
   { name: "Adobe", url: "https://www.adobe.com", logo: "/logos/adobe.svg", logoClass: "h-14 md:h-16" },
   { name: "Mercedes-Benz", url: "https://www.mercedes-benz.com", logo: "/logos/benz.svg", logoClass: "h-14 md:h-16" },
@@ -93,7 +98,4 @@ export const CUSTOMERS: Customer[] = [
   { name: "TEPSCO", url: "https://www.tepsco.co.jp", logo: "/logos/tepsco.svg", logoClass: "h-12 md:h-14" },
   { name: "Netcare", url: "https://www.netcare.co.za", logo: "/logos/netcare.svg", logoClass: "h-16 md:h-20" },
   { name: "Children's Health", url: "https://www.childrens.com", logo: "/logos/childrens-health.svg", logoClass: "h-8 md:h-9" },
-  { name: "Clip", url: "https://www.clip.mx", logo: "/logos/clip.svg", logoClass: "h-12 md:h-14" },
-  { name: "Great Day Improvements", url: "https://greatdayimprovements.com", logo: "/logos/greatday.png", logoClass: "h-8 md:h-9" },
-  { name: "Admed", url: "https://www.admed.com.br", logo: "/logos/admed.svg" },
 ];
