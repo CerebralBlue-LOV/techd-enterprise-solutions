@@ -7,10 +7,10 @@ const Row = ({
   items: Customer[];
   reverse?: boolean;
 }) => {
-  // Visual padding: prepend the last 3 logos so top-tier brands (Adobe, Mercedes-Benz...)
-  // hit center-screen a few seconds into the loop instead of already drifting off-screen.
-  const padded = items.length > 3 ? [...items.slice(-3), ...items] : items;
-  const doubled = [...padded, ...padded];
+  // Duplicate the list once for a seamless marquee loop. Use negative
+  // animation-delay (set in CSS via inline style below) to offset the start
+  // so top-tier brands hit center a few seconds into the loop.
+  const doubled = [...items, ...items];
   return (
     <div
       className="marquee-wrap overflow-hidden"
@@ -25,6 +25,7 @@ const Row = ({
         className={`marquee marquee-slow gap-16 md:gap-24 px-8 items-center ${
           reverse ? "marquee-reverse" : ""
         }`}
+        style={{ animationDelay: "-12s" }}
       >
         {doubled.map((c, i) => (
           <a
