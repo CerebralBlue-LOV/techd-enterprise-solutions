@@ -61,7 +61,7 @@ export const LogoStrip = () => {
       className="py-10 border-y border-border bg-background"
     >
       <div className="px-4 text-center text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
-        <p className="lg:inline">
+        <p className="md:whitespace-nowrap lg:inline lg:whitespace-normal">
           Trusted by leaders in healthcare, media, energy &amp; the public sector
         </p>
         <span className="hidden lg:inline text-primary mx-3" aria-hidden="true">·</span>
