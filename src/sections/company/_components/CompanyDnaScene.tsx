@@ -15,7 +15,7 @@ const PRIMARY = "#00B3E3";
 // around its vertical axis.
 
 const HEIGHT = 9.0;          // vertical span of the helix (stretched)
-const RADIUS = 0.85;         // helix radius
+const RADIUS = 1.15;         // helix radius (wider)
 const TURNS = 2.6;           // full turns over HEIGHT — looser pitch
 const STRAND_SEGMENTS = 320; // resolution per strand
 const RUNG_COUNT = 22;       // base-pair rungs
