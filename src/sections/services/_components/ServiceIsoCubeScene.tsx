@@ -10,13 +10,13 @@ interface SceneProps {
 const PRIMARY = "#00B3E3";
 
 // ServicesFigure — two interlocking wireframe gears rotating in
-// opposite directions. Monoline cyan, slight isometric tilt.
+// opposite directions at the correct gear ratio. Monoline cyan.
 
 interface GearSpec {
   teeth: number;
-  outerR: number; // tooth tip radius
-  rootR: number;  // tooth root radius (= pitch)
-  hubR: number;   // inner hub circle
+  outerR: number;
+  rootR: number;
+  hubR: number;
   depth: number;
 }
 
@@ -27,17 +27,14 @@ function buildGearEdges(spec: GearSpec): THREE.BufferGeometry {
 
   for (let i = 0; i < teeth; i++) {
     const base = i * step;
-    // tooth profile: root-start, tip-start, tip-end, root-end
     const a1 = base - step * 0.22;
     const a2 = base - step * 0.12;
     const a3 = base + step * 0.12;
     const a4 = base + step * 0.22;
-
     const p1 = [Math.cos(a1) * rootR, Math.sin(a1) * rootR];
     const p2 = [Math.cos(a2) * outerR, Math.sin(a2) * outerR];
     const p3 = [Math.cos(a3) * outerR, Math.sin(a3) * outerR];
     const p4 = [Math.cos(a4) * rootR, Math.sin(a4) * rootR];
-
     if (i === 0) shape.moveTo(p1[0], p1[1]);
     else shape.lineTo(p1[0], p1[1]);
     shape.lineTo(p2[0], p2[1]);
@@ -46,7 +43,6 @@ function buildGearEdges(spec: GearSpec): THREE.BufferGeometry {
   }
   shape.closePath();
 
-  // Hub hole
   const hole = new THREE.Path();
   hole.absarc(0, 0, hubR, 0, Math.PI * 2, false);
   shape.holes.push(hole);
@@ -61,7 +57,6 @@ function buildGearEdges(spec: GearSpec): THREE.BufferGeometry {
   return new THREE.EdgesGeometry(geom, 20);
 }
 
-// Build extra inner detail (concentric ring + spokes) as line segments.
 function buildSpokes(rOuter: number, rInner: number, count: number): THREE.BufferGeometry {
   const pts: number[] = [];
   for (let i = 0; i < count; i++) {
@@ -70,7 +65,6 @@ function buildSpokes(rOuter: number, rInner: number, count: number): THREE.Buffe
     const s = Math.sin(a);
     pts.push(c * rInner, s * rInner, 0, c * rOuter, s * rOuter, 0);
   }
-  // pitch circle ring (segments)
   const ringSegs = 64;
   for (let i = 0; i < ringSegs; i++) {
     const a0 = (i / ringSegs) * Math.PI * 2;
@@ -90,8 +84,6 @@ const Gears = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const g1Ref = useRef<THREE.Group>(null);
   const g2Ref = useRef<THREE.Group>(null);
 
-  // Gear A — bigger, 18 teeth. Gear B — smaller, 12 teeth.
-  // Pitch (rootR) chosen so they mesh: distance = rootA + rootB.
   const A: GearSpec = { teeth: 18, outerR: 1.55, rootR: 1.30, hubR: 0.32, depth: 0.18 };
   const B: GearSpec = { teeth: 12, outerR: 1.08, rootR: 0.87, hubR: 0.22, depth: 0.18 };
 
@@ -100,12 +92,7 @@ const Gears = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const spokesA = useMemo(() => buildSpokes(A.rootR * 0.85, A.hubR + 0.08, 6), []);
   const spokesB = useMemo(() => buildSpokes(B.rootR * 0.82, B.hubR + 0.06, 5), []);
 
-  // Distance between centers — slight overlap so teeth visually mesh
   const D = A.rootR + B.rootR - 0.04;
-
-  // Phase offset: tooth of B falls into gap of A. Each gear half-step
-  // = π / teeth. With opposite rotation ratio (-Na/Nb), the tooth on
-  // line of centers must be offset by half a tooth on B.
   const phaseB = Math.PI / B.teeth;
 
   useFrame(({ clock }) => {
@@ -114,7 +101,7 @@ const Gears = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
       groupRef.current.rotation.x = -0.32 + tiltY * 0.08;
       groupRef.current.rotation.y = -0.18 + tiltX * 0.1;
     }
-    const omega = 0.45;
+    const omega = 0.15;
     if (g1Ref.current) g1Ref.current.rotation.z = t * omega;
     if (g2Ref.current)
       g2Ref.current.rotation.z = -t * omega * (A.teeth / B.teeth) + phaseB;
@@ -122,7 +109,6 @@ const Gears = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
 
   return (
     <group ref={groupRef}>
-      {/* Gear A — left */}
       <group ref={g1Ref} position={[-D / 2, 0, 0]}>
         <lineSegments>
           <primitive object={gearAEdges} attach="geometry" />
@@ -133,8 +119,6 @@ const Gears = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
           <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
         </lineSegments>
       </group>
-
-      {/* Gear B — right */}
       <group ref={g2Ref} position={[D / 2, 0, 0]}>
         <lineSegments>
           <primitive object={gearBEdges} attach="geometry" />
