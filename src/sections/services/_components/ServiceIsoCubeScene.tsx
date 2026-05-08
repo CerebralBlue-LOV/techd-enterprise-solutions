@@ -9,58 +9,91 @@ interface SceneProps {
 
 const PRIMARY = "#00B3E3";
 
-// ServicesFigure — wireframe arched bridge, slowly rotating.
-// Two parallel arches (front + back), cross-braced, with vertical
-// suspension cables down to a deck. Monoline cyan.
+// ServicesFigure — wireframe target / reticle.
+// Dense concentric rings, radial spokes, tick marks, crosshair, and an
+// orbiting tilted ring. Reads as 'precision delivery, hitting the goal'.
 
-const W = 4.4;
-const H = 1.4;
-const D = 0.9;
-const N = 16;
+const RINGS = [2.4, 2.0, 1.55, 1.1, 0.65, 0.28];
+const RING_SEG = 128;
+const SPOKES_MAJOR = 8;   // long spokes from center to outermost ring
+const SPOKES_MINOR = 24;  // short ticks on outermost ring
+const TICKS_OUTER = 72;   // tiny tick marks on outermost ring
+const ORBIT_R = 2.1;      // tilted orbiting ring radius
 
-function archPoint(i: number): [number, number] {
-  const theta = Math.PI * (1 - i / N);
-  return [(W / 2) * Math.cos(theta), H * Math.sin(theta)];
+function ringSegments(pts: number[], radius: number, segments: number) {
+  for (let i = 0; i < segments; i++) {
+    const a0 = (i / segments) * Math.PI * 2;
+    const a1 = ((i + 1) / segments) * Math.PI * 2;
+    pts.push(Math.cos(a0) * radius, Math.sin(a0) * radius, 0);
+    pts.push(Math.cos(a1) * radius, Math.sin(a1) * radius, 0);
+  }
 }
 
-function buildBridgeEdges(): THREE.BufferGeometry {
+function buildTargetEdges(): THREE.BufferGeometry {
   const pts: number[] = [];
-  const halfD = D / 2;
 
-  for (const z of [halfD, -halfD]) {
-    for (let i = 0; i < N; i++) {
-      const [x0, y0] = archPoint(i);
-      const [x1, y1] = archPoint(i + 1);
-      pts.push(x0, y0, z, x1, y1, z);
-    }
+  // Concentric rings
+  for (const r of RINGS) ringSegments(pts, r, RING_SEG);
+
+  const rOuter = RINGS[0];
+  const rInner = RINGS[RINGS.length - 1];
+
+  // Major radial spokes (full radius, every 45°)
+  for (let i = 0; i < SPOKES_MAJOR; i++) {
+    const a = (i / SPOKES_MAJOR) * Math.PI * 2;
+    const cx = Math.cos(a);
+    const cy = Math.sin(a);
+    pts.push(cx * rInner, cy * rInner, 0, cx * rOuter, cy * rOuter, 0);
   }
 
-  for (let i = 0; i <= N; i++) {
-    const [x, y] = archPoint(i);
-    pts.push(x, y, halfD, x, y, -halfD);
-  }
-  for (let i = 0; i < N; i++) {
-    const [xa, ya] = archPoint(i);
-    const [xb, yb] = archPoint(i + 1);
-    pts.push(xa, ya, halfD, xb, yb, -halfD);
-    pts.push(xb, yb, halfD, xa, ya, -halfD);
-  }
-
-  for (let i = 1; i < N; i++) {
-    const [x, y] = archPoint(i);
-    pts.push(x, y, halfD, x, 0, halfD);
-    pts.push(x, y, -halfD, x, 0, -halfD);
+  // Minor radial ticks (between 2nd and outermost rings)
+  const rB = RINGS[1];
+  for (let i = 0; i < SPOKES_MINOR; i++) {
+    if (i % (SPOKES_MINOR / SPOKES_MAJOR) === 0) continue; // skip where major spokes sit
+    const a = (i / SPOKES_MINOR) * Math.PI * 2;
+    const cx = Math.cos(a);
+    const cy = Math.sin(a);
+    pts.push(cx * rB, cy * rB, 0, cx * rOuter, cy * rOuter, 0);
   }
 
-  const deckXs = [-W / 2, W / 2];
-  const deckZs = [-halfD, halfD];
-  pts.push(deckXs[0], 0, deckZs[0], deckXs[1], 0, deckZs[0]);
-  pts.push(deckXs[0], 0, deckZs[1], deckXs[1], 0, deckZs[1]);
-  pts.push(deckXs[0], 0, deckZs[0], deckXs[0], 0, deckZs[1]);
-  pts.push(deckXs[1], 0, deckZs[0], deckXs[1], 0, deckZs[1]);
-  for (let i = 1; i < N; i++) {
-    const [x] = archPoint(i);
-    pts.push(x, 0, -halfD, x, 0, halfD);
+  // Outer-edge tick marks (small protruding ticks just outside outer ring)
+  const tickInner = rOuter;
+  const tickShort = rOuter + 0.08;
+  const tickLong = rOuter + 0.18;
+  for (let i = 0; i < TICKS_OUTER; i++) {
+    const a = (i / TICKS_OUTER) * Math.PI * 2;
+    const cx = Math.cos(a);
+    const cy = Math.sin(a);
+    const long = i % (TICKS_OUTER / SPOKES_MAJOR) === 0;
+    const tEnd = long ? tickLong : tickShort;
+    pts.push(cx * tickInner, cy * tickInner, 0, cx * tEnd, cy * tEnd, 0);
+  }
+
+  // Crosshair: 4 segments with a small gap at center
+  const gap = RINGS[RINGS.length - 1] * 0.6;
+  const crossEnd = rOuter * 1.1;
+  pts.push(-crossEnd, 0, 0, -gap, 0, 0);
+  pts.push(gap, 0, 0, crossEnd, 0, 0);
+  pts.push(0, -crossEnd, 0, 0, -gap, 0);
+  pts.push(0, gap, 0, 0, crossEnd, 0);
+
+  // Reticle corner brackets at the diagonals (4 short L-marks at outermost ring)
+  const bracketR = rOuter * 0.92;
+  const bracketLen = 0.22;
+  for (let q = 0; q < 4; q++) {
+    const a = Math.PI / 4 + (q * Math.PI) / 2;
+    const cx = Math.cos(a);
+    const cy = Math.sin(a);
+    const px = cx * bracketR;
+    const py = cy * bracketR;
+    // tangent direction
+    const tx = -cy;
+    const ty = cx;
+    // radial direction
+    const rx = cx;
+    const ry = cy;
+    pts.push(px, py, 0, px + tx * bracketLen, py + ty * bracketLen, 0);
+    pts.push(px, py, 0, px + rx * bracketLen, py + ry * bracketLen, 0);
   }
 
   const geom = new THREE.BufferGeometry();
@@ -68,23 +101,81 @@ function buildBridgeEdges(): THREE.BufferGeometry {
   return geom;
 }
 
-const Bridge = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
+function buildOrbitRing(): THREE.BufferGeometry {
+  const pts: number[] = [];
+  ringSegments(pts, ORBIT_R, 96);
+  // Add small tick marks every 30° for a 'gauge' feel
+  const seg = 24;
+  for (let i = 0; i < seg; i++) {
+    const a = (i / seg) * Math.PI * 2;
+    const cx = Math.cos(a);
+    const cy = Math.sin(a);
+    const len = i % 4 === 0 ? 0.16 : 0.08;
+    pts.push(cx * ORBIT_R, cy * ORBIT_R, 0, cx * (ORBIT_R + len), cy * (ORBIT_R + len), 0);
+  }
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+  return geom;
+}
+
+function buildBullseye(): THREE.BufferGeometry {
+  const pts: number[] = [];
+  ringSegments(pts, 0.1, 28);
+  // tiny inner cross
+  pts.push(-0.06, 0, 0, 0.06, 0, 0);
+  pts.push(0, -0.06, 0, 0, 0.06, 0);
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+  return geom;
+}
+
+const Target = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const edges = useMemo(buildBridgeEdges, []);
+  const ringsRef = useRef<THREE.Group>(null);
+  const orbitRef = useRef<THREE.Group>(null);
+
+  const targetGeom = useMemo(buildTargetEdges, []);
+  const orbitGeom = useMemo(buildOrbitRing, []);
+  const bullGeom = useMemo(buildBullseye, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.15 + tiltX * 0.2;
-      groupRef.current.rotation.x = -0.18 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
+      groupRef.current.rotation.x = -0.5 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.1;
+      groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.08 + tiltX * 0.18;
+    }
+    if (ringsRef.current) {
+      ringsRef.current.rotation.z = t * 0.08;
+    }
+    if (orbitRef.current) {
+      // Tilted ring spinning around its own axis, also slowly precessing
+      orbitRef.current.rotation.z = -t * 0.25;
+      orbitRef.current.rotation.y = 0.65 + Math.sin(t * 0.2) * 0.1;
+      orbitRef.current.rotation.x = 0.2;
     }
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.3, 0]}>
+    <group ref={groupRef}>
+      <group ref={ringsRef}>
+        <lineSegments>
+          <primitive object={targetGeom} attach="geometry" />
+          <lineBasicMaterial color={PRIMARY} transparent opacity={0.85} depthWrite={false} />
+        </lineSegments>
+      </group>
+
+      {/* Tilted orbiting ring for added depth and motion */}
+      <group ref={orbitRef}>
+        <lineSegments>
+          <primitive object={orbitGeom} attach="geometry" />
+          <lineBasicMaterial color={PRIMARY} transparent opacity={0.6} depthWrite={false} />
+        </lineSegments>
+      </group>
+
+      {/* Center bullseye, never rotates */}
       <lineSegments>
-        <primitive object={edges} attach="geometry" />
-        <lineBasicMaterial color={PRIMARY} transparent opacity={0.9} depthWrite={false} />
+        <primitive object={bullGeom} attach="geometry" />
+        <lineBasicMaterial color={PRIMARY} transparent opacity={1} depthWrite={false} />
       </lineSegments>
     </group>
   );
@@ -98,12 +189,12 @@ export const ServiceIsoCubeScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0.4, 6.4], fov: 42 }}
+      camera={{ position: [0, 0, 7], fov: 44 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
     >
-      <Bridge tiltX={tiltX} tiltY={tiltY} />
+      <Target tiltX={tiltX} tiltY={tiltY} />
     </Canvas>
   );
 };
