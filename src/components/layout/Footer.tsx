@@ -13,7 +13,7 @@ export const Footer = () => (
           Enterprise AI, data, security, and automation for the Fortune 500.
           IBM Platinum Business Partner.
         </p>
-        <IBMPlatinumBadge size="md" className="mt-6" href="https://www.ibm.com/partnerplus/directory/company/16906" />
+        <IBMPlatinumBadge size="md" className="mt-6" href="/company/ibm-partnership" />
         <p className="mt-4 text-sm font-light text-muted-foreground">
           Call us:{" "}
           <a href="tel:+18889883243" className="font-normal text-secondary hover:text-primary transition-colors">

@@ -44,28 +44,19 @@ export const IBMPlatinumBadge = ({
 }: Props) => {
   const s = SIZES[size];
   const isCard = variant === "card";
-  const Comp: "a" | "div" = href ? "a" : "div";
-  const linkProps = href
-    ? {
-        href,
-        target: "_blank",
-        rel: "noopener noreferrer",
-        "aria-label": "TechD — IBM Platinum Business Partner (opens IBM)",
-      }
-    : {};
+  const isExternal = !!href && /^(https?:)?\/\//.test(href);
 
-  return (
-    <Comp
-      {...linkProps}
-      className={cn(
-        "inline-flex items-center rounded-lg border border-border bg-background",
-        isCard &&
-          "flex-col text-center rounded-2xl border-primary/30 bg-background/90 shadow-2xl shadow-primary/10 backdrop-blur-xl",
-        href && "transition-colors hover:border-primary",
-        s.wrap,
-        className,
-      )}
-    >
+  const classes = cn(
+    "inline-flex items-center rounded-lg border border-border bg-background",
+    isCard &&
+      "flex-col text-center rounded-2xl border-primary/30 bg-background/90 shadow-2xl shadow-primary/10 backdrop-blur-xl",
+    href && "transition-colors hover:border-primary",
+    s.wrap,
+    className,
+  );
+
+  const inner = (
+    <>
       <div className={cn("grid place-items-center rounded-md bg-secondary shrink-0", s.logo)}>
         <img src={ibmLogo} alt="IBM" className="h-full w-full object-contain" />
       </div>
@@ -80,7 +71,29 @@ export const IBMPlatinumBadge = ({
           </div>
         )}
       </div>
-    </Comp>
+    </>
+  );
+
+  if (!href) return <div className={classes}>{inner}</div>;
+
+  if (isExternal) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="TechD — IBM Platinum Business Partner (opens IBM)"
+        className={classes}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={href} aria-label="TechD — IBM Platinum Business Partner" className={classes}>
+      {inner}
+    </Link>
   );
 };
 
