@@ -73,12 +73,12 @@ export const CUSTOMERS: Customer[] = [
   { name: "Fiserv", url: "https://www.fiserv.com", logo: "/logos/fiserv.svg", logoClass: "h-8 md:h-9" },
   { name: "Seagate", url: "https://www.seagate.com", logo: "/logos/seagate.svg", logoClass: "h-8 md:h-9" },
   { name: "Wabtec", url: "https://www.wabteccorp.com", logo: "/logos/wabtec.svg" },
-  { name: "Itochu", url: "https://www.itochu.co.jp/en/", logo: "/logos/itochu.svg", logoClass: "h-10 md:h-12" },
+  { name: "Itochu", url: "https://www.itochu.co.jp/en/", logo: "/logos/itochu.svg" },
   { name: "NSK", url: "https://www.nsk.com", logo: "/logos/nsk.svg", logoClass: "h-8 md:h-9" },
 
   // Tier 2 — top-tier universities and major institutions
   { name: "Harvard University", url: "https://www.harvard.edu", logo: "/logos/harvard.svg", logoClass: "h-14 md:h-16" },
-  { name: "Penn State", url: "https://www.psu.edu", logo: "/logos/pennstate.svg", logoClass: "h-14 md:h-16" },
+  { name: "Penn State", url: "https://www.psu.edu", logo: "/logos/pennstate.svg" },
   { name: "National University of Singapore", url: "https://www.nus.edu.sg", logo: "/logos/nus.svg", logoClass: "h-10 md:h-12" },
   { name: "Stony Brook University", url: "https://www.stonybrook.edu", logo: "/logos/stonybrook.svg", logoClass: "h-8 md:h-9" },
   { name: "New York Institute of Technology", url: "https://www.nyit.edu", logo: "/logos/nyit.svg" },
@@ -90,7 +90,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "Dah Sing Bank", url: "https://www.dahsing.com", logo: "/logos/dahsing.svg", logoClass: "h-8 md:h-9" },
   { name: "Banco del Pacífico", url: "https://www.bancodelpacifico.com", logo: "/logos/banco-del-pacifico.svg" },
   { name: "BROU", url: "https://www.brou.com.uy", logo: "/logos/brou.svg", logoClass: "h-7 md:h-8" },
-  { name: "TEPSCO", url: "https://www.tepsco.co.jp", logo: "/logos/tepsco.svg", logoClass: "h-14 md:h-16" },
+  { name: "TEPSCO", url: "https://www.tepsco.co.jp", logo: "/logos/tepsco.svg", logoClass: "h-12 md:h-14" },
   { name: "Netcare", url: "https://www.netcare.co.za", logo: "/logos/netcare.svg", logoClass: "h-16 md:h-20" },
   { name: "Children's Health", url: "https://www.childrens.com", logo: "/logos/childrens-health.svg", logoClass: "h-8 md:h-9" },
   { name: "Clip", url: "https://www.clip.mx", logo: "/logos/clip.svg", logoClass: "h-12 md:h-14" },
