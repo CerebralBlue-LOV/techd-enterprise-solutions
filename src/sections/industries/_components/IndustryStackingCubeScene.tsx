@@ -9,43 +9,63 @@ interface SceneProps {
 
 const PRIMARY = "#00B3E3";
 
-// Stacking-cube loop — three wireframe cubes form an L-cluster on the
-// "ground"; a fourth cube rises from inside, lands on top, holds, then
-// descends back down. Inspired by the Dribbble "Isometric Shapes
+// Stacking-cube loop, recreated from the Dribbble "Isometric Shapes
 // Lottie Showreel" reference (top-left tile).
+//
+// Layout: three wireframe cubes form a flat L on the ground plane —
+// one back, one front-left, one front-right. A fourth cube descends
+// onto the back cube and the three bases slide inward to assemble.
+// Then the bases slide outward and the top cube rises and fades out.
+// The whole sequence loops.
 
 const CUBE = 1.0;
 const GAP = 0.02;
 const STEP = CUBE + GAP;
 
-// Three static base cubes — L-shape on the ground plane, plus one
-// stacked on the back-left to give the silhouette its character.
-const BASE_POSITIONS: [number, number, number][] = [
-  [0, 0, 0],          // back-left, ground
-  [STEP, 0, 0],       // front-right, ground (in our rotated camera, looks like front)
-  [0, STEP, 0],       // back-left, stacked
+// Three flat-L base cubes. The "back" cube is the one that gets stacked on.
+type Vec3 = [number, number, number];
+const BASE_HOME: Vec3[] = [
+  [0, 0, 0],          // back  (stack target sits at y = STEP above this)
+  [STEP, 0, 0],       // front-right
+  [0, 0, STEP],       // front-left
 ];
-// Where the animated 4th cube lands.
-const TARGET: [number, number, number] = [STEP, STEP, 0];
+// Outward offset (where each base slides to in the "exploded" pose).
+// Direction = home position - cluster centroid, normalized then scaled.
+const EXPLODE_DIST = 0.55;
+const centroid: Vec3 = [
+  (BASE_HOME[0][0] + BASE_HOME[1][0] + BASE_HOME[2][0]) / 3,
+  0,
+  (BASE_HOME[0][2] + BASE_HOME[1][2] + BASE_HOME[2][2]) / 3,
+];
+const BASE_OFFSETS: Vec3[] = BASE_HOME.map((p) => {
+  const dx = p[0] - centroid[0];
+  const dz = p[2] - centroid[2];
+  const len = Math.hypot(dx, dz) || 1;
+  return [(dx / len) * EXPLODE_DIST, 0, (dz / len) * EXPLODE_DIST];
+});
 
-// Loop timing (in seconds)
-const RISE = 0.9;     // travel up
-const HOLD_TOP = 0.7; // pause at top
-const FALL = 0.9;     // travel down
-const HOLD_BOTTOM = 0.7;
-const LOOP = RISE + HOLD_TOP + FALL + HOLD_BOTTOM;
+// Top (stacked) cube: home is on top of the back cube.
+const TOP_HOME: Vec3 = [BASE_HOME[0][0], STEP, BASE_HOME[0][2]];
+const TOP_RISE_Y = STEP + 1.4; // where it rises to before fading out
 
-const RISE_FROM_Y = -1.6;     // starts below the cluster
-const RISE_TO_Y = TARGET[1];  // lands on top
+// ---------- Loop timing (seconds) ----------
+const ASSEMBLE = 0.85;  // bases slide inward + top descends (4-cube state)
+const HOLD_4   = 0.35;  // pause assembled
+const EXPLODE  = 0.85;  // bases slide outward + top rises & fades
+const HOLD_3   = 0.35;  // pause exploded (only 3 bases visible)
+const LOOP = ASSEMBLE + HOLD_4 + EXPLODE + HOLD_3;
 
-// Ease in-out cubic
+// Easing — smooth in/out
 const ease = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
 const StackingCube = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const moverRef = useRef<THREE.Group>(null);
-  const moverMatRef = useRef<THREE.LineBasicMaterial>(null);
+  const baseRefs = useRef<(THREE.Group | null)[]>([]);
+  const topRef = useRef<THREE.Group>(null);
+  const topMatRef = useRef<THREE.LineBasicMaterial>(null);
 
   const edges = useMemo(
     () => new THREE.EdgesGeometry(new THREE.BoxGeometry(CUBE, CUBE, CUBE)),
@@ -54,71 +74,85 @@ const StackingCube = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
-
     if (groupRef.current) {
-      // Hold the isometric vibe; only a whisper of motion.
-      groupRef.current.rotation.y = 0.6 + Math.sin(t * 0.18) * 0.05 + tiltX * 0.15;
+      // Steady isometric framing; almost no rotation.
+      groupRef.current.rotation.y = 0.6 + tiltX * 0.1;
       groupRef.current.rotation.x = -0.45 + tiltY * 0.06;
     }
 
-    // Phase the loop
     const local = t % LOOP;
-    let y = RISE_FROM_Y;
-    let opacity = 1;
 
-    if (local < RISE) {
-      const p = ease(local / RISE);
-      y = RISE_FROM_Y + (RISE_TO_Y - RISE_FROM_Y) * p;
-      opacity = Math.min(1, p * 2 + 0.15);
-    } else if (local < RISE + HOLD_TOP) {
-      y = RISE_TO_Y;
-      opacity = 1;
-    } else if (local < RISE + HOLD_TOP + FALL) {
-      const p = ease((local - RISE - HOLD_TOP) / FALL);
-      y = RISE_TO_Y + (RISE_FROM_Y - RISE_TO_Y) * p;
-      opacity = Math.max(0.15, 1 - p * 0.85);
+    // Compute "spread" parameter (0 = assembled cluster, 1 = exploded outward)
+    // and "topPresence" (0 = top cube hidden up high & faded, 1 = top cube seated).
+    let spread: number;
+    let topPresence: number;
+
+    if (local < ASSEMBLE) {
+      const p = ease(local / ASSEMBLE);
+      spread = 1 - p;       // 1 → 0
+      topPresence = p;      // 0 → 1
+    } else if (local < ASSEMBLE + HOLD_4) {
+      spread = 0;
+      topPresence = 1;
+    } else if (local < ASSEMBLE + HOLD_4 + EXPLODE) {
+      const p = ease((local - ASSEMBLE - HOLD_4) / EXPLODE);
+      spread = p;           // 0 → 1
+      topPresence = 1 - p;  // 1 → 0
     } else {
-      y = RISE_FROM_Y;
-      opacity = 0.15;
+      spread = 1;
+      topPresence = 0;
     }
 
-    if (moverRef.current) {
-      moverRef.current.position.set(TARGET[0], y, TARGET[2]);
+    // Apply to bases
+    baseRefs.current.forEach((g, i) => {
+      if (!g) return;
+      const home = BASE_HOME[i];
+      const off = BASE_OFFSETS[i];
+      g.position.set(
+        home[0] + off[0] * spread,
+        home[1] + off[1] * spread,
+        home[2] + off[2] * spread,
+      );
+    });
+
+    // Apply to top cube
+    if (topRef.current) {
+      const y = lerp(TOP_RISE_Y, TOP_HOME[1], topPresence);
+      topRef.current.position.set(TOP_HOME[0], y, TOP_HOME[2]);
     }
-    if (moverMatRef.current) {
-      moverMatRef.current.opacity = opacity;
+    if (topMatRef.current) {
+      // Fade in/out near the extremes for a softer entrance/exit
+      topMatRef.current.opacity = Math.min(1, topPresence * 1.4);
     }
   });
 
   return (
-    <group ref={groupRef} rotation={[-0.45, 0.6, 0]}>
-      {/* Static base cluster */}
-      {BASE_POSITIONS.map((pos, i) => (
-        <group key={i} position={pos}>
+    <group ref={groupRef} rotation={[-0.45, 0.6, 0]} position={[-STEP / 2, -STEP / 2, -STEP / 2]}>
+      {/* Three base cubes */}
+      {BASE_HOME.map((pos, i) => (
+        <group key={i} position={pos} ref={(g) => (baseRefs.current[i] = g)}>
           <lineSegments>
             <primitive object={edges} attach="geometry" />
             <lineBasicMaterial
               color={PRIMARY}
               transparent
-              opacity={0.92}
+              opacity={0.95}
               depthWrite={false}
-              linewidth={1}
             />
           </lineSegments>
         </group>
       ))}
 
-      {/* Animated 4th cube */}
-      <group ref={moverRef} position={TARGET}>
+      {/* Top stacked cube */}
+      <group ref={topRef} position={TOP_HOME}>
         <lineSegments>
           <primitive object={edges} attach="geometry" />
           <lineBasicMaterial
-            ref={moverMatRef}
+            ref={topMatRef}
             color={PRIMARY}
             transparent
             opacity={1}
             depthWrite={false}
-            linewidth={1}
           />
         </lineSegments>
       </group>
@@ -134,7 +168,7 @@ export const IndustryStackingCubeScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [4.5, 3.8, 5.5], fov: 36 }}
+      camera={{ position: [4.5, 3.8, 5.5], fov: 34 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
