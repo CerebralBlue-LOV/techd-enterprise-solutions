@@ -1,18 +1,18 @@
 import { Suspense, lazy } from "react";
 
-const ClusterScene = lazy(
-  () => import("@/sections/industries/_components/IndustryClusterScene"),
+const StackingCubeScene = lazy(
+  () => import("@/sections/industries/_components/IndustryStackingCubeScene"),
 );
 
 /**
- * IndustriesFigure — isometric wireframe cube cluster (3D plus-sign of
- * 7 cubes). Center cube counter-rotates; the 6 axis neighbours drift
- * gently outward — one per industry vertical TechD serves.
+ * IndustriesFigure — isometric wireframe "stacking cube" loop. Three
+ * cubes form an L-cluster; a fourth rises from below, lands on top,
+ * holds, descends. Inspired by the Dribbble Isometric Shapes Showreel.
  */
 export const IndustriesFigure = () => (
   <div className="absolute inset-0">
     <Suspense fallback={null}>
-      <ClusterScene tiltX={0} tiltY={0} />
+      <StackingCubeScene tiltX={0} tiltY={0} />
     </Suspense>
   </div>
 );
