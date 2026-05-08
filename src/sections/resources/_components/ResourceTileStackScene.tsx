@@ -85,8 +85,8 @@ const Book = ({ tiltX = 0, tiltY = 0, rotationOverride, positionOverride }: Scen
       } else {
         // Pinned static view + tiny ambient drift + pointer tilt.
         groupRef.current.rotation.x = -2.73 + Math.sin(t * 0.12) * 0.03 + tiltY * 0.08;
-        groupRef.current.rotation.y = 0.69 + Math.sin(t * 0.15) * 0.04 + tiltX * 0.15;
-        groupRef.current.rotation.z = -2.07;
+        groupRef.current.rotation.y = 0.9 + Math.sin(t * 0.15) * 0.04 + tiltX * 0.15;
+        groupRef.current.rotation.z = -2.16;
       }
       if (positionOverride) {
         groupRef.current.position.set(
@@ -95,7 +95,7 @@ const Book = ({ tiltX = 0, tiltY = 0, rotationOverride, positionOverride }: Scen
           positionOverride[2],
         );
       } else {
-        groupRef.current.position.set(-0.05, 0.1, -2.5);
+        groupRef.current.position.set(0.1, 0.35, -1.1);
       }
     }
 
