@@ -212,6 +212,11 @@
   }
 }
 
+@keyframes practice-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
 @keyframes btn-glow-shift {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }

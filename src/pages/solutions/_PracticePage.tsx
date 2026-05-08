@@ -4,7 +4,6 @@ import { SOLUTIONS, type Solution } from "@content/solutions";
 import PracticeHeroSection from "@sections/solutions/PracticeHeroSection";
 import WhyPracticeSection from "@sections/solutions/WhyPracticeSection";
 import ProductsGridSection from "@sections/solutions/ProductsGridSection";
-import CerebralBlueToolsSection from "@sections/solutions/CerebralBlueToolsSection";
 import IndustriesServedSection from "@sections/solutions/IndustriesServedSection";
 import ApproachSection from "@sections/solutions/ApproachSection";
 import OutcomesSection from "@sections/solutions/OutcomesSection";
@@ -32,7 +31,6 @@ const PracticePage = ({ practiceId }: Props) => {
       <PracticeHeroSection practice={practice} />
       <WhyPracticeSection practice={practice} />
       <ProductsGridSection practice={practice} />
-      <CerebralBlueToolsSection practice={practice} />
       <IndustriesServedSection practice={practice} />
       <ApproachSection practice={practice} />
       <OutcomesSection practice={practice} />

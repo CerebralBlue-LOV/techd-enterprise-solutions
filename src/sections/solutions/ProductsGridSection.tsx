@@ -47,8 +47,8 @@ export const ProductsGridSection = ({ practice }: Props) => (
       <Reveal>
         <SectionHeading
           eyebrow="Products in this practice"
-          title="The IBM products we deliver"
-          subtitle="Each product card opens a deeper detail page with capabilities, use cases, and engagement options."
+          title="The platforms and tools we deliver"
+          subtitle="Select any product to explore capabilities, use cases, and how we engage."
         />
       </Reveal>
       <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">

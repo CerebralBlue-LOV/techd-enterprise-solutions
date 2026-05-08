@@ -49,6 +49,13 @@ export const SOLUTIONS: Solution[] = [
     ctaLabel: "Explore AI practice",
     products: [
       {
+        name: "NeuralSeek",
+        tagline: "Turn your existing knowledge base into a cited, grounded AI assistant.",
+        description:
+          "NeuralSeek connects to what you already have — SharePoint, Confluence, or any document repository — and returns cited, traceable answers to complex queries in seconds. Designed to layer on top of watsonx Assistant or run as a standalone API, closing the gap between raw document retrieval and enterprise-grade conversational AI.",
+        link: { kind: "external", url: "https://neuralseek.com" },
+      },
+      {
         name: "watsonx.ai",
         tagline: "Build and deploy enterprise AI on foundation models you can trust.",
         description:
@@ -159,15 +166,6 @@ export const SOLUTIONS: Solution[] = [
             "Data quality scoring and remediation workflows",
           ],
         },
-      },
-    ],
-    ownTools: [
-      {
-        name: "NeuralSeek",
-        tagline: "RAG-powered answers from your enterprise knowledge base — in seconds.",
-        description:
-          "NeuralSeek is a Cerebral Blue product that layers semantic search and answer synthesis on top of your existing knowledge base, returning cited, grounded responses to complex questions — deployable alongside watsonx Assistant or as a standalone API.",
-        link: { kind: "external", url: "https://neuralseek.com" },
       },
     ],
   },
