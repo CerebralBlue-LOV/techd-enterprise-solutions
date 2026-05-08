@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 
-const RingsScene = lazy(() => import("./IndustryRingsScene"));
+const PillarsScene = lazy(() => import("./IndustryPillarsScene"));
 
 interface BackdropProps {
   /** Kept for API compatibility. */
@@ -37,7 +37,7 @@ export const IndustryHeroBackdrop = (_: BackdropProps) => {
       {/* 2. Right-side rings tower */}
       <div className="absolute inset-y-0 right-0 hidden md:block md:w-[60%] lg:w-[55%]">
         <Suspense fallback={null}>
-          <RingsScene tiltX={0} tiltY={0} />
+          <PillarsScene tiltX={0} tiltY={0} />
         </Suspense>
         <div
           className="absolute inset-0"
