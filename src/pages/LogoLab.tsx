@@ -274,12 +274,37 @@ const LogoLab = () => {
                     : ""
                 }`}
               >
-                <span
-                  className="absolute left-2 top-2 z-10 rounded-md bg-secondary/90 px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground"
-                  aria-hidden
-                >
-                  #{i + 1}
-                </span>
+                <div className="absolute left-2 top-2 z-10 flex items-center gap-1 rounded-md bg-secondary/90 px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
+                  <span aria-hidden>#</span>
+                  <input
+                    type="number"
+                    min={1}
+                    max={order.length}
+                    defaultValue={i + 1}
+                    key={`${name}-${i}`}
+                    aria-label={`Position for ${name}`}
+                    title="Type a position then press Enter"
+                    onClick={(e) => (e.target as HTMLInputElement).select()}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+                    }}
+                    onBlur={(e) => {
+                      const raw = parseInt(e.currentTarget.value, 10);
+                      if (!Number.isFinite(raw)) {
+                        e.currentTarget.value = String(i + 1);
+                        return;
+                      }
+                      const target = Math.max(1, Math.min(order.length, raw)) - 1;
+                      if (target === i) return;
+                      setOrder((prev) => {
+                        const next = prev.filter((n) => n !== name);
+                        next.splice(target, 0, name);
+                        return next;
+                      });
+                    }}
+                    className="w-9 rounded bg-background/20 px-1 text-center text-[10px] font-bold text-primary-foreground outline-none ring-1 ring-transparent focus:ring-primary [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  />
+                </div>
                 <LogoTile
                   customer={c}
                   current={edits[c.name]}
