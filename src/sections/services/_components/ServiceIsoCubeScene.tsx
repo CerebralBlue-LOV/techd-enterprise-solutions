@@ -14,7 +14,7 @@ const PRIMARY = "#00B3E3";
 // pipe segments. A small pulse travels left-to-right along the line.
 // Reads as 'workflow / delivery / engagement journey'.
 
-const NODE_COUNT = 5;
+const NODE_COUNT: number = 5;
 const SPAN = 4.6;
 const NODE_R = 0.32;
 const PIPE_R = 0.12;
