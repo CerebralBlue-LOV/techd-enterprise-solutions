@@ -30,6 +30,8 @@ type Props = {
   /** lg: stacked centered card; sm/md: inline horizontal pill */
   variant?: "inline" | "card";
   showTenure?: boolean;
+  /** If set, renders as an external link (opens in new tab). */
+  href?: string;
 };
 
 export const IBMPlatinumBadge = ({
@@ -37,16 +39,28 @@ export const IBMPlatinumBadge = ({
   variant = "inline",
   showTenure = false,
   className,
+  href,
 }: Props) => {
   const s = SIZES[size];
   const isCard = variant === "card";
+  const Comp: "a" | "div" = href ? "a" : "div";
+  const linkProps = href
+    ? {
+        href,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        "aria-label": "TechD — IBM Platinum Business Partner (opens IBM)",
+      }
+    : {};
 
   return (
-    <div
+    <Comp
+      {...linkProps}
       className={cn(
         "inline-flex items-center rounded-lg border border-border bg-background",
         isCard &&
           "flex-col text-center rounded-2xl border-primary/30 bg-background/90 shadow-2xl shadow-primary/10 backdrop-blur-xl",
+        href && "transition-colors hover:border-primary",
         s.wrap,
         className,
       )}
@@ -65,7 +79,7 @@ export const IBMPlatinumBadge = ({
           </div>
         )}
       </div>
-    </div>
+    </Comp>
   );
 };
 
