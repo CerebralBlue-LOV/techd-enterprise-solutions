@@ -60,7 +60,7 @@ const Borromean = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
               <lineBasicMaterial
                 color={PRIMARY}
                 transparent
-                opacity={0.92}
+                opacity={0.55}
                 depthWrite={false}
               />
             </lineSegments>
