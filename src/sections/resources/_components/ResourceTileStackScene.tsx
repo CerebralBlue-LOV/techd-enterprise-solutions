@@ -9,88 +9,129 @@ interface SceneProps {
 
 const PRIMARY = "#00B3E3";
 
-// Resources figure — a stack of thin isometric wireframe tiles (a deck of
-// documents / layered knowledge). They lift sequentially in a slow
-// top-down wave: each card rises a beat, hovers, settles back. Same
-// isometric vocabulary as the rest of the figure system.
+// Resources figure — open wireframe book with pages fanning from
+// right to left, one at a time, then resetting. Monoline cyan.
 
-const TILE_W = 1.6;       // tile X
-const TILE_D = 1.6;       // tile Z
-const TILE_H = 0.16;      // tile thickness (Y)
-const TILE_GAP = 0.04;    // vertical gap between tiles when stacked
-const TILE_COUNT = 5;
-const STEP = TILE_H + TILE_GAP;
+const PAGE_W = 1.7;          // page width (along X, hinged at x=0)
+const PAGE_D = 2.2;          // page depth (along Z, the spine direction)
+const PAGE_SUBDIV_W = 4;
+const PAGE_SUBDIV_D = 5;
 
-// Rest Y for each tile (bottom tile = 0, top tile = 4 * STEP)
-const REST_Y = (i: number) => i * STEP;
+const PAGE_COUNT = 6;
+const FLIP_DUR = 1.1;        // seconds per page flip
+const STAGGER = 0.55;        // delay between successive flips
+const HOLD = 0.8;            // pause after all flipped
+const LOOP = STAGGER * (PAGE_COUNT - 1) + FLIP_DUR + HOLD;
 
-const LIFT = 0.7;         // how high a tile rises during its beat
-// ---------- Loop timing (seconds) ----------
-const PER_TILE = 0.95;    // each tile gets this much of the cycle
-const STAGGER = 0.55;     // delay between successive tiles (overlapping)
-const LIFT_T = 0.35;      // rise duration
-const HOLD_T = 0.25;      // hover duration at top
-const FALL_T = 0.35;      // fall duration
-const LOOP = STAGGER * TILE_COUNT + 1.0; // a clean pause at the end
+// Build a subdivided rectangular page (hinged at x=0).
+// Rectangle spans x: 0..PAGE_W, z: -PAGE_D/2..PAGE_D/2, y=0.
+function buildPageEdges(): THREE.BufferGeometry {
+  const pts: number[] = [];
+  const dx = PAGE_W / PAGE_SUBDIV_W;
+  const dz = PAGE_D / PAGE_SUBDIV_D;
+  const z0 = -PAGE_D / 2;
+
+  // vertical lines (constant x)
+  for (let i = 0; i <= PAGE_SUBDIV_W; i++) {
+    const x = i * dx;
+    pts.push(x, 0, z0, x, 0, z0 + PAGE_D);
+  }
+  // horizontal lines (constant z)
+  for (let j = 0; j <= PAGE_SUBDIV_D; j++) {
+    const z = z0 + j * dz;
+    pts.push(0, 0, z, PAGE_W, 0, z);
+  }
+
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+  return geom;
+}
 
 const ease = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-// Lift offset for tile i at global time t.
-function tileLift(t: number, i: number) {
-  // Top tile lifts first (highest index → smallest delay).
-  const order = TILE_COUNT - 1 - i;
-  const local = (t % LOOP) - order * STAGGER;
-  if (local < 0 || local > LIFT_T + HOLD_T + FALL_T) return 0;
-  if (local < LIFT_T) return lerp(0, LIFT, ease(local / LIFT_T));
-  if (local < LIFT_T + HOLD_T) return LIFT;
-  const p = ease((local - LIFT_T - HOLD_T) / FALL_T);
-  return lerp(LIFT, 0, p);
+// Returns the rotation around z-axis for page i at loop-local time `local`.
+// Pages start lying flat on the right (rotation = 0) and flip to the left
+// (rotation = +PI). After HOLD pause, the loop restarts.
+function pageRotation(local: number, i: number): number {
+  const start = i * STAGGER;
+  if (local < start) return 0;
+  if (local < start + FLIP_DUR) {
+    const p = ease((local - start) / FLIP_DUR);
+    return Math.PI * p;
+  }
+  return Math.PI;
 }
 
-const Stack = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
+const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const tileRefs = useRef<(THREE.Group | null)[]>([]);
+  const pageRefs = useRef<(THREE.Group | null)[]>([]);
 
-  const edges = useMemo(
-    () => new THREE.EdgesGeometry(new THREE.BoxGeometry(TILE_W, TILE_H, TILE_D)),
-    [],
-  );
-
-  // Center the whole stack vertically
-  const centerY = ((TILE_COUNT - 1) * STEP) / 2;
+  const pageGeom = useMemo(buildPageEdges, []);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      // Iconic isometric framing with a whisper of life
-      groupRef.current.rotation.y = Math.PI / 4 + Math.sin(t * 0.18) * 0.05 + tiltX * 0.1;
-      groupRef.current.rotation.x = -Math.atan(1 / Math.sqrt(2)) + tiltY * 0.06;
+      // Slight slow drift, matching solutions speed.
+      groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.08 + tiltX * 0.15;
+      groupRef.current.rotation.x = -0.55 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
     }
-    tileRefs.current.forEach((g, i) => {
-      if (!g) return;
-      g.position.y = REST_Y(i) - centerY + tileLift(t, i);
-    });
+
+    const local = t % LOOP;
+    for (let i = 0; i < PAGE_COUNT; i++) {
+      const ref = pageRefs.current[i];
+      if (!ref) continue;
+      // tiny per-page z-offset so stacked pages don't z-fight
+      const flat = pageRotation(local, i);
+      ref.rotation.z = flat;
+      // small lift while mid-flip so it arcs slightly above the spine
+      const mid = Math.sin((flat / Math.PI) * Math.PI); // 0..1..0
+      ref.position.y = mid * 0.05;
+    }
   });
 
   return (
-    <group ref={groupRef}>
-      {Array.from({ length: TILE_COUNT }).map((_, i) => (
+    <group ref={groupRef} rotation={[-0.55, 0, 0]}>
+      {/* Left cover/base — pages that have already been flipped land on
+          this side. Rendered flat at rotation = PI (mirrored on -X). */}
+      <group rotation={[0, 0, Math.PI]}>
+        <lineSegments>
+          <primitive object={pageGeom} attach="geometry" />
+          <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
+        </lineSegments>
+      </group>
+
+      {/* Right base — base sheet on the right side. */}
+      <lineSegments>
+        <primitive object={pageGeom} attach="geometry" />
+        <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
+      </lineSegments>
+
+      {/* Spine — vertical line along z at x=0 */}
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={2}
+            array={new Float32Array([0, 0, -PAGE_D / 2, 0, 0, PAGE_D / 2])}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <lineBasicMaterial color={PRIMARY} transparent opacity={0.95} depthWrite={false} />
+      </lineSegments>
+
+      {/* Flipping pages — hinged at x=0, rotated around z to swing left */}
+      {Array.from({ length: PAGE_COUNT }).map((_, i) => (
         <group
           key={i}
-          position={[0, REST_Y(i) - centerY, 0]}
-          ref={(g) => (tileRefs.current[i] = g)}
+          ref={(el) => {
+            pageRefs.current[i] = el;
+          }}
+          position={[0, 0.001 + i * 0.002, 0]}
         >
           <lineSegments>
-            <primitive object={edges} attach="geometry" />
-            <lineBasicMaterial
-              color={PRIMARY}
-              transparent
-              // Slight opacity falloff toward the bottom for depth
-              opacity={0.55 + 0.4 * (i / (TILE_COUNT - 1))}
-              depthWrite={false}
-            />
+            <primitive object={pageGeom} attach="geometry" />
+            <lineBasicMaterial color={PRIMARY} transparent opacity={0.9} depthWrite={false} />
           </lineSegments>
         </group>
       ))}
@@ -106,12 +147,12 @@ export const ResourceTileStackScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [3.4, 3.0, 3.4], fov: 36 }}
+      camera={{ position: [0, 0, 6.4], fov: 42 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
     >
-      <Stack tiltX={tiltX} tiltY={tiltY} />
+      <Book tiltX={tiltX} tiltY={tiltY} />
     </Canvas>
   );
 };
