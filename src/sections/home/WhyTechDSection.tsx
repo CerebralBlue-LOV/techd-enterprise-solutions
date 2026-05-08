@@ -23,7 +23,7 @@ export const WhyTechDSection = () => (
       <div className="mt-10 grid items-center gap-6 md:gap-12 lg:grid-cols-2 lg:gap-16 md:mt-12">
         {/* LEFT — orbit + IBM credential */}
         <Reveal delay={80}>
-          <div className="relative flex aspect-square w-full max-w-[320px] md:max-w-[460px] mx-auto lg:mx-0 items-center justify-center">
+          <div className="relative flex aspect-square w-full max-w-[320px] md:max-w-[460px] mx-auto lg:mx-0 items-center justify-center overflow-hidden">
             <ParticleOrbit />
             <IBMPlatinumBadge size="lg" variant="card" showTenure className="relative z-20" />
           </div>
