@@ -91,7 +91,7 @@ const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   });
 
   return (
-    <group ref={groupRef} rotation={[0.95, 0.55, 0.15]}>
+    <group ref={groupRef} rotation={[-0.95, -0.6, 0]} position={[0, 0.6, 0]}>
       {/* Left cover/base — pages that have already been flipped land on
           this side. Rendered flat at rotation = PI (mirrored on -X). */}
       <group rotation={[0, 0, Math.PI]}>
