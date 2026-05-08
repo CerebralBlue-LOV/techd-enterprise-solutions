@@ -79,7 +79,7 @@ export const ServiceIsoCubeScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 6.4], fov: 44 }}
+      camera={{ position: [0, 0, 7], fov: 50 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
