@@ -1,5 +1,5 @@
-import { useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 interface SceneProps {
@@ -7,131 +7,120 @@ interface SceneProps {
   tiltY?: number;
 }
 
-const PRIMARY = "#00B3E3";
+const TILE_WIDTH = 2.9;
+const TILE_DEPTH = 3.6;
+const TILE_COUNT = 6;
+const TILE_DROP = 0.085;
+const TILE_OFFSET_X = 0.14;
+const TILE_OFFSET_Z = 0.18;
+const LIFT_DURATION = 2.4;
+const STAGGER = 0.6;
+const HOLD = 1.6;
+const LOOP = STAGGER * (TILE_COUNT - 1) + LIFT_DURATION + HOLD;
+const SHAPE_OPACITY = 0.55;
 
-// Resources figure — open wireframe book with pages fanning from
-// right to left, one at a time, then resetting. Monoline cyan.
+function buildDocumentEdges(): THREE.BufferGeometry {
+  const halfW = TILE_WIDTH / 2;
+  const halfD = TILE_DEPTH / 2;
+  const fold = 0.44;
+  const pts = [
+    -halfW, 0, -halfD, halfW, 0, -halfD,
+    halfW, 0, -halfD, halfW, 0, halfD,
+    halfW, 0, halfD, -halfW, 0, halfD,
+    -halfW, 0, halfD, -halfW, 0, -halfD,
+    halfW - fold, 0, halfD, halfW, 0, halfD - fold,
+    halfW - fold, 0, halfD, halfW - fold, 0, halfD - fold,
+    -halfW + 0.5, 0, -halfD + 0.38, -halfW + 0.5, 0, halfD - 0.5,
+    -halfW + 0.18, 0, halfD - 0.72, halfW - 0.68, 0, halfD - 0.72,
+    -halfW + 0.18, 0, halfD - 1.2, halfW - 0.5, 0, halfD - 1.2,
+    -halfW + 0.18, 0, halfD - 1.68, halfW - 0.82, 0, halfD - 1.68,
+  ];
 
-const PAGE_W = 2.4;          // page width (along X, hinged at x=0)
-const PAGE_D = 3.1;          // page depth (along Z, the spine direction)
-const PAGE_SUBDIV_W = 4;
-const PAGE_SUBDIV_D = 5;
-
-const PAGE_COUNT = 6;
-const FLIP_DUR = 4.0;        // seconds per page flip (slowed)
-const STAGGER = 2.0;         // delay between successive flips (slowed)
-const HOLD = 3.0;            // pause after all flipped (slowed)
-const LOOP = STAGGER * (PAGE_COUNT - 1) + FLIP_DUR + HOLD;
-
-// Build a subdivided rectangular page (hinged at x=0).
-// Rectangle spans x: 0..PAGE_W, z: -PAGE_D/2..PAGE_D/2, y=0.
-function buildPageEdges(): THREE.BufferGeometry {
-  const pts: number[] = [];
-  const dx = PAGE_W / PAGE_SUBDIV_W;
-  const dz = PAGE_D / PAGE_SUBDIV_D;
-  const z0 = -PAGE_D / 2;
-
-  // vertical lines (constant x)
-  for (let i = 0; i <= PAGE_SUBDIV_W; i++) {
-    const x = i * dx;
-    pts.push(x, 0, z0, x, 0, z0 + PAGE_D);
-  }
-  // horizontal lines (constant z)
-  for (let j = 0; j <= PAGE_SUBDIV_D; j++) {
-    const z = z0 + j * dz;
-    pts.push(0, 0, z, PAGE_W, 0, z);
-  }
-
-  const geom = new THREE.BufferGeometry();
-  geom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
-  return geom;
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+  return geometry;
 }
 
-const ease = (t: number) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const easeInOut = (t: number) => 0.5 - Math.cos(Math.PI * t) / 2;
 
-// Returns the rotation around z-axis for page i at loop-local time `local`.
-// Pages start lying flat on the right (rotation = 0) and flip to the left
-// (rotation = +PI). After HOLD pause, the loop restarts.
-function pageRotation(local: number, i: number): number {
-  const start = i * STAGGER;
-  if (local < start) return 0;
-  if (local < start + FLIP_DUR) {
-    const p = ease((local - start) / FLIP_DUR);
-    return Math.PI * p;
-  }
-  return Math.PI;
+function tileWave(local: number, index: number): number {
+  const start = index * STAGGER;
+  if (local < start || local > start + LIFT_DURATION) return 0;
+  const progress = easeInOut((local - start) / LIFT_DURATION);
+  return Math.sin(progress * Math.PI);
 }
 
-const Book = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
+const usePrimaryColor = () =>
+  useMemo(() => {
+    if (typeof window === "undefined") return "hsl(193 100% 45%)";
+    const primary = getComputedStyle(document.documentElement)
+      .getPropertyValue("--primary")
+      .trim();
+    return primary ? `hsl(${primary})` : "hsl(193 100% 45%)";
+  }, []);
+
+const SceneCamera = () => {
+  const { camera } = useThree();
+
+  useEffect(() => {
+    camera.position.set(4.9, 5.4, 4.6);
+    camera.lookAt(0, 0.2, 0);
+    camera.updateProjectionMatrix();
+  }, [camera]);
+
+  return null;
+};
+
+const ResourceStack = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const pageRefs = useRef<(THREE.Group | null)[]>([]);
-
-  const pageGeom = useMemo(buildPageEdges, []);
+  const tileRefs = useRef<(THREE.Group | null)[]>([]);
+  const tileGeometry = useMemo(buildDocumentEdges, []);
+  const primaryColor = usePrimaryColor();
 
   useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
+    const elapsed = clock.getElapsedTime();
+    const local = elapsed % LOOP;
+
     if (groupRef.current) {
-      // Slight slow drift, matching solutions speed.
-      groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.08 + tiltX * 0.15;
-      groupRef.current.rotation.x = -0.55 + Math.sin(t * 0.12) * 0.04 + tiltY * 0.08;
+      groupRef.current.rotation.y = 0.4 + Math.sin(elapsed * 0.16) * 0.05 + tiltX * 0.14;
+      groupRef.current.rotation.x = 0.06 + Math.sin(elapsed * 0.12) * 0.015 + tiltY * 0.05;
+      groupRef.current.position.y = 0.12 + Math.sin(elapsed * 0.18) * 0.03;
     }
 
-    const local = t % LOOP;
-    for (let i = 0; i < PAGE_COUNT; i++) {
-      const ref = pageRefs.current[i];
-      if (!ref) continue;
-      // tiny per-page z-offset so stacked pages don't z-fight
-      const flat = pageRotation(local, i);
-      ref.rotation.z = flat;
-      // small lift while mid-flip so it arcs slightly above the spine
-      const mid = Math.sin((flat / Math.PI) * Math.PI); // 0..1..0
-      ref.position.y = mid * 0.05;
+    for (let index = 0; index < TILE_COUNT; index += 1) {
+      const tile = tileRefs.current[index];
+      if (!tile) continue;
+
+      const wave = tileWave(local, index);
+      tile.position.x = -index * TILE_OFFSET_X + wave * 0.2;
+      tile.position.y = -index * TILE_DROP + wave * 0.24;
+      tile.position.z = index * TILE_OFFSET_Z - wave * 0.3;
+      tile.rotation.y = wave * 0.14;
+      tile.rotation.x = wave * 0.03;
+
+      const scale = 1 + wave * 0.015;
+      tile.scale.setScalar(scale);
     }
   });
 
   return (
-    <group ref={groupRef} rotation={[-0.45, -1.35, 0]} position={[0, 0.4, 0]}>
-      {/* Left cover/base — pages that have already been flipped land on
-          this side. Rendered flat at rotation = PI (mirrored on -X). */}
-      <group rotation={[0, 0, Math.PI]}>
-        <lineSegments>
-          <primitive object={pageGeom} attach="geometry" />
-          <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
-        </lineSegments>
-      </group>
-
-      {/* Right base — base sheet on the right side. */}
-      <lineSegments>
-        <primitive object={pageGeom} attach="geometry" />
-        <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
-      </lineSegments>
-
-      {/* Spine — vertical line along z at x=0 */}
-      <lineSegments>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={2}
-            array={new Float32Array([0, 0, -PAGE_D / 2, 0, 0, PAGE_D / 2])}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
-      </lineSegments>
-
-      {/* Flipping pages — hinged at x=0, rotated around z to swing left */}
-      {Array.from({ length: PAGE_COUNT }).map((_, i) => (
+    <group ref={groupRef} position={[0.28, 0, 0]} scale={1.14}>
+      {Array.from({ length: TILE_COUNT }).map((_, index) => (
         <group
-          key={i}
-          ref={(el) => {
-            pageRefs.current[i] = el;
+          key={index}
+          ref={(element) => {
+            tileRefs.current[index] = element;
           }}
-          position={[0, 0.001 + i * 0.002, 0]}
+          position={[-index * TILE_OFFSET_X, -index * TILE_DROP, index * TILE_OFFSET_Z]}
         >
           <lineSegments>
-            <primitive object={pageGeom} attach="geometry" />
-            <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
+            <primitive object={tileGeometry} attach="geometry" />
+            <lineBasicMaterial
+              color={primaryColor}
+              transparent
+              opacity={SHAPE_OPACITY}
+              depthWrite={false}
+            />
           </lineSegments>
         </group>
       ))}
@@ -147,12 +136,13 @@ export const ResourceTileStackScene = ({ tiltX, tiltY }: SceneProps) => {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 6.4], fov: 42 }}
+      camera={{ position: [4.9, 5.4, 4.6], fov: 34 }}
       gl={{ alpha: true, antialias: true }}
       style={{ background: "transparent" }}
       frameloop={reduced ? "demand" : "always"}
     >
-      <Book tiltX={tiltX} tiltY={tiltY} />
+      <SceneCamera />
+      <ResourceStack tiltX={tiltX} tiltY={tiltY} />
     </Canvas>
   );
 };
