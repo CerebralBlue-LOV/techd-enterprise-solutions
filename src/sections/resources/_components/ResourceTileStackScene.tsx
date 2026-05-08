@@ -18,9 +18,9 @@ const PAGE_SUBDIV_W = 4;
 const PAGE_SUBDIV_D = 5;
 
 const PAGE_COUNT = 6;
-const FLIP_DUR = 1.1;        // seconds per page flip
-const STAGGER = 0.55;        // delay between successive flips
-const HOLD = 0.8;            // pause after all flipped
+const FLIP_DUR = 2.4;        // seconds per page flip
+const STAGGER = 1.2;         // delay between successive flips
+const HOLD = 1.8;            // pause after all flipped
 const LOOP = STAGGER * (PAGE_COUNT - 1) + FLIP_DUR + HOLD;
 
 // Build a subdivided rectangular page (hinged at x=0).
