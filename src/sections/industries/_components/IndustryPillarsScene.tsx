@@ -24,8 +24,11 @@ const Pillars = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.25 + tiltX * 0.2;
-      groupRef.current.rotation.x = -0.05 + tiltY * 0.08;
+      // Continuous slow Y rotation (like the solutions wireframe)
+      groupRef.current.rotation.y = t * 0.15 + tiltX * 0.2;
+      groupRef.current.rotation.x = -0.05 + Math.sin(t * 0.1) * 0.06 + tiltY * 0.08;
+      // Slow vertical float — top↔bottom drift
+      groupRef.current.position.y = Math.sin(t * 0.35) * 0.25;
     }
     // Subtle "breathing" — each pillar scales Y slightly out of phase.
     pillarRefs.current.forEach((m, i) => {
