@@ -8,7 +8,6 @@ interface SceneProps {
 }
 
 const PRIMARY = "#00B3E3";
-const HIGHLIGHT = "#7CE6FF";
 
 const PILLAR_COUNT = 6;
 const PILLAR_WIDTH = 0.32;
