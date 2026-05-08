@@ -22,25 +22,31 @@ export const LogoTile = ({ customer, current, dirty, onChange }: Props) => {
 
   return (
     <div
-      className={`rounded-xl border p-5 transition ${
+      className={`group rounded-xl border p-5 transition ${
         dirty
           ? "border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.12)]"
           : "border-border"
       } ${status.tone === "danger" ? "border-destructive/60" : ""}`}
     >
-      {/* Logo preview area */}
-      <div className="grid h-28 place-items-center rounded-lg bg-background border border-border/60">
+      {/* Logo preview area — hover reveals color */}
+      <a
+        href={customer.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={`Open ${customer.name}`}
+        className="grid h-28 place-items-center rounded-lg bg-background border border-border/60 transition hover:border-primary"
+      >
         {customer.logo ? (
           <img
             src={customer.logo}
             alt={customer.name}
             onError={() => setBroken(true)}
-            className={`${cls} w-auto object-contain opacity-70 grayscale`}
+            className={`${cls} w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
           />
         ) : (
           <span className="text-xs text-muted-foreground">no logo file</span>
         )}
-      </div>
+      </a>
 
       {/* Meta */}
       <div className="mt-3 flex items-start justify-between gap-2">
@@ -48,9 +54,14 @@ export const LogoTile = ({ customer, current, dirty, onChange }: Props) => {
           <p className="truncate text-sm font-bold text-secondary">
             {customer.name}
           </p>
-          <p className="truncate text-[11px] text-muted-foreground">
-            {customer.logo ?? "—"}
-          </p>
+          <a
+            href={customer.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block truncate text-[11px] text-muted-foreground hover:text-primary"
+          >
+            {customer.url}
+          </a>
         </div>
         <span
           className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${

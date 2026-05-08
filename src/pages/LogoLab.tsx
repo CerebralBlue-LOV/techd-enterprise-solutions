@@ -133,15 +133,8 @@ const LogoLab = () => {
             >
               Copy diff
             </button>
-            <button
-              type="button"
-              onClick={handleDownload}
-              disabled={dirtyCount === 0 || saving}
-              className="rounded-md bg-primary px-4 py-2 text-xs font-bold text-primary-foreground disabled:opacity-50"
-            >
-              {saving ? "Working…" : "Download site.ts"}
-            </button>
           </div>
+
         </div>
         {message && (
           <p className="mt-3 text-xs font-bold text-primary">{message}</p>
