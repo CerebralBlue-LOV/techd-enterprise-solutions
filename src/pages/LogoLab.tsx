@@ -14,7 +14,14 @@ const LogoLab = () => {
     () => Object.fromEntries(CUSTOMERS.map((c) => [c.name, c.logoClass ?? null])),
     [],
   );
-  const initialOrder = useMemo(() => CUSTOMERS.map((c) => c.name), []);
+  const initialOrder = useMemo(
+    () =>
+      (CUSTOMERS.length > 3
+        ? [...CUSTOMERS.slice(-3), ...CUSTOMERS.slice(0, -3)]
+        : CUSTOMERS
+      ).map((c) => c.name),
+    [],
+  );
 
   const [edits, setEdits] = useState<Record<string, string | null>>(initialEdits);
   const [order, setOrder] = useState<string[]>(initialOrder);
