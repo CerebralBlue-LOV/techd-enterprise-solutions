@@ -89,4 +89,6 @@ export const CUSTOMERS: Customer[] = [
   { name: "Verizon", url: "https://www.verizon.com", logo: "/logos/verizon.svg", logoClass: "h-10 md:h-12" },
   { name: "Dow", url: "https://www.dow.com", logo: "/logos/dow.svg", logoClass: "h-14 md:h-16" },
   { name: "Penn State", url: "https://www.psu.edu", logo: "/logos/pennstate.svg", logoClass: "h-12 md:h-14" },
+  { name: "Itochu", url: "https://www.itochu.co.jp/en/", logo: "/logos/itochu.svg", logoClass: "h-10 md:h-12" },
+  { name: "Children's Health", url: "https://www.childrens.com", logo: "/logos/childrens-health.svg", logoClass: "h-8 md:h-9" },
 ];
