@@ -18,7 +18,6 @@ const INNER = 1.2;
 
 const IsoCubes = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const innerRef = useRef<THREE.Group>(null);
 
   const outerEdges = useMemo(
     () => new THREE.EdgesGeometry(new THREE.BoxGeometry(OUTER, OUTER, OUTER)),
@@ -52,12 +51,9 @@ const IsoCubes = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
-      groupRef.current.rotation.y = t * 0.15 + tiltX * 0.2;
-      groupRef.current.rotation.x = -0.5 + Math.sin(t * 0.1) * 0.04 + tiltY * 0.08;
-    }
-    if (innerRef.current) {
-      innerRef.current.rotation.y = -t * 0.25;
-      innerRef.current.rotation.x = t * 0.18;
+      // Classic isometric pose: tilt top toward camera, slow yaw drift.
+      groupRef.current.rotation.x = -Math.atan(1 / Math.sqrt(2)) + tiltY * 0.06;
+      groupRef.current.rotation.y = Math.PI / 4 + t * 0.15 + tiltX * 0.15;
     }
   });
 
@@ -85,18 +81,16 @@ const IsoCubes = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
         />
       </lineSegments>
 
-      {/* Inner cube — gently counter-rotates */}
-      <group ref={innerRef}>
-        <lineSegments>
-          <primitive object={innerEdges} attach="geometry" />
-          <lineBasicMaterial
-            color={PRIMARY}
-            transparent
-            opacity={0.85}
-            depthWrite={false}
-          />
-        </lineSegments>
-      </group>
+      {/* Inner cube — locked to outer so it reads as a true nested cube */}
+      <lineSegments>
+        <primitive object={innerEdges} attach="geometry" />
+        <lineBasicMaterial
+          color={PRIMARY}
+          transparent
+          opacity={0.85}
+          depthWrite={false}
+        />
+      </lineSegments>
     </group>
   );
 };
