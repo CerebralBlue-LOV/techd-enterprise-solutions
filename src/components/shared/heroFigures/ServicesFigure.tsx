@@ -1,12 +1,20 @@
+import { Suspense, lazy } from "react";
+
+const IsoCubeScene = lazy(
+  () => import("@/sections/services/_components/ServiceIsoCubeScene"),
+);
+
 /**
- * ServicesFigure — placeholder. The services hero motif has not been designed
- * yet; this slot is rendered in /figure-lab so we can iterate on it.
+ * ServicesFigure — isometric wireframe cube viewed from the corner
+ * (hexagonal silhouette with a Y inside). Three visible faces pulse
+ * with a soft brand-cyan fill in sequence — the X/Y/Z axes highlight
+ * from the Dribbble Isometric Shapes Showreel, minus the labels.
  */
 export const ServicesFigure = () => (
-  <div className="absolute inset-0 flex items-center justify-center">
-    <div className="rounded-md border border-dashed border-border px-4 py-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-      Services figure — TBD
-    </div>
+  <div className="absolute inset-0">
+    <Suspense fallback={null}>
+      <IsoCubeScene tiltX={0} tiltY={0} />
+    </Suspense>
   </div>
 );
 
