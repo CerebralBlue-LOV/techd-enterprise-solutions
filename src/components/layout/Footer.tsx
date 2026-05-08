@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Linkedin } from "lucide-react";
+import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
 import logo from "@/assets/techd-logo.webp";
 import { NAV } from "@/content/site";
 import { IBMPlatinumBadge } from "@shared/IBMPlatinumBadge";
@@ -15,15 +15,23 @@ export const Footer = () => (
         </p>
         <IBMPlatinumBadge size="md" className="mt-6" />
         <div className="mt-6 flex items-center gap-3">
-          <a
-            href="https://www.linkedin.com/company/techd"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="TechD on LinkedIn"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-          >
-            <Linkedin className="h-4 w-4" />
-          </a>
+          {[
+            { Icon: Linkedin, href: "https://www.linkedin.com/company/techd", label: "LinkedIn" },
+            { Icon: Twitter,  href: "https://twitter.com/techd",              label: "Twitter / X" },
+            { Icon: Facebook, href: "https://www.facebook.com/techd",         label: "Facebook" },
+            { Icon: Youtube,  href: "https://www.youtube.com/@techd",         label: "YouTube" },
+          ].map(({ Icon, href, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`TechD on ${label}`}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              <Icon className="h-4 w-4" />
+            </a>
+          ))}
         </div>
       </div>
 
