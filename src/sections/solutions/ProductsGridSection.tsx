@@ -99,7 +99,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
     if (paused || total <= 1) return;
     if (prefersReducedMotion()) return;
     const t = window.setTimeout(() => {
-      setIndex((i) => (i + 1) % total);
+      goTo((index + 1) % total);
     }, AUTO_MS);
     return () => window.clearTimeout(t);
   }, [index, paused, total]);
