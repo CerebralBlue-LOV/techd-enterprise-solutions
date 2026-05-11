@@ -100,10 +100,6 @@ const SlideContent = ({
         <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
           {product.name}
         </h3>
-        <ArrowUpRight
-          className="mt-2 size-7 md:size-8 text-white/70 shrink-0"
-          aria-hidden
-        />
       </div>
       <div
         className={cn("mt-auto pt-10", anim)}
@@ -306,21 +302,9 @@ export const ProductsGridSection = ({ practice }: Props) => {
               <div className="relative flex flex-col p-8 md:p-10 lg:p-12 min-h-[520px] md:min-h-[600px]">
                 {/* Top chip row */}
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5 rounded-full bg-white/10 backdrop-blur-sm px-3 py-1.5 ring-1 ring-white/15">
-                    <span className="grid h-6 w-6 place-items-center rounded-full bg-primary/30 ring-1 ring-primary/40">
-                      {motif ? (
-                        <img
-                          src={motif.image}
-                          alt=""
-                          aria-hidden
-                          className="h-4 w-4 object-contain"
-                        />
-                      ) : (
-                        <span className="h-2 w-2 rounded-full bg-primary" />
-                      )}
-                    </span>
+                  <div className="flex items-center rounded-full bg-white/10 backdrop-blur-sm px-3 py-1.5 ring-1 ring-white/15">
                     <span className="text-xs font-normal text-white/90">
-                      {practice.name}
+                      Featured product
                     </span>
                   </div>
                   <ProductLink
