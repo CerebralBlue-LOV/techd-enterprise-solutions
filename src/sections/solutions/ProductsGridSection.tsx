@@ -344,6 +344,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                       key={`out-${prevIndex}`}
                       product={products[prevIndex]}
                       direction="out"
+                      reverse={reverse}
                       className="absolute inset-0"
                     />
                   )}
@@ -352,6 +353,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                     key={`in-${index}`}
                     product={active}
                     direction="in"
+                    reverse={reverse}
                     className="absolute inset-0"
                   />
                 </div>
