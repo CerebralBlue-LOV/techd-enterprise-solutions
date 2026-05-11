@@ -245,10 +245,13 @@ export const ProductsGridSection = ({ practice }: Props) => {
                 {/* Focal display + body, keyed for transition */}
                 <div
                   key={index}
-                  className="mt-10 flex-1 flex flex-col animate-fade-in"
+                  className="mt-10 flex-1 flex flex-col overflow-hidden"
                   aria-live="polite"
                 >
-                  <div className="flex items-start gap-3">
+                  <div
+                    className="flex items-start gap-3 animate-slide-in-right"
+                    style={{ animationDelay: "0ms" }}
+                  >
                     <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
                       {active.name}
                     </h3>
@@ -258,11 +261,17 @@ export const ProductsGridSection = ({ practice }: Props) => {
                     />
                   </div>
 
-                  <div className="mt-auto pt-10">
+                  <div
+                    className="mt-auto pt-10 animate-slide-in-right"
+                    style={{ animationDelay: "120ms" }}
+                  >
                     <p className="text-base md:text-lg font-bold text-white leading-snug">
                       {active.tagline}
                     </p>
-                    <p className="mt-3 text-sm md:text-base font-light text-white/75 leading-relaxed line-clamp-3">
+                    <p
+                      className="mt-3 text-sm md:text-base font-light text-white/75 leading-relaxed line-clamp-3 animate-slide-in-right"
+                      style={{ animationDelay: "220ms" }}
+                    >
                       {active.description}
                     </p>
                   </div>
