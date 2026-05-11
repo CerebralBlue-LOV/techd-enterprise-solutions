@@ -55,7 +55,7 @@ const ClientRow = ({ client, index }: { client: ClientEntry; index: number }) =>
     <Wrapper
       {...wrapperProps}
       className={cn(
-        "group relative grid items-center gap-6 border-b border-border px-2 py-7 md:py-8",
+        "group relative grid items-center gap-6 border-b border-border last:border-b-0 px-2 py-7 md:py-8",
         "grid-cols-[2.5rem_7.5rem_1fr_auto] md:grid-cols-[3rem_10rem_1fr_auto]",
         "transition-colors duration-300",
         client.url && "hover:bg-muted/20 cursor-pointer",
