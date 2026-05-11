@@ -139,8 +139,8 @@ const Geometry = () => {
 
   return (
     <group ref={group}>
-      <Cube position={[-2.2, 0, 0]} size={1.6} rotationSpeed={0.18} />
-      <Cube position={[2.2, 0, 0]} size={1.9} rotationSpeed={-0.14} />
+      <Cube position={[-2.3, 0, 0]} size={1.5} rotationSpeed={0.18} />
+      <Cube position={[2.3, 0, 0]} size={1.5} rotationSpeed={-0.14} />
       <Bridge />
     </group>
   );
