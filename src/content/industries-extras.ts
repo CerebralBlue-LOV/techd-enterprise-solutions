@@ -109,7 +109,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       "Grid analytics, asset performance management, and OT/IT security for regulated utilities and the independent system operators that keep the lights on.",
     whyPoints: [
       { title: "NERC-CIP fluency",     body: "Security, identity, and data movement patterns aligned with the controls regulated utilities answer for." },
-      { title: "Grid-scale data work", body: "Active engagements with Dominion Energy and MISO Energy across grid operations and analytics." },
+      { title: "Grid-scale data work", body: "Engagements with operators like TEPSCO (Tokyo Electric Power Services) across power engineering and grid analytics." },
       { title: "OT/IT under one roof", body: "Observability and security that span operational technology and IT — not two disconnected programs." },
       { title: "Built to be audited",  body: "Lineage, access controls, and reporting that satisfy state PUCs and FERC, not just internal audit." },
     ],
