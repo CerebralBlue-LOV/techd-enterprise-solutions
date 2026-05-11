@@ -5,6 +5,11 @@ import IndustriesFigure from "@/components/shared/heroFigures/IndustriesFigure";
 import ServicesFigure from "@/components/shared/heroFigures/ServicesFigure";
 import ResourcesFigure from "@/components/shared/heroFigures/ResourcesFigure";
 import CompanyFigure from "@/components/shared/heroFigures/CompanyFigure";
+import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGenerativeFigure";
+import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
+import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
+import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
+import HybridCloudFigure from "@/components/shared/heroFigures/solutions/HybridCloudFigure";
 
 const ResourceTileStackScene = lazy(
   () => import("@/sections/resources/_components/ResourceTileStackScene"),
@@ -27,6 +32,14 @@ const SLOTS = [
   { label: "Industries", Figure: IndustriesFigure },
   { label: "Services", Figure: ServicesFigure },
   { label: "Company", Figure: CompanyFigure },
+] as const;
+
+const SOLUTION_SLOTS = [
+  { label: "AI & Generative", code: "AiGenerativeFigure", Figure: AiGenerativeFigure },
+  { label: "Data & Analytics", code: "DataAnalyticsFigure", Figure: DataAnalyticsFigure },
+  { label: "Automation & FinOps", code: "AutomationFinOpsFigure", Figure: AutomationFinOpsFigure },
+  { label: "Security & Compliance", code: "SecurityComplianceFigure", Figure: SecurityComplianceFigure },
+  { label: "Hybrid Cloud", code: "HybridCloudFigure", Figure: HybridCloudFigure },
 ] as const;
 
 type Vec3 = [number, number, number];
