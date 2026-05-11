@@ -52,10 +52,6 @@ export const ApproachSection = ({ practice }: Props) => {
                       <span className="absolute inset-y-0 left-0 w-0 bg-primary transition-[width] duration-700 ease-out group-hover:w-full" />
                     </span>
                   </div>
-                    <span aria-hidden className="relative h-px flex-1 bg-border overflow-hidden">
-                      <span className="absolute inset-y-0 left-0 w-0 bg-primary transition-[width] duration-700 ease-out group-hover:w-full" />
-                    </span>
-                  </div>
 
                   <h3 className="relative mt-5 text-xl md:text-2xl font-bold text-secondary leading-tight tracking-tight transition-transform duration-500 group-hover:translate-x-0.5">
                     {step.step}
