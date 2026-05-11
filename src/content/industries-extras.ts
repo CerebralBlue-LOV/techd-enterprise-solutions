@@ -8,15 +8,13 @@
  */
 
 export type WhyPoint = { title: string; body: string };
+/**
+ * `name` must match a `Customer.name` in `src/content/site.ts` so logo, url,
+ * and sizing flow from the single CUSTOMERS source of truth (Logo Lab).
+ */
 export type ClientEntry = {
   name: string;
   note: string;
-  /** External site for outbound link. */
-  url?: string;
-  /** Path under /public — e.g. "/logos/johns-hopkins.png". */
-  logo?: string;
-  /** Optional override of logo height utility classes. */
-  logoClass?: string;
 };
 export type PracticeProof = { id: string; proof: string };
 export type StatCallout = { value: string; label: string };
@@ -45,12 +43,9 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Clinical-grade outputs",    body: "RAG architectures that cite their sources, governance that satisfies your CMIO, and the operational support to keep them running." },
     ],
     clients: [
-      { name: "Johns Hopkins Medicine", note: "Academic medical center",                  url: "https://www.hopkinsmedicine.org", logo: "/logos/johns-hopkins.png" },
-      { name: "CHOP",                   note: "Children's Hospital of Philadelphia",      url: "https://www.chop.edu",            logo: "/logos/chop.png" },
-      { name: "Jefferson Health",       note: "Health system, Philadelphia region",        url: "https://www.jeffersonhealth.org", logo: "/logos/jefferson-health.png" },
-      { name: "Temple Health",          note: "Academic health system",                    url: "https://www.templehealth.org",    logo: "/logos/temple-health.png" },
-      { name: "Genesis HealthCare",     note: "Long-term care and skilled nursing",       url: "https://www.genesishcc.com",       logo: "/logos/genesis-healthcare.png" },
-      { name: "Johnson & Johnson",      note: "Global pharmaceutical and consumer health", url: "https://www.jnj.com",             logo: "/logos/johnson-and-johnson.png" },
+      { name: "Admed",              note: "Brazilian medical platform — clinical data and decision support." },
+      { name: "Netcare",            note: "South Africa's leading private hospital network." },
+      { name: "Children's Health",  note: "Pediatric health system, North Texas." },
     ],
     practices: [
       { id: "ai-generative",       proof: "Clinical knowledge agents and grounded RAG built on watsonx, deployed inside health systems." },
@@ -70,15 +65,15 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Content intelligence, audience analytics, and operational AI built for the scale and pace of major studios, streamers, and platform businesses.",
     whyPoints: [
-      { title: "Platform-scale fluency", body: "Work shipped inside Sony Interactive Entertainment, Sony Pictures, and Comcast/Peacock — not pitched at them." },
+      { title: "Platform-scale fluency", body: "Work shipped inside global media and platform businesses like Snap, Adobe, and Verizon — not pitched at them." },
       { title: "Content + audience",     body: "Two sides of the same coin: tag and search the catalog, then understand who's watching what." },
       { title: "Operational AI",         body: "Workflow assistants, knowledge agents, and automation that take cost out of post, ops, and customer support." },
       { title: "Built on watsonx",       body: "Foundation-model governance and RAG patterns that hold up to legal review and rights management." },
     ],
     clients: [
-      { name: "Sony Interactive Entertainment", note: "PlayStation platform",                url: "https://www.sie.com",        logo: "/logos/sony-interactive.svg" },
-      { name: "Sony Pictures",                  note: "Film and TV production",              url: "https://www.sonypictures.com", logo: "/logos/sony-pictures.png" },
-      { name: "Comcast / Peacock",              note: "Cable, streaming, and broadband",     url: "https://corporate.comcast.com", logo: "/logos/comcast-peacock.svg" },
+      { name: "Snap Inc.", note: "Camera-first social platform — content and audience scale." },
+      { name: "Adobe",     note: "Creative software platform — media tooling and asset workflows." },
+      { name: "Verizon",   note: "Telecom and media — distribution and customer experience at scale." },
     ],
     practices: [
       { id: "ai-generative",  proof: "Content intelligence and operational AI for studios, networks, and streamers." },
@@ -93,13 +88,12 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       "Underwriting copilots, claims acceleration, and actuarial analytics built for property, casualty, and specialty carriers who can't ship anything an auditor can't explain.",
     whyPoints: [
       { title: "Carrier-grade controls", body: "NAIC and SOX compliance tooling, lineage-traced data, and the audit posture regulated carriers need." },
-      { title: "Specialty carrier fit",  body: "Active work with PURE Insurance and National General — high-net-worth and standard P&C." },
+      { title: "Specialty carrier fit",  body: "Active work with global insurers like MetLife — life, group benefits, and annuities at scale." },
       { title: "Underwriting copilots",  body: "RAG and agentic workflows grounded in your underwriting guidelines and historical book." },
       { title: "Claims acceleration",    body: "Document intelligence, automation, and observability that take days out of the claims cycle." },
     ],
     clients: [
-      { name: "PURE Insurance",     note: "High-net-worth homeowner insurance", url: "https://www.pureinsurance.com",         logo: "/logos/pure-insurance.png" },
-      { name: "National General",   note: "Property and casualty carrier",       url: "https://www.nationalgeneral.com",       logo: "/logos/national-general.png" },
+      { name: "MetLife", note: "Global insurer — life, group benefits, and annuities." },
     ],
     practices: [
       { id: "ai-generative",       proof: "Underwriting copilots and claims acceleration for property and specialty carriers." },
@@ -115,13 +109,12 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       "Grid analytics, asset performance management, and OT/IT security for regulated utilities and the independent system operators that keep the lights on.",
     whyPoints: [
       { title: "NERC-CIP fluency",     body: "Security, identity, and data movement patterns aligned with the controls regulated utilities answer for." },
-      { title: "Grid-scale data work", body: "Active engagements with Dominion Energy and MISO Energy across grid operations and analytics." },
+      { title: "Grid-scale data work", body: "Engagements with operators like TEPSCO (Tokyo Electric Power Services) across power engineering and grid analytics." },
       { title: "OT/IT under one roof", body: "Observability and security that span operational technology and IT — not two disconnected programs." },
       { title: "Built to be audited",  body: "Lineage, access controls, and reporting that satisfy state PUCs and FERC, not just internal audit." },
     ],
     clients: [
-      { name: "Dominion Energy", note: "Regulated electric utility",              url: "https://www.dominionenergy.com", logo: "/logos/dominion-energy.png" },
-      { name: "MISO Energy",     note: "Midcontinent independent system operator", url: "https://www.misoenergy.org",     logo: "/logos/miso-energy.png" },
+      { name: "TEPSCO", note: "Tokyo Electric Power Services — engineering for power generation and grid." },
     ],
     practices: [
       { id: "data-analytics",      proof: "Grid analytics and operational dashboards for regulated utilities and ISOs." },
@@ -138,12 +131,15 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     whyPoints: [
       { title: "Research-grade compute", body: "Platforms that handle research workloads alongside administrative analytics on a shared, governed foundation." },
       { title: "FERPA by design",        body: "Access controls and lineage that protect student data from the catalog up — not patched at the report layer." },
-      { title: "Named institutions",     body: "Active or recent work with Princeton University and Virginia Commonwealth University." },
+      { title: "Named institutions",     body: "Active or recent work with Harvard, Penn State, NUS, Stony Brook, and NYIT." },
       { title: "BI muscle",              body: "Cognos and Planning Analytics depth applied to enrollment, finance, and research analytics." },
     ],
     clients: [
-      { name: "Princeton University", note: "Research university",            url: "https://www.princeton.edu", logo: "/logos/princeton-university.png" },
-      { name: "VCU",                  note: "Virginia Commonwealth University", url: "https://www.vcu.edu",       logo: "/logos/vcu.png" },
+      { name: "Harvard University",                    note: "Ivy League — research computing and administrative analytics." },
+      { name: "Penn State",                            note: "R1 public research university." },
+      { name: "National University of Singapore",      note: "Top-ranked Asia-Pacific research university." },
+      { name: "Stony Brook University",                note: "SUNY flagship — research and student data." },
+      { name: "New York Institute of Technology",      note: "Private polytechnic — applied research." },
     ],
     practices: [
       { id: "data-analytics",      proof: "Student, research, and finance analytics for top-tier universities." },
@@ -158,13 +154,13 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       "Auditable AI systems and modernized records management for federal agencies and the defense technology organizations that support them.",
     whyPoints: [
       { title: "FedRAMP-aligned posture", body: "Architectures designed against FedRAMP and FISMA controls — not retrofitted to them." },
-      { title: "Federal experience",      body: "Direct work with the Department of Homeland Security and defense contractor L3Harris." },
+      { title: "Federal experience",      body: "Engagements aligned with U.S. federal mission requirements and defense technology programs." },
       { title: "Auditable AI",            body: "watsonx-based RAG and governance patterns that produce explainable, source-cited outputs." },
       { title: "Records modernization",   body: "Data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
     ],
     clients: [
-      { name: "Department of Homeland Security", note: "Federal agency",                  url: "https://www.dhs.gov",     logo: "/logos/dhs.svg" },
-      { name: "L3Harris",                        note: "Defense electronics contractor",   url: "https://www.l3harris.com", logo: "/logos/l3harris.png" },
+      // No matching public-sector clients in the current CUSTOMERS roster.
+      // Section will hide automatically until one is added in Logo Lab.
     ],
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
