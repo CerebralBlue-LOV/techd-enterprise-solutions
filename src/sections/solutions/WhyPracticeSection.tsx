@@ -13,7 +13,7 @@ export const WhyPracticeSection = ({ practice }: Props) => {
   if (!extras?.whyPoints?.length) return null;
 
   return (
-    <section id="why" className="section scroll-mt-24">
+    <section id="why" className="section scroll-mt-24 border-t border-border">
       <SectionMarker page={`Solutions / ${practice.name}`} name="Why this practice" />
       <div className="container-page">
         <Reveal>
@@ -25,16 +25,19 @@ export const WhyPracticeSection = ({ practice }: Props) => {
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {extras.whyPoints.map((p, i) => (
             <Reveal key={p.title} delay={i * 60}>
-              <div className="group relative min-h-[260px] flex items-center justify-center rounded-xl overflow-hidden cursor-default bg-background border border-border transition-shadow duration-[600ms] hover:shadow-[0_20px_40px_-12px_hsl(var(--primary)/0.5)]">
-                {/* Front: white with title */}
-                <div className="flex flex-col items-center justify-center p-6 text-center transition-all duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none group-hover:[transform:scale(0)_rotate(-45deg)]">
-                  <h3 className="text-xl font-bold text-secondary leading-tight">{p.title}</h3>
-                </div>
+              <div className="group relative min-h-[260px] flex flex-col justify-end rounded-xl overflow-hidden cursor-default bg-background border border-border transition-shadow duration-500 hover:shadow-[0_20px_40px_-12px_hsl(var(--primary)/0.5)]">
+                {/* Light orbs */}
+                <div className="absolute -top-8 -left-8 w-44 h-44 rounded-full bg-primary/20 blur-3xl" />
+                <div className="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-muted/60 blur-xl" />
 
-                {/* Back: white panel rotates in */}
-                <div className="absolute top-1/2 left-1/2 w-full h-full p-6 flex flex-col justify-center bg-background opacity-0 [transform:translate(-50%,-50%)_rotate(-45deg)] transition-all duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none group-hover:opacity-100 group-hover:[transform:translate(-50%,-50%)_rotate(0deg)]">
-                  <h3 className="text-base font-bold text-secondary">{p.title}</h3>
-                  <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">{p.body}</p>
+                {/* Content */}
+                <div className="relative p-6">
+                  <h3 className="text-xl font-bold text-secondary leading-tight">{p.title}</h3>
+                  <div className="grid grid-rows-[0fr] transition-all duration-500 motion-reduce:duration-0 group-hover:grid-rows-[1fr] group-hover:mt-3">
+                    <div className="overflow-hidden">
+                      <p className="text-sm font-light text-muted-foreground leading-relaxed">{p.body}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Reveal>
