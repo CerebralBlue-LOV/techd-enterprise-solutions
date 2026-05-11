@@ -72,14 +72,23 @@ const ProductLink = ({
 const SlideContent = ({
   product,
   direction,
+  reverse,
   className,
 }: {
   product: Product;
   direction: "in" | "out";
+  reverse: boolean;
   className?: string;
 }) => {
   const isIn = direction === "in";
-  const anim = isIn ? "animate-slide-in-right" : "animate-slide-out-left";
+  // Forward: out → left, in ← right. Reverse: out → right, in ← left.
+  const anim = isIn
+    ? reverse
+      ? "animate-slide-in-left"
+      : "animate-slide-in-right"
+    : reverse
+      ? "animate-slide-out-right"
+      : "animate-slide-out-left";
   // Incoming waits for the outgoing exit (1400ms) before starting.
   const baseDelay = isIn ? 1400 : 0;
   return (
