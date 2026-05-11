@@ -726,7 +726,7 @@
 
 /* Progress bar fill for products carousel */
 @keyframes progress-fill {
-  from { transform: scaleX(0); }
+  from { transform: scaleX(0.06); }
   to   { transform: scaleX(1); }
 }
 
