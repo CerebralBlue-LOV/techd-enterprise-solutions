@@ -69,20 +69,80 @@ const ProductLink = ({
   );
 };
 
+const SlideContent = ({
+  product,
+  direction,
+  className,
+}: {
+  product: Product;
+  direction: "in" | "out";
+  className?: string;
+}) => {
+  const anim =
+    direction === "in" ? "animate-slide-in-right" : "animate-slide-out-left";
+  return (
+    <div className={cn("flex h-full flex-col", className)}>
+      <div className={cn("flex items-start gap-3", anim)}>
+        <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
+          {product.name}
+        </h3>
+        <ArrowUpRight
+          className="mt-2 size-7 md:size-8 text-white/70 shrink-0"
+          aria-hidden
+        />
+      </div>
+      <div
+        className={cn("mt-auto pt-10", anim)}
+        style={{ animationDelay: direction === "in" ? "140ms" : "0ms" }}
+      >
+        <p className="text-base md:text-lg font-bold text-white leading-snug">
+          {product.tagline}
+        </p>
+        <p
+          className={cn(
+            "mt-3 text-sm md:text-base font-light text-white/75 leading-relaxed line-clamp-3",
+            anim,
+          )}
+          style={{ animationDelay: direction === "in" ? "260ms" : "0ms" }}
+        >
+          {product.description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export const ProductsGridSection = ({ practice }: Props) => {
   const products = practice.products;
   const total = products.length;
   const motif = PRACTICE_MOTIFS[practice.id];
   const [index, setIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  // Track outgoing slide for exit animation
+  const goTo = (next: number) => {
+    setIndex((curr) => {
+      if (next === curr) return curr;
+      setPrevIndex(curr);
+      return next;
+    });
+  };
+
+  // Clear outgoing layer once its animation finishes
+  useEffect(() => {
+    if (prevIndex === null) return;
+    const t = window.setTimeout(() => setPrevIndex(null), 1100);
+    return () => window.clearTimeout(t);
+  }, [prevIndex, index]);
 
   // Auto-advance
   useEffect(() => {
     if (paused || total <= 1) return;
     if (prefersReducedMotion()) return;
     const t = window.setTimeout(() => {
-      setIndex((i) => (i + 1) % total);
+      goTo((index + 1) % total);
     }, AUTO_MS);
     return () => window.clearTimeout(t);
   }, [index, paused, total]);
@@ -93,14 +153,14 @@ export const ProductsGridSection = ({ practice }: Props) => {
     if (!node) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
-        setIndex((i) => (i + 1) % total);
+        goTo((index + 1) % total);
       } else if (e.key === "ArrowLeft") {
-        setIndex((i) => (i - 1 + total) % total);
+        goTo((index - 1 + total) % total);
       }
     };
     node.addEventListener("keydown", onKey);
     return () => node.removeEventListener("keydown", onKey);
-  }, [total]);
+  }, [total, index]);
 
   const active = products[index];
   const glow = GLOW_POSITIONS[index % GLOW_POSITIONS.length];
@@ -242,39 +302,27 @@ export const ProductsGridSection = ({ practice }: Props) => {
                   </ProductLink>
                 </div>
 
-                {/* Focal display + body, keyed for transition */}
+                {/* Focal display + body, with overlapping enter/exit layers */}
                 <div
-                  key={index}
-                  className="mt-10 flex-1 flex flex-col overflow-hidden"
+                  className="relative mt-10 flex-1"
                   aria-live="polite"
                 >
-                  <div
-                    className="flex items-start gap-3 animate-slide-in-right"
-                    style={{ animationDelay: "0ms" }}
-                  >
-                    <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
-                      {active.name}
-                    </h3>
-                    <ArrowUpRight
-                      className="mt-2 size-7 md:size-8 text-white/70 shrink-0"
-                      aria-hidden
+                  {/* Outgoing slide */}
+                  {prevIndex !== null && (
+                    <SlideContent
+                      key={`out-${prevIndex}`}
+                      product={products[prevIndex]}
+                      direction="out"
+                      className="absolute inset-0"
                     />
-                  </div>
-
-                  <div
-                    className="mt-auto pt-10 animate-slide-in-right"
-                    style={{ animationDelay: "120ms" }}
-                  >
-                    <p className="text-base md:text-lg font-bold text-white leading-snug">
-                      {active.tagline}
-                    </p>
-                    <p
-                      className="mt-3 text-sm md:text-base font-light text-white/75 leading-relaxed line-clamp-3 animate-slide-in-right"
-                      style={{ animationDelay: "220ms" }}
-                    >
-                      {active.description}
-                    </p>
-                  </div>
+                  )}
+                  {/* Incoming slide */}
+                  <SlideContent
+                    key={`in-${index}`}
+                    product={active}
+                    direction="in"
+                    className="relative"
+                  />
                 </div>
 
                 {/* Dot pagination */}
@@ -292,7 +340,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                         aria-selected={isActive}
                         aria-current={isActive ? "true" : undefined}
                         aria-label={`Show product ${i + 1} of ${total}: ${p.name}`}
-                        onClick={() => setIndex(i)}
+                        onClick={() => goTo(i)}
                         className={cn(
                           "h-1.5 rounded-full transition-all duration-300",
                           isActive
