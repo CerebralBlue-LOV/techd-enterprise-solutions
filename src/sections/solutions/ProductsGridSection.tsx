@@ -330,9 +330,9 @@ export const ProductsGridSection = ({ practice }: Props) => {
                   />
                 </div>
 
-                {/* Dot pagination */}
+                {/* Segmented progress bar */}
                 <div
-                  className="mt-8 flex items-center gap-2"
+                  className="mt-10 flex items-center gap-2 w-full"
                   role="tablist"
                   aria-label="Select product"
                 >
@@ -347,10 +347,8 @@ export const ProductsGridSection = ({ practice }: Props) => {
                         aria-label={`Show product ${i + 1} of ${total}: ${p.name}`}
                         onClick={() => goTo(i)}
                         className={cn(
-                          "h-1.5 rounded-full transition-all duration-300",
-                          isActive
-                            ? "w-8 bg-white"
-                            : "w-2 bg-white/30 hover:bg-white/50",
+                          "h-[2px] flex-1 rounded-full transition-colors duration-300",
+                          isActive ? "bg-white" : "bg-white/25 hover:bg-white/50",
                         )}
                       />
                     );
