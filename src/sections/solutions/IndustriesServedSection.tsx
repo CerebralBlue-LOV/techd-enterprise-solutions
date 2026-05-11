@@ -65,28 +65,44 @@ export const IndustriesServedSection = ({ practice }: Props) => {
                 <rect width="100%" height="100%" fill="url(#practice-ind-grid)" />
               </svg>
 
-              {/* Content — keyed so it re-mounts and re-animates on change */}
-              <div key={current.ind.id} className="relative z-10 flex h-full flex-col justify-between p-8 md:p-10 animate-fade-in">
-                <div>
-                  <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
-                    {current.ind.regulation}
-                  </p>
-                  <h3 className="mt-4 text-3xl md:text-4xl font-bold text-background leading-[1.1] tracking-tight">
-                    {current.ind.name}
-                  </h3>
-                  <p className="mt-4 max-w-md text-sm md:text-base font-light text-background/70 leading-relaxed">
-                    {current.proof}
-                  </p>
-                </div>
+              {/* Content — all panels stacked, crossfade between them */}
+              {items.map((it, i) => {
+                const isActive = i === active;
+                return (
+                  <div
+                    key={it.ind.id}
+                    aria-hidden={!isActive}
+                    className={cn(
+                      "absolute inset-0 z-10 flex flex-col justify-between p-8 md:p-10",
+                      "transition-all duration-700 ease-out",
+                      isActive
+                        ? "opacity-100 translate-y-0 pointer-events-auto"
+                        : "opacity-0 translate-y-2 pointer-events-none",
+                    )}
+                  >
+                    <div>
+                      <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
+                        {it.ind.regulation}
+                      </p>
+                      <h3 className="mt-4 text-3xl md:text-4xl font-bold text-background leading-[1.1] tracking-tight">
+                        {it.ind.name}
+                      </h3>
+                      <p className="mt-4 max-w-md text-sm md:text-base font-light text-background/70 leading-relaxed">
+                        {it.proof}
+                      </p>
+                    </div>
 
-                <Link
-                  to={`/industries/${current.ind.id}`}
-                  className="group/cta mt-8 inline-flex w-fit items-center gap-1.5 text-sm font-bold text-primary transition-all duration-300 hover:gap-2.5"
-                >
-                  View {current.ind.name}
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-0.5" />
-                </Link>
-              </div>
+                    <Link
+                      to={`/industries/${it.ind.id}`}
+                      tabIndex={isActive ? 0 : -1}
+                      className="group/cta mt-8 inline-flex w-fit items-center gap-1.5 text-sm font-bold text-primary transition-all duration-300 hover:gap-2.5"
+                    >
+                      View {it.ind.name}
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-0.5" />
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
