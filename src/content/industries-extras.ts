@@ -142,8 +142,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "BI muscle",              body: "Cognos and Planning Analytics depth applied to enrollment, finance, and research analytics." },
     ],
     clients: [
-      { name: "Princeton University", note: "Research university" },
-      { name: "VCU",                  note: "Virginia Commonwealth University" },
+      { name: "Princeton University", note: "Research university",            url: "https://www.princeton.edu", logo: "/logos/princeton-university.png" },
+      { name: "VCU",                  note: "Virginia Commonwealth University", url: "https://www.vcu.edu",       logo: "/logos/vcu.png" },
     ],
     practices: [
       { id: "data-analytics",      proof: "Student, research, and finance analytics for top-tier universities." },
