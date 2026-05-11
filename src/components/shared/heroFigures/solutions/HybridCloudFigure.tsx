@@ -10,7 +10,7 @@ import { WireframePanel, PRIMARY, HIGHLIGHT } from "./_SharedWireframe";
  */
 
 const TRAVELERS = 14;
-const BRIDGE_LENGTH = 4.4; // distance between cube centers along X
+const BRIDGE_LENGTH = 3.2; // distance between cube centers along X
 
 const Cube = ({
   position,
