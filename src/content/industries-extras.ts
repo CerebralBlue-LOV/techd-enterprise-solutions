@@ -120,8 +120,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Built to be audited",  body: "Lineage, access controls, and reporting that satisfy state PUCs and FERC, not just internal audit." },
     ],
     clients: [
-      { name: "Dominion Energy", note: "Regulated electric utility" },
-      { name: "MISO Energy",     note: "Midcontinent independent system operator" },
+      { name: "Dominion Energy", note: "Regulated electric utility",              url: "https://www.dominionenergy.com", logo: "/logos/dominion-energy.png" },
+      { name: "MISO Energy",     note: "Midcontinent independent system operator", url: "https://www.misoenergy.org",     logo: "/logos/miso-energy.png" },
     ],
     practices: [
       { id: "data-analytics",      proof: "Grid analytics and operational dashboards for regulated utilities and ISOs." },
