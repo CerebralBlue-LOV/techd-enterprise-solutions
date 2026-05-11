@@ -110,9 +110,9 @@ export const ProductsGridSection = ({ practice }: Props) => {
     if (!node) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
-        setIndex((i) => (i + 1) % total);
+        goTo((index + 1) % total);
       } else if (e.key === "ArrowLeft") {
-        setIndex((i) => (i - 1 + total) % total);
+        goTo((index - 1 + total) % total);
       }
     };
     node.addEventListener("keydown", onKey);
