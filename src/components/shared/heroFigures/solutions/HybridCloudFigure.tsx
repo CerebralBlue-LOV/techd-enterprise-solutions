@@ -32,7 +32,7 @@ const Cube = ({
   return (
     <group ref={ref} position={position}>
       <lineSegments>
-        <edgesGeometry args={[new THREE.BoxGeometry(size, size, size)]} />
+        <edgesGeometry args={[new THREE.BoxGeometry(size * 1.4, size, size)]} />
         <lineBasicMaterial
           color={PRIMARY}
           transparent
@@ -41,7 +41,7 @@ const Cube = ({
         />
       </lineSegments>
       <points>
-        <boxGeometry args={[size, size, size]} />
+        <boxGeometry args={[size * 1.4, size, size]} />
         <pointsMaterial
           color={HIGHLIGHT}
           size={0.1}
