@@ -46,7 +46,7 @@ export const ApproachSection = ({ practice }: Props) => {
                   {/* Top row: step number + animated connector line */}
                   <div className="relative flex items-center gap-3">
                     <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-                      {num}
+                      Step
                     </span>
                     <span aria-hidden className="relative h-px flex-1 bg-border overflow-hidden">
                       <span className="absolute inset-y-0 left-0 w-0 bg-primary transition-[width] duration-700 ease-out group-hover:w-full" />
