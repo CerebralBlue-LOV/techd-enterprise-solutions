@@ -131,7 +131,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     whyPoints: [
       { title: "Research-grade compute", body: "Platforms that handle research workloads alongside administrative analytics on a shared, governed foundation." },
       { title: "FERPA by design",        body: "Access controls and lineage that protect student data from the catalog up — not patched at the report layer." },
-      { title: "Named institutions",     body: "Active or recent work with Princeton University and Virginia Commonwealth University." },
+      { title: "Named institutions",     body: "Active or recent work with Harvard, Penn State, NUS, Stony Brook, and NYIT." },
       { title: "BI muscle",              body: "Cognos and Planning Analytics depth applied to enrollment, finance, and research analytics." },
     ],
     clients: [
