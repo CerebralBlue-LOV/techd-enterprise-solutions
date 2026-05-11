@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
 import { type Solution } from "@content/solutions";
 
 interface Props {
