@@ -3,6 +3,7 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import GeometricAccent from "@shared/GeometricAccent";
+import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 
 type Props = {
   eyebrow: string;
@@ -10,13 +11,22 @@ type Props = {
   subtitle?: string;
   seoTitle?: string;
   seoDescription?: string;
+  /** Set to false to suppress the standardized final CTA. Defaults to true. */
+  showFinalCta?: boolean;
 };
 
 /**
  * Shared scaffold for new IA pages. Minimal hero only — full content arrives
  * in per-page follow-up plans.
  */
-const PlaceholderPage = ({ eyebrow, title, subtitle, seoTitle, seoDescription }: Props) => (
+const PlaceholderPage = ({
+  eyebrow,
+  title,
+  subtitle,
+  seoTitle,
+  seoDescription,
+  showFinalCta = true,
+}: Props) => (
   <Layout>
     <SEO
       title={seoTitle ?? `${title} — TechD`}
@@ -35,6 +45,7 @@ const PlaceholderPage = ({ eyebrow, title, subtitle, seoTitle, seoDescription }:
         </Reveal>
       </div>
     </section>
+    {showFinalCta ? <PageFinalCtaSection pageLabel={title} /> : null}
   </Layout>
 );
 

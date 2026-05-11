@@ -1,8 +1,4 @@
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@ui/button";
-import Reveal from "@shared/Reveal";
-import SectionMarker from "@shared/SectionMarker";
+import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 import { type Product, type Solution } from "@content/solutions";
 
 interface Props {
@@ -10,36 +6,24 @@ interface Props {
   product: Product;
 }
 
+/**
+ * Thin adapter — uses the shared `PageFinalCtaSection` so every page across
+ * the site shares one CTA treatment. Primary CTA is the site-wide
+ * "Talk to an expert" → /contact; secondary returns the visitor to the
+ * practice page they came from.
+ */
 export const ProductCtaSection = ({ practice, product }: Props) => (
-  <section className="section">
-    <SectionMarker page="Product" name={`${product.name} — CTA`} />
-    <div className="container-page">
-      <Reveal>
-        <div className="rounded-2xl border border-border bg-card p-10 md:p-14 text-center max-w-2xl mx-auto">
-          <p className="eyebrow mb-4">Ready to get started?</p>
-          <h2 className="text-3xl md:text-4xl leading-[1.1]">
-            Talk to an expert
-          </h2>
-          <p className="mt-5 text-base font-light text-muted-foreground">
-            Our senior engineers have shipped {product.name} in production for Fortune 500
-            organizations. Tell us your challenge.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button asChild size="lg" className="btn-glow">
-              <Link to="/contact">
-                Get in touch <ArrowRight className="ml-1" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link to={`/solutions/${practice.id}`}>
-                Explore {practice.name}
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </Reveal>
-    </div>
-  </section>
+  <PageFinalCtaSection
+    pageLabel="Product"
+    markerName={`${product.name} — CTA`}
+    eyebrow="Ready to get started?"
+    title="Talk to an expert."
+    lede={`Our senior engineers have shipped ${product.name} in production for Fortune 500 organizations. Tell us your challenge.`}
+    secondary={{
+      label: `Explore ${practice.name}`,
+      to: `/solutions/${practice.id}`,
+    }}
+  />
 );
 
 export default ProductCtaSection;
