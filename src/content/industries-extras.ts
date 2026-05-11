@@ -93,8 +93,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Claims acceleration",    body: "Document intelligence, automation, and observability that take days out of the claims cycle." },
     ],
     clients: [
-      { name: "PURE Insurance",     note: "High-net-worth homeowner insurance", url: "https://www.pureinsurance.com",         logo: "/logos/pure-insurance.png" },
-      { name: "National General",   note: "Property and casualty carrier",       url: "https://www.nationalgeneral.com",       logo: "/logos/national-general.png" },
+      { name: "MetLife", note: "Global insurer — life, group benefits, and annuities." },
     ],
     practices: [
       { id: "ai-generative",       proof: "Underwriting copilots and claims acceleration for property and specialty carriers." },
