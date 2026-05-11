@@ -159,39 +159,39 @@ export const ProductsGridSection = ({ practice }: Props) => {
             >
               {/* Animated background layers */}
               <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-                {/* Slow rotating conic shimmer */}
+                {/* Rotating conic shimmer */}
                 <div
-                  className="absolute -inset-1/2 opacity-30 animate-shimmer-rotate"
+                  className="absolute -inset-1/2 opacity-60 animate-shimmer-rotate"
                   style={{
                     background:
-                      "conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / 0.35) 60deg, transparent 140deg, hsl(var(--primary) / 0.25) 240deg, transparent 320deg)",
+                      "conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / 0.7) 60deg, transparent 140deg, hsl(var(--primary) / 0.5) 240deg, transparent 320deg)",
                     filter: "blur(40px)",
                   }}
                 />
                 {/* Drifting cyan blob A */}
                 <div
-                  className="absolute -top-1/4 -left-1/4 h-[70%] w-[70%] rounded-full animate-blob-a"
+                  className="absolute -top-1/4 -left-1/4 h-[80%] w-[80%] rounded-full animate-blob-a"
                   style={{
                     background:
-                      "radial-gradient(circle, hsl(var(--primary) / 0.55) 0%, transparent 60%)",
+                      "radial-gradient(circle, hsl(var(--primary) / 0.9) 0%, transparent 60%)",
                     filter: "blur(50px)",
                   }}
                 />
                 {/* Drifting cyan blob B */}
                 <div
-                  className="absolute top-0 -right-1/4 h-[65%] w-[65%] rounded-full animate-blob-b"
+                  className="absolute top-0 -right-1/4 h-[75%] w-[75%] rounded-full animate-blob-b"
                   style={{
                     background:
-                      "radial-gradient(circle, hsl(var(--primary) / 0.45) 0%, transparent 65%)",
+                      "radial-gradient(circle, hsl(var(--primary) / 0.8) 0%, transparent 65%)",
                     filter: "blur(60px)",
                   }}
                 />
                 {/* Drifting cyan blob C */}
                 <div
-                  className="absolute -bottom-1/4 left-1/4 h-[60%] w-[60%] rounded-full animate-blob-c"
+                  className="absolute -bottom-1/4 left-1/4 h-[70%] w-[70%] rounded-full animate-blob-c"
                   style={{
                     background:
-                      "radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, transparent 60%)",
+                      "radial-gradient(circle, hsl(var(--primary) / 0.75) 0%, transparent 60%)",
                     filter: "blur(55px)",
                   }}
                 />
@@ -199,10 +199,9 @@ export const ProductsGridSection = ({ practice }: Props) => {
                 <div
                   className="absolute inset-0 transition-opacity duration-700"
                   style={{
-                    background: `radial-gradient(circle at ${glow.x} ${glow.y}, hsl(var(--primary) / 0.35), transparent 50%)`,
+                    background: `radial-gradient(circle at ${glow.x} ${glow.y}, hsl(var(--primary) / 0.55), transparent 55%)`,
                   }}
                 />
-                {/* Subtle grain/noise via tiny dotted overlay */}
                 <div
                   className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
                   style={{
