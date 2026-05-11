@@ -48,8 +48,12 @@ import Events from "@pages/resources/Events";
  * triggers only — they do NOT have parent routes. Each child gets its own page.
  * Old parent paths redirect to a sensible first-child page.
  */
+import ScrollToTop from "./ScrollToTop";
+
 export const AppRoutes = () => (
-  <Routes>
+  <>
+    <ScrollToTop />
+    <Routes>
     <Route path="/" element={<Home />} />
 
     {/* Solutions — children only; parent redirects */}
