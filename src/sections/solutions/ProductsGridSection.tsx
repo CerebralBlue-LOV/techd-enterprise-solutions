@@ -106,8 +106,8 @@ export const ProductsGridSection = ({ practice }: Props) => {
   const glow = GLOW_POSITIONS[index % GLOW_POSITIONS.length];
 
   const cardBg: CSSProperties = {
-    background: `radial-gradient(circle at ${glow.x} ${glow.y}, hsl(var(--primary) / 0.55), transparent 55%), linear-gradient(180deg, hsl(var(--secondary) / 0.98), hsl(var(--secondary)))`,
-    transition: "background 700ms ease-out",
+    background:
+      "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
   };
 
   return (
@@ -154,18 +154,64 @@ export const ProductsGridSection = ({ practice }: Props) => {
               onMouseLeave={() => setPaused(false)}
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
-              className="relative overflow-hidden rounded-3xl ring-1 ring-white/10 shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="relative overflow-hidden rounded-3xl ring-1 ring-white/10 shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:[&_*]:!animate-none"
               style={cardBg}
             >
-              {/* Inner subtle texture */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
-                style={{
-                  background:
-                    "radial-gradient(120% 80% at 50% 0%, hsl(var(--primary) / 0.2), transparent 60%)",
-                }}
-              />
+              {/* Animated background layers */}
+              <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+                {/* Slow rotating conic shimmer */}
+                <div
+                  className="absolute -inset-1/2 opacity-30 animate-shimmer-rotate"
+                  style={{
+                    background:
+                      "conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / 0.35) 60deg, transparent 140deg, hsl(var(--primary) / 0.25) 240deg, transparent 320deg)",
+                    filter: "blur(40px)",
+                  }}
+                />
+                {/* Drifting cyan blob A */}
+                <div
+                  className="absolute -top-1/4 -left-1/4 h-[70%] w-[70%] rounded-full animate-blob-a"
+                  style={{
+                    background:
+                      "radial-gradient(circle, hsl(var(--primary) / 0.55) 0%, transparent 60%)",
+                    filter: "blur(50px)",
+                  }}
+                />
+                {/* Drifting cyan blob B */}
+                <div
+                  className="absolute top-0 -right-1/4 h-[65%] w-[65%] rounded-full animate-blob-b"
+                  style={{
+                    background:
+                      "radial-gradient(circle, hsl(var(--primary) / 0.45) 0%, transparent 65%)",
+                    filter: "blur(60px)",
+                  }}
+                />
+                {/* Drifting cyan blob C */}
+                <div
+                  className="absolute -bottom-1/4 left-1/4 h-[60%] w-[60%] rounded-full animate-blob-c"
+                  style={{
+                    background:
+                      "radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, transparent 60%)",
+                    filter: "blur(55px)",
+                  }}
+                />
+                {/* Active-slide spotlight, transitions with index */}
+                <div
+                  className="absolute inset-0 transition-opacity duration-700"
+                  style={{
+                    background: `radial-gradient(circle at ${glow.x} ${glow.y}, hsl(var(--primary) / 0.35), transparent 50%)`,
+                  }}
+                />
+                {/* Subtle grain/noise via tiny dotted overlay */}
+                <div
+                  className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(hsl(0 0% 100%) 1px, transparent 1px)",
+                    backgroundSize: "3px 3px",
+                  }}
+                />
+              </div>
 
               <div className="relative flex flex-col p-8 md:p-10 lg:p-12 min-h-[520px] md:min-h-[600px]">
                 {/* Top chip row */}
