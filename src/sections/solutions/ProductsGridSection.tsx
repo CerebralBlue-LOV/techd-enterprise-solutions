@@ -69,6 +69,49 @@ const ProductLink = ({
   );
 };
 
+const SlideContent = ({
+  product,
+  direction,
+  className,
+}: {
+  product: Product;
+  direction: "in" | "out";
+  className?: string;
+}) => {
+  const anim =
+    direction === "in" ? "animate-slide-in-right" : "animate-slide-out-left";
+  return (
+    <div className={cn("flex h-full flex-col", className)}>
+      <div className={cn("flex items-start gap-3", anim)}>
+        <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
+          {product.name}
+        </h3>
+        <ArrowUpRight
+          className="mt-2 size-7 md:size-8 text-white/70 shrink-0"
+          aria-hidden
+        />
+      </div>
+      <div
+        className={cn("mt-auto pt-10", anim)}
+        style={{ animationDelay: direction === "in" ? "140ms" : "0ms" }}
+      >
+        <p className="text-base md:text-lg font-bold text-white leading-snug">
+          {product.tagline}
+        </p>
+        <p
+          className={cn(
+            "mt-3 text-sm md:text-base font-light text-white/75 leading-relaxed line-clamp-3",
+            anim,
+          )}
+          style={{ animationDelay: direction === "in" ? "260ms" : "0ms" }}
+        >
+          {product.description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export const ProductsGridSection = ({ practice }: Props) => {
   const products = practice.products;
   const total = products.length;
