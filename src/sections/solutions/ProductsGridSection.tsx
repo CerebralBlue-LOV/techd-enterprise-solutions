@@ -117,7 +117,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
     };
     node.addEventListener("keydown", onKey);
     return () => node.removeEventListener("keydown", onKey);
-  }, [total]);
+  }, [total, index]);
 
   const active = products[index];
   const glow = GLOW_POSITIONS[index % GLOW_POSITIONS.length];
