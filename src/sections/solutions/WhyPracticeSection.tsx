@@ -65,8 +65,6 @@ export const WhyPracticeSection = ({ practice }: Props) => {
           <SectionHeading
             eyebrow="Why this practice"
             title={`What you get with TechD's ${practice.name} practice`}
-            align="center"
-            className="mx-auto"
           />
         </Reveal>
 
