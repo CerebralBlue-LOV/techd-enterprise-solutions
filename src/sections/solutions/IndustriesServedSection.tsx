@@ -43,7 +43,7 @@ export const IndustriesServedSection = ({ practice }: Props) => {
 
         <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Left: minimal dark preview panel */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-7">
             <div className="relative h-full min-h-[340px] overflow-hidden rounded-2xl bg-secondary">
               {/* Single subtle cyan glow */}
               <div
@@ -107,7 +107,7 @@ export const IndustriesServedSection = ({ practice }: Props) => {
           </div>
 
           {/* Right: minimal interactive list */}
-          <div className="lg:col-span-6 flex items-center">
+          <div className="lg:col-span-5 flex items-center">
             <ul className="w-full flex flex-col" role="tablist" aria-label="Industries">
               {items.map((it, i) => {
                 const isActive = i === active;
@@ -120,7 +120,7 @@ export const IndustriesServedSection = ({ practice }: Props) => {
                       onMouseEnter={() => setActive(i)}
                       onFocus={() => setActive(i)}
                       onClick={() => setActive(i)}
-                      className="group relative w-full text-left py-4 border-b border-border flex items-center pl-5"
+                      className="group relative w-full text-left py-7 border-b border-border flex items-center pl-5"
                     >
                       <span
                         aria-hidden
