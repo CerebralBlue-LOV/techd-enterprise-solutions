@@ -88,7 +88,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       "Underwriting copilots, claims acceleration, and actuarial analytics built for property, casualty, and specialty carriers who can't ship anything an auditor can't explain.",
     whyPoints: [
       { title: "Carrier-grade controls", body: "NAIC and SOX compliance tooling, lineage-traced data, and the audit posture regulated carriers need." },
-      { title: "Specialty carrier fit",  body: "Active work with PURE Insurance and National General — high-net-worth and standard P&C." },
+      { title: "Specialty carrier fit",  body: "Active work with global insurers like MetLife — life, group benefits, and annuities at scale." },
       { title: "Underwriting copilots",  body: "RAG and agentic workflows grounded in your underwriting guidelines and historical book." },
       { title: "Claims acceleration",    body: "Document intelligence, automation, and observability that take days out of the claims cycle." },
     ],
