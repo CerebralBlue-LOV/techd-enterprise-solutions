@@ -16,7 +16,7 @@ const Geometry = () => {
     <group ref={group}>
       {/* Torus knot — the "pipeline / loop / flow" motif */}
       <lineSegments>
-        <edgesGeometry args={[new THREE.TorusKnotGeometry(1.6, 0.35, 48, 6)]} />
+        <edgesGeometry args={[new THREE.TorusKnotGeometry(1.5, 0.25, 32, 4)]} />
         <lineBasicMaterial color={PRIMARY} transparent opacity={0.55} depthWrite={false} />
       </lineSegments>
       <points>
