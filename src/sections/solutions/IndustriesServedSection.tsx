@@ -95,7 +95,6 @@ export const IndustriesServedSection = ({ practice }: Props) => {
             <ul className="w-full flex flex-col" role="tablist" aria-label="Industries">
               {items.map((it, i) => {
                 const isActive = i === active;
-                const num = String(i + 1).padStart(2, "0");
                 return (
                   <li key={it.ind.id}>
                     <button
@@ -105,39 +104,25 @@ export const IndustriesServedSection = ({ practice }: Props) => {
                       onMouseEnter={() => setActive(i)}
                       onFocus={() => setActive(i)}
                       onClick={() => setActive(i)}
-                      className="group relative w-full text-left py-5 border-b border-border flex items-center gap-5"
+                      className="group relative w-full text-left py-4 border-b border-border flex items-center pl-5"
                     >
                       <span
                         aria-hidden
                         className={cn(
                           "absolute left-0 top-1/2 -translate-y-1/2 w-[2px] bg-primary transition-all duration-500",
-                          isActive ? "h-10 opacity-100" : "h-0 opacity-0",
+                          isActive ? "h-8 opacity-100" : "h-0 opacity-0",
                         )}
                       />
                       <span
                         className={cn(
-                          "text-[11px] font-bold tracking-[0.2em] uppercase transition-colors duration-300 w-8",
-                          isActive ? "text-primary" : "text-muted-foreground",
-                        )}
-                      >
-                        {num}
-                      </span>
-                      <span
-                        className={cn(
-                          "flex-1 text-xl md:text-2xl font-bold leading-tight tracking-tight transition-all duration-500",
-                          isActive ? "text-secondary translate-x-1" : "text-muted-foreground/70 group-hover:text-secondary",
+                          "text-base md:text-lg font-normal leading-tight tracking-tight transition-all duration-500",
+                          isActive
+                            ? "text-secondary translate-x-1"
+                            : "text-muted-foreground group-hover:text-secondary",
                         )}
                       >
                         {it.ind.name}
                       </span>
-                      <ArrowRight
-                        className={cn(
-                          "h-4 w-4 transition-all duration-500",
-                          isActive
-                            ? "text-primary opacity-100 translate-x-0"
-                            : "text-muted-foreground opacity-0 -translate-x-2",
-                        )}
-                      />
                     </button>
                   </li>
                 );
