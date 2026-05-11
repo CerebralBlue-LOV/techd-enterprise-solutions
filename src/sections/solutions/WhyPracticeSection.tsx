@@ -22,31 +22,23 @@ export const WhyPracticeSection = ({ practice }: Props) => {
             title={`What you get with TechD's ${practice.name} practice`}
           />
         </Reveal>
-        <div className="mt-16 grid gap-8 md:gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {extras.whyPoints.map((p, i) => {
-            const rotations = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"];
-            const rotate = rotations[i % rotations.length];
-            return (
-              <Reveal key={p.title} delay={i * 60}>
-                <div
-                  className={`group relative h-full transform-gpu ${rotate} transition-transform duration-500 ease-out hover:rotate-0 hover:-translate-y-1 motion-reduce:rotate-0 motion-reduce:transform-none`}
-                >
-                  <div className="h-full overflow-hidden rounded-2xl border border-primary/20 bg-background shadow-[0_10px_30px_-12px_hsl(var(--primary)/0.25)] transition-shadow duration-500 group-hover:shadow-[0_20px_45px_-15px_hsl(var(--primary)/0.35)]">
-                    <div className="bg-primary/10 px-5 py-4 border-b border-primary/15">
-                      <h3 className="text-base font-bold text-primary leading-tight">
-                        {p.title}
-                      </h3>
-                    </div>
-                    <div className="px-5 py-5">
-                      <p className="text-sm font-light text-muted-foreground leading-relaxed">
-                        {p.body}
-                      </p>
-                    </div>
-                  </div>
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {extras.whyPoints.map((p, i) => (
+            <Reveal key={p.title} delay={i * 60}>
+              <div className="group h-full overflow-hidden rounded-xl border border-primary/15 bg-background shadow-[0_4px_18px_-10px_hsl(var(--primary)/0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_14px_32px_-14px_hsl(var(--primary)/0.4)]">
+                <div className="bg-primary/10 px-5 py-4 border-b border-primary/15">
+                  <h3 className="text-base font-bold text-primary leading-tight">
+                    {p.title}
+                  </h3>
                 </div>
-              </Reveal>
-            );
-          })}
+                <div className="px-5 py-5">
+                  <p className="text-sm font-light text-muted-foreground leading-relaxed">
+                    {p.body}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
