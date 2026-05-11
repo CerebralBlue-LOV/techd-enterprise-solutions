@@ -111,7 +111,8 @@ export const AppRoutes = () => (
     <Route path="/figure-lab" element={<FigureLab />} />
     {/* Catch-all — must stay last. */}
     <Route path="*" element={<NotFound />} />
-  </Routes>
+    </Routes>
+  </>
 );
 
 import { useParams } from "react-router-dom";
