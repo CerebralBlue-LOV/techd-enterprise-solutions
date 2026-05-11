@@ -154,7 +154,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       "Auditable AI systems and modernized records management for federal agencies and the defense technology organizations that support them.",
     whyPoints: [
       { title: "FedRAMP-aligned posture", body: "Architectures designed against FedRAMP and FISMA controls — not retrofitted to them." },
-      { title: "Federal experience",      body: "Direct work with the Department of Homeland Security and defense contractor L3Harris." },
+      { title: "Federal experience",      body: "Engagements aligned with U.S. federal mission requirements and defense technology programs." },
       { title: "Auditable AI",            body: "watsonx-based RAG and governance patterns that produce explainable, source-cited outputs." },
       { title: "Records modernization",   body: "Data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
     ],
