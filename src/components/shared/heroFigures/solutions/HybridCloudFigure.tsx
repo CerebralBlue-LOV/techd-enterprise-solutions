@@ -10,7 +10,7 @@ import { WireframePanel, PRIMARY, HIGHLIGHT } from "./_SharedWireframe";
  */
 
 const TRAVELERS = 14;
-const BRIDGE_LENGTH = 4.4; // distance between cube centers along X
+const BRIDGE_LENGTH = 3.2; // distance between cube centers along X
 
 const Cube = ({
   position,
@@ -139,8 +139,8 @@ const Geometry = () => {
 
   return (
     <group ref={group}>
-      <Cube position={[-2.2, 0, 0]} size={1.6} rotationSpeed={0.18} />
-      <Cube position={[2.2, 0, 0]} size={1.9} rotationSpeed={-0.14} />
+      <Cube position={[-1.6, 0, 0]} size={1.6} rotationSpeed={0.18} />
+      <Cube position={[1.6, 0, 0]} size={1.9} rotationSpeed={-0.14} />
       <Bridge />
     </group>
   );
