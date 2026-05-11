@@ -189,27 +189,30 @@
   .btn-glow:focus-visible::before {
     opacity: 1;
   }
-  /* Subtle diagonal sheen sweep on hover (inside the button) */
+  /* Diagonal sheen sweep on hover — animated via background-position so it
+     never escapes the button's rounded box (transform-based sweeps leak past
+     clip-path because the clip moves with the transform). */
   .btn-glow::after {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(
+    background-image: linear-gradient(
       115deg,
-      transparent 35%,
-      hsl(0 0% 100% / 0.14) 50%,
-      transparent 65%
+      transparent 40%,
+      hsl(0 0% 100% / 0.18) 50%,
+      transparent 60%
     );
-    transform: translateX(-110%);
-    transition: transform 900ms ease-out;
-    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: 250% 100%;
+    background-position: 130% 0;
     opacity: 0;
-    clip-path: inset(0 round var(--radius));
+    transition: background-position 700ms ease-out, opacity 200ms ease-out;
+    pointer-events: none;
   }
   .btn-glow:hover::after,
   .btn-glow:focus-visible::after {
-    transform: translateX(110%);
+    background-position: -130% 0;
     opacity: 1;
   }
 }
