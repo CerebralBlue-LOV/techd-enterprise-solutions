@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
 import { type Solution } from "@content/solutions";
 
 interface Props {
@@ -68,17 +69,7 @@ export const PracticeCtaSection = ({ practice }: Props) => (
                   <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">
                     Accreditation
                   </h4>
-                  <div className="flex items-center gap-3">
-                    <div className="px-2 py-1 bg-secondary text-secondary-foreground text-[10px] font-bold tracking-wider rounded-sm">
-                      IBM
-                    </div>
-                    <div className="leading-tight">
-                      <p className="text-xs font-bold uppercase text-primary tracking-wider">
-                        Platinum
-                      </p>
-                      <p className="text-sm font-bold text-secondary">Business Partner</p>
-                    </div>
-                  </div>
+                  <IBMPlatinumBadge size="md" />
                 </div>
 
                 {/* Engagement model */}
