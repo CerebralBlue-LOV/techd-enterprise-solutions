@@ -1,6 +1,8 @@
+import { ArrowDownLeft } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
+import { cn } from "@/lib/utils";
 import { type Solution } from "@content/solutions";
 import { PRACTICE_EXTRAS } from "@content/solutions-extras";
 
@@ -8,9 +10,42 @@ interface Props {
   practice: Solution;
 }
 
+type Variant = "dark" | "light" | "cyan" | "outline";
+
+/** Bento layout for 4 cards — varied size + tone, brand-safe. */
+const LAYOUT: { variant: Variant; span: string }[] = [
+  { variant: "dark",    span: "md:col-span-2 md:row-span-2" }, // hero card, tall+wide
+  { variant: "light",   span: "md:col-span-1 md:row-span-1" },
+  { variant: "cyan",    span: "md:col-span-1 md:row-span-1" },
+  { variant: "outline", span: "md:col-span-2 md:row-span-1" }, // wide bottom card
+];
+
+const variantStyles: Record<Variant, string> = {
+  dark:    "bg-secondary text-background",
+  light:   "bg-muted/30 text-secondary",
+  cyan:    "bg-primary text-background",
+  outline: "bg-background text-secondary border border-border",
+};
+
+const arrowTone: Record<Variant, string> = {
+  dark:    "text-background/70",
+  light:   "text-secondary/60",
+  cyan:    "text-background/80",
+  outline: "text-secondary/50",
+};
+
+const titleSize: Record<Variant, string> = {
+  dark:    "text-3xl md:text-5xl",
+  light:   "text-2xl md:text-3xl",
+  cyan:    "text-2xl md:text-3xl",
+  outline: "text-2xl md:text-3xl",
+};
+
 export const WhyPracticeSection = ({ practice }: Props) => {
   const extras = PRACTICE_EXTRAS[practice.id];
   if (!extras?.whyPoints?.length) return null;
+
+  const points = extras.whyPoints.slice(0, 4);
 
   return (
     <section id="why" className="section scroll-mt-24 border-t border-border">
@@ -19,47 +54,85 @@ export const WhyPracticeSection = ({ practice }: Props) => {
         <Reveal>
           <SectionHeading
             eyebrow="Why this practice"
-            title={`What you get with TechD's ${practice.name} practice`}
+            title={`What you'll get with TechD's ${practice.name} practice`}
+            subtitle="Production patterns, IBM-certified engineers, and an operating model your team can own — not slideware."
+            align="center"
           />
         </Reveal>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 border-l border-t border-border">
-          {extras.whyPoints.map((p, i) => {
-            const tag = ["ARCH", "CORE", "FLOW", "SYST"][i % 4];
-            const num = String(i + 1).padStart(2, "0");
+
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 md:auto-rows-[minmax(220px,1fr)] gap-4 md:gap-5">
+          {points.map((p, i) => {
+            const layout = LAYOUT[i] ?? LAYOUT[LAYOUT.length - 1];
+            const { variant, span } = layout;
+            const isHero = variant === "dark";
+
             return (
-              <Reveal key={p.title} delay={i * 60}>
-                <div className="group relative h-full p-10 border-r border-b border-border bg-background hover:bg-muted/20 transition-colors duration-500 overflow-hidden min-h-[280px]">
-                  {/* Top-right technical metadata */}
-                  <div className="absolute top-0 right-0 p-3 text-[10px] font-mono tracking-tight text-secondary/40">
-                    {num} / {tag}
-                  </div>
-                  {/* Bottom-left cyan L-bracket */}
-                  <div className="absolute bottom-0 left-0 w-8 h-px bg-primary" />
-                  <div className="absolute bottom-0 left-0 w-px h-8 bg-primary" />
-
-                  {/* Decorative circle */}
-                  <div
+              <Reveal key={p.title} delay={i * 80} className={cn(span, "h-full")}>
+                <article
+                  className={cn(
+                    "group relative h-full w-full overflow-hidden rounded-sm p-7 md:p-9 flex flex-col justify-between transition-all duration-500",
+                    "hover:-translate-y-0.5",
+                    variantStyles[variant],
+                  )}
+                >
+                  {/* Corner arrow */}
+                  <ArrowDownLeft
                     aria-hidden
-                    className="absolute -right-4 -bottom-4 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500"
-                  >
-                    <svg width="140" height="140" viewBox="0 0 100 100">
-                      <circle cx="50" cy="50" r="48" fill="none" stroke="hsl(var(--secondary))" strokeWidth="0.5" />
-                      <path d="M0 50 L100 50 M50 0 L50 100" stroke="hsl(var(--secondary))" strokeWidth="0.5" />
+                    className={cn(
+                      "absolute top-5 right-5 h-5 w-5 rotate-180 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1",
+                      arrowTone[variant],
+                    )}
+                    strokeWidth={1.5}
+                  />
+
+                  {/* Decorative motif for hero card */}
+                  {isHero && (
+                    <svg
+                      aria-hidden
+                      viewBox="0 0 200 200"
+                      className="absolute -bottom-10 -left-8 h-64 w-64 opacity-[0.08]"
+                    >
+                      <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <circle cx="100" cy="100" r="45" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                      <path d="M5 100 H195 M100 5 V195" stroke="currentColor" strokeWidth="0.5" />
                     </svg>
+                  )}
+
+                  <div className="relative z-10">
+                    <span
+                      className={cn(
+                        "inline-block text-[11px] font-mono tracking-[0.18em] uppercase mb-4",
+                        variant === "cyan" ? "text-background/80" :
+                        variant === "dark" ? "text-primary" :
+                        "text-primary",
+                      )}
+                    >
+                      {String(i + 1).padStart(2, "0")} — {["Foundation","Method","Velocity","Outcome"][i]}
+                    </span>
                   </div>
 
-                  <div className="relative z-10 flex flex-col h-full">
-                    <span className="block text-primary text-xs font-bold tracking-[0.2em] mb-6 uppercase">
-                      Section {num}
-                    </span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-secondary leading-tight tracking-tight uppercase mb-5">
+                  <div className="relative z-10">
+                    <h3
+                      className={cn(
+                        "font-bold leading-[1.05] tracking-tight mb-3",
+                        titleSize[variant],
+                      )}
+                    >
                       {p.title}
                     </h3>
-                    <p className="text-sm md:text-base font-light text-muted-foreground leading-relaxed max-w-sm">
+                    <p
+                      className={cn(
+                        "font-light leading-relaxed max-w-md",
+                        isHero ? "text-base md:text-lg text-background/80" :
+                        variant === "cyan" ? "text-sm md:text-base text-background/90" :
+                        "text-sm md:text-base text-muted-foreground",
+                      )}
+                    >
                       {p.body}
                     </p>
                   </div>
-                </div>
+                </article>
               </Reveal>
             );
           })}
