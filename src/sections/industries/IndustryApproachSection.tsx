@@ -1,6 +1,4 @@
-import Reveal from "@shared/Reveal";
-import SectionMarker from "@shared/SectionMarker";
-import SectionHeading from "@shared/SectionHeading";
+import PageApproachSection from "@shared/page/PageApproachSection";
 import { type Industry } from "@content/industries";
 
 const STEPS = [
@@ -15,32 +13,11 @@ interface Props {
 }
 
 export const IndustryApproachSection = ({ industry }: Props) => (
-  <section id="approach" className="section bg-muted/30 scroll-mt-24">
-    <SectionMarker page={`Industries / ${industry.name}`} name="Approach" />
-    <div className="container-page">
-      <Reveal>
-        <SectionHeading
-          eyebrow="How we engage"
-          title="A delivery model built for regulated enterprises that can't afford a stalled program"
-        />
-      </Reveal>
-      <ol className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {STEPS.map((s, i) => (
-          <Reveal key={s.step} delay={i * 60}>
-            <li className="rounded-xl border border-border p-6 h-full bg-background">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                Step {String(i + 1).padStart(2, "0")}
-              </p>
-              <h3 className="mt-2 text-lg font-bold text-secondary">{s.step}</h3>
-              <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
-                {s.detail}
-              </p>
-            </li>
-          </Reveal>
-        ))}
-      </ol>
-    </div>
-  </section>
+  <PageApproachSection
+    pageLabel={`Industries / ${industry.name}`}
+    title="A delivery model built for regulated enterprises that can't afford a stalled program"
+    steps={STEPS}
+  />
 );
 
 export default IndustryApproachSection;
