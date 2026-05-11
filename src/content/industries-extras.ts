@@ -71,9 +71,9 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Built on watsonx",       body: "Foundation-model governance and RAG patterns that hold up to legal review and rights management." },
     ],
     clients: [
-      { name: "Sony Interactive Entertainment", note: "PlayStation platform",                url: "https://www.sie.com",        logo: "/logos/sony-interactive.svg" },
-      { name: "Sony Pictures",                  note: "Film and TV production",              url: "https://www.sonypictures.com", logo: "/logos/sony-pictures.png" },
-      { name: "Comcast / Peacock",              note: "Cable, streaming, and broadband",     url: "https://corporate.comcast.com", logo: "/logos/comcast-peacock.svg" },
+      { name: "Snap Inc.", note: "Camera-first social platform — content and audience scale." },
+      { name: "Adobe",     note: "Creative software platform — media tooling and asset workflows." },
+      { name: "Verizon",   note: "Telecom and media — distribution and customer experience at scale." },
     ],
     practices: [
       { id: "ai-generative",  proof: "Content intelligence and operational AI for studios, networks, and streamers." },
