@@ -4,9 +4,10 @@ import { Button } from "@ui/button";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
-import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
-import ResourceHeroBackdrop from "@/sections/resources/_components/ResourceHeroBackdrop";
+import ResourcesFigure from "@shared/heroFigures/ResourcesFigure";
+import PageHero from "@shared/page/PageHero";
+import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 import { RESOURCES } from "@content/resources";
 
 const posts = RESOURCES.filter((r) => r.type === "blog" && !r.draft);
@@ -18,21 +19,14 @@ const Blog = () => (
       description="Insights on enterprise AI, data governance, security, and the IBM stack — from the TechD team."
     />
 
-    {/* Hero */}
-    <section className="relative overflow-hidden min-h-[40vh] flex items-center">
-      <SectionMarker page="Resources / Blog" name="Hero" />
-      <ResourceHeroBackdrop />
-      <div className="container-page relative z-10 pt-20 pb-16 md:pt-28 md:pb-20">
-        <Reveal>
-          <SectionHeading
-            as="h1"
-            eyebrow="Resources / Blog"
-            title="Thinking out loud on enterprise AI."
-            subtitle="Practical takes on governance, data architecture, and the IBM stack — from practitioners who ship."
-          />
-        </Reveal>
-      </div>
-    </section>
+    <PageHero
+      pageLabel="Resources / Blog"
+      parent="Resources"
+      child="Blog"
+      headline="Thinking out loud on enterprise AI."
+      lede="Practical takes on governance, data architecture, and the IBM stack — from practitioners who ship."
+      figure={<ResourcesFigure />}
+    />
 
     {/* Card grid / empty state */}
     <section className="section bg-muted/30">
@@ -81,6 +75,13 @@ const Blog = () => (
         )}
       </div>
     </section>
+
+    <PageFinalCtaSection
+      pageLabel="Resources / Blog"
+      eyebrow="Put it into practice"
+      title="Talk to an architect who's done it."
+      lede="Ideas are worth more in production. Our senior IBM-certified engineers can help you move from concept to delivery."
+    />
   </Layout>
 );
 

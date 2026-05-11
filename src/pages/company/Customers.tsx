@@ -3,7 +3,9 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import CompanyHeroBackdrop from "@/sections/company/_components/CompanyHeroBackdrop";
+import CompanyFigure from "@shared/heroFigures/CompanyFigure";
+import PageHero from "@shared/page/PageHero";
+import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 import LogoStrip from "@shared/LogoStrip";
 import { CUSTOMERS } from "@content/site";
 
@@ -46,31 +48,14 @@ const Customers = () => {
         description="TechD serves Fortune 500 enterprises across healthcare, media, insurance, energy, higher education, and public sector."
       />
 
-      {/* Hero */}
-      <section
-        className="relative overflow-hidden min-h-[50vh] flex items-center"
-      >
-        <SectionMarker page="Company / Customers" name="Hero" />
-        <CompanyHeroBackdrop />
-        <div className="container-page relative z-10 pt-16 pb-12 md:pt-20 md:pb-16">
-          <Reveal>
-            <div className="max-w-4xl">
-              <p className="eyebrow flex items-center gap-3">
-                <span className="inline-block h-px w-8 bg-primary" />
-                Company
-                <span className="text-muted-foreground/60">/</span>
-                <span>Customers</span>
-              </p>
-              <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-secondary">
-                Trusted by regulated enterprises.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg md:text-xl font-light text-muted-foreground leading-relaxed">
-                Fortune 500 health systems, studios, insurers, utilities, universities, and federal agencies — clients who can't afford a bad delivery.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        pageLabel="Company / Customers"
+        parent="Company"
+        child="Customers"
+        headline="Trusted by regulated enterprises."
+        lede="Fortune 500 health systems, studios, insurers, utilities, universities, and federal agencies — clients who can't afford a bad delivery."
+        figure={<CompanyFigure />}
+      />
 
       {/* Marquee strip */}
       <section className="section bg-muted/30">
@@ -85,10 +70,7 @@ const Customers = () => {
         <SectionMarker page="Company / Customers" name="By industry" />
         <div className="container-page">
           <Reveal>
-            <SectionHeading
-              eyebrow="By industry"
-              title="Where we've delivered"
-            />
+            <SectionHeading eyebrow="By industry" title="Where we've delivered" />
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {INDUSTRY_GROUPS.map((group, gi) => {
@@ -114,6 +96,12 @@ const Customers = () => {
           </div>
         </div>
       </section>
+
+      <PageFinalCtaSection
+        pageLabel="Company / Customers"
+        eyebrow="Be the next one"
+        title="Talk to the team behind the work."
+      />
     </Layout>
   );
 };

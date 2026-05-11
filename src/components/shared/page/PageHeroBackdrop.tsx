@@ -1,20 +1,29 @@
-import CompanyFigure from "@/components/shared/heroFigures/CompanyFigure";
+import type { ReactNode } from "react";
 
 interface BackdropProps {
+  /** Right-side wireframe figure (lazy or eager). Optional. */
+  figure?: ReactNode;
   /** Kept for API compatibility — not used by this layout. */
   cursor?: { x: number; y: number } | null;
 }
 
 /**
- * Company hero backdrop — engineered grid + CompanyFigure on the right,
- * with the same soft cyan washes / vignette family used elsewhere.
+ * Shared template-page hero backdrop.
+ *
+ *  1. Engineered grid (CSS, masked at edges)
+ *  2. Right-side wireframe figure slot
+ *  3. Soft cyan gradient washes
+ *  4. Top vignette into background
+ *
+ * Used by Solutions, Industries, Services, Resources, Company hero shells.
  */
-export const CompanyHeroBackdrop = (_: BackdropProps) => {
+export const PageHeroBackdrop = ({ figure }: BackdropProps) => {
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
+      {/* 1. Engineered grid */}
       <div
         className="absolute inset-0"
         style={{
@@ -28,19 +37,23 @@ export const CompanyHeroBackdrop = (_: BackdropProps) => {
         }}
       />
 
-      <div className="absolute inset-y-0 right-0 hidden md:block md:w-[60%] lg:w-[55%]">
-        <CompanyFigure />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 50% 70% at 0% 60%, hsl(var(--background)) 0%, hsl(var(--background) / 0.85) 35%, transparent 75%)",
-          }}
-        />
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
-      </div>
+      {/* 2. Right-side figure slot */}
+      {figure ? (
+        <div className="absolute inset-y-0 right-0 hidden md:block md:w-[60%] lg:w-[55%]">
+          {figure}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 50% 70% at 0% 60%, hsl(var(--background)) 0%, hsl(var(--background) / 0.85) 35%, transparent 75%)",
+            }}
+          />
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        </div>
+      ) : null}
 
+      {/* 3. Gradient wash */}
       <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
       <div
         className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl animate-gradient-drift"
@@ -51,9 +64,10 @@ export const CompanyHeroBackdrop = (_: BackdropProps) => {
         style={{ animationDelay: "-4s" }}
       />
 
+      {/* 4. Top vignette */}
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
     </div>
   );
 };
 
-export default CompanyHeroBackdrop;
+export default PageHeroBackdrop;

@@ -1,60 +1,85 @@
-# Add a "Solutions" section to /figure-lab — 5 per-practice wireframe figures
+## Goal
 
-Goal: a new section in `/figure-lab` showing **one wireframe figure per practice** (AI & Generative, Data & Analytics, Automation & FinOps, Security & Compliance, Hybrid Cloud) using the same r3f / three.js graphic language as the existing `PracticeWireframeScene` (cyan wireframe edges + additive vertex points on a gently rotating shape, on the engineered grid backdrop).
+Today, every page family (Solutions, Industries, Services, Resources, Company) ships its own near-duplicate hero, "Why TechD", approach, and final CTA. Heights, copy structure, visuals, and CTA treatments drifted. We'll consolidate to **one set of reusable section components**, lift Solutions' richer treatments to be the standard, and apply them everywhere.
 
-This is **lab-only** — no changes to home, no changes to the existing `/solutions/*` pages.
+## Current inconsistencies (audit)
 
-## Visual language (locked)
+| Section | Solutions | Industries | Services | Resources | Company/About |
+|---|---|---|---|---|---|
+| Hero min-height | `80vh` | `50vh` | (similar) | `40vh` | `50vh` |
+| Hero backdrop | `PracticeHeroBackdrop` + per-practice figure | `IndustryHeroBackdrop` + figure | `ServiceHeroBackdrop` + figure | `ResourceHeroBackdrop` | `CompanyHeroBackdrop` |
+| "Why TechD" | Bento grid, 4 variants (dark/light/accent/outline), 101 lines | Plain 4-col card grid, 42 lines | Plain card grid, 42 lines | — | — |
+| Approach | Numbered cards w/ ghost numeral, sheen, connector (73 lines) | Plain card grid (46 lines) | Plain card grid (45 lines) | — | — |
+| Final CTA | Animated dark gradient panel, conic shimmer, blobs (102 lines) | Plain card w/ button (39 lines) | Plain card w/ button (58 lines) | Inline plain card | — |
+| Page-CTA button | `btn-glow` "Talk to an expert" → `/contact` ✅ | same ✅ | same ✅ | same ✅ | — |
 
-Every figure shares these rules so the line stays consistent:
-- `<Canvas>` with the existing camera/lighting setup
-- A `lineSegments` over `edgesGeometry` (cyan `#00B3E3`, opacity ~0.55)
-- A `points` overlay (highlight `#7CE6FF`, additive blending, opacity ~0.95)
-- Slow rotation via `useFrame` (`rotation.y = t * 0.15`, sine wobble on x)
-- Respect `prefers-reduced-motion` — static frame, no animation
-- Same engineered-grid background panel used by the other lab tiles
+The CTA button itself is already standardized (memory rule). What's not standardized is the **panel** around it and the surrounding sections.
 
-Only the **geometry** changes per practice — keeps each figure recognizable without breaking the family look.
+## What we'll build
 
-## Per-practice geometry mapping
+Create a new shared folder `src/components/shared/page/` with five reusable building blocks:
 
-| Practice | Geometry | Visual story |
-|---|---|---|
-| AI & Generative | `IcosahedronGeometry(2.6, 1)` + inner offset shell | The current globe — keeps the "thinking model" feel |
-| Data & Analytics | Stacked wireframe boxes / extruded grid columns | Reads as a 3D bar chart / data cube |
-| Automation & FinOps | Rotating `TorusKnotGeometry` | Loop/flow — pipelines and orchestration |
-| Security & Compliance | `OctahedronGeometry` + concentric ring (`TorusGeometry`) | Shield/lock signal |
-| Hybrid Cloud | Two interlinked rings (two `TorusGeometry`) crossing at 90° | Connection between two environments |
+1. **`PageHero`** — replaces `PracticeHeroSection`, `IndustryHeroSection`, `ServiceHeroSection`, the inline About hero, and the inline Resources hero.
+   - Props: `eyebrowParent` (e.g. "Solutions"), `eyebrowChild` (e.g. practice name), `headline`, `lede`, `meta?` (small uppercase line, used today by Industries for regulation), `anchors?` (on-page nav), `backdrop` (ReactNode slot), `cursor` state managed internally.
+   - Locked layout: `min-h-[70vh]` (single height for all template hero pages — between current 80 and 50), shared paddings, breadcrumb pattern, anchor nav row.
 
-(Geometry choices are intentionally simple primitives — they read fast at small sizes and match the existing isometric-wireframe reference saved in memory.)
+2. **`PageWhySection`** — the **Solutions bento** treatment becomes the standard.
+   - Props: `eyebrow`, `title`, `points: { title; body }[]`, `pageLabel` (for `SectionMarker`).
+   - Same 4-variant LAYOUT array currently in `WhyPracticeSection`.
 
-## Files to add
+3. **`PageApproachSection`** — the **Solutions numbered-card** treatment becomes the standard.
+   - Props: `eyebrow`, `title`, `steps: { step; detail }[]`, `pageLabel`.
 
-```
-src/components/shared/heroFigures/solutions/
-  AiGenerativeFigure.tsx         # current globe, renamed/re-exported for clarity
-  DataAnalyticsFigure.tsx
-  AutomationFinOpsFigure.tsx
-  SecurityComplianceFigure.tsx
-  HybridCloudFigure.tsx
-  _SharedWireframe.tsx           # shared <Canvas> + lighting + reduced-motion wrapper
-```
+4. **`PageFinalCtaSection`** — the **Solutions animated panel** becomes the standard.
+   - Props: `eyebrow` (e.g. practice/industry/service name), `title?` (default "Ready when you are."), `lede?`, `primary` (label + to, defaults to "Talk to an expert" → `/contact` with `btn-glow`), `secondary?` (optional second link, e.g. "View our clients").
+   - Always uses the `btn-glow` standard for the primary button (per memory rule).
 
-`_SharedWireframe.tsx` exposes a single `<WireframePanel>{children}</WireframePanel>` so each per-practice file only ships its geometry — guarantees the graphic line stays identical.
+5. **`PageHeroBackdrop`** — wrapper around the existing per-page backdrops so each domain just passes its figure component.
+   - Props: `figure: ReactNode`, `cursor?`. Keeps the grid + gradient wash + vignette identical across families.
+   - `PracticeHeroBackdrop`, `IndustryHeroBackdrop`, `ServiceHeroBackdrop` become thin wrappers (or are deleted in favor of inline usage with the right figure).
 
-## File to edit
+## Migration
 
-- `src/pages/FigureLab.tsx` — add a new section block "Solutions" rendering the 5 figures in a 2- or 3-column grid, each in the same labeled card the existing `SLOTS` use (header chip with practice name + figure component name). Section sits above the existing top-level figures grid.
+| File | Action |
+|---|---|
+| `src/sections/solutions/PracticeHeroSection.tsx` | Rewrite to use `PageHero` + figure resolver from existing `PracticeHeroBackdrop` map. |
+| `src/sections/solutions/WhyPracticeSection.tsx` | Replace body with `PageWhySection`. |
+| `src/sections/solutions/ApproachSection.tsx` | Replace body with `PageApproachSection`. |
+| `src/sections/solutions/PracticeCtaSection.tsx` | Replace body with `PageFinalCtaSection`. |
+| `src/sections/industries/IndustryHeroSection.tsx` | Use `PageHero` with `meta={industry.regulation}`. |
+| `src/sections/industries/WhyIndustrySection.tsx` | Use `PageWhySection`. |
+| `src/sections/industries/IndustryApproachSection.tsx` | Use `PageApproachSection`. |
+| `src/sections/industries/IndustryCtaSection.tsx` | Use `PageFinalCtaSection`. |
+| `src/sections/services/ServiceHeroSection.tsx` | Use `PageHero`. |
+| `src/sections/services/ServiceWhySection.tsx` | Use `PageWhySection`. |
+| `src/sections/services/ServiceApproachSection.tsx` | Use `PageApproachSection`. |
+| `src/sections/services/ServiceCtaSection.tsx` | Use `PageFinalCtaSection`. |
+| `src/pages/resources/CaseStudies.tsx`, `Blog.tsx`, `Webinars.tsx`, `Events.tsx`, `BlogDetail.tsx`, `CaseStudyDetail.tsx` | Replace inline hero with `PageHero`; replace inline final CTA with `PageFinalCtaSection`. |
+| `src/pages/company/About.tsx`, `Customers.tsx`, `IBMPartnership.tsx` | Replace inline hero with `PageHero`; add `PageFinalCtaSection` at the bottom (currently missing on About). |
+| `src/pages/Contact.tsx` | Optional: same `PageHero` shell at the top. Out of scope unless you want it. |
 
-## Out of scope
+## Content data — no schema changes
 
-- No changes to home `SolutionsGridSection` or any `/solutions/*` page
-- No live tuner UI for these (only the existing `ResourcesTuner` keeps sliders) — can add later if you want
-- No content/data changes in `src/content/solutions.ts`
-- No new dependencies — uses already-installed `three` + `@react-three/fiber`
+We won't touch `src/content/*` shapes. The wrappers in each domain read the same `industries-extras.ts` / `solutions-extras.ts` / `services-extras.ts` and feed normalized props into the shared components. Industries/Services don't have `whyPoints` or `approach` content as rich as Solutions today — if a domain has fewer points, the bento layout already handles it (or we cap at 4 per pre-existing LAYOUT array).
 
-## Acceptance
+## What we are NOT doing in this pass
 
-- `/figure-lab` shows a new "Solutions" section with 5 cards, one per practice, each running a distinct but visually-related wireframe scene
-- Reduced-motion users see static frames
-- No regressions on the existing figure tiles
+- Not redesigning the in-page sections that are unique per family (`ProductsGridSection`, `IndustryClientsSection`, `SolutionsForIndustrySection`, `ServiceOfferingsSection`, etc.) — only the four shared ones.
+- Not changing copy / data files.
+- Not changing the hero figures themselves (those already standardized last sprint).
+- Not modifying brand tokens, fonts, or animations beyond what's already in the Solutions versions.
+- No CMS, no routing changes.
+
+## Acceptance criteria
+
+- Every template-page hero has the same height, padding, breadcrumb pattern, and anchor row.
+- "Why TechD", "Approach", and "Final CTA" look identical (modulo content) on Solutions, Industries, Services pages.
+- Resources and Company landing pages use the same hero shell and final CTA.
+- "Talk to an expert" CTA stays `btn-glow` → `/contact` across all pages (memory rule preserved).
+- Net lines deleted ≥ lines added (consolidation, not new surface).
+
+## Open questions
+
+1. **Industries `regulation` line** ("HIPAA · HITECH" etc.) currently appears between the lede and the anchors. Keep as a `meta` slot on `PageHero` so other families can use it too (e.g. Services could show certifications)? **My recommendation: yes.**
+2. **Final CTA secondary link.** Solutions shows "View our clients". Should Industries / Services / Resources also show it, or stay primary-only? **My recommendation: primary-only by default, opt-in per page.**
+3. **Hero height.** Settle on `min-h-[70vh]` site-wide, or keep Solutions at `80vh` and align everything else up to that? **My recommendation: `70vh` everywhere — denser pages above the fold, more consistent feel.**
