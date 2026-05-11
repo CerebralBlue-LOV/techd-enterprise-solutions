@@ -21,7 +21,7 @@ const GLOW_POSITIONS = [
   { x: "50%", y: "90%" },
 ];
 
-const AUTO_MS = 5000;
+const AUTO_MS = 7000;
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
