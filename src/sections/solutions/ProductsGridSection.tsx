@@ -346,7 +346,12 @@ export const ProductsGridSection = ({ practice }: Props) => {
                         aria-current={isActive ? "true" : undefined}
                         aria-label={`Show product ${i + 1} of ${total}: ${p.name}`}
                         onClick={() => goTo(i)}
-                        className="relative h-[2px] flex-1 overflow-hidden rounded-full bg-white/25 hover:bg-white/40 transition-colors"
+                        className={cn(
+                          "relative h-[3px] flex-1 overflow-hidden rounded-full transition-colors",
+                          isActive
+                            ? "bg-primary/30"
+                            : "bg-white/15 hover:bg-white/30",
+                        )}
                       >
                         {isActive && (
                           <span
