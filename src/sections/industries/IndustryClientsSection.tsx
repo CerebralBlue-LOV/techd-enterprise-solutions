@@ -4,47 +4,58 @@ import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
 import { type Industry } from "@content/industries";
 import { INDUSTRIES_EXTRAS, type ClientEntry } from "@content/industries-extras";
+import { CUSTOMERS, type Customer } from "@content/site";
 import { cn } from "@/lib/utils";
 
 interface Props {
   industry: Industry;
 }
 
-const ClientLogo = ({ client }: { client: ClientEntry }) => {
-  if (!client.logo) {
-    // Monogram fallback
-    const initials = client.name
-      .replace(/[^A-Za-z0-9& ]/g, "")
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((w) => w[0])
-      .join("")
-      .toUpperCase();
+type ResolvedClient = ClientEntry & { customer?: Customer };
+
+const ClientLogo = ({ client }: { client: ResolvedClient }) => {
+  const c = client.customer;
+  if (c?.logo) {
     return (
-      <span className="font-bold text-secondary text-2xl tracking-tight leading-none">
-        {initials}
-      </span>
+      <img
+        src={`${import.meta.env.BASE_URL}${c.logo.replace(/^\//, "")}`}
+        alt={`${c.name} logo`}
+        loading="lazy"
+        className={cn(
+          c.logoClass ?? "h-9 md:h-10",
+          "w-auto object-contain opacity-70 grayscale transition duration-500 group-hover:opacity-100 group-hover:grayscale-0",
+        )}
+      />
     );
   }
+  // Monogram fallback (for entries with no matching CUSTOMERS logo).
+  const initials = client.name
+    .replace(/[^A-Za-z0-9& ]/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
   return (
-    <img
-      src={`${import.meta.env.BASE_URL}${client.logo.replace(/^\//, "")}`}
-      alt={`${client.name} logo`}
-      loading="lazy"
-      className={cn(
-        client.logoClass ?? "h-9 md:h-10",
-        "w-auto object-contain opacity-70 grayscale transition duration-500 group-hover:opacity-100 group-hover:grayscale-0",
-      )}
-    />
+    <span className="font-bold text-secondary text-2xl tracking-tight leading-none">
+      {initials}
+    </span>
   );
 };
 
-const ClientRow = ({ client, index }: { client: ClientEntry; index: number }) => {
-  const Wrapper = client.url ? "a" : "div";
-  const wrapperProps = client.url
+const ClientRow = ({
+  client,
+  index,
+}: {
+  client: ResolvedClient;
+  index: number;
+}) => {
+  const url = client.customer?.url;
+  const Wrapper = url ? "a" : "div";
+  const wrapperProps = url
     ? {
-        href: client.url,
+        href: url,
         target: "_blank",
         rel: "noopener noreferrer",
         "aria-label": `Visit ${client.name}`,
@@ -58,26 +69,19 @@ const ClientRow = ({ client, index }: { client: ClientEntry; index: number }) =>
         "group relative grid items-center gap-6 border-b border-border last:border-b-0 px-2 py-7 md:py-8",
         "grid-cols-[2.5rem_7.5rem_1fr_auto] md:grid-cols-[3rem_10rem_1fr_auto]",
         "transition-colors duration-300",
-        client.url && "hover:bg-muted/20 cursor-pointer",
+        url && "hover:bg-muted/20 cursor-pointer",
       )}
     >
-      {/* Vertical cyan rail on hover */}
       <span
         aria-hidden
         className="absolute left-0 top-1/2 -translate-y-1/2 h-0 w-[2px] bg-primary transition-all duration-500 group-hover:h-12"
       />
-
-      {/* Index */}
       <span className="font-mono text-[11px] font-bold tracking-[0.18em] text-muted-foreground">
         {String(index + 1).padStart(2, "0")}
       </span>
-
-      {/* Logo plate */}
       <span className="flex h-12 items-center">
         <ClientLogo client={client} />
       </span>
-
-      {/* Name + note */}
       <span className="min-w-0">
         <span className="block text-lg md:text-xl font-bold text-secondary leading-tight tracking-tight transition-colors duration-300 group-hover:text-primary">
           {client.name}
@@ -86,15 +90,13 @@ const ClientRow = ({ client, index }: { client: ClientEntry; index: number }) =>
           {client.note}
         </span>
       </span>
-
-      {/* Outbound link icon */}
       <span
         aria-hidden
         className={cn(
           "shrink-0 hidden md:flex items-center justify-center h-9 w-9 rounded-full border border-border text-muted-foreground transition-all duration-300",
-          client.url &&
+          url &&
             "group-hover:border-primary group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5",
-          !client.url && "opacity-0",
+          !url && "opacity-0",
         )}
       >
         <ArrowUpRight className="h-4 w-4" />
@@ -106,6 +108,13 @@ const ClientRow = ({ client, index }: { client: ClientEntry; index: number }) =>
 export const IndustryClientsSection = ({ industry }: Props) => {
   const extras = INDUSTRIES_EXTRAS[industry.id];
   if (!extras?.clients?.length) return null;
+
+  // Resolve every entry against the CUSTOMERS roster (single source of truth
+  // for logo, url, and sizing — edits flow from /logo-lab).
+  const resolved: ResolvedClient[] = extras.clients.map((c) => ({
+    ...c,
+    customer: CUSTOMERS.find((x) => x.name === c.name),
+  }));
 
   return (
     <section id="clients" className="section bg-muted/30 scroll-mt-24">
@@ -127,7 +136,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                     Active clients
                   </dt>
                   <dd className="mt-1 text-3xl md:text-4xl font-bold text-secondary leading-none">
-                    {extras.clients.length}
+                    {resolved.length}
                   </dd>
                 </div>
                 <div>
@@ -145,7 +154,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
           <div className="lg:col-span-7">
             <Reveal>
               <div className="border-t border-border bg-background rounded-xl px-3 md:px-5">
-                {extras.clients.map((c, i) => (
+                {resolved.map((c, i) => (
                   <ClientRow key={c.name} client={c} index={i} />
                 ))}
               </div>
