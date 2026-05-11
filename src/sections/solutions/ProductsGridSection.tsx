@@ -21,7 +21,7 @@ const GLOW_POSITIONS = [
   { x: "50%", y: "90%" },
 ];
 
-const AUTO_MS = 5000;
+const AUTO_MS = 7000;
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -78,11 +78,16 @@ const SlideContent = ({
   direction: "in" | "out";
   className?: string;
 }) => {
-  const anim =
-    direction === "in" ? "animate-slide-in-right" : "animate-slide-out-left";
+  const isIn = direction === "in";
+  const anim = isIn ? "animate-slide-in-right" : "animate-slide-out-left";
+  // Incoming waits for the outgoing exit (1400ms) before starting.
+  const baseDelay = isIn ? 1400 : 0;
   return (
     <div className={cn("flex h-full flex-col", className)}>
-      <div className={cn("flex items-start gap-3", anim)}>
+      <div
+        className={cn("flex items-start gap-3", anim)}
+        style={{ animationDelay: `${baseDelay}ms` }}
+      >
         <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
           {product.name}
         </h3>
@@ -93,7 +98,7 @@ const SlideContent = ({
       </div>
       <div
         className={cn("mt-auto pt-10", anim)}
-        style={{ animationDelay: direction === "in" ? "140ms" : "0ms" }}
+        style={{ animationDelay: `${baseDelay + (isIn ? 160 : 0)}ms` }}
       >
         <p className="text-base md:text-lg font-bold text-white leading-snug">
           {product.tagline}
@@ -103,7 +108,7 @@ const SlideContent = ({
             "mt-3 text-sm md:text-base font-light text-white/75 leading-relaxed line-clamp-3",
             anim,
           )}
-          style={{ animationDelay: direction === "in" ? "260ms" : "0ms" }}
+          style={{ animationDelay: `${baseDelay + (isIn ? 300 : 0)}ms` }}
         >
           {product.description}
         </p>
@@ -133,7 +138,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
   // Clear outgoing layer once its animation finishes
   useEffect(() => {
     if (prevIndex === null) return;
-    const t = window.setTimeout(() => setPrevIndex(null), 1100);
+    const t = window.setTimeout(() => setPrevIndex(null), 1500);
     return () => window.clearTimeout(t);
   }, [prevIndex, index]);
 
