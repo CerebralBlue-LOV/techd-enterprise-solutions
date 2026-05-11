@@ -87,6 +87,16 @@ export default {
           "40%": { opacity: "1" },
           "100%": { opacity: "0", transform: "translateX(-60px)" },
         },
+        "slide-in-left": {
+          "0%": { opacity: "0", transform: "translateX(-60px)" },
+          "60%": { opacity: "1" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-out-right": {
+          "0%": { opacity: "1", transform: "translateX(0)" },
+          "40%": { opacity: "1" },
+          "100%": { opacity: "0", transform: "translateX(60px)" },
+        },
         "progress-fill": {
           "0%": { transform: "scaleX(0)" },
           "100%": { transform: "scaleX(1)" },
