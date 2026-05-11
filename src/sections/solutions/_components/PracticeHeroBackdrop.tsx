@@ -1,23 +1,46 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, type ComponentType } from "react";
+import { type Solution } from "@content/solutions";
 
-const WireframeScene = lazy(() => import("./PracticeWireframeScene"));
+const AiGenerativeFigure = lazy(
+  () => import("@shared/heroFigures/solutions/AiGenerativeFigure")
+);
+const DataAnalyticsFigure = lazy(
+  () => import("@shared/heroFigures/solutions/DataAnalyticsFigure")
+);
+const AutomationFinOpsFigure = lazy(
+  () => import("@shared/heroFigures/solutions/AutomationFinOpsFigure")
+);
+const SecurityComplianceFigure = lazy(
+  () => import("@shared/heroFigures/solutions/SecurityComplianceFigure")
+);
+const HybridCloudFigure = lazy(
+  () => import("@shared/heroFigures/solutions/HybridCloudFigure")
+);
+
+const FIGURES: Record<Solution["id"], ComponentType> = {
+  "ai-generative": AiGenerativeFigure,
+  "data-analytics": DataAnalyticsFigure,
+  "automation-finops": AutomationFinOpsFigure,
+  "security-compliance": SecurityComplianceFigure,
+  "hybrid-cloud": HybridCloudFigure,
+};
 
 interface BackdropProps {
   /** Kept for API compatibility — not used by the new layout. */
   cursor?: { x: number; y: number } | null;
+  practiceId?: Solution["id"];
 }
 
 /**
- * Practice hero backdrop — mirrors the home hero pattern:
- *  1. Faint engineered grid (CSS, masked at edges)
- *  2. Right-side particle constellation (cyan, lazy r3f)
- *  3. Soft cyan gradient washes
- *  4. Top vignette into background
+ * Practice hero backdrop — mirrors the home hero pattern, but now renders
+ * the per-practice wireframe figure on the right side.
  */
-export const PracticeHeroBackdrop = (_: BackdropProps) => {
+export const PracticeHeroBackdrop = ({ practiceId }: BackdropProps) => {
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const Figure = practiceId ? FIGURES[practiceId] : null;
 
   return (
     <div
@@ -38,11 +61,13 @@ export const PracticeHeroBackdrop = (_: BackdropProps) => {
         }}
       />
 
-      {/* 2. Right-side particle constellation */}
+      {/* 2. Right-side per-practice figure */}
       <div className="absolute inset-y-0 right-0 hidden md:block md:w-[60%] lg:w-[55%]">
-        <Suspense fallback={null}>
-          <WireframeScene tiltX={0} tiltY={0} />
-        </Suspense>
+        {Figure ? (
+          <Suspense fallback={null}>
+            <Figure />
+          </Suspense>
+        ) : null}
         {/* Edge fades — radial on the left so it blends only where the graphic sits */}
         <div
           className="absolute inset-0"
@@ -69,7 +94,6 @@ export const PracticeHeroBackdrop = (_: BackdropProps) => {
       {/* 4. Top vignette */}
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
 
-      {/* Suppress the constellation's idle if reduced motion */}
       {reduced ? <span className="hidden" data-reduced="true" /> : null}
     </div>
   );
