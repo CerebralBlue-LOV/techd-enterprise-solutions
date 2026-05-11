@@ -140,6 +140,7 @@ export default {
         "shimmer-rotate": "shimmer-rotate 20s linear infinite",
         float: "float 7s ease-in-out infinite",
         "card-sweep": "card-sweep 0.3s ease-out forwards",
+        "progress-fill": "progress-fill 7s linear forwards",
       },
     },
   },
