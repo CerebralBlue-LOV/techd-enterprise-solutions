@@ -138,7 +138,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
   // Clear outgoing layer once its animation finishes
   useEffect(() => {
     if (prevIndex === null) return;
-    const t = window.setTimeout(() => setPrevIndex(null), 1100);
+    const t = window.setTimeout(() => setPrevIndex(null), 1500);
     return () => window.clearTimeout(t);
   }, [prevIndex, index]);
 
