@@ -22,26 +22,47 @@ export const WhyPracticeSection = ({ practice }: Props) => {
             title={`What you get with TechD's ${practice.name} practice`}
           />
         </Reveal>
-        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {extras.whyPoints.map((p, i) => (
-            <Reveal key={p.title} delay={i * 60}>
-              <div className="group relative min-h-[260px] flex flex-col justify-end rounded-xl overflow-hidden cursor-default bg-background border border-border transition-shadow duration-500 hover:shadow-[0_20px_40px_-12px_hsl(var(--primary)/0.5)]">
-                {/* Light orbs */}
-                <div className="absolute -top-8 -left-8 w-44 h-44 rounded-full bg-primary/20 blur-3xl" />
-                <div className="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-muted/60 blur-xl" />
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 border-l border-t border-border">
+          {extras.whyPoints.map((p, i) => {
+            const tag = ["ARCH", "CORE", "FLOW", "SYST"][i % 4];
+            const num = String(i + 1).padStart(2, "0");
+            return (
+              <Reveal key={p.title} delay={i * 60}>
+                <div className="group relative h-full p-10 border-r border-b border-border bg-background hover:bg-muted/20 transition-colors duration-500 overflow-hidden min-h-[280px]">
+                  {/* Top-right technical metadata */}
+                  <div className="absolute top-0 right-0 p-3 text-[10px] font-mono tracking-tight text-secondary/40">
+                    {num} / {tag}
+                  </div>
+                  {/* Bottom-left cyan L-bracket */}
+                  <div className="absolute bottom-0 left-0 w-8 h-px bg-primary" />
+                  <div className="absolute bottom-0 left-0 w-px h-8 bg-primary" />
 
-                {/* Content */}
-                <div className="relative p-6">
-                  <h3 className="text-xl font-bold text-secondary leading-tight">{p.title}</h3>
-                  <div className="grid grid-rows-[0fr] transition-all duration-500 motion-reduce:duration-0 group-hover:grid-rows-[1fr] group-hover:mt-3">
-                    <div className="overflow-hidden">
-                      <p className="text-sm font-light text-muted-foreground leading-relaxed">{p.body}</p>
-                    </div>
+                  {/* Decorative circle */}
+                  <div
+                    aria-hidden
+                    className="absolute -right-4 -bottom-4 opacity-[0.06] group-hover:opacity-[0.12] transition-opacity duration-500"
+                  >
+                    <svg width="140" height="140" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="48" fill="none" stroke="hsl(var(--secondary))" strokeWidth="0.5" />
+                      <path d="M0 50 L100 50 M50 0 L50 100" stroke="hsl(var(--secondary))" strokeWidth="0.5" />
+                    </svg>
+                  </div>
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    <span className="block text-primary text-xs font-bold tracking-[0.2em] mb-6 uppercase">
+                      Section {num}
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-secondary leading-tight tracking-tight uppercase mb-5">
+                      {p.title}
+                    </h3>
+                    <p className="text-sm md:text-base font-light text-muted-foreground leading-relaxed max-w-sm">
+                      {p.body}
+                    </p>
                   </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
