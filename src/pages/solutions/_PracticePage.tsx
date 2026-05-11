@@ -6,7 +6,7 @@ import WhyPracticeSection from "@sections/solutions/WhyPracticeSection";
 import ProductsGridSection from "@sections/solutions/ProductsGridSection";
 import IndustriesServedSection from "@sections/solutions/IndustriesServedSection";
 import ApproachSection from "@sections/solutions/ApproachSection";
-import OutcomesSection from "@sections/solutions/OutcomesSection";
+
 import PracticeCtaSection from "@sections/solutions/PracticeCtaSection";
 import NotFound from "@pages/NotFound";
 
@@ -33,7 +33,6 @@ const PracticePage = ({ practiceId }: Props) => {
       <ProductsGridSection practice={practice} />
       <IndustriesServedSection practice={practice} />
       <ApproachSection practice={practice} />
-      <OutcomesSection practice={practice} />
       <PracticeCtaSection practice={practice} />
     </Layout>
   );
