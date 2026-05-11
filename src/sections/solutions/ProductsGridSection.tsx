@@ -72,14 +72,23 @@ const ProductLink = ({
 const SlideContent = ({
   product,
   direction,
+  reverse,
   className,
 }: {
   product: Product;
   direction: "in" | "out";
+  reverse: boolean;
   className?: string;
 }) => {
   const isIn = direction === "in";
-  const anim = isIn ? "animate-slide-in-right" : "animate-slide-out-left";
+  // Forward: out → left, in ← right. Reverse: out → right, in ← left.
+  const anim = isIn
+    ? reverse
+      ? "animate-slide-in-left"
+      : "animate-slide-in-right"
+    : reverse
+      ? "animate-slide-out-right"
+      : "animate-slide-out-left";
   // Incoming waits for the outgoing exit (1400ms) before starting.
   const baseDelay = isIn ? 1400 : 0;
   return (
@@ -123,13 +132,17 @@ export const ProductsGridSection = ({ practice }: Props) => {
   const motif = PRACTICE_MOTIFS[practice.id];
   const [index, setIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const [reverse, setReverse] = useState(false);
   const [paused, setPaused] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Track outgoing slide for exit animation
-  const goTo = (next: number) => {
+  // Track outgoing slide for exit animation. `dir` overrides direction
+  // detection (used for auto-advance wrap-around).
+  const goTo = (next: number, dir?: "forward" | "reverse") => {
     setIndex((curr) => {
       if (next === curr) return curr;
+      const isReverse = dir ? dir === "reverse" : next < curr;
+      setReverse(isReverse);
       setPrevIndex(curr);
       return next;
     });
@@ -142,12 +155,12 @@ export const ProductsGridSection = ({ practice }: Props) => {
     return () => window.clearTimeout(t);
   }, [prevIndex, index]);
 
-  // Auto-advance
+  // Auto-advance (always forward, including last → first wrap)
   useEffect(() => {
     if (paused || total <= 1) return;
     if (prefersReducedMotion()) return;
     const t = window.setTimeout(() => {
-      goTo((index + 1) % total);
+      goTo((index + 1) % total, "forward");
     }, AUTO_MS);
     return () => window.clearTimeout(t);
   }, [index, paused, total]);
@@ -158,9 +171,9 @@ export const ProductsGridSection = ({ practice }: Props) => {
     if (!node) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
-        goTo((index + 1) % total);
+        goTo((index + 1) % total, "forward");
       } else if (e.key === "ArrowLeft") {
-        goTo((index - 1 + total) % total);
+        goTo((index - 1 + total) % total, "reverse");
       }
     };
     node.addEventListener("keydown", onKey);
@@ -331,6 +344,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                       key={`out-${prevIndex}`}
                       product={products[prevIndex]}
                       direction="out"
+                      reverse={reverse}
                       className="absolute inset-0"
                     />
                   )}
@@ -339,6 +353,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                     key={`in-${index}`}
                     product={active}
                     direction="in"
+                    reverse={reverse}
                     className="absolute inset-0"
                   />
                 </div>
