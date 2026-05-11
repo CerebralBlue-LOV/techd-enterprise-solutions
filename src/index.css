@@ -729,3 +729,13 @@
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
+
+/* Spotlight glow cross-fade for products carousel */
+@keyframes glow-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes glow-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
