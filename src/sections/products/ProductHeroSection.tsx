@@ -3,7 +3,7 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import GeometricAccent from "@shared/GeometricAccent";
+import SectionBackdrop from "@shared/SectionBackdrop";
 import { type Product, type Solution } from "@content/solutions";
 
 interface Props {
@@ -12,10 +12,18 @@ interface Props {
 }
 
 export const ProductHeroSection = ({ practice, product }: Props) => (
-  <section className="relative overflow-hidden">
+  <section className="relative overflow-hidden min-h-[50vh] flex items-center">
     <SectionMarker page="Product" name={product.name} />
-    <GeometricAccent />
-    <div className="container-page relative pt-20 pb-16 md:pt-28">
+    <SectionBackdrop intensity="strong" />
+
+    {/* Gradient blobs */}
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="absolute -right-16 top-1/2 -translate-y-1/2 h-[320px] w-[320px] rounded-full bg-primary/15 blur-3xl" />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[200px] w-[200px] rounded-full bg-background/60 blur-2xl" />
+      <div className="absolute right-48 -bottom-20 h-[240px] w-[240px] rounded-full bg-primary/8 blur-3xl" />
+    </div>
+
+    <div className="container-page relative pt-20 pb-16 md:pt-28 w-full">
       <Reveal>
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1.5 text-xs text-muted-foreground">

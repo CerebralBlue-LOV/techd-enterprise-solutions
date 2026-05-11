@@ -51,7 +51,7 @@ export const PracticeHeroSection = ({ practice }: Props) => {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden min-h-[70vh] flex items-center"
+      className="relative overflow-hidden min-h-[80vh] flex items-center"
     >
       <SectionMarker page={`Solutions / ${practice.name}`} name="Hero" />
       <PracticeHeroBackdrop cursor={cursor} />
