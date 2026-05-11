@@ -189,7 +189,7 @@
   .btn-glow:focus-visible::before {
     opacity: 1;
   }
-  /* IBM-style diagonal sheen sweep on hover (inside the button) */
+  /* Subtle diagonal sheen sweep on hover (inside the button) */
   .btn-glow::after {
     content: "";
     position: absolute;
@@ -197,18 +197,20 @@
     border-radius: inherit;
     background: linear-gradient(
       115deg,
-      transparent 30%,
-      hsl(0 0% 100% / 0.35) 50%,
-      transparent 70%
+      transparent 35%,
+      hsl(0 0% 100% / 0.14) 50%,
+      transparent 65%
     );
     transform: translateX(-110%);
-    transition: transform 700ms ease-out;
+    transition: transform 900ms ease-out;
     pointer-events: none;
+    opacity: 0;
     clip-path: inset(0 round var(--radius));
   }
   .btn-glow:hover::after,
   .btn-glow:focus-visible::after {
     transform: translateX(110%);
+    opacity: 1;
   }
 }
 
