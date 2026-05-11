@@ -259,39 +259,27 @@ export const ProductsGridSection = ({ practice }: Props) => {
                   </ProductLink>
                 </div>
 
-                {/* Focal display + body, keyed for transition */}
+                {/* Focal display + body, with overlapping enter/exit layers */}
                 <div
-                  key={index}
-                  className="mt-10 flex-1 flex flex-col overflow-hidden"
+                  className="relative mt-10 flex-1"
                   aria-live="polite"
                 >
-                  <div
-                    className="flex items-start gap-3 animate-slide-in-right"
-                    style={{ animationDelay: "0ms" }}
-                  >
-                    <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
-                      {active.name}
-                    </h3>
-                    <ArrowUpRight
-                      className="mt-2 size-7 md:size-8 text-white/70 shrink-0"
-                      aria-hidden
+                  {/* Outgoing slide */}
+                  {prevIndex !== null && (
+                    <SlideContent
+                      key={`out-${prevIndex}`}
+                      product={products[prevIndex]}
+                      direction="out"
+                      className="absolute inset-0"
                     />
-                  </div>
-
-                  <div
-                    className="mt-auto pt-10 animate-slide-in-right"
-                    style={{ animationDelay: "120ms" }}
-                  >
-                    <p className="text-base md:text-lg font-bold text-white leading-snug">
-                      {active.tagline}
-                    </p>
-                    <p
-                      className="mt-3 text-sm md:text-base font-light text-white/75 leading-relaxed line-clamp-3 animate-slide-in-right"
-                      style={{ animationDelay: "220ms" }}
-                    >
-                      {active.description}
-                    </p>
-                  </div>
+                  )}
+                  {/* Incoming slide */}
+                  <SlideContent
+                    key={`in-${index}`}
+                    product={active}
+                    direction="in"
+                    className="relative"
+                  />
                 </div>
 
                 {/* Dot pagination */}
