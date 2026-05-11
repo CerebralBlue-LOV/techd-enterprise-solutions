@@ -43,12 +43,9 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Clinical-grade outputs",    body: "RAG architectures that cite their sources, governance that satisfies your CMIO, and the operational support to keep them running." },
     ],
     clients: [
-      { name: "Johns Hopkins Medicine", note: "Academic medical center",                  url: "https://www.hopkinsmedicine.org", logo: "/logos/johns-hopkins.png" },
-      { name: "CHOP",                   note: "Children's Hospital of Philadelphia",      url: "https://www.chop.edu",            logo: "/logos/chop.png" },
-      { name: "Jefferson Health",       note: "Health system, Philadelphia region",        url: "https://www.jeffersonhealth.org", logo: "/logos/jefferson-health.png" },
-      { name: "Temple Health",          note: "Academic health system",                    url: "https://www.templehealth.org",    logo: "/logos/temple-health.png" },
-      { name: "Genesis HealthCare",     note: "Long-term care and skilled nursing",       url: "https://www.genesishcc.com",       logo: "/logos/genesis-healthcare.png" },
-      { name: "Johnson & Johnson",      note: "Global pharmaceutical and consumer health", url: "https://www.jnj.com",             logo: "/logos/johnson-and-johnson.png" },
+      { name: "Admed",              note: "Brazilian medical platform — clinical data and decision support." },
+      { name: "Netcare",            note: "South Africa's leading private hospital network." },
+      { name: "Children's Health",  note: "Pediatric health system, North Texas." },
     ],
     practices: [
       { id: "ai-generative",       proof: "Clinical knowledge agents and grounded RAG built on watsonx, deployed inside health systems." },
