@@ -85,6 +85,24 @@ export default {
           "0%, 100%": { transform: "translate3d(0,0,0) scale(1)", opacity: "0.7" },
           "50%": { transform: "translate3d(2%, -1%, 0) scale(1.05)", opacity: "0.9" },
         },
+        "blob-a": {
+          "0%, 100%": { transform: "translate3d(-10%, -8%, 0) scale(1)" },
+          "33%": { transform: "translate3d(15%, 5%, 0) scale(1.15)" },
+          "66%": { transform: "translate3d(5%, 20%, 0) scale(0.9)" },
+        },
+        "blob-b": {
+          "0%, 100%": { transform: "translate3d(20%, 10%, 0) scale(1.1)" },
+          "50%": { transform: "translate3d(-15%, -10%, 0) scale(0.95)" },
+        },
+        "blob-c": {
+          "0%, 100%": { transform: "translate3d(0%, 25%, 0) scale(0.9)" },
+          "40%": { transform: "translate3d(-20%, -15%, 0) scale(1.2)" },
+          "70%": { transform: "translate3d(18%, 8%, 0) scale(1)" },
+        },
+        "shimmer-rotate": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
         float: {
           "0%, 100%": { transform: "translateY(-6px)" },
           "50%": { transform: "translateY(6px)" },
@@ -100,6 +118,10 @@ export default {
         "fade-up": "fade-up 0.5s ease-out both",
         marquee: "marquee 45s linear infinite",
         "gradient-drift": "gradient-drift 18s ease-in-out infinite",
+        "blob-a": "blob-a 22s ease-in-out infinite",
+        "blob-b": "blob-b 26s ease-in-out infinite",
+        "blob-c": "blob-c 30s ease-in-out infinite",
+        "shimmer-rotate": "shimmer-rotate 40s linear infinite",
         float: "float 7s ease-in-out infinite",
         "card-sweep": "card-sweep 0.3s ease-out forwards",
       },
