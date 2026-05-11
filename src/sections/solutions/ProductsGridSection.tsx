@@ -260,13 +260,26 @@ export const ProductsGridSection = ({ practice }: Props) => {
                     filter: "blur(55px)",
                   }}
                 />
-                {/* Active-slide spotlight, transitions with index */}
+                {/* Active-slide spotlight, cross-fades with index */}
+                {prevIndex !== null && (
+                  <div
+                    key={`glow-out-${prevIndex}`}
+                    className="absolute inset-0"
+                    style={{
+                      background: `radial-gradient(circle at ${GLOW_POSITIONS[prevIndex % GLOW_POSITIONS.length].x} ${GLOW_POSITIONS[prevIndex % GLOW_POSITIONS.length].y}, hsl(var(--primary) / 0.55), transparent 55%)`,
+                      animation: "glow-fade-out 700ms ease-out forwards",
+                    }}
+                  />
+                )}
                 <div
-                  className="absolute inset-0 transition-opacity duration-700"
+                  key={`glow-in-${index}`}
+                  className="absolute inset-0"
                   style={{
                     background: `radial-gradient(circle at ${glow.x} ${glow.y}, hsl(var(--primary) / 0.55), transparent 55%)`,
+                    animation: "glow-fade-in 700ms ease-out forwards",
                   }}
                 />
+
                 <div
                   className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
                   style={{
