@@ -105,14 +105,14 @@ const Bridge = () => {
 
   return (
     <group>
-      <line geometry={bridgeGeom as unknown as THREE.BufferGeometry}>
+      <lineSegments geometry={bridgeGeom}>
         <lineBasicMaterial
           color={PRIMARY}
           transparent
           opacity={0.18}
           depthWrite={false}
         />
-      </line>
+      </lineSegments>
       <points ref={pointsRef} geometry={travelersGeom}>
         <pointsMaterial
           color={HIGHLIGHT}
