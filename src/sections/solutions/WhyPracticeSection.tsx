@@ -22,17 +22,19 @@ export const WhyPracticeSection = ({ practice }: Props) => {
             title={`What you get with TechD's ${practice.name} practice`}
           />
         </Reveal>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {extras.whyPoints.map((p, i) => (
             <Reveal key={p.title} delay={i * 60}>
-              <div className="group flex h-full flex-col rounded-2xl bg-primary px-1 pt-2 pb-1 shadow-[0_8px_24px_-12px_hsl(var(--primary)/0.5)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_-14px_hsl(var(--primary)/0.6)]">
-                <h3 className="px-3 pb-2 text-base font-bold leading-tight text-background">
-                  {p.title}
-                </h3>
-                <div className="flex-1 rounded-xl bg-background p-5 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
-                  <p className="text-sm font-light leading-relaxed text-muted-foreground">
-                    {p.body}
-                  </p>
+              <div className="group relative min-h-[260px] flex items-center justify-center rounded-xl overflow-hidden cursor-default bg-background border border-border transition-shadow duration-[600ms] hover:shadow-[0_20px_40px_-12px_hsl(var(--primary)/0.5)]">
+                {/* Front: white with title */}
+                <div className="flex flex-col items-center justify-center p-6 text-center transition-all duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none group-hover:[transform:scale(0)_rotate(-45deg)]">
+                  <h3 className="text-xl font-bold text-secondary leading-tight">{p.title}</h3>
+                </div>
+
+                {/* Back: white panel rotates in */}
+                <div className="absolute top-1/2 left-1/2 w-full h-full p-6 flex flex-col justify-center bg-background opacity-0 [transform:translate(-50%,-50%)_rotate(-45deg)] transition-all duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none group-hover:opacity-100 group-hover:[transform:translate(-50%,-50%)_rotate(0deg)]">
+                  <h3 className="text-base font-bold text-secondary">{p.title}</h3>
+                  <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">{p.body}</p>
                 </div>
               </div>
             </Reveal>
