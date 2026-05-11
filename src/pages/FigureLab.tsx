@@ -5,6 +5,11 @@ import IndustriesFigure from "@/components/shared/heroFigures/IndustriesFigure";
 import ServicesFigure from "@/components/shared/heroFigures/ServicesFigure";
 import ResourcesFigure from "@/components/shared/heroFigures/ResourcesFigure";
 import CompanyFigure from "@/components/shared/heroFigures/CompanyFigure";
+import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGenerativeFigure";
+import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
+import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
+import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
+import HybridCloudFigure from "@/components/shared/heroFigures/solutions/HybridCloudFigure";
 
 const ResourceTileStackScene = lazy(
   () => import("@/sections/resources/_components/ResourceTileStackScene"),
@@ -27,6 +32,14 @@ const SLOTS = [
   { label: "Industries", Figure: IndustriesFigure },
   { label: "Services", Figure: ServicesFigure },
   { label: "Company", Figure: CompanyFigure },
+] as const;
+
+const SOLUTION_SLOTS = [
+  { label: "AI & Generative", code: "AiGenerativeFigure", Figure: AiGenerativeFigure },
+  { label: "Data & Analytics", code: "DataAnalyticsFigure", Figure: DataAnalyticsFigure },
+  { label: "Automation & FinOps", code: "AutomationFinOpsFigure", Figure: AutomationFinOpsFigure },
+  { label: "Security & Compliance", code: "SecurityComplianceFigure", Figure: SecurityComplianceFigure },
+  { label: "Hybrid Cloud", code: "HybridCloudFigure", Figure: HybridCloudFigure },
 ] as const;
 
 type Vec3 = [number, number, number];
@@ -166,6 +179,36 @@ const FigureLab = () => {
             be iterated independently.
           </p>
         </header>
+
+        {/* Solutions — per-practice wireframe figures */}
+        <section className="mb-16">
+          <header className="mb-6">
+            <h2 className="text-lg font-bold text-secondary">Solutions — per practice</h2>
+            <p className="mt-1 max-w-2xl text-sm font-light text-muted-foreground">
+              One figure per solution practice, sharing the same r3f wireframe
+              language (cyan edges + additive vertex points, slow rotation).
+              Only the geometry changes between practices.
+            </p>
+          </header>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {SOLUTION_SLOTS.map(({ label, code, Figure }) => (
+              <article
+                key={label}
+                className="overflow-hidden rounded-lg border border-border bg-background"
+              >
+                <div className="flex items-center justify-between border-b border-border px-4 py-2">
+                  <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    {label}
+                  </span>
+                  <code className="text-[10px] text-muted-foreground">{code}</code>
+                </div>
+                <div className="relative aspect-[4/3] w-full" style={GRID_STYLE}>
+                  <Figure />
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <div className="grid gap-8 md:grid-cols-2">
           <ResourcesTuner />

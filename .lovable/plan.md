@@ -1,52 +1,60 @@
-# Refresh PracticeCtaSection ("Let's build a plan")
+# Add a "Solutions" section to /figure-lab — 5 per-practice wireframe figures
 
-Scope: visual + copy only. Single file: `src/sections/solutions/PracticeCtaSection.tsx`. Plus one memory entry to make `btn-glow` the standard for "Talk to an expert" CTAs.
+Goal: a new section in `/figure-lab` showing **one wireframe figure per practice** (AI & Generative, Data & Analytics, Automation & FinOps, Security & Compliance, Hybrid Cloud) using the same r3f / three.js graphic language as the existing `PracticeWireframeScene` (cyan wireframe edges + additive vertex points on a gently rotating shape, on the engineered grid backdrop).
 
-## 1. New copy
+This is **lab-only** — no changes to home, no changes to the existing `/solutions/*` pages.
 
-Replace the current headline/eyebrow/paragraph. Proposed (open to edits before build):
+## Visual language (locked)
 
-- **Eyebrow:** keep the practice name (`{practice.name}`) — it grounds the CTA per-page.
-- **Headline:** `Ready when you are.` (shorter, more confident than "Let's build a plan")
-- **Sub:** `One conversation with a senior IBM-certified architect. No relay, no junior swap after signature.`
+Every figure shares these rules so the line stays consistent:
+- `<Canvas>` with the existing camera/lighting setup
+- A `lineSegments` over `edgesGeometry` (cyan `#00B3E3`, opacity ~0.55)
+- A `points` overlay (highlight `#7CE6FF`, additive blending, opacity ~0.95)
+- Slow rotation via `useFrame` (`rotation.y = t * 0.15`, sine wobble on x)
+- Respect `prefers-reduced-motion` — static frame, no animation
+- Same engineered-grid background panel used by the other lab tiles
 
-If you'd rather use different wording, tell me before implement and I'll swap it in.
+Only the **geometry** changes per practice — keeps each figure recognizable without breaking the family look.
 
-## 2. Reduce elements
+## Per-practice geometry mapping
 
-Remove from the section:
-- `IBMPlatinumBadge` block (right column)
-- 3-up `STATS` grid (F500 / 15+ yrs / Platinum)
-- The 12-column split layout
+| Practice | Geometry | Visual story |
+|---|---|---|
+| AI & Generative | `IcosahedronGeometry(2.6, 1)` + inner offset shell | The current globe — keeps the "thinking model" feel |
+| Data & Analytics | Stacked wireframe boxes / extruded grid columns | Reads as a 3D bar chart / data cube |
+| Automation & FinOps | Rotating `TorusKnotGeometry` | Loop/flow — pipelines and orchestration |
+| Security & Compliance | `OctahedronGeometry` + concentric ring (`TorusGeometry`) | Shield/lock signal |
+| Hybrid Cloud | Two interlinked rings (two `TorusGeometry`) crossing at 90° | Connection between two environments |
 
-Keep only: eyebrow, headline, sub, two CTAs — centered, single column, generous whitespace. The trust signals already live elsewhere on the page (hero, Why, products grid), so the close doesn't need to repeat them.
+(Geometry choices are intentionally simple primitives — they read fast at small sizes and match the existing isometric-wireframe reference saved in memory.)
 
-## 3. Buttons
+## Files to add
 
-- **Primary "Talk to an expert":** swap the custom `bg-primary` link for the shared `btn-glow` treatment used in the header (`<Button asChild className="btn-glow"><Link to="/contact">Talk to an expert</Link></Button>`). Same animated cyan glow, same hover behavior — site-wide consistency.
-- **Secondary "See who we've shipped for":** wrap in a bordered ghost button — `border border-background/25 hover:border-background hover:bg-background/5`, same size as primary, keep the arrow icon and its hover translate.
+```
+src/components/shared/heroFigures/solutions/
+  AiGenerativeFigure.tsx         # current globe, renamed/re-exported for clarity
+  DataAnalyticsFigure.tsx
+  AutomationFinOpsFigure.tsx
+  SecurityComplianceFigure.tsx
+  HybridCloudFigure.tsx
+  _SharedWireframe.tsx           # shared <Canvas> + lighting + reduced-motion wrapper
+```
 
-## 4. Background
+`_SharedWireframe.tsx` exposes a single `<WireframePanel>{children}</WireframePanel>` so each per-practice file only ships its geometry — guarantees the graphic line stays identical.
 
-Replace the single static `bg-primary/20 blur-3xl` glow + faint SVG grid with the same animated gradient system used inside the Products grid hero card:
-- Base: `linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary)/0.92) 60%, hsl(220 15% 12%) 100%)`
-- Three drifting cyan radial blobs: `animate-blob-a`, `animate-blob-b`, `animate-blob-c`
-- A slow `animate-shimmer-rotate` conic sweep at low opacity
-- `ring-1 ring-white/10` and the existing rounded-2xl container, with `motion-reduce:[&_*]:!animate-none`
+## File to edit
 
-All keyframes already exist in `tailwind.config.ts` — no new tokens.
-
-## 5. Memory
-
-Add a memory file documenting `btn-glow` as the standard treatment for the "Talk to an expert" CTA across the site, so future sections reuse it instead of re-styling.
-
----
-
-## Files touched
-
-- `src/sections/solutions/PracticeCtaSection.tsx` — rewrite
-- `mem://design/talk-to-an-expert-cta` — new memory + index update
+- `src/pages/FigureLab.tsx` — add a new section block "Solutions" rendering the 5 figures in a 2- or 3-column grid, each in the same labeled card the existing `SLOTS` use (header chip with practice name + figure component name). Section sits above the existing top-level figures grid.
 
 ## Out of scope
 
-No content data changes, no new components, no router changes, no new dependencies.
+- No changes to home `SolutionsGridSection` or any `/solutions/*` page
+- No live tuner UI for these (only the existing `ResourcesTuner` keeps sliders) — can add later if you want
+- No content/data changes in `src/content/solutions.ts`
+- No new dependencies — uses already-installed `three` + `@react-three/fiber`
+
+## Acceptance
+
+- `/figure-lab` shows a new "Solutions" section with 5 cards, one per practice, each running a distinct but visually-related wireframe scene
+- Reduced-motion users see static frames
+- No regressions on the existing figure tiles
