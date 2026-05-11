@@ -1,47 +1,68 @@
 ## Goal
 
-Every top-level section's hero should show the **engineered grid background + its assigned wireframe figure on the right**, with the existing soft cyan washes/vignettes preserved. Same pattern Solutions already uses, applied uniformly across all five areas.
+Replace the current 3-column products grid on every practice page (`/solutions/:practice`) with a single, high-impact showcase: a left-side section heading paired with a tall, dark featured card on the right that auto-cycles through that practice's products. Reference video's vibe, our brand colors (cyan-only gradient on dark), our icons, our content.
 
-## Current state
+## Layout (desktop, ≥lg)
 
-| Section | Hero backdrop | Grid? | Figure on right? |
-|---|---|---|---|
-| Solutions (`/solutions/*`) | `PracticeHeroBackdrop` | ✅ | ✅ icosahedron |
-| Industries (`/industries/*`) | `IndustryHeroBackdrop` | needs verify | needs verify |
-| Services (`/services/*`) | `ServiceHeroBackdrop` | needs verify | needs verify |
-| Resources (`/resources/*`) | `HoneycombHeroBackdrop` (shared honeycomb) | ✅ honeycomb, no grid | ❌ no figure |
-| Company (`/company/*` — About, Customers, IBMPartnership) | `RingsHeroBackdrop` (shared rings) | ✅ rings, no grid | ❌ no figure |
+```text
+┌─────────────────────────────┬──────────────────────────┐
+│ Eyebrow                     │  ┌────────────────────┐  │
+│                             │  │ ◐ Category   pill ↗│  │
+│ Big section title           │  │                    │  │
+│ (text-5xl, bold)            │  │   PRODUCT NAME     │  │
+│                             │  │   (focal display)  │  │
+│ Subtitle paragraph          │  │                    │  │
+│                             │  │   Tagline (bold)   │  │
+│ [Talk to an expert →]       │  │   Description…     │  │
+│ [View case studies]         │  │                    │  │
+│                             │  │ ● ○ ○ ○ ○          │  │
+│                             │  └────────────────────┘  │
+└─────────────────────────────┴──────────────────────────┘
+       5 cols of 12                  7 cols of 12
+```
 
-The figures themselves already exist in `src/components/shared/heroFigures/` and render correctly in `/figure-lab`. This work is purely about **wiring them into the real hero backdrops** so each page matches the Solutions pattern.
+Mobile/tablet (<lg): stacks vertically — heading on top, card below, full width.
 
-## Plan
+## The featured card
 
-### 1. Audit Industries + Services backdrops
-Open `IndustryHeroBackdrop` and `ServiceHeroBackdrop`. If they already follow the Solutions pattern (grid + figure-on-right + washes), no change. If not, refactor them to match.
+- Tall aspect (~4:5 desktop, auto on mobile), `rounded-3xl`.
+- Background: near-black surface (`bg-secondary` shifted darker via a CSS-token-only overlay) with an off-center cyan radial glow — `radial-gradient(at 30% 20%, hsl(var(--primary)/0.55), transparent 60%)` layered over `hsl(var(--secondary)/0.95)`. All via tokens, no raw hex.
+- Subtle inner ring (`ring-1 ring-white/10`) and a soft drop shadow.
+- The glow's position shifts per slide (top-left, top-right, bottom-left…) so each rotation feels like the light moves — that's the "movement" the user asked for.
 
-### 2. Create dedicated backdrops for Resources and Company
-Resources and Company currently use the generic `HoneycombHeroBackdrop` and `RingsHeroBackdrop`, which don't include the grid or our figures.
+Card content, top to bottom:
+1. **Chip row** — left: small circular badge with the practice motif icon + product category label (e.g. "Foundation models"). Right: pill showing the practice name + small `↗` arrow that links to the product page (or external URL).
+2. **Focal display** — the product short name in a huge, condensed weight (e.g. `text-7xl md:text-8xl font-bold`), with a small up-right arrow next to it. This is the analogue to the "35%" in the reference.
+3. **Body** — bold tagline, then light description (truncated to ~2–3 lines for consistent height).
+4. **Dot pagination** — one dot per product, active dot wider (a `w-8` pill vs `w-2` circles), clickable.
 
-- New `src/sections/resources/_components/ResourceHeroBackdrop.tsx` — same structure as `PracticeHeroBackdrop`, but lazy-loads `ResourcesFigure` (book/fanning pages).
-- New `src/sections/company/_components/CompanyHeroBackdrop.tsx` — same structure, lazy-loads `CompanyFigure` (DNA helix).
+## Motion
 
-### 3. Swap the backdrops on the real pages
+- **Auto-advance** every 5s, pause on hover or when card is focused.
+- **Slide transition**: content cross-fades + slides up 12px (200ms ease-out); the gradient glow re-positions via a 600ms transition so the light visibly drifts to a new corner — this delivers the "kind of movement for each card" effect.
+- **Respect `prefers-reduced-motion`**: disable auto-advance and reduce the transition to a plain opacity swap.
+- Keyboard: ←/→ arrows cycle; dots are real buttons with `aria-label`.
 
-- Resources pages (`Blog.tsx`, `CaseStudies.tsx`, plus the placeholder Webinars/Events if they're upgraded to real heroes): replace `HoneycombHeroBackdrop` import + usage with `ResourceHeroBackdrop`.
-- Company pages (`About.tsx`, `Customers.tsx`, `IBMPartnership.tsx`): replace `RingsHeroBackdrop` import + usage with `CompanyHeroBackdrop`.
+## Data
 
-### 4. Verify
-Walk through one page per section (`/solutions/ai-generative`, `/industries/healthcare`, `/services/advisory`, `/resources/case-studies`, `/company/about`) and confirm each hero shows: engineered grid + its figure on the right + the existing cyan washes.
+- Source: existing `practice.products` from `src/content/solutions.ts` — no schema changes.
+- The "category label" inside the chip comes from `practice.name` (consistent per practice). No new content fields needed.
+- Icon in the chip reuses the practice's existing motif from `src/content/practice-motifs.ts` (one icon per practice, fine because all slides belong to the same practice).
+- Link target: internal product → `/solutions/:practice/:slug`; external → the URL with `target="_blank"`.
 
-## What stays the same
+## Files
 
-- The five figure components (`SolutionsFigure`, `IndustriesFigure`, `ServicesFigure`, `ResourcesFigure`, `CompanyFigure`) are unchanged.
-- All hero copy, anchors, and section ordering.
-- The soft cyan blur washes and edge vignettes already in each backdrop.
-- `HoneycombHeroBackdrop` and `RingsHeroBackdrop` remain in the shared folder in case other pages still use them — only the resources/company pages are switched off them.
+- **Replace** `src/sections/solutions/ProductsGridSection.tsx` with the new showcase component (keep the same export name + filename so `_PracticePage.tsx` doesn't change). Section keeps `id="products"` and `scroll-mt-24` so existing anchors still work.
+- **No changes** to `src/content/solutions.ts`, `src/pages/solutions/_PracticePage.tsx`, or anything else.
+
+## Accessibility
+
+- Section labeled by its heading.
+- The card is a `region` with `aria-roledescription="carousel"` and `aria-live="polite"` for slide changes.
+- Dots are `<button>` with `aria-label="Show product N of M"` and `aria-current` on the active one.
+- Auto-rotation pauses on focus within the card, not just hover.
 
 ## Out of scope
 
-- No changes to figure shapes, speeds, or the figure-lab page.
-- No restyling of other sections inside each page.
-- No changes to navigation, routing, or content data.
+- No new content fields, no copy rewrites, no changes to product detail pages.
+- No new dependencies (no Embla, no Framer Motion) — plain React state + Tailwind transitions are enough for this effect.
