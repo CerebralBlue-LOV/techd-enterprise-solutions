@@ -5,7 +5,7 @@ import LogoStripSection from "@sections/home/LogoStripSection";
 import SolutionsGridSection from "@sections/home/SolutionsGridSection";
 import EngineeredFieldSection from "@sections/home/EngineeredFieldSection";
 import WhyTechDSection from "@sections/home/WhyTechDSection";
-import FinalCtaSection from "@sections/home/FinalCtaSection";
+import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 
 /**
  * Page: Home (route "/")
@@ -31,7 +31,12 @@ const Home = () => (
     <SolutionsGridSection />
     <EngineeredFieldSection />
     <WhyTechDSection />
-    <FinalCtaSection />
+      <PageFinalCtaSection
+        pageLabel="Home"
+        eyebrow="Ready to talk?"
+        title="Talk to an expert."
+        lede="30-minute conversation with a senior IBM-certified architect. No sales pass-through, no slide deck. Just engineering."
+      />
   </Layout>
 );
 
