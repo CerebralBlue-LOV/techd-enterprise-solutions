@@ -8,7 +8,16 @@
  */
 
 export type WhyPoint = { title: string; body: string };
-export type ClientEntry = { name: string; note: string };
+export type ClientEntry = {
+  name: string;
+  note: string;
+  /** External site for outbound link. */
+  url?: string;
+  /** Path under /public — e.g. "/logos/johns-hopkins.png". */
+  logo?: string;
+  /** Optional override of logo height utility classes. */
+  logoClass?: string;
+};
 export type PracticeProof = { id: string; proof: string };
 export type StatCallout = { value: string; label: string };
 
@@ -36,12 +45,12 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Clinical-grade outputs",    body: "RAG architectures that cite their sources, governance that satisfies your CMIO, and the operational support to keep them running." },
     ],
     clients: [
-      { name: "Johns Hopkins Medicine", note: "Academic medical center" },
-      { name: "CHOP",                   note: "Children's Hospital of Philadelphia" },
-      { name: "Jefferson Health",       note: "Health system, Philadelphia region" },
-      { name: "Temple Health",          note: "Academic health system" },
-      { name: "Genesis HealthCare",     note: "Long-term care and skilled nursing" },
-      { name: "Johnson & Johnson",      note: "Global pharmaceutical and consumer health" },
+      { name: "Johns Hopkins Medicine", note: "Academic medical center",                  url: "https://www.hopkinsmedicine.org", logo: "/logos/johns-hopkins.png" },
+      { name: "CHOP",                   note: "Children's Hospital of Philadelphia",      url: "https://www.chop.edu",            logo: "/logos/chop.png" },
+      { name: "Jefferson Health",       note: "Health system, Philadelphia region",        url: "https://www.jeffersonhealth.org", logo: "/logos/jefferson-health.png" },
+      { name: "Temple Health",          note: "Academic health system",                    url: "https://www.templehealth.org",    logo: "/logos/temple-health.png" },
+      { name: "Genesis HealthCare",     note: "Long-term care and skilled nursing",       url: "https://www.genesishcc.com",       logo: "/logos/genesis-healthcare.png" },
+      { name: "Johnson & Johnson",      note: "Global pharmaceutical and consumer health", url: "https://www.jnj.com",             logo: "/logos/johnson-and-johnson.png" },
     ],
     practices: [
       { id: "ai-generative",       proof: "Clinical knowledge agents and grounded RAG built on watsonx, deployed inside health systems." },
@@ -67,9 +76,9 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Built on watsonx",       body: "Foundation-model governance and RAG patterns that hold up to legal review and rights management." },
     ],
     clients: [
-      { name: "Sony Interactive Entertainment", note: "PlayStation platform" },
-      { name: "Sony Pictures",                  note: "Film and TV production" },
-      { name: "Comcast / Peacock",              note: "Cable, streaming, and broadband" },
+      { name: "Sony Interactive Entertainment", note: "PlayStation platform",                url: "https://www.sie.com",        logo: "/logos/sony-interactive.svg" },
+      { name: "Sony Pictures",                  note: "Film and TV production",              url: "https://www.sonypictures.com", logo: "/logos/sony-pictures.png" },
+      { name: "Comcast / Peacock",              note: "Cable, streaming, and broadband",     url: "https://corporate.comcast.com", logo: "/logos/comcast-peacock.svg" },
     ],
     practices: [
       { id: "ai-generative",  proof: "Content intelligence and operational AI for studios, networks, and streamers." },
@@ -89,8 +98,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Claims acceleration",    body: "Document intelligence, automation, and observability that take days out of the claims cycle." },
     ],
     clients: [
-      { name: "PURE Insurance",     note: "High-net-worth homeowner insurance" },
-      { name: "National General",   note: "Property and casualty carrier" },
+      { name: "PURE Insurance",     note: "High-net-worth homeowner insurance", url: "https://www.pureinsurance.com",         logo: "/logos/pure-insurance.png" },
+      { name: "National General",   note: "Property and casualty carrier",       url: "https://www.nationalgeneral.com",       logo: "/logos/national-general.png" },
     ],
     practices: [
       { id: "ai-generative",       proof: "Underwriting copilots and claims acceleration for property and specialty carriers." },
@@ -111,8 +120,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Built to be audited",  body: "Lineage, access controls, and reporting that satisfy state PUCs and FERC, not just internal audit." },
     ],
     clients: [
-      { name: "Dominion Energy", note: "Regulated electric utility" },
-      { name: "MISO Energy",     note: "Midcontinent independent system operator" },
+      { name: "Dominion Energy", note: "Regulated electric utility",              url: "https://www.dominionenergy.com", logo: "/logos/dominion-energy.png" },
+      { name: "MISO Energy",     note: "Midcontinent independent system operator", url: "https://www.misoenergy.org",     logo: "/logos/miso-energy.png" },
     ],
     practices: [
       { id: "data-analytics",      proof: "Grid analytics and operational dashboards for regulated utilities and ISOs." },
@@ -133,8 +142,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "BI muscle",              body: "Cognos and Planning Analytics depth applied to enrollment, finance, and research analytics." },
     ],
     clients: [
-      { name: "Princeton University", note: "Research university" },
-      { name: "VCU",                  note: "Virginia Commonwealth University" },
+      { name: "Princeton University", note: "Research university",            url: "https://www.princeton.edu", logo: "/logos/princeton-university.png" },
+      { name: "VCU",                  note: "Virginia Commonwealth University", url: "https://www.vcu.edu",       logo: "/logos/vcu.png" },
     ],
     practices: [
       { id: "data-analytics",      proof: "Student, research, and finance analytics for top-tier universities." },
@@ -154,8 +163,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Records modernization",   body: "Data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
     ],
     clients: [
-      { name: "Department of Homeland Security", note: "Federal agency" },
-      { name: "L3Harris",                        note: "Defense electronics contractor" },
+      { name: "Department of Homeland Security", note: "Federal agency",                  url: "https://www.dhs.gov",     logo: "/logos/dhs.svg" },
+      { name: "L3Harris",                        note: "Defense electronics contractor",   url: "https://www.l3harris.com", logo: "/logos/l3harris.png" },
     ],
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
