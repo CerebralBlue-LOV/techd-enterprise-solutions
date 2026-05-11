@@ -8,15 +8,13 @@
  */
 
 export type WhyPoint = { title: string; body: string };
+/**
+ * `name` must match a `Customer.name` in `src/content/site.ts` so logo, url,
+ * and sizing flow from the single CUSTOMERS source of truth (Logo Lab).
+ */
 export type ClientEntry = {
   name: string;
   note: string;
-  /** External site for outbound link. */
-  url?: string;
-  /** Path under /public — e.g. "/logos/johns-hopkins.png". */
-  logo?: string;
-  /** Optional override of logo height utility classes. */
-  logoClass?: string;
 };
 export type PracticeProof = { id: string; proof: string };
 export type StatCallout = { value: string; label: string };
