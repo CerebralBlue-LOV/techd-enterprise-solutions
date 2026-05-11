@@ -22,29 +22,32 @@ export const ApproachSection = ({ practice }: Props) => {
             title="A delivery model built for enterprises that can't afford a stalled program"
           />
         </Reveal>
-        <ol className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {extras.approach.map((step, i) => (
-            <Reveal key={step.step} delay={i * 60}>
-              <li className="group relative min-h-[260px] flex items-center justify-center rounded-xl overflow-hidden cursor-default bg-background border border-border transition-shadow duration-[600ms] hover:shadow-[0_20px_40px_-12px_hsl(var(--primary)/0.5)]">
-                {/* Front: step number + title */}
-                <div className="flex flex-col items-center justify-center p-6 text-center transition-all duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none group-hover:[transform:scale(0)_rotate(-45deg)]">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary/70">
-                    Step {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-2 text-xl font-bold text-secondary leading-tight">{step.step}</h3>
-                </div>
 
-                {/* Back: white panel rotates in on hover */}
-                <div className="absolute top-1/2 left-1/2 w-full h-full p-6 flex flex-col justify-center bg-background opacity-0 [transform:translate(-50%,-50%)_rotate(-45deg)] transition-all duration-[600ms] [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none group-hover:opacity-100 group-hover:[transform:translate(-50%,-50%)_rotate(0deg)]">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                    Step {String(i + 1).padStart(2, "0")}
+        <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {extras.approach.map((step, i) => {
+            const num = String(i + 1).padStart(2, "0");
+            return (
+              <Reveal key={step.step} delay={i * 80}>
+                <li className="group relative h-full flex flex-col rounded-2xl border border-border bg-background p-7 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_10px_30px_-15px_hsl(var(--primary)/0.35)]">
+                  {/* Top row: step number + accent line */}
+                  <div className="flex items-center gap-3">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+                      Step {num}
+                    </span>
+                    <span aria-hidden className="h-px flex-1 bg-border group-hover:bg-primary/40 transition-colors duration-500" />
+                  </div>
+
+                  <h3 className="mt-5 text-xl md:text-2xl font-bold text-secondary leading-tight tracking-tight">
+                    {step.step}
+                  </h3>
+
+                  <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
+                    {step.detail}
                   </p>
-                  <h3 className="mt-2 text-base font-bold text-secondary">{step.step}</h3>
-                  <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">{step.detail}</p>
-                </div>
-              </li>
-            </Reveal>
-          ))}
+                </li>
+              </Reveal>
+            );
+          })}
         </ol>
       </div>
     </section>
