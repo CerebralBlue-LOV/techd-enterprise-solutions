@@ -84,19 +84,10 @@ export const WhyPracticeSection = ({ practice }: Props) => {
                     v.card,
                   )}
                 >
-                  {/* Top row: index + arrow */}
-                  <div className="flex items-start justify-between">
+                  {/* Top row: index */}
+                  <div className="flex items-start">
                     <span className={cn("text-xs font-bold tracking-[0.2em] uppercase", v.eyebrow)}>
                       {num} — Why
-                    </span>
-                    <span
-                      className={cn(
-                        "inline-flex h-9 w-9 items-center justify-center rounded-full border border-current/30 transition-transform duration-500 group-hover:-translate-x-1 group-hover:translate-y-1",
-                        v.arrow,
-                      )}
-                      aria-hidden
-                    >
-                      <ArrowDownLeft className="h-4 w-4" />
                     </span>
                   </div>
 
