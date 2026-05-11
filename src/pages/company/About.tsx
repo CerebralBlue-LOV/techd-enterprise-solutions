@@ -3,7 +3,9 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import CompanyHeroBackdrop from "@/sections/company/_components/CompanyHeroBackdrop";
+import CompanyFigure from "@shared/heroFigures/CompanyFigure";
+import PageHero from "@shared/page/PageHero";
+import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 
 const LEADERSHIP = [
   {
@@ -35,31 +37,14 @@ const About = () => {
         description="Designing, building, and running AI, data, and hybrid cloud systems for Fortune 500 enterprises since 2009."
       />
 
-      {/* Hero */}
-      <section
-        className="relative overflow-hidden min-h-[50vh] flex items-center"
-      >
-        <SectionMarker page="Company / About" name="Hero" />
-        <CompanyHeroBackdrop />
-        <div className="container-page relative z-10 pt-16 pb-12 md:pt-20 md:pb-16">
-          <Reveal>
-            <div className="max-w-4xl">
-              <p className="eyebrow flex items-center gap-3">
-                <span className="inline-block h-px w-8 bg-primary" />
-                Company
-                <span className="text-muted-foreground/60">/</span>
-                <span>About</span>
-              </p>
-              <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-secondary">
-                IBM's partner for regulated enterprise delivery.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg md:text-xl font-light text-muted-foreground leading-relaxed">
-                Designing, building, and running AI, data, and hybrid cloud systems for Fortune 500 enterprises since 2009.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        pageLabel="Company / About"
+        parent="Company"
+        child="About"
+        headline="IBM's partner for regulated enterprise delivery."
+        lede="Designing, building, and running AI, data, and hybrid cloud systems for Fortune 500 enterprises since 2009."
+        figure={<CompanyFigure />}
+      />
 
       {/* Company description */}
       <section className="section">
@@ -80,7 +65,6 @@ const About = () => {
               </div>
             </Reveal>
 
-            {/* Fact callouts */}
             <Reveal delay={80}>
               <div className="grid grid-cols-2 gap-4">
                 {FACTS.map((f) => (
@@ -118,6 +102,8 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      <PageFinalCtaSection pageLabel="Company / About" eyebrow="TechD" />
     </Layout>
   );
 };

@@ -3,7 +3,9 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import CompanyHeroBackdrop from "@/sections/company/_components/CompanyHeroBackdrop";
+import CompanyFigure from "@shared/heroFigures/CompanyFigure";
+import PageHero from "@shared/page/PageHero";
+import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 
 const SPECIALIZATIONS = [
   {
@@ -51,31 +53,14 @@ const IBMPartnership = () => {
         description="TechD is an IBM Platinum Business Partner — IBM's highest partner classification — with direct access to watsonx, IBM Z, OpenShift, and IBM Security engineering."
       />
 
-      {/* Hero */}
-      <section
-        className="relative overflow-hidden min-h-[50vh] flex items-center"
-      >
-        <SectionMarker page="Company / IBM Partnership" name="Hero" />
-        <CompanyHeroBackdrop />
-        <div className="container-page relative z-10 pt-16 pb-12 md:pt-20 md:pb-16">
-          <Reveal>
-            <div className="max-w-4xl">
-              <p className="eyebrow flex items-center gap-3">
-                <span className="inline-block h-px w-8 bg-primary" />
-                Company
-                <span className="text-muted-foreground/60">/</span>
-                <span>IBM Partnership</span>
-              </p>
-              <h1 className="mt-6 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight text-secondary">
-                Platinum. IBM's highest partner classification.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg md:text-xl font-light text-muted-foreground leading-relaxed">
-                Direct access to IBM product engineering, early participation in beta programs, and IBM-certified practitioners across every practice area.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        pageLabel="Company / IBM Partnership"
+        parent="Company"
+        child="IBM Partnership"
+        headline="Platinum. IBM's highest partner classification."
+        lede="Direct access to IBM product engineering, early participation in beta programs, and IBM-certified practitioners across every practice area."
+        figure={<CompanyFigure />}
+      />
 
       {/* What Platinum means */}
       <section className="section">
@@ -128,6 +113,12 @@ const IBMPartnership = () => {
           </div>
         </div>
       </section>
+
+      <PageFinalCtaSection
+        pageLabel="Company / IBM Partnership"
+        eyebrow="IBM Platinum"
+        title="Bring a Platinum partner to your next IBM engagement."
+      />
     </Layout>
   );
 };
