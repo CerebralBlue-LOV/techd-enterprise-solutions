@@ -67,10 +67,10 @@ const Geometry = () => {
   return (
     <group ref={whole}>
       <group ref={a}>
-        <Tetra radius={2.0} opacity={0.7} />
+        <Tetra radius={2.5} opacity={0.7} />
       </group>
       <group ref={b}>
-        <Tetra radius={2.0} invert opacity={0.7} highlight />
+        <Tetra radius={2.5} invert opacity={0.7} />
       </group>
     </group>
   );
