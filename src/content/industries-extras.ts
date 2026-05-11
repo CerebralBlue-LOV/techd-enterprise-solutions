@@ -163,8 +163,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Records modernization",   body: "Data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
     ],
     clients: [
-      { name: "Department of Homeland Security", note: "Federal agency" },
-      { name: "L3Harris",                        note: "Defense electronics contractor" },
+      { name: "Department of Homeland Security", note: "Federal agency",                  url: "https://www.dhs.gov",     logo: "/logos/dhs.svg" },
+      { name: "L3Harris",                        note: "Defense electronics contractor",   url: "https://www.l3harris.com", logo: "/logos/l3harris.png" },
     ],
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
