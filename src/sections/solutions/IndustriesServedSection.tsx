@@ -28,7 +28,7 @@ export const IndustriesServedSection = ({ practice }: Props) => {
     })
     .filter((x): x is Item => Boolean(x));
 
-  const current = items[active];
+  
 
   return (
     <section id="industries" className="section scroll-mt-24">
