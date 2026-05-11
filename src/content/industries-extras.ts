@@ -65,7 +65,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Content intelligence, audience analytics, and operational AI built for the scale and pace of major studios, streamers, and platform businesses.",
     whyPoints: [
-      { title: "Platform-scale fluency", body: "Work shipped inside Sony Interactive Entertainment, Sony Pictures, and Comcast/Peacock — not pitched at them." },
+      { title: "Platform-scale fluency", body: "Work shipped inside global media and platform businesses like Snap, Adobe, and Verizon — not pitched at them." },
       { title: "Content + audience",     body: "Two sides of the same coin: tag and search the catalog, then understand who's watching what." },
       { title: "Operational AI",         body: "Workflow assistants, knowledge agents, and automation that take cost out of post, ops, and customer support." },
       { title: "Built on watsonx",       body: "Foundation-model governance and RAG patterns that hold up to legal review and rights management." },
