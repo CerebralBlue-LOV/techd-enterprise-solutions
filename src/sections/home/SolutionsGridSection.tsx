@@ -3,24 +3,26 @@ import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import { SOLUTIONS } from "@content/solutions";
 import FlipCard from "@sections/home/_components/FlipCard";
-import PlexusMotif, { type MotifVariant } from "@sections/home/_components/PlexusMotif";
-import plexusBrain from "@/assets/plexus/plexus-brain.webp";
-import plexusDatabase from "@/assets/plexus/plexus-database.webp";
-import plexusGears from "@/assets/plexus/plexus-gears.webp";
-import plexusShield from "@/assets/plexus/plexus-shield.webp";
-import plexusCloud from "@/assets/plexus/plexus-cloud.webp";
+import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGenerativeFigure";
+import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
+import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
+import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
+import HybridCloudFigure from "@/components/shared/heroFigures/solutions/HybridCloudFigure";
+import type { ComponentType } from "react";
 
-const MOTIFS: Record<string, { image: string; alt: string; backTitle: string; footer: string; variant: MotifVariant }> = {
-  "ai-generative": { image: plexusBrain, alt: "Neural plexus brain", backTitle: "Production-grade AI", footer: "United States", variant: "ai" },
-  "data-analytics": { image: plexusDatabase, alt: "Neural plexus database", backTitle: "Data foundations", footer: "United States", variant: "data" },
-  "automation-finops": { image: plexusGears, alt: "Neural plexus gears", backTitle: "Run smarter", footer: "Global", variant: "automation" },
-  "security-compliance": { image: plexusShield, alt: "Neural plexus shield", backTitle: "Defense in depth", footer: "Regulated industries", variant: "security" },
-  "hybrid-cloud": { image: plexusCloud, alt: "Neural plexus cloud", backTitle: "Anywhere, governed", footer: "United States", variant: "cloud" },
+const FIGURES: Record<string, { Figure: ComponentType; backTitle: string; footer: string }> = {
+  "ai-generative": { Figure: AiGenerativeFigure, backTitle: "Production-grade AI", footer: "United States" },
+  "data-analytics": { Figure: DataAnalyticsFigure, backTitle: "Data foundations", footer: "United States" },
+  "automation-finops": { Figure: AutomationFinOpsFigure, backTitle: "Run smarter", footer: "Global" },
+  "security-compliance": { Figure: SecurityComplianceFigure, backTitle: "Defense in depth", footer: "Regulated industries" },
+  "hybrid-cloud": { Figure: HybridCloudFigure, backTitle: "Anywhere, governed", footer: "United States" },
 };
 
 /**
  * Section: Home / Solutions Grid
- * Five practice flip cards using the plexus neural-node motif system.
+ * Five practice flip cards. Card motifs use the shared per-practice r3f
+ * wireframe figures so the home grid speaks the same graphic line as the
+ * /solutions/* hero backdrops.
  */
 export const SolutionsGridSection = () => (
   <section className="section">
@@ -36,8 +38,9 @@ export const SolutionsGridSection = () => (
 
       <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {SOLUTIONS.map((s, i) => {
-          const m = MOTIFS[s.id];
+          const m = FIGURES[s.id];
           if (!m) return null;
+          const { Figure } = m;
           return (
             <Reveal key={s.id} delay={i * 50}>
               <FlipCard
@@ -49,7 +52,7 @@ export const SolutionsGridSection = () => (
                 backBody={s.pitch}
                 chips={s.products.slice(0, 5).map((p) => p.name)}
                 ctaLabel={s.ctaLabel}
-                motif={<PlexusMotif image={m.image} alt={m.alt} variant={m.variant} />}
+                motif={<Figure />}
               />
             </Reveal>
           );
