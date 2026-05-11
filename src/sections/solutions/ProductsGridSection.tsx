@@ -326,7 +326,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                     key={`in-${index}`}
                     product={active}
                     direction="in"
-                    className="relative"
+                    className="absolute inset-0"
                   />
                 </div>
 
