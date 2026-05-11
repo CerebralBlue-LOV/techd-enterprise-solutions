@@ -100,10 +100,6 @@ const SlideContent = ({
         <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
           {product.name}
         </h3>
-        <ArrowUpRight
-          className="mt-2 size-7 md:size-8 text-white/70 shrink-0"
-          aria-hidden
-        />
       </div>
       <div
         className={cn("mt-auto pt-10", anim)}
