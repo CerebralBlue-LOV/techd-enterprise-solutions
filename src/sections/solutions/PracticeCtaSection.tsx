@@ -1,94 +1,96 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import type { CSSProperties } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
+import { Button } from "@ui/button";
 import { type Solution } from "@content/solutions";
 
 interface Props {
   practice: Solution;
 }
 
-const STATS = [
-  { value: "F500", label: "Clients shipped" },
-  { value: "15+ yrs", label: "IBM partnership" },
-  { value: "Platinum", label: "Tier — top 1%" },
-];
+const panelBg: CSSProperties = {
+  background:
+    "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
+};
 
 export const PracticeCtaSection = ({ practice }: Props) => (
   <section className="section bg-muted/30">
     <SectionMarker page={`Solutions / ${practice.name}`} name="Final CTA" />
     <div className="container-page">
       <Reveal>
-        <div className="relative overflow-hidden rounded-2xl bg-secondary">
-          {/* Single quiet cyan glow */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-28 -right-24 h-[28rem] w-[28rem] rounded-full bg-primary/20 blur-3xl animate-[blob-drift_22s_ease-in-out_infinite] motion-reduce:animate-none"
-          />
+        <div
+          className="relative overflow-hidden rounded-3xl ring-1 ring-white/10 shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)] motion-reduce:[&_*]:!animate-none"
+          style={panelBg}
+        >
+          {/* Animated background layers — mirrors ProductsGridSection */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div
+              className="absolute -inset-1/2 opacity-60 animate-shimmer-rotate"
+              style={{
+                background:
+                  "conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / 0.7) 60deg, transparent 140deg, hsl(var(--primary) / 0.5) 240deg, transparent 320deg)",
+                filter: "blur(40px)",
+              }}
+            />
+            <div
+              className="absolute -top-1/4 -left-1/4 h-[80%] w-[80%] rounded-full animate-blob-a"
+              style={{
+                background:
+                  "radial-gradient(circle, hsl(var(--primary) / 0.9) 0%, transparent 60%)",
+                filter: "blur(50px)",
+              }}
+            />
+            <div
+              className="absolute top-0 -right-1/4 h-[75%] w-[75%] rounded-full animate-blob-b"
+              style={{
+                background:
+                  "radial-gradient(circle, hsl(var(--primary) / 0.8) 0%, transparent 65%)",
+                filter: "blur(60px)",
+              }}
+            />
+            <div
+              className="absolute -bottom-1/4 left-1/4 h-[70%] w-[70%] rounded-full animate-blob-c"
+              style={{
+                background:
+                  "radial-gradient(circle, hsl(var(--primary) / 0.75) 0%, transparent 60%)",
+                filter: "blur(55px)",
+              }}
+            />
+            <div
+              className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
+              style={{
+                backgroundImage:
+                  "radial-gradient(hsl(0 0% 100%) 1px, transparent 1px)",
+                backgroundSize: "3px 3px",
+              }}
+            />
+          </div>
 
-          {/* Faint grid */}
-          <svg
-            aria-hidden
-            className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.05]"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <pattern id="cta-grid" width="48" height="48" patternUnits="userSpaceOnUse">
-                <path d="M 48 0 L 0 0 0 48" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-background" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#cta-grid)" />
-          </svg>
+          {/* Content — single column, centered, minimal */}
+          <div className="relative mx-auto max-w-3xl px-8 py-20 md:px-12 md:py-28 text-center">
+            <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
+              {practice.name}
+            </p>
+            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] text-background tracking-tight">
+              Ready when you are.
+            </h2>
+            <p className="mt-5 mx-auto max-w-xl text-base md:text-lg font-light text-background/75 leading-relaxed">
+              One conversation with a senior IBM-certified architect. No relay, no junior swap after signature.
+            </p>
 
-          {/* Content */}
-          <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 px-8 py-16 md:px-12 md:py-20">
-            {/* Left: pitch + CTA */}
-            <div className="lg:col-span-7">
-              <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
-                {practice.name}
-              </p>
-              <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] text-background tracking-tight">
-                Let's build a plan
-              </h2>
-              <p className="mt-5 max-w-lg text-base md:text-lg font-light text-background/75 leading-relaxed">
-                A senior IBM-certified architect on the call from day one — no pre-sales relay, no junior staffing surprise after signature.
-              </p>
-
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/contact"
-                  className="group inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-background font-bold uppercase tracking-wider text-sm rounded-md transition-all duration-300 hover:gap-3 hover:shadow-[0_12px_32px_-8px_hsl(var(--primary)/0.6)]"
-                >
-                  Talk to an expert
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                </Link>
-                <Link
-                  to="/company/customers"
-                  className="group inline-flex items-center gap-1.5 text-sm font-bold text-background/80 hover:text-background transition-colors"
-                >
-                  See who we've shipped for
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Right: trust grid */}
-            <div className="lg:col-span-5 flex flex-col gap-5">
-              <IBMPlatinumBadge size="md" variant="inline" className="w-full justify-start bg-background/5 border-background/10" />
-
-              <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-lg bg-background/10">
-                {STATS.map((s) => (
-                  <div key={s.label} className="bg-secondary p-5">
-                    <dt className="text-2xl md:text-3xl font-bold text-background leading-none tracking-tight">
-                      {s.value}
-                    </dt>
-                    <dd className="mt-2 text-[11px] font-bold uppercase tracking-[0.15em] text-background/60 leading-snug">
-                      {s.label}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Button asChild className="btn-glow">
+                <Link to="/contact">Talk to an expert</Link>
+              </Button>
+              <Link
+                to="/company/customers"
+                className="group inline-flex items-center gap-2 px-7 py-3 rounded-md border border-background/25 text-sm font-bold uppercase tracking-wider text-background/90 transition-colors duration-200 hover:border-background hover:bg-background/5 hover:text-background"
+              >
+                See who we've shipped for
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
             </div>
           </div>
         </div>
