@@ -97,7 +97,7 @@ export const IndustriesServedSection = ({ practice }: Props) => {
                       tabIndex={isActive ? 0 : -1}
                       className="group/cta mt-8 inline-flex w-fit items-center gap-1.5 text-sm font-bold text-primary transition-all duration-300 hover:gap-2.5"
                     >
-                      View {it.ind.name}
+                      Explore the industry
                       <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-0.5" />
                     </Link>
                   </div>
