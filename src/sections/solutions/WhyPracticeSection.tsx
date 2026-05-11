@@ -25,14 +25,12 @@ export const WhyPracticeSection = ({ practice }: Props) => {
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {extras.whyPoints.map((p, i) => (
             <Reveal key={p.title} delay={i * 60}>
-              <div className="group h-full overflow-hidden rounded-xl border border-primary/15 bg-background shadow-[0_4px_18px_-10px_hsl(var(--primary)/0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_14px_32px_-14px_hsl(var(--primary)/0.4)]">
-                <div className="bg-primary/10 px-5 py-4 border-b border-primary/15">
-                  <h3 className="text-base font-bold text-primary leading-tight">
-                    {p.title}
-                  </h3>
-                </div>
-                <div className="px-5 py-5">
-                  <p className="text-sm font-light text-muted-foreground leading-relaxed">
+              <div className="group flex h-full flex-col rounded-2xl bg-primary p-4 shadow-[0_8px_24px_-12px_hsl(var(--primary)/0.5)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_-14px_hsl(var(--primary)/0.6)]">
+                <h3 className="px-2 pt-1 pb-3 text-base font-bold leading-tight text-background">
+                  {p.title}
+                </h3>
+                <div className="flex-1 rounded-xl bg-background p-5">
+                  <p className="text-sm font-light leading-relaxed text-muted-foreground">
                     {p.body}
                   </p>
                 </div>
