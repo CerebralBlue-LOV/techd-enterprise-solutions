@@ -309,7 +309,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                         aria-selected={isActive}
                         aria-current={isActive ? "true" : undefined}
                         aria-label={`Show product ${i + 1} of ${total}: ${p.name}`}
-                        onClick={() => setIndex(i)}
+                        onClick={() => goTo(i)}
                         className={cn(
                           "h-1.5 rounded-full transition-all duration-300",
                           isActive
