@@ -132,13 +132,17 @@ export const ProductsGridSection = ({ practice }: Props) => {
   const motif = PRACTICE_MOTIFS[practice.id];
   const [index, setIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const [reverse, setReverse] = useState(false);
   const [paused, setPaused] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Track outgoing slide for exit animation
-  const goTo = (next: number) => {
+  // Track outgoing slide for exit animation. `dir` overrides direction
+  // detection (used for auto-advance wrap-around).
+  const goTo = (next: number, dir?: "forward" | "reverse") => {
     setIndex((curr) => {
       if (next === curr) return curr;
+      const isReverse = dir ? dir === "reverse" : next < curr;
+      setReverse(isReverse);
       setPrevIndex(curr);
       return next;
     });
@@ -151,12 +155,12 @@ export const ProductsGridSection = ({ practice }: Props) => {
     return () => window.clearTimeout(t);
   }, [prevIndex, index]);
 
-  // Auto-advance
+  // Auto-advance (always forward, including last → first wrap)
   useEffect(() => {
     if (paused || total <= 1) return;
     if (prefersReducedMotion()) return;
     const t = window.setTimeout(() => {
-      goTo((index + 1) % total);
+      goTo((index + 1) % total, "forward");
     }, AUTO_MS);
     return () => window.clearTimeout(t);
   }, [index, paused, total]);
@@ -167,9 +171,9 @@ export const ProductsGridSection = ({ practice }: Props) => {
     if (!node) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
-        goTo((index + 1) % total);
+        goTo((index + 1) % total, "forward");
       } else if (e.key === "ArrowLeft") {
-        goTo((index - 1 + total) % total);
+        goTo((index - 1 + total) % total, "reverse");
       }
     };
     node.addEventListener("keydown", onKey);
