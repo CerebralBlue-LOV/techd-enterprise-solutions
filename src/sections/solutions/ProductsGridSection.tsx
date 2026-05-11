@@ -74,8 +74,25 @@ export const ProductsGridSection = ({ practice }: Props) => {
   const total = products.length;
   const motif = PRACTICE_MOTIFS[practice.id];
   const [index, setIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  // Track outgoing slide for exit animation
+  const goTo = (next: number) => {
+    setIndex((curr) => {
+      if (next === curr) return curr;
+      setPrevIndex(curr);
+      return next;
+    });
+  };
+
+  // Clear outgoing layer once its animation finishes
+  useEffect(() => {
+    if (prevIndex === null) return;
+    const t = window.setTimeout(() => setPrevIndex(null), 1100);
+    return () => window.clearTimeout(t);
+  }, [prevIndex, index]);
 
   // Auto-advance
   useEffect(() => {
