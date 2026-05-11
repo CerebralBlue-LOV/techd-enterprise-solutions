@@ -99,25 +99,12 @@ export const WhyPracticeSection = ({ practice }: Props) => {
                     </svg>
                   )}
 
-                  {/* Subtle sweep highlight on hover */}
-                  <div
-                    aria-hidden
-                    className={cn(
-                      "pointer-events-none absolute inset-0 -translate-x-full opacity-0 group-hover:translate-x-full group-hover:opacity-100 transition-all duration-[1200ms] ease-out",
-                      variant === "dark"
-                        ? "bg-gradient-to-r from-transparent via-background/10 to-transparent"
-                        : variant === "cyan"
-                        ? "bg-gradient-to-r from-transparent via-background/20 to-transparent"
-                        : "bg-gradient-to-r from-transparent via-primary/10 to-transparent",
-                    )}
-                  />
-
                   <div className="relative z-10">
                     <span
                       className={cn(
                         "inline-block text-[11px] font-mono tracking-[0.18em] uppercase mb-4",
-                        variant === "cyan" ? "text-background/90" :
-                        variant === "dark" ? "text-background/80" :
+                        variant === "cyan" ? "text-background/80" :
+                        variant === "dark" ? "text-primary" :
                         "text-primary",
                       )}
                     >
