@@ -12,17 +12,12 @@ const HIGHLIGHT = "#7CE6FF";
 
 const Wireframe = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
   const groupRef = useRef<THREE.Group>(null);
-  const innerRef = useRef<THREE.Mesh>(null);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     if (groupRef.current) {
       groupRef.current.rotation.y = t * 0.15 + tiltX * 0.2;
       groupRef.current.rotation.x = Math.sin(t * 0.1) * 0.15 + tiltY * 0.15;
-    }
-    if (innerRef.current) {
-      innerRef.current.rotation.y = -t * 0.1;
-      innerRef.current.rotation.z = t * 0.08;
     }
   });
 
@@ -52,19 +47,6 @@ const Wireframe = ({ tiltX = 0, tiltY = 0 }: SceneProps) => {
           blending={THREE.AdditiveBlending}
         />
       </points>
-
-      {/* Inner counter-rotating wireframe — adds depth */}
-      <mesh ref={innerRef}>
-        <icosahedronGeometry args={[1.4, 0]} />
-        <meshBasicMaterial
-          color={PRIMARY}
-          wireframe
-          transparent
-          opacity={0.25}
-          depthWrite={false}
-        />
-      </mesh>
-
     </group>
   );
 };
