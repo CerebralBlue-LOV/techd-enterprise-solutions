@@ -723,3 +723,9 @@
 @media (prefers-reduced-motion: reduce) {
   .flip-fx-layer * { animation: none !important; }
 }
+
+/* Progress bar fill for products carousel */
+@keyframes progress-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
