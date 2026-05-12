@@ -121,8 +121,9 @@ export const PageHero = ({
                   parentTo ? (
                     <Link
                       to={parentTo}
-                      className="transition-colors hover:text-primary focus-visible:text-primary"
+                      className="group/parent inline-flex items-center gap-1.5 text-primary underline-offset-4 decoration-primary/40 hover:underline hover:decoration-primary transition-colors"
                     >
+                      <ArrowLeft className="size-3 transition-transform group-hover/parent:-translate-x-0.5" />
                       {parent}
                     </Link>
                   ) : (
