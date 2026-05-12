@@ -203,9 +203,38 @@ export const ProductsGridSection = ({ practice }: Props) => {
               The platforms and tools we deliver
             </h2>
             <p className="mt-5 text-lg text-muted-foreground font-light">
-              Select any product to explore capabilities, use cases, and how we
-              engage.
+              Select any product to explore capabilities, use cases, and how we engage.
             </p>
+
+            {/* Product list — primary navigation for this section */}
+            <ul className="mt-8 flex flex-col divide-y divide-border border-y border-border">
+              {products.map((p, i) => {
+                const isActive = i === index;
+                return (
+                  <li key={p.name}>
+                    <ProductLink
+                      practiceId={practice.id}
+                      product={p}
+                      className={cn(
+                        "group flex items-center justify-between gap-3 py-3 text-base font-medium transition-colors",
+                        isActive
+                          ? "text-primary"
+                          : "text-secondary hover:text-primary",
+                      )}
+                    >
+                      <span className="flex items-center gap-3">
+                        <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        {p.name}
+                      </span>
+                      <ArrowUpRight className="size-4 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                    </ProductLink>
+                  </li>
+                );
+              })}
+            </ul>
+
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild className="btn-glow">
                 <Link to="/contact">Talk to an expert</Link>
@@ -213,40 +242,6 @@ export const ProductsGridSection = ({ practice }: Props) => {
               <Button asChild variant="outline">
                 <Link to="/resources/case-studies">View case studies</Link>
               </Button>
-            </div>
-
-            {/* Quick links — jump straight to any product */}
-            <div className="mt-10 border-t border-border pt-6">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground mb-3">
-                Jump to a product
-              </p>
-              <ul className="flex flex-col gap-1">
-                {products.map((p, i) => {
-                  const isActive = i === index;
-                  return (
-                    <li key={p.name}>
-                      <ProductLink
-                        practiceId={practice.id}
-                        product={p}
-                        className={cn(
-                          "group flex items-center justify-between gap-3 py-1.5 text-sm font-medium transition-colors",
-                          isActive
-                            ? "text-primary"
-                            : "text-secondary hover:text-primary",
-                        )}
-                      >
-                        <span className="flex items-center gap-2">
-                          <span className="font-mono text-xs text-muted-foreground tabular-nums">
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                          {p.name}
-                        </span>
-                        <ArrowUpRight className="size-3.5 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
-                      </ProductLink>
-                    </li>
-                  );
-                })}
-              </ul>
             </div>
           </Reveal>
 
