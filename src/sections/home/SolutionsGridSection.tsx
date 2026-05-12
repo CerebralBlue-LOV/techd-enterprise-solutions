@@ -48,7 +48,13 @@ export const SolutionsGridSection = () => (
                 footer={m.footer}
                 backTitle={m.backTitle}
                 backBody={s.pitch}
-                chips={s.products.slice(0, 5).map((p) => p.name)}
+                chips={s.products.map((p) => ({
+                  label: p.name,
+                  to: p.link.kind === "internal"
+                    ? `/solutions/${s.id}/${p.link.slug}`
+                    : p.link.url,
+                  external: p.link.kind === "external",
+                }))}
                 ctaLabel={s.ctaLabel}
                 motif={<Figure />}
               />
