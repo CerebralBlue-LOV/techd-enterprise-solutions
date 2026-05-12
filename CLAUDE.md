@@ -185,6 +185,15 @@ Read `docs/PROJECT-SCOPE.md` for full project scope and `docs/ARCHITECTURE.md` f
 - Short, descriptive commit messages. No `Co-Authored-By` trailers.
 - Small commits, push frequently — Lovable needs to stay in sync.
 
+## Deprecated logos
+
+Logo files in `public/logos/deprecated/` are **orphaned** — they existed in the repo but are no longer referenced by the CUSTOMERS array in `src/content/site.ts` and are not displayed in the LogoStrip. Do not reference these files from any component or content file. They are kept temporarily pending PM confirmation that they can be deleted entirely.
+
+Files in `public/logos/deprecated/`:
+`burlington.png` · `chop.png` · `comcast-peacock.svg` · `corning.png` · `dhs.svg` · `dominion-energy.png` · `genesis-healthcare.png` · `hamilton-beach.png` · `jefferson-health.png` · `johns-hopkins.png` · `johnson-and-johnson.png` · `kennedy-center.png` · `kenseal.png` · `l3harris.png` · `miso-energy.png` · `national-general.png` · `princeton-university.png` · `pure-insurance.png` · `sony-interactive.svg` · `sony-pictures.png` · `temple-health.png` · `vcu.png` · `white-cap.png`
+
+Use `/admin-lab` to review them visually.
+
 ## Anti-patterns to avoid
 
 - Don't suggest switching to Astro, Next.js, or any other framework. Stack is locked.
@@ -194,6 +203,7 @@ Read `docs/PROJECT-SCOPE.md` for full project scope and `docs/ARCHITECTURE.md` f
 - Don't touch `src/components/ui/` — those are shadcn defaults.
 - Don't introduce raw hex colors anywhere.
 - Don't write or apply 410 redirects (see `docs/ARCHITECTURE.md` — spam was theme-level, not URL-based).
+- Don't reference files in `public/logos/deprecated/` from any component or content file — those are orphaned logos awaiting PM sign-off for deletion.
 
 ---
 

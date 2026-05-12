@@ -3,6 +3,7 @@ import Home from "@pages/Home";
 import ProductDetail from "@pages/ProductDetail";
 import Contact from "@pages/Contact";
 import NotFound from "@pages/NotFound";
+import AdminLab from "@pages/AdminLab";
 import IconLab from "@pages/IconLab";
 import LogoLab from "@pages/LogoLab";
 import FigureLab from "@pages/FigureLab";
@@ -107,6 +108,7 @@ export const AppRoutes = () => (
     <Route path="/company/customers" element={<Customers />} />
 
     <Route path="/contact" element={<Contact />} />
+    <Route path="/admin-lab" element={<AdminLab />} />
     <Route path="/icon-lab" element={<IconLab />} />
     <Route path="/logo-lab" element={<LogoLab />} />
     <Route path="/figure-lab" element={<FigureLab />} />
