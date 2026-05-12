@@ -1,7 +1,7 @@
 import { forwardRef, type CSSProperties, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Intensity = "vivid" | "soft";
+type Intensity = "vivid" | "medium" | "soft";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -35,6 +35,15 @@ const LEVELS: Record<
     blobA: "0.9",
     blobB: "0.8",
     blobC: "0.75",
+    shadow: "shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)]",
+  },
+  medium: {
+    shimmerOpacity: "opacity-40",
+    shimmerStop1: "0.5",
+    shimmerStop2: "0.35",
+    blobA: "0.6",
+    blobB: "0.5",
+    blobC: "0.45",
     shadow: "shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)]",
   },
   soft: {
