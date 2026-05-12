@@ -208,7 +208,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
 
             {/* Product quick-jump — quiet inline text links */}
             <p className="mt-6 text-sm font-light text-muted-foreground leading-relaxed">
-              <span className="mr-1">Jump to:</span>
+              
               {products.map((p, i) => {
                 const isActive = i === index;
                 return (
