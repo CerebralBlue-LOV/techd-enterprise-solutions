@@ -1,5 +1,11 @@
-import { useState, type ReactNode, type ElementType } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+
+export type FlipChip = {
+  label: string;
+  to?: string;
+  external?: boolean;
+};
 
 interface Props {
   eyebrow: string;
@@ -7,7 +13,7 @@ interface Props {
   footer: string;
   backTitle: string;
   backBody: string;
-  chips: string[];
+  chips: FlipChip[];
   ctaLabel: string;
   motif: ReactNode;
   to?: string;
@@ -26,12 +32,8 @@ export const FlipCard = ({
 }: Props) => {
   const [hover, setHover] = useState(false);
 
-  const Wrapper = (to ? Link : "div") as ElementType;
-  const wrapperProps: Record<string, unknown> = to ? { to } : {};
-
   return (
-    <Wrapper
-      {...wrapperProps}
+    <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       data-hover={hover ? "true" : undefined}
@@ -77,23 +79,57 @@ export const FlipCard = ({
                 {backBody}
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5">
-                {chips.map((chip) => (
-                  <span
-                    key={chip}
-                    className="rounded-full border border-border bg-background/60 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-secondary"
-                  >
-                    {chip}
-                  </span>
-                ))}
+                {chips.map((chip) => {
+                  const baseClass =
+                    "rounded-full border border-border bg-background/60 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-secondary transition-colors";
+                  if (chip.to && chip.external) {
+                    return (
+                      <a
+                        key={chip.label}
+                        href={chip.to}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${baseClass} hover:border-primary hover:text-primary`}
+                      >
+                        {chip.label}
+                      </a>
+                    );
+                  }
+                  if (chip.to) {
+                    return (
+                      <Link
+                        key={chip.label}
+                        to={chip.to}
+                        className={`${baseClass} hover:border-primary hover:text-primary`}
+                      >
+                        {chip.label}
+                      </Link>
+                    );
+                  }
+                  return (
+                    <span key={chip.label} className={baseClass}>
+                      {chip.label}
+                    </span>
+                  );
+                })}
               </div>
-              <span className="mt-auto inline-flex w-fit items-center rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)]">
-                {ctaLabel}
-              </span>
+              {to ? (
+                <Link
+                  to={to}
+                  className="mt-auto inline-flex w-fit items-center rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)] transition-transform hover:-translate-y-0.5"
+                >
+                  {ctaLabel}
+                </Link>
+              ) : (
+                <span className="mt-auto inline-flex w-fit items-center rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)]">
+                  {ctaLabel}
+                </span>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </Wrapper>
+    </div>
   );
 };
 
