@@ -17,6 +17,7 @@ interface Props {
   ctaLabel: string;
   motif: ReactNode;
   to?: string;
+  compact?: boolean;
 }
 
 export const FlipCard = ({
@@ -29,6 +30,7 @@ export const FlipCard = ({
   ctaLabel,
   motif,
   to,
+  compact = false,
 }: Props) => {
   const [hover, setHover] = useState(false);
 
@@ -37,7 +39,7 @@ export const FlipCard = ({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       data-hover={hover ? "true" : undefined}
-      className="flip-card relative block h-full min-h-[340px] rounded-xl"
+      className={`flip-card relative block h-full rounded-xl ${compact ? "min-h-[240px]" : "min-h-[340px]"}`}
     >
       <div className="flip-card-inner relative h-full w-full">
         {/* FRONT */}
