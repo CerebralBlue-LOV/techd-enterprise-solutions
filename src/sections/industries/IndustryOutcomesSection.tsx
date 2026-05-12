@@ -13,8 +13,8 @@ export const IndustryOutcomesSection = ({ industry }: Props) => {
   if (!extras?.stats?.length) return null;
 
   return (
-    <section id="outcomes" className="section bg-secondary scroll-mt-24">
     <section id="outcomes" className="section bg-secondary scroll-mt-24 relative overflow-hidden">
+
       <HoverGridBackdrop variant="dark" topRim={false} spotlightRadius={360} />
       <SectionMarker page={`Industries / ${industry.name}`} name="Outcomes" />
       <div className="container-page relative z-10">
