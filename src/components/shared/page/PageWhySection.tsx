@@ -84,7 +84,13 @@ export const PageWhySection = ({
                     v.card,
                   )}
                 >
-                  <div>
+                  {variant === "dark" ? (
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -top-24 -right-20 h-72 w-72 rounded-full bg-primary/40 blur-3xl opacity-70 transition-opacity duration-500 group-hover:opacity-90"
+                    />
+                  ) : null}
+                  <div className="relative">
                     <h3
                       className={cn(
                         "font-bold leading-[1.05] tracking-tight",
