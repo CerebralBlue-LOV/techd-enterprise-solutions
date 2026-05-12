@@ -28,9 +28,9 @@ export const ProductRelatedSection = ({ practice, product }: Props) => {
   return (
     <section className="bg-background">
       <SectionMarker page="Product" name={`${product.name} — Related`} />
-      <div className="container-page py-16 md:py-20">
+      <div className="container-page py-12 md:py-14">
         <Reveal>
-          <div className="flex items-baseline justify-between gap-6 border-b border-border pb-4 mb-10">
+          <div className="flex items-baseline justify-between gap-6 border-b border-border pb-3 mb-6">
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">
               More in {practice.name}
             </h2>
