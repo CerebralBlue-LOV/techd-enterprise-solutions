@@ -122,7 +122,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
 
               {/* Right — logo cards (single column rows) */}
               <div className="lg:col-span-7">
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {resolved.map((c) => (
                     <ClientCard key={c.name} client={c} />
                   ))}
