@@ -13,6 +13,8 @@ export type Product = {
   tagline: string;
   description: string;
   link: ProductLink;
+  /** Optional URL to the vendor's official product page (e.g. ibm.com). */
+  vendorUrl?: string;
   detail?: ProductDetail;
 };
 
