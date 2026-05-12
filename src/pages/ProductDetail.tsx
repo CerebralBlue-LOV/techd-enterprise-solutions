@@ -5,6 +5,7 @@ import NotFound from "@pages/NotFound";
 import ProductHeroSection from "@sections/products/ProductHeroSection";
 import ProductOverviewSection from "@sections/products/ProductOverviewSection";
 import ProductUseCasesSection from "@sections/products/ProductUseCasesSection";
+import ProductWhyTechDSection from "@sections/products/ProductWhyTechDSection";
 import ProductCtaSection from "@sections/products/ProductCtaSection";
 import { SOLUTIONS } from "@content/solutions";
 
@@ -37,6 +38,7 @@ const ProductDetail = () => {
       <ProductHeroSection practice={solution} product={product} />
       <ProductOverviewSection product={product} />
       <ProductUseCasesSection product={product} />
+      <ProductWhyTechDSection product={product} />
       <ProductCtaSection practice={solution} product={product} />
     </Layout>
   );
