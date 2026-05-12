@@ -1,4 +1,8 @@
-import PageHero from "@shared/page/PageHero";
+import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
+import Reveal from "@shared/Reveal";
+import SectionMarker from "@shared/SectionMarker";
+import PageHeroBackdrop from "@shared/page/PageHeroBackdrop";
 import PracticeFigure from "@sections/solutions/_components/PracticeFigure";
 import { type Product, type Solution } from "@content/solutions";
 
@@ -8,25 +12,45 @@ interface Props {
 }
 
 /**
- * Product detail hero. Uses the shared `PageHero` so it matches the practice
- * page exactly — same backdrop, grid, masking, and figure slot. The figure
- * on the right is the same wireframe used on the parent practice's banner.
- *
- * No CTAs in the hero — the bottom `ProductCtaSection` carries the
- * site-wide "Talk to an expert" closer.
+ * Product detail hero. Original two-line breadcrumb + practice eyebrow
+ * styling, with the parent practice's wireframe figure on the right
+ * (via the shared `PageHeroBackdrop`). No CTA buttons in the hero —
+ * the bottom `ProductCtaSection` carries the closer.
  */
 export const ProductHeroSection = ({ practice, product }: Props) => (
-  <PageHero
-    pageLabel={`Product / ${product.name}`}
-    parent={practice.name}
-    parentTo={`/solutions/${practice.id}`}
-    child={product.name}
-    headline={product.name}
-    lede={product.tagline}
-    headlineSize="text-4xl md:text-5xl"
-    minHeight="min-h-[60vh]"
-    figure={<PracticeFigure practiceId={practice.id} />}
-  />
+  <section className="relative overflow-hidden min-h-[60vh] flex items-center">
+    <SectionMarker page={`Product / ${product.name}`} name="Hero" />
+    <PageHeroBackdrop figure={<PracticeFigure practiceId={practice.id} />} />
+
+    <div className="container-page relative z-10 pt-20 pb-16 md:pt-28 w-full">
+      <Reveal>
+        {/* Breadcrumb */}
+        <nav
+          aria-label="Breadcrumb"
+          className="mb-8 flex items-center gap-1.5 text-xs text-muted-foreground"
+        >
+          <Link
+            to={`/solutions/${practice.id}`}
+            className="hover:text-primary transition-colors"
+          >
+            {practice.name}
+          </Link>
+          <ChevronRight className="size-3 shrink-0" />
+          <span className="text-secondary font-medium">{product.name}</span>
+        </nav>
+
+        <div className="max-w-3xl">
+          <p className="eyebrow mb-3">{practice.name}</p>
+          <h1 className="text-4xl md:text-5xl font-bold leading-[1.05] tracking-tight text-secondary">
+            {product.name}
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg md:text-xl font-light text-muted-foreground leading-relaxed">
+            {product.tagline}
+          </p>
+        </div>
+      </Reveal>
+    </div>
+  </section>
 );
 
 export default ProductHeroSection;
