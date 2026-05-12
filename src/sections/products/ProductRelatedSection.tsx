@@ -43,21 +43,37 @@ export const ProductRelatedSection = ({ practice, product }: Props) => {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div
+          className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 cursor-grab active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          onMouseDown={(e) => {
+            const el = e.currentTarget;
+            const startX = e.pageX;
+            const startScroll = el.scrollLeft;
+            const onMove = (ev: MouseEvent) => {
+              el.scrollLeft = startScroll - (ev.pageX - startX);
+            };
+            const onUp = () => {
+              window.removeEventListener("mousemove", onMove);
+              window.removeEventListener("mouseup", onUp);
+            };
+            window.addEventListener("mousemove", onMove);
+            window.addEventListener("mouseup", onUp);
+          }}
+        >
           {siblings.map((sib, i) => {
             if (sib.link.kind !== "internal") return null;
             return (
               <Reveal key={sib.link.slug} delay={i * 70}>
                 <Link
                   to={`/solutions/${practice.id}/${sib.link.slug}`}
-                  className={`group block ${
-                    i > 0 ? "md:border-l md:border-border md:pl-12" : ""
+                  className={`group block shrink-0 snap-start w-64 ${
+                    i > 0 ? "border-l border-border pl-8" : ""
                   }`}
                 >
-                  <h3 className="text-xl font-bold text-secondary transition-colors duration-200 group-hover:text-primary">
+                  <h3 className="text-base font-bold text-secondary transition-colors duration-200 group-hover:text-primary">
                     {sib.name}
                   </h3>
-                  <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
+                  <p className="mt-1 text-xs text-muted-foreground font-light leading-relaxed line-clamp-2">
                     {sib.tagline}
                   </p>
                 </Link>
