@@ -9,7 +9,7 @@ import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGene
 import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
 import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
 import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
-import HybridCloudFigure from "@/components/shared/heroFigures/solutions/HybridCloudFigure";
+
 
 const ResourceTileStackScene = lazy(
   () => import("@/sections/resources/_components/ResourceTileStackScene"),
@@ -39,7 +39,6 @@ const SOLUTION_SLOTS = [
   { label: "Data & Analytics", code: "DataAnalyticsFigure", Figure: DataAnalyticsFigure },
   { label: "Automation & FinOps", code: "AutomationFinOpsFigure", Figure: AutomationFinOpsFigure },
   { label: "Security & Compliance", code: "SecurityComplianceFigure", Figure: SecurityComplianceFigure },
-  { label: "Hybrid Cloud", code: "HybridCloudFigure", Figure: HybridCloudFigure },
 ] as const;
 
 type Vec3 = [number, number, number];

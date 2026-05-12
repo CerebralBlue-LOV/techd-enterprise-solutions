@@ -51,7 +51,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "ai-generative",       proof: "Clinical knowledge agents and grounded RAG built on watsonx, deployed inside health systems." },
       { id: "data-analytics",      proof: "Clinical and operational dashboards on Cognos and Db2, plus open lakehouse foundations on watsonx.data." },
       { id: "security-compliance", proof: "HIPAA-grade data protection, audit readiness, and zero-downtime data movement." },
-      { id: "hybrid-cloud",        proof: "Hybrid Db2 and OpenShift platforms spanning on-prem and cloud." },
     ],
     stats: [
       { value: "5+",   label: "Named U.S. health systems served" },
@@ -78,7 +77,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     practices: [
       { id: "ai-generative",  proof: "Content intelligence and operational AI for studios, networks, and streamers." },
       { id: "data-analytics", proof: "Audience analytics and content performance for major media platforms." },
-      { id: "hybrid-cloud",   proof: "Hybrid OpenShift and data architectures for global media operations." },
     ],
   },
 
@@ -120,7 +118,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "data-analytics",      proof: "Grid analytics and operational dashboards for regulated utilities and ISOs." },
       { id: "automation-finops",   proof: "Grid-system observability and OT/IT cost management." },
       { id: "security-compliance", proof: "NERC-CIP and OT/IT security for utilities and ISOs." },
-      { id: "hybrid-cloud",        proof: "Mainframe-to-cloud data flows for regulated utilities." },
     ],
   },
 
@@ -165,7 +162,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
       { id: "security-compliance", proof: "FedRAMP-aligned security architectures for federal missions." },
-      { id: "hybrid-cloud",        proof: "FedRAMP-aligned hybrid architectures for federal agencies." },
     ],
   },
 };

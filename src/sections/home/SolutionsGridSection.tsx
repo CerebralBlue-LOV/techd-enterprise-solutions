@@ -7,7 +7,6 @@ import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGene
 import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
 import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
 import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
-import HybridCloudFigure from "@/components/shared/heroFigures/solutions/HybridCloudFigure";
 import type { ComponentType } from "react";
 
 const FIGURES: Record<string, { Figure: ComponentType; backTitle: string; footer: string }> = {
@@ -15,12 +14,11 @@ const FIGURES: Record<string, { Figure: ComponentType; backTitle: string; footer
   "data-analytics": { Figure: DataAnalyticsFigure, backTitle: "Data foundations", footer: "United States" },
   "automation-finops": { Figure: AutomationFinOpsFigure, backTitle: "Run smarter", footer: "Global" },
   "security-compliance": { Figure: SecurityComplianceFigure, backTitle: "Defense in depth", footer: "Regulated industries" },
-  "hybrid-cloud": { Figure: HybridCloudFigure, backTitle: "Anywhere, governed", footer: "United States" },
 };
 
 /**
  * Section: Home / Solutions Grid
- * Five practice flip cards. Card motifs use the shared per-practice r3f
+ * Four practice flip cards. Card motifs use the shared per-practice r3f
  * wireframe figures so the home grid speaks the same graphic line as the
  * /solutions/* hero backdrops.
  */
@@ -31,12 +29,12 @@ export const SolutionsGridSection = () => (
       <Reveal>
         <SectionHeading
           eyebrow="Solutions"
-          title="Five practices. One outcome: leverage."
-          subtitle="Each practice is led by senior IBM-certified practitioners with a decade-plus of enterprise delivery on watsonx, Db2, OpenShift, and the modern data stack."
+          title="Four practices. One outcome: leverage."
+          subtitle="Each practice is led by senior IBM-certified practitioners with a decade-plus of enterprise delivery on watsonx, Db2, Cognos, and the modern data stack."
         />
       </Reveal>
 
-      <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-6 md:grid-cols-2">
         {SOLUTIONS.map((s, i) => {
           const m = FIGURES[s.id];
           if (!m) return null;

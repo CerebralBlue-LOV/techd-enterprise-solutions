@@ -46,13 +46,6 @@ const APPROACH_SECURITY: ApproachStep[] = [
   { step: "Operate",   detail: "Ongoing rule tuning, threat intelligence updates, and incident response support — keeping pace with your evolving regulatory and threat environment." },
 ];
 
-const APPROACH_HYBRID: ApproachStep[] = [
-  { step: "Discover", detail: "Inventory workloads by compliance tier, infrastructure dependency, and cloud-readiness — across on-premises, mainframe, and existing cloud environments." },
-  { step: "Architect", detail: "Hybrid topology design — OpenShift as the common runtime, IBM Cloud or multi-cloud for regulated services, mainframe data integration without disruption." },
-  { step: "Deliver",   detail: "Cluster build, storage configuration, workload migration, and a Day 2 operations model your platform team can own." },
-  { step: "Operate",   detail: "Cluster health monitoring, capacity planning, and platform engineering support across your full hybrid estate." },
-];
-
 export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   "ai-generative": {
     whyPoints: [
@@ -125,18 +118,4 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     approach: APPROACH_SECURITY,
   },
 
-  "hybrid-cloud": {
-    whyPoints: [
-      { title: "Run it anywhere",        body: "Workloads on IBM Cloud, AWS, Azure, on-premises, or back on the mainframe — by design, not by accident." },
-      { title: "OpenShift everywhere",   body: "Red Hat OpenShift as the common runtime for Cloud Pak for Data and watsonx — the same operating model on every cloud." },
-      { title: "Mainframe, modernized",  body: "z/OS Connect and IBM Data Replication expose mainframe data as APIs and real-time feeds — no big-bang migration required." },
-      { title: "Zero-downtime moves",    body: "IBM Data Replication (IIDR) keeps the source system live while the target is built, validated, and cut over — no planned outage." },
-    ],
-    industries: [
-      { id: "healthcare",       proof: "Hybrid Db2 and OpenShift platforms for major U.S. health systems. Regulated workloads stay where they need to; analytics and AI run where they're fastest — one operating model across both." },
-      { id: "energy-utilities", proof: "Mainframe-to-cloud data flows for regulated utilities and ISOs. IBM Data Replication keeps the system of record live while modern workloads consume real-time feeds — no planned outage, no big-bang cutover." },
-      { id: "public-sector",    proof: "FedRAMP-aligned hybrid architectures for federal agencies and defense technology. OpenShift as the common runtime across IBM Cloud, on-premises, and the mainframe — accredited, observable, and operable on Day 2." },
-    ],
-    approach: APPROACH_HYBRID,
-  },
 };

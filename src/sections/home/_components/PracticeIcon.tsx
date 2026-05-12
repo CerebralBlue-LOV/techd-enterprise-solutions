@@ -1,10 +1,10 @@
 /**
  * PracticeIcon — Style A "Light glass — corner halos (original)" tile.
  * White surface, 1px border, two cyan halos in opposite corners, primary glyph.
- * Keyed by solution id: ai · data-analytics · automation · security · hybrid-cloud.
+ * Keyed by solution id: ai · data-analytics · automation · security.
  */
 
-type PracticeId = "ai" | "data-analytics" | "automation" | "security" | "hybrid-cloud";
+type PracticeId = "ai" | "data-analytics" | "automation" | "security";
 
 const Glyph = ({ id }: { id: PracticeId }) => {
   switch (id) {
@@ -45,15 +45,6 @@ const Glyph = ({ id }: { id: PracticeId }) => {
           <path d="M22 30v-3a10 10 0 0120 0v3" opacity={0.5} />
           <rect x="22" y="30" width="20" height="14" rx="2" />
           <circle cx="32" cy="37" r="2" fill="currentColor" />
-        </>
-      );
-    case "hybrid-cloud":
-      return (
-        <>
-          <path d="M22 18l14-7 14 7v14l-14 7-14-7z" />
-          <path d="M22 18l14 7 14-7M36 25v14" opacity={0.5} />
-          <path d="M14 32l12-6 12 6v12l-12 6-12-6z" />
-          <path d="M14 32l12 6 12-6M26 38v12" opacity={0.5} />
         </>
       );
   }
