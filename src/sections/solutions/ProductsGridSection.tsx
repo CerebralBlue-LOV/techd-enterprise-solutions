@@ -180,11 +180,6 @@ export const ProductsGridSection = ({ practice }: Props) => {
   const active = products[index];
   const glow = GLOW_POSITIONS[index % GLOW_POSITIONS.length];
 
-  const cardBg: CSSProperties = {
-    background:
-      "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
-  };
-
   return (
     <section
       id="products"
