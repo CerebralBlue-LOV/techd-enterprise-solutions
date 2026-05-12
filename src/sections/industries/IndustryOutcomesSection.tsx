@@ -1,3 +1,4 @@
+import HoverGridBackdrop from "@shared/HoverGridBackdrop";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import { type Industry } from "@content/industries";
