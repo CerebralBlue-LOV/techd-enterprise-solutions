@@ -18,7 +18,7 @@ interface Props {
  * the bottom `ProductCtaSection` carries the closer.
  */
 export const ProductHeroSection = ({ practice, product }: Props) => (
-  <section className="relative overflow-hidden min-h-[calc(100vh-5rem)] flex items-center">
+  <section className="relative overflow-hidden min-h-[60vh] flex items-center">
     <SectionMarker page={`Product / ${product.name}`} name="Hero" />
     <PageHeroBackdrop figure={<PracticeFigure practiceId={practice.id} />} />
 
