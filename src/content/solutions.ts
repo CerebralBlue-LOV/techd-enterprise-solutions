@@ -51,13 +51,6 @@ export const SOLUTIONS: Solution[] = [
     ctaLabel: "Explore AI practice",
     products: [
       {
-        name: "NeuralSeek",
-        tagline: "Turn your existing knowledge base into a cited, grounded AI assistant.",
-        description:
-          "NeuralSeek connects to what you already have — SharePoint, Confluence, or any document repository — and returns cited, traceable answers to complex queries in seconds. Designed to layer on top of watsonx Assistant or run as a standalone API, closing the gap between raw document retrieval and enterprise-grade conversational AI.",
-        link: { kind: "external", url: "https://neuralseek.com" },
-      },
-      {
         name: "watsonx.ai",
         tagline: "Build and deploy enterprise AI on foundation models you can trust.",
         description:
@@ -87,31 +80,96 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        name: "watsonx Assistant",
-        tagline: "Conversational AI that understands your business — not just your words.",
+        name: "watsonx",
+        tagline: "The unified platform for enterprise AI — data, models, and governance under one roof.",
         description:
-          "IBM's enterprise virtual agent platform for deploying AI-powered assistants across web, mobile, phone, and internal tools — with no-hallucination guardrails and deep integration hooks.",
-        link: { kind: "internal", slug: "watsonx-assistant" },
-        vendorUrl: "https://www.ibm.com/products/watsonx-assistant",
+          "IBM watsonx is the integrated AI and data platform that brings model development (watsonx.ai), governed data (watsonx.data), and responsible AI controls (watsonx.governance) into a single operating environment for the enterprise.",
+        link: { kind: "internal", slug: "watsonx" },
+        vendorUrl: "https://www.ibm.com/products/watsonx",
         detail: {
           overview: [
-            "watsonx Assistant is IBM's enterprise conversational AI platform. It handles customer-facing and employee-facing virtual agents with a low-hallucination architecture: answers are grounded in your verified content, not generated from open web data.",
-            "TechD has deployed watsonx Assistant for healthcare payers, media companies, and public sector agencies. Our implementations connect the assistant to existing knowledge bases, CRM systems, and backend APIs — so users get accurate, actionable answers without a live agent in the loop.",
+            "watsonx is IBM's flagship enterprise AI platform, combining three pillars — watsonx.ai for model development, watsonx.data for governed lakehouse storage, and watsonx.governance for responsible AI lifecycle management — under a single control plane. It is the foundation IBM expects regulated enterprises to standardize on for production AI.",
+            "TechD architects watsonx environments end-to-end: landing zone design, identity and access integration, foundation model selection, and the connective tissue between watsonx.data, your existing Db2 estate, and the downstream applications that consume AI outputs. Our engagements deliver a platform your team can extend long after we leave.",
           ],
           capabilities: [
-            "Multi-channel deployment — web chat, SMS, voice (via telephony connectors), Slack, Teams",
-            "No-hallucination RAG: answers grounded in your vetted content",
-            "Actions-based dialog design (no complex dialog trees required)",
-            "Search skill integration with existing knowledge bases and SharePoint",
-            "Custom extensions for REST API calls to backend systems",
-            "Human escalation routing with full conversation context handoff",
-            "Analytics dashboard — intent trends, containment rate, drop-off points",
+            "Unified access to watsonx.ai, watsonx.data, and watsonx.governance",
+            "Foundation model catalog — IBM Granite plus curated open-source models",
+            "Governed lakehouse access via watsonx.data and Apache Iceberg",
+            "Responsible AI lifecycle: lineage, drift detection, fact sheets, audit trails",
+            "Single sign-on, RBAC, and policy enforcement across the platform",
+            "Hybrid deployment — IBM Cloud, on-premises via Cloud Pak for Data, or air-gapped",
+            "Integration with watsonx Orchestrate for agentic workflow execution",
           ],
           useCases: [
-            "Patient self-service and appointment management for health systems",
-            "Employee HR and IT helpdesk automation",
-            "Customer onboarding flows for insurance and financial services",
-            "Benefits and policy Q&A for government agencies",
+            "Enterprise AI platform standardization for regulated industries",
+            "Governed foundation model adoption with auditable outputs",
+            "Cross-business-unit AI shared services",
+            "Hybrid AI workloads spanning on-prem data and cloud compute",
+          ],
+        },
+      },
+      {
+        name: "watsonx Orchestrate",
+        tagline: "Agentic AI that gets enterprise work done — across the apps your teams already use.",
+        description:
+          "IBM watsonx Orchestrate runs AI agents that take action across your business systems — Salesforce, Workday, ServiceNow, SAP, and custom APIs — with the governance and observability enterprises require.",
+        link: { kind: "internal", slug: "watsonx-orchestrate" },
+        vendorUrl: "https://www.ibm.com/products/watsonx-orchestrate",
+        detail: {
+          overview: [
+            "watsonx Orchestrate is IBM's agentic AI platform for automating multi-step business work. It coordinates AI agents that combine foundation model reasoning with pre-built skills against the SaaS and custom systems enterprises run on — turning natural-language instructions into executed workflows across HR, sales, IT, and operations.",
+            "TechD implements Orchestrate for organizations that have proven AI value in pilots and need a path to scaled, governed agent deployment. Our engagements cover skill library design, integration with your identity and audit infrastructure, and the human-in-the-loop controls that keep agentic actions defensible at the board level.",
+          ],
+          capabilities: [
+            "Agent builder grounded in watsonx.ai foundation models",
+            "Pre-built skill catalog for Salesforce, Workday, ServiceNow, SAP, Microsoft 365",
+            "Custom skill creation against any REST API or internal system",
+            "Multi-agent orchestration with handoff and supervision patterns",
+            "Conversational and triggered execution modes",
+            "Audit log of every agent action — input, decision, system call, outcome",
+            "Role-based access and human-in-the-loop approval gates",
+          ],
+          useCases: [
+            "HR self-service — onboarding, leave, benefits across Workday and ServiceNow",
+            "Sales operations — quote generation, opportunity hygiene in Salesforce",
+            "IT operations — ticket triage, password reset, software request automation",
+            "Procure-to-pay assistance across SAP, Coupa, and approval workflows",
+          ],
+        },
+      },
+      {
+        name: "NeuralSeek",
+        tagline: "Turn your existing knowledge base into a cited, grounded AI assistant.",
+        description:
+          "NeuralSeek connects to what you already have — SharePoint, Confluence, or any document repository — and returns cited, traceable answers to complex queries in seconds. Designed to layer on top of watsonx or run as a standalone API, closing the gap between raw document retrieval and enterprise-grade conversational AI.",
+        link: { kind: "external", url: "https://neuralseek.com" },
+      },
+      {
+        name: "IBM Bob",
+        tagline: "An AI assistant for IBM software — built into the products your teams already operate.",
+        description:
+          "IBM Bob is the conversational AI assistant embedded across IBM's enterprise software portfolio, helping operators, developers, and analysts get answers, troubleshoot issues, and execute tasks against the products they already run.",
+        link: { kind: "internal", slug: "ibm-bob" },
+        vendorUrl: "https://bob.ibm.com",
+        detail: {
+          overview: [
+            "IBM Bob is IBM's product-embedded AI assistant — a watsonx-grounded conversational layer that lives inside IBM software products (Db2, Cloud Pak for Data, AIOps tooling, and more) to help users navigate features, diagnose problems, and execute tasks faster. It draws on IBM product documentation, telemetry, and best-practice patterns to give contextual, grounded answers.",
+            "TechD helps clients adopt IBM Bob alongside the IBM platforms they already run. We configure Bob for the specific product surface area in scope, integrate it with your support and observability tooling, and train your operators on the prompt patterns that get the most value from an embedded assistant.",
+          ],
+          capabilities: [
+            "Embedded inside IBM enterprise products — no separate UI to roll out",
+            "Grounded in IBM product documentation and best practices",
+            "Contextual help — understands the screen and resource you are looking at",
+            "Diagnostic assistance for performance, configuration, and error states",
+            "Action execution against IBM product APIs (where enabled)",
+            "Powered by IBM watsonx foundation models with audit trail",
+            "Deployed alongside IBM Cloud and Cloud Pak for Data installations",
+          ],
+          useCases: [
+            "Db2 administration assistance — query tuning, configuration guidance",
+            "Cloud Pak for Data operator support and troubleshooting",
+            "AIOps and platform engineering team productivity",
+            "Onboarding new operators to IBM platform tooling",
           ],
         },
       },
@@ -124,7 +182,7 @@ export const SOLUTIONS: Solution[] = [
         vendorUrl: "https://www.ibm.com/products/spss-modeler",
         detail: {
           overview: [
-            "IBM SPSS Modeler is IBM's visual machine learning and predictive analytics workbench. It provides a drag-and-drop interface for data preparation, model building, evaluation, and scoring — covering a broad algorithm library from logistic regression and gradient boosting to deep learning and text analytics. Models can be deployed as REST APIs, integrated into batch scoring pipelines, or published into Watson Studio.",
+            "IBM SPSS Modeler is IBM's visual machine learning and predictive analytics workbench. It provides a drag-and-drop interface for data preparation, model building, evaluation, and scoring — covering a broad algorithm library from logistic regression and gradient boosting to deep learning and text analytics. Models can be deployed as REST APIs, integrated into batch scoring pipelines, or published into watsonx.ai.",
             "TechD uses SPSS Modeler for clients who need production predictive models without a dedicated data science engineering team. Our engagements span healthcare readmission prediction, insurance claims propensity modeling, and workforce attrition forecasting — using the SPSS node library to iterate quickly and deploy via Cloud Pak for Data.",
           ],
           capabilities: [
@@ -132,7 +190,7 @@ export const SOLUTIONS: Solution[] = [
             "Algorithm breadth — regression, decision trees, SVM, neural networks, time series, text analytics",
             "In-database scoring push-down for Db2, Netezza, and cloud data warehouses",
             "SPSS Modeler as a Service on IBM Cloud Pak for Data — no on-premises install required",
-            "Model management and batch scoring integration with Watson Studio",
+            "Model management and batch scoring integration with watsonx.ai",
             "Automated model building — AutoML for rapid baseline comparison across algorithm families",
             "Python and R extension nodes for custom algorithm integration",
           ],
@@ -144,35 +202,6 @@ export const SOLUTIONS: Solution[] = [
           ],
         },
       },
-      {
-        name: "IBM Knowledge Catalog",
-        tagline: "Find, trust, and govern every data asset across your enterprise.",
-        description:
-          "IBM's data catalog and governance layer for classifying, tagging, and enforcing policies across data assets — the metadata backbone that makes AI outputs defensible.",
-        link: { kind: "internal", slug: "ibm-knowledge-catalog" },
-        vendorUrl: "https://www.ibm.com/products/knowledge-catalog",
-        detail: {
-          overview: [
-            "IBM Knowledge Catalog (part of the watsonx.governance platform) is the central inventory and governance layer for enterprise data and AI assets. It connects to data sources, classifies assets automatically, enforces data protection policies, and provides a searchable catalog that data engineers, scientists, and stewards use to find trusted data.",
-            "TechD implements Knowledge Catalog as the foundation of enterprise data governance programs — particularly in heavily regulated industries where data lineage and access control are audit requirements, not optional. Our engagements typically run alongside watsonx.data or Cloud Pak for Data deployments.",
-          ],
-          capabilities: [
-            "Automated data discovery and classification across multi-cloud sources",
-            "Business glossary with ownership, stewardship, and policy linkage",
-            "Data lineage visualization — upstream sources to downstream consumers",
-            "Policy enforcement: masking, encryption, access restriction",
-            "AI model catalog — track models alongside their training datasets",
-            "Integration with DataStage, Db2, and third-party sources via connectors",
-            "Compliance reporting for GDPR, CCPA, HIPAA data inventories",
-          ],
-          useCases: [
-            "Regulatory data inventory and audit preparation (HIPAA, GDPR)",
-            "AI model governance and responsible AI documentation",
-            "Self-service data marketplace for internal data consumers",
-            "Data quality scoring and remediation workflows",
-          ],
-        },
-      },
     ],
   },
 
@@ -181,7 +210,7 @@ export const SOLUTIONS: Solution[] = [
     name: "Data & Analytics",
     outcome: "Make your data AI-ready, governed, and defensible.",
     description:
-      "Fifteen years of Db2, Cognos, and TM1 in production — now extended with open lakehouse, DataStage, and the modern analytics stack your AI depends on.",
+      "Fifteen years of Db2, Cognos, and TM1 in production — extended with watsonx.data, Cloud Pak for Data, DataStage, and the modern analytics stack your AI depends on.",
     highlights: [
       "Open lakehouse architecture",
       "Cataloged, lineage-traced data",
@@ -221,22 +250,22 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        name: "watsonx.data / Cloud Pak for Data",
+        name: "watsonx.data",
         tagline: "The open lakehouse platform that connects your data to your AI.",
         description:
-          "watsonx.data delivers open lakehouse architecture — Parquet/Iceberg on object storage, Presto/Spark query engines, and unified governance — deployed via IBM Cloud Pak for Data on any infrastructure.",
+          "watsonx.data delivers open lakehouse architecture — Parquet/Iceberg on object storage, Presto/Spark query engines, and unified governance — for analytics and AI workloads on any infrastructure.",
         link: { kind: "internal", slug: "watsonx-data" },
         vendorUrl: "https://www.ibm.com/products/watsonx-data",
         detail: {
           overview: [
-            "watsonx.data is IBM's open lakehouse platform, providing a cost-efficient alternative to proprietary data warehouses by running multiple query engines (Presto, Spark, Db2) against a shared open-format data store. It is deployed via Cloud Pak for Data — IBM's unified data and AI platform — which also hosts watsonx.ai, Knowledge Catalog, and DataStage in a single environment.",
-            "TechD architects have worked with Cloud Pak for Data since its earliest releases. Our engagements help clients consolidate fragmented analytics infrastructure onto a single governed platform — reducing data copy sprawl and preparing data assets for AI consumption.",
+            "watsonx.data is IBM's open lakehouse platform, providing a cost-efficient alternative to proprietary data warehouses by running multiple query engines (Presto, Spark, Db2) against a shared open-format data store. It is the governed data layer that watsonx.ai trains on and that BI tools query directly.",
+            "TechD architects have worked with the Cloud Pak for Data and watsonx.data lineage since the earliest releases. Our engagements help clients consolidate fragmented analytics infrastructure onto a single governed platform — reducing data copy sprawl and preparing data assets for AI consumption.",
           ],
           capabilities: [
             "Open lakehouse on object storage (Apache Iceberg, Parquet, ORC)",
             "Multi-engine query: Presto, Spark, Db2, Netezza integration",
             "Data sharing across watsonx.ai, DataStage, and Cognos Analytics",
-            "Built-in data governance via IBM Knowledge Catalog",
+            "Built-in data governance integration",
             "On-premises, IBM Cloud, AWS, or Azure deployment",
             "Cost optimization — tiered storage with hot/warm/cold data routing",
             "Zero-ETL access to live operational Db2 and streaming sources",
@@ -250,60 +279,31 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        name: "IBM DataStage",
-        tagline: "Enterprise data integration that moves, transforms, and delivers at scale.",
+        name: "Cloud Pak for Data",
+        tagline: "The unified data and AI platform — deployed where your data already lives.",
         description:
-          "IBM DataStage is TechD's primary ETL and data pipeline tool — available as SaaS on IBM Cloud and as part of Cloud Pak for Data — for building and operating the data flows AI and analytics depend on.",
-        link: { kind: "internal", slug: "ibm-datastage" },
-        vendorUrl: "https://www.ibm.com/products/datastage",
+          "IBM Cloud Pak for Data is the integrated platform that hosts watsonx.ai, watsonx.data, DataStage, and IBM's data and AI services on a single OpenShift-based runtime — on-premises, on IBM Cloud, or on any hyperscaler.",
+        link: { kind: "internal", slug: "cloud-pak-for-data" },
+        vendorUrl: "https://www.ibm.com/products/cloud-pak-for-data",
         detail: {
           overview: [
-            "IBM DataStage is a high-throughput ETL and ELT platform used to build, orchestrate, and monitor data pipelines across on-premises, cloud, and hybrid environments. It handles structured and semi-structured data transformations at the scale enterprise clients require — millions of records per minute with parallel execution.",
-            "TechD teams have built and maintained DataStage pipelines for health systems, media companies, and financial institutions. We design pipeline architecture, optimize job performance, and manage migrations from legacy ETL tools (Informatica, SSIS, ODI) to DataStage running on Cloud Pak for Data.",
+            "IBM Cloud Pak for Data is IBM's containerized platform for delivering data and AI services together. It packages watsonx.ai, watsonx.data, DataStage, IBM Match 360, and dozens of other services as Kubernetes operators on Red Hat OpenShift — giving enterprises a single deployable platform they can install on-premises, on IBM Cloud, or on AWS, Azure, and GCP.",
+            "TechD has implemented Cloud Pak for Data since its earliest releases. Our engagements cover OpenShift sizing and cluster build, service catalog selection, identity and storage integration, and the operational model that lets your platform team run a multi-tenant data and AI environment without an army of specialists.",
           ],
           capabilities: [
-            "Parallel execution engine for high-throughput batch and near-real-time pipelines",
-            "Connectors for 100+ sources — Db2, Oracle, SQL Server, Salesforce, S3, HDFS",
-            "ELT push-down to warehouse engines for in-database transformation",
-            "DataStage as a Service (SaaS) on IBM Cloud with no infrastructure management",
-            "Visual pipeline designer with parameterization and job scheduling",
-            "CDC integration with IBM Data Replication for streaming ingest",
-            "Lineage tracking into IBM Knowledge Catalog",
+            "Unified runtime for watsonx.ai, watsonx.data, DataStage, and 60+ IBM services",
+            "Runs on Red Hat OpenShift — on-premises, IBM Cloud, AWS, Azure, GCP",
+            "Multi-tenant project workspaces with role-based access",
+            "Integrated data virtualization across heterogeneous sources",
+            "Built-in governance, lineage, and policy enforcement",
+            "Air-gapped installation option for regulated and classified workloads",
+            "Operator-based lifecycle management — install, upgrade, scale via Kubernetes",
           ],
           useCases: [
-            "Nightly EDW loads for Cognos Analytics and Planning Analytics",
-            "HL7/FHIR patient data pipelines for health systems",
-            "Legacy ETL tool migrations (Informatica, SSIS) to Cloud Pak for Data",
-            "Real-time data feeds from operational systems into lakehouse storage",
-          ],
-        },
-      },
-      {
-        name: "IBM Netezza Performance Server",
-        tagline: "Purpose-built MPP analytics that delivers sub-second results on petabyte-scale datasets.",
-        description:
-          "IBM Netezza Performance Server is IBM's high-throughput analytics appliance — massively parallel processing and FPGA-accelerated query execution for clients where BI query performance is the bottleneck, on-premises or on IBM Cloud.",
-        link: { kind: "internal", slug: "ibm-netezza" },
-        vendorUrl: "https://www.ibm.com/products/netezza",
-        detail: {
-          overview: [
-            "IBM Netezza Performance Server is a purpose-built data warehouse and analytics appliance designed for extreme query performance at scale. Its massively parallel processing (MPP) architecture and FPGA-based query accelerators deliver sub-second results on datasets that would take minutes in general-purpose databases. Netezza is available as an on-premises appliance (NPS 1000) and as a managed service on IBM Cloud.",
-            "TechD deploys Netezza for clients with heavy analytical query workloads — particularly in media, insurance, and healthcare — where BI platform performance is the bottleneck. Our engagements include appliance sizing and installation, schema design for MPP workloads, Cognos Analytics integration, and migrations from legacy Teradata and Sybase IQ environments.",
-          ],
-          capabilities: [
-            "Massively parallel processing — queries distributed across hundreds of processing nodes",
-            "FPGA-accelerated scan and compression for sub-second large-dataset queries",
-            "In-database analytics — run Python and R models directly against the data",
-            "Netezza on IBM Cloud — SaaS deployment with zero infrastructure management",
-            "Native Cognos Analytics integration as a high-performance BI data source",
-            "Transparent data encryption and row-level security for sensitive datasets",
-            "Migration support from Teradata, Sybase IQ, and Vertica environments",
-          ],
-          useCases: [
-            "High-frequency ad-hoc analytics for media audience and subscriber data",
-            "Actuarial and claims analytics at petabyte scale for insurance",
-            "Population health analytics for large health systems",
-            "Legacy Teradata migration to the IBM stack with performance parity",
+            "Enterprise data and AI platform consolidation",
+            "On-premises watsonx deployment for data sovereignty requirements",
+            "Multi-cloud AI platform with consistent operating model",
+            "Regulated industry data science environment with audit controls",
           ],
         },
       },
@@ -366,60 +366,118 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        name: "Cognos Controller",
-        tagline: "Automate financial close, consolidation, and statutory reporting.",
+        name: "IBM DataStage",
+        tagline: "Enterprise data integration that moves, transforms, and delivers at scale.",
         description:
-          "IBM Cognos Controller streamlines intercompany eliminations, currency translation, and GAAP/IFRS consolidation for finance teams that need to close faster and report with confidence.",
-        link: { kind: "internal", slug: "cognos-controller" },
-        vendorUrl: "https://www.ibm.com/products/cognos-controller",
+          "IBM DataStage is TechD's primary ETL and data pipeline tool — available as SaaS on IBM Cloud and as part of Cloud Pak for Data — for building and operating the data flows AI and analytics depend on.",
+        link: { kind: "internal", slug: "ibm-datastage" },
+        vendorUrl: "https://www.ibm.com/products/datastage",
         detail: {
           overview: [
-            "IBM Cognos Controller is a financial consolidation and close management application designed for CFO offices and corporate finance teams. It handles the complexity of multi-entity consolidations — intercompany eliminations, minority interest, currency translation, and group-level statutory reporting — in a controlled, auditable environment.",
-            "TechD delivers Cognos Controller implementations for mid-market and enterprise organizations that need faster close cycles and defensible financial statements. Our engagements include requirements design, chart of accounts setup, group structure configuration, and integration with ERP source systems.",
+            "IBM DataStage is a high-throughput ETL and ELT platform used to build, orchestrate, and monitor data pipelines across on-premises, cloud, and hybrid environments. It handles structured and semi-structured data transformations at the scale enterprise clients require — millions of records per minute with parallel execution.",
+            "TechD teams have built and maintained DataStage pipelines for health systems, media companies, and financial institutions. We design pipeline architecture, optimize job performance, and manage migrations from legacy ETL tools (Informatica, SSIS, ODI) to DataStage running on Cloud Pak for Data.",
           ],
           capabilities: [
-            "Multi-entity consolidation with automated intercompany elimination",
-            "Currency translation and foreign exchange restatement (GAAP, IFRS)",
-            "Workflow-driven close process with task assignment and status tracking",
-            "Audit trail — every submission, override, and journal entry logged",
-            "Reporting packages for statutory, management, and segment reporting",
-            "ERP integration — SAP, Oracle, Microsoft Dynamics source connections",
-            "Drill-through from consolidated group figures to entity-level detail",
+            "Parallel execution engine for high-throughput batch and near-real-time pipelines",
+            "Connectors for 100+ sources — Db2, Oracle, SQL Server, Salesforce, S3, HDFS",
+            "ELT push-down to warehouse engines for in-database transformation",
+            "DataStage as a Service (SaaS) on IBM Cloud with no infrastructure management",
+            "Visual pipeline designer with parameterization and job scheduling",
+            "CDC integration for streaming ingest",
+            "Lineage tracking into the watsonx.data and Cloud Pak for Data governance layer",
           ],
           useCases: [
-            "Monthly and quarterly group financial close for multi-entity organizations",
-            "IFRS 16 lease accounting consolidation",
-            "Post-merger integration — rapid consolidation of acquired entities",
-            "Regulatory reporting for insurance and financial services groups",
+            "Nightly EDW loads for Cognos Analytics and Planning Analytics",
+            "HL7/FHIR patient data pipelines for health systems",
+            "Legacy ETL tool migrations (Informatica, SSIS) to Cloud Pak for Data",
+            "Real-time data feeds from operational systems into lakehouse storage",
           ],
         },
       },
       {
-        name: "IBM MDM",
-        tagline: "One trusted record for every customer, product, and entity across your enterprise.",
+        name: "IBM Netezza Performance Server",
+        tagline: "Purpose-built MPP analytics that delivers sub-second results on petabyte-scale datasets.",
         description:
-          "IBM Master Data Management creates and maintains the authoritative golden record for your most critical data domains — eliminating duplicates, resolving identity, and enforcing consistency across systems.",
-        link: { kind: "internal", slug: "ibm-mdm" },
-        vendorUrl: "https://www.ibm.com/products/master-data-management",
+          "IBM Netezza Performance Server is IBM's high-throughput analytics appliance — massively parallel processing and FPGA-accelerated query execution for clients where BI query performance is the bottleneck, on-premises or on IBM Cloud.",
+        link: { kind: "internal", slug: "ibm-netezza" },
+        vendorUrl: "https://www.ibm.com/products/netezza",
         detail: {
           overview: [
-            "IBM Master Data Management (MDM) is the enterprise platform for creating, governing, and distributing trusted master records across customer, product, supplier, location, and other critical data domains. It resolves entity identities probabilistically, manages hierarchies, and synchronizes the golden record back to consuming applications.",
-            "TechD implements IBM MDM for enterprises where duplicated, inconsistent, or incomplete reference data creates compliance risk, poor customer experience, or failed analytics. Our engagements span architecture design, match-merge rule development, domain model configuration, and integration with downstream CRM, ERP, and analytics systems.",
+            "IBM Netezza Performance Server is a purpose-built data warehouse and analytics appliance designed for extreme query performance at scale. Its massively parallel processing (MPP) architecture and FPGA-based query accelerators deliver sub-second results on datasets that would take minutes in general-purpose databases. Netezza is available as an on-premises appliance (NPS 1000) and as a managed service on IBM Cloud.",
+            "TechD deploys Netezza for clients with heavy analytical query workloads — particularly in media, insurance, and healthcare — where BI platform performance is the bottleneck. Our engagements include appliance sizing and installation, schema design for MPP workloads, Cognos Analytics integration, and migrations from legacy Teradata and Sybase IQ environments.",
           ],
           capabilities: [
-            "Multi-domain MDM — customer, product, supplier, location, and custom domains",
-            "Probabilistic and deterministic match-merge for entity resolution",
-            "Hierarchy management — corporate family trees, product taxonomies",
-            "Stewardship workflow — human review queues for unresolved matches",
-            "Survivorship rules — configure which source system wins per attribute",
-            "Real-time and batch synchronization to downstream applications",
-            "Integration with IBM Knowledge Catalog for governed data lineage",
+            "Massively parallel processing — queries distributed across hundreds of processing nodes",
+            "FPGA-accelerated scan and compression for sub-second large-dataset queries",
+            "In-database analytics — run Python and R models directly against the data",
+            "Netezza on IBM Cloud — SaaS deployment with zero infrastructure management",
+            "Native Cognos Analytics integration as a high-performance BI data source",
+            "Transparent data encryption and row-level security for sensitive datasets",
+            "Migration support from Teradata, Sybase IQ, and Vertica environments",
           ],
           useCases: [
-            "Patient identity resolution and EMPI for health systems",
-            "Customer 360 for insurance, financial services, and retail",
-            "Product master for manufacturers and distributors",
-            "Supplier consolidation and vendor de-duplication post-merger",
+            "High-frequency ad-hoc analytics for media audience and subscriber data",
+            "Actuarial and claims analytics at petabyte scale for insurance",
+            "Population health analytics for large health systems",
+            "Legacy Teradata migration to the IBM stack with performance parity",
+          ],
+        },
+      },
+      {
+        name: "watsonx.data intelligence",
+        tagline: "Catalog, classify, and govern every data asset that feeds your AI.",
+        description:
+          "watsonx.data intelligence (the evolution of IBM's data catalog and metadata services) discovers, classifies, and governs data and AI assets across your enterprise — the metadata backbone that makes AI outputs defensible.",
+        link: { kind: "internal", slug: "watsonx-data-intelligence" },
+        vendorUrl: "https://www.ibm.com/products/watsonx-data-intelligence",
+        detail: {
+          overview: [
+            "watsonx.data intelligence is IBM's enterprise data and AI catalog — the central inventory, classification, and governance layer for the data assets that feed analytics and watsonx.ai workloads. It connects to data sources, classifies assets automatically, enforces protection policies, and exposes a searchable catalog for data engineers, scientists, and stewards.",
+            "TechD implements watsonx.data intelligence as the foundation of enterprise data governance programs — particularly in regulated industries where data lineage and access control are audit requirements, not optional. Our engagements typically run alongside watsonx.data and Cloud Pak for Data deployments.",
+          ],
+          capabilities: [
+            "Automated data discovery and classification across multi-cloud sources",
+            "Business glossary with ownership, stewardship, and policy linkage",
+            "Data lineage visualization — upstream sources to downstream consumers",
+            "Policy enforcement: masking, encryption, access restriction",
+            "AI asset cataloging — track models alongside their training datasets",
+            "Integration with DataStage, Db2, and third-party sources via connectors",
+            "Compliance reporting for GDPR, CCPA, HIPAA data inventories",
+          ],
+          useCases: [
+            "Regulatory data inventory and audit preparation (HIPAA, GDPR)",
+            "AI model governance and responsible AI documentation",
+            "Self-service data marketplace for internal data consumers",
+            "Data quality scoring and remediation workflows",
+          ],
+        },
+      },
+      {
+        name: "watsonx.data integration",
+        tagline: "Move, transform, and unify data across your hybrid estate — built for the watsonx era.",
+        description:
+          "watsonx.data integration is IBM's modern data integration service — combining ETL, ELT, replication, and streaming patterns into a single platform that feeds watsonx.data, watsonx.ai, and downstream analytics.",
+        link: { kind: "internal", slug: "watsonx-data-integration" },
+        vendorUrl: "https://www.ibm.com/products/watsonx-data-integration",
+        detail: {
+          overview: [
+            "watsonx.data integration is IBM's unified data integration platform, bringing batch ETL/ELT, change data capture, and streaming integration patterns under a single design and operations surface. It is purpose-built to move data into watsonx.data and other governed targets at the scale enterprise AI demands.",
+            "TechD implements watsonx.data integration for clients consolidating fragmented integration tooling onto a single IBM-supported stack. Our engagements include source system inventory, pipeline design, performance tuning, and migrations from legacy ETL platforms — with the lineage and observability your governance program requires.",
+          ],
+          capabilities: [
+            "Unified batch ETL/ELT, CDC, and streaming integration patterns",
+            "Native targets for watsonx.data and Cloud Pak for Data",
+            "Heterogeneous connectivity — Db2, Oracle, SQL Server, SAP, Salesforce, S3",
+            "Visual designer plus code-based pipeline authoring",
+            "End-to-end lineage into watsonx.data intelligence",
+            "Hybrid deployment — IBM Cloud, on-premises, or air-gapped",
+            "Operations dashboard for pipeline health, lag, and throughput",
+          ],
+          useCases: [
+            "Consolidating legacy ETL tools onto a single modern platform",
+            "Feeding watsonx.data lakehouse with governed source data",
+            "Real-time data movement from operational systems to analytics targets",
+            "Hybrid data integration spanning on-premises and cloud sources",
           ],
         },
       },
@@ -536,14 +594,14 @@ export const SOLUTIONS: Solution[] = [
     name: "Security & Compliance",
     outcome: "Pass the audit. Protect the data. Respond to the breach.",
     description:
-      "IBM Guardium, QRadar, Resilient, MDM, and Data Replication — the data security, threat detection, and governance tooling that keeps regulated enterprises compliant and resilient.",
+      "IBM Guardium, QRadar, and Resilient — the data security, threat detection, and incident response tooling that keeps regulated enterprises compliant and resilient.",
     highlights: [
       "Data activity monitoring",
       "Threat detection and SOAR",
       "Audit-ready evidence trails",
     ],
     pitch:
-      "Identity, threat detection, and data protection engineered for regulated enterprises — IBM Security and Guardium delivered by senior practitioners.",
+      "Data protection, threat detection, and structured response engineered for regulated enterprises — IBM Guardium, QRadar, and Resilient delivered by senior practitioners.",
     ctaLabel: "Explore security practice",
     products: [
       {
@@ -605,15 +663,15 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        name: "IBM Resilient",
+        name: "IBM Resilient (QRadar SOAR)",
         tagline: "Orchestrate and accelerate security incident response across your team.",
         description:
-          "IBM Resilient SOAR provides the playbooks, case management, and automation that turn detected threats into structured, documented response — cutting mean time to respond for security operations teams.",
+          "IBM Resilient — now packaged as QRadar SOAR — provides the playbooks, case management, and automation that turn detected threats into structured, documented response, cutting mean time to respond for security operations teams.",
         link: { kind: "internal", slug: "ibm-resilient" },
         vendorUrl: "https://www.ibm.com/products/qradar-soar",
         detail: {
           overview: [
-            "IBM Resilient is a Security Orchestration, Automation, and Response (SOAR) platform that provides incident case management, dynamic playbooks, and integration with existing security tools to coordinate response actions across teams and reduce manual effort during active incidents.",
+            "IBM Resilient (delivered today as QRadar SOAR) is a Security Orchestration, Automation, and Response platform that provides incident case management, dynamic playbooks, and integration with existing security tools to coordinate response actions across teams and reduce manual effort during active incidents.",
             "TechD implements Resilient alongside QRadar and Guardium to close the detect-to-respond loop. When QRadar raises an offense or Guardium detects anomalous data access, Resilient creates a structured case, assigns owners, triggers playbook tasks, and documents every action — building the incident record regulators and cyber insurers expect.",
           ],
           capabilities: [
@@ -630,140 +688,6 @@ export const SOLUTIONS: Solution[] = [
             "Ransomware and data breach response playbooks",
             "GDPR / CCPA breach notification process management",
             "Coordinated response across IT security, legal, and communications teams",
-          ],
-        },
-      },
-    ],
-  },
-
-  {
-    id: "hybrid-cloud",
-    name: "Hybrid Cloud & Infrastructure",
-    outcome: "Run mission workloads where they belong — and move them when you need to.",
-    description:
-      "IBM Cloud, Red Hat OpenShift, and mainframe integration — hybrid architecture that connects where your data actually lives with where your AI needs to run.",
-    highlights: [
-      "OpenShift across any cloud",
-      "Mainframe data integration",
-      "Portable, policy-driven workloads",
-    ],
-    pitch:
-      "OpenShift, Cloud Pak, and modern platform engineering — portable workloads across on-prem, IBM Cloud, AWS, and Azure with a single operating model.",
-    ctaLabel: "Explore hybrid cloud practice",
-    products: [
-      {
-        name: "IBM Cloud",
-        tagline: "The hybrid cloud platform built for regulated enterprise workloads.",
-        description:
-          "IBM Cloud delivers VPC infrastructure, managed Kubernetes, and compliance-ready services — the deployment target for watsonx.ai, Db2 on Cloud, and the regulated workloads that cannot go to hyperscalers.",
-        link: { kind: "internal", slug: "ibm-cloud" },
-        vendorUrl: "https://www.ibm.com/cloud",
-        detail: {
-          overview: [
-            "IBM Cloud is IBM's public and hybrid cloud platform, built with compliance certifications (FedRAMP, HIPAA, SOC 2, PCI-DSS) that hyperscalers typically offer as add-ons. For TechD clients in healthcare, government, and financial services, these built-in compliance controls make IBM Cloud the path of least resistance for moving regulated data to the cloud.",
-            "TechD designs IBM Cloud architectures for clients deploying Cloud Pak for Data, watsonx.ai, and Db2 on Cloud. Our engagements cover landing zone design, network topology (VPC, Direct Link for private connectivity), IAM policy configuration, and the security baseline that allows production workloads to meet regulatory requirements.",
-          ],
-          capabilities: [
-            "VPC infrastructure with bare metal, virtual server, and managed Kubernetes (IKS/ROKS)",
-            "Built-in compliance: FedRAMP Moderate, HIPAA, PCI-DSS, SOC 2",
-            "IBM Cloud Direct Link — dedicated private connectivity from data center to cloud",
-            "Managed database services: Db2 on Cloud, PostgreSQL, MongoDB, Redis",
-            "IBM Cloud Object Storage — S3-compatible, geo-redundant, used by watsonx.data",
-            "Key Protect and Hyper Protect Crypto Services — bring-your-own-key encryption",
-            "Security and Compliance Center — continuous compliance posture monitoring",
-          ],
-          useCases: [
-            "Regulated workload migration for healthcare and government agencies",
-            "watsonx.ai and Cloud Pak for Data SaaS deployment environment",
-            "Hybrid connectivity between on-premises Db2 and cloud analytics",
-            "FedRAMP-authorized environment for federal agency data workloads",
-          ],
-        },
-      },
-      {
-        name: "Red Hat OpenShift",
-        tagline: "Enterprise Kubernetes for deploying containerized workloads anywhere.",
-        description:
-          "Red Hat OpenShift is the container platform that TechD uses to run Cloud Pak for Data, watsonx, and modern application workloads — on IBM Cloud, on-premises, or at the edge.",
-        link: { kind: "internal", slug: "red-hat-openshift" },
-        vendorUrl: "https://www.redhat.com/en/technologies/cloud-computing/openshift",
-        detail: {
-          overview: [
-            "Red Hat OpenShift is an enterprise Kubernetes platform that adds developer tooling, integrated CI/CD, and hardened security policies on top of the upstream Kubernetes project. IBM's entire watsonx and Cloud Pak portfolio runs on OpenShift — making it the required runtime for any on-premises deployment of TechD's AI and data platform work.",
-            "TechD architects are experienced with OpenShift cluster design and operations across bare metal, VMware, IBM Cloud, and AWS. Our engagements include cluster sizing and installation, storage configuration for stateful workloads (Db2, watsonx.data), network policy design, and the ongoing Day 2 operations model that keeps clusters healthy.",
-          ],
-          capabilities: [
-            "Enterprise Kubernetes with built-in pod security, network policy, and RBAC",
-            "Operator framework — automated lifecycle management for stateful applications",
-            "OpenShift Pipelines (Tekton) and GitOps (Argo CD) for CI/CD",
-            "Multi-cluster management via Red Hat Advanced Cluster Management",
-            "Integrated container registry and image scanning",
-            "Storage integration — Portworx, IBM Spectrum Scale, ODF for persistent volumes",
-            "Deployment targets: IBM Cloud ROKS, on-premises, AWS ROSA, Azure ARO",
-          ],
-          useCases: [
-            "On-premises Cloud Pak for Data and watsonx platform deployment",
-            "Application modernization — re-platforming Java EE / WebSphere workloads",
-            "Hybrid CI/CD pipelines spanning on-premises and cloud environments",
-            "Edge compute deployments for manufacturing and energy utilities",
-          ],
-        },
-      },
-      {
-        name: "Mainframe Integration",
-        tagline: "Connect your IBM Z investment to modern cloud, AI, and analytics without risk.",
-        description:
-          "TechD's mainframe integration practice bridges IBM Z systems to watsonx, Db2, and hybrid cloud — offloading analytics workloads, feeding real-time data pipelines, and modernizing interfaces without touching core transaction code.",
-        link: { kind: "internal", slug: "mainframe-integration" },
-        vendorUrl: "https://www.ibm.com/it-infrastructure/z",
-        detail: {
-          overview: [
-            "IBM Z (mainframe) systems continue to run the most critical transaction workloads for financial services, insurance, and healthcare clients — processing trillions of dollars in transactions annually. The challenge isn't replacing the mainframe; it's connecting it to modern analytics, AI, and cloud architectures without disrupting the transaction system of record.",
-            "TechD's mainframe integration practice focuses on data access, offload, and API modernization. We use IBM Data Replication (IIDR) to stream Db2 for z/OS changes to distributed targets, IBM z/OS Connect to expose mainframe programs as RESTful APIs, and watsonx.data federation to run analytics queries against z/OS data without extraction.",
-          ],
-          capabilities: [
-            "Db2 for z/OS change data capture via IBM Data Replication (IIDR)",
-            "z/OS Connect EE — expose COBOL programs and IMS/CICS transactions as REST APIs",
-            "Mainframe data federation via watsonx.data and Db2 Big SQL",
-            "Offload analytics from MIPS-intensive batch jobs to distributed engines",
-            "Real-time z/OS data feeds into Kafka and lakehouse architectures",
-            "IBM Z observability integration with Instana for end-to-end tracing",
-            "Incremental modernization patterns — extend, not replace, core transaction systems",
-          ],
-          useCases: [
-            "Core banking and insurance system data exposure for cloud analytics",
-            "Mainframe batch offload to reduce MIPS costs and cycle time",
-            "API modernization — wrapping COBOL transactions for mobile and web consumers",
-            "Real-time event streaming from z/OS into event-driven microservice architectures",
-          ],
-        },
-      },
-      {
-        name: "IBM Data Replication",
-        tagline: "Zero-downtime data migration and continuous replication for hybrid environments.",
-        description:
-          "IBM Data Replication (IIDR) uses log-based change data capture to replicate data between heterogeneous sources and targets with sub-second latency — and no application downtime during migration.",
-        link: { kind: "internal", slug: "ibm-data-replication" },
-        vendorUrl: "https://www.ibm.com/products/data-replication",
-        detail: {
-          overview: [
-            "IBM InfoSphere Data Replication (IIDR) is a change data capture (CDC) platform that reads database transaction logs to stream inserts, updates, and deletes to target systems in near real time. It supports migrations between heterogeneous platforms (Oracle to Db2, SQL Server to cloud), continuous replication for active-active architectures, and feeding event streams to Kafka.",
-            "TechD uses IBM Data Replication in cloud migration projects, mainframe offload programs, and hybrid integration architectures. It is a critical tool for any project requiring zero downtime during database platform transitions — the source database keeps serving production traffic while the target is built and validated.",
-          ],
-          capabilities: [
-            "Log-based CDC from Oracle, SQL Server, Db2, Informix, z/OS, and more",
-            "Heterogeneous replication — any source to any supported target",
-            "Sub-second latency for near real-time replication",
-            "Zero-downtime cutover support — run source and target in parallel",
-            "Kafka integration for event streaming architectures",
-            "Transformation and filtering rules applied in-flight",
-            "Monitoring dashboard — lag metrics, throughput, and error alerting",
-          ],
-          useCases: [
-            "Oracle to IBM Db2 cloud migration with zero production downtime",
-            "Mainframe (z/OS Db2) offload to distributed or cloud targets",
-            "Active-active replication for geographically distributed read replicas",
-            "Real-time data feeds from OLTP systems into analytics platforms",
           ],
         },
       },
