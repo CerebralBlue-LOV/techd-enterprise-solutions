@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import DarkGlowPanel from "@shared/DarkGlowPanel";
 import { Button } from "@ui/button";
 import { type Product, type Solution } from "@content/solutions";
 import { PRACTICE_MOTIFS } from "@content/practice-motifs";
