@@ -111,6 +111,7 @@ export const SolutionsForIndustrySection = ({ industry }: Props) => {
                   chips={chips}
                   ctaLabel={sol.ctaLabel}
                   motif={<StaticMotif initials={initialsFor(sol.name)} />}
+                  compact
                 />
               </Reveal>
             );
