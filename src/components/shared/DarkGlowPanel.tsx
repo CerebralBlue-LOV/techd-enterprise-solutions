@@ -54,26 +54,24 @@ const LEVELS: Record<
  * Used for the featured product carousel (vivid) and the site-wide final CTA
  * (soft). Respects prefers-reduced-motion.
  */
-export const DarkGlowPanel = ({
-  children,
-  intensity = "soft",
-  className,
-  rounded = "rounded-3xl",
-  style,
-  ...rest
-}: Props) => {
-  const lv = LEVELS[intensity];
-  return (
-    <div
-      {...rest}
-      className={cn(
-        "relative overflow-hidden ring-1 ring-white/10 motion-reduce:[&_*]:!animate-none",
-        rounded,
-        lv.shadow,
-        className,
-      )}
-      style={{ ...PANEL_BG, ...style }}
-    >
+export const DarkGlowPanel = forwardRef<HTMLDivElement, Props>(
+  (
+    { children, intensity = "soft", className, rounded = "rounded-3xl", style, ...rest },
+    ref,
+  ) => {
+    const lv = LEVELS[intensity];
+    return (
+      <div
+        ref={ref}
+        {...rest}
+        className={cn(
+          "relative overflow-hidden ring-1 ring-white/10 motion-reduce:[&_*]:!animate-none",
+          rounded,
+          lv.shadow,
+          className,
+        )}
+        style={{ ...PANEL_BG, ...style }}
+      >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
