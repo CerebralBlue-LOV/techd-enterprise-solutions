@@ -51,6 +51,35 @@ export const SOLUTIONS: Solution[] = [
     ctaLabel: "Explore AI practice",
     products: [
       {
+        name: "NeuralSeek",
+        tagline: "Turn your existing knowledge base into a cited, grounded AI assistant.",
+        description:
+          "NeuralSeek connects to what you already have — SharePoint, Confluence, or any document repository — and returns cited, traceable answers to complex queries in seconds. Designed to layer on top of watsonx or run as a standalone API, closing the gap between raw document retrieval and enterprise-grade conversational AI.",
+        link: { kind: "internal", slug: "neuralseek" },
+        vendorUrl: "https://neuralseek.com",
+        detail: {
+          overview: [
+            "NeuralSeek is a retrieval-augmented generation (RAG) platform that turns an organization's existing document repositories — SharePoint, Confluence, Box, file shares, internal wikis — into a governed, conversational knowledge layer. Every answer is cited back to source documents, scored for confidence, and traceable end-to-end so business and compliance teams can trust what an AI says.",
+            "TechD deploys NeuralSeek as a standalone conversational API, as the retrieval layer behind watsonx-powered assistants, and as the grounding engine for contact-center and field-service applications. Our engagements cover corpus curation, governance setup, prompt and answer tuning, and integration with the channels (web, Teams, Slack, telephony) where employees and customers actually ask questions.",
+          ],
+          capabilities: [
+            "Connectors for SharePoint, Confluence, Box, S3, web, file shares, and custom repositories",
+            "Cited answers — every response links back to the underlying source passages",
+            "Confidence scoring and answer-quality analytics out of the box",
+            "Governed corpus management — versioning, expiry, access controls per source",
+            "Model-agnostic — runs against watsonx, OpenAI, Anthropic, and open-source LLMs",
+            "REST API and embeddable widgets for web, Teams, Slack, and contact-center channels",
+            "PII redaction, prompt-injection defenses, and full audit logging",
+          ],
+          useCases: [
+            "Customer-facing product and support assistants grounded in catalog and KB content",
+            "Contact-center agent assist surfacing verified answers in real time",
+            "Internal knowledge search across policy, HR, and engineering documentation",
+            "Field-service and frontline worker assistants on mobile devices",
+          ],
+        },
+      },
+      {
         name: "watsonx.ai",
         tagline: "Build and deploy enterprise AI on foundation models you can trust.",
         description:
@@ -136,13 +165,6 @@ export const SOLUTIONS: Solution[] = [
             "Procure-to-pay assistance across SAP, Coupa, and approval workflows",
           ],
         },
-      },
-      {
-        name: "NeuralSeek",
-        tagline: "Turn your existing knowledge base into a cited, grounded AI assistant.",
-        description:
-          "NeuralSeek connects to what you already have — SharePoint, Confluence, or any document repository — and returns cited, traceable answers to complex queries in seconds. Designed to layer on top of watsonx or run as a standalone API, closing the gap between raw document retrieval and enterprise-grade conversational AI.",
-        link: { kind: "external", url: "https://neuralseek.com" },
       },
       {
         name: "IBM Bob",

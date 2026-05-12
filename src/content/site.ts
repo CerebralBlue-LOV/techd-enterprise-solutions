@@ -9,7 +9,7 @@ export const NAV: NavItem[] = [
   {
     label: "Solutions",
     children: [
-      { label: "AI & Generative Solutions",     href: "/solutions/ai-generative",       description: "watsonx, watsonx.ai, watsonx Orchestrate, NeuralSeek, IBM Bob, SPSS Modeler." },
+      { label: "AI & Generative Solutions",     href: "/solutions/ai-generative",       description: "NeuralSeek, watsonx.ai, watsonx, watsonx Orchestrate, IBM Bob, SPSS Modeler." },
       { label: "Data & Analytics",              href: "/solutions/data-analytics",      description: "Db2, watsonx.data, Cloud Pak for Data, Cognos Analytics, Planning Analytics, DataStage, Netezza." },
       { label: "Automation & FinOps",           href: "/solutions/automation-finops",   description: "IBM Apptio, Instana, Turbonomic." },
       { label: "Security & Compliance",         href: "/solutions/security-compliance", description: "Guardium, QRadar, Resilient — data protection and threat detection." },
