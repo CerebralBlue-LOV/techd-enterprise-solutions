@@ -25,7 +25,7 @@ export const ProductOverviewSection = ({ product, hideCapabilities }: Props) => 
         {hideCapabilities ? (
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             {/* Left: sticky editorial title */}
-            <Reveal threshold={0.4} className="lg:col-span-5">
+            <Reveal className="lg:col-span-5">
               <div className="lg:sticky lg:top-28">
                 <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
                   Overview
@@ -48,7 +48,7 @@ export const ProductOverviewSection = ({ product, hideCapabilities }: Props) => 
             </Reveal>
 
             {/* Right: prose */}
-            <Reveal threshold={0.4} delay={80} className="lg:col-span-7">
+            <Reveal delay={80} className="lg:col-span-7">
               <p className="text-xl md:text-2xl font-light text-secondary leading-snug">
                 {product.tagline}
               </p>
