@@ -116,14 +116,13 @@ export const PageHero = ({
               <p className="eyebrow flex items-center gap-3">{eyebrow}</p>
             ) : parent || child ? (
               <p className="eyebrow flex items-center gap-3">
-                <span className="inline-block h-px w-8 bg-primary" />
+                {!parentTo && <span className="inline-block h-px w-8 bg-primary" />}
                 {parent ? (
                   parentTo ? (
                     <Link
                       to={parentTo}
-                      className="group/parent inline-flex items-center gap-1.5 text-primary underline-offset-4 decoration-primary/40 hover:underline hover:decoration-primary transition-colors"
+                      className="text-muted-foreground underline-offset-4 decoration-muted-foreground/40 hover:text-primary hover:underline hover:decoration-primary transition-colors"
                     >
-                      <ArrowLeft className="size-3 transition-transform group-hover/parent:-translate-x-0.5" />
                       {parent}
                     </Link>
                   ) : (
