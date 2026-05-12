@@ -206,34 +206,28 @@ export const ProductsGridSection = ({ practice }: Props) => {
               Select any product to explore capabilities, use cases, and how we engage.
             </p>
 
-            {/* Product list — primary navigation for this section */}
-            <ul className="mt-8 flex flex-col divide-y divide-border border-y border-border">
+            {/* Product chips — compact, less prominent than a list */}
+            <div className="mt-8 flex flex-wrap gap-2">
               {products.map((p, i) => {
                 const isActive = i === index;
                 return (
-                  <li key={p.name}>
-                    <ProductLink
-                      practiceId={practice.id}
-                      product={p}
-                      className={cn(
-                        "group flex items-center justify-between gap-3 py-3 text-base font-medium transition-colors",
-                        isActive
-                          ? "text-primary"
-                          : "text-secondary hover:text-primary",
-                      )}
-                    >
-                      <span className="flex items-center gap-3">
-                        <span className="font-mono text-xs text-muted-foreground tabular-nums">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        {p.name}
-                      </span>
-                      <ArrowUpRight className="size-4 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
-                    </ProductLink>
-                  </li>
+                  <ProductLink
+                    key={p.name}
+                    practiceId={practice.id}
+                    product={p}
+                    className={cn(
+                      "group inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+                      isActive
+                        ? "border-primary text-primary bg-primary/5"
+                        : "border-border text-secondary hover:border-primary hover:text-primary",
+                    )}
+                  >
+                    {p.name}
+                    <ArrowUpRight className="size-3.5 opacity-60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </ProductLink>
                 );
               })}
-            </ul>
+            </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild className="btn-glow">
