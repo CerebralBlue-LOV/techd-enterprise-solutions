@@ -167,13 +167,6 @@ export const SOLUTIONS: Solution[] = [
         },
       },
       {
-        name: "NeuralSeek",
-        tagline: "Turn your existing knowledge base into a cited, grounded AI assistant.",
-        description:
-          "NeuralSeek connects to what you already have — SharePoint, Confluence, or any document repository — and returns cited, traceable answers to complex queries in seconds. Designed to layer on top of watsonx or run as a standalone API, closing the gap between raw document retrieval and enterprise-grade conversational AI.",
-        link: { kind: "external", url: "https://neuralseek.com" },
-      },
-      {
         name: "IBM Bob",
         tagline: "An AI assistant for IBM software — built into the products your teams already operate.",
         description:
