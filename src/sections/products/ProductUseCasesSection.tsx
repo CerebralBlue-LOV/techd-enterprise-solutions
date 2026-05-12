@@ -22,14 +22,26 @@ export const ProductUseCasesSection = ({ product }: Props) => {
             align="center"
           />
         </Reveal>
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {useCases.map((uc, i) => (
-            <Reveal key={uc} delay={i * 60}>
-              <div className="card-hover rounded-xl p-6 h-full">
-                <p className="text-sm font-bold text-secondary leading-snug">{uc}</p>
-              </div>
-            </Reveal>
-          ))}
+        <div className="mt-16 grid gap-x-16 gap-y-14 md:grid-cols-2 max-w-6xl mx-auto">
+          {useCases.map((uc, i) => {
+            const num = String(i + 1).padStart(2, "0");
+            return (
+              <Reveal key={uc} delay={i * 90}>
+                <div className="group relative flex flex-col gap-5">
+                  <div className="flex items-baseline gap-4">
+                    <span className="text-primary text-5xl md:text-6xl font-extralight tracking-tighter opacity-30 transition-opacity duration-500 group-hover:opacity-100">
+                      {num}
+                    </span>
+                    <div className="h-px flex-grow bg-border mt-2 origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100" />
+                  </div>
+                  <p className="text-secondary text-xl md:text-2xl font-normal leading-snug tracking-tight transition-colors duration-300 group-hover:text-foreground">
+                    {uc}
+                  </p>
+                  <div className="h-[2px] w-10 bg-primary origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
