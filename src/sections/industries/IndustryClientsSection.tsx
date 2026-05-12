@@ -33,14 +33,13 @@ const ClientCard = ({ client }: { client: ResolvedClient }) => {
     <Wrapper
       {...wrapperProps}
       className={cn(
-        "group relative flex items-center gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6",
+        "group relative flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6",
         "transition-all duration-300",
         "hover:border-white/25 hover:bg-white/[0.06] hover:-translate-y-0.5",
         url && "cursor-pointer",
       )}
     >
-      {/* Logo cell — visible at rest, monochrome white silhouette for cross-brand consistency */}
-      <div className="flex h-12 w-24 shrink-0 items-center justify-center">
+      <div className="flex h-12 w-full items-center justify-start">
         {c?.logo ? (
           <img
             src={`${import.meta.env.BASE_URL}${c.logo.replace(/^\//, "")}`}
@@ -48,7 +47,7 @@ const ClientCard = ({ client }: { client: ResolvedClient }) => {
             loading="lazy"
             className={cn(
               c.logoClass ?? "h-9 md:h-10",
-              "w-auto max-w-[96px] object-contain brightness-0 invert opacity-90 transition-opacity duration-300 group-hover:opacity-100",
+              "w-auto max-w-[120px] object-contain brightness-0 invert opacity-90 transition-opacity duration-300 group-hover:opacity-100",
             )}
           />
         ) : (
@@ -58,8 +57,7 @@ const ClientCard = ({ client }: { client: ResolvedClient }) => {
         )}
       </div>
 
-      {/* Divider + copy */}
-      <div className="flex flex-col border-l border-white/10 pl-6 min-w-0">
+      <div className="flex flex-col border-t border-white/10 pt-4 min-w-0">
         <p className="text-base font-bold text-white leading-tight transition-colors duration-300 group-hover:text-primary">
           {client.name}
         </p>
