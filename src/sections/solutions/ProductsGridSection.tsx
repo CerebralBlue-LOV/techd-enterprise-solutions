@@ -206,28 +206,32 @@ export const ProductsGridSection = ({ practice }: Props) => {
               Select any product to explore capabilities, use cases, and how we engage.
             </p>
 
-            {/* Product chips — compact, less prominent than a list */}
-            <div className="mt-8 flex flex-wrap gap-2">
+            {/* Product quick-jump — quiet inline text links */}
+            <p className="mt-6 text-sm font-light text-muted-foreground leading-relaxed">
+              <span className="mr-1">Jump to:</span>
               {products.map((p, i) => {
                 const isActive = i === index;
                 return (
-                  <ProductLink
-                    key={p.name}
-                    practiceId={practice.id}
-                    product={p}
-                    className={cn(
-                      "group inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-                      isActive
-                        ? "border-primary text-primary bg-primary/5"
-                        : "border-border text-secondary hover:border-primary hover:text-primary",
+                  <span key={p.name}>
+                    <ProductLink
+                      practiceId={practice.id}
+                      product={p}
+                      className={cn(
+                        "underline-offset-4 hover:underline transition-colors",
+                        isActive
+                          ? "text-primary"
+                          : "text-secondary hover:text-primary",
+                      )}
+                    >
+                      {p.name}
+                    </ProductLink>
+                    {i < products.length - 1 && (
+                      <span className="mx-1.5 text-muted-foreground/60">·</span>
                     )}
-                  >
-                    {p.name}
-                    <ArrowUpRight className="size-3.5 opacity-60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </ProductLink>
+                  </span>
                 );
               })}
-            </div>
+            </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild className="btn-glow">
