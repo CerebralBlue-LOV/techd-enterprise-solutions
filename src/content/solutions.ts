@@ -63,6 +63,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM's enterprise AI studio for training, fine-tuning, and deploying foundation models alongside your own machine learning assets — with built-in governance and MLOps.",
         link: { kind: "internal", slug: "watsonx-ai" },
+        vendorUrl: "https://www.ibm.com/products/watsonx-ai",
         detail: {
           overview: [
             "watsonx.ai is IBM's enterprise-grade AI and data science platform for the full model lifecycle — from experimentation and fine-tuning through production deployment. It provides access to IBM-curated foundation models (Granite series), open-source models (Llama, Mistral), and the tooling to adapt them securely to your own data.",
@@ -120,6 +121,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM SPSS Modeler is a visual predictive analytics platform for building, evaluating, and deploying machine learning models — from classical regression and decision trees to neural networks — on structured enterprise data.",
         link: { kind: "internal", slug: "ibm-spss-modeler" },
+        vendorUrl: "https://www.ibm.com/products/spss-modeler",
         detail: {
           overview: [
             "IBM SPSS Modeler is IBM's visual machine learning and predictive analytics workbench. It provides a drag-and-drop interface for data preparation, model building, evaluation, and scoring — covering a broad algorithm library from logistic regression and gradient boosting to deep learning and text analytics. Models can be deployed as REST APIs, integrated into batch scoring pipelines, or published into Watson Studio.",
@@ -148,6 +150,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM's data catalog and governance layer for classifying, tagging, and enforcing policies across data assets — the metadata backbone that makes AI outputs defensible.",
         link: { kind: "internal", slug: "ibm-knowledge-catalog" },
+        vendorUrl: "https://www.ibm.com/products/knowledge-catalog",
         detail: {
           overview: [
             "IBM Knowledge Catalog (part of the watsonx.governance platform) is the central inventory and governance layer for enterprise data and AI assets. It connects to data sources, classifies assets automatically, enforces data protection policies, and provides a searchable catalog that data engineers, scientists, and stewards use to find trusted data.",
@@ -194,6 +197,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Db2 is the production relational database at the core of TechD's data platform engagements — on-premises, containerized, or on cloud — with built-in AI extensions and hybrid query capabilities.",
         link: { kind: "internal", slug: "ibm-db2" },
+        vendorUrl: "https://www.ibm.com/products/db2",
         detail: {
           overview: [
             "IBM Db2 is a high-performance relational database system used across TechD's enterprise client base for transactional workloads, analytics, and hybrid data architectures. Db2 Warehouse extends the engine with columnar BLU Acceleration and in-database ML for analytical workloads without a separate data warehouse infrastructure.",
@@ -222,6 +226,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "watsonx.data delivers open lakehouse architecture — Parquet/Iceberg on object storage, Presto/Spark query engines, and unified governance — deployed via IBM Cloud Pak for Data on any infrastructure.",
         link: { kind: "internal", slug: "watsonx-data" },
+        vendorUrl: "https://www.ibm.com/products/watsonx-data",
         detail: {
           overview: [
             "watsonx.data is IBM's open lakehouse platform, providing a cost-efficient alternative to proprietary data warehouses by running multiple query engines (Presto, Spark, Db2) against a shared open-format data store. It is deployed via Cloud Pak for Data — IBM's unified data and AI platform — which also hosts watsonx.ai, Knowledge Catalog, and DataStage in a single environment.",
@@ -250,6 +255,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM DataStage is TechD's primary ETL and data pipeline tool — available as SaaS on IBM Cloud and as part of Cloud Pak for Data — for building and operating the data flows AI and analytics depend on.",
         link: { kind: "internal", slug: "ibm-datastage" },
+        vendorUrl: "https://www.ibm.com/products/datastage",
         detail: {
           overview: [
             "IBM DataStage is a high-throughput ETL and ELT platform used to build, orchestrate, and monitor data pipelines across on-premises, cloud, and hybrid environments. It handles structured and semi-structured data transformations at the scale enterprise clients require — millions of records per minute with parallel execution.",
@@ -278,6 +284,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Netezza Performance Server is IBM's high-throughput analytics appliance — massively parallel processing and FPGA-accelerated query execution for clients where BI query performance is the bottleneck, on-premises or on IBM Cloud.",
         link: { kind: "internal", slug: "ibm-netezza" },
+        vendorUrl: "https://www.ibm.com/products/netezza",
         detail: {
           overview: [
             "IBM Netezza Performance Server is a purpose-built data warehouse and analytics appliance designed for extreme query performance at scale. Its massively parallel processing (MPP) architecture and FPGA-based query accelerators deliver sub-second results on datasets that would take minutes in general-purpose databases. Netezza is available as an on-premises appliance (NPS 1000) and as a managed service on IBM Cloud.",
@@ -306,6 +313,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Cognos Analytics is TechD's flagship BI platform — AI-assisted report creation, governed dashboards, and enterprise scheduling for the clients who have trusted it for over a decade.",
         link: { kind: "internal", slug: "cognos-analytics" },
+        vendorUrl: "https://www.ibm.com/products/cognos-analytics",
         detail: {
           overview: [
             "IBM Cognos Analytics is an AI-powered business intelligence and dashboarding platform that lets business users create reports, explore data, and build dashboards with minimal IT involvement — while IT retains governance over data sources, security, and distribution.",
@@ -334,6 +342,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Planning Analytics (powered by TM1) is TechD's core FP&A platform — fast multi-dimensional modeling for budgeting, forecasting, and scenario analysis in finance teams that outgrew spreadsheets.",
         link: { kind: "internal", slug: "planning-analytics" },
+        vendorUrl: "https://www.ibm.com/products/planning-analytics",
         detail: {
           overview: [
             "IBM Planning Analytics is the enterprise performance management platform built on the TM1 in-memory OLAP engine. It powers budgeting, forecasting, financial close, and workforce planning for complex organizations — with a combination of spreadsheet-familiar interfaces (TM1 Web, Planning Analytics for Excel) and browser-based workspace.",
@@ -362,6 +371,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Cognos Controller streamlines intercompany eliminations, currency translation, and GAAP/IFRS consolidation for finance teams that need to close faster and report with confidence.",
         link: { kind: "internal", slug: "cognos-controller" },
+        vendorUrl: "https://www.ibm.com/products/cognos-controller",
         detail: {
           overview: [
             "IBM Cognos Controller is a financial consolidation and close management application designed for CFO offices and corporate finance teams. It handles the complexity of multi-entity consolidations — intercompany eliminations, minority interest, currency translation, and group-level statutory reporting — in a controlled, auditable environment.",
@@ -390,6 +400,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Master Data Management creates and maintains the authoritative golden record for your most critical data domains — eliminating duplicates, resolving identity, and enforcing consistency across systems.",
         link: { kind: "internal", slug: "ibm-mdm" },
+        vendorUrl: "https://www.ibm.com/products/master-data-management",
         detail: {
           overview: [
             "IBM Master Data Management (MDM) is the enterprise platform for creating, governing, and distributing trusted master records across customer, product, supplier, location, and other critical data domains. It resolves entity identities probabilistically, manages hierarchies, and synchronizes the golden record back to consuming applications.",
@@ -436,6 +447,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Apptio is the TBM platform for IT financial management — translating infrastructure invoices, headcount, and vendor contracts into the cost-per-service view that CIOs and CFOs need to make investment decisions.",
         link: { kind: "internal", slug: "ibm-apptio" },
+        vendorUrl: "https://www.ibm.com/products/apptio",
         detail: {
           overview: [
             "IBM Apptio (acquired by IBM in 2019) is the leading Technology Business Management platform for understanding, communicating, and optimizing what IT spends and delivers. It ingests data from financial systems, CMDB, cloud billing APIs, and project tools to build a consumption-based cost model across applications, services, and business units.",
@@ -464,6 +476,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Instana delivers real-time distributed tracing, infrastructure monitoring, and incident root-cause analysis across microservices, containers, and hybrid environments — without manual instrumentation.",
         link: { kind: "internal", slug: "ibm-instana" },
+        vendorUrl: "https://www.ibm.com/products/instana",
         detail: {
           overview: [
             "IBM Instana (acquired by IBM in 2020) is a full-stack observability platform designed for cloud-native and hybrid environments. It auto-discovers services, containers, and hosts; instruments applications automatically; and correlates traces, logs, and metrics into a unified topology map — refreshed every second.",
@@ -492,6 +505,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Turbonomic is an Application Resource Management platform that analyzes workload demand in real time and autonomously resizes, moves, or reschedules resources to hit performance targets at minimum cost.",
         link: { kind: "internal", slug: "ibm-turbonomic" },
+        vendorUrl: "https://www.ibm.com/products/turbonomic",
         detail: {
           overview: [
             "IBM Turbonomic (acquired by IBM in 2021) applies AI-driven Application Resource Management to continuously balance application performance and infrastructure cost. It monitors demand, projects resource needs, and issues — or executes — scaling actions across VMware, Kubernetes, and public cloud environments.",
@@ -538,6 +552,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Guardium is the enterprise data security and activity monitoring platform for detecting unauthorized access, enforcing encryption policies, and producing the audit trails regulators require.",
         link: { kind: "internal", slug: "ibm-guardium" },
+        vendorUrl: "https://www.ibm.com/products/guardium",
         detail: {
           overview: [
             "IBM Guardium provides continuous monitoring of data access across databases, data warehouses, big data environments, and cloud storage. It captures every query, tracks who accessed what data and when, detects anomalous activity, and generates the compliance reports required for HIPAA, PCI-DSS, SOX, and GDPR audits.",
@@ -566,6 +581,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM QRadar SIEM collects logs, flows, and events from across the enterprise, correlates them against threat intelligence, and surfaces the security incidents that matter — before they become breaches.",
         link: { kind: "internal", slug: "ibm-qradar" },
+        vendorUrl: "https://www.ibm.com/qradar",
         detail: {
           overview: [
             "IBM QRadar is a SIEM (Security Information and Event Management) platform that ingests log and flow data from network devices, servers, applications, and cloud services, then applies correlation rules and behavioral analytics to detect threats. On-premises QRadar deployments remain a core IBM product actively supported in 2026.",
@@ -594,6 +610,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Resilient SOAR provides the playbooks, case management, and automation that turn detected threats into structured, documented response — cutting mean time to respond for security operations teams.",
         link: { kind: "internal", slug: "ibm-resilient" },
+        vendorUrl: "https://www.ibm.com/products/qradar-soar",
         detail: {
           overview: [
             "IBM Resilient is a Security Orchestration, Automation, and Response (SOAR) platform that provides incident case management, dynamic playbooks, and integration with existing security tools to coordinate response actions across teams and reduce manual effort during active incidents.",
@@ -640,6 +657,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Cloud delivers VPC infrastructure, managed Kubernetes, and compliance-ready services — the deployment target for watsonx.ai, Db2 on Cloud, and the regulated workloads that cannot go to hyperscalers.",
         link: { kind: "internal", slug: "ibm-cloud" },
+        vendorUrl: "https://www.ibm.com/cloud",
         detail: {
           overview: [
             "IBM Cloud is IBM's public and hybrid cloud platform, built with compliance certifications (FedRAMP, HIPAA, SOC 2, PCI-DSS) that hyperscalers typically offer as add-ons. For TechD clients in healthcare, government, and financial services, these built-in compliance controls make IBM Cloud the path of least resistance for moving regulated data to the cloud.",
@@ -668,6 +686,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "Red Hat OpenShift is the container platform that TechD uses to run Cloud Pak for Data, watsonx, and modern application workloads — on IBM Cloud, on-premises, or at the edge.",
         link: { kind: "internal", slug: "red-hat-openshift" },
+        vendorUrl: "https://www.redhat.com/en/technologies/cloud-computing/openshift",
         detail: {
           overview: [
             "Red Hat OpenShift is an enterprise Kubernetes platform that adds developer tooling, integrated CI/CD, and hardened security policies on top of the upstream Kubernetes project. IBM's entire watsonx and Cloud Pak portfolio runs on OpenShift — making it the required runtime for any on-premises deployment of TechD's AI and data platform work.",
@@ -696,6 +715,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "TechD's mainframe integration practice bridges IBM Z systems to watsonx, Db2, and hybrid cloud — offloading analytics workloads, feeding real-time data pipelines, and modernizing interfaces without touching core transaction code.",
         link: { kind: "internal", slug: "mainframe-integration" },
+        vendorUrl: "https://www.ibm.com/it-infrastructure/z",
         detail: {
           overview: [
             "IBM Z (mainframe) systems continue to run the most critical transaction workloads for financial services, insurance, and healthcare clients — processing trillions of dollars in transactions annually. The challenge isn't replacing the mainframe; it's connecting it to modern analytics, AI, and cloud architectures without disrupting the transaction system of record.",
@@ -724,6 +744,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM Data Replication (IIDR) uses log-based change data capture to replicate data between heterogeneous sources and targets with sub-second latency — and no application downtime during migration.",
         link: { kind: "internal", slug: "ibm-data-replication" },
+        vendorUrl: "https://www.ibm.com/products/data-replication",
         detail: {
           overview: [
             "IBM InfoSphere Data Replication (IIDR) is a change data capture (CDC) platform that reads database transaction logs to stream inserts, updates, and deletes to target systems in near real time. It supports migrations between heterogeneous platforms (Oracle to Db2, SQL Server to cloud), continuous replication for active-active architectures, and feeding event streams to Kafka.",
