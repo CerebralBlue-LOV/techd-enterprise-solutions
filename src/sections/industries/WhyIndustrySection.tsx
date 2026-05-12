@@ -28,21 +28,11 @@ export const WhyIndustrySection = ({ industry }: Props) => {
     >
       <SectionMarker page={`Industries / ${industry.name}`} name="Why TechD" />
       <div className="container-page">
-        {/* Section header — quiet, typography-led */}
-        <Reveal>
-          <div className="mb-10">
-            <h2 className="text-secondary text-xs font-bold tracking-[0.4em] uppercase">
-              Why TechD
-            </h2>
-            <div className="mt-4 h-[2px] w-12 bg-primary" />
-          </div>
-        </Reveal>
-
         <div className="space-y-4">
           {/* Featured cyan-gradient hero card */}
           <Reveal>
             <article
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-[hsl(195_100%_38%)] p-8 md:p-12 lg:p-16 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.55)]"
+              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-[hsl(195_100%_38%)] p-6 md:p-8 lg:p-10 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.55)]"
             >
               {/* Ambient radial highlights */}
               <div
@@ -53,20 +43,15 @@ export const WhyIndustrySection = ({ industry }: Props) => {
                     "radial-gradient(60% 80% at 80% 20%, hsl(var(--background) / 0.30) 0%, transparent 60%), radial-gradient(40% 60% at 20% 100%, hsl(var(--secondary) / 0.40) 0%, transparent 70%)",
                 }}
               />
-              {/* Slow-shimmer slash */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute top-0 right-0 h-full w-72 bg-background/5 skew-x-[-20deg] translate-x-32 transition-transform duration-700 ease-out group-hover:translate-x-20"
-              />
 
               <div className="relative z-10 max-w-3xl">
-                <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-background/70 mb-5">
-                  {industry.name}
+                <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-background/70 mb-4">
+                  Why TechD · {industry.name}
                 </p>
-                <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight text-background">
+                <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight text-background">
                   {featured.title}
                 </h3>
-                <p className="mt-6 md:mt-8 text-lg md:text-xl lg:text-2xl font-light leading-relaxed text-background/90 max-w-2xl">
+                <p className="mt-4 md:mt-5 text-base md:text-lg font-light leading-relaxed text-background/90 max-w-2xl">
                   {featured.body}
                 </p>
               </div>
