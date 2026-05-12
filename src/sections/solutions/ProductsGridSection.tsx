@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import DarkGlowPanel from "@shared/DarkGlowPanel";
 import { Button } from "@ui/button";
 import { type Product, type Solution } from "@content/solutions";
 import { PRACTICE_MOTIFS } from "@content/practice-motifs";
@@ -179,11 +180,6 @@ export const ProductsGridSection = ({ practice }: Props) => {
   const active = products[index];
   const glow = GLOW_POSITIONS[index % GLOW_POSITIONS.length];
 
-  const cardBg: CSSProperties = {
-    background:
-      "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
-  };
-
   return (
     <section
       id="products"
@@ -245,7 +241,8 @@ export const ProductsGridSection = ({ practice }: Props) => {
 
           {/* Right: featured card */}
           <Reveal className="lg:col-span-7">
-            <div
+            <DarkGlowPanel
+              intensity="vivid"
               ref={cardRef}
               role="region"
               aria-roledescription="carousel"
@@ -255,48 +252,13 @@ export const ProductsGridSection = ({ practice }: Props) => {
               onMouseLeave={() => setPaused(false)}
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
-              className="relative overflow-hidden rounded-3xl ring-1 ring-white/10 shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:[&_*]:!animate-none"
-              style={cardBg}
+              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              {/* Animated background layers */}
-              <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-                {/* Rotating conic shimmer */}
-                <div
-                  className="absolute -inset-1/2 opacity-60 animate-shimmer-rotate"
-                  style={{
-                    background:
-                      "conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / 0.7) 60deg, transparent 140deg, hsl(var(--primary) / 0.5) 240deg, transparent 320deg)",
-                    filter: "blur(40px)",
-                  }}
-                />
-                {/* Drifting cyan blob A */}
-                <div
-                  className="absolute -top-1/4 -left-1/4 h-[80%] w-[80%] rounded-full animate-blob-a"
-                  style={{
-                    background:
-                      "radial-gradient(circle, hsl(var(--primary) / 0.9) 0%, transparent 60%)",
-                    filter: "blur(50px)",
-                  }}
-                />
-                {/* Drifting cyan blob B */}
-                <div
-                  className="absolute top-0 -right-1/4 h-[75%] w-[75%] rounded-full animate-blob-b"
-                  style={{
-                    background:
-                      "radial-gradient(circle, hsl(var(--primary) / 0.8) 0%, transparent 65%)",
-                    filter: "blur(60px)",
-                  }}
-                />
-                {/* Drifting cyan blob C */}
-                <div
-                  className="absolute -bottom-1/4 left-1/4 h-[70%] w-[70%] rounded-full animate-blob-c"
-                  style={{
-                    background:
-                      "radial-gradient(circle, hsl(var(--primary) / 0.75) 0%, transparent 60%)",
-                    filter: "blur(55px)",
-                  }}
-                />
-                {/* Active-slide spotlight, cross-fades with index */}
+              {/* Active-slide spotlight, cross-fades with index */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 overflow-hidden"
+              >
                 {prevIndex !== null && (
                   <div
                     key={`glow-out-${prevIndex}`}
@@ -313,15 +275,6 @@ export const ProductsGridSection = ({ practice }: Props) => {
                   style={{
                     background: `radial-gradient(circle at ${glow.x} ${glow.y}, hsl(var(--primary) / 0.55), transparent 55%)`,
                     animation: "glow-fade-in 700ms ease-out forwards",
-                  }}
-                />
-
-                <div
-                  className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(hsl(0 0% 100%) 1px, transparent 1px)",
-                    backgroundSize: "3px 3px",
                   }}
                 />
               </div>
@@ -408,7 +361,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                   })}
                 </div>
               </div>
-            </div>
+            </DarkGlowPanel>
           </Reveal>
         </div>
       </div>

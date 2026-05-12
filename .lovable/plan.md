@@ -1,89 +1,94 @@
-## Goal
+# Improve AI & Generative product detail pages
 
-Apply the confirmed May 2026 product schema to the Solutions area:
-- **Remove** 9 products + the entire Hybrid Cloud & Infrastructure practice
-- **Keep** 15 products as-is (no copy rewrites)
-- **Add** 5 new products with full detail pages
-- **Reorder** products inside each practice so the home flip-card chips lead with flagship brands
+Scope: only the four product detail pages under `/solutions/ai-generative/*` (NeuralSeek, watsonx.ai, watsonx, watsonx Orchestrate). Practice and other practices stay untouched.
 
-The "KEEP / NEW / REMOVE" labels in your spec are planning-only — no badge UI exists in the codebase, so nothing to strip there.
+## What I found
 
----
+Right now the same dark animated cyan-on-secondary panel (rotating conic shimmer + 3 drifting blobs + dotted overlay) is duplicated in two places:
 
-## Final per-practice list (shipped order — first 5 become home-card chips)
+- `src/sections/solutions/ProductsGridSection.tsx` (featured product carousel, full-fidelity)
+- `src/components/shared/page/PageFinalCtaSection.tsx` (final CTA, lower-opacity variant)
 
-**AI & Generative Solutions** (6)
-1. watsonx.ai *(keep)*
-2. watsonx — platform *(new)*
-3. watsonx Orchestrate *(new)*
-4. NeuralSeek *(keep, external)*
-5. IBM Bob *(new — internal page, vendorUrl `bob.ibm.com`)*
-6. IBM SPSS Modeler *(keep)*
-— drop watsonx Assistant, IBM Knowledge Catalog
+Both build the same layer stack inline. There is no shared primitive — duplicated CSS is the reason every section that wants this look re-implements it.
 
-**Data & Analytics** (9)
-1. IBM Db2 *(keep)*
-2. watsonx.data *(keep — rename card from "watsonx.data / Cloud Pak for Data" to "watsonx.data")*
-3. Cloud Pak for Data *(new)*
-4. Cognos Analytics *(keep)*
-5. Planning Analytics *(keep)*
-6. IBM DataStage *(keep)*
-7. IBM Netezza Performance Server *(keep)*
-8. watsonx.data intelligence *(new)*
-9. watsonx.data integration *(new)*
-— drop Cognos Controller, IBM MDM
+The four product detail pages are fully data-driven through `ProductDetail` in `src/content/solutions.ts` and rendered by:
 
-**Automation & FinOps** (3, all keep): Apptio · Instana · Turbonomic
+- `ProductHeroSection` — light, breadcrumb + title + tagline
+- `ProductOverviewSection` — 2-col: prose left, numbered capabilities list right
+- `ProductUseCasesSection` — light grey 4-up card grid
+- `ProductWhyTechDSection` — 2-col: bulleted points + stat callouts
+- `ProductCtaSection` — already uses the dark panel via `PageFinalCtaSection`
 
-**Security & Compliance** (3)
-1. IBM Guardium *(keep)*
-2. IBM QRadar *(keep)*
-3. IBM Resilient *(keep — relabel as "IBM Resilient (QRadar SOAR)")*
-— drop IBM MDM, IBM Data Replication
+Visual rhythm today: light → light → light(grey) → light → dark CTA. It's flat. Adding one dark panel mid-page (Key Capabilities) breaks the monotony and earns its weight, especially since capabilities are the densest, most scannable list on the page.
 
-**Hybrid Cloud & Infrastructure** — *removed entirely*
+## Step 1 — Extract the shared dark panel
 
----
+New file: `src/components/shared/DarkGlowPanel.tsx`
 
-## Changes by file
+A single primitive that owns the cyan-on-secondary background system (the gradient base + conic shimmer + 3 animated blobs + dotted overlay + ring + shadow). Pure presentational wrapper — children render on top.
 
-**`src/content/solutions.ts`**
-- Delete the 9 removed product entries.
-- Delete the entire `hybrid-cloud` Solution.
-- Add 5 new product entries with `name`, `tagline`, `description`, `link` (internal slug), `vendorUrl`, and full `detail` block (overview / capabilities / use cases) drafted in TechD's existing voice.
-- Reorder products inside each practice to the order above.
-- Rename watsonx.data card title (drop "/ Cloud Pak for Data").
-- Update Data & Analytics `description` / `pitch` / `highlights` to reflect the new line-up.
-- Update Security & Compliance `description` to drop MDM and Data Replication mentions.
+```tsx
+interface Props {
+  children: React.ReactNode;
+  /** "vivid" = featured-card intensity, "soft" = CTA intensity. Default "soft". */
+  intensity?: "vivid" | "soft";
+  className?: string;          // outer wrapper extras
+  rounded?: string;            // override radius (default rounded-3xl)
+}
+```
 
-**`src/content/solutions-extras.ts`** — remove `hybrid-cloud` key + `APPROACH_HYBRID`.
+Two intensities so we keep both existing looks:
+- `vivid` matches `ProductsGridSection` featured card (blob alphas ~0.75–0.9, shimmer 0.5–0.7)
+- `soft` matches `PageFinalCtaSection` (blob alphas ~0.3–0.4, shimmer ~0.25–0.35)
 
-**`src/content/practice-motifs.ts`** — remove `hybrid-cloud` motif.
+Respects `prefers-reduced-motion` (already handled via `motion-reduce:[&_*]:!animate-none`).
 
-**`src/content/site.ts`** — remove Hybrid Cloud from Solutions nav dropdown and footer.
+Then refactor the two existing call-sites to use `<DarkGlowPanel intensity="vivid">` and `<DarkGlowPanel intensity="soft">` so we delete ~80 lines of duplicated JSX without any visual change. Verify by eye on `/solutions/ai-generative` (featured card) and the CTA at the bottom.
 
-**`src/app/routes.tsx`**
-- Delete `/solutions/hybrid-cloud` route + `HybridCloud` import.
-- Redirect `/solutions/hybrid-cloud` and `/solutions/hybrid-cloud/:product` → `/solutions/ai-generative`.
-- Add legacy redirects for the 9 removed product URLs → their parent practice page (protects inbound and Google-cached links).
+## Step 2 — Redesign Key Capabilities (AI & Generative product pages only)
 
-**`src/sections/home/SolutionsGridSection.tsx`**
-- Remove `HybridCloudFigure` import + `hybrid-cloud` entry from the `FIGURES` map.
-- Switch grid from `lg:grid-cols-3` to `lg:grid-cols-2` so 4 cards lay out cleanly (2×2). Confirm visually after.
-- Card chips auto-update from the reordered `SOLUTIONS` array.
+Replace the current right-column numbered list inside `ProductOverviewSection`. New layout:
 
-**Files to delete**
-- `src/pages/solutions/HybridCloud.tsx`
-- `src/components/shared/heroFigures/solutions/HybridCloudFigure.tsx`
-- Any `hybrid-cloud` branch in `PracticeFigure.tsx`, `PracticeIcon.tsx`, `motifs/index.ts`, `industries-extras.ts`, `services-extras.ts`, `FigureLab.tsx` — strip cleanly so TS compiles.
+- The Overview section stays a 2-col light section — prose left, but the right column becomes a compact "At a glance" panel (eyebrow + 2–3 bullet highlights + vendor link). This keeps the section calm.
+- Pull **Key Capabilities** out into its own dedicated full-width section between Overview and Use Cases.
+- That new section uses `<DarkGlowPanel intensity="vivid">` as the background.
+- Inside the panel: eyebrow + headline + a 2-column list of capabilities. Each row = mono index `01`, `02`… in `text-white/40`, capability text in `text-white` with `font-light leading-relaxed`, separated by `divide-y divide-white/10`. No icons, no boxes — same typography-led discipline as the rest of the site, just inverted on dark.
 
-**Docs**
-- Update `docs/rebuild/solutions.md` and `docs/REDIRECT-MAP.md` to match the new schema and redirects.
+```text
+┌────────── DarkGlowPanel (vivid) ─────────────┐
+│ KEY CAPABILITIES                             │
+│ What NeuralSeek delivers in production       │
+│                                              │
+│ 01  Automated RAG against 40+ LLMs ...       │
+│ 02  Cited, fact-checkable responses ...      │
+│ 03  mAIstro multi-agent canvas ...           │
+│ ...                                          │
+└──────────────────────────────────────────────┘
+```
 
----
+New file: `src/sections/products/ProductCapabilitiesSection.tsx`. `ProductOverviewSection` is trimmed to just the prose + at-a-glance side panel.
 
-## Out of scope
+Wired only on AI & Generative product pages. Easiest gate: add the new section to `ProductDetail.tsx` conditionally on `solution.id === "ai-generative"` so the other 3 practices keep the existing single-section overview until you greenlight rollout. (Once approved we can promote it to all practices in one edit.)
 
-- No copy rewrites on KEEP products.
-- No visible "New" badge anywhere (planning-only labels).
-- No changes to home hero/figures beyond what's needed for the build to pass.
+## Step 3 — Stop here, regroup
+
+You said start with one. After Step 2 you'll see the dark Key Capabilities panel live on the 4 AI pages. Then we decide separately how to refresh Overview / Use Cases / Why TechD — the shared `DarkGlowPanel` will already exist so any future sections that want this treatment are a one-liner.
+
+## Files
+
+**New**
+- `src/components/shared/DarkGlowPanel.tsx`
+- `src/sections/products/ProductCapabilitiesSection.tsx`
+
+**Modified**
+- `src/sections/solutions/ProductsGridSection.tsx` — swap inline layers for `<DarkGlowPanel intensity="vivid">`
+- `src/components/shared/page/PageFinalCtaSection.tsx` — swap inline layers for `<DarkGlowPanel intensity="soft">`
+- `src/sections/products/ProductOverviewSection.tsx` — drop the right-column capabilities list, replace with quiet "At a glance" panel
+- `src/pages/ProductDetail.tsx` — render `ProductCapabilitiesSection` between Overview and Use Cases when `solution.id === "ai-generative"`
+
+## Out of scope (this round)
+
+- Other 3 practices' product pages
+- Hero, Use Cases, Why TechD, CTA visual changes
+- Content edits in `solutions.ts`
+- Practice-page changes (`/solutions/ai-generative` itself)

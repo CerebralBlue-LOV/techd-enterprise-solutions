@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import type { CSSProperties } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import DarkGlowPanel from "@shared/DarkGlowPanel";
 import { Button } from "@ui/button";
 
 interface CtaLink {
@@ -25,19 +25,13 @@ interface Props {
   markerName?: string;
 }
 
-const panelBg: CSSProperties = {
-  background:
-    "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
-};
-
 const DEFAULT_PRIMARY: CtaLink = { label: "Talk to an expert", to: "/contact" };
 const DEFAULT_LEDE =
   "One conversation with a senior IBM-certified architect. No relay, no junior swap after signature.";
 
 /**
- * Shared Final CTA panel — animated cyan-on-dark with conic shimmer + blobs.
- * Standardized treatment lifted from Solutions. Primary CTA always `btn-glow`
- * and defaults to "Talk to an expert" → /contact (site-wide rule).
+ * Shared Final CTA panel — animated cyan-on-dark via DarkGlowPanel.
+ * Primary CTA always `btn-glow` and defaults to "Talk to an expert" → /contact.
  */
 export const PageFinalCtaSection = ({
   pageLabel,
@@ -52,54 +46,7 @@ export const PageFinalCtaSection = ({
     <SectionMarker page={pageLabel} name={markerName} />
     <div className="container-page">
       <Reveal>
-        <div
-          className="relative overflow-hidden rounded-3xl ring-1 ring-white/10 shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)] motion-reduce:[&_*]:!animate-none"
-          style={panelBg}
-        >
-          {/* Animated background layers */}
-          <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div
-              className="absolute -inset-1/2 opacity-30 animate-shimmer-rotate"
-              style={{
-                background:
-                  "conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / 0.35) 60deg, transparent 140deg, hsl(var(--primary) / 0.25) 240deg, transparent 320deg)",
-                filter: "blur(40px)",
-              }}
-            />
-            <div
-              className="absolute -top-1/4 -left-1/4 h-[80%] w-[80%] rounded-full animate-blob-a"
-              style={{
-                background:
-                  "radial-gradient(circle, hsl(var(--primary) / 0.4) 0%, transparent 60%)",
-                filter: "blur(50px)",
-              }}
-            />
-            <div
-              className="absolute top-0 -right-1/4 h-[75%] w-[75%] rounded-full animate-blob-b"
-              style={{
-                background:
-                  "radial-gradient(circle, hsl(var(--primary) / 0.35) 0%, transparent 65%)",
-                filter: "blur(60px)",
-              }}
-            />
-            <div
-              className="absolute -bottom-1/4 left-1/4 h-[70%] w-[70%] rounded-full animate-blob-c"
-              style={{
-                background:
-                  "radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 60%)",
-                filter: "blur(55px)",
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
-              style={{
-                backgroundImage:
-                  "radial-gradient(hsl(0 0% 100%) 1px, transparent 1px)",
-                backgroundSize: "3px 3px",
-              }}
-            />
-          </div>
-
+        <DarkGlowPanel intensity="soft">
           <div className="relative mx-auto max-w-3xl px-8 py-20 md:px-12 md:py-28 text-center">
             {eyebrow ? (
               <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
@@ -131,7 +78,7 @@ export const PageFinalCtaSection = ({
               ) : null}
             </div>
           </div>
-        </div>
+        </DarkGlowPanel>
       </Reveal>
     </div>
   </section>
