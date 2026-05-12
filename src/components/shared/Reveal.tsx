@@ -5,9 +5,16 @@ interface RevealProps {
   children: ReactNode;
   delay?: number;
   className?: string;
+  /** IntersectionObserver threshold (0-1). Defaults to 0.15. */
+  threshold?: number;
 }
 
-export const Reveal = ({ children, delay = 0, className }: RevealProps) => {
+export const Reveal = ({
+  children,
+  delay = 0,
+  className,
+  threshold = 0.15,
+}: RevealProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
@@ -23,11 +30,11 @@ export const Reveal = ({ children, delay = 0, className }: RevealProps) => {
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+      { threshold, rootMargin: "0px 0px -40px 0px" },
     );
     io.observe(node);
     return () => io.disconnect();
-  }, []);
+  }, [threshold]);
 
   const style: CSSProperties = { transitionDelay: `${delay}ms` };
 
