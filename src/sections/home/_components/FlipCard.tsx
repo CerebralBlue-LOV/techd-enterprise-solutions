@@ -83,7 +83,7 @@ export const FlipCard = ({
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {chips.map((chip) => {
                   const baseClass =
-                    "rounded-full border border-border bg-background/60 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-secondary transition-colors";
+                    "rounded-md border border-border bg-background/60 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-secondary transition-colors";
                   if (chip.to && chip.external) {
                     return (
                       <a
@@ -118,12 +118,12 @@ export const FlipCard = ({
               {to ? (
                 <Link
                   to={to}
-                  className="mt-auto inline-flex w-fit items-center rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)] transition-transform hover:-translate-y-0.5"
+                  className="mt-auto inline-flex w-fit items-center rounded-md bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)] transition-transform hover:-translate-y-0.5"
                 >
                   {ctaLabel}
                 </Link>
               ) : (
-                <span className="mt-auto inline-flex w-fit items-center rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)]">
+                <span className="mt-auto inline-flex w-fit items-center rounded-md bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-[0_8px_20px_-10px_hsl(var(--primary)/0.6)]">
                   {ctaLabel}
                 </span>
               )}
