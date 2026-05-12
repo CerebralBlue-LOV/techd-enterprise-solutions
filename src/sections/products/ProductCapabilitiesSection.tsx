@@ -26,7 +26,7 @@ export const ProductCapabilitiesSection = ({ product }: Props) => {
       <SectionMarker page="Product" name={`${product.name} — Key Capabilities`} />
       <div className="container-page">
         <Reveal>
-          <DarkGlowPanel intensity="vivid">
+          <DarkGlowPanel intensity="medium">
             <div className="relative px-8 py-16 md:px-14 md:py-20 lg:px-16 lg:py-24">
               <div className="max-w-3xl">
                 <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
