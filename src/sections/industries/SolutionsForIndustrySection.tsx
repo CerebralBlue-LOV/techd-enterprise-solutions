@@ -1,5 +1,6 @@
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import SectionHeading from "@shared/SectionHeading";
 import { type Industry } from "@content/industries";
 import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 import { SOLUTIONS } from "@content/solutions";
