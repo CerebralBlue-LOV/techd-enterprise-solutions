@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, FileWarning, FlaskConical, ImageOff } from "lucide-react";
+import { ArrowUpRight, FlaskConical, ImageOff } from "lucide-react";
 import Layout from "@layout/Layout";
 
 const LAB_ROUTES = [
@@ -25,53 +25,6 @@ const LAB_ROUTES = [
     name: "Logo Lab",
     blurb:
       "Customer logo QA tool — drag to reorder, pick size presets, export diff back to site.ts.",
-  },
-];
-
-const DEAD_CODE: { path: string; note: string }[] = [
-  {
-    path: "src/sections/solutions/CerebralBlueToolsSection.tsx",
-    note: "Never imported by any page",
-  },
-  {
-    path: "src/components/shared/HoneycombHeroBackdrop.tsx",
-    note: "Never imported — prototype backdrop",
-  },
-  {
-    path: "src/sections/home/_components/SolutionCard.tsx",
-    note: "Superseded by FlipCard in SolutionsGridSection",
-  },
-  {
-    path: "src/sections/home/_components/PracticeIcon.tsx",
-    note: "Earlier icon iteration — no longer imported",
-  },
-  {
-    path: "src/sections/industries/_components/IndustryClusterScene.tsx",
-    note: "Prototype — IndustryStackingCubeScene is live",
-  },
-  {
-    path: "src/sections/industries/_components/IndustryFloorScene.tsx",
-    note: "Prototype — IndustryStackingCubeScene is live",
-  },
-  {
-    path: "src/sections/industries/_components/IndustryPillarsScene.tsx",
-    note: "Prototype — IndustryStackingCubeScene is live",
-  },
-  {
-    path: "src/sections/industries/_components/IndustryRingsScene.tsx",
-    note: "Prototype — IndustryStackingCubeScene is live",
-  },
-  {
-    path: "src/sections/industries/_components/IndustrySpireScene.tsx",
-    note: "Prototype — IndustryStackingCubeScene is live",
-  },
-  {
-    path: "src/sections/solutions/_components/PracticeConstellationScene.tsx",
-    note: "Prototype — PracticeWireframeScene is live",
-  },
-  {
-    path: "src/sections/solutions/_components/PracticeIndustriesCarousel.tsx",
-    note: "Never imported — prototype carousel",
   },
 ];
 
@@ -110,9 +63,8 @@ const AdminLab = () => (
         Admin Lab
       </h1>
       <p className="mt-4 max-w-2xl text-muted-foreground font-light">
-        Internal hub for design labs, dead-code inventory, and orphaned assets. Not linked in
-        navigation — accessible at{" "}
-        <code className="text-xs bg-muted px-1.5 py-0.5 rounded">/admin-lab</code>.
+        Internal hub for design labs and orphaned assets. Not linked in navigation — accessible
+        at <code className="text-xs bg-muted px-1.5 py-0.5 rounded">/admin-lab</code>.
       </p>
     </div>
 
@@ -146,40 +98,6 @@ const AdminLab = () => (
       </div>
     </section>
 
-    {/* ── Dead code inventory ── */}
-    <section className="border-t border-border">
-      <div className="container-page py-10">
-        <div className="flex items-center gap-3 mb-2">
-          <FileWarning className="size-4 text-primary" />
-          <h2 className="text-xl font-bold text-secondary">Dead code</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-6 max-w-2xl">
-          Components that exist in the repo but are not imported by any page. Review before
-          deleting — some may be intentional prototypes.
-        </p>
-        <div className="rounded-xl border border-border overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/40">
-                <th className="text-left px-5 py-3 font-medium text-secondary">File path</th>
-                <th className="text-left px-5 py-3 font-medium text-secondary">Note</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {DEAD_CODE.map((item) => (
-                <tr key={item.path} className="hover:bg-muted/20 transition-colors">
-                  <td className="px-5 py-3.5">
-                    <code className="text-xs text-secondary break-all">{item.path}</code>
-                  </td>
-                  <td className="px-5 py-3.5 text-muted-foreground font-light">{item.note}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
     {/* ── Deprecated logos ── */}
     <section className="border-t border-border">
       <div className="container-page py-10">
@@ -192,8 +110,9 @@ const AdminLab = () => (
           <code className="text-xs bg-muted px-1.5 py-0.5 rounded">
             public/logos/deprecated/
           </code>
-          . Not referenced in <code className="text-xs bg-muted px-1.5 py-0.5 rounded">site.ts</code> and
-          not displayed in LogoStrip. Keep until PM confirms they can be removed from the repo.
+          . Not referenced in{" "}
+          <code className="text-xs bg-muted px-1.5 py-0.5 rounded">site.ts</code> and not
+          displayed in LogoStrip. Keep until PM confirms they can be removed from the repo.
         </p>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
           {DEPRECATED_LOGOS.map((file) => {
