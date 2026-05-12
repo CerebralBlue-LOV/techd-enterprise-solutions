@@ -5,7 +5,7 @@ import ParticleOrbit from "./_components/ParticleOrbit";
 import { IBMPlatinumBadge } from "@shared/IBMPlatinumBadge";
 
 export const WhyTechDSection = () => (
-  <section className="section bg-muted/40 overflow-hidden">
+  <section id="why-techd" className="section bg-muted/40 overflow-hidden">
     <SectionMarker page="Home" name="Why TechD" />
     <div className="container-page">
       {/* Heading above both columns */}

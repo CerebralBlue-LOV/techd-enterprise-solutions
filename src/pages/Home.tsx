@@ -33,9 +33,9 @@ const Home = () => (
     <WhyTechDSection />
       <PageFinalCtaSection
         pageLabel="Home"
-        eyebrow="Ready to talk?"
-        title="Talk to an expert."
+        eyebrow="Start the engagement"
         lede="30-minute conversation with a senior IBM-certified architect. No sales pass-through, no slide deck. Just engineering."
+        secondary={{ label: "See our solutions", to: "/#solutions" }}
       />
   </Layout>
 );

@@ -29,7 +29,7 @@ export const EngineeredFieldSection = () => (
     </Suspense>
 
     {/* Sub-section: Industries grid — six regulated sectors. */}
-    <section className="section relative z-10">
+    <section id="industries" className="section relative z-10">
       <SectionMarker page="Home" name="Industries Grid" />
       <div className="container-page">
         <Reveal>
@@ -47,7 +47,7 @@ export const EngineeredFieldSection = () => (
     </section>
 
     {/* Sub-section: Featured case study — IBM-published, dark card. */}
-    <section className="section relative z-10">
+    <section id="case-study" className="section relative z-10">
       <SectionMarker page="Home" name="Featured Case Study" />
       <div className="container-page">
         <Reveal>

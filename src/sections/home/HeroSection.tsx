@@ -18,7 +18,7 @@ const HeroParticleField = lazy(
  *          Keep min-h-[88vh] so the hero dominates first paint.
  */
 export const HeroSection = () => (
-  <section className="relative overflow-hidden min-h-[80vh] md:min-h-[88vh] flex items-center">
+  <section id="hero" className="relative overflow-hidden min-h-[80vh] md:min-h-[88vh] flex items-center">
     <SectionMarker page="Home" name="Hero" />
     <HeroBackdrop />
     <Suspense fallback={null}>

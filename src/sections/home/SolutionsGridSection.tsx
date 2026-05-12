@@ -23,7 +23,7 @@ const FIGURES: Record<string, { Figure: ComponentType; backTitle: string; footer
  * /solutions/* hero backdrops.
  */
 export const SolutionsGridSection = () => (
-  <section className="section">
+  <section id="solutions" className="section">
     <SectionMarker page="Home" name="Solutions Grid" />
     <div className="container-page">
       <Reveal>
