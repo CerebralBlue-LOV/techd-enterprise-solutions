@@ -39,19 +39,16 @@ const ClientCard = ({ client }: { client: ResolvedClient }) => {
         url && "cursor-pointer",
       )}
     >
-      <div className="flex h-12 w-full items-center justify-start">
+      <div className="flex h-20 w-full items-center justify-center rounded-xl bg-white px-4">
         {c?.logo ? (
           <img
             src={`${import.meta.env.BASE_URL}${c.logo.replace(/^\//, "")}`}
             alt={`${c.name} logo`}
             loading="lazy"
-            className={cn(
-              c.logoClass ?? "h-9 md:h-10",
-              "w-auto max-w-[120px] object-contain brightness-0 invert opacity-90 transition-opacity duration-300 group-hover:opacity-100",
-            )}
+            className="max-h-10 md:max-h-12 w-auto max-w-[160px] object-contain"
           />
         ) : (
-          <span className="font-bold text-white/80 text-2xl tracking-tight leading-none">
+          <span className="font-bold text-secondary text-2xl tracking-tight leading-none">
             {initials}
           </span>
         )}
@@ -102,7 +99,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
               <dl className="flex gap-12 pt-2">
                 <div className="flex flex-col gap-1">
                   <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                    Active clients
+                    Featured clients
                   </dt>
                   <dd className="text-4xl font-bold text-white leading-none">
                     {resolved.length}

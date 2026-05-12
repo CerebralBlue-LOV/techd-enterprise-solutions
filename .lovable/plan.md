@@ -1,94 +1,50 @@
-# Improve AI & Generative product detail pages
+## Problem recap
 
-Scope: only the four product detail pages under `/solutions/ai-generative/*` (NeuralSeek, watsonx.ai, watsonx, watsonx Orchestrate). Practice and other practices stay untouched.
+The current treatment forces every logo through `brightness-0 invert` so it becomes a flat white silhouette on the dark card. That works for simple wordmarks but destroys detailed/crest logos (Harvard, Penn State, NUS, Stony Brook, NYIT, Netcare). Per-logo opt-outs would create two visual languages on the same grid — inconsistent.
 
-## What I found
+## Proposed solution — one uniform treatment for all logos
 
-Right now the same dark animated cyan-on-secondary panel (rotating conic shimmer + 3 drifting blobs + dotted overlay) is duplicated in two places:
-
-- `src/sections/solutions/ProductsGridSection.tsx` (featured product carousel, full-fidelity)
-- `src/components/shared/page/PageFinalCtaSection.tsx` (final CTA, lower-opacity variant)
-
-Both build the same layer stack inline. There is no shared primitive — duplicated CSS is the reason every section that wants this look re-implements it.
-
-The four product detail pages are fully data-driven through `ProductDetail` in `src/content/solutions.ts` and rendered by:
-
-- `ProductHeroSection` — light, breadcrumb + title + tagline
-- `ProductOverviewSection` — 2-col: prose left, numbered capabilities list right
-- `ProductUseCasesSection` — light grey 4-up card grid
-- `ProductWhyTechDSection` — 2-col: bulleted points + stat callouts
-- `ProductCtaSection` — already uses the dark panel via `PageFinalCtaSection`
-
-Visual rhythm today: light → light → light(grey) → light → dark CTA. It's flat. Adding one dark panel mid-page (Key Capabilities) breaks the monotony and earns its weight, especially since capabilities are the densest, most scannable list on the page.
-
-## Step 1 — Extract the shared dark panel
-
-New file: `src/components/shared/DarkGlowPanel.tsx`
-
-A single primitive that owns the cyan-on-secondary background system (the gradient base + conic shimmer + 3 animated blobs + dotted overlay + ring + shadow). Pure presentational wrapper — children render on top.
-
-```tsx
-interface Props {
-  children: React.ReactNode;
-  /** "vivid" = featured-card intensity, "soft" = CTA intensity. Default "soft". */
-  intensity?: "vivid" | "soft";
-  className?: string;          // outer wrapper extras
-  rounded?: string;            // override radius (default rounded-3xl)
-}
-```
-
-Two intensities so we keep both existing looks:
-- `vivid` matches `ProductsGridSection` featured card (blob alphas ~0.75–0.9, shimmer 0.5–0.7)
-- `soft` matches `PageFinalCtaSection` (blob alphas ~0.3–0.4, shimmer ~0.25–0.35)
-
-Respects `prefers-reduced-motion` (already handled via `motion-reduce:[&_*]:!animate-none`).
-
-Then refactor the two existing call-sites to use `<DarkGlowPanel intensity="vivid">` and `<DarkGlowPanel intensity="soft">` so we delete ~80 lines of duplicated JSX without any visual change. Verify by eye on `/solutions/ai-generative` (featured card) and the CTA at the bottom.
-
-## Step 2 — Redesign Key Capabilities (AI & Generative product pages only)
-
-Replace the current right-column numbered list inside `ProductOverviewSection`. New layout:
-
-- The Overview section stays a 2-col light section — prose left, but the right column becomes a compact "At a glance" panel (eyebrow + 2–3 bullet highlights + vendor link). This keeps the section calm.
-- Pull **Key Capabilities** out into its own dedicated full-width section between Overview and Use Cases.
-- That new section uses `<DarkGlowPanel intensity="vivid">` as the background.
-- Inside the panel: eyebrow + headline + a 2-column list of capabilities. Each row = mono index `01`, `02`… in `text-white/40`, capability text in `text-white` with `font-light leading-relaxed`, separated by `divide-y divide-white/10`. No icons, no boxes — same typography-led discipline as the rest of the site, just inverted on dark.
+Give every card a **white logo plate** at the top, and render every logo in its **original colors**. The card body (name + note) stays on the dark panel.
 
 ```text
-┌────────── DarkGlowPanel (vivid) ─────────────┐
-│ KEY CAPABILITIES                             │
-│ What NeuralSeek delivers in production       │
-│                                              │
-│ 01  Automated RAG against 40+ LLMs ...       │
-│ 02  Cited, fact-checkable responses ...      │
-│ 03  mAIstro multi-agent canvas ...           │
-│ ...                                          │
-└──────────────────────────────────────────────┘
+┌─────────────────────────────┐
+│ ░░░░░ white plate ░░░░░░░░ │  ← logo in original colors, centered
+│ ░░░░░ [   LOGO   ] ░░░░░░░ │
+├─────────────────────────────┤
+│ Harvard University          │  ← dark card body, white text
+│ Ivy League — research       │
+│ computing and analytics.    │
+└─────────────────────────────┘
 ```
 
-New file: `src/sections/products/ProductCapabilitiesSection.tsx`. `ProductOverviewSection` is trimmed to just the prose + at-a-glance side panel.
+Why this works:
+- **Single rule** — no per-logo flags, no two visual modes. Every logo gets the same plate, same padding, same height.
+- **Brand-safe** — original colors preserved everywhere (matters for IBM partner logos, university crests, financial brands).
+- **Reads on dark** — white plate gives every logo guaranteed contrast.
+- **Stripe/Linear-ish** — these sites use exactly this pattern (logo tile + dark caption) for partner / customer grids.
 
-Wired only on AI & Generative product pages. Easiest gate: add the new section to `ProductDetail.tsx` conditionally on `solution.id === "ai-generative"` so the other 3 practices keep the existing single-section overview until you greenlight rollout. (Once approved we can promote it to all practices in one edit.)
+### Implementation details
 
-## Step 3 — Stop here, regroup
+In `src/sections/industries/IndustryClientsSection.tsx`, inside `ClientCard`:
 
-You said start with one. After Step 2 you'll see the dark Key Capabilities panel live on the 4 AI pages. Then we decide separately how to refresh Overview / Use Cases / Why TechD — the shared `DarkGlowPanel` will already exist so any future sections that want this treatment are a one-liner.
+- Replace the current logo cell with a fixed-height plate:
+  - `bg-white rounded-xl flex items-center justify-center h-20 w-full px-4`
+  - Inside: `<img>` with `max-h-10 md:max-h-12 w-auto object-contain` (override the per-customer `logoClass` for this context — we control sizing here so the grid stays even).
+  - Drop `brightness-0 invert` entirely.
+- Body section below (name + note) stays as it is on the dark card.
+- Initials fallback (when no logo): same white plate, but render initials in `text-secondary` instead of white.
+- Keep the existing hover: card border lifts to `white/25`, slight `-translate-y-0.5`, name shifts to `text-primary`. No change to the plate itself.
 
-## Files
+### Stat label rename
 
-**New**
-- `src/components/shared/DarkGlowPanel.tsx`
-- `src/sections/products/ProductCapabilitiesSection.tsx`
+In the left column, change `"Active clients"` → **"Featured clients"** (or *Selected* / *Showcased* if you prefer one of those).
 
-**Modified**
-- `src/sections/solutions/ProductsGridSection.tsx` — swap inline layers for `<DarkGlowPanel intensity="vivid">`
-- `src/components/shared/page/PageFinalCtaSection.tsx` — swap inline layers for `<DarkGlowPanel intensity="soft">`
-- `src/sections/products/ProductOverviewSection.tsx` — drop the right-column capabilities list, replace with quiet "At a glance" panel
-- `src/pages/ProductDetail.tsx` — render `ProductCapabilitiesSection` between Overview and Use Cases when `solution.id === "ai-generative"`
+### Files touched
 
-## Out of scope (this round)
+- `src/sections/industries/IndustryClientsSection.tsx` — rewrite the logo cell, drop the invert filter, add white plate; rename the stat label.
+- No changes needed to `src/content/site.ts` or the `Customer` type.
 
-- Other 3 practices' product pages
-- Hero, Use Cases, Why TechD, CTA visual changes
-- Content edits in `solutions.ts`
-- Practice-page changes (`/solutions/ai-generative` itself)
+## Question before I build
+
+1. Confirm the new label: **Featured clients**, *Selected clients*, or *Showcased clients*?
+2. Plate style preference: pure white (`bg-white`) for max contrast, or a softer off-white (`bg-white/95` with a faint inner shadow) to feel less harsh against the dark panel? I'd default to pure white for clarity unless you say otherwise.
