@@ -27,7 +27,7 @@ export const ProductHeroSection = ({ practice, product }: Props) => (
         {/* Breadcrumb */}
         <nav
           aria-label="Breadcrumb"
-          className="mb-8 flex items-center gap-2 text-sm text-muted-foreground"
+          className="mb-3 flex items-center gap-2 text-sm text-muted-foreground"
         >
           <Link
             to={`/solutions/${practice.id}`}
