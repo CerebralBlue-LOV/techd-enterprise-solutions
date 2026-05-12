@@ -101,7 +101,6 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { id: "ai-generative",       proof: "AI readiness reviews and watsonx-grounded use-case selection." },
       { id: "data-analytics",      proof: "Lakehouse, Cognos, and Planning Analytics roadmaps for regulated enterprises." },
       { id: "security-compliance", proof: "Guardium and QRadar posture assessments against HIPAA, FedRAMP, NAIC, and NERC-CIP." },
-      { id: "hybrid-cloud",        proof: "Workload-by-workload cloud strategy across IBM Cloud, AWS, Azure, and on-prem." },
     ],
     industries: [
       { id: "healthcare",      proof: "HIPAA-aligned data and AI roadmaps for major U.S. health systems." },
@@ -141,7 +140,6 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { id: "ai-generative",       proof: "watsonx.ai builds — RAG pipelines, vector store design, prompt governance, and MLOps in production." },
       { id: "data-analytics",      proof: "Db2, DataStage, Netezza, watsonx.data, Cognos, and Planning Analytics builds and migrations." },
       { id: "security-compliance", proof: "Guardium, QRadar, and Resilient deployments — use-case rule development and compliance report validation." },
-      { id: "hybrid-cloud",        proof: "OpenShift cluster builds, Cloud Pak for Data deployments, and IBM Data Replication-led zero-downtime migrations." },
       { id: "automation-finops",   proof: "Instana, Apptio, and Turbonomic deployment and integration into your ITSM and CFO dashboards." },
     ],
     industries: [
@@ -183,7 +181,6 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { id: "ai-generative",       proof: "watsonx.ai operations — model drift monitoring, prompt library updates, RAG pipeline health." },
       { id: "security-compliance", proof: "Guardium and QRadar SOC operations and rule tuning for regulated estates." },
       { id: "automation-finops",   proof: "Instana, Apptio, and Turbonomic operations with continuous cost optimization." },
-      { id: "hybrid-cloud",        proof: "OpenShift cluster operations and Day 2 platform engineering across hybrid estates." },
     ],
     industries: [
       { id: "healthcare",       proof: "HIPAA-grade managed operations for major U.S. health systems." },
@@ -220,10 +217,9 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     ],
     approach: APPROACH_TRAINING,
     solutions: [
-      { id: "ai-generative",       proof: "watsonx.ai, watsonx Assistant, and SPSS Modeler enablement for data science and platform teams." },
+      { id: "ai-generative",       proof: "watsonx, watsonx.ai, watsonx Orchestrate, and SPSS Modeler enablement for data science and platform teams." },
       { id: "data-analytics",      proof: "Cognos Analytics, Planning Analytics, Db2, and DataStage training across analyst, developer, and admin tracks." },
       { id: "security-compliance", proof: "Guardium administration and use-case development training for security operations teams." },
-      { id: "hybrid-cloud",        proof: "Cloud Pak for Data and OpenShift training for platform engineering teams." },
     ],
     industries: [
       { id: "healthcare",       proof: "Cognos and Planning Analytics enablement for clinical and operational analytics teams." },

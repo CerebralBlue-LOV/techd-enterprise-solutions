@@ -39,7 +39,6 @@ const SOLUTION_SLOTS = [
   { label: "Data & Analytics", code: "DataAnalyticsFigure", Figure: DataAnalyticsFigure },
   { label: "Automation & FinOps", code: "AutomationFinOpsFigure", Figure: AutomationFinOpsFigure },
   { label: "Security & Compliance", code: "SecurityComplianceFigure", Figure: SecurityComplianceFigure },
-  { label: "Hybrid Cloud", code: "HybridCloudFigure", Figure: HybridCloudFigure },
 ] as const;
 
 type Vec3 = [number, number, number];

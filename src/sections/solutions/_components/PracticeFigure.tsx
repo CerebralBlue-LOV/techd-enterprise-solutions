@@ -13,16 +13,12 @@ const AutomationFinOpsFigure = lazy(
 const SecurityComplianceFigure = lazy(
   () => import("@shared/heroFigures/solutions/SecurityComplianceFigure")
 );
-const HybridCloudFigure = lazy(
-  () => import("@shared/heroFigures/solutions/HybridCloudFigure")
-);
 
 const FIGURES: Record<Solution["id"], ComponentType> = {
   "ai-generative": AiGenerativeFigure,
   "data-analytics": DataAnalyticsFigure,
   "automation-finops": AutomationFinOpsFigure,
   "security-compliance": SecurityComplianceFigure,
-  "hybrid-cloud": HybridCloudFigure,
 };
 
 interface Props {

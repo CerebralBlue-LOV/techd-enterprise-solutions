@@ -3,7 +3,6 @@ import plexusBrain from "@/assets/plexus/plexus-brain.webp";
 import plexusDatabase from "@/assets/plexus/plexus-database.webp";
 import plexusGears from "@/assets/plexus/plexus-gears.webp";
 import plexusShield from "@/assets/plexus/plexus-shield.webp";
-import plexusCloud from "@/assets/plexus/plexus-cloud.webp";
 
 export type PracticeMotif = { image: string; alt: string; variant: MotifVariant };
 
@@ -12,5 +11,4 @@ export const PRACTICE_MOTIFS: Record<string, PracticeMotif> = {
   "data-analytics":      { image: plexusDatabase, alt: "Neural plexus database", variant: "data" },
   "automation-finops":   { image: plexusGears,    alt: "Neural plexus gears",    variant: "automation" },
   "security-compliance": { image: plexusShield,   alt: "Neural plexus shield",   variant: "security" },
-  "hybrid-cloud":        { image: plexusCloud,    alt: "Neural plexus cloud",    variant: "cloud" },
 };
