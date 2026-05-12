@@ -243,7 +243,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
           <Reveal className="lg:col-span-7">
             <DarkGlowPanel
               intensity="vivid"
-              ref={cardRef as never}
+              ref={cardRef}
               role="region"
               aria-roledescription="carousel"
               aria-label={`${practice.name} products`}
