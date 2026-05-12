@@ -46,13 +46,6 @@ const APPROACH_SECURITY: ApproachStep[] = [
   { step: "Operate",   detail: "Ongoing rule tuning, threat intelligence updates, and incident response support — keeping pace with your evolving regulatory and threat environment." },
 ];
 
-const APPROACH_HYBRID: ApproachStep[] = [
-  { step: "Discover", detail: "Inventory workloads by compliance tier, infrastructure dependency, and cloud-readiness — across on-premises, mainframe, and existing cloud environments." },
-  { step: "Architect", detail: "Hybrid topology design — OpenShift as the common runtime, IBM Cloud or multi-cloud for regulated services, mainframe data integration without disruption." },
-  { step: "Deliver",   detail: "Cluster build, storage configuration, workload migration, and a Day 2 operations model your platform team can own." },
-  { step: "Operate",   detail: "Cluster health monitoring, capacity planning, and platform engineering support across your full hybrid estate." },
-];
-
 export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   "ai-generative": {
     whyPoints: [

@@ -9,7 +9,7 @@ import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGene
 import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
 import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
 import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
-import HybridCloudFigure from "@/components/shared/heroFigures/solutions/HybridCloudFigure";
+
 
 const ResourceTileStackScene = lazy(
   () => import("@/sections/resources/_components/ResourceTileStackScene"),
