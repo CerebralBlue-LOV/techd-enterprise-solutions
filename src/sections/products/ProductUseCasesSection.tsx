@@ -12,7 +12,7 @@ export const ProductUseCasesSection = ({ product }: Props) => {
   if (!useCases?.length) return null;
 
   return (
-    <section className="section bg-muted/40">
+    <section id="use-cases" className="section bg-muted/40 scroll-mt-24">
       <SectionMarker page="Product" name={`${product.name} — Use Cases`} />
       <div className="container-page">
         <Reveal>

@@ -14,7 +14,7 @@ export const ProductWhyTechDSection = ({ product }: Props) => {
   if (!whyTechD?.length) return null;
 
   return (
-    <section className="section border-t border-border">
+    <section id="why-techd" className="section border-t border-border scroll-mt-24">
       <SectionMarker page="Product" name={`${product.name} — Why TechD`} />
       <div className="container-page">
         <div className="grid gap-16 lg:grid-cols-2">
