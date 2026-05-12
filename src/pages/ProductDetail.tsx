@@ -46,7 +46,9 @@ const ProductDetail = () => {
       )}
       <ProductUseCasesSection product={product} />
       <ProductWhyTechDSection product={product} />
-      <ProductCtaSection practice={solution} product={product} />
+      <div id="talk" className="scroll-mt-24">
+        <ProductCtaSection practice={solution} product={product} />
+      </div>
     </Layout>
   );
 };

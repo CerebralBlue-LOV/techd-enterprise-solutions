@@ -19,7 +19,7 @@ export const ProductOverviewSection = ({ product, hideCapabilities }: Props) => 
   const { overview, capabilities } = product.detail;
 
   return (
-    <section className="section border-t border-border">
+    <section id="overview" className="section border-t border-border scroll-mt-24">
       <SectionMarker page="Product" name={`${product.name} — Overview`} />
       <div className="container-page">
         {hideCapabilities ? (

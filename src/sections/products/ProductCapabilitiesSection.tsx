@@ -22,7 +22,7 @@ export const ProductCapabilitiesSection = ({ product }: Props) => {
   const right = capabilities.slice(mid);
 
   return (
-    <section className="section bg-muted/30">
+    <section id="capabilities" className="section bg-muted/30 scroll-mt-24">
       <SectionMarker page="Product" name={`${product.name} — Key Capabilities`} />
       <div className="container-page">
         <Reveal>
