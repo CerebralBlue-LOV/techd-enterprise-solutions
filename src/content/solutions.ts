@@ -91,6 +91,7 @@ export const SOLUTIONS: Solution[] = [
         description:
           "IBM's enterprise virtual agent platform for deploying AI-powered assistants across web, mobile, phone, and internal tools — with no-hallucination guardrails and deep integration hooks.",
         link: { kind: "internal", slug: "watsonx-assistant" },
+        vendorUrl: "https://www.ibm.com/products/watsonx-assistant",
         detail: {
           overview: [
             "watsonx Assistant is IBM's enterprise conversational AI platform. It handles customer-facing and employee-facing virtual agents with a low-hallucination architecture: answers are grounded in your verified content, not generated from open web data.",
