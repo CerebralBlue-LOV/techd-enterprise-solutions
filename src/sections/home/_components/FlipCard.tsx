@@ -72,12 +72,12 @@ export const FlipCard = ({
 
         {/* BACK */}
         <div className="flip-card-face flip-card-back">
-          <div className="relative h-full p-6">
+          <div className={`relative h-full ${compact ? "p-5" : "p-6"}`}>
             <div className="relative flex h-full flex-col">
-              <h3 className="text-lg font-bold leading-snug text-secondary">
+              <h3 className={`font-bold leading-snug text-secondary ${compact ? "text-base" : "text-lg"}`}>
                 {backTitle}
               </h3>
-              <p className="mt-3 text-sm font-light leading-relaxed text-secondary/80">
+              <p className={`mt-2 font-light leading-relaxed text-secondary/80 ${compact ? "text-xs line-clamp-3" : "text-sm mt-3"}`}>
                 {backBody}
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5">
