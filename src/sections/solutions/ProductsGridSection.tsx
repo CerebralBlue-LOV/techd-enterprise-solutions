@@ -361,7 +361,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                   })}
                 </div>
               </div>
-            </div>
+            </DarkGlowPanel>
           </Reveal>
         </div>
       </div>
