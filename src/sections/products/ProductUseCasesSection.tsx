@@ -19,10 +19,10 @@ export const ProductUseCasesSection = ({ product }: Props) => {
           <SectionHeading
             eyebrow="Use Cases"
             title="Where TechD delivers this in practice"
-            align="center"
+            align="left"
           />
         </Reveal>
-        <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2 max-w-5xl mx-auto">
+        <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
           {useCases.map((uc, i) => {
             const num = String(i + 1).padStart(2, "0");
             return (
@@ -36,7 +36,7 @@ export const ProductUseCasesSection = ({ product }: Props) => {
                       <div className="absolute inset-y-0 left-0 w-full bg-primary origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100" />
                     </div>
                   </div>
-                  <p className="text-secondary/90 text-base md:text-lg font-light leading-relaxed transition-colors duration-300 group-hover:text-secondary">
+                  <p className="text-base md:text-lg font-light leading-relaxed bg-gradient-to-r from-secondary/80 via-secondary/80 to-secondary/80 bg-clip-text text-transparent transition-all duration-500 ease-out group-hover:from-primary group-hover:via-secondary group-hover:to-secondary">
                     {uc}
                   </p>
                 </div>
