@@ -73,15 +73,14 @@ export const SolutionsForIndustrySection = ({ industry }: Props) => {
       <div className="container-page">
         {/* Header — quiet, hairline rule, same grammar as WhyIndustry */}
         <Reveal>
-          <div className="mb-10">
-            <h2 className="text-secondary text-xs font-bold tracking-[0.4em] uppercase">
-              Solutions · {industry.name}
-            </h2>
-            <div className="mt-4 h-[2px] w-12 bg-primary" />
-          </div>
+          <SectionHeading
+            eyebrow="Solutions"
+            title={`Built for ${industry.name.toLowerCase()}.`}
+            subtitle="The same four practices, configured to the regulatory and operational realities of your industry."
+          />
         </Reveal>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {rows.map(({ sol, proof }, i) => {
             const CAP = 6;
             const all = sol.products.map((p) => ({
