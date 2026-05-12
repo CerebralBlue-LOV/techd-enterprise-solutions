@@ -16,11 +16,6 @@ const LAB_ROUTES = [
       "3D scene / figure prototypes used in hero sections — industry cubes, practice wireframes, resource stacks.",
   },
   {
-    path: "/icon-lab",
-    name: "Icon Lab",
-    blurb: "Icon inventory and size-system QA across every practice and service icon.",
-  },
-  {
     path: "/logo-lab",
     name: "Logo Lab",
     blurb:
