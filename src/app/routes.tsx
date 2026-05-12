@@ -118,7 +118,7 @@ export const AppRoutes = () => (
 
     <Route path="/contact" element={<Contact />} />
     <Route path="/admin-lab" element={<AdminLab />} />
-    <Route path="/icon-lab" element={<IconLab />} />
+    
     <Route path="/logo-lab" element={<LogoLab />} />
     <Route path="/figure-lab" element={<FigureLab />} />
     <Route path="/section-lab" element={<SectionLab />} />
