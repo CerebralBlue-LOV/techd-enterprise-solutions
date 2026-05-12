@@ -48,13 +48,22 @@ export const SolutionsGridSection = () => (
                 footer={m.footer}
                 backTitle={m.backTitle}
                 backBody={s.pitch}
-                chips={s.products.map((p) => ({
-                  label: p.name,
-                  to: p.link.kind === "internal"
-                    ? `/solutions/${s.id}/${p.link.slug}`
-                    : p.link.url,
-                  external: p.link.kind === "external",
-                }))}
+                chips={(() => {
+                  const CAP = 6;
+                  const all = s.products.map((p) => ({
+                    label: p.name,
+                    to: p.link.kind === "internal"
+                      ? `/solutions/${s.id}/${p.link.slug}`
+                      : p.link.url,
+                    external: p.link.kind === "external",
+                  }));
+                  if (all.length <= CAP) return all;
+                  const extra = all.length - CAP;
+                  return [
+                    ...all.slice(0, CAP),
+                    { label: `+${extra} more`, to: `/solutions/${s.id}` },
+                  ];
+                })()}
                 ctaLabel={s.ctaLabel}
                 motif={<Figure />}
               />
