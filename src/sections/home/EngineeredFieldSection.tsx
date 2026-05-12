@@ -60,8 +60,8 @@ export const EngineeredFieldSection = () => (
               A US family-owned retailer rebuilt online shopping on IBM Db2,
               watsonx Assistant, and NeuralSeek.
             </h2>
-            <div className="relative mt-10 grid gap-8 md:grid-cols-3">
-              <div>
+            <div className="relative mt-10 grid gap-4 md:grid-cols-3">
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:border-primary hover:bg-white/[0.09]">
                 <div className="text-sm font-bold uppercase tracking-wider text-primary">
                   Personalization
                 </div>
@@ -70,7 +70,7 @@ export const EngineeredFieldSection = () => (
                   retrieval-augmented generation.
                 </p>
               </div>
-              <div>
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:border-primary hover:bg-white/[0.09]">
                 <div className="text-sm font-bold uppercase tracking-wider text-primary">
                   Service efficiency
                 </div>
@@ -78,7 +78,7 @@ export const EngineeredFieldSection = () => (
                   Call-center efficiency gains and reduced customer frustration.
                 </p>
               </div>
-              <div>
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 transition-all duration-300 hover:border-primary hover:bg-white/[0.09]">
                 <div className="text-sm font-bold uppercase tracking-wider text-primary">
                   Shopper insight
                 </div>

@@ -12,6 +12,7 @@ const ANCHORS = [
   { href: "#clients", label: "Clients" },
   { href: "#solutions", label: "Solutions" },
   { href: "#approach", label: "Approach" },
+  { href: "#outcomes", label: "Outcomes" },
 ];
 
 export const IndustryHeroSection = ({ industry }: Props) => {

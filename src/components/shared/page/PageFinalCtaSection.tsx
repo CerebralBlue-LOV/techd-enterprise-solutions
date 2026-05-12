@@ -23,6 +23,8 @@ interface Props {
   /** Optional secondary link (rendered as outline-style button). */
   secondary?: CtaLink;
   markerName?: string;
+  /** Section id for anchor links. Defaults to "cta". */
+  id?: string;
 }
 
 const DEFAULT_PRIMARY: CtaLink = { label: "Talk to an expert", to: "/contact" };
@@ -41,8 +43,9 @@ export const PageFinalCtaSection = ({
   primary = DEFAULT_PRIMARY,
   secondary,
   markerName = "Final CTA",
+  id = "cta",
 }: Props) => (
-  <section className="section bg-muted/30">
+  <section id={id} className="section bg-muted/30">
     <SectionMarker page={pageLabel} name={markerName} />
     <div className="container-page">
       <Reveal>

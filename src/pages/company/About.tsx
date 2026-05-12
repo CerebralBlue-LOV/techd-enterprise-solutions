@@ -47,7 +47,7 @@ const About = () => {
       />
 
       {/* Company description */}
-      <section className="section">
+      <section id="story" className="section">
         <SectionMarker page="Company / About" name="Story" />
         <div className="container-page">
           <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] items-start">
@@ -80,7 +80,7 @@ const About = () => {
       </section>
 
       {/* Leadership */}
-      <section className="section bg-muted/30">
+      <section id="leadership" className="section bg-muted/30">
         <SectionMarker page="Company / About" name="Leadership" />
         <div className="container-page">
           <Reveal>

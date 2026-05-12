@@ -63,7 +63,7 @@ const IBMPartnership = () => {
       />
 
       {/* What Platinum means */}
-      <section className="section">
+      <section id="what-platinum" className="section">
         <SectionMarker page="Company / IBM Partnership" name="What Platinum means" />
         <div className="container-page">
           <Reveal>
@@ -88,7 +88,7 @@ const IBMPartnership = () => {
       </section>
 
       {/* Practice specializations */}
-      <section className="section bg-muted/30">
+      <section id="specializations" className="section bg-muted/30">
         <SectionMarker page="Company / IBM Partnership" name="Specializations" />
         <div className="container-page">
           <Reveal>

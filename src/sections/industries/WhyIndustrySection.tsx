@@ -87,8 +87,7 @@ export const WhyIndustrySection = ({ industry }: Props) => {
           )}
         </div>
 
-        {/* Fading accent strip */}
-        <div className="mt-12 h-px w-full bg-gradient-to-r from-primary via-secondary to-transparent opacity-30" />
+
       </div>
     </section>
   );

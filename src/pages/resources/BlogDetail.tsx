@@ -48,7 +48,7 @@ const BlogDetail = () => {
       />
 
       {post.body && post.body.length > 0 && (
-        <section className="section">
+        <section id="content" className="section">
           <SectionMarker page="Resources / Blog" name="Detail Body" />
           <div className="container-page">
             <Reveal>

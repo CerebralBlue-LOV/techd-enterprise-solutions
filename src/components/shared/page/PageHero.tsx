@@ -39,6 +39,8 @@ interface Props {
   maxWidth?: string;
   /** H1 size class. Defaults to template-page size. */
   headlineSize?: string;
+  /** Section id for anchor links. Defaults to "hero". */
+  id?: string;
 }
 
 /**
@@ -63,6 +65,7 @@ export const PageHero = ({
   minHeight = "min-h-[70vh]",
   maxWidth = "max-w-4xl",
   headlineSize = "text-4xl md:text-5xl lg:text-6xl",
+  id = "hero",
 }: Props) => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null);
@@ -94,6 +97,7 @@ export const PageHero = ({
   return (
     <section
       ref={sectionRef}
+      id={id}
       className={`relative overflow-hidden ${minHeight} flex items-center`}
     >
       <SectionMarker page={pageLabel} name="Hero" />

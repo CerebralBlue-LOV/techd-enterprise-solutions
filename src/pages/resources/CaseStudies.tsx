@@ -28,7 +28,7 @@ const CaseStudies = () => (
     />
 
     {/* Card grid */}
-    <section className="section bg-muted/30">
+    <section id="list" className="section bg-muted/30">
       <SectionMarker page="Resources / Case Studies" name="List" />
       <div className="container-page">
         {items.length === 0 ? (

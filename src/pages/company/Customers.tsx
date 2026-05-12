@@ -58,7 +58,7 @@ const Customers = () => {
       />
 
       {/* Marquee strip */}
-      <section className="section bg-muted/30">
+      <section id="logos" className="section bg-muted/30">
         <SectionMarker page="Company / Customers" name="Logo strip" />
         <div className="container-page">
           <LogoStrip />
@@ -66,7 +66,7 @@ const Customers = () => {
       </section>
 
       {/* By industry */}
-      <section className="section">
+      <section id="by-industry" className="section">
         <SectionMarker page="Company / Customers" name="By industry" />
         <div className="container-page">
           <Reveal>

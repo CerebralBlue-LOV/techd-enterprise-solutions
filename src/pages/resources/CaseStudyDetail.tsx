@@ -45,7 +45,7 @@ const CaseStudyDetail = () => {
       />
 
       {resource.body && resource.body.length > 0 && (
-        <section className="section">
+        <section id="content" className="section">
           <SectionMarker page="Resources / Case Studies" name="Detail Body" />
           <div className="container-page">
             <Reveal>
