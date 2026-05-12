@@ -1,3 +1,4 @@
+import HoverGridBackdrop from "@shared/HoverGridBackdrop";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import { type Industry } from "@content/industries";
@@ -12,9 +13,11 @@ export const IndustryOutcomesSection = ({ industry }: Props) => {
   if (!extras?.stats?.length) return null;
 
   return (
-    <section id="outcomes" className="section bg-secondary scroll-mt-24">
+    <section id="outcomes" className="section bg-secondary scroll-mt-24 relative overflow-hidden">
+
+      <HoverGridBackdrop variant="dark" topRim={false} spotlightRadius={360} />
       <SectionMarker page={`Industries / ${industry.name}`} name="Outcomes" />
-      <div className="container-page">
+      <div className="container-page relative z-10">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] items-center">
           <Reveal>
             <p className="eyebrow mb-3">The proof, in one paragraph</p>
