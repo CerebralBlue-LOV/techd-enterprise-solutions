@@ -13,7 +13,7 @@ export const ProductOverviewSection = ({ product }: Props) => {
   const { overview, capabilities } = product.detail;
 
   return (
-    <section className="section">
+    <section className="section border-t border-border">
       <SectionMarker page="Product" name={`${product.name} — Overview`} />
       <div className="container-page">
         <div className="grid gap-16 lg:grid-cols-2">
