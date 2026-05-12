@@ -9,9 +9,11 @@ import { PRACTICE_MOTIFS } from "@content/practice-motifs";
 import { cn } from "@/lib/utils";
 
 /**
- * /solutions-for-industry-lab — internal preview page for the
- * "Solutions in this industry" section. Renders 4 design directions
- * side-by-side using Healthcare data so we can pick one to ship.
+ * /section-lab — internal lab for visual design experiments on real
+ * sections. Use it to iterate on motion, gradients, dark vs. light
+ * treatments, etc., without touching the live pages. Currently focused on
+ * the per-industry "Solutions in this industry" section, rendered with
+ * Healthcare data.
  */
 
 const extras = INDUSTRIES_EXTRAS["healthcare"];
