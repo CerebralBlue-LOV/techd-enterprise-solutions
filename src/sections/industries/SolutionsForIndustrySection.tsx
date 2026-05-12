@@ -80,7 +80,7 @@ export const SolutionsForIndustrySection = ({ industry }: Props) => {
           </div>
         </Reveal>
 
-        <div className="mt-4 grid gap-6 md:grid-cols-2">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {rows.map(({ sol, proof }, i) => {
             const CAP = 6;
             const all = sol.products.map((p) => ({
