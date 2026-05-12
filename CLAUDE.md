@@ -205,6 +205,19 @@ Use `/admin-lab` to review them visually.
 - Don't write or apply 410 redirects (see `docs/ARCHITECTURE.md` — spam was theme-level, not URL-based).
 - Don't reference files in `public/logos/deprecated/` from any component or content file — those are orphaned logos awaiting PM sign-off for deletion.
 
+## Content copy rules (when editing `src/content/`)
+
+Full guide: ClickUp — "Messaging & Copywriting" page in the Project Overview doc.
+
+Rules that must hold in every content edit:
+
+- **Voice:** practitioner-to-practitioner. The reader is a CIO or senior engineer who has seen every vendor pitch. No superlatives ("world-class," "cutting-edge," "best-in-class," "industry-leading"), no filler adjectives ("robust," "powerful"), no passive voice in delivery claims.
+- **Taglines:** one sentence under 20 words. Lead with a specific differentiating fact. Never restate the product name. Must include at least one concrete, current claim.
+- **Capabilities:** 7 bullets, named current features only. Reference 2025/2026 release facts where available. Format: `Feature name — what it does`. No generic descriptions.
+- **Why TechD bullets:** sell TechD as implementer, not the product. Write in first person ("we configure," "we build"). Focus on delivery governance, cross-product integration, regulated-industry depth, and post-go-live sustainability. Never duplicate product capabilities.
+- **Stats:** only use numbers from Forrester TEI, Gartner MQ, official IBM benchmarks, or documented customer results. Always format as `{ value: "X", label: "source context" }`. Never invent or round up.
+- **Industry framing:** anchor use cases to TechD's six verticals — healthcare, insurance, public sector, media & entertainment, higher education, energy & utilities. Name compliance frameworks (HIPAA, FedRAMP, PCI-DSS, NERC-CIP) where they apply naturally.
+
 ---
 
 ## Documentation index
