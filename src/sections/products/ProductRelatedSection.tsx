@@ -44,7 +44,7 @@ export const ProductRelatedSection = ({ practice, product }: Props) => {
         </Reveal>
 
         <div
-          className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 cursor-grab active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-2 cursor-grab active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           onMouseDown={(e) => {
             const el = e.currentTarget;
             const startX = e.pageX;
