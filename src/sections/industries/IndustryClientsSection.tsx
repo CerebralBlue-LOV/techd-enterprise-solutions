@@ -85,8 +85,8 @@ export const IndustryClientsSection = ({ industry }: Props) => {
       <SectionMarker page={`Industries / ${industry.name}`} name="Clients" />
       <div className="container-page">
         <Reveal>
-          <DarkGlowPanel intensity="medium" rounded="rounded-3xl">
-            <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 p-8 md:p-12 lg:p-16 items-center">
+          <DarkGlowPanel intensity="soft" rounded="rounded-3xl">
+            <div className="relative z-10 grid lg:grid-cols-12 gap-10 lg:gap-12 p-8 md:p-12 lg:p-16 items-center">
 
               {/* Left — copy */}
               <div className="lg:col-span-5 flex flex-col gap-8">
