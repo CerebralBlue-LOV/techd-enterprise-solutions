@@ -4,6 +4,7 @@ import SEO from "@seo/SEO";
 import NotFound from "@pages/NotFound";
 import ProductHeroSection from "@sections/products/ProductHeroSection";
 import ProductOverviewSection from "@sections/products/ProductOverviewSection";
+import ProductCapabilitiesSection from "@sections/products/ProductCapabilitiesSection";
 import ProductUseCasesSection from "@sections/products/ProductUseCasesSection";
 import ProductWhyTechDSection from "@sections/products/ProductWhyTechDSection";
 import ProductCtaSection from "@sections/products/ProductCtaSection";
