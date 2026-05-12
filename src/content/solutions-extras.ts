@@ -12,6 +12,7 @@ export type ApproachStep = { step: string; detail: string };
 export type StatCallout = { value: string; label: string };
 
 export type PracticeExtras = {
+  whyTitle: string;
   whyPoints: WhyPoint[];
   industries: IndustryProof[];
   approach: ApproachStep[];
@@ -48,6 +49,7 @@ const APPROACH_SECURITY: ApproachStep[] = [
 
 export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   "ai-generative": {
+    whyTitle: "Governed AI built on watsonx — grounded in your data, ready for production",
     whyPoints: [
       { title: "Grounded, not guessing", body: "RAG architectures sourced from your governed data — not the open web. Outputs cite the documents they came from." },
       { title: "Built on watsonx",       body: "IBM Granite, Llama, Mistral, and your own fine-tuned models behind a single enterprise control plane." },
@@ -68,6 +70,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   },
 
   "data-analytics": {
+    whyTitle: "Fifteen years deep on IBM data — Db2, Cognos, and the lakehouse under one roof",
     whyPoints: [
       { title: "Open lakehouse",        body: "watsonx.data on Iceberg/Parquet with Presto and Spark — no proprietary lock-in." },
       { title: "15+ years of Cognos",   body: "One of the deepest Cognos Analytics and Planning Analytics practices in the IBM partner ecosystem." },
@@ -88,6 +91,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   },
 
   "automation-finops": {
+    whyTitle: "Full-stack observability and IT financial management, owned as one practice",
     whyPoints: [
       { title: "See the whole stack",   body: "Instana for full-stack observability — application, runtime, infrastructure, and the network in between." },
       { title: "Right-size the spend",  body: "Apptio for IT financial management and Turbonomic for workload-level cost optimization." },
@@ -103,6 +107,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   },
 
   "security-compliance": {
+    whyTitle: "Compliance-grade security from practitioners who've passed the audits you're facing",
     whyPoints: [
       { title: "Pass the audit",        body: "Guardium delivers the data activity monitoring, access controls, and pre-built compliance reports your auditors ask for by name." },
       { title: "Detect, then respond",  body: "QRadar correlates events across your entire estate; Resilient runs the structured playbook when an incident triggers." },

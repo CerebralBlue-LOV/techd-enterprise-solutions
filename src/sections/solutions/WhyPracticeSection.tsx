@@ -13,7 +13,7 @@ export const WhyPracticeSection = ({ practice }: Props) => {
   return (
     <PageWhySection
       pageLabel={`Solutions / ${practice.name}`}
-      title={`Why enterprises choose TechD for ${practice.name}`}
+      title={extras.whyTitle}
       points={extras.whyPoints}
       markerName="Why this practice"
     />
