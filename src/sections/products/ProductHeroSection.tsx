@@ -19,8 +19,8 @@ export const ProductHeroSection = ({ practice, product }: Props) => (
   <PageHero
     pageLabel={`Product / ${product.name}`}
     parent={practice.name}
+    parentTo={`/solutions/${practice.id}`}
     child={product.name}
-    backLink={{ to: `/solutions/${practice.id}`, label: `Back to ${practice.name}` }}
     headline={product.name}
     lede={product.tagline}
     headlineSize="text-4xl md:text-5xl"

@@ -15,6 +15,8 @@ interface Props {
   pageLabel: string;
   /** Breadcrumb parent, e.g. "Solutions". Hidden when `eyebrow` is provided. */
   parent?: string;
+  /** Optional href — when set, parent renders as a link back to that route. */
+  parentTo?: string;
   /** Breadcrumb child, e.g. practice/industry/service name. */
   child?: string;
   /** Custom eyebrow override (e.g. detail pages: "Healthcare · Apr 2025"). */
@@ -49,6 +51,7 @@ interface Props {
 export const PageHero = ({
   pageLabel,
   parent,
+  parentTo,
   child,
   eyebrow,
   backLink,
@@ -114,7 +117,18 @@ export const PageHero = ({
             ) : parent || child ? (
               <p className="eyebrow flex items-center gap-3">
                 <span className="inline-block h-px w-8 bg-primary" />
-                {parent}
+                {parent ? (
+                  parentTo ? (
+                    <Link
+                      to={parentTo}
+                      className="transition-colors hover:text-primary focus-visible:text-primary"
+                    >
+                      {parent}
+                    </Link>
+                  ) : (
+                    <span>{parent}</span>
+                  )
+                ) : null}
                 {parent && child ? (
                   <span className="text-muted-foreground/60">/</span>
                 ) : null}
