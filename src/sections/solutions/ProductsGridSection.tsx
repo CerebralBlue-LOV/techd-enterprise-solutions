@@ -220,7 +220,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                         "underline-offset-4 hover:underline transition-colors",
                         isActive
                           ? "text-primary"
-                          : "text-secondary hover:text-primary",
+                          : "text-muted-foreground hover:text-primary",
                       )}
                     >
                       {p.name}
