@@ -49,10 +49,10 @@ const LEVELS: Record<
 };
 
 /**
- * Shared dark cyan-glow panel — the secondary-base gradient with a rotating
+ * Shared dark cyan-glow panel — secondary-base gradient with a rotating
  * conic shimmer, three drifting cyan blobs, and a subtle dotted overlay.
- * Used for the featured product carousel (vivid) and the site-wide final CTA
- * (soft). Respects prefers-reduced-motion.
+ * Used for the featured product carousel (vivid) and the site-wide final
+ * CTA (soft). Respects prefers-reduced-motion.
  */
 export const DarkGlowPanel = forwardRef<HTMLDivElement, Props>(
   (
@@ -72,51 +72,53 @@ export const DarkGlowPanel = forwardRef<HTMLDivElement, Props>(
         )}
         style={{ ...PANEL_BG, ...style }}
       >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-      >
         <div
-          className={cn("absolute -inset-1/2 animate-shimmer-rotate", lv.shimmerOpacity)}
-          style={{
-            background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / ${lv.shimmerStop1}) 60deg, transparent 140deg, hsl(var(--primary) / ${lv.shimmerStop2}) 240deg, transparent 320deg)`,
-            filter: "blur(40px)",
-          }}
-        />
-        <div
-          className="absolute -top-1/4 -left-1/4 h-[80%] w-[80%] rounded-full animate-blob-a"
-          style={{
-            background: `radial-gradient(circle, hsl(var(--primary) / ${lv.blobA}) 0%, transparent 60%)`,
-            filter: "blur(50px)",
-          }}
-        />
-        <div
-          className="absolute top-0 -right-1/4 h-[75%] w-[75%] rounded-full animate-blob-b"
-          style={{
-            background: `radial-gradient(circle, hsl(var(--primary) / ${lv.blobB}) 0%, transparent 65%)`,
-            filter: "blur(60px)",
-          }}
-        />
-        <div
-          className="absolute -bottom-1/4 left-1/4 h-[70%] w-[70%] rounded-full animate-blob-c"
-          style={{
-            background: `radial-gradient(circle, hsl(var(--primary) / ${lv.blobC}) 0%, transparent 60%)`,
-            filter: "blur(55px)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "radial-gradient(hsl(0 0% 100%) 1px, transparent 1px)",
-            backgroundSize: "3px 3px",
-          }}
-        />
-      </div>
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+        >
+          <div
+            className={cn("absolute -inset-1/2 animate-shimmer-rotate", lv.shimmerOpacity)}
+            style={{
+              background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, hsl(var(--primary) / ${lv.shimmerStop1}) 60deg, transparent 140deg, hsl(var(--primary) / ${lv.shimmerStop2}) 240deg, transparent 320deg)`,
+              filter: "blur(40px)",
+            }}
+          />
+          <div
+            className="absolute -top-1/4 -left-1/4 h-[80%] w-[80%] rounded-full animate-blob-a"
+            style={{
+              background: `radial-gradient(circle, hsl(var(--primary) / ${lv.blobA}) 0%, transparent 60%)`,
+              filter: "blur(50px)",
+            }}
+          />
+          <div
+            className="absolute top-0 -right-1/4 h-[75%] w-[75%] rounded-full animate-blob-b"
+            style={{
+              background: `radial-gradient(circle, hsl(var(--primary) / ${lv.blobB}) 0%, transparent 65%)`,
+              filter: "blur(60px)",
+            }}
+          />
+          <div
+            className="absolute -bottom-1/4 left-1/4 h-[70%] w-[70%] rounded-full animate-blob-c"
+            style={{
+              background: `radial-gradient(circle, hsl(var(--primary) / ${lv.blobC}) 0%, transparent 60%)`,
+              filter: "blur(55px)",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
+            style={{
+              backgroundImage:
+                "radial-gradient(hsl(0 0% 100%) 1px, transparent 1px)",
+              backgroundSize: "3px 3px",
+            }}
+          />
+        </div>
 
-      {children}
-    </div>
-  );
-};
+        {children}
+      </div>
+    );
+  },
+);
+DarkGlowPanel.displayName = "DarkGlowPanel";
 
 export default DarkGlowPanel;
