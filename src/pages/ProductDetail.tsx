@@ -37,7 +37,13 @@ const ProductDetail = () => {
         description={product.tagline}
       />
       <ProductHeroSection practice={solution} product={product} />
-      <ProductOverviewSection product={product} />
+      <ProductOverviewSection
+        product={product}
+        hideCapabilities={solution.id === "ai-generative"}
+      />
+      {solution.id === "ai-generative" && (
+        <ProductCapabilitiesSection product={product} />
+      )}
       <ProductUseCasesSection product={product} />
       <ProductWhyTechDSection product={product} />
       <ProductCtaSection practice={solution} product={product} />
