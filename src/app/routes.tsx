@@ -19,7 +19,7 @@ import AIGenerative from "@pages/solutions/AIGenerative";
 import DataAnalytics from "@pages/solutions/DataAnalytics";
 import AutomationFinOps from "@pages/solutions/AutomationFinOps";
 import SecurityCompliance from "@pages/solutions/SecurityCompliance";
-import HybridCloud from "@pages/solutions/HybridCloud";
+
 
 // Services
 import Advisory from "@pages/services/Advisory";
@@ -64,11 +64,20 @@ export const AppRoutes = () => (
     <Route path="/solutions/data-analytics" element={<DataAnalytics />} />
     <Route path="/solutions/automation-finops" element={<AutomationFinOps />} />
     <Route path="/solutions/security-compliance" element={<SecurityCompliance />} />
-    <Route path="/solutions/hybrid-cloud" element={<HybridCloud />} />
     {/* Legacy practice slug redirects */}
     <Route path="/solutions/ai" element={<Navigate to="/solutions/ai-generative" replace />} />
     <Route path="/solutions/automation" element={<Navigate to="/solutions/automation-finops" replace />} />
     <Route path="/solutions/security" element={<Navigate to="/solutions/security-compliance" replace />} />
+    {/* Removed Hybrid Cloud practice — redirect to AI practice */}
+    <Route path="/solutions/hybrid-cloud" element={<Navigate to="/solutions/ai-generative" replace />} />
+    <Route path="/solutions/hybrid-cloud/:product" element={<Navigate to="/solutions/ai-generative" replace />} />
+    {/* Removed product slugs — redirect to parent practice */}
+    <Route path="/solutions/ai-generative/watsonx-assistant" element={<Navigate to="/solutions/ai-generative" replace />} />
+    <Route path="/solutions/ai-generative/ibm-knowledge-catalog" element={<Navigate to="/solutions/ai-generative" replace />} />
+    <Route path="/solutions/data-analytics/cognos-controller" element={<Navigate to="/solutions/data-analytics" replace />} />
+    <Route path="/solutions/data-analytics/ibm-mdm" element={<Navigate to="/solutions/data-analytics" replace />} />
+    <Route path="/solutions/security-compliance/ibm-mdm" element={<Navigate to="/solutions/security-compliance" replace />} />
+    <Route path="/solutions/security-compliance/ibm-data-replication" element={<Navigate to="/solutions/security-compliance" replace />} />
     {/* Legacy product URLs under old practice slugs */}
     <Route path="/solutions/ai/:product" element={<LegacyProductRedirect practice="ai-generative" />} />
     <Route path="/solutions/automation/:product" element={<LegacyProductRedirect practice="automation-finops" />} />
