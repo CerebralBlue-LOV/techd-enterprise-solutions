@@ -6,6 +6,7 @@ import NotFound from "@pages/NotFound";
 import IconLab from "@pages/IconLab";
 import LogoLab from "@pages/LogoLab";
 import FigureLab from "@pages/FigureLab";
+import SolutionsForIndustryLab from "@pages/SolutionsForIndustryLab";
 
 // Company
 import About from "@pages/company/About";
@@ -109,6 +110,7 @@ export const AppRoutes = () => (
     <Route path="/icon-lab" element={<IconLab />} />
     <Route path="/logo-lab" element={<LogoLab />} />
     <Route path="/figure-lab" element={<FigureLab />} />
+    <Route path="/solutions-for-industry-lab" element={<SolutionsForIndustryLab />} />
     {/* Catch-all — must stay last. */}
     <Route path="*" element={<NotFound />} />
     </Routes>
