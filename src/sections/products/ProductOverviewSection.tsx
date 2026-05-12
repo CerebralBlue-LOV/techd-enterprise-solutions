@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
@@ -30,21 +30,35 @@ export const ProductOverviewSection = ({ product }: Props) => {
                 </p>
               ))}
             </div>
+
+            {product.vendorUrl && (
+              <a
+                href={product.vendorUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4"
+              >
+                Visit the official {product.name} page
+                <ArrowUpRight className="size-4" />
+              </a>
+            )}
           </Reveal>
 
-          {/* Capabilities */}
+          {/* Capabilities — quiet, typography-led, no heavy box */}
           <Reveal delay={80}>
-            <div className="rounded-xl border border-border p-7 md:p-9">
-              <p className="eyebrow mb-5">Key Capabilities</p>
-              <ul className="space-y-3">
-                {capabilities.map((cap) => (
-                  <li key={cap} className="flex items-start gap-3">
-                    <Check className="mt-0.5 size-4 shrink-0 text-primary" />
-                    <span className="text-sm text-secondary leading-snug">{cap}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="eyebrow mb-6">Key Capabilities</p>
+            <ul className="divide-y divide-border border-t border-border">
+              {capabilities.map((cap, i) => (
+                <li key={cap} className="flex items-start gap-5 py-4">
+                  <span className="font-mono text-xs text-muted-foreground tabular-nums pt-1 shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-base font-light text-secondary leading-relaxed">
+                    {cap}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </div>
