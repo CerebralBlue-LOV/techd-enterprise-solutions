@@ -7,6 +7,7 @@ import ProductOverviewSection from "@sections/products/ProductOverviewSection";
 import ProductCapabilitiesSection from "@sections/products/ProductCapabilitiesSection";
 import ProductUseCasesSection from "@sections/products/ProductUseCasesSection";
 import ProductWhyTechDSection from "@sections/products/ProductWhyTechDSection";
+import ProductRelatedSection from "@sections/products/ProductRelatedSection";
 import ProductCtaSection from "@sections/products/ProductCtaSection";
 import { SOLUTIONS } from "@content/solutions";
 
