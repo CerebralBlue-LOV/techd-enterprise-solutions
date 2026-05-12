@@ -1,22 +1,14 @@
-import type { CSSProperties, ReactNode } from "react";
+import { forwardRef, type CSSProperties, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type Intensity = "vivid" | "soft";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   /** "vivid" = featured-card intensity. "soft" = CTA-panel intensity. */
   intensity?: Intensity;
-  className?: string;
   /** Override outer rounding. Defaults to rounded-3xl. */
   rounded?: string;
-  /** Optional inline style for the wrapper (e.g. min-height). */
-  style?: CSSProperties;
-  /** Forwarded aria-label / role / etc. */
-  role?: string;
-  "aria-label"?: string;
-  "aria-roledescription"?: string;
-  tabIndex?: number;
 }
 
 const PANEL_BG: CSSProperties = {
