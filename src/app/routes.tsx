@@ -4,7 +4,7 @@ import ProductDetail from "@pages/ProductDetail";
 import Contact from "@pages/Contact";
 import NotFound from "@pages/NotFound";
 import AdminLab from "@pages/AdminLab";
-import IconLab from "@pages/IconLab";
+
 import LogoLab from "@pages/LogoLab";
 import FigureLab from "@pages/FigureLab";
 import SectionLab from "@pages/SectionLab";
