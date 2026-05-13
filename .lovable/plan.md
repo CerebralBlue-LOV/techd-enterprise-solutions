@@ -1,91 +1,53 @@
 
-# Resources buildout — plan
+# Preview the new Resources content
 
-Source of truth for content: `docs/revisions/resources/{case-studies,blog,webinars,events}.md`.
-All new entries land as `draft: true` so nothing renders publicly until PM/legal flip the flag — matching `docs/rebuild/resources.md` policy.
+Goal: see all the new Case Studies, Blog, Webinars, and Events entries rendered in the live preview without claiming they're production-ready.
 
-## Goals
+## Approach
 
-1. Make the four Resources sub-pages structurally complete (Case Studies, Blog, Webinars, Events) so flipping `draft: false` is the only step left.
-2. Wire the content model in `src/content/resources.ts` to everything the revision docs require (vertical, products, format, location, etc.).
-3. Replace the two placeholder pages (Webinars, Events) with real list + detail pages that match the Blog / Case Studies pattern.
+Temporarily set `draft: false` on every new entry in `src/content/resources.ts`. This is a one-file edit — the page components and routes are already wired up. Nothing else moves.
 
-## 1. Extend the `Resource` content model
+Important: this is a **preview-only** change. PM/legal sign-off is still required before this state is acceptable for the public site, so this edit must be reverted (or selectively flipped back to `draft: true`) before shipping. I'll add a clear `// PREVIEW ONLY — revert before publish` comment block at the top of the file so we can find and undo it in one step.
 
-Add optional fields used across the four types (kept optional so existing entries keep compiling):
+## What gets flipped
 
-- `vertical?: string` — TechD's six verticals (rename of existing `industry` for clarity, or keep `industry` as alias).
-- `products?: string[]` — current IBM product names (used as eyebrow chips).
-- `tags?: string[]` — blog/webinar topical tags.
-- `format?: "virtual" | "in-person" | "conference" | "roundtable"` — events.
-- `location?: string | null` — events.
-- `registrationUrl?: string | null` — events / webinars.
-- `publishedAt?: string` — ISO date for blog (kept alongside the human `date`).
+All entries currently marked `draft: true` in `src/content/resources.ts`:
 
-No backend, no CMS — pure typed TS module. Marketing/PM edits the file.
+**Case Studies (7)**
+- Pharma sales/marketing Cognos · Hospital data warehouse · Cancer treatment center BI · University Cognos rollout · Communications firm Planning Analytics · Insurance claims modernization · R1 university research cloud
 
-## 2. Seed `src/content/resources.ts` with all draft content
+**Blog (9)**
+- Agentic AI operating model · watsonx governance · Zero-trust · DataStage → watsonx.data · Cognos 12 vs. 11.2 cutoff · FinOps loop (Apptio + Turbonomic + Instana) · watsonx Orchestrate + ERP · Planning Analytics 2.1 · SPSS Modeler AutoML
 
-From the revision docs, add these entries (all `draft: true`, except the one already-published retail case study):
+**Webinars (7)**
+- AI agents that pass an audit · Data lake to data product · NeuralSeek RAG · Turbonomic + Instana · Planning Analytics 2.1 migration · Guardium DDR · Cognos 12 agentic BI
 
-**Case Studies (5 new placeholders)** — Pharma BI, Hospital DW, Cancer Center BI, University Cognos, Comms Planning Analytics. Anonymized client labels, current product names per §4 of `case-studies.md`.
+**Events (5)**
+- IBM Think 2026 · NYC Enterprise AI roundtable · Lunch & Learn watsonx.ai · Workshop data governance · Roundtable FinOps
 
-**Blog (6 new draft topic anchors)** — the six rewrite angles from §5 of `blog.md` (DataStage→watsonx.data, Cognos 12 cutoff, FinOps Apptio+Turbonomic, watsonx Orchestrate + ERP, Planning Analytics 2.1, SPSS AutoML), plus keep the existing 3 drafts.
+The single already-published case study (US retailer / Db2 / watsonx Assistant / NeuralSeek) is unaffected.
 
-**Webinars (5 new draft topics)** — the five gap-fill webinars from §5 of `webinars.md` (NeuralSeek RAG, Turbonomic+Instana, PA 2.1 migration, Guardium DDR, Cognos 12 agents), plus keep existing 2.
+## What you'll see after the change
 
-**Events (2 new draft topics)** — Lunch & Learn (watsonx.ai), Workshop (Data Governance & AI Readiness), Roundtable (FinOps). Keep existing IBM Think 2026 + NYC Roundtable.
+- `/resources/case-studies` → 8 cards (1 real + 7 previewed)
+- `/resources/blog` → 9 cards with tag chips
+- `/resources/webinars` → 7 cards with product chips
+- `/resources/events` → 5 cards with format + location
 
-All entries carry `products[]` and `vertical` where the revision doc specifies them, so list pages can show eyebrow chips and filter later.
+Each card links to its detail page (`/resources/<type>/<slug>`) using the layout already built last turn.
 
-## 3. Pages
+## Reverting later
 
-### CaseStudies.tsx (already real)
-- Add `products[]` chip row to cards.
-- No structural change.
+When you're ready to lock back to "drafts hidden":
+- Either delete the preview edit (one revert)
+- Or selectively re-flip individual entries back to `draft: true` as PM approves them one by one
 
-### Blog.tsx (already real)
-- Add `tags[]` chip row to cards.
-- No structural change.
+## Out of scope for this preview pass
 
-### Webinars.tsx — replace placeholder
-Pattern: clone `Blog.tsx`. Card shows: products eyebrow → title → description → `date` (or "On-demand") + format. Empty state when no published items, identical voice to Blog empty state. Links to `/resources/webinars/:slug`.
+- No copy edits, no real dates/locations/registration links, no real client names
+- No new pages, components, or routes (already in place)
+- No changes to the published case study
 
-### WebinarDetail.tsx — new
-Pattern: clone `BlogDetail.tsx`. Hero shows date / format / products. Body paragraphs from `body[]`. Secondary CTA back to `/resources/webinars`. If `registrationUrl` is set, primary CTA becomes "Register" → external link; otherwise the standard `btn-glow` "Talk to an expert" → `/contact`.
+## Files touched
 
-### Events.tsx — replace placeholder
-Pattern: clone `Blog.tsx`, but card shows `format` badge + `date` + `location`. Sort upcoming events first, then on-demand/TBD. Same empty state pattern. Links to `/resources/events/:slug`.
-
-### EventDetail.tsx — new
-Mirrors WebinarDetail with `format` + `location` line and a "Register" CTA when `registrationUrl` exists.
-
-### Routes
-Add to `src/app/routes.tsx`:
-- `/resources/webinars/:slug` → `WebinarDetail`
-- `/resources/events/:slug` → `EventDetail`
-
-## 4. Optional Resources hub (`/resources`)
-
-Currently `/resources` redirects to `/resources/case-studies`. Recommendation: keep the redirect for now (matches `docs/rebuild/resources.md` "clean slate" stance). A real hub page can come later once at least one published item exists per type. Not building this in this pass unless you say so.
-
-## 5. Out of scope (per `docs/rebuild/resources.md` and `CLAUDE.md`)
-
-- No CMS, no live calendar, no webinar platform integration.
-- No invented metrics, client names, dates, or registration URLs.
-- No new colors/fonts; reuse `btn-glow`, `card-hover`, `eyebrow` tokens.
-- No edits to `src/components/ui/`.
-
-## Technical notes
-
-- Files added: `src/pages/resources/WebinarDetail.tsx`, `src/pages/resources/EventDetail.tsx`.
-- Files modified: `src/content/resources.ts` (type + ~18 new entries), `src/pages/resources/Webinars.tsx`, `src/pages/resources/Events.tsx`, `src/pages/resources/Blog.tsx` (tag chips), `src/pages/resources/CaseStudies.tsx` (product chips), `src/app/routes.tsx`.
-- TS strict; all new fields optional; existing entries keep working.
-- All cards/details use `Reveal`, `PageHero`, `PageFinalCtaSection`, `SectionMarker` like the existing Blog/CaseStudies pages — no new shared components.
-
-## Result after implementation
-
-- 4 Resources sub-pages structurally complete with detail routes.
-- ~18 new draft entries seeded from the revision docs, organized by practice + vertical.
-- Zero new published content; PM flips `draft: false` per item as approvals land.
-- Practice coverage gaps (Automation & FinOps, AI & Generative) are visible in the data file as ready-to-publish drafts.
+- `src/content/resources.ts` only.

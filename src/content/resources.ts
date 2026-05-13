@@ -79,7 +79,7 @@ export const RESOURCES: Resource[] = [
     industry: "Healthcare",
     practice: "data-analytics",
     products: ["IBM Cognos Analytics"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "cs-hospital-dw",
@@ -92,7 +92,7 @@ export const RESOURCES: Resource[] = [
     industry: "Healthcare",
     practice: "data-analytics",
     products: ["IBM Db2", "IBM watsonx.data"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "cs-cancer-bi",
@@ -105,7 +105,7 @@ export const RESOURCES: Resource[] = [
     industry: "Healthcare",
     practice: "data-analytics",
     products: ["IBM Cognos Analytics"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "cs-university-cognos",
@@ -118,7 +118,7 @@ export const RESOURCES: Resource[] = [
     industry: "Higher Education",
     practice: "data-analytics",
     products: ["IBM Cognos Analytics"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "cs-comms-planning-analytics",
@@ -131,7 +131,7 @@ export const RESOURCES: Resource[] = [
     industry: "Media & Entertainment",
     practice: "data-analytics",
     products: ["IBM Planning Analytics"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 
   // Original draft entries kept for parity.
@@ -144,7 +144,7 @@ export const RESOURCES: Resource[] = [
       "A modular claims platform replaced a 30-year-old mainframe path — without a single missed cycle.",
     date: "2025",
     industry: "Insurance",
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "cs-3",
@@ -155,7 +155,7 @@ export const RESOURCES: Resource[] = [
       "Identity, governance, and FinOps for grant-funded research workloads across three campuses.",
     date: "2025",
     industry: "Higher Education",
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 
   // ─── Blog ────────────────────────────────────────────────────────────────────
@@ -169,7 +169,7 @@ export const RESOURCES: Resource[] = [
     date: "May 2026",
     practice: "ai-generative",
     tags: ["AI & Generative", "Operating model"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "bl-2",
@@ -181,7 +181,7 @@ export const RESOURCES: Resource[] = [
     practice: "ai-generative",
     products: ["watsonx.governance"],
     tags: ["Governance", "watsonx"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "bl-3",
@@ -193,7 +193,7 @@ export const RESOURCES: Resource[] = [
     practice: "security-compliance",
     products: ["IBM Guardium", "IBM QRadar"],
     tags: ["Zero trust", "Security & Compliance"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 
   // Net-new draft topics from docs/revisions/resources/blog.md §5.
@@ -209,7 +209,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM watsonx.data"],
     tags: ["Data integration", "Migration"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "bl-cognos-12-cutoff",
@@ -223,7 +223,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Cognos Analytics"],
     tags: ["Cognos", "Migration"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "bl-finops-loop",
@@ -237,7 +237,7 @@ export const RESOURCES: Resource[] = [
     practice: "automation-finops",
     products: ["IBM Apptio", "IBM Turbonomic", "IBM Instana"],
     tags: ["FinOps", "Observability"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "bl-orchestrate-erp",
@@ -251,7 +251,7 @@ export const RESOURCES: Resource[] = [
     practice: "ai-generative",
     products: ["watsonx Orchestrate"],
     tags: ["Agentic AI", "Automation"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "bl-planning-analytics-21",
@@ -264,7 +264,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Planning Analytics"],
     tags: ["FP&A", "Planning Analytics"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "bl-spss-automl",
@@ -277,7 +277,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM SPSS Modeler"],
     tags: ["AutoML", "Analytics"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 
   // ─── Webinars ────────────────────────────────────────────────────────────────
@@ -291,7 +291,7 @@ export const RESOURCES: Resource[] = [
     date: "On-demand",
     practice: "ai-generative",
     products: ["watsonx Orchestrate", "watsonx.governance"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "wb-2",
@@ -302,7 +302,7 @@ export const RESOURCES: Resource[] = [
     date: "On-demand",
     practice: "data-analytics",
     products: ["IBM watsonx.data"],
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 
   // Net-new draft webinars from docs/revisions/resources/webinars.md §5.
@@ -318,7 +318,7 @@ export const RESOURCES: Resource[] = [
     practice: "ai-generative",
     products: ["NeuralSeek", "watsonx.ai"],
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "wb-turbonomic-instana",
@@ -332,7 +332,7 @@ export const RESOURCES: Resource[] = [
     practice: "automation-finops",
     products: ["IBM Instana", "IBM Turbonomic"],
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "wb-pa-21-migration",
@@ -345,7 +345,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Planning Analytics"],
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "wb-guardium-ddr",
@@ -359,7 +359,7 @@ export const RESOURCES: Resource[] = [
     practice: "security-compliance",
     products: ["IBM Guardium"],
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "wb-cognos-12-agents",
@@ -372,7 +372,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Cognos Analytics"],
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 
   // ─── Events ──────────────────────────────────────────────────────────────────
@@ -388,7 +388,7 @@ export const RESOURCES: Resource[] = [
     format: "conference",
     location: "Boston",
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "ev-2",
@@ -402,7 +402,7 @@ export const RESOURCES: Resource[] = [
     format: "roundtable",
     location: "New York",
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 
   // Net-new draft events from docs/revisions/resources/events.md §5.
@@ -420,7 +420,7 @@ export const RESOURCES: Resource[] = [
     format: "virtual",
     location: "Virtual",
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "ev-workshop-governance",
@@ -435,7 +435,7 @@ export const RESOURCES: Resource[] = [
     format: "in-person",
     location: "TBD",
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
   {
     id: "ev-roundtable-finops",
@@ -451,6 +451,6 @@ export const RESOURCES: Resource[] = [
     format: "roundtable",
     location: "TBD",
     registrationUrl: null,
-    draft: true,
+    draft: false, /* PREVIEW ONLY — revert before publish */
   },
 ];
