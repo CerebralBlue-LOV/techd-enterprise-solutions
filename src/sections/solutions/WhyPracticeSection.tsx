@@ -93,7 +93,7 @@ export const WhyPracticeSection = ({ practice }: Props) => {
 
         {/* Ledger of remaining notes — clickable to promote */}
         {rest.length > 0 && (
-          <div className="relative mt-12 md:mt-16 border-y border-border py-6">
+          <div className="relative mt-12 md:mt-16 border-y border-border py-12 md:py-16">
             <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-border">
               {rest.map(({ p, i }) => (
                 <button
