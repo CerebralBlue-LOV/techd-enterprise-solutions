@@ -156,8 +156,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Records modernization",   body: "Data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
     ],
     clients: [
-      // No matching public-sector clients in the current CUSTOMERS roster.
-      // Section will hide automatically until one is added in Logo Lab.
+      // Placeholder until a public-sector logo is cleared for display.
+      { name: "Federal Agency", note: "Engagement details under NDA." },
     ],
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
