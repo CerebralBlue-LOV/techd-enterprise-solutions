@@ -1,81 +1,123 @@
+import { useState } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import HoverGridBackdrop from "@shared/HoverGridBackdrop";
 import { type Solution } from "@content/solutions";
 import { PRACTICE_EXTRAS } from "@content/solutions-extras";
+import { cn } from "@/lib/utils";
 
 interface Props {
   practice: Solution;
 }
 
+/**
+ * Pull-quote + ledger ("W2" from /section-lab).
+ * Click any ledger note to promote it into the quote slot;
+ * the previously-active point demotes back into the ledger.
+ */
 export const WhyPracticeSection = ({ practice }: Props) => {
   const extras = PRACTICE_EXTRAS[practice.id];
   const points = extras?.whyPoints ?? [];
-  if (!extras?.whyTitle && !points.length) return null;
+  const [active, setActive] = useState(0);
+
+  if (!points.length) return null;
+
+  const activePoint = points[active] ?? points[0];
+  const rest = points
+    .map((p, i) => ({ p, i }))
+    .filter(({ i }) => i !== active);
 
   return (
     <section
       id="why"
-      className="py-14 md:py-20 scroll-mt-24 border-t border-border bg-background"
+      className="relative py-14 md:py-20 scroll-mt-24 border-t border-border bg-background overflow-hidden"
     >
-      <SectionMarker page={`Solutions / ${practice.name}`} name="Why this practice" />
-      <div className="container-page">
-        <div className="space-y-4">
-          {/* Featured primary gradient hero card */}
-          <Reveal>
-            <article
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-[hsl(195_100%_38%)] p-6 md:p-8 lg:p-10 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.55)]"
-            >
-              <HoverGridBackdrop variant="primary" background={false} topRim={false} spotlightRadius={400} />
+      <SectionMarker page={`Solutions / ${practice.name}`} name="Why TechD" />
 
-              {/* Ambient radial highlights */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-700 group-hover:opacity-60"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(60% 80% at 80% 20%, hsl(var(--background) / 0.30) 0%, transparent 60%), radial-gradient(40% 60% at 20% 100%, hsl(var(--secondary) / 0.40) 0%, transparent 70%)",
-                }}
-              />
+      {/* faint dot grid, masked to upper-left */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-50"
+        style={{
+          backgroundImage:
+            "radial-gradient(hsl(var(--border)) 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+          WebkitMaskImage:
+            "radial-gradient(60% 70% at 30% 30%, black 30%, transparent 80%)",
+          maskImage:
+            "radial-gradient(60% 70% at 30% 30%, black 30%, transparent 80%)",
+        }}
+      />
 
-              <div className="relative z-10 max-w-3xl">
-                <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-background/70 mb-4">
-                  Why TechD · {practice.name}
-                </p>
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight text-background">
-                  {extras.whyTitle}
-                </h3>
-              </div>
-            </article>
-          </Reveal>
+      <div className="container-page relative">
+        <Reveal>
+          <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
+            Why TechD · {practice.name}
+          </p>
+        </Reveal>
 
-          {/* Supporting tiles — 2×2 grid */}
-          {points.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {points.map((p, i) => (
-                <Reveal key={p.title} delay={i * 80}>
-                  <article className="group relative h-full overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_12px_32px_-16px_hsl(var(--primary)/0.35)]">
-                    {/* Top hairline reveal on hover */}
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    />
-                    {/* Static cyan top accent (resting state) */}
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 top-0 h-[2px] bg-primary/70 transition-all duration-300 group-hover:bg-primary"
-                    />
-                    <h4 className="text-primary text-xs md:text-sm font-bold uppercase tracking-widest mt-2 mb-3 md:mb-4 transition-colors">
-                      {p.title}
-                    </h4>
-                    <p className="text-secondary font-light text-sm md:text-base leading-relaxed">
-                      {p.body}
-                    </p>
-                  </article>
-                </Reveal>
+        {/* Pull-quote — re-keyed on active so it animates on swap */}
+        <div key={active} className="mt-6 max-w-5xl animate-fade-in motion-reduce:animate-none">
+          <p
+            className="text-3xl md:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight text-secondary"
+            aria-live="polite"
+          >
+            <span className="text-primary font-bold">“</span>
+            {activePoint.title}
+            <span className="text-primary font-bold">”</span>
+          </p>
+          <p className="mt-6 text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl">
+            {activePoint.body}
+          </p>
+        </div>
+
+        {/* Ledger of remaining notes — clickable to promote */}
+        {rest.length > 0 && (
+          <div className="relative mt-12 md:mt-16 border-t border-border pt-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-border">
+              {rest.map(({ p, i }, idx) => (
+                <button
+                  key={p.title}
+                  type="button"
+                  onClick={() => setActive(i)}
+                  aria-pressed={false}
+                  className={cn(
+                    "group relative text-left py-5 md:py-3 md:px-6 first:md:pl-0 last:md:pr-0",
+                    "transition-all duration-300 ease-out motion-reduce:transition-none",
+                    "hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
+                    "animate-fade-in motion-reduce:animate-none",
+                  )}
+                  style={{ animationDelay: `${idx * 60}ms` }}
+                >
+                  {/* hover cyan top hairline */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-px bg-border overflow-hidden md:left-6 md:right-6 first:md:left-0 last:md:right-0"
+                  >
+                    <span className="block h-full w-0 bg-primary transition-all duration-500 group-hover:w-full" />
+                  </span>
+                  <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
+                    Note · {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-3 text-base font-bold text-secondary leading-snug transition-colors group-hover:text-primary">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
+                    {p.body}
+                  </p>
+                </button>
               ))}
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Section seam — closes Why, opens next */}
+        <div className="mt-16 md:mt-20 flex items-center gap-4">
+          <span aria-hidden="true" className="h-px flex-1 bg-border" />
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-muted-foreground whitespace-nowrap">
+            § Next · Products
+          </span>
+          <span aria-hidden="true" className="h-px flex-1 bg-primary/40" />
         </div>
       </div>
     </section>
