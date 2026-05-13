@@ -8,6 +8,7 @@ import SectionMarker from "@shared/SectionMarker";
 import ResourcesFigure from "@shared/heroFigures/ResourcesFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
+import ResourcesQuickLinksSection from "@sections/resources/ResourcesQuickLinksSection";
 import { RESOURCES } from "@content/resources";
 
 const items = RESOURCES.filter((r) => r.type === "events" && !r.draft);
@@ -96,6 +97,8 @@ const Events = () => (
         )}
       </div>
     </section>
+
+    <ResourcesQuickLinksSection current="events" />
 
     <PageFinalCtaSection
       pageLabel="Resources / Events"

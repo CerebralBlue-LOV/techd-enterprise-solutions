@@ -8,6 +8,7 @@ import SectionMarker from "@shared/SectionMarker";
 import ResourcesFigure from "@shared/heroFigures/ResourcesFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
+import ResourcesQuickLinksSection from "@sections/resources/ResourcesQuickLinksSection";
 import { RESOURCES } from "@content/resources";
 
 const posts = RESOURCES.filter((r) => r.type === "blog" && !r.draft);
@@ -87,6 +88,8 @@ const Blog = () => (
         )}
       </div>
     </section>
+
+    <ResourcesQuickLinksSection current="blog" />
 
     <PageFinalCtaSection
       pageLabel="Resources / Blog"
