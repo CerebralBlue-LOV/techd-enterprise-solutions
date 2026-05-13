@@ -47,10 +47,11 @@ export const NAV: NavItem[] = [
     label: "Company",
     href: "/company/about",
     children: [
-      { label: "About",           href: "/company/about",            description: "Our story, leadership, and delivery footprint." },
-      { label: "IBM Partnership", href: "/company/ibm-partnership",  description: "Platinum-tier access to IBM engineering and early product programs." },
-      { label: "Customers",       href: "/company/customers",        description: "Fortune 500 enterprises across healthcare, media, insurance, and more." },
-      { label: "Contact",         href: "/contact",                  description: "Talk to a senior practitioner — no SDR queue." },
+      { label: "About",                href: "/company/about",                 description: "Our story, four-practice coverage, and leadership." },
+      { label: "IBM Partnership",      href: "/company/ibm-partnership",       description: "Platinum tier under IBM Partner Plus — 21 products across four practices." },
+      { label: "Delivery Methodology", href: "/company/delivery-methodology",  description: "Five engagement stages, IBM Platform Assessment, and compliance posture." },
+      { label: "Customers",            href: "/company/customers",             description: "Enterprises we deliver for, by industry." },
+      { label: "Contact",              href: "/contact",                       description: "Talk to a senior practitioner — no SDR queue." },
     ],
   },
 ];
