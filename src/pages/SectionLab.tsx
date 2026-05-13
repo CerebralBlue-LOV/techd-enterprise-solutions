@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Layout from "@layout/Layout";
 import SectionHeading from "@shared/SectionHeading";
+import { SectionBackdrop } from "@shared/SectionBackdrop";
 import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 import { SOLUTIONS } from "@content/solutions";
 import { PRACTICE_MOTIFS } from "@content/practice-motifs";
