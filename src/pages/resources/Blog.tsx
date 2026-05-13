@@ -34,7 +34,7 @@ const Blog = () => (
     />
 
     {/* Card grid / empty state */}
-    <section id="list" className="section bg-muted/30 border-t border-border">
+    <section id="list" className="section bg-muted/30 border-t border-border scroll-mt-24">
       <SectionMarker page="Resources / Blog" name="List" />
       <div className="container-page">
         {posts.length === 0 ? (

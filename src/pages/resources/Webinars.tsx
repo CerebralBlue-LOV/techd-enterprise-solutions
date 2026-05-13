@@ -33,7 +33,7 @@ const Webinars = () => (
       ]}
     />
 
-    <section id="list" className="section bg-muted/30 border-t border-border">
+    <section id="list" className="section bg-muted/30 border-t border-border scroll-mt-24">
       <SectionMarker page="Resources / Webinars" name="List" />
       <div className="container-page">
         {items.length === 0 ? (
