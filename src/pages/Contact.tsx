@@ -127,44 +127,33 @@ const Contact = () => {
 
       {/* WORKING AREA */}
       <section className="section">
-        <SectionMarker page="Contact" name="Form + Context" />
-        <div className="container-page grid gap-12 lg:grid-cols-[0.9fr_1.3fr] lg:gap-16">
-          {/* Left rail */}
+        <SectionMarker page="Contact" name="Intro + Form" />
+        <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-20">
+          {/* Left — editorial intro */}
           <Reveal>
-            <aside className="lg:sticky lg:top-24 space-y-10">
-              <div>
-                <p className="eyebrow mb-4">Where to find us</p>
-                <ul className="divide-y divide-border border-y border-border">
-                  <li className="flex items-center gap-4 py-4">
-                    <MapPin className="size-4 text-primary shrink-0" />
-                    <span className="text-sm font-light text-secondary">Miami, FL — Headquarters</span>
-                  </li>
-                  <li className="flex items-center gap-4 py-4">
-                    <Mail className="size-4 text-primary shrink-0" />
-                    <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
-                  </li>
-                  <li className="flex items-center gap-4 py-4">
-                    <Phone className="size-4 text-primary shrink-0" />
-                    <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="eyebrow mb-5">What happens next</p>
-                <StepFlow orientation="vertical" steps={NEXT_STEPS} />
-              </div>
-
-              <div className="rounded-xl border border-border bg-muted/30 p-5 flex items-start gap-4">
-                <IBMPlatinumBadge size="sm" />
-                <p className="text-xs font-light text-muted-foreground leading-relaxed">
-                  21 IBM products. 6 regulated industries. The senior architect on your first call is the same one who'd lead the engagement.
+            <div className="lg:sticky lg:top-24 space-y-8">
+              <p className="eyebrow">Why this form is short</p>
+              <h2 className="text-4xl md:text-5xl font-bold leading-[1.05] tracking-tight text-secondary">
+                Tell us what you're trying to ship. We'll route it to the right <span className="text-primary">principal</span>.
+              </h2>
+              <div className="space-y-5 text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-lg">
+                <p>
+                  No SDR queue. No discovery-call relay. The note you write below lands with a senior practitioner the same day — not a sales development rep working from a script.
+                </p>
+                <p>
+                  A good first message is three sentences: the outcome you're after, what's blocking it today, and what success looks like in 90 days. That's enough for us to bring the right person to the call.
                 </p>
               </div>
-            </aside>
+              <div className="flex items-start gap-4 pt-2">
+                <IBMPlatinumBadge size="sm" />
+                <p className="text-xs font-light text-muted-foreground leading-relaxed max-w-xs">
+                  21 IBM products. 6 regulated industries. The architect on your first call is the one who'd lead the engagement.
+                </p>
+              </div>
+            </div>
           </Reveal>
 
-          {/* Form card */}
+          {/* Right — Form card */}
           <Reveal delay={100}>
             <div
               className="relative rounded-2xl border border-border bg-background p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_24px_48px_-32px_hsl(var(--primary)/0.25)] ring-1 ring-border/60"
@@ -367,6 +356,38 @@ const Contact = () => {
       </section>
 
       {/* Trust strip */}
+      {/* SUPPORTING INFO BAND */}
+      <section className="border-y border-border bg-muted/30">
+        <SectionMarker page="Contact" name="Location + Next steps" />
+        <div className="container-page py-16 md:py-20 grid gap-12 md:grid-cols-2 md:gap-16">
+          <Reveal>
+            <div>
+              <p className="eyebrow mb-5">Where to find us</p>
+              <ul className="divide-y divide-border border-y border-border">
+                <li className="flex items-center gap-4 py-4">
+                  <MapPin className="size-4 text-primary shrink-0" />
+                  <span className="text-sm font-light text-secondary">Miami, FL — Headquarters</span>
+                </li>
+                <li className="flex items-center gap-4 py-4">
+                  <Mail className="size-4 text-primary shrink-0" />
+                  <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
+                </li>
+                <li className="flex items-center gap-4 py-4">
+                  <Phone className="size-4 text-primary shrink-0" />
+                  <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
+                </li>
+              </ul>
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <div>
+              <p className="eyebrow mb-5">What happens next</p>
+              <StepFlow orientation="vertical" steps={NEXT_STEPS} />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <LogoStrip />
     </Layout>
   );
