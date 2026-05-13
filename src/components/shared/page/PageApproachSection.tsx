@@ -41,12 +41,18 @@ export const PageApproachSection = ({
   const Body = (
     <div className="container-page">
       <Reveal>
-        <SectionHeading
-          eyebrow={eyebrow}
-          title={title}
-          eyebrowClassName={isDark ? "text-primary" : undefined}
-          titleClassName={isDark ? "text-background" : undefined}
-        />
+        {isDark ? (
+          <div className="max-w-3xl">
+            <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary mb-3">
+              {eyebrow}
+            </p>
+            <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-background">
+              {title}
+            </h2>
+          </div>
+        ) : (
+          <SectionHeading eyebrow={eyebrow} title={title} />
+        )}
       </Reveal>
 
       <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
