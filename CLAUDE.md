@@ -15,6 +15,7 @@ Marketing website rebuild for **TechD** (IBM Platinum Business Partner serving F
 This repository is **public**. Before committing anything, verify:
 
 - No personal names, email addresses, or phone numbers in any file
+  - Exception: Executive leadership names and career details (prior employers, education, tenure) are permitted in `docs/revisions/`, `docs/audit/`, and `src/content/about.ts`. No personal contact details (home address, personal phone, personal email) in any file.
 - No API keys, tokens, secrets, or credentials anywhere (use GitHub Secrets / AWS environment variables)
 - No internal Slack handles, Google Drive links, or internal URLs
 - No local filesystem paths (`~/Documents/...`, `/home/...`)
