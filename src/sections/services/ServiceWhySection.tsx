@@ -1,88 +1,122 @@
+import { useEffect, useRef, useState } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import HoverGridBackdrop from "@shared/HoverGridBackdrop";
 import { type Service } from "@content/services";
 import { SERVICES_EXTRAS } from "@content/services-extras";
+import { cn } from "@/lib/utils";
 
 interface Props {
   service: Service;
 }
 
+/**
+ * Pull-quote + ledger. Click any ledger note to promote it
+ * into the quote slot with a soft cross-fade.
+ * Mirrors src/sections/solutions/WhyPracticeSection.tsx.
+ */
 export const ServiceWhySection = ({ service }: Props) => {
   const extras = SERVICES_EXTRAS[service.id];
   const points = extras?.whyPoints ?? [];
+
+  const [active, setActive] = useState(0);
+  const [displayed, setDisplayed] = useState(0);
+  const [phase, setPhase] = useState<"idle" | "out" | "in">("idle");
+  const timeouts = useRef<number[]>([]);
+
+  useEffect(() => {
+    if (active === displayed) return;
+    setPhase("out");
+    const t1 = window.setTimeout(() => {
+      setDisplayed(active);
+      const t2 = window.setTimeout(() => setPhase("in"), 20);
+      const t3 = window.setTimeout(() => setPhase("idle"), 340);
+      timeouts.current.push(t2, t3);
+    }, 200);
+    timeouts.current.push(t1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
+  useEffect(() => {
+    return () => {
+      timeouts.current.forEach(window.clearTimeout);
+      timeouts.current = [];
+    };
+  }, []);
+
   if (!points.length) return null;
 
-  const [featured, ...rest] = points;
-  const supporting = rest.slice(0, 3);
+  const activePoint = points[displayed] ?? points[0];
+  const rest = points
+    .map((p, i) => ({ p, i }))
+    .filter(({ i }) => i !== displayed);
+
+  const quoteState =
+    phase === "out"
+      ? "opacity-0 translate-y-1"
+      : "opacity-100 translate-y-0";
 
   return (
     <section
       id="why"
-      className="py-14 md:py-20 scroll-mt-24 border-t border-border bg-background"
+      className="relative py-14 md:py-20 scroll-mt-24 border-t border-border bg-background overflow-hidden"
     >
       <SectionMarker page={`Services / ${service.name}`} name="Why TechD" />
-      <div className="container-page">
-        <div className="space-y-4">
-          {/* Featured primary cyan gradient hero card */}
-          <Reveal>
-            <article
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary to-[hsl(195_100%_38%)] p-6 md:p-8 lg:p-10 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.55)]"
-            >
-              <HoverGridBackdrop variant="primary" background={false} topRim={false} spotlightRadius={400} />
 
-              {/* Ambient radial highlights */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-700 group-hover:opacity-60"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(60% 80% at 80% 20%, hsl(var(--background) / 0.30) 0%, transparent 60%), radial-gradient(40% 60% at 20% 100%, hsl(var(--secondary) / 0.40) 0%, transparent 70%)",
-                }}
-              />
+      <div className="container-page relative">
+        <Reveal>
+          <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
+            Why TechD · {service.name}
+          </p>
+        </Reveal>
 
-              <div className="relative z-10 max-w-3xl">
-                <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-background/70 mb-4">
-                  Why TechD · {service.name}
-                </p>
-                <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight text-background">
-                  {featured.title}
-                </h3>
-                <p className="mt-4 md:mt-5 text-base md:text-lg font-light leading-relaxed text-background/90 max-w-2xl">
-                  {featured.body}
-                </p>
-              </div>
-            </article>
-          </Reveal>
+        {/* Pull-quote — soft cross-fade between active points */}
+        <div
+          className={cn(
+            "mt-6 max-w-5xl transition-all duration-300 ease-out motion-reduce:transition-none",
+            quoteState,
+          )}
+          aria-live="polite"
+        >
+          <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light leading-[1.15] md:leading-[1.1] tracking-tight text-secondary">
+            <span className="text-primary font-bold">“</span>
+            {activePoint.title}
+            <span className="text-primary font-bold">”</span>
+          </p>
+          <p className="mt-4 md:mt-6 text-sm sm:text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl">
+            {activePoint.body}
+          </p>
+        </div>
 
-          {/* Supporting tiles */}
-          {supporting.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {supporting.map((p, i) => (
-                <Reveal key={p.title} delay={i * 80}>
-                  <article className="group relative h-full overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_12px_32px_-16px_hsl(var(--primary)/0.35)]">
-                    {/* Top hairline reveal on hover */}
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    />
-                    {/* Static primary top accent (resting state) */}
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 top-0 h-[2px] bg-primary/70 transition-all duration-300 group-hover:bg-primary"
-                    />
-                    <h4 className="text-primary text-xs md:text-sm font-bold uppercase tracking-widest mt-2 mb-3 md:mb-4 transition-colors">
-                      {p.title}
-                    </h4>
-                    <p className="text-secondary font-light text-sm md:text-base leading-relaxed">
-                      {p.body}
-                    </p>
-                  </article>
-                </Reveal>
+        {/* Ledger of remaining notes — clickable to promote */}
+        {rest.length > 0 && (
+          <div className="relative mt-10 md:mt-16 border-y border-border py-6 md:py-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-border md:divide-y-0 md:divide-x">
+              {rest.map(({ p, i }) => (
+                <button
+                  key={p.title}
+                  type="button"
+                  onClick={() => setActive(i)}
+                  className={cn(
+                    "group text-left py-5 first:pt-0 last:pb-0 md:py-3 md:px-6 md:first:pt-3 md:last:pb-3 md:first:pl-0 md:last:pr-0",
+                    "transition-all duration-300 ease-out motion-reduce:transition-none",
+                    "hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
+                  )}
+                >
+                  <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
+                    Note · {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-2 md:mt-3 text-base font-bold text-secondary leading-snug transition-colors group-hover:text-primary">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
+                    {p.body}
+                  </p>
+                </button>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
