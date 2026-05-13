@@ -55,21 +55,21 @@ export const NAV: NavItem[] = [
   },
 ];
 
-export type Customer = { name: string; url: string; logo?: string; logoClass?: string };
+export type Customer = { name: string; url: string; logo?: string; logoOnDark?: string; logoClass?: string };
 
 export const CUSTOMERS: Customer[] = [
   // Lead-in trio (per request)
-  { name: "Admed", url: "https://www.admed.com.br", logo: "/logos/admed.svg" },
+  { name: "Admed", url: "https://www.admed.com.br", logo: "/logos/admed.svg", logoOnDark: "/logos/white/admed.png" },
   { name: "Great Day Improvements", url: "https://greatdayimprovements.com", logo: "/logos/greatday.png", logoClass: "h-8 md:h-9" },
   { name: "Clip", url: "https://www.clip.mx", logo: "/logos/clip.svg", logoClass: "h-12 md:h-14" },
 
   // Tier 1 — global blue-chip enterprises (most recognizable F500 / global brands)
-  { name: "Adobe", url: "https://www.adobe.com", logo: "/logos/adobe.svg", logoClass: "h-14 md:h-16" },
+  { name: "Adobe", url: "https://www.adobe.com", logo: "/logos/adobe.svg", logoOnDark: "/logos/white/adobe.png", logoClass: "h-14 md:h-16" },
   { name: "Mercedes-Benz", url: "https://www.mercedes-benz.com", logo: "/logos/benz.svg", logoClass: "h-14 md:h-16" },
-  { name: "Verizon", url: "https://www.verizon.com", logo: "/logos/verizon.svg", logoClass: "h-8 md:h-9" },
-  { name: "Snap Inc.", url: "https://www.snap.com", logo: "/logos/snap.svg", logoClass: "h-12 md:h-14" },
+  { name: "Verizon", url: "https://www.verizon.com", logo: "/logos/verizon.svg", logoOnDark: "/logos/white/verizon.png", logoClass: "h-8 md:h-9" },
+  { name: "Snap Inc.", url: "https://www.snap.com", logo: "/logos/snap.svg", logoOnDark: "/logos/white/snap.png", logoClass: "h-12 md:h-14" },
   { name: "Santander", url: "https://www.santander.com", logo: "/logos/santander.svg", logoClass: "h-8 md:h-9" },
-  { name: "MetLife", url: "https://www.metlife.com", logo: "/logos/metlife.svg", logoClass: "h-7 md:h-8" },
+  { name: "MetLife", url: "https://www.metlife.com", logo: "/logos/metlife.svg", logoOnDark: "/logos/white/metlife.png", logoClass: "h-7 md:h-8" },
   { name: "Mizuho", url: "https://www.mizuho-financial.com", logo: "/logos/mizuho.svg", logoClass: "h-8 md:h-9" },
   { name: "NatWest", url: "https://www.natwest.com", logo: "/logos/natwest.svg", logoClass: "h-14 md:h-16" },
   { name: "Itaú", url: "https://www.itau.com.br", logo: "/logos/itau.svg", logoClass: "h-16 md:h-20" },
@@ -81,11 +81,11 @@ export const CUSTOMERS: Customer[] = [
   { name: "NSK", url: "https://www.nsk.com", logo: "/logos/nsk.svg", logoClass: "h-8 md:h-9" },
 
   // Tier 2 — top-tier universities and major institutions
-  { name: "Harvard University", url: "https://www.harvard.edu", logo: "/logos/harvard.svg", logoClass: "h-14 md:h-16" },
-  { name: "Penn State", url: "https://www.psu.edu", logo: "/logos/pennstate.svg" },
-  { name: "National University of Singapore", url: "https://www.nus.edu.sg", logo: "/logos/nus.svg", logoClass: "h-10 md:h-12" },
-  { name: "Stony Brook University", url: "https://www.stonybrook.edu", logo: "/logos/stonybrook.svg", logoClass: "h-8 md:h-9" },
-  { name: "New York Institute of Technology", url: "https://www.nyit.edu", logo: "/logos/nyit.svg" },
+  { name: "Harvard University", url: "https://www.harvard.edu", logo: "/logos/harvard.svg", logoOnDark: "/logos/white/harvard.png", logoClass: "h-14 md:h-16" },
+  { name: "Penn State", url: "https://www.psu.edu", logo: "/logos/pennstate.svg", logoOnDark: "/logos/white/pennstate.png" },
+  { name: "National University of Singapore", url: "https://www.nus.edu.sg", logo: "/logos/nus.svg", logoOnDark: "/logos/white/nus.png", logoClass: "h-10 md:h-12" },
+  { name: "Stony Brook University", url: "https://www.stonybrook.edu", logo: "/logos/stonybrook.svg", logoOnDark: "/logos/white/stonybrook.png", logoClass: "h-8 md:h-9" },
+  { name: "New York Institute of Technology", url: "https://www.nyit.edu", logo: "/logos/nyit.svg", logoOnDark: "/logos/white/nyit.png" },
 
   // Tier 3 — strong regional / sector leaders
   { name: "Banorte", url: "https://www.banorte.com", logo: "/logos/banorte.svg", logoClass: "h-6 md:h-7" },
@@ -94,7 +94,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "Dah Sing Bank", url: "https://www.dahsing.com", logo: "/logos/dahsing.svg", logoClass: "h-8 md:h-9" },
   { name: "Banco del Pacífico", url: "https://www.bancodelpacifico.com", logo: "/logos/banco-del-pacifico.svg" },
   { name: "BROU", url: "https://www.brou.com.uy", logo: "/logos/brou.svg", logoClass: "h-7 md:h-8" },
-  { name: "TEPSCO", url: "https://www.tepsco.co.jp", logo: "/logos/tepsco.svg", logoClass: "h-12 md:h-14" },
-  { name: "Netcare", url: "https://www.netcare.co.za", logo: "/logos/netcare.svg", logoClass: "h-16 md:h-20" },
-  { name: "Children's Health", url: "https://www.childrens.com", logo: "/logos/childrens-health.svg", logoClass: "h-8 md:h-9" },
+  { name: "TEPSCO", url: "https://www.tepsco.co.jp", logo: "/logos/tepsco.svg", logoOnDark: "/logos/white/tepsco.png", logoClass: "h-12 md:h-14" },
+  { name: "Netcare", url: "https://www.netcare.co.za", logo: "/logos/netcare.svg", logoOnDark: "/logos/white/netcare.png", logoClass: "h-16 md:h-20" },
+  { name: "Children's Health", url: "https://www.childrens.com", logo: "/logos/childrens-health.svg", logoOnDark: "/logos/white/childrens-health.png", logoClass: "h-8 md:h-9" },
 ];
