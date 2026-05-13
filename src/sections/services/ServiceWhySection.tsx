@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Plus } from "lucide-react";
+
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import { type Service } from "@content/services";
@@ -127,16 +127,14 @@ export const ServiceWhySection = ({ service }: Props) => {
                       >
                         {p.title}
                       </h3>
-                      <Plus
-                        aria-hidden
-                        className={cn(
-                          "shrink-0 h-4 w-4 transition-all duration-300 ease-out motion-reduce:transition-none",
-                          isActive
-                            ? "text-primary rotate-45"
-                            : "text-muted-foreground rotate-0 group-hover:text-primary",
-                        )}
-                        strokeWidth={1.5}
-                      />
+                      {isActive && (
+                        <span
+                          aria-hidden
+                          className="shrink-0 text-primary font-bold text-2xl leading-none -mt-1"
+                        >
+                          “
+                        </span>
+                      )}
                     </div>
                   </button>
                 );
