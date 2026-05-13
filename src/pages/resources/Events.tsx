@@ -42,9 +42,14 @@ const Events = () => (
       headline="Where we'll be next."
       lede="Working sessions, roundtables, and IBM conference appearances — small rooms, senior conversations."
       figure={<ResourcesFigure />}
+      anchors={[
+        { href: "/resources/case-studies", label: "Case Studies" },
+        { href: "/resources/blog", label: "Blog" },
+        { href: "/resources/webinars", label: "Webinars" },
+      ]}
     />
 
-    <section id="list" className="section bg-muted/30">
+    <section id="list" className="section bg-muted/30 border-t border-border">
       <SectionMarker page="Resources / Events" name="List" />
       <div className="container-page">
         {items.length === 0 ? (

@@ -27,10 +27,15 @@ const Blog = () => (
       headline="Thinking out loud on enterprise AI."
       lede="Practical takes on governance, data architecture, and the IBM stack — from practitioners who ship."
       figure={<ResourcesFigure />}
+      anchors={[
+        { href: "/resources/case-studies", label: "Case Studies" },
+        { href: "/resources/webinars", label: "Webinars" },
+        { href: "/resources/events", label: "Events" },
+      ]}
     />
 
     {/* Card grid / empty state */}
-    <section id="list" className="section bg-muted/30">
+    <section id="list" className="section bg-muted/30 border-t border-border">
       <SectionMarker page="Resources / Blog" name="List" />
       <div className="container-page">
         {posts.length === 0 ? (

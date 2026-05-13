@@ -27,9 +27,14 @@ const Webinars = () => (
       headline="Sessions for people who ship."
       lede="Live and on-demand walkthroughs from senior IBM-certified architects — no slideware, no vendor talk track."
       figure={<ResourcesFigure />}
+      anchors={[
+        { href: "/resources/case-studies", label: "Case Studies" },
+        { href: "/resources/blog", label: "Blog" },
+        { href: "/resources/events", label: "Events" },
+      ]}
     />
 
-    <section id="list" className="section bg-muted/30">
+    <section id="list" className="section bg-muted/30 border-t border-border">
       <SectionMarker page="Resources / Webinars" name="List" />
       <div className="container-page">
         {items.length === 0 ? (

@@ -26,10 +26,15 @@ const CaseStudies = () => (
       headline="Named in the work, not the slides."
       lede="A growing record of enterprise engagements — each one verified, none invented."
       figure={<ResourcesFigure />}
+      anchors={[
+        { href: "/resources/blog", label: "Blog" },
+        { href: "/resources/webinars", label: "Webinars" },
+        { href: "/resources/events", label: "Events" },
+      ]}
     />
 
     {/* Card grid */}
-    <section id="list" className="section bg-muted/30">
+    <section id="list" className="section bg-muted/30 border-t border-border">
       <SectionMarker page="Resources / Case Studies" name="List" />
       <div className="container-page">
         {items.length === 0 ? (
