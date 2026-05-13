@@ -75,6 +75,8 @@ const About = () => {
         ]}
       />
 
+      <div className="border-t border-border" />
+
       {/* Founding story */}
       <section id="story" className="section scroll-mt-24">
         <SectionMarker page="Company / About" name="Story" />
