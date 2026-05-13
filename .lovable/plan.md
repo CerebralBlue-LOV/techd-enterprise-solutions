@@ -1,50 +1,33 @@
-## Problem recap
+## Goal
+Show the affected client logos in `#clients` as white, transparent-background marks on the dark card surface instead of placing full-color logos on white rectangles.
 
-The current treatment forces every logo through `brightness-0 invert` so it becomes a flat white silhouette on the dark card. That works for simple wordmarks but destroys detailed/crest logos (Harvard, Penn State, NUS, Stony Brook, NYIT, Netcare). Per-logo opt-outs would create two visual languages on the same grid — inconsistent.
+## What I’ll change
+1. Add a dark-surface logo field to the shared customer data so each client can have:
+   - the current standard logo for light surfaces
+   - an alternate white/transparent logo for dark surfaces
+2. Update the industry client cards to use the dark-surface logo variant when available and remove the hard white logo plate treatment.
+3. Create white transparent logo assets for the affected clients you called out first:
+   - Harvard University
+   - Penn State
+   - National University of Singapore
+   - and any other industry-card logos that clearly need the same treatment for consistency
+4. Keep the home marquee/logo strip unchanged unless a logo also needs a dedicated dark-surface treatment there later.
 
-## Proposed solution — one uniform treatment for all logos
+## Why this approach
+- CSS alone won’t reliably convert these logos, because many of the current `.svg` files are actually embedded raster artwork.
+- A curated white-on-transparent asset per affected logo gives the cleanest result and keeps sizing/legibility under control.
+- It preserves consistency across cards without forcing every logo onto a white slab.
 
-Give every card a **white logo plate** at the top, and render every logo in its **original colors**. The card body (name + note) stays on the dark panel.
-
-```text
-┌─────────────────────────────┐
-│ ░░░░░ white plate ░░░░░░░░ │  ← logo in original colors, centered
-│ ░░░░░ [   LOGO   ] ░░░░░░░ │
-├─────────────────────────────┤
-│ Harvard University          │  ← dark card body, white text
-│ Ivy League — research       │
-│ computing and analytics.    │
-└─────────────────────────────┘
-```
-
-Why this works:
-- **Single rule** — no per-logo flags, no two visual modes. Every logo gets the same plate, same padding, same height.
-- **Brand-safe** — original colors preserved everywhere (matters for IBM partner logos, university crests, financial brands).
-- **Reads on dark** — white plate gives every logo guaranteed contrast.
-- **Stripe/Linear-ish** — these sites use exactly this pattern (logo tile + dark caption) for partner / customer grids.
-
-### Implementation details
-
-In `src/sections/industries/IndustryClientsSection.tsx`, inside `ClientCard`:
-
-- Replace the current logo cell with a fixed-height plate:
-  - `bg-white rounded-xl flex items-center justify-center h-20 w-full px-4`
-  - Inside: `<img>` with `max-h-10 md:max-h-12 w-auto object-contain` (override the per-customer `logoClass` for this context — we control sizing here so the grid stays even).
-  - Drop `brightness-0 invert` entirely.
-- Body section below (name + note) stays as it is on the dark card.
-- Initials fallback (when no logo): same white plate, but render initials in `text-secondary` instead of white.
-- Keep the existing hover: card border lifts to `white/25`, slight `-translate-y-0.5`, name shifts to `text-primary`. No change to the plate itself.
-
-### Stat label rename
-
-In the left column, change `"Active clients"` → **"Featured clients"** (or *Selected* / *Showcased* if you prefer one of those).
-
-### Files touched
-
-- `src/sections/industries/IndustryClientsSection.tsx` — rewrite the logo cell, drop the invert filter, add white plate; rename the stat label.
-- No changes needed to `src/content/site.ts` or the `Customer` type.
-
-## Question before I build
-
-1. Confirm the new label: **Featured clients**, *Selected clients*, or *Showcased clients*?
-2. Plate style preference: pure white (`bg-white`) for max contrast, or a softer off-white (`bg-white/95` with a faint inner shadow) to feel less harsh against the dark panel? I'd default to pure white for clarity unless you say otherwise.
+## Technical details
+- Files likely involved:
+  - `src/content/site.ts`
+  - `src/sections/industries/IndustryClientsSection.tsx`
+  - `public/logos/*` for the new white transparent variants
+- Data shape change:
+  - add an optional field such as `logoOnDark` to `Customer`
+- Rendering logic:
+  - industry cards prefer `logoOnDark` on dark backgrounds
+  - fall back to the existing logo when no alternate exists yet
+- Validation:
+  - review the higher-education `#clients` section first since those are the clearest problem cases
+  - then spot-check the other industry pages for scale and contrast consistency

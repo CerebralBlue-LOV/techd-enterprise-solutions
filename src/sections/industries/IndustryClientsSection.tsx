@@ -39,16 +39,16 @@ const ClientCard = ({ client }: { client: ResolvedClient }) => {
         url && "cursor-pointer",
       )}
     >
-      <div className="flex h-20 w-full items-center justify-center rounded-xl bg-white px-4">
+      <div className="flex h-20 w-full items-center justify-center px-4">
         {c?.logo ? (
           <img
             src={`${import.meta.env.BASE_URL}${c.logo.replace(/^\//, "")}`}
             alt={`${c.name} logo`}
             loading="lazy"
-            className="max-h-10 md:max-h-12 w-auto max-w-[160px] object-contain"
+            className="max-h-10 md:max-h-12 w-auto max-w-[160px] object-contain brightness-0 invert opacity-85 transition-opacity duration-300 group-hover:opacity-100"
           />
         ) : (
-          <span className="font-bold text-secondary text-2xl tracking-tight leading-none">
+          <span className="font-bold text-white/85 text-2xl tracking-tight leading-none">
             {initials}
           </span>
         )}
