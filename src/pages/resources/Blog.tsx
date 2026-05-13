@@ -29,8 +29,7 @@ const Blog = () => (
       figure={<ResourcesFigure />}
       anchors={[
         { href: "#list", label: "Latest" },
-        { href: "/resources/webinars", label: "Webinars" },
-        { href: "/resources/events", label: "Events" },
+        { href: "#more", label: "Explore TechD" },
       ]}
     />
 

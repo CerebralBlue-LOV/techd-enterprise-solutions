@@ -44,8 +44,7 @@ const Events = () => (
       figure={<ResourcesFigure />}
       anchors={[
         { href: "#list", label: "Latest" },
-        { href: "#list", label: "Latest" },
-        { href: "/resources/webinars", label: "Webinars" },
+        { href: "#more", label: "Explore TechD" },
       ]}
     />
 
