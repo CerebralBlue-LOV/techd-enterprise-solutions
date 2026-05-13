@@ -4,9 +4,11 @@ import { SERVICES, type Service } from "@content/services";
 import { SERVICES_EXTRAS } from "@content/services-extras";
 import ServiceHeroSection from "@sections/services/ServiceHeroSection";
 import ServiceWhySection from "@sections/services/ServiceWhySection";
+import ServiceSpotlightSection from "@sections/services/ServiceSpotlightSection";
 import ServiceOfferingsSection from "@sections/services/ServiceOfferingsSection";
-import ServiceApproachSection from "@sections/services/ServiceApproachSection";
-import ServicePracticesSection from "@sections/services/ServicePracticesSection";
+import ServiceMethodologySection from "@sections/services/ServiceMethodologySection";
+import ServiceProductCoverageSection from "@sections/services/ServiceProductCoverageSection";
+import ServiceCrossLinksSection from "@sections/services/ServiceCrossLinksSection";
 import ServiceCtaSection from "@sections/services/ServiceCtaSection";
 import NotFound from "@pages/NotFound";
 
@@ -28,9 +30,11 @@ const ServicePage = ({ serviceId }: Props) => {
       />
       <ServiceHeroSection service={service} />
       <ServiceWhySection service={service} />
+      <ServiceSpotlightSection service={service} />
       <ServiceOfferingsSection service={service} />
-      <ServiceApproachSection service={service} />
-      <ServicePracticesSection service={service} />
+      <ServiceMethodologySection service={service} />
+      <ServiceProductCoverageSection service={service} />
+      <ServiceCrossLinksSection service={service} />
       <ServiceCtaSection service={service} />
     </Layout>
   );
