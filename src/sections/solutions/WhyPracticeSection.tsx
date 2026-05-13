@@ -81,27 +81,27 @@ export const WhyPracticeSection = ({ practice }: Props) => {
           )}
           aria-live="polite"
         >
-          <p className="text-3xl md:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight text-secondary">
+          <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light leading-[1.15] md:leading-[1.1] tracking-tight text-secondary">
             <span className="text-primary font-bold">“</span>
             {activePoint.title}
             <span className="text-primary font-bold">”</span>
           </p>
-          <p className="mt-6 text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl">
+          <p className="mt-4 md:mt-6 text-sm sm:text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl">
             {activePoint.body}
           </p>
         </div>
 
         {/* Ledger of remaining notes — clickable to promote */}
         {rest.length > 0 && (
-          <div className="relative mt-12 md:mt-16 border-y border-border py-12 md:py-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-border">
+          <div className="relative mt-10 md:mt-16 border-y border-border py-6 md:py-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-border md:divide-y-0 md:divide-x">
               {rest.map(({ p, i }) => (
                 <button
                   key={p.title}
                   type="button"
                   onClick={() => setActive(i)}
                   className={cn(
-                    "group text-left py-5 md:py-3 md:px-6 first:md:pl-0 last:md:pr-0",
+                    "group text-left py-5 first:pt-0 last:pb-0 md:py-3 md:px-6 md:first:pt-3 md:last:pb-3 md:first:pl-0 md:last:pr-0",
                     "transition-all duration-300 ease-out motion-reduce:transition-none",
                     "hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
@@ -110,7 +110,7 @@ export const WhyPracticeSection = ({ practice }: Props) => {
                   <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
                     Note · {String(i + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="mt-3 text-base font-bold text-secondary leading-snug transition-colors group-hover:text-primary">
+                  <h3 className="mt-2 md:mt-3 text-base font-bold text-secondary leading-snug transition-colors group-hover:text-primary">
                     {p.title}
                   </h3>
                   <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
