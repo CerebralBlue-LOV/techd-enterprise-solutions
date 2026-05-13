@@ -1,54 +1,45 @@
-# 3 more "Why TechD" proposals — compact, divider-led, with subtle backdrops
+# Apply W2 (Pull-quote + ledger) to Solutions Why section, with click-to-promote animation + section divider
 
-## Goals from your direction
+## Changes
 
-- Keep the existing W1/W2/W3 untouched.
-- Add **3 new proposals (W4, W5, W6)** with distinct personalities.
-- Stay **compact** — these sit right under the page hero, so they should feel like a confident "second beat", not a second hero.
-- Use **lines / dividers / hairlines** as the dominant structural device (not cards or fills).
-- Reuse the **dot-grid particle backdrop** from W2 in at least one new proposal, and try other subtle backdrops (e.g. existing `SectionBackdrop` engineered grid, faint diagonal hatch).
-- Strict brand palette only — `primary`, `secondary`, `muted`, `border`, `background`. No raw hex.
+### 1. Rewrite `src/sections/solutions/WhyPracticeSection.tsx` to the W2 layout
 
-## Where it lands
+- Replace the current cyan-gradient hero card + 2×2 tiles with the **Pull-quote + ledger** treatment from `/section-lab` (W2):
+  - Eyebrow `Why TechD · {practice.name}`
+  - Large editorial pull-quote (the **active** point's `title`, wrapped in primary cyan curly quotes)
+  - Body line under it = the active point's `body`
+  - Faint dot-grid backdrop (same `radial-gradient(hsl(var(--border)) 1px, …)` as W2), masked to upper-left
+  - Below: a **3-up ledger row** of the *non-active* points, separated by `md:divide-x divide-border`
+- Brand palette only. No new tokens.
 
-All 3 new proposals are appended to the "Why TechD — proposals" group at the top of `src/pages/SectionLab.tsx`, immediately after W3, before the existing 01-07. They use the same `VariantShell` framing and the same `WHY_POINTS` data already defined in the file.
+### 2. Make notes clickable with a "promote to quote" animation
 
-## The 3 new proposals
+- The active note is held in component state (`useState<number>(0)`, defaults to the first point).
+- Each ledger note becomes a `<button>`. Clicking it sets that index as active, swapping it into the quote slot; the previous quote demotes into the ledger position vacated by the click.
+- Animation:
+  - The pull-quote area is keyed by `active` so React remounts it. A short cross-fade / lift uses Tailwind's existing `animate-fade-in` (`fade-in 0.3s ease-out` — already in `tailwind.config.ts`).
+  - The ledger items get a `transition-all duration-300` on opacity + small `translate-y` so the reorder reads smoothly. To keep DOM simple, the ledger renders `points.filter((_, i) => i !== active)` and relies on React keys (the point's `title`) so unaffected items don't re-animate.
+  - Hovered note gets a cyan top hairline + slight `-translate-y-0.5` to signal it's interactive.
+  - All motion respects `prefers-reduced-motion` via Tailwind's built-in `motion-reduce:` variants on the transitions.
+- Accessibility: each note button gets `aria-pressed={i === active}` and a visible focus ring (`focus-visible:ring-2 focus-visible:ring-primary`).
 
-### W4 — Horizontal rail (4-up, divider-led)
-- Single row layout. Eyebrow + small section title sit on a top hairline. Below: a 4-column grid where each column is a `whyPoint` separated by **vertical hairlines** (`md:divide-x divide-border`).
-- Each column: small mono numeral (`01`) on top, bold short title, light body. No background fills, no cards.
-- Bottom hairline closes the section. Total visible height stays well under one screen — pure "data row" feel.
-- Backdrop: faint `SectionBackdrop intensity="soft"` (existing component) — engineered grid + drifting cyan blob, very low opacity, gives the rail some atmosphere without competing.
-- Personality: a Bloomberg/FT-style data strip. Maximum density per pixel.
+### 3. Section divider between Why and the next section
 
-### W5 — Diagonal stack with running rule
-- Vertical list, each row is a single line of structure: left = micro number + uppercase tag, middle = bold title, right = body text — separated by horizontal hairlines (`divide-y divide-border`).
-- A **single primary cyan vertical "running rule"** spans the full height on the left edge of the title column, tying all rows together visually (the cyan line *is* the design).
-- On row hover, the row slides 2px right and the title shifts to `text-primary` — only motion in the section.
-- Backdrop: the **same dot-grid particle pattern from W2**, but masked to the upper-left corner only so it acts as an "incoming" texture.
-- Personality: Linear changelog meets Anthropic spec table. Compact, scannable, very type-driven.
+- After the section's content, render a thin **side-by-side divider rule** that visually closes Why and opens the next (`ProductsGridSection`):
+  - Layout: `container-page`, single horizontal row split into two halves — left half `h-px bg-border`, right half `h-px bg-primary/40` (or vice versa), with a small mono micro-label (`§ 02 · Products`) sitting on the seam.
+  - Lives inside the same `<section id="why">` so it doesn't affect the route or anchors.
+  - Pure decorative — `aria-hidden="true"` on the rule itself; the label is plain text.
+- This pattern stays local to this section for now; if you want it across all pages later, we can promote it into a shared `SectionSeam` component.
 
-### W6 — Asymmetric split with diagonal hatch backdrop
-- Two-column split (5/7): **left** = sticky-feeling tall block holding the eyebrow + title + a single short "credentials line" (e.g. `IBM Platinum · 25+ years`); **right** = the four `whyPoints` rendered as a vertical list, each separated by hairlines.
-- Connector: a single horizontal cyan hairline runs across the full width *behind* both columns at the title baseline, tying them.
-- Backdrop: a faint **diagonal hatch pattern** (45° linear-gradient stripes at very low opacity, masked with a radial fade) — new but built inline with brand tokens, no new files.
-- Each right-side row uses a small `→` indicator that animates on hover (`group-hover:translate-x-1`).
-- Personality: editorial split layout. Frames the section as a statement + supporting evidence, very different rhythm from the symmetric grids in W1/W3.
+## Reuse / scope
 
-## Technical notes
-
-- All three are local components in `src/pages/SectionLab.tsx`: `WhyProposalRail`, `WhyProposalRunningRule`, `WhyProposalSplit`.
-- Reuses already-imported `cn`, `Reveal`, `SectionHeading` (where useful), and the existing `WHY_POINTS` / `WHY_TITLE` constants.
-- New import: `SectionBackdrop` from `@shared/SectionBackdrop` (used in W4 only).
-- The dot-grid pattern in W5 is the same inline `radial-gradient(hsl(var(--border)) 1px, transparent 1px)` snippet from W2 — copied locally, not extracted, to keep the lab self-contained until a winner is picked.
-- Diagonal hatch in W6: inline `repeating-linear-gradient(45deg, hsl(var(--border)/0.5) 0 1px, transparent 1px 14px)` with a radial mask. No new tokens.
-- Compact vertical rhythm: each proposal targets ~`py-12 md:py-14` (vs. ~`py-16 md:py-20` for W1/W2). Titles top out at `text-2xl md:text-3xl` (vs. up to `text-6xl` in W2). They will read as "supporting beat after hero", not as a second hero.
-- Respects `prefers-reduced-motion` (only `Reveal` + simple `transition-transform` / `transition-colors`; no keyframes).
-- Three new `VariantShell` entries (W4 / W5 / W6) added in order after W3.
+- No changes to `_PracticePage.tsx`, content files, or any other section.
+- No changes to Industries / Services Why sections — they keep the W2 lab proposal as a *reference* until you decide to roll the same treatment there too.
+- `SectionMarker` and `Reveal` continue to be used; `HoverGridBackdrop` is no longer needed in this file (import removed).
+- The `/section-lab` W2 stays as-is (it's the static reference).
 
 ## Out of scope
 
-- Editing the live `WhyPracticeSection` / `WhyIndustrySection` / `ServiceWhySection` / `PageWhySection`.
-- Extracting any of the proposals into a shared component — that happens after you pick a winner.
-- Touching `src/content/`.
+- Touching Industries/Services/Home Why sections.
+- Building a shared `<WhySection>` primitive — defer until at least one more page adopts the same pattern.
+- Editing `src/content/solutions-extras.ts` (uses existing `whyTitle` + `whyPoints` shape).
