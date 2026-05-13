@@ -1,110 +1,66 @@
-# Company section — visual & interaction upgrade
+# Contact page — visual & UX upgrade
 
-Scope: presentation-only refinements across the four Company pages. No content rewrites, no new data, no new routes. All work uses existing tokens (`primary` cyan, `secondary`, `muted`), Roboto Condensed, `Reveal`, shadcn primitives, and Tailwind. Respects `prefers-reduced-motion`.
+Goal: turn `/contact` from a plain two‑column form into the most polished page on the site — the moment a CIO decides to reach out. Quiet, confident, typography‑led (Stripe/Linear feel), still on brand tokens only.
 
-## Pages in scope
-1. `/company/about`
-2. `/company/ibm-partnership`
-3. `/company/delivery-methodology`
-4. `/company/customers`
+## Scope
 
----
+Presentation-only refinements to `src/pages/Contact.tsx` plus 1–2 small shared pieces. No backend changes (form still console‑logs + toasts), no new routes, no new colors outside `primary / secondary / muted / background`, Roboto Condensed only, respects `prefers-reduced-motion`.
 
-## 1. About — `src/pages/company/About.tsx`
+## Sections (top → bottom)
 
-**Founding story (`#story`)**
-- Replace the plain 2×2 facts grid with a stacked "spec card" — thin top border in primary, large value, eyebrow label, hairline divider between rows. Subtle hover lift on each row.
-- Add a faint vertical timeline rail to the left of the prose paragraphs (2009 → 2017 → today markers as small pills).
+1. **Hero band** — full‑bleed, uses `RingsHeroBackdrop` (already in repo) behind a tight headline.
+   - Eyebrow: `CONTACT`
+   - H1: "Talk to an expert."
+   - Subtitle: existing copy ("No SDR queue…").
+   - Right side: a small `StatBand` (3 stats: e.g. "1 business day response", "IBM Platinum since 2019", "Senior architect, first call").
 
-**Practices (`#practices`)**
-- Upgrade practice cards to a richer hover state: top-left corner index numeral (01–04) in primary, animated arrow that translates on hover, border + inner glow shift to `primary/40`, subtle scale (1.01) on the card.
-- Add a one-line "stack" footer per card listing 2–3 anchor product names pulled from `PORTFOLIO_BY_PRACTICE` (no new content, just re-using existing data).
+2. **Two-column working area** (the form is the hero of the page)
+   - **Left rail (sticky on lg+):**
+     - "Where to find us" — Miami, FL + email/phone placeholders, each on its own row with a thin divider.
+     - "What happens next" — 3 numbered steps using `StepFlow` vertical (Submit → Routed to a principal → 30‑min working call).
+     - Small trust block: IBM Platinum badge (`IBMPlatinumBadge`) + line "21 IBM products. 6 regulated industries."
+   - **Right column (form card):**
+     - Wrap form in a `DarkGlowPanel` `intensity="soft"` style? **No** — keep the form on light surface for legibility, but lift it: `rounded-2xl border bg-background shadow-[0_1px_0_hsl(var(--border))] ring-1 ring-border/60`, generous padding, focus rings in `primary`.
+     - Field grouping with subtle section labels ("About you", "About the project").
+     - Replace plain `Select` for "Area of interest" with a chip‑style toggle row (uses existing `ToggleGroup`) — one tap, no dropdown.
+     - Add an optional "Timeline" chip row (Now / This quarter / Exploring) — purely informational, included in payload.
+     - Submit button: full‑width on mobile, right‑aligned `btn-glow` on desktop with arrow icon, matches site CTA standard.
+     - Inline success state: on submit, swap the form for a calm confirmation panel ("Thanks — a principal will be in touch within one business day.") with a "Back to site" link. (Still no backend.)
 
-**Industries / compliance (`#industries`)**
-- Convert the 4 framework boxes into a tabbed component (shadcn `Tabs`) with framework name as tab and industry + detail as panel. Keeps the page shorter and adds interaction.
-- Below tabs, render the six verticals as a horizontal chip row instead of a paragraph.
+3. **Closing trust strip** — thin row above footer:
+   - Left: "Trusted by Fortune 500 leaders." Right: muted `LogoStrip` (reuse existing component, slowed to 60s, grayscale → color on hover).
 
-**Leadership (`#leadership`)**
-- Wrap each leadership card in a shadcn `HoverCard` so hovering the avatar reveals an expanded bio popover (uses existing `bio` + `domains`).
-- Card itself gets a subtle gradient ring around the avatar (cyan → transparent) and a hairline divider above the domain chips.
+4. **No final CTA panel** on this page — it would be redundant; the form *is* the CTA.
 
-**Methodology preview (`#methodology`)**
-- Replace the side card with a horizontal mini-stepper (5 dots connected by a line, each labelled with the stage name). Click → `/company/delivery-methodology`. Reinforces the same-team story visually.
+## Interaction & motion
 
----
+- `Reveal` on each section (existing 16px/500ms pattern).
+- Form fields: focus ring transitions to `primary` over 150ms; labels stay static (no float labels — keep readable).
+- Submit button: 1px lift on hover, glow already provided by `btn-glow`.
+- Success state: cross‑fade swap inside the card, no layout jump.
+- Sticky left rail uses `position: sticky; top: 6rem` on `lg+` only.
 
-## 2. IBM Partnership — `src/pages/company/IBMPartnership.tsx`
+## Accessibility
 
-**Credential block (`#credential`)**
-- Promote to a dark panel using existing `DarkGlowPanel` / `DarkSection` shared component (already used elsewhere). Adds visual contrast and signals "credential" weight.
-- Add the existing `IBMPlatinumBadge` component to the left side, "Verify" CTA on the right as `Button` with `btn-glow` outline variant.
+- Maintain semantic order, visible focus rings, `aria-live="polite"` on the success panel, `aria-required` on required inputs, error messages already wired via `FormMessage`.
+- Honor `prefers-reduced-motion` for the rings backdrop and reveals (existing components already do).
 
-**What Platinum means (`#what-platinum`)**
-- Add a small numeric indicator (01–04) to each card and a hairline accent bar in primary that grows from 0 → full width on hover.
+## Files
 
-**Portfolio (`#portfolio`)**
-- Make each product chip an interactive `HoverCard`: hover surfaces a 1-line description (we already have product copy in `solutions-extras.ts` / `solutions.ts` — read-only lookup, no new content authored).
-- Add a sticky-on-scroll count summary at top of the section ("21 products · 4 practices") rendered as a thin pill bar.
+- **Edit:** `src/pages/Contact.tsx` (full rewrite of layout, same schema + submit handler).
+- **Reuse, no edits:** `RingsHeroBackdrop`, `StatBand`, `StepFlow`, `IBMPlatinumBadge`, `LogoStrip`, `Reveal`, `SectionHeading`, `SectionMarker`, all `components/ui/*`.
+- **Possibly add (only if needed for the chip groups):** nothing new — `ToggleGroup` from shadcn is already in the repo.
 
-**AI Operating Model (`#operating-model`)**
-- Replace flat table with a 4-step horizontal flow (Govern → Integrate → Orchestrate → Automate) using arrow connectors between cards. On `md+` it's horizontal; on mobile it stacks vertically with a left rail.
+## Out of scope
 
-**Quick Start Advisory (`#quick-start`)**
-- Wrap in a subtle gradient backdrop (radial cyan glow at 6–8% opacity, bottom-right). Reuses pattern from `RingsHeroBackdrop` style (decorative only, not a new figure).
+- No real form backend / Lambda wiring.
+- No copy rewrites beyond the small additions above (stat labels, step labels, section labels).
+- No new colors, fonts, or 3D scenes.
+- No changes to header/footer.
 
----
+## Open question (one)
 
-## 3. Delivery Methodology — `src/pages/company/DeliveryMethodology.tsx`
-
-**Engagement stages (`#stages`)**
-- Replace 5-column grid with a vertical zig-zag timeline on `md+`: alternating left/right cards connected by a vertical primary rail with numbered nodes. On mobile, stacks linearly with a left rail.
-- Each stage card gets an icon (lucide: `Compass`, `Layout`, `Hammer`, `GraduationCap`, `LifeBuoy`) and the stage number as a large faint background numeral.
-
-**Platform Assessment (`#assessment`)**
-- Convert the 3-card layout (Scope / Deliverable / Next) into a shadcn `Accordion` with the Scope panel open by default. More scannable, less wall-of-bullets.
-
-**Compliance (`#compliance`)**
-- Cards get a hover state that flips/reveals a back face with the framework's typical evidence artifacts (1 sentence each, written from the existing `detail` text — no new claims).
-- Above the grid, add an industry → framework lookup row (small horizontal pills).
-
-**Commitment (`#commitment`)**
-- Promote to a full-bleed dark section using `DarkSection`, with the `SAME_PRACTITIONERS_COMMITMENT` quote rendered large with an oversized opening quotation mark in primary at 30% opacity.
-
----
-
-## 4. Customers — `src/pages/company/Customers.tsx`
-
-**Logo strip (`#logos`)**
-- Already covered by `LogoStrip`; add a 3-stat band above it (`{CUSTOMERS.length}+ enterprises`, `15+ years`, `6 verticals`) as a thin border-only row.
-
-**By industry (`#by-industry`)**
-- Replace the plain "list of names" cards with cards that render mini logo tiles (greyscale → cyan-tint on hover) using the existing `/public/logos/*.svg` files already wired to each `CUSTOMERS` entry.
-- Add a filter chip row at the top (All, Financial Services, Healthcare, …) that filters the visible groups with smooth `fade-in`.
-
----
-
-## Shared additions
-
-- One small new component `src/components/shared/StatBand.tsx` — a thin border-only row of 2–4 stats with eyebrow + value. Reused on About facts, Customers stat band, and the Partnership credential.
-- One small new component `src/components/shared/StepFlow.tsx` — horizontal/vertical numbered flow with connector line. Reused by About methodology preview, Operating Model section, and Engagement Stages.
-
-Both live in `components/shared/`, use existing tokens only, have no business logic.
-
----
-
-## Out of scope (call out)
-
-- No copy changes to `src/content/about.ts`.
-- No new pages or routes.
-- No real headshots (initials avatars stay).
-- No 3D / `CompanyFigure` changes.
-- No dark mode toggle — `DarkSection` is a per-section device only.
-
-## Files touched
-
-- `src/pages/company/About.tsx`
-- `src/pages/company/IBMPartnership.tsx`
-- `src/pages/company/DeliveryMethodology.tsx`
-- `src/pages/company/Customers.tsx`
-- `src/components/shared/StatBand.tsx` *(new)*
-- `src/components/shared/StepFlow.tsx` *(new)*
+For the "What happens next" 3‑step list, OK to use these labels?
+1. You submit the form
+2. A senior principal reviews it the same day
+3. We schedule a 30‑minute working call within one business day
