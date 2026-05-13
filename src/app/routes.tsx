@@ -12,6 +12,7 @@ import SectionLab from "@pages/SectionLab";
 // Company
 import About from "@pages/company/About";
 import IBMPartnership from "@pages/company/IBMPartnership";
+import DeliveryMethodology from "@pages/company/DeliveryMethodology";
 import Customers from "@pages/company/Customers";
 
 // Solutions
@@ -118,6 +119,7 @@ export const AppRoutes = () => (
     <Route path="/company" element={<Navigate to="/company/about" replace />} />
     <Route path="/company/about" element={<About />} />
     <Route path="/company/ibm-partnership" element={<IBMPartnership />} />
+    <Route path="/company/delivery-methodology" element={<DeliveryMethodology />} />
     <Route path="/company/customers" element={<Customers />} />
 
     <Route path="/contact" element={<Contact />} />
