@@ -7,12 +7,12 @@ interface Props {
 }
 
 /**
- * Section: Services / Methodology
+ * Section: Services / Methodology — DARK centerpiece.
  *
- * Per-service methodology block: AI Operating Model framing for Advisory,
- * 4-phase delivery for Implementation, onboarding + agentic for Managed,
- * delivery formats for Training. Renders via the shared PageApproachSection
- * styling so the visual treatment matches the rest of the site.
+ * Renders the per-service methodology (AI Operating Model for Advisory,
+ * 4-phase delivery for Implementation, onboarding+agentic for Managed,
+ * delivery formats for Training) inside a full-bleed dark section so the
+ * page has a centered dark beat between Offerings and Coverage.
  */
 export const ServiceMethodologySection = ({ service }: Props) => {
   const extras = SERVICES_EXTRAS[service.id];
@@ -26,6 +26,7 @@ export const ServiceMethodologySection = ({ service }: Props) => {
       pageLabel={`Services / ${service.name}`}
       eyebrow={methodology.eyebrow}
       title={methodology.title}
+      tone="dark"
       steps={methodology.items.map((i) => ({ step: i.name, detail: i.body }))}
     />
   );
