@@ -28,8 +28,8 @@ const Webinars = () => (
       lede="Live and on-demand walkthroughs from senior IBM-certified architects — no slideware, no vendor talk track."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/case-studies", label: "Case Studies" },
-        { href: "/resources/blog", label: "Blog" },
+        { href: "#list", label: "Latest" },
+        { href: "#list", label: "Latest" },
         { href: "/resources/events", label: "Events" },
       ]}
     />
@@ -82,7 +82,7 @@ const Webinars = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="webinars" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Webinars"

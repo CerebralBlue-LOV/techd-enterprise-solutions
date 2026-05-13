@@ -43,8 +43,8 @@ const Events = () => (
       lede="Working sessions, roundtables, and IBM conference appearances — small rooms, senior conversations."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/case-studies", label: "Case Studies" },
-        { href: "/resources/blog", label: "Blog" },
+        { href: "#list", label: "Latest" },
+        { href: "#list", label: "Latest" },
         { href: "/resources/webinars", label: "Webinars" },
       ]}
     />
@@ -103,7 +103,7 @@ const Events = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="events" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Events"

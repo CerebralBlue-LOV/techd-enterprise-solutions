@@ -28,7 +28,7 @@ const Blog = () => (
       lede="Practical takes on governance, data architecture, and the IBM stack — from practitioners who ship."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/case-studies", label: "Case Studies" },
+        { href: "#list", label: "Latest" },
         { href: "/resources/webinars", label: "Webinars" },
         { href: "/resources/events", label: "Events" },
       ]}
@@ -94,7 +94,7 @@ const Blog = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="blog" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Blog"

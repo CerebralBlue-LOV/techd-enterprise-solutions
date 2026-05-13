@@ -27,7 +27,7 @@ const CaseStudies = () => (
       lede="A growing record of enterprise engagements — each one verified, none invented."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/blog", label: "Blog" },
+        { href: "#list", label: "Latest" },
         { href: "/resources/webinars", label: "Webinars" },
         { href: "/resources/events", label: "Events" },
       ]}
@@ -88,7 +88,7 @@ const CaseStudies = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="case-studies" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Case Studies"
