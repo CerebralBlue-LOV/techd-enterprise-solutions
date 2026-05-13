@@ -108,30 +108,40 @@ export const WhyPracticeSection = ({ practice }: Props) => {
                     onClick={() => setActive(i)}
                     aria-pressed={isActive}
                     className={cn(
-                      "group text-left py-5 first:pt-0 last:pb-0 md:py-3 md:px-6 md:first:pt-3 md:last:pb-3 md:first:pl-0 md:last:pr-0",
-                      "transition-all duration-300 ease-out motion-reduce:transition-none",
+                      "group text-left py-3 first:pt-0 last:pb-0 md:py-2 md:px-4 md:first:pt-2 md:last:pb-2 md:first:pl-0 md:last:pr-0",
+                      "transition-all duration-200 ease-out motion-reduce:transition-none cursor-pointer",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
-                      isActive
-                        ? "opacity-100"
-                        : "opacity-70 hover:opacity-100 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
                     )}
                   >
-                    <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
-                      Note · {String(i + 1).padStart(2, "0")}
-                    </p>
-                    <h3
+                    <p
                       className={cn(
-                        "mt-2 md:mt-3 text-base font-bold leading-snug transition-colors",
-                        isActive
-                          ? "text-primary"
-                          : "text-secondary group-hover:text-primary",
+                        "text-[10px] font-mono uppercase tracking-[0.2em] transition-colors",
+                        isActive ? "text-primary" : "text-muted-foreground group-hover:text-primary",
                       )}
                     >
-                      {p.title}
-                    </h3>
-                    <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
-                      {p.body}
+                      Note · {String(i + 1).padStart(2, "0")}
                     </p>
+                    <div className="mt-1.5 flex items-center justify-between gap-3">
+                      <h3
+                        className={cn(
+                          "text-sm font-bold leading-snug transition-colors",
+                          isActive ? "text-primary" : "text-secondary group-hover:text-primary",
+                        )}
+                      >
+                        {p.title}
+                      </h3>
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "shrink-0 text-base leading-none transition-all duration-200 motion-reduce:transition-none",
+                          isActive
+                            ? "text-primary translate-x-0 opacity-100"
+                            : "text-muted-foreground -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary",
+                        )}
+                      >
+                        →
+                      </span>
+                    </div>
                   </button>
                 );
               })}
