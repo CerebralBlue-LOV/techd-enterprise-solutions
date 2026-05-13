@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,11 @@ import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
-import RingsHeroBackdrop from "@shared/RingsHeroBackdrop";
+import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
+
+const HeroParticleField = lazy(
+  () => import("@sections/home/_components/HeroParticleField"),
+);
 import StatBand from "@shared/StatBand";
 import StepFlow from "@shared/StepFlow";
 import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
@@ -92,7 +96,10 @@ const Contact = () => {
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-border">
         <SectionMarker page="Contact" name="Hero" />
-        <RingsHeroBackdrop />
+        <HeroBackdrop />
+        <Suspense fallback={null}>
+          <HeroParticleField />
+        </Suspense>
         <div className="container-page relative pt-24 pb-20 md:pt-32 md:pb-24">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-end">
             <Reveal>
