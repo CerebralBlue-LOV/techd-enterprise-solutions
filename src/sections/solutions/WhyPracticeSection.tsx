@@ -121,9 +121,6 @@ export const WhyPracticeSection = ({ practice }: Props) => {
             </div>
           </div>
         )}
-
-        {/* Section seam */}
-        <div aria-hidden="true" className="mt-16 md:mt-20 h-px bg-border" />
       </div>
     </section>
   );
