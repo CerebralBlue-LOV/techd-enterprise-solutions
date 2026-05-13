@@ -8,10 +8,11 @@ interface Props {
 }
 
 const ANCHORS = [
-  { href: "#why",        label: "Why TechD" },
-  { href: "#offerings",  label: "Offerings" },
-  { href: "#approach",   label: "How we work" },
-  { href: "#practices",  label: "Practices" },
+  { href: "#why",         label: "Why TechD" },
+  { href: "#spotlight",   label: "Spotlight" },
+  { href: "#offerings",   label: "Offerings" },
+  { href: "#methodology", label: "Methodology" },
+  { href: "#coverage",    label: "Coverage" },
 ];
 
 export const ServiceHeroSection = ({ service }: Props) => {
