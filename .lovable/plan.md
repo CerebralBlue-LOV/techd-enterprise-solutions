@@ -1,75 +1,110 @@
-# Company section content build-out
+# Company section — visual & interaction upgrade
 
-Source of truth: `docs/revisions/about/{company-overview, delivery-methodology, ibm-partnership, leadership-team}.md`. Every claim, list, and number on the rebuilt pages traces back to those four docs — no invented copy.
+Scope: presentation-only refinements across the four Company pages. No content rewrites, no new data, no new routes. All work uses existing tokens (`primary` cyan, `secondary`, `muted`), Roboto Condensed, `Reveal`, shadcn primitives, and Tailwind. Respects `prefers-reduced-motion`.
 
-## 1. New content module — `src/content/about.ts`
+## Pages in scope
+1. `/company/about`
+2. `/company/ibm-partnership`
+3. `/company/delivery-methodology`
+4. `/company/customers`
 
-A single typed module the four Company pages import from. No data lives in page components.
+---
 
-Exports:
+## 1. About — `src/pages/company/About.tsx`
 
-- `COMPANY_FACTS` — Founded 2009 · IBM Platinum Business Partner · Miami, FL HQ · Delivery across US & Canada.
-- `PRACTICE_AREAS` — Four objects: AI & Generative, Data & Analytics, Automation & FinOps, Security & Compliance. Each has `name`, one-sentence description, and `to` link to the matching `/solutions/*` page.
-- `PORTFOLIO_BY_PRACTICE` — The 21 confirmed products grouped under the four practices, exactly as listed in `ibm-partnership.md` §1.
-- `IBM_AI_OPERATING_MODEL` — Four pillars (Govern, Integrate, Orchestrate, Automate) each mapped to TechD's engagement stage, per `delivery-methodology.md` §3.
-- `ENGAGEMENT_STAGES` — Five stages: Advisory Assessment → Architecture Design → Implementation → Knowledge Transfer → Post-Go-Live Support, each with the deliverable sentence from `delivery-methodology.md` §5.
-- `IBM_PLATFORM_ASSESSMENT` — Scope (what we review) → Deliverable (written report contents) → Next step. Verbatim from `delivery-methodology.md` §1.
-- `COMPLIANCE_FRAMEWORKS` — HIPAA / FedRAMP / PCI-DSS / NERC-CIP, each tied to its industry vertical.
-- `LEADERSHIP` — Two entries (Marc Martina, Garrett Rowe) with name, title, 2–3 factual sentences, and `domains: string[]`. Bios use the exact wording from `leadership-team.md` §5. No headshots — cards render an initials avatar tile until photos arrive.
-- `QUICK_START_ADVISORY` — Scope, target, format, CTA copy.
-- `IBM_PARTNER_DIRECTORY_URL` — Built from listing ID `69abd900-4f1d-11df-ac68-020031000011` (per `ibm-partnership.md` §1).
+**Founding story (`#story`)**
+- Replace the plain 2×2 facts grid with a stacked "spec card" — thin top border in primary, large value, eyebrow label, hairline divider between rows. Subtle hover lift on each row.
+- Add a faint vertical timeline rail to the left of the prose paragraphs (2009 → 2017 → today markers as small pills).
 
-## 2. Rewrite `src/pages/company/About.tsx`
+**Practices (`#practices`)**
+- Upgrade practice cards to a richer hover state: top-left corner index numeral (01–04) in primary, animated arrow that translates on hover, border + inner glow shift to `primary/40`, subtle scale (1.01) on the card.
+- Add a one-line "stack" footer per card listing 2–3 anchor product names pulled from `PORTFOLIO_BY_PRACTICE` (no new content, just re-using existing data).
 
-Hero stays. Sections (top to bottom):
+**Industries / compliance (`#industries`)**
+- Convert the 4 framework boxes into a tabbed component (shadcn `Tabs`) with framework name as tab and industry + detail as panel. Keeps the page shorter and adds interaction.
+- Below tabs, render the six verticals as a horizontal chip row instead of a paragraph.
 
-1. **Founding story** — three sentences: 2009 Miami origin, IBM ecosystem entry, current Platinum / four-practice scale. `COMPANY_FACTS` chips beside it.
-2. **Four practices** — 2×2 card grid from `PRACTICE_AREAS`, each card linking to its `/solutions/*` page.
-3. **Regulated-industry depth** — Six-vertical callout (healthcare, insurance, public sector, M&E, higher ed, energy & utilities) with the four compliance frameworks attributed to their primary vertical.
-4. **Leadership** — Two cards (Marc, Garrett) using `LEADERSHIP`. Initials avatar tile, name, title, bio, domain coverage chip row. "Why this team" closing paragraph below the cards.
-5. **Methodology preview** — Short block linking to the new `/company/delivery-methodology` page.
-6. `PageFinalCtaSection` (existing).
+**Leadership (`#leadership`)**
+- Wrap each leadership card in a shadcn `HoverCard` so hovering the avatar reveals an expanded bio popover (uses existing `bio` + `domains`).
+- Card itself gets a subtle gradient ring around the avatar (cyan → transparent) and a hairline divider above the domain chips.
 
-Removes the fictional "VP of Delivery" entry and all unverifiable copy.
+**Methodology preview (`#methodology`)**
+- Replace the side card with a horizontal mini-stepper (5 dots connected by a line, each labelled with the stage name). Click → `/company/delivery-methodology`. Reinforces the same-team story visually.
 
-## 3. Rewrite `src/pages/company/IBMPartnership.tsx`
+---
 
-Hero stays. Sections:
+## 2. IBM Partnership — `src/pages/company/IBMPartnership.tsx`
 
-1. **Platinum credential block** — Tier name, "since 2009", and an outbound `Verify on IBM Partner Directory →` link to `IBM_PARTNER_DIRECTORY_URL` (rendered as a secondary button next to the existing CTA).
-2. **What Platinum means** — Keep the existing 4-card grid; copy already passes the doc audit.
-3. **Practice → product grid** — New. Four rows from `PORTFOLIO_BY_PRACTICE` showing all 21 products. Replaces the current "Specializations" section, which lists withdrawn products (Resilient, generic "IBM Cloud", "Hybrid Cloud" as a practice).
-4. **IBM AI Operating Model alignment** — Four-row table from `IBM_AI_OPERATING_MODEL`. Govern / Integrate / Orchestrate / Automate ↔ TechD engagement stage.
-5. **Quick Start Advisory Services** — Named offer block from `QUICK_START_ADVISORY`, CTA links to `/services/advisory`.
-6. `PageFinalCtaSection`.
+**Credential block (`#credential`)**
+- Promote to a dark panel using existing `DarkGlowPanel` / `DarkSection` shared component (already used elsewhere). Adds visual contrast and signals "credential" weight.
+- Add the existing `IBMPlatinumBadge` component to the left side, "Verify" CTA on the right as `Button` with `btn-glow` outline variant.
 
-## 4. New page — `src/pages/company/DeliveryMethodology.tsx` + route
+**What Platinum means (`#what-platinum`)**
+- Add a small numeric indicator (01–04) to each card and a hairline accent bar in primary that grows from 0 → full width on hover.
 
-- Route: `/company/delivery-methodology` added to `src/app/routes.tsx`.
-- Nav: append a fourth Company nav item in `src/content/site.ts`.
-- Hero uses `PageHero` + `CompanyFigure`, matching the other Company pages.
-- Sections:
-  1. **Engagement model** — Visual five-stage flow from `ENGAGEMENT_STAGES`.
-  2. **IBM Platform Assessment** — Three-column block (Scope / Deliverable / Next step) from `IBM_PLATFORM_ASSESSMENT`.
-  3. **Regulated-industry depth** — Four cards from `COMPLIANCE_FRAMEWORKS` (HIPAA, FedRAMP, PCI-DSS, NERC-CIP), one sentence each on what we configure.
-  4. **Same practitioners, advisory to delivery** — One-paragraph commitment block, exact wording from `delivery-methodology.md` §5.
-  5. `PageFinalCtaSection`.
+**Portfolio (`#portfolio`)**
+- Make each product chip an interactive `HoverCard`: hover surfaces a 1-line description (we already have product copy in `solutions-extras.ts` / `solutions.ts` — read-only lookup, no new content authored).
+- Add a sticky-on-scroll count summary at top of the section ("21 products · 4 practices") rendered as a thin pill bar.
 
-## 5. Cleanup — `src/pages/company/Customers.tsx`
+**AI Operating Model (`#operating-model`)**
+- Replace flat table with a 4-step horizontal flow (Govern → Integrate → Orchestrate → Automate) using arrow connectors between cards. On `md+` it's horizontal; on mobile it stacks vertically with a left rail.
 
-Walk every `INDUSTRY_GROUPS[*].ids` entry against the live `CUSTOMERS` array in `src/content/site.ts`. Drop names that no longer exist there (Johns Hopkins, J&J, Sony Pictures/Interactive, Comcast/Peacock, DHS, etc. — anything sitting in `public/logos/deprecated/`). Industry groups that end up empty are removed entirely. No new names are added.
+**Quick Start Advisory (`#quick-start`)**
+- Wrap in a subtle gradient backdrop (radial cyan glow at 6–8% opacity, bottom-right). Reuses pattern from `RingsHeroBackdrop` style (decorative only, not a new figure).
 
-## Technical notes
+---
 
-- All four files use existing primitives only: `PageHero`, `SectionMarker`, `SectionHeading`, `Reveal`, `PageFinalCtaSection`, `Layout`, `SEO`, `CompanyFigure`. No new shadcn primitives added.
-- All colors via Tailwind tokens (`primary`, `secondary`, `muted-foreground`, `border`). No raw hex.
-- "Talk to an expert" CTAs continue to use the standard `btn-glow` Button → `/contact` (per memory `mem://design/talk-to-an-expert-cta`).
-- Initials avatar = circular tile, `bg-muted/40`, `text-secondary`, two-letter initials. Pure CSS, no image dependency.
-- Verify-on-Partner-Directory link opens in a new tab with `rel="noreferrer"`.
-- TypeScript strict; every export typed. No `any`.
+## 3. Delivery Methodology — `src/pages/company/DeliveryMethodology.tsx`
 
-## Out of scope (deferred per CLAUDE.md)
+**Engagement stages (`#stages`)**
+- Replace 5-column grid with a vertical zig-zag timeline on `md+`: alternating left/right cards connected by a vertical primary rail with numbered nodes. On mobile, stacks linearly with a left rail.
+- Each stage card gets an icon (lucide: `Compass`, `Layout`, `Hammer`, `GraduationCap`, `LifeBuoy`) and the stage number as a large faint background numeral.
 
-- Real headshots (initials placeholder ships now; swap when PM provides photos).
-- Confirming whether the "Complimentary Cognos Analytics & Data Warehouse Assessments" offer is still active — the doc says PM must verify before publishing, so it's omitted.
-- Any 3D or motion changes — purely a content-and-structure pass.
+**Platform Assessment (`#assessment`)**
+- Convert the 3-card layout (Scope / Deliverable / Next) into a shadcn `Accordion` with the Scope panel open by default. More scannable, less wall-of-bullets.
+
+**Compliance (`#compliance`)**
+- Cards get a hover state that flips/reveals a back face with the framework's typical evidence artifacts (1 sentence each, written from the existing `detail` text — no new claims).
+- Above the grid, add an industry → framework lookup row (small horizontal pills).
+
+**Commitment (`#commitment`)**
+- Promote to a full-bleed dark section using `DarkSection`, with the `SAME_PRACTITIONERS_COMMITMENT` quote rendered large with an oversized opening quotation mark in primary at 30% opacity.
+
+---
+
+## 4. Customers — `src/pages/company/Customers.tsx`
+
+**Logo strip (`#logos`)**
+- Already covered by `LogoStrip`; add a 3-stat band above it (`{CUSTOMERS.length}+ enterprises`, `15+ years`, `6 verticals`) as a thin border-only row.
+
+**By industry (`#by-industry`)**
+- Replace the plain "list of names" cards with cards that render mini logo tiles (greyscale → cyan-tint on hover) using the existing `/public/logos/*.svg` files already wired to each `CUSTOMERS` entry.
+- Add a filter chip row at the top (All, Financial Services, Healthcare, …) that filters the visible groups with smooth `fade-in`.
+
+---
+
+## Shared additions
+
+- One small new component `src/components/shared/StatBand.tsx` — a thin border-only row of 2–4 stats with eyebrow + value. Reused on About facts, Customers stat band, and the Partnership credential.
+- One small new component `src/components/shared/StepFlow.tsx` — horizontal/vertical numbered flow with connector line. Reused by About methodology preview, Operating Model section, and Engagement Stages.
+
+Both live in `components/shared/`, use existing tokens only, have no business logic.
+
+---
+
+## Out of scope (call out)
+
+- No copy changes to `src/content/about.ts`.
+- No new pages or routes.
+- No real headshots (initials avatars stay).
+- No 3D / `CompanyFigure` changes.
+- No dark mode toggle — `DarkSection` is a per-section device only.
+
+## Files touched
+
+- `src/pages/company/About.tsx`
+- `src/pages/company/IBMPartnership.tsx`
+- `src/pages/company/DeliveryMethodology.tsx`
+- `src/pages/company/Customers.tsx`
+- `src/components/shared/StatBand.tsx` *(new)*
+- `src/components/shared/StepFlow.tsx` *(new)*
