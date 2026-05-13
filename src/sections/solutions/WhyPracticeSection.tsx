@@ -48,9 +48,6 @@ export const WhyPracticeSection = ({ practice }: Props) => {
   if (!points.length) return null;
 
   const activePoint = points[displayed] ?? points[0];
-  const rest = points
-    .map((p, i) => ({ p, i }))
-    .filter(({ i }) => i !== displayed);
 
   const quoteState =
     phase === "out"
@@ -91,33 +88,53 @@ export const WhyPracticeSection = ({ practice }: Props) => {
           </p>
         </div>
 
-        {/* Ledger of remaining notes — clickable to promote */}
-        {rest.length > 0 && (
+        {/* Ledger of all notes — clickable to promote, active is highlighted in place */}
+        {points.length > 1 && (
           <div className="relative mt-10 md:mt-16 border-y border-border py-6 md:py-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-border md:divide-y-0 md:divide-x">
-              {rest.map(({ p, i }) => (
-                <button
-                  key={p.title}
-                  type="button"
-                  onClick={() => setActive(i)}
-                  className={cn(
-                    "group text-left py-5 first:pt-0 last:pb-0 md:py-3 md:px-6 md:first:pt-3 md:last:pb-3 md:first:pl-0 md:last:pr-0",
-                    "transition-all duration-300 ease-out motion-reduce:transition-none",
-                    "hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
-                  )}
-                >
-                  <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
-                    Note · {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-2 md:mt-3 text-base font-bold text-secondary leading-snug transition-colors group-hover:text-primary">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
-                    {p.body}
-                  </p>
-                </button>
-              ))}
+            <div
+              className={cn(
+                "grid grid-cols-1 divide-y divide-border md:divide-y-0 md:divide-x",
+                points.length === 2 && "md:grid-cols-2",
+                points.length === 3 && "md:grid-cols-3",
+                points.length >= 4 && "md:grid-cols-4",
+              )}
+            >
+              {points.map((p, i) => {
+                const isActive = i === displayed;
+                return (
+                  <button
+                    key={p.title}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-pressed={isActive}
+                    className={cn(
+                      "group text-left py-5 first:pt-0 last:pb-0 md:py-3 md:px-6 md:first:pt-3 md:last:pb-3 md:first:pl-0 md:last:pr-0",
+                      "transition-all duration-300 ease-out motion-reduce:transition-none",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
+                      isActive
+                        ? "opacity-100"
+                        : "opacity-70 hover:opacity-100 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
+                    )}
+                  >
+                    <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
+                      Note · {String(i + 1).padStart(2, "0")}
+                    </p>
+                    <h3
+                      className={cn(
+                        "mt-2 md:mt-3 text-base font-bold leading-snug transition-colors",
+                        isActive
+                          ? "text-primary"
+                          : "text-secondary group-hover:text-primary",
+                      )}
+                    >
+                      {p.title}
+                    </h3>
+                    <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
+                      {p.body}
+                    </p>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
