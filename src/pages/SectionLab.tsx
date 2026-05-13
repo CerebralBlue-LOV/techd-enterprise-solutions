@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Layout from "@layout/Layout";
 import SectionHeading from "@shared/SectionHeading";
+import { SectionBackdrop } from "@shared/SectionBackdrop";
 import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 import { SOLUTIONS } from "@content/solutions";
 import { PRACTICE_MOTIFS } from "@content/practice-motifs";
@@ -193,6 +194,164 @@ const WhyProposalSpec = () => (
           </article>
         ))}
       </div>
+    </div>
+  </div>
+);
+
+/* ───────── Why W4 — Horizontal rail (4-up dividers) ───────── */
+const WhyProposalRail = () => (
+  <div className="relative px-6 md:px-12 py-12 md:py-14 overflow-hidden bg-background">
+    <SectionBackdrop intensity="soft" vignettes={false} />
+    <div className="relative">
+      <div className="flex items-baseline justify-between border-t border-border pt-5">
+        <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary">
+          Why TechD
+        </p>
+        <p className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+          {String(WHY_POINTS.length).padStart(2, "0")} reasons
+        </p>
+      </div>
+      <h2 className="mt-3 text-xl md:text-2xl font-bold leading-snug tracking-tight text-secondary max-w-2xl">
+        {WHY_TITLE}
+      </h2>
+
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-4 md:divide-x divide-border border-t border-b border-border">
+        {WHY_POINTS.map((p, i) => (
+          <div
+            key={p.title}
+            className="py-6 md:py-7 md:px-6 first:md:pl-0 last:md:pr-0 border-b border-border md:border-b-0"
+          >
+            <span className="text-[10px] font-mono tabular-nums tracking-[0.2em] text-primary">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 className="mt-3 text-sm md:text-base font-bold text-secondary leading-snug">
+              {p.title}
+            </h3>
+            <p className="mt-2 text-xs md:text-sm font-light text-muted-foreground leading-relaxed">
+              {p.body}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+/* ───────── Why W5 — Running cyan rule, hairline rows ───────── */
+const WhyProposalRunningRule = () => (
+  <div className="relative px-6 md:px-12 py-12 md:py-14 overflow-hidden bg-background">
+    {/* Dot-grid masked to upper-left */}
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 opacity-50"
+      style={{
+        backgroundImage:
+          "radial-gradient(hsl(var(--border)) 1px, transparent 1px)",
+        backgroundSize: "22px 22px",
+        WebkitMaskImage:
+          "radial-gradient(50% 60% at 15% 10%, black 10%, transparent 75%)",
+        maskImage:
+          "radial-gradient(50% 60% at 15% 10%, black 10%, transparent 75%)",
+      }}
+    />
+    <div className="relative">
+      <div className="max-w-2xl">
+        <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary">
+          Why TechD
+        </p>
+        <h2 className="mt-3 text-xl md:text-2xl font-bold leading-snug tracking-tight text-secondary">
+          {WHY_TITLE}
+        </h2>
+      </div>
+
+      <div className="relative mt-8">
+        <span
+          aria-hidden="true"
+          className="absolute left-[3.5rem] md:left-[5rem] top-0 bottom-0 w-px bg-primary"
+        />
+        <ul className="divide-y divide-border border-y border-border">
+          {WHY_POINTS.map((p, i) => (
+            <li
+              key={p.title}
+              className="group grid grid-cols-12 gap-4 py-5 md:py-6 transition-transform duration-300 hover:translate-x-0.5"
+            >
+              <div className="col-span-3 md:col-span-2 flex flex-col">
+                <span className="text-sm font-mono tabular-nums text-secondary">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="mt-1 text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
+                  Reason
+                </span>
+              </div>
+              <h3 className="col-span-9 md:col-span-4 text-base md:text-lg font-bold text-secondary leading-snug tracking-tight transition-colors group-hover:text-primary md:pl-4">
+                {p.title}
+              </h3>
+              <p className="col-span-12 md:col-span-6 text-sm font-light text-muted-foreground leading-relaxed">
+                {p.body}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+);
+
+/* ───────── Why W6 — Asymmetric split with diagonal hatch ───────── */
+const WhyProposalSplit = () => (
+  <div className="relative px-6 md:px-12 py-12 md:py-14 overflow-hidden bg-background">
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0"
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(45deg, hsl(var(--border) / 0.5) 0 1px, transparent 1px 14px)",
+        WebkitMaskImage:
+          "radial-gradient(70% 80% at 80% 30%, black 10%, transparent 75%)",
+        maskImage:
+          "radial-gradient(70% 80% at 80% 30%, black 10%, transparent 75%)",
+      }}
+    />
+    <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      <div className="lg:col-span-5 border-t border-border pt-5">
+        <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary">
+          Why TechD
+        </p>
+        <h2 className="mt-3 text-2xl md:text-3xl font-bold leading-tight tracking-tight text-secondary">
+          {WHY_TITLE}
+        </h2>
+        <p className="mt-5 text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
+          IBM Platinum Partner · 25+ years
+        </p>
+      </div>
+
+      <ul className="lg:col-span-7 border-t border-border divide-y divide-border">
+        {WHY_POINTS.map((p) => (
+          <li
+            key={p.title}
+            className="group flex items-start gap-4 py-4 md:py-5 transition-transform duration-300 hover:translate-x-0.5"
+          >
+            <span
+              aria-hidden="true"
+              className="mt-2 inline-block h-px w-6 bg-border transition-all duration-300 group-hover:w-10 group-hover:bg-primary"
+            />
+            <div className="flex-1">
+              <h3 className="text-base md:text-lg font-bold text-secondary leading-snug tracking-tight transition-colors group-hover:text-primary">
+                {p.title}
+              </h3>
+              <p className="mt-1.5 text-sm font-light text-muted-foreground leading-relaxed">
+                {p.body}
+              </p>
+            </div>
+            <span
+              aria-hidden="true"
+              className="mt-2 text-primary text-sm transition-transform duration-300 group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 );
@@ -718,6 +877,30 @@ const SectionLab = () => (
       blurb="Off-white frame with a single cyan corner bracket. 4-up data-sheet tiles with animated cyan top rail on hover."
     >
       <WhyProposalSpec />
+    </VariantShell>
+
+    <VariantShell
+      index="W4"
+      name="Horizontal rail"
+      blurb="Compact 4-up data strip with vertical hairlines and a soft engineered-grid backdrop. Bloomberg-style density."
+    >
+      <WhyProposalRail />
+    </VariantShell>
+
+    <VariantShell
+      index="W5"
+      name="Running cyan rule"
+      blurb="Hairline rows tied together by a single cyan vertical rule. Dot-grid texture bleeds in from the upper-left."
+    >
+      <WhyProposalRunningRule />
+    </VariantShell>
+
+    <VariantShell
+      index="W6"
+      name="Asymmetric split + hatch"
+      blurb="Statement on the left, evidence list on the right, faint diagonal hatch behind. Editorial split rhythm."
+    >
+      <WhyProposalSplit />
     </VariantShell>
 
     <VariantShell
