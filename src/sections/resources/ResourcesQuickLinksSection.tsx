@@ -18,6 +18,11 @@ const LINKS = [
     tagline: "Healthcare, insurance, public sector, media, higher ed, energy.",
     to: "/industries",
   },
+  {
+    name: "Company",
+    tagline: "Who we are, our IBM partnership, and the customers we serve.",
+    to: "/company",
+  },
 ];
 
 /**
