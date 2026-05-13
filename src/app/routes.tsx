@@ -41,7 +41,9 @@ import CaseStudyDetail from "@pages/resources/CaseStudyDetail";
 import Blog from "@pages/resources/Blog";
 import BlogDetail from "@pages/resources/BlogDetail";
 import Webinars from "@pages/resources/Webinars";
+import WebinarDetail from "@pages/resources/WebinarDetail";
 import Events from "@pages/resources/Events";
+import EventDetail from "@pages/resources/EventDetail";
 
 /**
  * Central route table.
@@ -108,7 +110,9 @@ export const AppRoutes = () => (
     <Route path="/resources/blog" element={<Blog />} />
     <Route path="/resources/blog/:slug" element={<BlogDetail />} />
     <Route path="/resources/webinars" element={<Webinars />} />
+    <Route path="/resources/webinars/:slug" element={<WebinarDetail />} />
     <Route path="/resources/events" element={<Events />} />
+    <Route path="/resources/events/:slug" element={<EventDetail />} />
 
     {/* Company */}
     <Route path="/company" element={<Navigate to="/company/about" replace />} />
