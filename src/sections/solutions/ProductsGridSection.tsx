@@ -204,14 +204,14 @@ export const ProductsGridSection = ({ practice }: Props) => {
 
             {/* Product quick-jump — quiet inline text links */}
             <p className="mt-6 text-sm font-light text-muted-foreground leading-relaxed">
-              
               {products.map((p, i) => {
                 const isActive = i === index;
                 return (
                   <span key={p.name}>
-                    <ProductLink
-                      practiceId={practice.id}
-                      product={p}
+                    <button
+                      type="button"
+                      onClick={() => goTo(i)}
+                      aria-pressed={isActive}
                       className={cn(
                         "underline-offset-4 hover:underline transition-colors",
                         isActive
@@ -220,7 +220,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                       )}
                     >
                       {p.name}
-                    </ProductLink>
+                    </button>
                     {i < products.length - 1 && (
                       <span className="mx-1.5 text-muted-foreground/60">·</span>
                     )}
