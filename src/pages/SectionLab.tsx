@@ -880,6 +880,30 @@ const SectionLab = () => (
     </VariantShell>
 
     <VariantShell
+      index="W4"
+      name="Horizontal rail"
+      blurb="Compact 4-up data strip with vertical hairlines and a soft engineered-grid backdrop. Bloomberg-style density."
+    >
+      <WhyProposalRail />
+    </VariantShell>
+
+    <VariantShell
+      index="W5"
+      name="Running cyan rule"
+      blurb="Hairline rows tied together by a single cyan vertical rule. Dot-grid texture bleeds in from the upper-left."
+    >
+      <WhyProposalRunningRule />
+    </VariantShell>
+
+    <VariantShell
+      index="W6"
+      name="Asymmetric split + hatch"
+      blurb="Statement on the left, evidence list on the right, faint diagonal hatch behind. Editorial split rhythm."
+    >
+      <WhyProposalSplit />
+    </VariantShell>
+
+    <VariantShell
       index="01"
       name="Numbered editorial list"
       blurb="Stripe-style. Big practice name, proof beside it, thin rules. Calm, confident."
