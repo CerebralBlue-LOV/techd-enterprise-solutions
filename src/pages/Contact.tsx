@@ -101,8 +101,8 @@ const Contact = () => {
           <HeroParticleField />
         </Suspense>
         <div className="container-page relative pt-24 pb-20 md:pt-32 md:pb-24">
-          <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-end">
-            <Reveal>
+          <Reveal>
+            <div className="max-w-3xl">
               <p className="eyebrow mb-4">Contact</p>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight text-secondary">
                 Talk to an <span className="text-primary">expert</span>.
@@ -110,11 +110,18 @@ const Contact = () => {
               <p className="mt-6 max-w-xl text-lg md:text-xl font-light text-muted-foreground leading-relaxed">
                 No SDR queue. No discovery-call routing. Tell us what you're trying to ship and we'll match you with the right senior practitioner — usually within one business day.
               </p>
-            </Reveal>
-            <Reveal delay={120}>
-              <StatBand items={HERO_STATS} />
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* STAT BANNER */}
+      <section className="border-b border-border bg-muted/30">
+        <SectionMarker page="Contact" name="Stat Banner" />
+        <div className="container-page py-10 md:py-12">
+          <Reveal>
+            <StatBand items={HERO_STATS} className="border-0 bg-transparent" />
+          </Reveal>
         </div>
       </section>
 
