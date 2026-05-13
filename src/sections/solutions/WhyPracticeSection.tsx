@@ -25,28 +25,32 @@ export const WhyPracticeSection = ({ practice }: Props) => {
 
   useEffect(() => {
     if (active === displayed) return;
-    // Phase 1: fade current quote out
     setPhase("out");
     const t1 = window.setTimeout(() => {
       setDisplayed(active);
-      // Force "in" state on next frame so transition runs
       const t2 = window.setTimeout(() => setPhase("in"), 20);
-      const t3 = window.setTimeout(() => setPhase("idle"), 320);
+      const t3 = window.setTimeout(() => setPhase("idle"), 340);
       timeouts.current.push(t2, t3);
     }, 200);
     timeouts.current.push(t1);
+    // Intentionally only depend on `active` so the in-flight timeouts
+    // aren't cleared when `displayed` updates mid-transition.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
+  useEffect(() => {
     return () => {
       timeouts.current.forEach(window.clearTimeout);
       timeouts.current = [];
     };
-  }, [active, displayed]);
+  }, []);
 
   if (!points.length) return null;
 
   const activePoint = points[displayed] ?? points[0];
   const rest = points
     .map((p, i) => ({ p, i }))
-    .filter(({ i }) => i !== active);
+    .filter(({ i }) => i !== displayed);
 
   const quoteState =
     phase === "out"
