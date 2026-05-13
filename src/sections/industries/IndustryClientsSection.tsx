@@ -42,10 +42,13 @@ const ClientCard = ({ client }: { client: ResolvedClient }) => {
       <div className="flex h-20 w-full items-center justify-center px-4">
         {c?.logo ? (
           <img
-            src={`${import.meta.env.BASE_URL}${c.logo.replace(/^\//, "")}`}
+            src={`${import.meta.env.BASE_URL}${(c.logoOnDark ?? c.logo).replace(/^\//, "")}`}
             alt={`${c.name} logo`}
             loading="lazy"
-            className="max-h-10 md:max-h-12 w-auto max-w-[160px] object-contain brightness-0 invert opacity-85 transition-opacity duration-300 group-hover:opacity-100"
+            className={cn(
+              "max-h-10 md:max-h-12 w-auto max-w-[160px] object-contain opacity-85 transition-opacity duration-300 group-hover:opacity-100",
+              !c.logoOnDark && "brightness-0 invert",
+            )}
           />
         ) : (
           <span className="font-bold text-white/85 text-2xl tracking-tight leading-none">
