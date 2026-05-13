@@ -287,14 +287,14 @@ export const ProductsGridSection = ({ practice }: Props) => {
                       Featured product
                     </span>
                   </div>
-                  <ProductLink
-                    practiceId={practice.id}
-                    product={active}
-                    ariaLabel={`Open ${active.name}`}
+                  <button
+                    type="button"
+                    onClick={() => goTo((index + 1) % total, "forward")}
+                    aria-label={`Show next product`}
                     className="grid h-9 w-9 place-items-center rounded-full bg-white/10 ring-1 ring-white/15 text-white hover:bg-primary hover:ring-primary transition-colors"
                   >
                     <ArrowUpRight className="size-4" />
-                  </ProductLink>
+                  </button>
                 </div>
 
                 {/* Focal display + body, with overlapping enter/exit layers */}
