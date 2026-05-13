@@ -27,14 +27,13 @@ const CaseStudies = () => (
       lede="A growing record of enterprise engagements — each one verified, none invented."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/blog", label: "Blog" },
-        { href: "/resources/webinars", label: "Webinars" },
-        { href: "/resources/events", label: "Events" },
+        { href: "#list", label: "Latest" },
+        { href: "#more", label: "Explore TechD" },
       ]}
     />
 
     {/* Card grid */}
-    <section id="list" className="section bg-muted/30 border-t border-border">
+    <section id="list" className="section bg-muted/30 border-t border-border scroll-mt-24">
       <SectionMarker page="Resources / Case Studies" name="List" />
       <div className="container-page">
         {items.length === 0 ? (
@@ -88,7 +87,7 @@ const CaseStudies = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="case-studies" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Case Studies"

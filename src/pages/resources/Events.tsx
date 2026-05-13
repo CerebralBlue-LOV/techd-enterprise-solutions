@@ -43,13 +43,12 @@ const Events = () => (
       lede="Working sessions, roundtables, and IBM conference appearances — small rooms, senior conversations."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/case-studies", label: "Case Studies" },
-        { href: "/resources/blog", label: "Blog" },
-        { href: "/resources/webinars", label: "Webinars" },
+        { href: "#list", label: "Latest" },
+        { href: "#more", label: "Explore TechD" },
       ]}
     />
 
-    <section id="list" className="section bg-muted/30 border-t border-border">
+    <section id="list" className="section bg-muted/30 border-t border-border scroll-mt-24">
       <SectionMarker page="Resources / Events" name="List" />
       <div className="container-page">
         {items.length === 0 ? (
@@ -103,7 +102,7 @@ const Events = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="events" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Events"

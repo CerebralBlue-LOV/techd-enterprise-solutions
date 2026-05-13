@@ -28,14 +28,13 @@ const Blog = () => (
       lede="Practical takes on governance, data architecture, and the IBM stack — from practitioners who ship."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/case-studies", label: "Case Studies" },
-        { href: "/resources/webinars", label: "Webinars" },
-        { href: "/resources/events", label: "Events" },
+        { href: "#list", label: "Latest" },
+        { href: "#more", label: "Explore TechD" },
       ]}
     />
 
     {/* Card grid / empty state */}
-    <section id="list" className="section bg-muted/30 border-t border-border">
+    <section id="list" className="section bg-muted/30 border-t border-border scroll-mt-24">
       <SectionMarker page="Resources / Blog" name="List" />
       <div className="container-page">
         {posts.length === 0 ? (
@@ -94,7 +93,7 @@ const Blog = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="blog" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Blog"

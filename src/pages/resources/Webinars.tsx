@@ -28,13 +28,12 @@ const Webinars = () => (
       lede="Live and on-demand walkthroughs from senior IBM-certified architects — no slideware, no vendor talk track."
       figure={<ResourcesFigure />}
       anchors={[
-        { href: "/resources/case-studies", label: "Case Studies" },
-        { href: "/resources/blog", label: "Blog" },
-        { href: "/resources/events", label: "Events" },
+        { href: "#list", label: "Latest" },
+        { href: "#more", label: "Explore TechD" },
       ]}
     />
 
-    <section id="list" className="section bg-muted/30 border-t border-border">
+    <section id="list" className="section bg-muted/30 border-t border-border scroll-mt-24">
       <SectionMarker page="Resources / Webinars" name="List" />
       <div className="container-page">
         {items.length === 0 ? (
@@ -82,7 +81,7 @@ const Webinars = () => (
       </div>
     </section>
 
-    <ResourcesQuickLinksSection current="webinars" />
+    <ResourcesQuickLinksSection />
 
     <PageFinalCtaSection
       pageLabel="Resources / Webinars"
