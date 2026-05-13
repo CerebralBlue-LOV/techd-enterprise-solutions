@@ -96,7 +96,10 @@ const Contact = () => {
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-border">
         <SectionMarker page="Contact" name="Hero" />
-        <RingsHeroBackdrop />
+        <HeroBackdrop />
+        <Suspense fallback={null}>
+          <HeroParticleField />
+        </Suspense>
         <div className="container-page relative pt-24 pb-20 md:pt-32 md:pb-24">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-end">
             <Reveal>
