@@ -204,14 +204,14 @@ export const ProductsGridSection = ({ practice }: Props) => {
 
             {/* Product quick-jump — quiet inline text links */}
             <p className="mt-6 text-sm font-light text-muted-foreground leading-relaxed">
-              
               {products.map((p, i) => {
                 const isActive = i === index;
                 return (
                   <span key={p.name}>
-                    <ProductLink
-                      practiceId={practice.id}
-                      product={p}
+                    <button
+                      type="button"
+                      onClick={() => goTo(i)}
+                      aria-pressed={isActive}
                       className={cn(
                         "underline-offset-4 hover:underline transition-colors",
                         isActive
@@ -220,7 +220,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                       )}
                     >
                       {p.name}
-                    </ProductLink>
+                    </button>
                     {i < products.length - 1 && (
                       <span className="mx-1.5 text-muted-foreground/60">·</span>
                     )}
@@ -287,14 +287,14 @@ export const ProductsGridSection = ({ practice }: Props) => {
                       Featured product
                     </span>
                   </div>
-                  <ProductLink
-                    practiceId={practice.id}
-                    product={active}
-                    ariaLabel={`Open ${active.name}`}
+                  <button
+                    type="button"
+                    onClick={() => goTo((index + 1) % total, "forward")}
+                    aria-label={`Show next product`}
                     className="grid h-9 w-9 place-items-center rounded-full bg-white/10 ring-1 ring-white/15 text-white hover:bg-primary hover:ring-primary transition-colors"
                   >
                     <ArrowUpRight className="size-4" />
-                  </ProductLink>
+                  </button>
                 </div>
 
                 {/* Focal display + body, with overlapping enter/exit layers */}
