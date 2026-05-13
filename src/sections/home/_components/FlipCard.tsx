@@ -39,7 +39,7 @@ export const FlipCard = ({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       data-hover={hover ? "true" : undefined}
-      className={`flip-card relative block h-full rounded-xl ${compact ? "min-h-[240px]" : "min-h-[340px]"}`}
+      className={`flip-card relative block h-full rounded-xl ${compact ? "min-h-[180px]" : "min-h-[340px]"}`}
     >
       <div className="flip-card-inner relative h-full w-full">
         {/* FRONT */}

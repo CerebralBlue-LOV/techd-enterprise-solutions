@@ -82,23 +82,6 @@ export const SolutionsForIndustrySection = ({ industry }: Props) => {
 
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {rows.map(({ sol, proof }, i) => {
-            const CAP = 2;
-            const all = sol.products.map((p) => ({
-              label: p.name,
-              to:
-                p.link.kind === "internal"
-                  ? `/solutions/${sol.id}/${p.link.slug}`
-                  : p.link.url,
-              external: p.link.kind === "external",
-            }));
-            const chips =
-              all.length <= CAP
-                ? all
-                : [
-                    ...all.slice(0, CAP),
-                    { label: `+${all.length - CAP} more`, to: `/solutions/${sol.id}` },
-                  ];
-
             return (
               <Reveal key={sol.id} delay={i * 50}>
                 <FlipCard
@@ -108,7 +91,7 @@ export const SolutionsForIndustrySection = ({ industry }: Props) => {
                   footer={industry.name}
                   backTitle={sol.outcome}
                   backBody={proof}
-                  chips={chips}
+                  chips={[]}
                   ctaLabel={sol.ctaLabel}
                   motif={<StaticMotif initials={initialsFor(sol.name)} />}
                   compact
@@ -118,8 +101,7 @@ export const SolutionsForIndustrySection = ({ industry }: Props) => {
           })}
         </div>
 
-        {/* Fading accent strip */}
-        <div className="mt-12 h-px w-full bg-gradient-to-r from-primary via-secondary to-transparent opacity-30" />
+        <div className="mt-12 border-t border-border" />
       </div>
     </section>
   );

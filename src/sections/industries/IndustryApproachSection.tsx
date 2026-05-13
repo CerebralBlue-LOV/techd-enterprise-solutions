@@ -15,7 +15,8 @@ interface Props {
 export const IndustryApproachSection = ({ industry }: Props) => (
   <PageApproachSection
     pageLabel={`Industries / ${industry.name}`}
-    title="A delivery model built for regulated enterprises that can't afford a stalled program"
+    title="Four phases. One team. No handoffs."
+    subtitle="Senior IBM-certified engineers take your program from discovery through production support — the same people who build it stay on to run it."
     steps={STEPS}
   />
 );

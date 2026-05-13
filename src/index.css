@@ -260,6 +260,37 @@
   transform: none;
 }
 
+/* Spotlight step numbers — fade up on reveal */
+.spotlight-num {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.reveal.is-visible .spotlight-num {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Spotlight connector lines — draw down on reveal */
+.spotlight-line {
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.5s ease-out;
+}
+.reveal.is-visible .spotlight-line {
+  transform: scaleY(1);
+}
+
+/* Offerings timeline connector — horizontal line draws in from left on reveal */
+.offering-connector {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible .offering-connector {
+  transform: scaleX(1);
+}
+
 /* Marquee for logo strip */
 @keyframes marquee {
   from { transform: translateX(0); }

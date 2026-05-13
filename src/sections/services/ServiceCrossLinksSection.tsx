@@ -45,8 +45,8 @@ export const ServiceCrossLinksSection = ({ service }: Props) => {
             const to = l.kind === "service" ? `/services/${l.id}` : `/solutions/${l.id}`;
             const kindLabel = l.kind === "service" ? "Service" : "Practice";
             return (
-              <Reveal key={`${l.kind}-${l.id}`} delay={i * 50}>
-                <li>
+              <Reveal key={`${l.kind}-${l.id}`} delay={i * 50} className="h-full">
+                <li className="h-full">
                   <Link
                     to={to}
                     className="group relative block h-full overflow-hidden rounded-xl border border-white/10 bg-background/[0.04] backdrop-blur-sm p-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/60 hover:bg-background/[0.07] hover:shadow-[0_12px_32px_-16px_hsl(var(--primary)/0.5)]"

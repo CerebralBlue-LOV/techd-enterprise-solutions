@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import { type Service } from "@content/services";
@@ -7,38 +8,12 @@ interface Props {
   service: Service;
 }
 
-/**
- * Section: Services / Spotlight — editorial split.
- *
- * Left: eyebrow + headline + lede + numbered "what happens next" rail.
- * Right: oversized hero artifact card promoting the deliverable bullet
- *        (engineered grid backdrop + ghost numeral).
- * Below: 3-up hairline-separated typography strip with the remaining
- *        bullets — pure type, no boxes.
- */
 export const ServiceSpotlightSection = ({ service }: Props) => {
   const extras = SERVICES_EXTRAS[service.id];
   const spotlight = extras?.spotlight;
-  if (!spotlight) return null;
+  const [active, setActive] = useState(0);
 
-  // Promote the bullet whose label leads with "What we deliver" /
-  // "Same team" / "Pipeline" / "Executive Briefings" — the
-  // editorially loudest one. Falls back to the first bullet.
-  const HERO_PRIORITIES = [
-    /deliver/i,
-    /same team/i,
-    /pipeline/i,
-    /executive/i,
-  ];
-  const heroIndex = (() => {
-    for (const re of HERO_PRIORITIES) {
-      const i = spotlight.bullets.findIndex((b) => re.test(b.label));
-      if (i >= 0) return i;
-    }
-    return 0;
-  })();
-  const hero = spotlight.bullets[heroIndex];
-  const rest = spotlight.bullets.filter((_, i) => i !== heroIndex);
+  if (!spotlight) return null;
 
   return (
     <section
@@ -62,21 +37,29 @@ export const ServiceSpotlightSection = ({ service }: Props) => {
               </p>
 
               {spotlight.next?.length ? (
-                <ol className="mt-10 space-y-5 border-l border-border pl-6">
+                <ol className="mt-10 space-y-5">
                   {spotlight.next.map((n, i) => (
-                    <li key={n.step} className="relative">
+                    <li key={n.step} className="relative grid grid-cols-[1.5rem_1fr] items-start gap-x-3">
                       <span
                         aria-hidden
-                        className="absolute -left-[31px] top-0 inline-flex h-6 w-6 items-center justify-center rounded-full border border-primary/40 bg-background text-[10px] font-bold text-primary"
+                        className="spotlight-num text-[11px] font-bold text-primary tabular-nums leading-[1.25rem]"
+                        style={{ transitionDelay: `${i * 150}ms` }}
                       >
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <p className="text-sm font-bold uppercase tracking-wider text-secondary">
-                        {n.step}
-                      </p>
-                      <p className="mt-1 text-sm font-light text-muted-foreground leading-relaxed">
-                        {n.body}
-                      </p>
+                      <span
+                        aria-hidden
+                        className="spotlight-line absolute left-[6px] top-5 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent"
+                        style={{ transitionDelay: `${i * 150 + 220}ms` }}
+                      />
+                      <div>
+                        <p className="text-sm font-bold uppercase tracking-wider text-secondary leading-[1.25rem]">
+                          {n.step}
+                        </p>
+                        <p className="mt-1 text-sm font-light text-muted-foreground leading-relaxed">
+                          {n.body}
+                        </p>
+                      </div>
                     </li>
                   ))}
                 </ol>
@@ -84,10 +67,10 @@ export const ServiceSpotlightSection = ({ service }: Props) => {
             </Reveal>
           </div>
 
-          {/* Right: oversized hero artifact card */}
+          {/* Right: tabbed card */}
           <div className="lg:col-span-7">
             <Reveal delay={80}>
-              <article className="group relative h-full min-h-[24rem] overflow-hidden rounded-2xl border border-border bg-background p-8 md:p-10 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.4)]">
+              <article className="group relative min-h-[26rem] overflow-hidden rounded-2xl border border-border bg-background p-8 md:p-10 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.4)]">
                 {/* Engineered grid backdrop */}
                 <div
                   aria-hidden
@@ -102,17 +85,12 @@ export const ServiceSpotlightSection = ({ service }: Props) => {
                       "radial-gradient(70% 80% at 70% 30%, black 30%, transparent 85%)",
                   }}
                 />
-                {/* Cyan blob */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl transition-opacity duration-700 group-hover:bg-primary/20"
-                />
                 {/* Ghost numeral */}
                 <span
                   aria-hidden
                   className="pointer-events-none absolute -bottom-10 -right-2 text-[14rem] font-bold leading-none tracking-tighter text-primary/[0.05] select-none transition-all duration-700 group-hover:text-primary/[0.10] group-hover:-translate-y-2"
                 >
-                  01
+                  {String(active + 1).padStart(2, "0")}
                 </span>
                 {/* Top hairline reveal */}
                 <span
@@ -125,38 +103,38 @@ export const ServiceSpotlightSection = ({ service }: Props) => {
                   className="absolute inset-x-0 top-0 h-[2px] bg-primary/70 transition-all duration-300 group-hover:bg-primary"
                 />
 
-                <div className="relative z-10 flex h-full flex-col">
-                  <p className="mt-2 text-primary text-xs font-bold uppercase tracking-[0.25em]">
-                    {hero.label}
-                  </p>
-                  <p className="mt-6 text-2xl md:text-3xl font-bold leading-tight tracking-tight text-secondary">
-                    {hero.body}
-                  </p>
+                <div className="relative z-10 flex flex-col h-full">
+                  {/* Tab strip — full width, equal columns */}
+                  <div className="grid border-b border-border/60" style={{ gridTemplateColumns: `repeat(${spotlight.bullets.length}, 1fr)` }}>
+                    {spotlight.bullets.map((b, i) => (
+                      <button
+                        key={b.label}
+                        onClick={() => setActive(i)}
+                        className={`pb-3 pt-1 text-center text-sm font-bold uppercase tracking-[0.15em] border-b-2 -mb-px transition-colors duration-200 ${
+                          active === i
+                            ? "text-primary border-primary"
+                            : "text-muted-foreground border-transparent hover:text-secondary hover:border-border"
+                        }`}
+                      >
+                        {b.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Tab content */}
+                  <div className="mt-8 flex-1">
+                    <p
+                      key={active}
+                      className="text-lg font-normal text-secondary leading-relaxed animate-[fade-up_0.2s_ease-out_both]"
+                    >
+                      {spotlight.bullets[active].body}
+                    </p>
+                  </div>
                 </div>
               </article>
             </Reveal>
           </div>
         </div>
-
-        {/* Hairline-separated typography strip — remaining bullets */}
-        {rest.length > 0 && (
-          <div className="mt-14 border-t border-border pt-10">
-            <ul className="grid gap-x-10 gap-y-8 md:grid-cols-3">
-              {rest.map((b, i) => (
-                <Reveal key={b.label} delay={i * 60}>
-                  <li>
-                    <p className="text-primary text-xs font-bold uppercase tracking-widest">
-                      {b.label}
-                    </p>
-                    <p className="mt-3 text-sm font-light text-secondary leading-relaxed">
-                      {b.body}
-                    </p>
-                  </li>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </section>
   );

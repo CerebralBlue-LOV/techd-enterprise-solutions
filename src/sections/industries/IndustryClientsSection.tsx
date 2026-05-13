@@ -90,33 +90,47 @@ export const IndustryClientsSection = ({ industry }: Props) => {
               <div className="space-y-4">
                 <p className="eyebrow text-primary">Clients we serve</p>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-[1.05] tracking-tight">
-                  Partners in {industry.name}.
+                  {extras.headline}
                 </h2>
                 <p className="text-base font-light text-white/65 leading-relaxed max-w-md">
-                  Active or recent engagements in {industry.name}. Every logo
-                  here represents a live or completed project — we don't list
-                  a name we haven't earned.
+                  Every logo here represents a live or completed project —
+                  we don't list a name we haven't earned.
                 </p>
               </div>
 
-              <dl className="flex gap-12 pt-2">
-                <div className="flex flex-col gap-1">
-                  <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                    Featured clients
-                  </dt>
-                  <dd className="text-4xl font-bold text-white leading-none">
-                    {resolved.length}
-                  </dd>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                    Regulation
-                  </dt>
-                  <dd className="text-base font-bold text-primary tracking-tight uppercase">
-                    {industry.regulation}
-                  </dd>
-                </div>
-              </dl>
+              {extras.stats?.length ? (
+                <dl className="flex flex-wrap gap-x-8 gap-y-5 pt-2">
+                  {extras.stats.map((s) => (
+                    <div key={s.label} className="flex flex-col gap-1">
+                      <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+                        {s.label}
+                      </dt>
+                      <dd className="text-2xl font-bold text-white leading-none">
+                        {s.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : (
+                <dl className="flex gap-12 pt-2">
+                  <div className="flex flex-col gap-1">
+                    <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+                      Featured clients
+                    </dt>
+                    <dd className="text-4xl font-bold text-white leading-none">
+                      {resolved.length}
+                    </dd>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+                      Regulation
+                    </dt>
+                    <dd className="text-2xl font-bold text-white leading-none uppercase">
+                      {industry.regulation}
+                    </dd>
+                  </div>
+                </dl>
+              )}
             </div>
 
             {/* Right — logo cards */}

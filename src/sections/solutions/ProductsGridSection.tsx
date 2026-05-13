@@ -72,11 +72,13 @@ const ProductLink = ({
 
 const SlideContent = ({
   product,
+  practiceId,
   direction,
   reverse,
   className,
 }: {
   product: Product;
+  practiceId: string;
   direction: "in" | "out";
   reverse: boolean;
   className?: string;
@@ -98,9 +100,16 @@ const SlideContent = ({
         className={cn("flex items-start gap-3", anim)}
         style={{ animationDelay: `${baseDelay}ms` }}
       >
-        <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
-          {product.name}
-        </h3>
+        <ProductLink
+          practiceId={practiceId}
+          product={product}
+          ariaLabel={`View ${product.name} details`}
+          className="group/title"
+        >
+          <h3 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] text-white tracking-tight">
+            {product.name}
+          </h3>
+        </ProductLink>
       </div>
       <div
         className={cn("mt-auto pt-10", anim)}
@@ -196,38 +205,28 @@ export const ProductsGridSection = ({ practice }: Props) => {
               id="products-heading"
               className="text-4xl md:text-5xl leading-[1.05]"
             >
-              The platforms and tools we deliver
+              Platforms we deliver
             </h2>
-            <p className="mt-5 text-lg text-muted-foreground font-light">
-              Select any product to explore capabilities, use cases, and how we engage.
-            </p>
-
-            {/* Product quick-jump — quiet inline text links */}
-            <p className="mt-6 text-sm font-light text-muted-foreground leading-relaxed">
+            <div className="mt-5 grid grid-cols-3 gap-x-3 gap-y-1">
               {products.map((p, i) => {
                 const isActive = i === index;
                 return (
-                  <span key={p.name}>
-                    <button
-                      type="button"
-                      onClick={() => goTo(i)}
-                      aria-pressed={isActive}
-                      className={cn(
-                        "underline-offset-4 hover:underline transition-colors",
-                        isActive
-                          ? "text-primary"
-                          : "text-muted-foreground hover:text-primary",
-                      )}
-                    >
-                      {p.name}
-                    </button>
-                    {i < products.length - 1 && (
-                      <span className="mx-1.5 text-muted-foreground/60">·</span>
+                  <button
+                    key={p.name}
+                    type="button"
+                    onClick={() => goTo(i)}
+                    className={cn(
+                      "text-left text-sm py-1.5 px-2 rounded transition-colors duration-300",
+                      isActive
+                        ? "text-primary font-normal"
+                        : "text-muted-foreground hover:text-secondary",
                     )}
-                  </span>
+                  >
+                    {p.name}
+                  </button>
                 );
               })}
-            </p>
+            </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild className="btn-glow">
@@ -282,19 +281,19 @@ export const ProductsGridSection = ({ practice }: Props) => {
               <div className="relative flex flex-col p-8 md:p-10 lg:p-12 min-h-[520px] md:min-h-[600px]">
                 {/* Top chip row */}
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center rounded-full bg-white/10 backdrop-blur-sm px-3 py-1.5 ring-1 ring-white/15">
+                  <div className="flex items-center rounded-md bg-white/10 backdrop-blur-sm px-3 py-1.5 ring-1 ring-white/15">
                     <span className="text-xs font-normal text-white/90">
                       Featured product
                     </span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => goTo((index + 1) % total, "forward")}
-                    aria-label={`Show next product`}
-                    className="grid h-9 w-9 place-items-center rounded-full bg-white/10 ring-1 ring-white/15 text-white hover:bg-primary hover:ring-primary transition-colors"
+                  <ProductLink
+                    practiceId={practice.id}
+                    product={active}
+                    ariaLabel={`View ${active.name} details`}
+                    className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 bg-white/10 ring-1 ring-white/15 text-white hover:bg-primary hover:ring-primary transition-colors"
                   >
                     <ArrowUpRight className="size-4" />
-                  </button>
+                  </ProductLink>
                 </div>
 
                 {/* Focal display + body, with overlapping enter/exit layers */}
@@ -307,6 +306,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                     <SlideContent
                       key={`out-${prevIndex}`}
                       product={products[prevIndex]}
+                      practiceId={practice.id}
                       direction="out"
                       reverse={reverse}
                       className="absolute inset-0"
@@ -316,6 +316,7 @@ export const ProductsGridSection = ({ practice }: Props) => {
                   <SlideContent
                     key={`in-${index}`}
                     product={active}
+                    practiceId={practice.id}
                     direction="in"
                     reverse={reverse}
                     className="absolute inset-0"
@@ -338,24 +339,26 @@ export const ProductsGridSection = ({ practice }: Props) => {
                         aria-current={isActive ? "true" : undefined}
                         aria-label={`Show product ${i + 1} of ${total}: ${p.name}`}
                         onClick={() => goTo(i)}
-                        className={cn(
-                          "relative h-[3px] flex-1 overflow-hidden rounded-full transition-colors",
-                          isActive
-                            ? "bg-primary/30"
-                            : "bg-white/15 hover:bg-white/30",
-                        )}
+                        className="relative flex-1 py-3 flex items-center"
                       >
-                        {isActive && (
-                          <span
-                            key={`fill-${index}`}
-                            aria-hidden
-                            className="absolute inset-y-0 left-0 w-full origin-left bg-white"
-                            style={{
-                              animation: `progress-fill ${AUTO_MS}ms linear forwards`,
-                              animationPlayState: paused ? "paused" : "running",
-                            }}
-                          />
-                        )}
+                        <div
+                          className={cn(
+                            "relative h-[3px] w-full overflow-hidden rounded-full transition-colors",
+                            isActive ? "bg-primary/30" : "bg-white/15 hover:bg-white/30",
+                          )}
+                        >
+                          {isActive && (
+                            <span
+                              key={`fill-${index}`}
+                              aria-hidden
+                              className="absolute inset-y-0 left-0 w-full origin-left bg-white"
+                              style={{
+                                animation: `progress-fill ${AUTO_MS}ms linear forwards`,
+                                animationPlayState: paused ? "paused" : "running",
+                              }}
+                            />
+                          )}
+                        </div>
                       </button>
                     );
                   })}

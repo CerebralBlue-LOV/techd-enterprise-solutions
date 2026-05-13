@@ -124,9 +124,9 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       lede:
         "A structured one-day engagement, on-site or remote, that produces a written report your CIO can take to the board and your architects can execute against on Monday.",
       bullets: [
-        { label: "What we review", body: "Architecture, hardware specifications, software configuration, security posture, user-role design, licensing position, and upgrade paths — across the IBM platforms in scope." },
-        { label: "What we deliver", body: "A written comprehensive report: findings summary, best-practice recommendations, patching and maintenance requirements, licensing summary, expansion and upgrade recommendations, and complementary solution recommendations." },
-        { label: "What happens next", body: "An optional Quick Start Advisory package: pre-implementation solution design, installation and configuration, data connection setup, model and template creation, knowledge transfer, customized training, and post-implementation support." },
+        { label: "What we review", body: "Architecture, hardware specifications, software configuration, security posture, user-role design, licensing position, and upgrade paths — across the IBM platforms in scope. We cover every platform in a single structured session, not a multi-week discovery engagement. Findings are written on the day — not a sales proposal with a follow-on engagement attached." },
+        { label: "What we deliver", body: "A written comprehensive report: findings summary, best-practice recommendations, patching and maintenance requirements, licensing summary, expansion and upgrade recommendations, and complementary solution recommendations. This is a document your CIO can present at a board meeting and your architects can execute against on Monday. We write an opinion — the recommended path, the sequencing, and the investment case — not a menu of options that pushes the decision back to you." },
+        { label: "What happens next", body: "An optional Quick Start Advisory package: pre-implementation solution design, installation and configuration, data connection setup, model and template creation, knowledge transfer, customized training, and post-implementation support. The package is scoped after the assessment, using the findings as the specification. You are not buying a follow-on engagement blind — you know exactly what was found and what needs to be addressed before we scope the fix." },
       ],
       next: [
         { step: "Discovery", body: "Stakeholder session on goals, constraints, and the regulatory tier in play." },
@@ -163,7 +163,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     },
     crossLinks: [
       { kind: "service",  id: "implementation", label: "Implementation",   blurb: "The architecture we recommend is the architecture we build — same practitioners, no handoff." },
-      { kind: "service",  id: "managed",        label: "Managed Services", blurb: "Run the platform we designed with SLAs tied to outcomes, not ticket counts." },
+      { kind: "service",  id: "managed-services", label: "Managed Services", blurb: "Run the platform we designed with SLAs tied to outcomes, not ticket counts." },
       { kind: "solution", id: "ai-generative",  label: "AI & Generative",  blurb: "watsonx-grounded use-case selection and AI readiness reviews." },
       { kind: "solution", id: "data-analytics", label: "Data & Analytics", blurb: "Lakehouse, Cognos, and Planning Analytics roadmaps for regulated enterprises." },
     ],
@@ -206,10 +206,10 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       lede:
         "Our scope is the connector layer and the data contract, not just the IBM stack in isolation. We name the systems we integrate with, and we deliver across IBM Cloud, AWS, Azure, Oracle Cloud, and on-premises.",
       bullets: [
-        { label: "Same team, end to end", body: "The architects who designed it install, configure, and tune it. No bait-and-switch from sales pitch to delivery, no handoff to a separate delivery organization." },
-        { label: "Named integration scope", body: "Salesforce, ServiceNow, Azure Data Factory, Informatica, enterprise ERP, and the systems of record AI needs to ground on — including z/OS Connect and IBM Data Replication for mainframe estates." },
-        { label: "Hybrid and multi-cloud", body: "Cloud Pak for Data and the watsonx suite implemented across IBM Cloud, AWS, Azure, Oracle Cloud, and on-premises OpenShift — chosen for your latency, sovereignty, and economics." },
-        { label: "Reusable accelerators", body: "Reference architectures, DataStage migration patterns, Cognos content migration tooling, and Guardium policy baselines we bring to every engagement — not invented on your clock." },
+        { label: "Same team, end to end", body: "The architects who designed it install, configure, and tune it. No bait-and-switch from sales pitch to delivery, no handoff to a separate delivery organization. The person who signed off on your architecture blueprint is the same one on-site for go-live — no ramp-up time, no translation loss, no junior team inheriting a senior team's design." },
+        { label: "Integration scope", body: "Salesforce, ServiceNow, Azure Data Factory, Informatica, enterprise ERP, and the systems of record AI needs to ground on — including z/OS Connect and IBM Data Replication for mainframe estates. We scope the integration layer in the design phase, not after the IBM platform is live. Every connector, API contract, and data replication pattern is documented before provisioning starts." },
+        { label: "Hybrid and multi-cloud", body: "Cloud Pak for Data and the watsonx suite implemented across IBM Cloud, AWS, Azure, Oracle Cloud, and on-premises OpenShift — chosen for your latency, sovereignty, and economics. We don't default to IBM Cloud. If your data residency requirements, existing hyperscaler commitments, or TCO model points elsewhere, we build there — and we document why." },
+        { label: "Reusable accelerators", body: "Reference architectures, DataStage migration patterns, Cognos content migration tooling, and Guardium policy baselines we bring to every engagement — not invented on your clock. These are tested implementation artifacts — migration scripts, policy baselines, and configuration playbooks — that compress delivery timelines and reduce post-go-live rework." },
       ],
     },
     engagements: [
@@ -241,7 +241,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     },
     crossLinks: [
       { kind: "service",  id: "advisory", label: "Advisory",         blurb: "Start with a one-day platform assessment before scoping a build." },
-      { kind: "service",  id: "managed",  label: "Managed Services", blurb: "Hand off the platform we built to the team that built it — no learning curve." },
+      { kind: "service",  id: "managed-services", label: "Managed Services", blurb: "Hand off the platform we built to the team that built it — no learning curve." },
       { kind: "solution", id: "data-analytics",      label: "Data & Analytics",      blurb: "Db2, DataStage, Netezza, watsonx.data, Cognos, and Planning Analytics builds and migrations." },
       { kind: "solution", id: "security-compliance", label: "Security & Compliance", blurb: "Guardium, QRadar, and Resilient deployments with compliance report validation." },
     ],
@@ -285,10 +285,10 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       lede:
         "We do not measure ourselves by how many tickets we closed. We measure by whether your pipelines ran, your reports delivered, your models stayed available, and your security alerts were triaged.",
       bullets: [
-        { label: "Pipeline availability",     body: "DataStage and watsonx.data pipeline completion rates — measured against the schedules your business depends on, not against a generic uptime number." },
-        { label: "Report and model freshness", body: "Cognos scheduled report delivery and watsonx.ai inference endpoint availability — the metrics your analysts and applications actually feel." },
-        { label: "Security alert triage time", body: "Guardium and QRadar alert response time against your regulatory tier (SOX, PCI-DSS, HIPAA, NERC-CIP) — not a generic ticket-resolution SLA." },
-        { label: "Platform economics",         body: "Apptio cost allocation and Turbonomic optimization actions reviewed monthly — savings reported in invoice lines, not slide decks." },
+        { label: "Pipeline availability",     body: "DataStage and watsonx.data pipeline completion rates — measured against the schedules your business depends on, not against a generic uptime number. If your overnight ETL misses its window and the business opens to stale data, that is the failure we track and prevent. We set the SLA against your schedule, not ours." },
+        { label: "Model freshness", body: "Cognos scheduled report delivery and watsonx.ai inference endpoint availability — the metrics your analysts and applications actually feel. A platform that is 'up' but delivering 4-hour-old reports or a model endpoint timing out at peak load is not a managed platform. We monitor at the output layer, not just the infrastructure layer." },
+        { label: "Security alert triage time", body: "Guardium and QRadar alert response time against your regulatory tier (SOX, PCI-DSS, HIPAA, NERC-CIP) — not a generic ticket-resolution SLA. Your compliance auditor does not care how many tickets we closed. They care how long a high-severity Guardium policy violation sat unacknowledged. That is what we report on and what we are held to." },
+        { label: "Platform economics",         body: "Apptio cost allocation and Turbonomic optimization actions reviewed monthly — savings reported in invoice lines, not slide decks. We implement the Turbonomic actions — workload placement changes, resource right-sizing, reserved instance recommendations — not just flag them. Your cloud bill reflects it the next billing cycle." },
       ],
     },
     engagements: [
@@ -364,10 +364,10 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       lede:
         "The catalog is organized by who needs to learn what — not by product family. Pick the track that matches the audience, then pick the format that matches your team's geography and tools.",
       bullets: [
-        { label: "Executive Briefings",   body: "Half-day or full-day sessions for CIOs and business leaders: IBM AI Operating Model overview, watsonx platform capabilities, and ROI framing for the four practice areas." },
-        { label: "Architect Bootcamps",   body: "2–5 day deep dives for solution architects: platform design, reference architectures, and integration patterns across AI & Generative, Data & Analytics, Automation & FinOps, and Security & Compliance." },
-        { label: "Engineering Labs",      body: "Hands-on configuration courses for data engineers, developers, and administrators — platform-specific, instructor-led, and run on your data when you want them to." },
-        { label: "Custom curriculum",     body: "Bespoke programs scoped from a discovery session: skills-gap mapping, your platform configuration, your governance model, and your use cases." },
+        { label: "Executive Briefings",   body: "Half-day or full-day sessions for CIOs and business leaders: IBM AI Operating Model overview, watsonx platform capabilities, and ROI framing for the four practice areas. Designed to produce a decision, not a follow-up meeting. Participants leave with a shared vocabulary, a framed investment case, and a prioritized set of questions for their architects." },
+        { label: "Architect Bootcamps",   body: "2–5 day deep dives for solution architects: platform design, reference architectures, and integration patterns across AI & Generative, Data & Analytics, Automation & FinOps, and Security & Compliance. Labs run in your environment where possible, against your schemas and your deployment targets. Architects leave with a working reference architecture they helped build, not a vendor slide deck." },
+        { label: "Engineering Labs",      body: "Hands-on configuration courses for data engineers, developers, and administrators — platform-specific, instructor-led, and run on your data when you want them to. Every lab produces an artifact — a configured pipeline, a tuned model deployment, a tested policy baseline — that stays in your environment after the course ends. Capability that compounds, not a certificate that doesn't." },
+        { label: "Custom curriculum",     body: "Bespoke programs scoped from a discovery session: skills-gap mapping, your platform configuration, your governance model, and your use cases. We start with a skills-gap analysis against your team's current roles and your platform's production state — then build the curriculum backward from where you need to be, not forward from a standard catalog." },
       ],
     },
     engagements: [

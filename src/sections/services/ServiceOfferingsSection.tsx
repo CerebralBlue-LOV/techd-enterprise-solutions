@@ -8,67 +8,73 @@ interface Props {
   service: Service;
 }
 
-/**
- * Section: Services / Offerings — engagement catalog list.
- *
- * Vertical list inside a single rounded card. Each row: name (left),
- * duration chip (mid), summary (right). Hairline dividers, hover row
- * gains a left primary cyan rule + 2px content shift.
- */
+const parseDuration = (d: string): [string, string] => {
+  if (/ongoing/i.test(d))    return ["∞",   "RETAINER"];
+  if (/annual/i.test(d))     return ["12",  "MONTHS"];
+  if (/quarterly/i.test(d))  return ["90",  "DAYS"];
+  if (/project/i.test(d))    return ["→",   "PROJECT"];
+  if (/half.+full/i.test(d)) return ["01",  "DAY"];
+  const idx = d.indexOf(" ");
+  if (idx === -1) return [d, ""];
+  const num = d.slice(0, idx);
+  const unit = d.slice(idx + 1).toUpperCase();
+  return [/^\d$/.test(num) ? `0${num}` : num, unit];
+};
+
+
 export const ServiceOfferingsSection = ({ service }: Props) => {
   const extras = SERVICES_EXTRAS[service.id];
   if (!extras?.engagements?.length) return null;
+  const count = extras.engagements.length;
 
   return (
     <section id="offerings" className="section bg-muted/30 scroll-mt-24">
       <SectionMarker page={`Services / ${service.name}`} name="Offerings" />
       <div className="container-page">
         <Reveal>
-          <SectionHeading
-            eyebrow="Engagements"
-            title="What you can buy"
-            subtitle="Named, scoped offerings — each with a defined output and a start date. Scan the duration column to find the fit."
-          />
-        </Reveal>
-
-        <Reveal delay={60}>
-          <div className="mt-12 overflow-hidden rounded-2xl border border-border bg-background">
-            {/* Column header — typography only */}
-            <div className="hidden md:grid md:grid-cols-12 gap-6 border-b border-border bg-muted/40 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
-              <div className="md:col-span-4">Engagement</div>
-              <div className="md:col-span-2">Duration</div>
-              <div className="md:col-span-6">What you get</div>
-            </div>
-
-            <ul className="divide-y divide-border">
-              {extras.engagements.map((e) => (
-                <li
-                  key={e.name}
-                  className="group relative grid grid-cols-1 gap-3 px-6 py-6 md:grid-cols-12 md:gap-6 md:py-7 transition-colors duration-200 hover:bg-primary/[0.025]"
-                >
-                  {/* Left primary rail on hover */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-y-0 left-0 w-[3px] origin-top scale-y-0 bg-primary transition-transform duration-300 ease-out group-hover:scale-y-100"
-                  />
-                  <div className="md:col-span-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5">
-                    <h3 className="text-base md:text-lg font-bold text-secondary leading-tight">
-                      {e.name}
-                    </h3>
-                  </div>
-                  <div className="md:col-span-2">
-                    <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
-                      {e.duration}
-                    </span>
-                  </div>
-                  <p className="md:col-span-6 text-sm font-light text-muted-foreground leading-relaxed">
-                    {e.summary}
-                  </p>
-                </li>
-              ))}
-            </ul>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading
+              eyebrow="Engagements"
+              title="What you can buy"
+              subtitle="Named, scoped offerings — each with a defined output and a start date."
+            />
+            <span className="shrink-0 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground tabular-nums">
+              {count} engagement{count !== 1 ? "s" : ""}
+            </span>
           </div>
         </Reveal>
+
+        <div className="mt-14">
+          {extras.engagements.map((e, i) => (
+              <Reveal key={e.name} delay={i * 100}>
+                <div
+                  className={`group grid grid-cols-1 gap-y-3 py-8 md:grid-cols-[5rem_5fr_6fr] md:items-start md:gap-x-10 md:gap-y-0 ${
+                    i < count - 1 ? "border-b border-border" : ""
+                  }`}
+                >
+                  {/* Duration — number big, unit stacked below */}
+                  <div className="flex flex-col items-center leading-none">
+                    <span className="text-3xl md:text-4xl font-bold tabular-nums leading-none select-none text-primary/25 transition-colors duration-300 group-hover:text-primary/70">
+                      {parseDuration(e.duration)[0]}
+                    </span>
+                    <span className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-muted-foreground/50 transition-colors duration-300 group-hover:text-primary/50">
+                      {parseDuration(e.duration)[1]}
+                    </span>
+                  </div>
+
+                  {/* Name */}
+                  <h3 className="text-xl md:text-2xl font-bold leading-tight text-secondary transition-colors duration-200 group-hover:text-primary">
+                    {e.name}
+                  </h3>
+
+                  {/* Summary */}
+                  <p className="text-sm md:text-[15px] font-light text-muted-foreground leading-relaxed">
+                    {e.summary}
+                  </p>
+                </div>
+              </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

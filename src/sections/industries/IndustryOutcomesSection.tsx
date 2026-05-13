@@ -26,13 +26,13 @@ export const IndustryOutcomesSection = ({ industry }: Props) => {
             </p>
           </Reveal>
           <Reveal delay={100}>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
               {extras.stats.map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-xl border border-white/20 bg-white/[0.08] p-6 transition-all duration-300 hover:border-primary hover:bg-white/[0.14] hover:-translate-y-1 hover:shadow-[0_12px_40px_-10px_hsl(var(--primary)/0.4)]"
+                  className="min-w-0 rounded-xl border border-white/20 bg-white/[0.08] p-6 transition-all duration-300 hover:border-primary hover:bg-white/[0.14] hover:-translate-y-1 hover:shadow-[0_12px_40px_-10px_hsl(var(--primary)/0.4)]"
                 >
-                  <p className="text-3xl md:text-4xl font-bold text-primary leading-none">
+                  <p className="text-2xl md:text-3xl font-bold text-primary leading-none">
                     {s.value}
                   </p>
                   <p className="mt-2 text-sm font-light text-white/55 leading-snug">

@@ -10,6 +10,7 @@ interface Props {
   pageLabel: string;
   eyebrow?: string;
   title: string;
+  subtitle?: string;
   steps: ApproachStep[];
   id?: string;
   markerName?: string;
@@ -29,6 +30,7 @@ export const PageApproachSection = ({
   pageLabel,
   eyebrow = "How we engage",
   title,
+  subtitle,
   steps,
   id = "approach",
   markerName = "Approach",
@@ -51,7 +53,7 @@ export const PageApproachSection = ({
             </h2>
           </div>
         ) : (
-          <SectionHeading eyebrow={eyebrow} title={title} />
+          <SectionHeading eyebrow={eyebrow} title={title} subtitle={subtitle} />
         )}
       </Reveal>
 

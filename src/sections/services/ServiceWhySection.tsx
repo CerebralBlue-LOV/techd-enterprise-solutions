@@ -62,7 +62,7 @@ export const ServiceWhySection = ({ service }: Props) => {
 
       <div className="container-page relative">
         <Reveal>
-          <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
+          <p className="eyebrow">
             Why TechD · {service.name}
           </p>
         </Reveal>
@@ -75,7 +75,7 @@ export const ServiceWhySection = ({ service }: Props) => {
           )}
           aria-live="polite"
         >
-          <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light leading-[1.15] md:leading-[1.1] tracking-tight text-secondary">
+          <p className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-normal leading-[1.15] md:leading-[1.1] tracking-tight text-secondary">
             <span className="text-primary font-bold">“</span>
             {activePoint.title}
             <span className="text-primary font-bold">”</span>
@@ -87,7 +87,7 @@ export const ServiceWhySection = ({ service }: Props) => {
 
         {/* Ledger of all notes — clickable to promote, active is highlighted in place */}
         {points.length > 1 && (
-          <div className="relative mt-10 md:mt-16 border-y border-border py-4 md:py-12">
+          <div className="relative mt-8 md:mt-10 border-y border-border py-4 md:py-6">
             <div
               className={cn(
                 "grid grid-cols-1 divide-y divide-border md:divide-y-0 md:divide-x",
@@ -112,21 +112,21 @@ export const ServiceWhySection = ({ service }: Props) => {
                   >
                     <p
                       className={cn(
-                        "text-[10px] font-mono uppercase tracking-[0.2em] transition-colors",
-                        isActive ? "text-primary" : "text-muted-foreground group-hover:text-primary",
+                        "text-[10px] font-bold uppercase tracking-[0.2em] transition-colors",
+                        isActive ? "text-secondary" : "text-muted-foreground group-hover:text-secondary",
                       )}
                     >
                       Note · {String(i + 1).padStart(2, "0")}
                     </p>
                     <div className="mt-1 flex items-center justify-between gap-3">
-                      <h3
+                      <h2
                         className={cn(
                           "text-lg md:text-xl font-light leading-snug tracking-tight transition-colors",
-                          isActive ? "text-primary" : "text-secondary group-hover:text-primary",
+                          isActive ? "text-secondary" : "text-muted-foreground group-hover:text-secondary",
                         )}
                       >
                         {p.title}
-                      </h3>
+                      </h2>
                       {isActive && (
                         <span
                           aria-hidden
