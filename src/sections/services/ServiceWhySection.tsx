@@ -69,7 +69,7 @@ export const ServiceWhySection = ({ service }: Props) => {
         {/* Pull-quote — soft cross-fade between active points */}
         <div
           className={cn(
-            "mt-6 max-w-5xl min-h-[180px] sm:min-h-[200px] md:min-h-[240px] transition-all duration-300 ease-out motion-reduce:transition-none",
+            "mt-6 max-w-5xl min-h-[110px] sm:min-h-[120px] md:min-h-[140px] transition-all duration-300 ease-out motion-reduce:transition-none",
             quoteState,
           )}
           aria-live="polite"
@@ -86,7 +86,7 @@ export const ServiceWhySection = ({ service }: Props) => {
 
         {/* Ledger of all notes — clickable to promote, active is highlighted in place */}
         {points.length > 1 && (
-          <div className="relative mt-10 md:mt-16 border-y border-border py-6 md:py-16">
+          <div className="relative mt-10 md:mt-16 border-y border-border py-4 md:py-12">
             <div
               className={cn(
                 "grid grid-cols-1 divide-y divide-border md:divide-y-0 md:divide-x",
