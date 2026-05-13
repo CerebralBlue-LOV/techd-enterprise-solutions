@@ -1,54 +1,54 @@
-# 3 new "Why TechD" proposals in `/section-lab`
+# 3 more "Why TechD" proposals — compact, divider-led, with subtle backdrops
 
-## Context
+## Goals from your direction
 
-The `id="why"` section exists on every Solutions, Industries, and Services page via:
-- `src/sections/solutions/WhyPracticeSection.tsx` — cyan-gradient hero card + 2×2 white tiles
-- `src/sections/industries/WhyIndustrySection.tsx` — solid `secondary` (gray) hero card + 3 white tiles
-- `src/sections/services/ServiceWhySection.tsx` — cyan-gradient hero card + 3 white tiles
-- `src/components/shared/page/PageWhySection.tsx` — older bento (dark/light/accent/outline mix)
-
-Structurally identical (featured headline + N supporting tiles), differentiated only by background fill (cyan gradient vs. solid gray). You want to break out of that pattern: less reliance on flat cyan/gray panels, more editorial / typographic / textural personality, while staying inside the locked brand palette.
+- Keep the existing W1/W2/W3 untouched.
+- Add **3 new proposals (W4, W5, W6)** with distinct personalities.
+- Stay **compact** — these sit right under the page hero, so they should feel like a confident "second beat", not a second hero.
+- Use **lines / dividers / hairlines** as the dominant structural device (not cards or fills).
+- Reuse the **dot-grid particle backdrop** from W2 in at least one new proposal, and try other subtle backdrops (e.g. existing `SectionBackdrop` engineered grid, faint diagonal hatch).
+- Strict brand palette only — `primary`, `secondary`, `muted`, `border`, `background`. No raw hex.
 
 ## Where it lands
 
-All 3 proposals will be **prepended** to the top of `src/pages/SectionLab.tsx` (above the existing "Solutions in this industry" experiments) inside a clearly labeled group: **"Why TechD — proposals"**. Existing variants stay untouched.
+All 3 new proposals are appended to the "Why TechD — proposals" group at the top of `src/pages/SectionLab.tsx`, immediately after W3, before the existing 01-07. They use the same `VariantShell` framing and the same `WHY_POINTS` data already defined in the file.
 
-Each proposal is rendered with **real data** from `INDUSTRIES_EXTRAS["healthcare"].whyPoints` (already imported in the file) so you can judge with production copy. The `VariantShell` wrapper already in the file will be reused for consistent framing.
+## The 3 new proposals
 
-No content files are touched. No changes to live Solutions/Industries/Services pages until you pick a direction.
+### W4 — Horizontal rail (4-up, divider-led)
+- Single row layout. Eyebrow + small section title sit on a top hairline. Below: a 4-column grid where each column is a `whyPoint` separated by **vertical hairlines** (`md:divide-x divide-border`).
+- Each column: small mono numeral (`01`) on top, bold short title, light body. No background fills, no cards.
+- Bottom hairline closes the section. Total visible height stays well under one screen — pure "data row" feel.
+- Backdrop: faint `SectionBackdrop intensity="soft"` (existing component) — engineered grid + drifting cyan blob, very low opacity, gives the rail some atmosphere without competing.
+- Personality: a Bloomberg/FT-style data strip. Maximum density per pixel.
 
-## The 3 proposals
+### W5 — Diagonal stack with running rule
+- Vertical list, each row is a single line of structure: left = micro number + uppercase tag, middle = bold title, right = body text — separated by horizontal hairlines (`divide-y divide-border`).
+- A **single primary cyan vertical "running rule"** spans the full height on the left edge of the title column, tying all rows together visually (the cyan line *is* the design).
+- On row hover, the row slides 2px right and the title shifts to `text-primary` — only motion in the section.
+- Backdrop: the **same dot-grid particle pattern from W2**, but masked to the upper-left corner only so it acts as an "incoming" texture.
+- Personality: Linear changelog meets Anthropic spec table. Compact, scannable, very type-driven.
 
-### Proposal A — Editorial manifesto (typography-led, no color blocks)
-- Two-column layout: left = oversized eyebrow + a single very large headline statement (`Why TechD`); right = a numbered list of points, each as `01 — Title` with body text on a hairline-divided rail.
-- Background stays `bg-background` (white). Zero gradient fills. Color is reserved for: a single primary cyan vertical rule on the left margin, and the numerals.
-- Reuses: `Reveal`, `SectionMarker`, `SectionHeading` (eyebrow only).
-- Personality: Linear / Stripe long-form essay. Quiet, confident, all weight carried by typography.
-
-### Proposal B — Featured quote + ledger
-- Top: a large editorial pull-quote rendered as `text-secondary` body type at hero scale (no card, no fill) — the first `whyPoint.title` becomes the quote, body becomes the attribution-style sub-line.
-- Below: a horizontal "ledger" of remaining points — 3 or 4 columns separated by hairlines (`divide-x divide-border`), each column = uppercase micro-label + short body. Looks like the back page of a magazine masthead.
-- One subtle texture: a faint `SectionBackdrop` dot grid behind the quote at very low opacity. No solid color blocks.
-- Personality: editorial / print, very different from the current "card-heavy" rhythm.
-
-### Proposal C — Off-white inset frame with cyan corner accent
-- Single full-bleed inset block in `bg-muted/30` (the warm off-white we already use), with internal `border border-border` rounded-2xl frame; *no* cyan or secondary fills.
-- Inside the frame: SectionHeading at top; below it a 4-up grid of "spec card" tiles styled like technical data sheets — small monospace numeral, hairline top border, title in bold, body in light. On hover, the top hairline animates from left to right in primary cyan (the only place cyan appears).
-- One small fixed corner detail: a 24px primary cyan corner bracket (`border-t-2 border-l-2`) anchored to the top-left of the frame as a single brand "stamp."
-- Personality: technical / instrument-panel, similar feel to Vercel docs or Anthropic specs.
+### W6 — Asymmetric split with diagonal hatch backdrop
+- Two-column split (5/7): **left** = sticky-feeling tall block holding the eyebrow + title + a single short "credentials line" (e.g. `IBM Platinum · 25+ years`); **right** = the four `whyPoints` rendered as a vertical list, each separated by hairlines.
+- Connector: a single horizontal cyan hairline runs across the full width *behind* both columns at the title baseline, tying them.
+- Backdrop: a faint **diagonal hatch pattern** (45° linear-gradient stripes at very low opacity, masked with a radial fade) — new but built inline with brand tokens, no new files.
+- Each right-side row uses a small `→` indicator that animates on hover (`group-hover:translate-x-1`).
+- Personality: editorial split layout. Frames the section as a statement + supporting evidence, very different rhythm from the symmetric grids in W1/W3.
 
 ## Technical notes
 
-- New code lives only in `src/pages/SectionLab.tsx`. Three new local components: `WhyProposalEditorial`, `WhyProposalQuote`, `WhyProposalSpec`.
-- Data source: `INDUSTRIES_EXTRAS["healthcare"]?.whyPoints ?? []` (already imported). For the page-context label inside `SectionMarker`, use `"Why TechD — Lab"`.
-- Strict palette: only `primary` (`#00B3E3`), `secondary`, `muted`, `border`, `background`. No raw hex, no new tokens.
-- Reused primitives: `Reveal`, `SectionHeading`, `SectionMarker`, `SectionBackdrop` (Proposal B only), `cn`. No new shared components, no new dependencies.
-- Each proposal is wrapped in the existing `VariantShell` for label + index consistency with the rest of the lab page.
-- Respects `prefers-reduced-motion` (only existing `Reveal` motion is used; no new keyframes).
+- All three are local components in `src/pages/SectionLab.tsx`: `WhyProposalRail`, `WhyProposalRunningRule`, `WhyProposalSplit`.
+- Reuses already-imported `cn`, `Reveal`, `SectionHeading` (where useful), and the existing `WHY_POINTS` / `WHY_TITLE` constants.
+- New import: `SectionBackdrop` from `@shared/SectionBackdrop` (used in W4 only).
+- The dot-grid pattern in W5 is the same inline `radial-gradient(hsl(var(--border)) 1px, transparent 1px)` snippet from W2 — copied locally, not extracted, to keep the lab self-contained until a winner is picked.
+- Diagonal hatch in W6: inline `repeating-linear-gradient(45deg, hsl(var(--border)/0.5) 0 1px, transparent 1px 14px)` with a radial mask. No new tokens.
+- Compact vertical rhythm: each proposal targets ~`py-12 md:py-14` (vs. ~`py-16 md:py-20` for W1/W2). Titles top out at `text-2xl md:text-3xl` (vs. up to `text-6xl` in W2). They will read as "supporting beat after hero", not as a second hero.
+- Respects `prefers-reduced-motion` (only `Reveal` + simple `transition-transform` / `transition-colors`; no keyframes).
+- Three new `VariantShell` entries (W4 / W5 / W6) added in order after W3.
 
 ## Out of scope
 
-- Editing the live `WhyPracticeSection` / `WhyIndustrySection` / `ServiceWhySection` / `PageWhySection`. Once you pick a direction in the lab, a follow-up will roll it into the shared component and retire the others.
-- Content / copy changes in `src/content/`.
-- New shared components — kept local to `SectionLab.tsx` until a winner is chosen.
+- Editing the live `WhyPracticeSection` / `WhyIndustrySection` / `ServiceWhySection` / `PageWhySection`.
+- Extracting any of the proposals into a shared component — that happens after you pick a winner.
+- Touching `src/content/`.
