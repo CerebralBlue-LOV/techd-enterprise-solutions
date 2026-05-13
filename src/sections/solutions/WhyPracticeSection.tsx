@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Plus } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import { type Solution } from "@content/solutions";
@@ -130,17 +131,16 @@ export const WhyPracticeSection = ({ practice }: Props) => {
                       >
                         {p.title}
                       </h3>
-                      <span
+                      <Plus
                         aria-hidden
                         className={cn(
-                          "shrink-0 text-base leading-none transition-all duration-200 motion-reduce:transition-none",
+                          "shrink-0 h-4 w-4 transition-all duration-300 ease-out motion-reduce:transition-none",
                           isActive
-                            ? "text-primary translate-x-0 opacity-100"
-                            : "text-muted-foreground -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary",
+                            ? "text-primary rotate-45"
+                            : "text-muted-foreground rotate-0 group-hover:text-primary",
                         )}
-                      >
-                        →
-                      </span>
+                        strokeWidth={1.5}
+                      />
                     </div>
                   </button>
                 );
