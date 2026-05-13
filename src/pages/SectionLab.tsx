@@ -26,6 +26,177 @@ const rows = (extras?.practices ?? [])
 
 const TITLE = "Where TechD's practices have shipped in Healthcare";
 
+/* ═════════════════════════════════════════════════════════════
+ * "Why TechD" proposals — alternatives to the current cyan/gray
+ * card treatment used on Solutions, Industries, and Services.
+ * Rendered with Healthcare whyPoints as production data.
+ * ═════════════════════════════════════════════════════════════ */
+const WHY_POINTS = extras?.whyPoints ?? [];
+const WHY_TITLE = "Why teams pick TechD for regulated, high-stakes work";
+
+/* ───────── Why A — Editorial manifesto ───────── */
+const WhyProposalEditorial = () => (
+  <div className="px-6 md:px-12 py-16 md:py-20 bg-background">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      {/* Left: oversized headline with cyan rule */}
+      <div className="lg:col-span-5 relative lg:pl-6">
+        <span
+          aria-hidden="true"
+          className="hidden lg:block absolute left-0 top-2 bottom-2 w-px bg-primary"
+        />
+        <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary">
+          Why TechD · Healthcare
+        </p>
+        <h2 className="mt-5 text-3xl md:text-5xl font-bold leading-[1.05] tracking-tight text-secondary">
+          {WHY_TITLE}
+        </h2>
+        <p className="mt-6 text-base font-light text-muted-foreground leading-relaxed max-w-md">
+          Four reasons CIOs and chief data officers keep us in the room after
+          the procurement deck closes.
+        </p>
+      </div>
+
+      {/* Right: numbered ledger */}
+      <ol className="lg:col-span-7 lg:border-l lg:border-border lg:pl-10">
+        {WHY_POINTS.map((p, i) => (
+          <li
+            key={p.title}
+            className="grid grid-cols-12 gap-4 py-7 border-b border-border last:border-b-0"
+          >
+            <span className="col-span-2 md:col-span-1 text-sm font-mono tabular-nums text-primary pt-1">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <div className="col-span-10 md:col-span-11">
+              <h3 className="text-lg md:text-xl font-bold text-secondary leading-snug tracking-tight">
+                {p.title}
+              </h3>
+              <p className="mt-2 text-sm md:text-base font-light text-muted-foreground leading-relaxed">
+                {p.body}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+);
+
+/* ───────── Why B — Pull-quote + ledger ───────── */
+const WhyProposalQuote = () => {
+  const [hero, ...rest] = WHY_POINTS;
+  if (!hero) return null;
+  return (
+    <div className="relative px-6 md:px-12 py-16 md:py-24 overflow-hidden bg-background">
+      {/* faint dot grid */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-50"
+        style={{
+          backgroundImage:
+            "radial-gradient(hsl(var(--border)) 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+          WebkitMaskImage:
+            "radial-gradient(60% 70% at 30% 30%, black 30%, transparent 80%)",
+          maskImage:
+            "radial-gradient(60% 70% at 30% 30%, black 30%, transparent 80%)",
+        }}
+      />
+      <div className="relative max-w-5xl">
+        <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
+          Why TechD
+        </p>
+        <p className="mt-6 text-3xl md:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight text-secondary">
+          <span className="text-primary font-bold">“</span>
+          {hero.title}
+          <span className="text-primary font-bold">”</span>
+        </p>
+        <p className="mt-8 text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl">
+          {hero.body}
+        </p>
+      </div>
+
+      {/* ledger row */}
+      <div className="relative mt-14 md:mt-20 border-t border-border pt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-border">
+          {rest.map((p, i) => (
+            <div
+              key={p.title}
+              className={cn(
+                "py-5 md:py-2 md:px-8 first:md:pl-0 last:md:pr-0",
+                i === 0 && "md:pl-0",
+              )}
+            >
+              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
+                Note · 0{i + 2}
+              </p>
+              <h3 className="mt-3 text-base font-bold text-secondary leading-snug">
+                {p.title}
+              </h3>
+              <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
+                {p.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ───────── Why C — Spec sheet (off-white frame, cyan corner) ───────── */
+const WhyProposalSpec = () => (
+  <div className="px-6 md:px-10 py-12 md:py-16 bg-muted/30">
+    <div className="relative rounded-2xl border border-border bg-background p-8 md:p-12">
+      {/* cyan corner bracket */}
+      <span
+        aria-hidden="true"
+        className="absolute -top-px -left-px h-6 w-6 border-t-2 border-l-2 border-primary rounded-tl-2xl"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute -bottom-px -right-px h-6 w-6 border-b-2 border-r-2 border-primary rounded-br-2xl"
+      />
+
+      <div className="max-w-2xl">
+        <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary">
+          Why TechD · Spec
+        </p>
+        <h2 className="mt-4 text-2xl md:text-4xl font-bold leading-[1.1] tracking-tight text-secondary">
+          {WHY_TITLE}
+        </h2>
+      </div>
+
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden border border-border">
+        {WHY_POINTS.map((p, i) => (
+          <article
+            key={p.title}
+            className="group relative bg-background p-6 md:p-7 flex flex-col"
+          >
+            {/* animated cyan top hairline */}
+            <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-border overflow-hidden">
+              <span className="block h-full w-0 bg-primary transition-all duration-500 group-hover:w-full" />
+            </span>
+            <div className="flex items-baseline justify-between">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
+                {String(i + 1).padStart(2, "0")} / {String(WHY_POINTS.length).padStart(2, "0")}
+              </span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
+                Reason
+              </span>
+            </div>
+            <h3 className="mt-5 text-base md:text-lg font-bold text-secondary leading-snug tracking-tight">
+              {p.title}
+            </h3>
+            <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
+              {p.body}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 const VariantShell = ({
   index,
   name,
@@ -515,6 +686,39 @@ const SectionLab = () => (
         section, rendered with Healthcare data.
       </p>
     </div>
+
+    <div className="container-page pt-6 pb-2">
+      <p className="eyebrow text-primary">Why TechD — proposals</p>
+      <p className="mt-2 max-w-2xl text-sm text-muted-foreground font-light">
+        Three alternatives to the current cyan-gradient / gray-fill "Why TechD"
+        treatment used on Solutions, Industries, and Services. Less reliance on
+        flat color blocks; more typography and structure.
+      </p>
+    </div>
+
+    <VariantShell
+      index="W1"
+      name="Editorial manifesto"
+      blurb="Two-column. Oversized headline + cyan rule on the left, numbered ledger on the right. No gradients, no fills."
+    >
+      <WhyProposalEditorial />
+    </VariantShell>
+
+    <VariantShell
+      index="W2"
+      name="Pull-quote + ledger"
+      blurb="Magazine-style featured quote over a faint dot grid, supporting reasons as a hairline-divided ledger row underneath."
+    >
+      <WhyProposalQuote />
+    </VariantShell>
+
+    <VariantShell
+      index="W3"
+      name="Spec sheet"
+      blurb="Off-white frame with a single cyan corner bracket. 4-up data-sheet tiles with animated cyan top rail on hover."
+    >
+      <WhyProposalSpec />
+    </VariantShell>
 
     <VariantShell
       index="01"
