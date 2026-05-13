@@ -1,33 +1,19 @@
 ## Goal
+Keep the “Why TechD” section the same height when users switch between notes, so the page no longer jumps.
 
-Replace the current Services "Why TechD" section (cyan gradient hero card + 3 supporting tiles) with the same pull-quote + clickable ledger pattern used on Solutions, so the Services pages match the editorial feel of `/solutions/ai-generative`.
+## Plan
+1. Refactor the note-switching pattern in both `WhyPracticeSection` and `ServiceWhySection` so the ledger keeps a stable layout instead of removing the active note from the list.
+2. Keep all note slots rendered in a fixed order and style the active item as selected/inactive-for-click rather than filtering it out, which prevents the ledger content from reflowing.
+3. Replace the current quote-only height reservation with a more reliable stable container strategy so the featured quote area also stays visually consistent during the cross-fade.
+4. Verify the behavior on the solutions and services versions of the section in preview to confirm there is no vertical jump when switching among the longest and shortest notes.
 
-## Changes
-
-**1. Rewrite `src/sections/services/ServiceWhySection.tsx`**
-
-Mirror `src/sections/solutions/WhyPracticeSection.tsx` exactly, with these adaptations:
-
-- Props stay `{ service: Service }` (not `practice`).
-- `SectionMarker` page label: `Services / ${service.name}`.
-- Eyebrow: `Why TechD · ${service.name}`.
-- Data source: `SERVICES_EXTRAS[service.id]?.whyPoints` (already exists — same `WhyPoint` shape).
-- First point shown as the active pull-quote; remaining points become the clickable ledger row at the bottom.
-- Carry over the exact behavior from the Solutions version:
-  - `active` / `displayed` / `phase` state machine for soft cross-fade (200ms fade-out + 250ms fade-in, `prefers-reduced-motion` respected via `motion-reduce:` classes).
-  - Timeout cleanup on unmount.
-  - `border-y border-border py-6 md:py-16` ledger with `divide-y md:divide-x` between notes.
-  - Same responsive type ramp: `text-2xl sm:text-3xl md:text-5xl lg:text-6xl` for the quote.
-  - Same hover/focus styles on note buttons (cyan title hover, focus ring, subtle lift).
-
-**2. No other files touched**
-
-- `_ServicePage.tsx` already renders `<ServiceWhySection service={service} />` — no change.
-- `services-extras.ts` already provides `whyPoints` for every service — no change.
-- The old `HoverGridBackdrop` import is dropped from this file (no other usage to clean up).
-
-## Out of scope
-
-- No content edits to `services-extras.ts`.
-- No changes to other Service sections (Hero, Methodology, Offerings, etc.).
-- No changes to the Solutions version.
+## Technical details
+- Files to update:
+  - `src/sections/solutions/WhyPracticeSection.tsx`
+  - `src/sections/services/ServiceWhySection.tsx`
+- Likely implementation:
+  - stop deriving a `rest` array that excludes the active note
+  - render the full `points` array in the ledger
+  - disable pointer interaction for the active note and give it a selected visual state
+  - keep existing motion/fade behavior, but ensure the quote wrapper uses a stable reserved height without adding excessive empty space
+- No brand/color changes; stay within existing tokens and typography.
