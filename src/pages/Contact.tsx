@@ -356,6 +356,38 @@ const Contact = () => {
       </section>
 
       {/* Trust strip */}
+      {/* SUPPORTING INFO BAND */}
+      <section className="border-y border-border bg-muted/30">
+        <SectionMarker page="Contact" name="Location + Next steps" />
+        <div className="container-page py-16 md:py-20 grid gap-12 md:grid-cols-2 md:gap-16">
+          <Reveal>
+            <div>
+              <p className="eyebrow mb-5">Where to find us</p>
+              <ul className="divide-y divide-border border-y border-border">
+                <li className="flex items-center gap-4 py-4">
+                  <MapPin className="size-4 text-primary shrink-0" />
+                  <span className="text-sm font-light text-secondary">Miami, FL — Headquarters</span>
+                </li>
+                <li className="flex items-center gap-4 py-4">
+                  <Mail className="size-4 text-primary shrink-0" />
+                  <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
+                </li>
+                <li className="flex items-center gap-4 py-4">
+                  <Phone className="size-4 text-primary shrink-0" />
+                  <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
+                </li>
+              </ul>
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <div>
+              <p className="eyebrow mb-5">What happens next</p>
+              <StepFlow orientation="vertical" steps={NEXT_STEPS} />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <LogoStrip />
     </Layout>
   );
