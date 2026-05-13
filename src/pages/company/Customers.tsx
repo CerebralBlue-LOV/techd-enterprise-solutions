@@ -9,34 +9,64 @@ import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 import LogoStrip from "@shared/LogoStrip";
 import { CUSTOMERS } from "@content/site";
 
+/**
+ * Industry groupings reference names already present in CUSTOMERS (src/content/site.ts).
+ * Adding new client names here is out of scope until PM signs off on additional logos.
+ */
 const INDUSTRY_GROUPS = [
   {
+    label: "Financial Services",
+    ids: [
+      "Santander",
+      "MetLife",
+      "Mizuho",
+      "NatWest",
+      "Itaú",
+      "Fiserv",
+      "Banorte",
+      "Sicoob",
+      "Dah Sing Bank",
+      "Banco del Pacífico",
+      "BROU",
+    ],
+  },
+  {
+    label: "Higher Education & Research",
+    ids: [
+      "Harvard University",
+      "Penn State",
+      "National University of Singapore",
+      "Stony Brook University",
+      "New York Institute of Technology",
+    ],
+  },
+  {
     label: "Healthcare & Life Sciences",
-    ids: ["Johns Hopkins Medicine", "CHOP", "Jefferson Health", "Temple Health", "Genesis HealthCare", "Johnson & Johnson"],
+    ids: ["Netcare", "Children's Health", "Admed"],
   },
   {
-    label: "Media & Entertainment",
-    ids: ["Sony Pictures", "Sony Interactive Entertainment", "Comcast / Peacock"],
+    label: "Media, Tech & Telecom",
+    ids: ["Adobe", "Snap Inc.", "Verizon"],
   },
   {
-    label: "Insurance",
-    ids: ["PURE Insurance", "National General Insurance"],
+    label: "Industrial & Manufacturing",
+    ids: [
+      "Mercedes-Benz",
+      "Dow",
+      "Seagate",
+      "Wabtec",
+      "NSK",
+      "Itochu",
+      "Great Day Improvements",
+    ],
   },
   {
     label: "Energy & Utilities",
-    ids: ["Dominion Energy", "MISO Energy"],
+    ids: ["TEPSCO"],
   },
   {
-    label: "Higher Education",
-    ids: ["Princeton University", "VCU", "The Kennedy Center"],
-  },
-  {
-    label: "Public Sector & Defense",
-    ids: ["DHS", "L3Harris"],
-  },
-  {
-    label: "Enterprise",
-    ids: ["Corning", "Hamilton Beach", "Burlington", "White Cap"],
+    label: "Real Estate & Retail",
+    ids: ["Vornado Realty Trust", "Clip"],
   },
 ];
 
