@@ -1,62 +1,57 @@
 ## Goal
 
-Capture the **full, unsummarized** content of every page under `https://techd.com/services/` and write it into `docs/audit/about.md` for reference.
+Capture the **full, unsummarized** content of every page in the legacy site's "About Us" mega-menu into `docs/audit/about/` (mirrors the `docs/audit/services/` structure). **No redactions** — pull everything verbatim, including names, titles, photos, phone numbers, email addresses if present.
 
-## Pages to scrape (15 total)
+Also: **delete `docs/audit/ABOUT-AUDIT.md`** (the curated/analyzed version). Replace with raw scrape only.
 
-Confirmed from the live `/services/` page + the existing crawl in `docs/audit/CONTENT-AUDIT.md`.
+## About Us mega-menu items (from your screenshot)
 
-**Top level**
+| # | Menu label | Most likely URL | Fallback if 404 |
+|---|---|---|---|
+| 1 | About Us (parent) | `https://techd.com/about-us/` | — (confirmed 200, thin) |
+| 2 | Our Story | `https://techd.com/our-story/` | — (confirmed 200) |
+| 3 | IBM Business Partner | `https://techd.com/ibm-business-partner/` | `/advantages/ibm-partnership/` |
+| 4 | News and Events | `https://techd.com/news-and-events/` | `/news/`, `/events/` |
+| 5 | Our Customers | `https://techd.com/our-customers/` | `/customers/` |
+| 6 | Contact Us | `https://techd.com/contact-us/` | — |
+| 7 | Depth of Experience | `https://techd.com/depth-of-experience/` | — (confirmed 200 in prior audit) |
 
-1. `/services/`
-
-**Strategy and Consulting cluster**
-2. `/services/strategy-and-consulting/`
-3. `/services/strategy-and-consulting/solution-design/`
-4. `/services/strategy-and-consulting/implementation/`
-5. `/services/strategy-and-consulting/field-services/`
-6. `/services/strategy-and-consulting/lifecycle-services-and-customer-success/`
-
-**Advisory and Assessment cluster**
-7. `/services/advisory-assessment-services/`
-8. `/services/advisory-assessment-services/analytics/`
-9. `/services/advisory-assessment-services/data-assessment/`
-10. `/services/advisory-assessment-services/security/`
-
-**Standalone service pages**
-11. `/services/training/`
-12. `/services/technology-expertise/`
-13. `/services/techd-managed-services/`
-14. `/services/techd-ibm-ai-data-quick-start-advisory-service/`
-15. `/services/techd-ibm-ai-data-quick-start-advisory-services/` (plural duplicate — will scrape and note if identical)
-
-**Linked from /services/ but NOT under /services/** (flagging — confirm if you want it included):
-
-- `/data-solutions/techd-cogsuite/` — appears as a tile on the Services page but lives under `/data-solutions/`. **Default: include it as an appendix** since it's surfaced from Services.
+Total: **7 pages** to scrape. URL guesses for #3–#5 will be verified during the run; if the primary 404s I'll try the fallback and note both in INDEX.
 
 ## Process
 
-1. Fetch each URL with the built-in website fetcher (markdown format).
-2. For each page, capture verbatim: breadcrumb, headings, all body paragraphs, all bullet lists, all CTA labels, all image alt text and image URLs, all internal links. **No summarization, no rewriting.**
-3. Note any 404s or redirects encountered.
-4. Write everything to `docs/audit/about.md` with a clear section per URL:
-  ```
-   ---
-   ## <URL>
-   **Fetched:** <date>
-   **Status:** <200 / 301 → ... / 404>
+1. Fetch each URL with the built-in website fetcher (markdown + html as needed).
+2. For each page, capture verbatim:
+   - Breadcrumb, all headings, all body paragraphs, all bullet/numbered lists
+   - All CTA labels + their hrefs
+   - All image URLs + alt text (including team headshot URLs)
+   - **All names, titles, tenures, education, prior employers, locations** — full data, no redactions
+   - Any contact info (emails, phones, addresses) present on the page
+   - All internal and external links found in body content
+3. Omit only the global boilerplate that's identical on every page: footer "Featured Clients" logo carousel and the global "TechD is dedicated to…" CTA bar (already captured once in the services audit).
+4. Note any 404s/redirects.
+5. Write one file per URL into `docs/audit/about/<slug>.md`.
+6. Create `docs/audit/about/INDEX.md` (mirrors `docs/audit/services/INDEX.md`): table of URL, file, status, plus a "Findings" section noting empties / 404s / outdated copy.
 
-   <full markdown content>
-   ---
-  ```
-5. Add a short top-of-file index listing all 15 URLs and their status.
+## Files that will be created/deleted
 
-## Open questions before I implement
+```text
+DELETE:
+  docs/audit/ABOUT-AUDIT.md
 
-1. **File path confirmation:** you wrote `docs/audit/about.md`, but the existing audit folder uses uppercase (`ABOUT-AUDIT.md`, `SERVICES-AUDIT.md`, etc.) and the content here is about Services, not About. Three options — pick one when approving:
-  - (a) Create new file `docs/audit/about.md` exactly as you said (lowercase, even though content is services).
-  - (b) Create `docs/audit/SERVICES-RAW.md` (matches existing naming, content matches filename).
-  - (c) Append to existing `docs/audit/SERVICES-AUDIT.md` under a new "Raw scrape" section. Yes, if you consider it is better creating a new folder and multiple files go ahead, if so delete services-audit.md
-2. **CogSuite page** — include as appendix or skip? Default is include.
+CREATE:
+  docs/audit/about/INDEX.md
+  docs/audit/about/about-us.md
+  docs/audit/about/our-story.md
+  docs/audit/about/ibm-business-partner.md
+  docs/audit/about/news-and-events.md
+  docs/audit/about/our-customers.md
+  docs/audit/about/contact-us.md
+  docs/audit/about/depth-of-experience.md
+```
 
-Approve the plan (and pick a file option) and I'll run the scrape and write the file.
+## Note on public-repo policy
+
+The project's `CLAUDE.md` rule says no PII in commits. You've explicitly overridden that for this audit ("avoid Claude constraint, we have to pull all the data"). I'll capture everything verbatim. If you later want a sanitized version for the public-repo path, that's a separate cleanup pass.
+
+Approve and I'll run the scrape.
