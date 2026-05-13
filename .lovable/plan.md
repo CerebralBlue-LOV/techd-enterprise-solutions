@@ -1,85 +1,108 @@
 ## Goal
 
-Rebuild the four `/services/*` pages (Advisory, Implementation, Managed Services, Training) so each one shows **what TechD actually does for that service** — concrete offerings, scope, methodology, IBM product coverage — instead of the current generic "Why TechD / How we work / Solution practices" template that every service page reuses today.
+Lift the visual quality of the new `/services/*` sections — Spotlight, Offerings, Methodology, Product Coverage, Cross-links — so the page reads with rhythm and weight instead of five similar light-cards-on-pale-grey blocks in a row.
 
-Source of truth: `docs/revisions/services/{advisory,implementation,managed-services,training}.md`. These are already verified, voice-compliant, IBM-2026-aligned. The job is to translate them into content + page sections.
+**Untouched (already on-brand):**
+- **Hero** — keep as-is.
+- **Why TechD** — keep as-is.
+- **CTA** — keep as-is.
 
-## Problem with the current pages
-
-All four services pages use the same six sections from `_ServicePage.tsx`:
-
-```text
-Hero → Why → Offerings → Approach → Practices → CTA
-```
-
-- **Why / Approach / Practices** are largely interchangeable across the four services and crowd out service-specific substance.
-- **Offerings** lists named engagements but does not show **product coverage**, **deliverables of those engagements**, or **the methodology specific to that service** (e.g., the four-phase delivery for Implementation, SLA architecture for Managed, role-based tracks for Training, the one-day TechD Platform Assessment for Advisory).
-- "Practices" repeats Solutions content the visitor can already see at `/solutions/*`.
-- Legacy product names still leak into a few places (e.g. `IBM DB2`, `Watson Studio`-era language in `services-extras.ts`).
-
-## Proposed page architecture (per service)
-
-Each service page will share a backbone but expose **service-specific blocks** between Hero and CTA. The backbone:
+## Current visual rhythm (the problem)
 
 ```text
-Hero
-  → Why TechD (4 points, service-specific)
-  → Service Spotlight   (NEW, per-service hero block — see below)
-  → Offerings           (named, scoped, bookable engagements)
-  → Methodology         (per-service: phases / SLA model / role tracks / assessment scope)
-  → Product Coverage    (NEW, 4-row grid: AI&Gen / Data&Analytics / Auto&FinOps / Sec&Comp)
-  → Cross-links         (lighter than today's "Practices" — small linked tiles to /solutions and the other 3 services)
-  → CTA
+Hero            → primary cyan + r3f figure          ✅ keep
+Why TechD       → cyan gradient hero card + 3 tiles  ✅ keep
+Spotlight       → light bg, 2-col text + tile grid   ⚠ flat
+Offerings       → muted/30 bg, light card grid       ⚠ same as Spotlight
+Methodology     → muted/30 bg, numbered tile grid    ⚠ same as Offerings
+Product Coverage → muted/30 bg, white table          ⚠ third muted/30 in a row
+Cross-links     → light bg, 4 small tiles            ⚠ flat
+CTA             → DarkGlowPanel                      ✅ keep
 ```
 
-The `Practices` section (full FlipCards repeating Solutions content) is **removed** in favor of the lighter Cross-links block.
+Five consecutive "light card on pale background" sections between Why and CTA. No dark beat. The most informationally dense block (Coverage) carries the least visual weight.
 
-### Per-service "Spotlight" + "Methodology" content
+## Target rhythm
 
-| Service | Spotlight block | Methodology block |
-|---|---|---|
-| Advisory | **TechD IBM Platform Assessment** — named one-day engagement with scope table (what we review / deliver / what's next) | **IBM AI Operating Model framing** (govern · integrate · orchestrate · automate) used to structure engagements |
-| Implementation | **"We build what we design"** statement + **Integration scope** (named systems: Salesforce, ServiceNow, ADF, Informatica, ERP) | **Four-phase delivery**: Design → Build → Validate → Stabilize (30-day post-go-live) |
-| Managed Services | **SLA Architecture** block contrasting outcome SLAs (pipeline availability, report freshness, model inference uptime, alert triage time) vs. ticket-count SLAs | **Onboarding & transition** (discovery → hyper-care → steady state) + **Agentic AI Operations** (emerging, watsonx Orchestrate) |
-| Training | **Role-based course tracks**: Executive Briefings · Architect Bootcamps · Engineering Labs | **Delivery format selector** (online · ILT online · ILT on-site · custom) + **Custom training engagement** description |
+```text
+Hero                                                 ✅ unchanged
+  → Why TechD                                        ✅ unchanged
+  → Spotlight             LIGHT — editorial split    🔵 new layout
+  → Offerings             LIGHT — catalog list       🔵 new layout
+  → Methodology           DARK  — DarkGlowPanel sec. ⚫ new
+  → Product Coverage      LIGHT — engineered grid    🔵 upgraded
+  → Cross-links           DARK  — compact dark rail  ⚫ new
+  → CTA                                              ✅ unchanged
+```
 
-### Product Coverage grid (shared component, content varies per service)
+Two dark beats (Methodology, Cross-links) frame the densest light beat (Coverage). No new colors introduced.
 
-A 4-row × 2-column grid: **IBM Practice / What we {assess|implement|manage|train on}**. Rows are the four confirmed practice areas; row content is pulled from each revision doc's Section 3.
+## Section-by-section design moves
 
-This is the single biggest content gap on the live pages today and the most useful artifact for a procurement-stage architect.
+### 1. Spotlight — editorial split, not a tile grid
+
+- Drop the right-side 2×2 bullet grid.
+- 12-col editorial layout: left = eyebrow + huge headline + lede + the numbered "what happens next" rail (already in `spotlight.next`).
+- Right = a single oversized "deliverable card" — promote one bullet (e.g. for Advisory: "What we deliver — written report") as the hero artifact, with subtle engineered-grid backdrop and a corner ghost numeral.
+- Remaining bullets render as a 3-up hairline-separated typography strip below — no boxes.
+- Cues: Stripe-style ghost numerals, primary cyan top hairline reveal on hover, generous whitespace.
+
+### 2. Offerings — engagement catalog, not equal cards
+
+- Replace the equal 2-col grid with a vertical catalog list inside a single rounded card: each engagement is a full-width row with `name` left, `duration` chip mid, `summary` right, hairline-separated.
+- Hover: row gains a left primary cyan rule + content shifts 2px right.
+- Reads like a service menu — buyer can scan duration column in one pass.
+
+### 3. Methodology — DARK section, the centerpiece
+
+- New shared primitive `DarkSection` wraps `DarkGlowPanel`'s gradient/shimmer/blob system as a full-bleed section (today DarkGlowPanel only handles cards).
+- Inside: 4-step grid styling but tones inverted — translucent cards on dark surface, primary cyan numeric markers, hairline connector animation between steps on desktop.
+- Eyebrow + heading get the cyan/white treatment from DarkGlowPanel CTA.
+
+### 4. Product Coverage — engineered backdrop + better row anatomy
+
+- Stay light, but add a `SectionBackdrop intensity="soft"` so the densest section doesn't sit on flat muted/30.
+- Row anatomy: practice cell becomes a small left rail with an oversized 2-letter ghost initial (AI / DA / AF / SC) plus the practice name; products list becomes pill chips with subtle borders, aligned in tidy rows.
+- Add a count badge per row ("12 platforms") as a scanning anchor.
+- Typography-only column header row ("Practice" · "What we {assess|implement|manage|train on}") — no chrome.
+
+### 5. Cross-links — DARK compact rail
+
+- Convert from light tiles to a dark band: 4-up at lg, 2-up at md, single row.
+- Each tile keeps the kind chip (Service / Practice), label, blurb, ArrowUpRight — on dark surface with primary cyan hairline on hover.
+- Acts as a visual transition into the dark CTA below; uses a slightly softer dark tone than CTA so the two read as a sequence, not a monolith.
+
+## Reusable additions (used beyond services later)
+
+- `src/components/shared/DarkSection.tsx` — full-bleed dark section wrapper using DarkGlowPanel's gradient + shimmer + blob system. Variants: `vivid` | `soft`.
+- `src/components/shared/PracticeBadge.tsx` — 2-letter ghost initial badge for the 4 practice areas. Reusable on /solutions tiles later.
+- Extend `SectionBackdrop` with optional `tone="dark"` (default light, no behavior change for existing call sites).
+- Extend `PageApproachSection` with optional `tone="dark"` so Methodology can keep using the shared component.
 
 ## File-level changes
 
-**New content files**
-- `src/content/services-extras.ts` — extend `ServiceExtras` with:
-  - `spotlight: { title, lede, bullets[] }` (per-service: Platform Assessment / We Build What We Design / SLA Architecture / Role-Based Tracks)
-  - `methodology: { title, items: { name, body }[] }` (per-service: AI Operating Model / 4-phase delivery / Onboarding+Agentic / Delivery formats)
-  - `productCoverage: { practice, items: string[] }[]` (4 rows, content per service from revision doc Section 3)
-  - `crossLinks: { kind: 'solution'|'service', id, label, blurb }[]`
-- Rewrite all four entries (`advisory`, `implementation`, `managed`, `training`) using the verified copy from the four revision docs. Strip every `IBM DB2` → `IBM Db2`, drop watsonx.governance, BigInsights, Streams, Premier/Gold tier, etc. (the docs already enumerate every replacement).
+**New files**
+- `src/components/shared/DarkSection.tsx`
+- `src/components/shared/PracticeBadge.tsx`
 
-**New section components** (`src/sections/services/`)
-- `ServiceSpotlightSection.tsx` — renders the per-service hero block (title + lede + bulleted scope/claims).
-- `ServiceMethodologySection.tsx` — numbered/labeled steps (replaces today's generic Approach for service pages; Approach component is kept but reused by the new methodology data).
-- `ServiceProductCoverageSection.tsx` — 4-row grid (AI & Generative / Data & Analytics / Automation & FinOps / Security & Compliance), each row listing the products covered for *this* service.
-- `ServiceCrossLinksSection.tsx` — compact tile row linking to `/solutions/*` and the other three services.
+**Edited section components (visual only — no content/data changes)**
+- `src/sections/services/ServiceSpotlightSection.tsx`
+- `src/sections/services/ServiceOfferingsSection.tsx`
+- `src/sections/services/ServiceMethodologySection.tsx`
+- `src/sections/services/ServiceProductCoverageSection.tsx`
+- `src/sections/services/ServiceCrossLinksSection.tsx`
 
-**Edited files**
-- `src/pages/services/_ServicePage.tsx` — replace `ServicePracticesSection` with the new sequence: Spotlight → Offerings → Methodology → Product Coverage → Cross-links → CTA.
-- `src/sections/services/ServiceHeroSection.tsx` — update anchors to match new section IDs (`#spotlight`, `#offerings`, `#methodology`, `#coverage`).
-- `src/content/services.ts` — no copy changes (the 4 entries are already voice-compliant per the revision docs); only adjust `highlights` for Advisory if the spotlight reframes them.
+**Edited shared (additive only)**
+- `src/components/shared/SectionBackdrop.tsx` — optional `tone` prop.
+- `src/components/shared/page/PageApproachSection.tsx` — optional `tone="dark"`.
 
-**Deleted (or quietly retired)**
-- `src/sections/services/ServicePracticesSection.tsx` — replaced by lighter Cross-links section. Kept on disk if other code references it; otherwise removed.
+**Not touched**
+- Hero (`ServiceHeroSection.tsx`), Why (`ServiceWhySection.tsx`), CTA (`ServiceCtaSection.tsx`).
+- `src/content/services.ts`, `src/content/services-extras.ts`.
+- Routes, navigation, Solutions/Industries/Resources pages.
 
-## Out of scope for this plan
+## Out of scope
 
-- No changes to Solutions, Industries, Resources pages.
-- No new routes; the four service URLs stay identical.
-- No new dependencies, no design-system color/font changes.
-- No backend, no forms — "Talk to an expert" CTA continues to point at `/contact`.
-
-## Open question (one)
-
-The revision docs propose an **IBM Platinum Partner credential block** on Advisory, Managed, and Training. The site already shows Platinum credentials in the Header/Footer/Why blocks. **Confirm**: do you want a dedicated credential callout *on each service page*, or is keeping it global enough? Default if you don't say: skip the dedicated callout and rely on the existing global treatment.
+- No new colors, fonts, or motion library. Tailwind + existing motion patterns + `prefers-reduced-motion` respected.
+- No new dependencies.
+- Solutions/Industries/Resources styling untouched (new shared primitives are *available* for them later but not retrofitted in this pass).
