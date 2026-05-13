@@ -1,55 +1,62 @@
 ## Goal
-Generate white-on-transparent versions of the client logos used in the industry `#clients` cards, then point the cards at those white variants so every logo reads as a clean white mark on the dark surface.
 
-## Approach
-A one-off Python script (Pillow) that processes each input logo once, writes a `*-white.png` next to it, and is safe to re-run. The site code then prefers the white variant when present.
+Capture the **full, unsummarized** content of every page under `https://techd.com/services/` and write it into `docs/audit/about.md` for reference.
 
-## Script — `scripts/generate-white-logos.py`
+## Pages to scrape (15 total)
 
-Language: Python 3 with Pillow.
+Confirmed from the live `/services/` page + the existing crawl in `docs/audit/CONTENT-AUDIT.md`.
 
-For each input logo:
+**Top level**
 
-1. Load the source.
-   - If it's a real `.svg` (true vector), skip — those already invert cleanly with CSS and don't need a raster pass.
-   - If it's a PowerPoint-style `.svg` with an embedded `data:image/png;base64,...`, extract that PNG.
-   - If it's a `.png` or `.jpg`, load it directly.
-2. Convert to RGBA.
-3. Knock out the background:
-   - Treat near-white pixels (R, G, B all above ~245) as transparent.
-   - Optionally also knock out a single dominant solid corner color (handles non-white but uniform backgrounds).
-4. Recolor remaining pixels to pure white, preserving the original alpha so anti-aliased edges stay smooth.
-5. Trim transparent margins and write `public/logos/white/<name>.png`.
+1. `/services/`
 
-The script logs which files it processed, which it skipped, and which produced suspiciously empty output (so we can replace those by hand later).
+**Strategy and Consulting cluster**
+2. `/services/strategy-and-consulting/`
+3. `/services/strategy-and-consulting/solution-design/`
+4. `/services/strategy-and-consulting/implementation/`
+5. `/services/strategy-and-consulting/field-services/`
+6. `/services/strategy-and-consulting/lifecycle-services-and-customer-success/`
 
-## Scope of logos to process (industry `#clients` only, for now)
+**Advisory and Assessment cluster**
+7. `/services/advisory-assessment-services/`
+8. `/services/advisory-assessment-services/analytics/`
+9. `/services/advisory-assessment-services/data-assessment/`
+10. `/services/advisory-assessment-services/security/`
 
-- Healthcare: Admed, Netcare, Children's Health
-- Media: Snap Inc., Adobe, Verizon
-- Insurance: MetLife
-- Energy: TEPSCO
-- Higher Ed: Harvard, Penn State, NUS, Stony Brook, NYIT
+**Standalone service pages**
+11. `/services/training/`
+12. `/services/technology-expertise/`
+13. `/services/techd-managed-services/`
+14. `/services/techd-ibm-ai-data-quick-start-advisory-service/`
+15. `/services/techd-ibm-ai-data-quick-start-advisory-services/` (plural duplicate — will scrape and note if identical)
 
-The script accepts an explicit allow-list so we don't touch home-marquee-only logos.
+**Linked from /services/ but NOT under /services/** (flagging — confirm if you want it included):
 
-## Site changes after the script runs
+- `/data-solutions/techd-cogsuite/` — appears as a tile on the Services page but lives under `/data-solutions/`. **Default: include it as an appendix** since it's surfaced from Services.
 
-- Add an optional `logoOnDark` field to `Customer` in `src/content/site.ts` and fill it in for the logos above.
-- Update `IndustryClientsSection.tsx`:
-  - When `logoOnDark` exists, render that asset directly with no `brightness-0 invert` filter.
-  - When it doesn't exist, fall back to the current filter behavior.
-- No change to the home logo strip.
+## Process
 
-## Validation
+1. Fetch each URL with the built-in website fetcher (markdown format).
+2. For each page, capture verbatim: breadcrumb, headings, all body paragraphs, all bullet lists, all CTA labels, all image alt text and image URLs, all internal links. **No summarization, no rewriting.**
+3. Note any 404s or redirects encountered.
+4. Write everything to `docs/audit/about.md` with a clear section per URL:
+  ```
+   ---
+   ## <URL>
+   **Fetched:** <date>
+   **Status:** <200 / 301 → ... / 404>
 
-- Run the script.
-- Open the generated PNGs and visually QA each one (size, edges, no leftover background fringe).
-- Spot-check the higher-education and healthcare `#clients` sections in preview at desktop and mobile widths.
-- Note any logo that the script can't clean well — those become candidates for option 1 (manually sourced white mark).
+   <full markdown content>
+   ---
+  ```
+5. Add a short top-of-file index listing all 15 URLs and their status.
 
-## Out of scope
+## Open questions before I implement
 
-- Home-page logo marquee
-- Re-vectorizing the broken SVGs
-- Sourcing official brand-portal assets (deferred to follow-up if the script output isn't good enough)
+1. **File path confirmation:** you wrote `docs/audit/about.md`, but the existing audit folder uses uppercase (`ABOUT-AUDIT.md`, `SERVICES-AUDIT.md`, etc.) and the content here is about Services, not About. Three options — pick one when approving:
+  - (a) Create new file `docs/audit/about.md` exactly as you said (lowercase, even though content is services).
+  - (b) Create `docs/audit/SERVICES-RAW.md` (matches existing naming, content matches filename).
+  - (c) Append to existing `docs/audit/SERVICES-AUDIT.md` under a new "Raw scrape" section. Yes, if you consider it is better creating a new folder and multiple files go ahead, if so delete services-audit.md
+2. **CogSuite page** — include as appendix or skip? Default is include.
+
+Approve the plan (and pick a file option) and I'll run the scrape and write the file.
