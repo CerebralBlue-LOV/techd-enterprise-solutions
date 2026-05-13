@@ -108,7 +108,7 @@ export const WhyPracticeSection = ({ practice }: Props) => {
                     onClick={() => setActive(i)}
                     aria-pressed={isActive}
                     className={cn(
-                      "group text-left py-3 first:pt-0 last:pb-0 md:py-2 md:px-4 md:first:pt-2 md:last:pb-2 md:first:pl-0 md:last:pr-0",
+                      "group text-left py-2 first:pt-0 last:pb-0 md:py-1 md:px-4 md:first:pt-1 md:last:pb-1 md:first:pl-0 md:last:pr-0",
                       "transition-all duration-200 ease-out motion-reduce:transition-none cursor-pointer",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
                     )}
@@ -121,10 +121,10 @@ export const WhyPracticeSection = ({ practice }: Props) => {
                     >
                       Note · {String(i + 1).padStart(2, "0")}
                     </p>
-                    <div className="mt-1.5 flex items-center justify-between gap-3">
+                    <div className="mt-1 flex items-center justify-between gap-3">
                       <h3
                         className={cn(
-                          "text-sm font-bold leading-snug transition-colors",
+                          "text-lg md:text-xl font-light leading-snug tracking-tight transition-colors",
                           isActive ? "text-primary" : "text-secondary group-hover:text-primary",
                         )}
                       >
