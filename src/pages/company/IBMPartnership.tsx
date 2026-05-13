@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
@@ -8,13 +9,21 @@ import SectionHeading from "@shared/SectionHeading";
 import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
+import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
 import { Button } from "@ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@ui/hover-card";
+import { cn } from "@/lib/utils";
 import {
   PORTFOLIO_BY_PRACTICE,
   IBM_AI_OPERATING_MODEL,
   QUICK_START_ADVISORY,
   IBM_PARTNER_DIRECTORY_URL,
 } from "@content/about";
+import { SOLUTIONS } from "@content/solutions";
 
 const WHAT_PLATINUM_MEANS = [
   {
@@ -35,7 +44,21 @@ const WHAT_PLATINUM_MEANS = [
   },
 ];
 
+const useProductTaglines = () =>
+  useMemo(() => {
+    const map = new Map<string, string>();
+    for (const sol of SOLUTIONS) {
+      for (const p of sol.products) {
+        if (p.tagline) map.set(p.name.toLowerCase(), p.tagline);
+      }
+    }
+    return map;
+  }, []);
+
 const IBMPartnership = () => {
+  const taglines = useProductTaglines();
+  const totalProducts = PORTFOLIO_BY_PRACTICE.reduce((n, r) => n + r.products.length, 0);
+
   return (
     <Layout>
       <SEO
@@ -59,32 +82,52 @@ const IBMPartnership = () => {
         ]}
       />
 
-      {/* Credential block */}
+      {/* Credential block — dark panel */}
       <section id="credential" className="section scroll-mt-24">
         <SectionMarker page="Company / IBM Partnership" name="Credential" />
         <div className="container-page">
           <Reveal>
-            <div className="rounded-xl border border-border p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                  IBM Partner Plus
-                </p>
-                <p className="mt-2 text-2xl md:text-3xl font-bold text-secondary leading-tight">
-                  IBM Platinum Business Partner — active since 2009.
-                </p>
-                <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed max-w-2xl">
-                  Authorized IBM reseller and implementer. Verifiable on the IBM Partner Directory.
-                </p>
+            <div
+              className="relative overflow-hidden rounded-2xl border border-white/10 p-6 md:p-10"
+              style={{
+                background:
+                  "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
+              }}
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -top-1/2 -right-1/3 h-[120%] w-[80%] rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle, hsl(var(--primary) / 0.35) 0%, transparent 60%)",
+                  filter: "blur(80px)",
+                }}
+              />
+              <div className="relative flex flex-col md:flex-row md:items-center gap-6 md:justify-between">
+                <div className="flex items-center gap-5">
+                  <IBMPlatinumBadge size="md" />
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                      IBM Partner Plus
+                    </p>
+                    <p className="mt-2 text-2xl md:text-3xl font-bold text-white leading-tight">
+                      Platinum Business Partner — active since 2009.
+                    </p>
+                    <p className="mt-3 text-sm font-light text-white/70 leading-relaxed max-w-2xl">
+                      Authorized IBM reseller and implementer. Verifiable on the IBM Partner Directory.
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={IBM_PARTNER_DIRECTORY_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 h-12 px-6 rounded-md border border-white/30 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:border-primary hover:text-primary self-start md:self-auto whitespace-nowrap"
+                >
+                  Verify on IBM Partner Directory
+                  <ExternalLink className="h-4 w-4" />
+                </a>
               </div>
-              <a
-                href={IBM_PARTNER_DIRECTORY_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 h-12 px-6 rounded-md border border-border text-sm font-bold uppercase tracking-wider text-secondary transition-colors hover:border-primary hover:text-primary self-start md:self-auto whitespace-nowrap"
-              >
-                Verify on IBM Partner Directory
-                <ExternalLink className="h-4 w-4" />
-              </a>
             </div>
           </Reveal>
         </div>
@@ -103,11 +146,20 @@ const IBMPartnership = () => {
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {WHAT_PLATINUM_MEANS.map((p, i) => (
               <Reveal key={p.title} delay={i * 60}>
-                <div className="card-hover h-full rounded-xl p-6">
-                  <h3 className="text-base font-bold text-secondary leading-tight">{p.title}</h3>
+                <div className="group relative h-full overflow-hidden rounded-xl border border-border bg-background p-6 transition-colors hover:border-primary/50">
+                  <p className="text-[11px] font-bold tracking-[0.18em] text-primary">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-3 text-base font-bold text-secondary leading-tight">
+                    {p.title}
+                  </h3>
                   <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
                     {p.body}
                   </p>
+                  <span
+                    aria-hidden
+                    className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full"
+                  />
                 </div>
               </Reveal>
             ))}
@@ -122,17 +174,28 @@ const IBMPartnership = () => {
           <Reveal>
             <SectionHeading
               eyebrow="Practice → product"
-              title="Certified across 21 IBM products"
+              title={`Certified across ${totalProducts} IBM products`}
               subtitle="A scannable scope reference for procurement, architecture, and licensing conversations."
             />
           </Reveal>
-          <div className="mt-12 space-y-4">
+
+          <Reveal delay={60}>
+            <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-secondary">
+              <span className="text-primary">{totalProducts} products</span>
+              <span className="text-border">·</span>
+              <span>{PORTFOLIO_BY_PRACTICE.length} practices</span>
+              <span className="text-border">·</span>
+              <span className="text-muted-foreground">Hover any chip for details</span>
+            </div>
+          </Reveal>
+
+          <div className="mt-8 space-y-4">
             {PORTFOLIO_BY_PRACTICE.map((row, i) => (
               <Reveal key={row.practice} delay={i * 60}>
                 <div className="rounded-xl border border-border p-6 grid gap-5 md:grid-cols-[1fr_2.4fr] md:items-start">
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                      Practice
+                      Practice 0{i + 1}
                     </p>
                     <h3 className="mt-2 text-lg font-bold text-secondary leading-tight">
                       {row.practice}
@@ -146,14 +209,39 @@ const IBMPartnership = () => {
                     </Link>
                   </div>
                   <ul className="flex flex-wrap gap-2">
-                    {row.products.map((p) => (
-                      <li
-                        key={p}
-                        className="rounded-full border border-border px-3 py-1 text-[12px] font-light text-muted-foreground"
-                      >
-                        {p}
-                      </li>
-                    ))}
+                    {row.products.map((p) => {
+                      const tag = taglines.get(p.toLowerCase());
+                      const chip = (
+                        <span
+                          className={cn(
+                            "rounded-full border border-border px-3 py-1 text-[12px] font-light text-muted-foreground transition-colors",
+                            tag &&
+                              "cursor-help hover:border-primary/60 hover:text-secondary",
+                          )}
+                        >
+                          {p}
+                        </span>
+                      );
+                      return (
+                        <li key={p}>
+                          {tag ? (
+                            <HoverCard openDelay={120}>
+                              <HoverCardTrigger asChild>{chip}</HoverCardTrigger>
+                              <HoverCardContent className="w-72">
+                                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                                  {p}
+                                </p>
+                                <p className="mt-2 text-xs font-light text-muted-foreground leading-relaxed">
+                                  {tag}
+                                </p>
+                              </HoverCardContent>
+                            </HoverCard>
+                          ) : (
+                            chip
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </Reveal>
@@ -162,7 +250,7 @@ const IBMPartnership = () => {
         </div>
       </section>
 
-      {/* IBM AI Operating Model alignment */}
+      {/* IBM AI Operating Model alignment — horizontal flow */}
       <section id="operating-model" className="section bg-muted/30 scroll-mt-24">
         <SectionMarker page="Company / IBM Partnership" name="AI Operating Model" />
         <div className="container-page">
@@ -173,25 +261,31 @@ const IBMPartnership = () => {
               subtitle="Govern, integrate, orchestrate, automate. We use IBM's framework so client roadmaps share vocabulary with IBM's own field teams."
             />
           </Reveal>
-          <div className="mt-12 overflow-hidden rounded-xl border border-border">
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_2fr] bg-muted/40 text-xs font-bold uppercase tracking-[0.18em] text-secondary">
-              <div className="px-5 py-3">IBM pillar</div>
-              <div className="px-5 py-3 hidden md:block">TechD stage</div>
-              <div className="px-5 py-3 hidden md:block">What we deliver</div>
-            </div>
-            {IBM_AI_OPERATING_MODEL.map((row) => (
-              <div
-                key={row.pillar}
-                className="grid grid-cols-1 md:grid-cols-[1fr_1fr_2fr] border-t border-border text-sm"
-              >
-                <div className="px-5 py-4 font-bold text-primary uppercase tracking-[0.18em] text-xs">
-                  {row.pillar}
+          <div className="mt-12 relative grid gap-6 md:grid-cols-4">
+            {/* horizontal connector rail (md+) */}
+            <span
+              aria-hidden
+              className="hidden md:block absolute top-12 left-[8%] right-[8%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+            />
+            {IBM_AI_OPERATING_MODEL.map((row, i) => (
+              <Reveal key={row.pillar} delay={i * 70}>
+                <div className="relative h-full rounded-xl border border-border bg-background p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-primary bg-background text-xs font-bold text-primary">
+                      0{i + 1}
+                    </span>
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                      {row.pillar}
+                    </p>
+                  </div>
+                  <p className="mt-4 text-sm font-bold text-secondary leading-tight">
+                    {row.stage}
+                  </p>
+                  <p className="mt-2 text-xs font-light text-muted-foreground leading-relaxed">
+                    {row.detail}
+                  </p>
                 </div>
-                <div className="px-5 py-4 font-bold text-secondary md:py-4">{row.stage}</div>
-                <div className="px-5 py-4 font-light text-muted-foreground leading-relaxed">
-                  {row.detail}
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -201,7 +295,16 @@ const IBMPartnership = () => {
       <section id="quick-start" className="section scroll-mt-24">
         <SectionMarker page="Company / IBM Partnership" name="Quick Start Advisory" />
         <div className="container-page">
-          <div className="rounded-xl border border-border p-6 md:p-10 grid gap-8 md:grid-cols-[1.3fr_1fr] items-start">
+          <div className="relative overflow-hidden rounded-xl border border-border p-6 md:p-10 grid gap-8 md:grid-cols-[1.3fr_1fr] items-start">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -bottom-1/3 -right-1/4 h-[80%] w-[60%] rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, hsl(var(--primary) / 0.10) 0%, transparent 65%)",
+                filter: "blur(60px)",
+              }}
+            />
             <Reveal>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 Named offer
