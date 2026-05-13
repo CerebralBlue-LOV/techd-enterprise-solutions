@@ -687,6 +687,39 @@ const SectionLab = () => (
       </p>
     </div>
 
+    <div className="container-page pt-6 pb-2">
+      <p className="eyebrow text-primary">Why TechD — proposals</p>
+      <p className="mt-2 max-w-2xl text-sm text-muted-foreground font-light">
+        Three alternatives to the current cyan-gradient / gray-fill "Why TechD"
+        treatment used on Solutions, Industries, and Services. Less reliance on
+        flat color blocks; more typography and structure.
+      </p>
+    </div>
+
+    <VariantShell
+      index="W1"
+      name="Editorial manifesto"
+      blurb="Two-column. Oversized headline + cyan rule on the left, numbered ledger on the right. No gradients, no fills."
+    >
+      <WhyProposalEditorial />
+    </VariantShell>
+
+    <VariantShell
+      index="W2"
+      name="Pull-quote + ledger"
+      blurb="Magazine-style featured quote over a faint dot grid, supporting reasons as a hairline-divided ledger row underneath."
+    >
+      <WhyProposalQuote />
+    </VariantShell>
+
+    <VariantShell
+      index="W3"
+      name="Spec sheet"
+      blurb="Off-white frame with a single cyan corner bracket. 4-up data-sheet tiles with animated cyan top rail on hover."
+    >
+      <WhyProposalSpec />
+    </VariantShell>
+
     <VariantShell
       index="01"
       name="Numbered editorial list"
