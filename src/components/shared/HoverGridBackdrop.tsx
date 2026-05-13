@@ -12,12 +12,13 @@ import { useEffect, useRef } from "react";
  * parent receives the mouse listeners.
  *
  * Variants:
- *   - "dark"  → neutral gray gradient (good on dark cards, default)
- *   - "light" → subtle near-white gradient (good on light surfaces)
+ *   - "dark"    → neutral gray gradient (good on dark cards, default)
+ *   - "light"   → subtle near-white gradient (good on light surfaces)
+ *   - "primary" → cyan gradient with white grid lines (good on primary-colored cards)
  *
  * Optional `topRim` adds a thin cyan rim light along the top edge.
  */
-type Variant = "dark" | "light";
+type Variant = "dark" | "light" | "primary";
 
 type Props = {
   variant?: Variant;
@@ -27,17 +28,20 @@ type Props = {
   cellSize?: number;
   /** Show the cyan top rim line. Default true. */
   topRim?: boolean;
+  /** Render the base gradient background. Set false to overlay on an existing background. Default true. */
+  background?: boolean;
 };
 
 const GRADIENTS: Record<Variant, string> = {
   dark: "linear-gradient(135deg, hsl(240 3% 28%) 0%, hsl(240 3% 34%) 55%, hsl(240 3% 40%) 100%)",
-  light:
-    "linear-gradient(135deg, hsl(0 0% 99%) 0%, hsl(0 0% 97%) 55%, hsl(0 0% 95%) 100%)",
+  light: "linear-gradient(135deg, hsl(0 0% 99%) 0%, hsl(0 0% 97%) 55%, hsl(0 0% 95%) 100%)",
+  primary: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 100%)",
 };
 
 const GRID_LINE: Record<Variant, string> = {
   dark: "hsl(0 0% 100% / 0.16)",
   light: "hsl(var(--border) / 0.6)",
+  primary: "hsl(0 0% 100% / 0.20)",
 };
 
 export const HoverGridBackdrop = ({
@@ -45,6 +49,7 @@ export const HoverGridBackdrop = ({
   spotlightRadius = 280,
   cellSize = 48,
   topRim = true,
+  background = true,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -106,10 +111,12 @@ export const HoverGridBackdrop = ({
       aria-hidden="true"
       className="pointer-events-none absolute inset-0"
     >
-      <div
-        className="absolute inset-0"
-        style={{ background: GRADIENTS[variant] }}
-      />
+      {background && (
+        <div
+          className="absolute inset-0"
+          style={{ background: GRADIENTS[variant] }}
+        />
+      )}
 
       <div
         ref={gridRef}
