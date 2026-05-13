@@ -59,6 +59,18 @@ const CaseStudies = () => (
                   <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
                     {r.summary}
                   </p>
+                  {r.products && r.products.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {r.products.map((p) => (
+                        <span
+                          key={p}
+                          className="rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-muted-foreground"
+                        >
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <p className="mt-4 text-xs font-medium text-muted-foreground/60">
                     {r.date}
                   </p>

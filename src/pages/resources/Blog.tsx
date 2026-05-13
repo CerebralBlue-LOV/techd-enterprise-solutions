@@ -63,6 +63,18 @@ const Blog = () => (
                   <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
                     {r.summary}
                   </p>
+                  {r.tags && r.tags.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {r.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-muted-foreground"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <div className="mt-4 flex items-center gap-3 text-xs text-muted-foreground/60">
                     {r.author && <span>{r.author}</span>}
                     {r.author && <span>·</span>}
