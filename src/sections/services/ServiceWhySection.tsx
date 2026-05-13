@@ -72,7 +72,7 @@ export const ServiceWhySection = ({ service }: Props) => {
         {/* Pull-quote — soft cross-fade between active points */}
         <div
           className={cn(
-            "mt-6 max-w-5xl min-h-[260px] sm:min-h-[280px] md:min-h-[340px] lg:min-h-[380px] transition-all duration-300 ease-out motion-reduce:transition-none",
+            "mt-6 max-w-5xl min-h-[180px] sm:min-h-[200px] md:min-h-[240px] transition-all duration-300 ease-out motion-reduce:transition-none",
             quoteState,
           )}
           aria-live="polite"
