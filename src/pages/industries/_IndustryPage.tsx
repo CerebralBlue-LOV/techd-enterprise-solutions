@@ -28,7 +28,11 @@ const IndustryPage = ({ industryId }: Props) => {
       />
       <IndustryHeroSection industry={industry} />
       <WhyIndustrySection industry={industry} />
-      <IndustryClientsSection industry={industry} />
+      {industry.id === "public-sector" ? (
+        <IndustryFederalCredentialsSection industry={industry} />
+      ) : (
+        <IndustryClientsSection industry={industry} />
+      )}
       <SolutionsForIndustrySection industry={industry} />
       <IndustryApproachSection industry={industry} />
       <IndustryOutcomesSection industry={industry} />
