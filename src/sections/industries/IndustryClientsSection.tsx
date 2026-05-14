@@ -271,51 +271,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
             >
-              {/* Cross-fading radial glow */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 overflow-hidden"
-                >
-                  {prevIndex !== null && (
-                    <div
-                      key={`glow-out-${prevIndex}`}
-                      className="absolute inset-0"
-                      style={{
-                        background: `radial-gradient(circle at ${GLOW_POSITIONS[prevIndex % GLOW_POSITIONS.length].x} ${GLOW_POSITIONS[prevIndex % GLOW_POSITIONS.length].y}, hsl(var(--primary) / 0.55), transparent 55%)`,
-                        animation: "glow-fade-out 700ms ease-out forwards",
-                      }}
-                    />
-                  )}
-                  <div
-                    key={`glow-in-${index}`}
-                    className="absolute inset-0"
-                    style={{
-                      background: `radial-gradient(circle at ${glow.x} ${glow.y}, hsl(var(--primary) / 0.55), transparent 55%)`,
-                      animation: "glow-fade-in 700ms ease-out forwards",
-                    }}
-                  />
-                </div>
-
                 <div className="relative flex flex-col min-h-[480px] md:min-h-[540px]">
-                  {/* Top chip row */}
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center rounded-md bg-white/10 backdrop-blur-sm px-3 py-1.5 ring-1 ring-white/15">
-                      <span className="text-xs font-normal text-white/90">
-                        Featured client
-                      </span>
-                    </div>
-                    {active.customer?.url ? (
-                      <a
-                        href={active.customer.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Visit ${active.name}`}
-                        className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 bg-white/10 ring-1 ring-white/15 text-white hover:bg-primary hover:ring-primary transition-colors"
-                      >
-                        <ArrowUpRight className="size-4" />
-                      </a>
-                    ) : null}
-                  </div>
 
                   {/* Slide stage */}
                   <div className="relative mt-6 flex-1" aria-live="polite">
