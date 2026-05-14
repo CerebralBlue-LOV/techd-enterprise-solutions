@@ -133,10 +133,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { title: "Auditable AI",            body: "watsonx-based RAG and governance patterns that produce explainable, source-cited outputs." },
       { title: "Records modernization",   body: "Data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
     ],
-    clients: [
-      // Placeholder until a public-sector logo is cleared for display.
-      { name: "Federal Agency", note: "Engagement details under NDA." },
-    ],
+    clients: [],
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
       { id: "security-compliance", proof: "FedRAMP-aligned security architectures for federal missions." },
