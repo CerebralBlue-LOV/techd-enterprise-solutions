@@ -185,11 +185,15 @@ const ContactForm = () => {
               </div>
             </div>
 
-            <div className="border-t border-border" />
+            <div className="relative">
+              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+            </div>
 
             {/* About the project */}
             <div className="grid gap-5">
-              <p className="eyebrow text-primary/80">About the project</p>
+              <p className={SECTION_EYEBROW}>
+                <span className={STEP_NUM}>2</span> About the project
+              </p>
 
               <FormField
                 control={form.control}
