@@ -276,7 +276,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                   />
                 </div>
 
-                <div className="relative flex flex-col p-8 md:p-10 lg:p-12 min-h-[480px] md:min-h-[540px]">
+                <div className="relative flex flex-col min-h-[480px] md:min-h-[540px]">
                   {/* Top chip row */}
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center rounded-md bg-white/10 backdrop-blur-sm px-3 py-1.5 ring-1 ring-white/15">
