@@ -1,73 +1,68 @@
 ## Goal
 
-Add two new industries — **Financial Services** and **Manufacturing** — so all 32 customer logos have a home on an Industries page. Bring the unmapped 19 in with conservative, public-info-only notes. Cap each industry's clients grid at 12.
+Consolidate Industries from 8 → 7 by folding Insurance into Financial Services, then reorder the dropdown by client strength. Energy & Utilities and Public Sector stay as-is (narrative-led).
 
-## Logo assignments (the 19 unmapped → industries)
+## Final shape
 
-**Financial Services (11)** — banks, fintech, payments
-```text
-Santander · Mizuho · NatWest · Itaú · Banorte
-Sicoob · Dah Sing Bank · Banco del Pacífico · BROU
-Fiserv · Clip
-```
+| # | Industry | Slug | Logos |
+|---|---|---|---|
+| 1 | Financial Services & Insurance | `/industries/financial-services` | 12 (11 banking/payments + MetLife) |
+| 2 | Healthcare & Life Sciences | `/industries/healthcare` | 3 |
+| 3 | Manufacturing & Industrials | `/industries/manufacturing` | 6 |
+| 4 | Higher Education & Research | `/industries/higher-education` | 5 |
+| 5 | Media & Entertainment | `/industries/media-entertainment` | 3 |
+| 6 | Energy & Utilities | `/industries/energy-utilities` | 1 |
+| 7 | Public Sector | `/industries/public-sector` | 0 (narrative-only) |
 
-**Manufacturing (6)** — automotive, materials, industrials, rail, bearings, trading conglomerate
-```text
-Mercedes-Benz · Dow · Seagate · Wabtec · NSK · Itochu
-```
-
-**Stays in existing industries (no change):** Healthcare (3), Media & Ent. (3), Insurance (1: MetLife), Energy & Util. (1: TEPSCO), Higher Ed (5), Public Sector (placeholder).
-
-**Still unassigned (2)** — flagged in Logo Lab, not added to any industry until we have a clear vertical:
-- Great Day Improvements (home improvement / consumer)
-- Vornado Realty Trust (commercial real estate)
-
-These stay in the home `LogoStrip` only.
+Removed: `Insurance` (slug `/industries/insurance`).
 
 ## File changes
 
-### 1. `src/content/industries.ts` — add two entries
-Append after Public Sector:
-- `{ id: "financial-services", name: "Financial Services", regulation: "PCI-DSS · SOX · Basel III", outcome: "..." }`
-- `{ id: "manufacturing", name: "Manufacturing & Industrials", regulation: "ISO 27001 · NIST CSF", outcome: "..." }`
+### 1. `src/content/industries.ts`
+- Reorder array to the 7 entries above.
+- Delete the `insurance` entry.
+- Rename Financial Services entry: `name` → "Financial Services & Insurance", expand `outcome` to mention carriers + underwriting.
+- Update its `regulation` to `"PCI-DSS · SOX · NAIC · Basel III"`.
 
-### 2. `src/content/industries-extras.ts` — add two `INDUSTRIES_EXTRAS` entries
-Each gets the same shape as the existing five (`headline`, `lede`, `whyPoints` × 4, `clients` × N, `practices`, `stats`). Conservative public-info notes for each client (e.g. "Santander — Global universal bank, retail and commercial banking.").
+### 2. `src/content/industries-extras.ts`
+- Delete the `insurance` block.
+- In `financial-services` block:
+  - `headline`: "Banking, payments, and insurance — engineered for the regulator and the customer."
+  - `lede`: extend to include carriers / underwriting.
+  - Append `MetLife` to `clients` (carries the existing MetLife note).
+  - Add 2 new `whyPoints`: one on **Underwriting copilots** and one on **Claims acceleration** (lifted from current Insurance whyPoints) so the carrier story isn't lost.
+  - Trim back to 4 whyPoints total (keep "Bank-grade controls", "Payments depth", "Underwriting copilots", "Claims acceleration"; drop "Global reach" and "Fraud and AML" from the list — they survive in the lede).
+  - Add an `insurance` proof line to the `practices` mapping if not duplicating banking proof.
+  - Update `stats`: 12 named clients, NAIC + SOX + PCI-DSS standards.
 
-Practices mapping:
-- **Financial Services** → data-analytics, security-compliance, automation-finops, ai-generative
-- **Manufacturing** → data-analytics, automation-finops, security-compliance
+### 3. `src/pages/industries/`
+- Delete `Insurance.tsx`.
+- Rename FS page label is data-driven — no file rename needed (slug stays `financial-services`).
 
-### 3. `src/pages/industries/` — two new page files
-- `FinancialServices.tsx`
-- `Manufacturing.tsx`
+### 4. `src/app/routes.tsx`
+- Remove `import Insurance` and its `<Route />`.
+- Add a 301-style redirect: `/industries/insurance` → `/industries/financial-services`.
+- Keep all other industry routes; the redirect at `/industries` still goes to its first child but **change first-child to `/industries/financial-services`** to match the new order.
 
-Both follow the existing `_IndustryPage` pattern (same sections in the same order as Healthcare.tsx, etc.). No new components.
+### 5. `src/content/site.ts` (nav dropdown)
+- Reorder the 6 remaining industry items to the new order, drop the Insurance item, rename the FS label to "Financial Services & Insurance".
 
-### 4. `src/app/routes.tsx` — two new routes
-- `/industries/financial-services` → `FinancialServices`
-- `/industries/manufacturing` → `Manufacturing`
+### 6. `IndustryClientsSection` cap
+- Already capped at 12 — no change needed; FS hits exactly 12.
 
-The existing `/industries` redirect still goes to `/industries/healthcare` (no change).
-
-### 5. `src/components/layout/Header.tsx` (and any nav source in `src/content/site.ts`)
-Add the two new items to the Industries dropdown so they're navigable.
-
-### 6. `IndustryClientsSection.tsx` — add a 12-logo cap
-One-line change: `extras.clients.slice(0, 12)` before mapping. Today no industry exceeds 12 (max is 11), so the cap is a guardrail, not a visible cut.
-
-### 7. `src/pages/LogoLab.tsx` — auto-picks up the new mappings
-The Industries Logos QA section already iterates over `INDUSTRIES` × `INDUSTRIES_EXTRAS.clients`, so adding the entries above makes the new groups appear without further edits. Great Day + Vornado will surface as "unassigned" if I add a small "Not in any industry" tail group (small addition, ~15 lines).
+### 7. Sanity sweep for stale references
+- `rg "industries/insurance"` and `rg "\"insurance\""` across `src/content/`, `src/sections/`, `src/pages/` to catch any practice cross-links pointing at the old slug. Most likely hit: solutions-extras `industries[].id === "insurance"` proof entries — repoint those to `"financial-services"` so practice pages still surface the carrier proof.
+- Update Logo Lab's "Industries clients section" — auto-picks up new order/grouping; no edit needed.
 
 ## Out of scope
-- No new copy beyond the conservative public-info client notes and the two new industry pages' standard sections.
-- No nav redesign, no footer changes beyond adding the two industry links.
-- No changes to LogoStrip, brand tokens, or shared components.
-- No engagement claims for the new clients — public sector / regulated language only.
+- No new copy for Energy & Utilities or Public Sector (kept as-is).
+- No nav redesign, no homepage industry-grid changes beyond data reordering.
+- No deletion of MetLife from CUSTOMERS.
+- No new components.
 
 ## Risk + mitigation
-- **Risk:** new industry pages look thin without case studies. **Mitigation:** they use the same template as the existing five; copy depth matches what we have for Insurance and Energy & Utilities (also single-client industries today).
-- **Risk:** any client objects to being publicly listed. **Mitigation:** conservative notes contain only public-information descriptors, no engagement details. Easy to remove individually from `industries-extras.ts`.
+- **Risk:** existing inbound links / SEO to `/industries/insurance`. **Mitigation:** add the redirect in `routes.tsx`.
+- **Risk:** practice pages (e.g. AI Generative) reference industry id `"insurance"` for cross-sell proof. **Mitigation:** ripgrep sweep in step 7 retargets to `"financial-services"`.
 
 ## Deliverable
-After the change, `/industries/financial-services` and `/industries/manufacturing` are live, all 30 mappable logos render on at least one industry page, and Logo Lab shows the full assignment (plus the 2 unassigned flagged for later).
+After the change: 7 industries, FS leads the dropdown with 12 logos including MetLife, carrier-grade story preserved inside the FS page, `/industries/insurance` 301s to `/industries/financial-services`.
