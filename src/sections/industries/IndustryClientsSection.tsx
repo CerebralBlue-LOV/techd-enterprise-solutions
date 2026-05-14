@@ -364,7 +364,6 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                     </div>
                   )}
                 </div>
-              </DarkGlowPanel>
 
               <p className="mt-4 text-center text-[10px] font-light uppercase tracking-widest text-white/25">
                 Logos remain the property of their respective owners.
