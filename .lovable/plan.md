@@ -1,47 +1,44 @@
-## Restructure the Contact working area
+## Goal
 
-Currently the working area is a two-column split with the left rail holding "Where to find us", "What happens next", and the IBM trust block, and the right column holding the form. You want the section under the stat banner to feel more editorial: a piece of writing on the left, the form on the right, and the location + process info pulled out into their own band underneath.
+In `/logo-lab`, add a new dedicated section that mirrors the **exact set of customer logos** rendered by the Industries → Clients section, grouped by industry. This is a QA surface only — read-only review, no reorder/edit controls. The existing main "Customer logos QA" grid (used for the LogoStrip) stays untouched.
 
-### 1. Top split — "Words" left / Form right
+## What logos to show (from `src/content/industries-extras.ts`)
 
-Replace the current `lg:grid-cols-[0.9fr_1.3fr]` layout with a balanced two-column block (`lg:grid-cols-2`, generous gap).
+```text
+Healthcare        → Admed · Netcare · Children's Health
+Media & Ent.      → Snap Inc. · Adobe · Verizon
+Insurance         → MetLife
+Energy & Util.    → TEPSCO
+Higher Education  → Harvard University · Penn State · National University of Singapore · Stony Brook University · New York Institute of Technology
+Public Sector     → (no logo — "Federal Agency" placeholder, skip)
+```
 
-**Left column — editorial intro** (sticky on desktop):
-- Eyebrow: `Why this form is short`
-- Display headline (≈ `text-4xl md:text-5xl`, bold, secondary): something like *"Tell us what you're trying to ship. We'll route it to the right principal."*
-- 2 short paragraphs (`font-light text-muted-foreground`):
-  - One on the no‑SDR, no‑discovery‑relay promise.
-  - One on what a "good" first message looks like — outcome, blocker, success criteria.
-- Small inline note with `IBMPlatinumBadge` + one line: *21 IBM products, 6 regulated industries — the architect on your first call is the one who'd lead the work.*
+Names are matched against `CUSTOMERS` in `src/content/site.ts` to resolve `logo` / `logoOnDark` paths, exactly the way `IndustryClientsSection` does it. Any unmatched name is shown as an initials tile so missing logos surface immediately.
 
-**Right column — form card**: keep the existing `Form` + success state exactly as-is (no field, validation, or submit changes).
+## Where it lives
 
-### 2. New band below — Location + Next steps
+- File: `src/pages/LogoLab.tsx` (extend the existing page).
+- New section appended below the current "Customer logos QA" grid, separated by a horizontal rule and its own heading.
+- No new route, no new top-level component file required. If the section grows, we can later extract it to `src/sections/logo-lab/IndustriesLogosSection.tsx` — not needed for this pass.
 
-A new full-width section under the form, visually distinct (light `bg-muted/30` + top/bottom border, similar to the stat banner) so it reads as supporting info, not part of the form.
+## Visual treatment
 
-Two columns inside `container-page` (`md:grid-cols-2`, gap 12–16):
+- Section header: eyebrow "Internal · Industries logos", H2 "Industries clients section".
+- One block per industry:
+  - Industry name (bold) + count chip (e.g. "5 logos").
+  - Grid of logo tiles (`grid-cols-2 sm:grid-cols-3 lg:grid-cols-4`).
+  - Each tile renders the logo on a **dark card** that matches `IndustryClientsSection`'s look: `rounded-2xl border border-white/10 bg-secondary` with the logo centered, using `logoOnDark` when available and `brightness-0 invert` fallback otherwise — so what we see here is exactly what ships on the industries page.
+  - Below the dark card, a small light caption with the customer name and the resolved file path (e.g. `/logos/admed.svg`) for quick QA.
+- Tiles with no matching `CUSTOMERS` entry render an initials placeholder + a red "missing logo" pill so gaps are obvious.
 
-- **Where to find us** (left)
-  - Eyebrow + small heading
-  - The existing `MapPin` / `Mail` / `Phone` list, same content
-- **What happens next** (right)
-  - Eyebrow + small heading
-  - Existing `StepFlow orientation="vertical"` with the 3 `NEXT_STEPS`
+## Out of scope
 
-Both wrapped in `Reveal` with a small stagger.
+- No drag/reorder, no logoClass picker, no Save/Download. This is a review surface.
+- No changes to `IndustryClientsSection`, `industries-extras.ts`, or `site.ts`.
+- No changes to brand tokens or shared components.
 
-### 3. Cleanup
+## Files touched
 
-- Remove the old left-rail `<aside>` block.
-- `LogoStrip` stays at the bottom, unchanged.
-- No content rewording beyond the new editorial intro on the left.
-- No changes to hero, stat banner, schema, validation, or submit handler.
+- `src/pages/LogoLab.tsx` — append the new section + a small local helper that builds the industry → names map from `INDUSTRIES_EXTRAS`.
 
-### Technical notes
-
-- File touched: `src/pages/Contact.tsx` only.
-- Imports: `IBMPlatinumBadge`, `MapPin`, `Mail`, `Phone`, `StepFlow` stay (now used in the new band). No new dependencies.
-- Tokens only — `bg-muted/30`, `border-border`, `text-secondary`, `text-primary`, `text-muted-foreground`. No raw hex.
-- Sticky behavior on the left intro: `lg:sticky lg:top-24` so it holds while the form scrolls.
-- Mobile: stacks naturally (intro → form → location/steps band → logos).
+That's it — small, isolated, reuses existing data and tokens.

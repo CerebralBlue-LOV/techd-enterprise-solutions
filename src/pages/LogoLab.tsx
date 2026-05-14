@@ -1,7 +1,105 @@
 import { useMemo, useState } from "react";
 import Layout from "@layout/Layout";
-import { CUSTOMERS } from "@/content/site";
+import { CUSTOMERS, type Customer } from "@/content/site";
+import { INDUSTRIES } from "@content/industries";
+import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 import LogoTile from "@/sections/logo-lab/LogoTile";
+import { cn } from "@/lib/utils";
+
+const IndustriesLogosSection = () => {
+  const byName = useMemo(
+    () => Object.fromEntries(CUSTOMERS.map((c) => [c.name, c])) as Record<string, Customer>,
+    [],
+  );
+
+  const groups = INDUSTRIES.map((ind) => {
+    const clients = INDUSTRIES_EXTRAS[ind.id]?.clients ?? [];
+    const tiles = clients
+      .filter((c) => c.name !== "Federal Agency")
+      .map((c) => ({ name: c.name, customer: byName[c.name] }));
+    return { industry: ind, tiles };
+  }).filter((g) => g.tiles.length > 0);
+
+  const initialsOf = (name: string) =>
+    name
+      .replace(/[^A-Za-z0-9& ]/g, "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0])
+      .join("")
+      .toUpperCase();
+
+  return (
+    <section className="container py-12 border-t border-border">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+        Internal · Industries logos
+      </p>
+      <h2 className="mt-2 text-3xl font-bold text-secondary">
+        Industries clients section
+      </h2>
+      <p className="mt-2 max-w-2xl text-sm font-light text-muted-foreground">
+        Read-only QA of the exact logos rendered on each Industries page's
+        Clients section. Logos appear on the same dark surface used in
+        production. Missing logos surface as initials with a red flag.
+      </p>
+
+      <div className="mt-8 space-y-12">
+        {groups.map(({ industry, tiles }) => (
+          <div key={industry.id}>
+            <div className="flex items-baseline gap-3">
+              <h3 className="text-xl font-bold text-secondary">{industry.name}</h3>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                {tiles.length} logo{tiles.length === 1 ? "" : "s"}
+              </span>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {tiles.map(({ name, customer }) => {
+                const missing = !customer?.logo;
+                const src = customer?.logo
+                  ? `${import.meta.env.BASE_URL}${(customer.logoOnDark ?? customer.logo).replace(/^\//, "")}`
+                  : null;
+                const path = customer?.logoOnDark ?? customer?.logo ?? "—";
+                return (
+                  <div key={name} className="flex flex-col gap-2">
+                    <div className="relative flex h-32 items-center justify-center rounded-2xl border border-white/10 bg-secondary p-5">
+                      {missing && (
+                        <span className="absolute left-2 top-2 rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold text-destructive-foreground">
+                          missing logo
+                        </span>
+                      )}
+                      {src ? (
+                        <img
+                          src={src}
+                          alt={`${name} logo`}
+                          loading="lazy"
+                          className={cn(
+                            "max-h-12 w-auto max-w-[160px] object-contain",
+                            !customer?.logoOnDark && "brightness-0 invert",
+                          )}
+                        />
+                      ) : (
+                        <span className="text-2xl font-bold leading-none tracking-tight text-white/85">
+                          {initialsOf(name)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-bold text-secondary">{name}</p>
+                      <p className="truncate text-[11px] font-light text-muted-foreground">
+                        {path}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 /**
  * /logo-lab — internal page to QA + reorder the customer logos used in
@@ -318,6 +416,7 @@ const LogoLab = () => {
           })}
         </div>
       </section>
+      <IndustriesLogosSection />
     </Layout>
   );
 };
