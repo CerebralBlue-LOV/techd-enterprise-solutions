@@ -76,9 +76,11 @@ const ContactForm = () => {
 
   return (
     <div
-      className="relative rounded-2xl border border-border bg-background p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_24px_48px_-32px_hsl(var(--primary)/0.25)] ring-1 ring-border/60 overflow-hidden"
+      className="group relative rounded-2xl border border-border bg-gradient-to-br from-background via-background to-muted/20 p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_30px_60px_-32px_hsl(var(--primary)/0.3)] ring-1 ring-border/60 overflow-hidden transition-shadow duration-500 hover:shadow-[0_1px_0_hsl(var(--border)),0_36px_70px_-28px_hsl(var(--primary)/0.4)]"
       aria-live="polite"
     >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+      <div className="pointer-events-none absolute -top-32 -right-32 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
       <GeometricAccent className="opacity-30" />
 
       {submitted ? (
