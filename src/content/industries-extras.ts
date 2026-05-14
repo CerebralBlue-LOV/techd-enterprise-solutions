@@ -222,6 +222,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { name: "Wabtec",        note: "Global rail equipment manufacturer — locomotives, braking, and freight technology." },
       { name: "NSK",           note: "Japanese industrial manufacturer — bearings and precision machinery components." },
       { name: "Itochu",        note: "Japanese general trading company — industrial, energy, and consumer trading at global scale." },
+      { name: "Great Day Improvements", note: "US home improvement manufacturer — windows, doors, and outdoor living products." },
     ],
     practices: [
       { id: "data-analytics",      proof: "Operational and supply-chain analytics across automotive, materials, and industrial equipment." },
