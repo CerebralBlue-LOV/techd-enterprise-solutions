@@ -119,7 +119,9 @@ const ContactForm = () => {
           >
             {/* About you */}
             <div className="grid gap-5">
-              <p className="eyebrow text-primary/80">About you</p>
+              <p className={SECTION_EYEBROW}>
+                <span className={STEP_NUM}>1</span> About you
+              </p>
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField
                   control={form.control}
