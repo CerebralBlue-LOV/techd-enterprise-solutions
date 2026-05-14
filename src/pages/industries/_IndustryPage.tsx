@@ -4,6 +4,7 @@ import { INDUSTRIES, type Industry } from "@content/industries";
 import IndustryHeroSection from "@sections/industries/IndustryHeroSection";
 import WhyIndustrySection from "@sections/industries/WhyIndustrySection";
 import IndustryClientsSection from "@sections/industries/IndustryClientsSection";
+import IndustryFederalCredentialsSection from "@sections/industries/IndustryFederalCredentialsSection";
 import SolutionsForIndustrySection from "@sections/industries/SolutionsForIndustrySection";
 import IndustryApproachSection from "@sections/industries/IndustryApproachSection";
 import IndustryOutcomesSection from "@sections/industries/IndustryOutcomesSection";
