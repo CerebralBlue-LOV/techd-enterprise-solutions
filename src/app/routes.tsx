@@ -13,7 +13,7 @@ import SectionLab from "@pages/SectionLab";
 import About from "@pages/company/About";
 import IBMPartnership from "@pages/company/IBMPartnership";
 import DeliveryMethodology from "@pages/company/DeliveryMethodology";
-import Customers from "@pages/company/Customers";
+
 
 // Solutions
 import AIGenerative from "@pages/solutions/AIGenerative";
