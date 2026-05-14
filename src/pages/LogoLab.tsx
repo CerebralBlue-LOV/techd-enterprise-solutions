@@ -69,9 +69,22 @@ const IndustriesLogosSection = ({ edits, onChange }: IndustriesLogosSectionProps
                   ? `${import.meta.env.BASE_URL}${(customer.logoOnDark ?? customer.logo).replace(/^\//, "")}`
                   : null;
                 const path = customer?.logoOnDark ?? customer?.logo ?? "—";
+                const current = customer ? edits[customer.name] ?? null : null;
+                const dirty =
+                  customer != null &&
+                  current !== (customer.logoClass ?? null);
+                const sizeClass = current ?? DEFAULT_CLASS;
+                const activePreset = matchPreset(current ?? undefined);
                 return (
                   <div key={name} className="flex flex-col gap-2">
-                    <div className="relative flex h-32 items-center justify-center rounded-2xl border border-white/10 bg-secondary p-5">
+                    <div
+                      className={cn(
+                        "relative flex h-32 items-center justify-center rounded-2xl border bg-secondary p-5 transition",
+                        dirty
+                          ? "border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.18)]"
+                          : "border-white/10",
+                      )}
+                    >
                       {missing && (
                         <span className="absolute left-2 top-2 rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold text-destructive-foreground">
                           missing logo
@@ -83,7 +96,8 @@ const IndustriesLogosSection = ({ edits, onChange }: IndustriesLogosSectionProps
                           alt={`${name} logo`}
                           loading="lazy"
                           className={cn(
-                            "max-h-12 w-auto max-w-[160px] object-contain",
+                            sizeClass,
+                            "w-auto max-w-[200px] object-contain",
                             !customer?.logoOnDark && "brightness-0 invert",
                           )}
                         />
@@ -99,6 +113,34 @@ const IndustriesLogosSection = ({ edits, onChange }: IndustriesLogosSectionProps
                         {path}
                       </p>
                     </div>
+                    {customer && (
+                      <>
+                        <div className="flex flex-wrap gap-1.5">
+                          {SIZE_PRESETS.map((p) => {
+                            const active = activePreset.className === p.className;
+                            return (
+                              <button
+                                key={p.label}
+                                type="button"
+                                onClick={() => onChange(customer.name, p.className)}
+                                className={cn(
+                                  "rounded-md px-2 py-1 text-[11px] font-bold transition",
+                                  active
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-muted/40 text-secondary hover:bg-muted",
+                                )}
+                                title={p.className ?? DEFAULT_CLASS}
+                              >
+                                {p.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <p className="text-[10px] font-mono text-muted-foreground">
+                          {current ?? `${DEFAULT_CLASS}  (default)`}
+                        </p>
+                      </>
+                    )}
                   </div>
                 );
               })}
