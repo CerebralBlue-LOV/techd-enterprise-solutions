@@ -478,6 +478,16 @@ const LogoLab = () => {
           <p className="mt-3 text-xs font-bold text-primary">{message}</p>
         )}
 
+        <IndustriesLogosSection
+          edits={edits}
+          onChange={(name, next) =>
+            setEdits((prev) => ({ ...prev, [name]: next }))
+          }
+        />
+
+        <h2 className="mt-12 text-2xl font-bold text-secondary">
+          Customer logos (LogoStrip — drag to reorder)
+        </h2>
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {order.map((name, i) => {
             const c = byName[name];
