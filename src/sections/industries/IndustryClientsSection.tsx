@@ -251,23 +251,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
             >
-
-            {/* Right — featured client carousel */}
-            <div className="lg:col-span-7">
-              <DarkGlowPanel
-                intensity="vivid"
-                ref={cardRef}
-                role="region"
-                aria-roledescription="carousel"
-                aria-label={`${industry.name} clients`}
-                tabIndex={0}
-                onMouseEnter={() => setPaused(true)}
-                onMouseLeave={() => setPaused(false)}
-                onFocus={() => setPaused(true)}
-                onBlur={() => setPaused(false)}
-                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              >
-                {/* Cross-fading radial glow */}
+              {/* Cross-fading radial glow */}
                 <div
                   aria-hidden
                   className="pointer-events-none absolute inset-0 overflow-hidden"
