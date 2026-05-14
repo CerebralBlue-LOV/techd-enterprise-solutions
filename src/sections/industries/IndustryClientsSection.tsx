@@ -224,39 +224,33 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                 </dl>
               )}
 
-              {/* Clickable client name list */}
-              {total > 1 && (
-                <div className="grid grid-cols-2 gap-x-3 gap-y-1">
-                  {resolved.map((c, i) => {
-                    const isActive = i === index;
-                    return (
-                      <button
-                        key={c.name}
-                        type="button"
-                        onClick={() => goTo(i)}
-                        className={cn(
-                          "text-left text-sm py-1.5 px-2 rounded transition-colors duration-300 truncate",
-                          isActive
-                            ? "text-primary font-normal"
-                            : "text-white/55 hover:text-white",
-                        )}
-                      >
-                        {c.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
               <div className="flex flex-wrap gap-3 pt-2">
                 <Button asChild className="btn-glow">
                   <Link to="/contact">Talk to an expert</Link>
                 </Button>
-                <Button asChild variant="outline">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-white/25 bg-white/5 text-white hover:bg-white/10 hover:text-white hover:border-white/40"
+                >
                   <Link to="/resources/case-studies">View case studies</Link>
                 </Button>
               </div>
             </div>
+
+            {/* Right — featured client carousel (plain, no wrapper) */}
+            <div
+              className="lg:col-span-7"
+              ref={cardRef}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label={`${industry.name} clients`}
+              tabIndex={0}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+              onFocus={() => setPaused(true)}
+              onBlur={() => setPaused(false)}
+            >
 
             {/* Right — featured client carousel */}
             <div className="lg:col-span-7">
