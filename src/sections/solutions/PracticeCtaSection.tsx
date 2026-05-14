@@ -9,7 +9,6 @@ export const PracticeCtaSection = ({ practice }: Props) => (
   <PageFinalCtaSection
     pageLabel={`Solutions / ${practice.name}`}
     eyebrow={practice.name}
-    secondary={{ label: "View our clients", to: "/company/customers" }}
   />
 );
 
