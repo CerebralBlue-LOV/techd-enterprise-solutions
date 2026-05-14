@@ -416,6 +416,7 @@ const LogoLab = () => {
           })}
         </div>
       </section>
+      <IndustriesLogosSection />
     </Layout>
   );
 };
