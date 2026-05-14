@@ -224,56 +224,34 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                 </dl>
               )}
 
-              {/* Clickable client name list */}
-              {total > 1 && (
-                <div className="grid grid-cols-2 gap-x-3 gap-y-1">
-                  {resolved.map((c, i) => {
-                    const isActive = i === index;
-                    return (
-                      <button
-                        key={c.name}
-                        type="button"
-                        onClick={() => goTo(i)}
-                        className={cn(
-                          "text-left text-sm py-1.5 px-2 rounded transition-colors duration-300 truncate",
-                          isActive
-                            ? "text-primary font-normal"
-                            : "text-white/55 hover:text-white",
-                        )}
-                      >
-                        {c.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
               <div className="flex flex-wrap gap-3 pt-2">
                 <Button asChild className="btn-glow">
                   <Link to="/contact">Talk to an expert</Link>
                 </Button>
-                <Button asChild variant="outline">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-white/25 bg-white/5 text-white hover:bg-white/10 hover:text-white hover:border-white/40"
+                >
                   <Link to="/resources/case-studies">View case studies</Link>
                 </Button>
               </div>
             </div>
 
-            {/* Right — featured client carousel */}
-            <div className="lg:col-span-7">
-              <DarkGlowPanel
-                intensity="vivid"
-                ref={cardRef}
-                role="region"
-                aria-roledescription="carousel"
-                aria-label={`${industry.name} clients`}
-                tabIndex={0}
-                onMouseEnter={() => setPaused(true)}
-                onMouseLeave={() => setPaused(false)}
-                onFocus={() => setPaused(true)}
-                onBlur={() => setPaused(false)}
-                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              >
-                {/* Cross-fading radial glow */}
+            {/* Right — featured client carousel (plain, no wrapper) */}
+            <div
+              className="lg:col-span-7"
+              ref={cardRef}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label={`${industry.name} clients`}
+              tabIndex={0}
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+              onFocus={() => setPaused(true)}
+              onBlur={() => setPaused(false)}
+            >
+              {/* Cross-fading radial glow */}
                 <div
                   aria-hidden
                   className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -298,7 +276,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                   />
                 </div>
 
-                <div className="relative flex flex-col p-8 md:p-10 lg:p-12 min-h-[480px] md:min-h-[540px]">
+                <div className="relative flex flex-col min-h-[480px] md:min-h-[540px]">
                   {/* Top chip row */}
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center rounded-md bg-white/10 backdrop-blur-sm px-3 py-1.5 ring-1 ring-white/15">
@@ -386,7 +364,6 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                     </div>
                   )}
                 </div>
-              </DarkGlowPanel>
 
               <p className="mt-4 text-center text-[10px] font-light uppercase tracking-widest text-white/25">
                 Logos remain the property of their respective owners.
