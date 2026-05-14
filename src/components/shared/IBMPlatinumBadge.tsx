@@ -18,10 +18,10 @@ const SIZES: Record<Size, { wrap: string; logo: string; eyebrow: string; title: 
     title: "text-sm",
   },
   lg: {
-    wrap: "px-8 py-8 md:px-10 md:py-10 gap-5 flex-col",
-    logo: "h-20 w-32 px-3 md:h-24 md:w-36 md:px-4",
-    eyebrow: "text-xs tracking-[0.18em]",
-    title: "text-xl md:text-2xl",
+    wrap: "px-6 py-6 gap-3 flex-col",
+    logo: "h-14 w-20 px-2.5",
+    eyebrow: "text-[11px] tracking-[0.18em]",
+    title: "text-base md:text-lg",
   },
 };
 
