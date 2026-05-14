@@ -74,15 +74,35 @@ const SlideContent = ({
         style={{ animationDelay: `${baseDelay}ms` }}
       >
         {logoSrc ? (
-          <img
-            src={logoSrc}
-            alt={`${client.name} logo`}
-            loading="lazy"
-            className={cn(
-              "max-h-24 md:max-h-32 w-auto max-w-[280px] md:max-w-[360px] object-contain",
-              !c?.logoOnDark && "brightness-0 invert",
-            )}
-          />
+          c?.url ? (
+            <a
+              href={c.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit ${client.name}`}
+              className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
+            >
+              <img
+                src={logoSrc}
+                alt={`${client.name} logo`}
+                loading="lazy"
+                className={cn(
+                  "max-h-24 md:max-h-32 w-auto max-w-[280px] md:max-w-[360px] object-contain",
+                  !c?.logoOnDark && "brightness-0 invert",
+                )}
+              />
+            </a>
+          ) : (
+            <img
+              src={logoSrc}
+              alt={`${client.name} logo`}
+              loading="lazy"
+              className={cn(
+                "max-h-24 md:max-h-32 w-auto max-w-[280px] md:max-w-[360px] object-contain",
+                !c?.logoOnDark && "brightness-0 invert",
+              )}
+            />
+          )
         ) : (
           <span className="text-6xl md:text-7xl font-bold text-white/85 tracking-tight leading-none">
             {initialsOf(client.name)}
