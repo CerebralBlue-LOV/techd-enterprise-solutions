@@ -25,11 +25,21 @@ OUT_DIR = SRC_DIR / "white"
 
 # Industry #clients allow-list. Filenames (without extension) under public/logos/.
 ALLOW = [
+    # Healthcare
     "admed", "netcare", "childrens-health",
+    # Media & Tech
     "snap", "adobe", "verizon",
-    "metlife",
+    # Insurance / Financial Services
+    "metlife", "natwest", "itau", "mizuho", "santander", "fiserv",
+    "banorte", "sicoob", "dahsing", "banco-del-pacifico", "brou", "clip",
+    # Energy
     "tepsco",
+    # Higher Ed
     "harvard", "pennstate", "nus", "stonybrook", "nyit",
+    # Manufacturing & Industrials
+    "benz", "dow", "seagate", "wabtec", "itochu", "nsk", "greatday",
+    # Real estate
+    "vornado",
 ]
 
 WHITE_THRESHOLD = 240  # any channel >= this counts as background-ish
