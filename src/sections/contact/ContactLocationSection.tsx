@@ -1,4 +1,5 @@
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { cn } from "@/lib/utils";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import { CONTACT } from "@content/site";
@@ -58,50 +59,35 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
     <Wrapper
       {...(isLink ? { href } : {})}
       {...linkProps}
-      className={[
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background p-6 md:p-7",
+      className={cn(
+        "group relative flex h-full flex-col rounded-xl border border-border bg-background p-5",
         "transition-all duration-300 ease-out",
-        isLink
-          ? "hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_18px_40px_-24px_hsl(var(--primary)/0.45)]"
-          : "",
-      ].join(" ")}
+        isLink && "hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-sm",
+      )}
     >
-      {/* Ambient cyan wash on hover */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-      />
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-primary/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-      />
-
-      <div className="flex items-start justify-between gap-4">
-        <div className="grid place-items-center size-12 rounded-xl bg-secondary text-white transition-colors duration-300 group-hover:bg-primary">
-          <Icon className="size-5" />
+      <div className="flex items-center gap-3">
+        <div className="grid place-items-center size-9 rounded-md bg-secondary text-white transition-colors duration-300 group-hover:bg-primary">
+          <Icon className="size-4" />
         </div>
+        <p className="eyebrow">{eyebrow}</p>
         {isLink && (
-          <span className="grid place-items-center size-9 rounded-full border border-border text-muted-foreground transition-all duration-300 group-hover:border-primary group-hover:text-primary group-hover:-rotate-12">
-            <ArrowUpRight className="size-4" />
-          </span>
+          <ArrowUpRight className="ml-auto size-4 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         )}
       </div>
 
-      <p className="eyebrow mt-6">{eyebrow}</p>
       <p
-        className={[
-          "mt-2 text-xl md:text-2xl font-bold leading-tight tracking-tight",
+        className={cn(
+          "mt-4 text-base md:text-lg font-bold leading-tight tracking-tight",
           pending ? "text-muted-foreground" : "text-secondary",
-        ].join(" ")}
+        )}
       >
         {title}
       </p>
-      <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">{sub}</p>
+      <p className="mt-1.5 text-xs font-light text-muted-foreground leading-relaxed">{sub}</p>
 
       {cta && (
-        <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+        <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-primary">
           {cta}
-          <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       )}
     </Wrapper>
