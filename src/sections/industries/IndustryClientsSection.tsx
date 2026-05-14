@@ -223,26 +223,8 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                     </div>
                   ))}
                 </dl>
-              ) : (
-                <dl className="flex gap-12">
-                  <div className="flex flex-col gap-1">
-                    <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                      Featured clients
-                    </dt>
-                    <dd className="text-4xl font-bold text-white leading-none">
-                      {total}
-                    </dd>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                      Regulation
-                    </dt>
-                    <dd className="text-2xl font-bold text-white leading-none uppercase">
-                      {industry.regulation}
-                    </dd>
-                  </div>
-                </dl>
-              )}
+              ) : null}
+
 
               <div className="flex flex-wrap gap-3 pt-2">
                 <Button asChild className="btn-glow">
