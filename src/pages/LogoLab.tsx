@@ -558,12 +558,6 @@ const LogoLab = () => {
           })}
         </div>
       </section>
-      <IndustriesLogosSection
-        edits={edits}
-        onChange={(name, next) =>
-          setEdits((prev) => ({ ...prev, [name]: next }))
-        }
-      />
     </Layout>
   );
 };
