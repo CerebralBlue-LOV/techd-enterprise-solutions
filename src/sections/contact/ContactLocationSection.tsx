@@ -1,4 +1,5 @@
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { cn } from "@/lib/utils";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import { CONTACT } from "@content/site";
