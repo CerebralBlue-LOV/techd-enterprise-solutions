@@ -196,7 +196,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
       <SectionMarker page={`Industries / ${industry.name}`} name="Clients" />
       <Reveal>
         <DarkGlowPanel intensity="soft" rounded="rounded-none">
-          <div className="container-page relative z-10 grid lg:grid-cols-12 gap-10 lg:gap-12 py-16 md:py-20 lg:py-24 items-center">
+          <div className="container-page relative z-10 grid lg:grid-cols-12 gap-12 lg:gap-20 py-16 md:py-20 lg:py-24 items-center">
             {/* Left — copy */}
             <div className="lg:col-span-5 flex flex-col gap-8">
               <div className="space-y-4">
@@ -223,26 +223,8 @@ export const IndustryClientsSection = ({ industry }: Props) => {
                     </div>
                   ))}
                 </dl>
-              ) : (
-                <dl className="flex gap-12">
-                  <div className="flex flex-col gap-1">
-                    <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                      Featured clients
-                    </dt>
-                    <dd className="text-4xl font-bold text-white leading-none">
-                      {total}
-                    </dd>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                      Regulation
-                    </dt>
-                    <dd className="text-2xl font-bold text-white leading-none uppercase">
-                      {industry.regulation}
-                    </dd>
-                  </div>
-                </dl>
-              )}
+              ) : null}
+
 
               <div className="flex flex-wrap gap-3 pt-2">
                 <Button asChild className="btn-glow">
@@ -271,7 +253,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
             >
-                <div className="relative flex flex-col min-h-[480px] md:min-h-[540px]">
+                <div className="relative flex flex-col min-h-[480px] md:min-h-[540px] rounded-lg border border-white/15 p-6 md:p-8">
 
                   {/* Slide stage */}
                   <div className="relative mt-6 flex-1" aria-live="polite">
