@@ -52,11 +52,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "data-analytics",      proof: "Clinical and operational dashboards on Cognos and Db2, plus open lakehouse foundations on watsonx.data." },
       { id: "security-compliance", proof: "HIPAA-grade data protection, audit readiness, and zero-downtime data movement." },
     ],
-    stats: [
-      { value: "5+",   label: "Named U.S. health systems served" },
-      { value: "6+",   label: "Healthcare-focused webinars and workshops delivered" },
-      { value: "HIPAA", label: "Engagement standard" },
-    ],
   },
 
   "media-entertainment": {
@@ -78,11 +73,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "ai-generative",       proof: "Content intelligence and operational AI for studios, networks, and streamers." },
       { id: "data-analytics",      proof: "Audience analytics and content performance for major media platforms." },
       { id: "security-compliance", proof: "CCPA and SOC 2 data protection for media platforms and streaming services." },
-    ],
-    stats: [
-      { value: "3+",   label: "Named global media and platform clients" },
-      { value: "CCPA", label: "Privacy compliance standard" },
-      { value: "SOC 2", label: "Security engagement standard" },
     ],
   },
 
@@ -106,11 +96,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "data-analytics",      proof: "Grid analytics and operational dashboards for regulated utilities and ISOs." },
       { id: "automation-finops",   proof: "Grid-system observability and OT/IT cost management." },
       { id: "security-compliance", proof: "NERC-CIP and OT/IT security for utilities and ISOs." },
-    ],
-    stats: [
-      { value: "NERC-CIP", label: "OT/IT security compliance standard" },
-      { value: "FERC",     label: "Federal energy regulatory standard" },
-      { value: "3",        label: "Practice areas: Analytics, Automation, Security" },
     ],
   },
 
@@ -136,11 +121,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "ai-generative",       proof: "Knowledge agents and research assistants grounded in institutional content." },
       { id: "security-compliance", proof: "Identity, access, and FERPA-aligned data protection for higher ed." },
     ],
-    stats: [
-      { value: "5+",   label: "Named research universities served" },
-      { value: "FERPA", label: "Student data protection standard" },
-      { value: "FISMA", label: "Federal research data standard" },
-    ],
   },
 
   "public-sector": {
@@ -160,11 +140,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
       { id: "security-compliance", proof: "FedRAMP-aligned security architectures for federal missions." },
-    ],
-    stats: [
-      { value: "FedRAMP", label: "Cloud authorization standard" },
-      { value: "FISMA",   label: "Federal information security framework" },
-      { value: "2",       label: "Practice areas deployed: AI and Security" },
     ],
   },
 
@@ -223,11 +198,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "data-analytics",      proof: "Operational and supply-chain analytics across automotive, materials, and industrial equipment." },
       { id: "automation-finops",   proof: "Full-stack observability and IT cost management for global industrial estates." },
       { id: "security-compliance", proof: "OT/IT security and ISO 27001-aligned data protection for global manufacturers." },
-    ],
-    stats: [
-      { value: "6+",         label: "Named global industrial clients" },
-      { value: "ISO 27001",  label: "Security engagement standard" },
-      { value: "NIST CSF",   label: "Cyber risk framework" },
     ],
   },
 };
