@@ -4,9 +4,15 @@ import { CUSTOMERS, type Customer } from "@/content/site";
 import { INDUSTRIES } from "@content/industries";
 import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 import LogoTile from "@/sections/logo-lab/LogoTile";
+import { SIZE_PRESETS, DEFAULT_CLASS, matchPreset } from "@/sections/logo-lab/sizePresets";
 import { cn } from "@/lib/utils";
 
-const IndustriesLogosSection = () => {
+interface IndustriesLogosSectionProps {
+  edits: Record<string, string | null>;
+  onChange: (name: string, next: string | null) => void;
+}
+
+const IndustriesLogosSection = ({ edits, onChange }: IndustriesLogosSectionProps) => {
   const byName = useMemo(
     () => Object.fromEntries(CUSTOMERS.map((c) => [c.name, c])) as Record<string, Customer>,
     [],
@@ -63,9 +69,22 @@ const IndustriesLogosSection = () => {
                   ? `${import.meta.env.BASE_URL}${(customer.logoOnDark ?? customer.logo).replace(/^\//, "")}`
                   : null;
                 const path = customer?.logoOnDark ?? customer?.logo ?? "—";
+                const current = customer ? edits[customer.name] ?? null : null;
+                const dirty =
+                  customer != null &&
+                  current !== (customer.logoClass ?? null);
+                const sizeClass = current ?? DEFAULT_CLASS;
+                const activePreset = matchPreset(current ?? undefined);
                 return (
                   <div key={name} className="flex flex-col gap-2">
-                    <div className="relative flex h-32 items-center justify-center rounded-2xl border border-white/10 bg-secondary p-5">
+                    <div
+                      className={cn(
+                        "relative flex h-32 items-center justify-center rounded-2xl border bg-secondary p-5 transition",
+                        dirty
+                          ? "border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.18)]"
+                          : "border-white/10",
+                      )}
+                    >
                       {missing && (
                         <span className="absolute left-2 top-2 rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold text-destructive-foreground">
                           missing logo
@@ -77,7 +96,8 @@ const IndustriesLogosSection = () => {
                           alt={`${name} logo`}
                           loading="lazy"
                           className={cn(
-                            "max-h-12 w-auto max-w-[160px] object-contain",
+                            sizeClass,
+                            "w-auto max-w-[200px] object-contain",
                             !customer?.logoOnDark && "brightness-0 invert",
                           )}
                         />
@@ -93,6 +113,34 @@ const IndustriesLogosSection = () => {
                         {path}
                       </p>
                     </div>
+                    {customer && (
+                      <>
+                        <div className="flex flex-wrap gap-1.5">
+                          {SIZE_PRESETS.map((p) => {
+                            const active = activePreset.className === p.className;
+                            return (
+                              <button
+                                key={p.label}
+                                type="button"
+                                onClick={() => onChange(customer.name, p.className)}
+                                className={cn(
+                                  "rounded-md px-2 py-1 text-[11px] font-bold transition",
+                                  active
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-muted/40 text-secondary hover:bg-muted",
+                                )}
+                                title={p.className ?? DEFAULT_CLASS}
+                              >
+                                {p.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <p className="text-[10px] font-mono text-muted-foreground">
+                          {current ?? `${DEFAULT_CLASS}  (default)`}
+                        </p>
+                      </>
+                    )}
                   </div>
                 );
               })}
@@ -117,16 +165,26 @@ const IndustriesLogosSection = () => {
                   ? `${import.meta.env.BASE_URL}${(customer.logoOnDark ?? customer.logo).replace(/^\//, "")}`
                   : null;
                 const path = customer.logoOnDark ?? customer.logo ?? "—";
+                const current = edits[customer.name] ?? null;
+                const dirty = current !== (customer.logoClass ?? null);
+                const sizeClass = current ?? DEFAULT_CLASS;
+                const activePreset = matchPreset(current ?? undefined);
                 return (
                   <div key={customer.name} className="flex flex-col gap-2">
-                    <div className="relative flex h-32 items-center justify-center rounded-2xl border border-dashed border-border bg-secondary p-5">
+                    <div
+                      className={cn(
+                        "relative flex h-32 items-center justify-center rounded-2xl border border-dashed bg-secondary p-5 transition",
+                        dirty ? "border-primary" : "border-border",
+                      )}
+                    >
                       {src ? (
                         <img
                           src={src}
                           alt={`${customer.name} logo`}
                           loading="lazy"
                           className={cn(
-                            "max-h-12 w-auto max-w-[160px] object-contain",
+                            sizeClass,
+                            "w-auto max-w-[200px] object-contain",
                             !customer.logoOnDark && "brightness-0 invert",
                           )}
                         />
@@ -140,6 +198,30 @@ const IndustriesLogosSection = () => {
                       <p className="truncate text-sm font-bold text-secondary">{customer.name}</p>
                       <p className="truncate text-[11px] font-light text-muted-foreground">{path}</p>
                     </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {SIZE_PRESETS.map((p) => {
+                        const active = activePreset.className === p.className;
+                        return (
+                          <button
+                            key={p.label}
+                            type="button"
+                            onClick={() => onChange(customer.name, p.className)}
+                            className={cn(
+                              "rounded-md px-2 py-1 text-[11px] font-bold transition",
+                              active
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-muted/40 text-secondary hover:bg-muted",
+                            )}
+                            title={p.className ?? DEFAULT_CLASS}
+                          >
+                            {p.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="text-[10px] font-mono text-muted-foreground">
+                      {current ?? `${DEFAULT_CLASS}  (default)`}
+                    </p>
                   </div>
                 );
               })}
@@ -396,6 +478,16 @@ const LogoLab = () => {
           <p className="mt-3 text-xs font-bold text-primary">{message}</p>
         )}
 
+        <IndustriesLogosSection
+          edits={edits}
+          onChange={(name, next) =>
+            setEdits((prev) => ({ ...prev, [name]: next }))
+          }
+        />
+
+        <h2 className="mt-12 text-2xl font-bold text-secondary">
+          Customer logos (LogoStrip — drag to reorder)
+        </h2>
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {order.map((name, i) => {
             const c = byName[name];
@@ -466,7 +558,6 @@ const LogoLab = () => {
           })}
         </div>
       </section>
-      <IndustriesLogosSection />
     </Layout>
   );
 };
