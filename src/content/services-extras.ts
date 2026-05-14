@@ -180,7 +180,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     ],
     industries: [
       { id: "healthcare",       proof: "HIPAA-aligned data and AI roadmaps for major U.S. health systems." },
-      { id: "insurance",        proof: "Underwriting and claims modernization roadmaps for P&C and specialty carriers." },
+      { id: "financial-services",        proof: "Underwriting and claims modernization roadmaps for P&C and specialty carriers." },
       { id: "public-sector",    proof: "FedRAMP-aligned advisory for federal agencies and defense technology organizations." },
       { id: "energy-utilities", proof: "NERC-CIP-aligned grid and OT/IT advisory for regulated utilities and ISOs." },
     ],
@@ -260,7 +260,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     industries: [
       { id: "healthcare",          proof: "HIPAA-grade data platforms and clinical AI builds for major U.S. health systems." },
       { id: "media-entertainment", proof: "Audience and content intelligence builds for studios, networks, and streamers." },
-      { id: "insurance",           proof: "Underwriting copilots and claims automation builds for P&C and specialty carriers." },
+      { id: "financial-services",           proof: "Underwriting copilots and claims automation builds for P&C and specialty carriers." },
       { id: "public-sector",       proof: "FedRAMP-aligned hybrid platforms for federal agencies and defense technology organizations." },
     ],
     stats: [
@@ -338,7 +338,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     ],
     industries: [
       { id: "healthcare",       proof: "HIPAA-grade managed operations for major U.S. health systems." },
-      { id: "insurance",        proof: "Operations for underwriting, claims, and analytics platforms at P&C and specialty carriers." },
+      { id: "financial-services",        proof: "Operations for underwriting, claims, and analytics platforms at P&C and specialty carriers." },
       { id: "energy-utilities", proof: "NERC-CIP-aligned operations for grid analytics and OT/IT security." },
       { id: "public-sector",    proof: "FedRAMP-aligned operations for federal agencies and defense technology organizations." },
     ],
@@ -418,7 +418,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     industries: [
       { id: "healthcare",       proof: "Cognos and Planning Analytics enablement for clinical and operational analytics teams." },
       { id: "higher-education", proof: "Analytics and BI enablement for institutional research and finance teams." },
-      { id: "insurance",        proof: "SPSS Modeler and Cognos training for actuarial and analytics teams." },
+      { id: "financial-services",        proof: "SPSS Modeler and Cognos training for actuarial and analytics teams." },
       { id: "public-sector",    proof: "Cloud Pak for Data, watsonx, and Guardium enablement for federal teams." },
     ],
     stats: [

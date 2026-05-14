@@ -86,31 +86,8 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     ],
   },
 
-  insurance: {
-    headline: "Underwriting, claims, and analytics — engineered for regulated carriers.",
-    lede:
-      "Underwriting copilots, claims acceleration, and actuarial analytics built for property, casualty, and specialty carriers who can't ship anything an auditor can't explain.",
-    whyPoints: [
-      { title: "Carrier-grade controls", body: "NAIC and SOX compliance tooling, lineage-traced data, and the audit posture regulated carriers need." },
-      { title: "Specialty carrier fit",  body: "Active work with global insurers like MetLife — life, group benefits, and annuities at scale." },
-      { title: "Underwriting copilots",  body: "RAG and agentic workflows grounded in your underwriting guidelines and historical book." },
-      { title: "Claims acceleration",    body: "Document intelligence, automation, and observability that take days out of the claims cycle." },
-    ],
-    clients: [
-      { name: "MetLife", note: "Global insurer — life, group benefits, and annuities." },
-    ],
-    practices: [
-      { id: "ai-generative",       proof: "Underwriting copilots and claims acceleration for property and specialty carriers." },
-      { id: "data-analytics",      proof: "Actuarial analytics and regulatory reporting for P&C carriers." },
-      { id: "security-compliance", proof: "NAIC and SOX-aligned compliance tooling and audit readiness." },
-      { id: "automation-finops",   proof: "Claims platform observability and IT cost transparency." },
-    ],
-    stats: [
-      { value: "4",    label: "Practice areas across the carrier lifecycle" },
-      { value: "NAIC", label: "Insurance regulatory standard" },
-      { value: "SOX",  label: "Financial controls standard" },
-    ],
-  },
+  // Insurance was folded into Financial Services & Insurance — see the
+  // "financial-services" entry below.
 
   "energy-utilities": {
     headline: "Grid, OT/IT, and analytics for regulated utilities and ISOs.",
@@ -192,20 +169,21 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
   },
 
   "financial-services": {
-    headline: "Banking, payments, and cooperative finance — engineered for the regulator and the customer.",
+    headline: "Banking, payments, and insurance — engineered for the regulator and the customer.",
     lede:
-      "Core banking analytics, fraud and AML intelligence, and customer experience platforms built for global universal banks, regional carriers, payments networks, and cooperative finance — under PCI-DSS, SOX, and Basel III posture.",
+      "Core banking analytics, fraud and AML intelligence, underwriting copilots, claims acceleration, and customer experience platforms built for global universal banks, regional carriers, payments networks, cooperative finance, and insurance carriers — under PCI-DSS, SOX, NAIC, and Basel III posture.",
     whyPoints: [
-      { title: "Bank-grade controls",    body: "PCI-DSS, SOX, and Basel III control patterns implemented at scale across retail, commercial, and cooperative finance." },
-      { title: "Global reach",           body: "Active and recent work spans Latin America, Europe, Asia-Pacific, and North America — the same delivery team across geographies." },
+      { title: "Bank-grade controls",    body: "PCI-DSS, SOX, NAIC, and Basel III control patterns implemented at scale across retail, commercial, cooperative finance, and insurance carriers." },
       { title: "Payments depth",         body: "Card, real-time payments, and core banking experience — from issuer-acquirer to switch infrastructure to fintech rails." },
-      { title: "Fraud and AML",          body: "Detection models, case management, and reporting that hold up to examiner review and reduce false-positive load." },
+      { title: "Underwriting copilots",  body: "RAG and agentic workflows grounded in your underwriting guidelines and historical book — outputs that hold up to actuarial review." },
+      { title: "Claims acceleration",    body: "Document intelligence, automation, and observability that take days out of the claims cycle for life, group benefits, and P&C carriers." },
     ],
     clients: [
       { name: "Santander",            note: "Global universal bank — retail and commercial banking across Europe and the Americas." },
       { name: "Mizuho",               note: "Japanese megabank — corporate, retail, and global wholesale banking." },
       { name: "NatWest",              note: "UK retail and commercial bank — personal, business, and corporate banking." },
       { name: "Itaú",                 note: "Largest private bank in Latin America — retail, wholesale, and wealth management." },
+      { name: "MetLife",              note: "Global insurer — life, group benefits, and annuities." },
       { name: "Banorte",              note: "Mexican financial group — retail, commercial, and insurance services." },
       { name: "Sicoob",               note: "Brazilian credit cooperative system — cooperative finance at national scale." },
       { name: "Dah Sing Bank",        note: "Hong Kong commercial bank — retail and SME banking across greater China." },
@@ -215,15 +193,15 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { name: "Clip",                 note: "Mexican payments platform — card acceptance and SME financial services." },
     ],
     practices: [
-      { id: "data-analytics",      proof: "Core banking analytics, regulatory reporting, and customer 360 for global and regional banks." },
-      { id: "security-compliance", proof: "PCI-DSS, SOX, and AML compliance tooling across card, core, and digital channels." },
-      { id: "automation-finops",   proof: "Payments-platform observability and IT cost transparency for global financial groups." },
-      { id: "ai-generative",       proof: "Customer-service copilots and document intelligence grounded in policy and regulatory content." },
+      { id: "data-analytics",      proof: "Core banking analytics, actuarial reporting, and customer 360 for global banks and insurance carriers." },
+      { id: "security-compliance", proof: "PCI-DSS, SOX, NAIC, and AML compliance tooling across card, core, digital channels, and carrier policy admin." },
+      { id: "automation-finops",   proof: "Payments-platform and claims-platform observability with IT cost transparency for global financial groups and carriers." },
+      { id: "ai-generative",       proof: "Customer-service copilots, underwriting assistants, and document intelligence grounded in policy and regulatory content." },
     ],
     stats: [
-      { value: "11+",      label: "Named banking and payments clients" },
+      { value: "12+",      label: "Named banking, payments, and insurance clients" },
       { value: "PCI-DSS",  label: "Payments engagement standard" },
-      { value: "SOX",      label: "Financial controls standard" },
+      { value: "NAIC",     label: "Insurance regulatory standard" },
     ],
   },
 

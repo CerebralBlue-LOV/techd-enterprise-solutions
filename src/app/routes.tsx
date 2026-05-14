@@ -31,7 +31,7 @@ import Training from "@pages/services/Training";
 // Industries
 import Healthcare from "@pages/industries/Healthcare";
 import MediaEntertainment from "@pages/industries/MediaEntertainment";
-import Insurance from "@pages/industries/Insurance";
+
 import EnergyUtilities from "@pages/industries/EnergyUtilities";
 import HigherEducation from "@pages/industries/HigherEducation";
 import PublicSector from "@pages/industries/PublicSector";
@@ -98,10 +98,10 @@ export const AppRoutes = () => (
     <Route path="/services/training" element={<Training />} />
 
     {/* Industries */}
-    <Route path="/industries" element={<Navigate to="/industries/healthcare" replace />} />
+    <Route path="/industries" element={<Navigate to="/industries/financial-services" replace />} />
     <Route path="/industries/healthcare" element={<Healthcare />} />
     <Route path="/industries/media-entertainment" element={<MediaEntertainment />} />
-    <Route path="/industries/insurance" element={<Insurance />} />
+    <Route path="/industries/insurance" element={<Navigate to="/industries/financial-services" replace />} />
     <Route path="/industries/energy-utilities" element={<EnergyUtilities />} />
     <Route path="/industries/higher-education" element={<HigherEducation />} />
     <Route path="/industries/public-sector" element={<PublicSector />} />

@@ -58,7 +58,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     ],
     industries: [
       { id: "healthcare",          proof: "Clinical knowledge agents and HIPAA-grade data platforms for major U.S. health systems. Retrieval grounded in your EHR, ontologies, and clinical guidelines — every answer traceable to the source document." },
-      { id: "insurance",           proof: "Underwriting copilots and claims acceleration for property and specialty carriers. Models grounded in your policy language, loss history, and submission documents — outputs that hold up to actuarial and compliance review." },
+      { id: "financial-services",           proof: "Underwriting copilots and claims acceleration for property and specialty carriers. Models grounded in your policy language, loss history, and submission documents — outputs that hold up to actuarial and compliance review." },
       { id: "public-sector",       proof: "Auditable AI for federal agencies and defense technology organizations. FedRAMP-aligned deployments with end-to-end lineage, prompt governance, and air-gapped options where the mission requires them." },
       { id: "media-entertainment", proof: "Content intelligence and operational AI for studios, networks, and streamers. Metadata enrichment, rights-aware semantic search, and production workflow agents built on watsonx." },
     ],
@@ -81,7 +81,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
       { id: "healthcare",          proof: "Clinical and operational dashboards for major U.S. health systems. Trusted data pipelines from Epic, Cerner, and claims systems into Db2 and Cognos — the same numbers from the bedside to the board." },
       { id: "higher-education",    proof: "Student, research, and finance analytics for top-tier universities. Cognos and Planning Analytics models that connect enrollment, advancement, and grant accounting into a single source of truth." },
       { id: "media-entertainment", proof: "Audience analytics and content performance for studios and streamers. Lakehouse pipelines that join viewership, ad telemetry, and rights data — ready for both BI and the next watsonx use case." },
-      { id: "insurance",           proof: "Actuarial analytics and regulatory reporting for property and specialty carriers. Db2, DataStage, and Cognos pipelines built for the audit trail, the rate filing, and the planning cycle." },
+      { id: "financial-services",           proof: "Actuarial analytics and regulatory reporting for property and specialty carriers. Db2, DataStage, and Cognos pipelines built for the audit trail, the rate filing, and the planning cycle." },
     ],
     approach: APPROACH_DATA,
     stats: [
@@ -99,7 +99,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
       { title: "FinOps that scales",    body: "Cost allocation models that survive a re-org, a cloud migration, or an M&A." },
     ],
     industries: [
-      { id: "insurance",         proof: "Claims platform observability and IT cost transparency for specialty carriers. Instana traces every transaction end-to-end; Apptio gives the CFO the cost-per-policy view the business has been asking for." },
+      { id: "financial-services",         proof: "Claims platform observability and IT cost transparency for specialty carriers. Instana traces every transaction end-to-end; Apptio gives the CFO the cost-per-policy view the business has been asking for." },
       { id: "energy-utilities",  proof: "Grid-system observability and OT/IT cost management for regulated utilities. Instana watches the SCADA-adjacent stack; Turbonomic and Apptio align infrastructure spend with rate-case discipline." },
       { id: "public-sector",     proof: "Federal-grade observability and FinOps for agencies and defense technology. Mission-critical workloads instrumented, governed, and cost-allocated against your appropriation structure." },
     ],
@@ -117,7 +117,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     industries: [
       { id: "healthcare",       proof: "HIPAA-grade data protection and audit readiness for major U.S. health systems. Guardium policies tuned to PHI workloads; QRadar use cases mapped to the HIPAA Security Rule controls auditors actually test." },
       { id: "public-sector",    proof: "FedRAMP-aligned security architectures for federal agencies and defense technology. Layered controls, continuous monitoring, and response playbooks that pass authorization and survive ATO renewal." },
-      { id: "insurance",        proof: "NAIC and SOX compliance tooling for property and specialty carriers. Guardium and QRadar built around the data flows examiners follow — claims, policy admin, and financial close." },
+      { id: "financial-services",        proof: "NAIC and SOX compliance tooling for property and specialty carriers. Guardium and QRadar built around the data flows examiners follow — claims, policy admin, and financial close." },
       { id: "energy-utilities", proof: "NERC-CIP and OT/IT security for regulated utilities and ISOs. Asset-level monitoring at the IT/OT boundary, with response playbooks that recognize the operational risk of a wrong move." },
     ],
     approach: APPROACH_SECURITY,
