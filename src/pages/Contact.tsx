@@ -18,10 +18,10 @@ const Contact = () => (
       <SectionMarker page="Contact" name="Split" />
       <div className="container-page">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <Reveal className="lg:col-span-5">
+          <Reveal className="lg:col-span-4">
             <ContactInfo />
           </Reveal>
-          <Reveal delay={120} className="lg:col-span-7">
+          <Reveal delay={120} className="lg:col-span-8">
             <ContactForm />
           </Reveal>
         </div>
