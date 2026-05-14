@@ -73,7 +73,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
   const extras = INDUSTRIES_EXTRAS[industry.id];
   if (!extras?.clients?.length) return null;
 
-  const resolved: ResolvedClient[] = extras.clients.map((c) => ({
+  const resolved: ResolvedClient[] = extras.clients.slice(0, 12).map((c) => ({
     ...c,
     customer: CUSTOMERS.find((x) => x.name === c.name),
   }));

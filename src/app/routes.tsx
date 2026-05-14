@@ -105,6 +105,8 @@ export const AppRoutes = () => (
     <Route path="/industries/energy-utilities" element={<EnergyUtilities />} />
     <Route path="/industries/higher-education" element={<HigherEducation />} />
     <Route path="/industries/public-sector" element={<PublicSector />} />
+    <Route path="/industries/financial-services" element={<FinancialServices />} />
+    <Route path="/industries/manufacturing" element={<Manufacturing />} />
 
     {/* Resources */}
     <Route path="/resources" element={<Navigate to="/resources/case-studies" replace />} />
