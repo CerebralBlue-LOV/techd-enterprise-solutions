@@ -24,10 +24,6 @@ const DETAILS: Detail[] = [
     eyebrow: "Headquarters",
     title: `${CONTACT.address.city}, ${CONTACT.address.state}`,
     sub: CONTACT.address.lines[0],
-    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      `TechD ${CONTACT.address.city} ${CONTACT.address.state}`,
-    )}`,
-    cta: "Open in Google Maps",
   },
   {
     icon: Mail,
