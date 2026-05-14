@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import DarkGlowPanel from "@shared/DarkGlowPanel";
