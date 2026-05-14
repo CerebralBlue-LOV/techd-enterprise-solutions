@@ -198,11 +198,6 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "automation-finops",   proof: "Payments-platform and claims-platform observability with IT cost transparency for global financial groups and carriers." },
       { id: "ai-generative",       proof: "Customer-service copilots, underwriting assistants, and document intelligence grounded in policy and regulatory content." },
     ],
-    stats: [
-      { value: "12+",      label: "Named banking, payments, and insurance clients" },
-      { value: "PCI-DSS",  label: "Payments engagement standard" },
-      { value: "NAIC",     label: "Insurance regulatory standard" },
-    ],
   },
 
   manufacturing: {
