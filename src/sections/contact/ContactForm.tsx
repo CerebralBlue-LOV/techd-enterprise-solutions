@@ -42,10 +42,16 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const PILL =
-  "h-9 px-4 rounded-full border border-border text-xs font-bold uppercase tracking-wider text-secondary data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary hover:border-primary hover:text-primary transition-colors";
+  "h-10 px-4 rounded-full border border-border bg-background text-xs font-bold uppercase tracking-wider text-secondary data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary data-[state=on]:shadow-[0_6px_20px_-8px_hsl(var(--primary)/0.6)] hover:border-primary hover:text-primary transition-all duration-200";
 
 const FIELD_INPUT =
-  "h-11 focus-visible:ring-primary/50 focus-visible:border-primary transition-colors";
+  "h-12 bg-muted/30 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200";
+
+const SECTION_EYEBROW =
+  "flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
+
+const STEP_NUM =
+  "inline-flex h-6 w-6 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-bold";
 
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -70,9 +76,11 @@ const ContactForm = () => {
 
   return (
     <div
-      className="relative rounded-2xl border border-border bg-background p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_24px_48px_-32px_hsl(var(--primary)/0.25)] ring-1 ring-border/60 overflow-hidden"
+      className="group relative rounded-2xl border border-border bg-gradient-to-br from-background via-background to-muted/20 p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_30px_60px_-32px_hsl(var(--primary)/0.3)] ring-1 ring-border/60 overflow-hidden transition-shadow duration-500 hover:shadow-[0_1px_0_hsl(var(--border)),0_36px_70px_-28px_hsl(var(--primary)/0.4)]"
       aria-live="polite"
     >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+      <div className="pointer-events-none absolute -top-32 -right-32 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
       <GeometricAccent className="opacity-30" />
 
       {submitted ? (
@@ -111,7 +119,9 @@ const ContactForm = () => {
           >
             {/* About you */}
             <div className="grid gap-5">
-              <p className="eyebrow text-primary/80">About you</p>
+              <p className={SECTION_EYEBROW}>
+                <span className={STEP_NUM}>1</span> About you
+              </p>
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField
                   control={form.control}
@@ -175,11 +185,15 @@ const ContactForm = () => {
               </div>
             </div>
 
-            <div className="border-t border-border" />
+            <div className="relative">
+              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+            </div>
 
             {/* About the project */}
             <div className="grid gap-5">
-              <p className="eyebrow text-primary/80">About the project</p>
+              <p className={SECTION_EYEBROW}>
+                <span className={STEP_NUM}>2</span> About the project
+              </p>
 
               <FormField
                 control={form.control}
@@ -244,7 +258,7 @@ const ContactForm = () => {
                       <Textarea
                         rows={6}
                         placeholder="A few sentences is plenty — what's the outcome, what's blocking it, and what does success look like?"
-                        className="resize-none focus-visible:ring-primary/50 focus-visible:border-primary transition-colors"
+                        className="min-h-[160px] resize-none bg-muted/30 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200"
                         {...field}
                       />
                     </FormControl>
@@ -254,13 +268,17 @@ const ContactForm = () => {
               />
             </div>
 
-            <div className="flex flex-col-reverse gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs font-light text-muted-foreground">
+            <div className="flex flex-col-reverse gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="flex items-center gap-2 text-xs font-light text-muted-foreground">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                </span>
                 We respond within one business day.
               </p>
-              <Button type="submit" size="lg" className="btn-glow h-12 px-8 w-full sm:w-auto">
+              <Button type="submit" size="lg" className="btn-glow group/btn h-12 px-8 w-full sm:w-auto">
                 Send to a principal
-                <ArrowUpRight className="ml-1" />
+                <ArrowUpRight className="ml-1 transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
               </Button>
             </div>
           </form>
