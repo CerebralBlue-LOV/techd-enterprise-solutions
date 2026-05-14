@@ -35,6 +35,8 @@ import Insurance from "@pages/industries/Insurance";
 import EnergyUtilities from "@pages/industries/EnergyUtilities";
 import HigherEducation from "@pages/industries/HigherEducation";
 import PublicSector from "@pages/industries/PublicSector";
+import FinancialServices from "@pages/industries/FinancialServices";
+import Manufacturing from "@pages/industries/Manufacturing";
 
 // Resources
 import CaseStudies from "@pages/resources/CaseStudies";
