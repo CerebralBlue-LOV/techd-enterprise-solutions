@@ -71,12 +71,11 @@ export const IndustryFederalCredentialsSection = ({ industry }: Props) => {
 
             {/* Right — frameworks grid */}
             <div className="lg:col-span-7">
-              <div className="rounded-lg border border-white/15 p-6 md:p-8 grid sm:grid-cols-2 gap-px bg-white/10">
+              <div className="rounded-lg border border-white/15 grid sm:grid-cols-2 divide-y sm:divide-y-0 divide-white/10 sm:[&>*:nth-child(2n)]:border-l sm:[&>*:nth-child(2n)]:border-white/10 sm:[&>*:nth-child(n+3)]:border-t sm:[&>*:nth-child(n+3)]:border-white/10">
                 {FRAMEWORKS.map(({ icon: Icon, label, body }) => (
                   <div
                     key={label}
-                    className="bg-[hsl(var(--background))] p-5 md:p-6 flex flex-col gap-3"
-                    style={{ background: "rgb(10 10 14)" }}
+                    className="p-5 md:p-6 flex flex-col gap-3"
                   >
                     <Icon className="size-6 text-primary" aria-hidden />
                     <h3 className="text-lg font-bold text-white leading-tight">
