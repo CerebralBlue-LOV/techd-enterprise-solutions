@@ -10,7 +10,6 @@ import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 import PageApproachSection from "@shared/page/PageApproachSection";
-import StatBand from "@shared/StatBand";
 import {
   HoverCard,
   HoverCardContent,
@@ -43,11 +42,6 @@ const VERTICALS = [
   "Energy & Utilities",
 ];
 
-const TIMELINE = [
-  { year: "2009", note: "Founded in Miami" },
-  { year: "2017", note: "Expanded to full IBM data & AI portfolio" },
-  { year: "Today", note: "IBM Platinum, US & Canada delivery" },
-];
 
 const About = () => {
   return (
@@ -106,26 +100,27 @@ const About = () => {
                   </p>
                 </div>
 
-                <ul className="mt-8 flex flex-wrap gap-2">
-                  {TIMELINE.map((t) => (
-                    <li
-                      key={t.year}
-                      className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[11px] font-light text-muted-foreground"
-                    >
-                      <span className="font-bold tracking-wider text-primary">
-                        {t.year}
-                      </span>
-                      <span className="text-secondary/70">·</span>
-                      <span>{t.note}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </Reveal>
 
-            <Reveal delay={80}>
-              <StatBand items={COMPANY_FACTS.map((f) => ({ value: f.value, label: f.label }))} className="grid-cols-2 lg:grid-cols-2 sm:grid-cols-2" />
-            </Reveal>
+            <div className="grid grid-cols-2 gap-4">
+              {COMPANY_FACTS.map((f, i) => (
+                <Reveal key={f.label} delay={80 + i * 70}>
+                  <div className="group relative overflow-hidden rounded-xl border border-border bg-background px-6 py-5 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_8px_24px_-8px_hsl(var(--primary)/0.2)]">
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary/[0.06] to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
+                    />
+                    <p className="text-2xl md:text-3xl font-bold text-secondary leading-none transition-all duration-300 group-hover:scale-105 group-hover:text-primary">
+                      {f.value}
+                    </p>
+                    <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
+                      {f.label}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
