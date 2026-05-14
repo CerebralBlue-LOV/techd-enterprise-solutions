@@ -253,7 +253,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
             >
-                <div className="relative flex flex-col min-h-[480px] md:min-h-[540px]">
+                <div className="relative flex flex-col min-h-[480px] md:min-h-[540px] rounded-lg border border-white/15 p-6 md:p-8">
 
                   {/* Slide stage */}
                   <div className="relative mt-6 flex-1" aria-live="polite">
