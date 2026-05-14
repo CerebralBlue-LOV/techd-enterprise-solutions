@@ -18,14 +18,13 @@ export const NAV: NavItem[] = [
   {
     label: "Industries",
     children: [
+      { label: "Financial Services & Insurance", href: "/industries/financial-services", description: "Core banking analytics, fraud and AML, underwriting copilots, claims acceleration, regulator-ready data platforms." },
       { label: "Healthcare & Life Sciences",  href: "/industries/healthcare",        description: "Clinical knowledge agents, HIPAA-grade data platforms, pharmacovigilance automation." },
-      { label: "Media & Entertainment",       href: "/industries/media-entertainment", description: "Content intelligence, audience analytics, operational AI." },
-      { label: "Insurance",                   href: "/industries/insurance",          description: "Underwriting copilots, claims automation, actuarial analytics." },
-      { label: "Energy & Utilities",          href: "/industries/energy-utilities",   description: "Grid analytics, asset performance management, OT/IT security." },
-      { label: "Higher Education & Research", href: "/industries/higher-education",   description: "Research computing, identity and SSO, student data platforms." },
-      { label: "Public Sector",               href: "/industries/public-sector",      description: "Auditable AI systems, FedRAMP-aligned cloud, records modernization." },
-      { label: "Financial Services",          href: "/industries/financial-services", description: "Core banking analytics, fraud and AML, regulator-ready data platforms." },
       { label: "Manufacturing & Industrials", href: "/industries/manufacturing",      description: "Operational analytics, supply-chain intelligence, OT/IT security." },
+      { label: "Higher Education & Research", href: "/industries/higher-education",   description: "Research computing, identity and SSO, student data platforms." },
+      { label: "Media & Entertainment",       href: "/industries/media-entertainment", description: "Content intelligence, audience analytics, operational AI." },
+      { label: "Energy & Utilities",          href: "/industries/energy-utilities",   description: "Grid analytics, asset performance management, OT/IT security." },
+      { label: "Public Sector",               href: "/industries/public-sector",      description: "Auditable AI systems, FedRAMP-aligned cloud, records modernization." },
     ],
   },
   {
