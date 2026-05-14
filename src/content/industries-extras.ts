@@ -190,4 +190,70 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { value: "2",       label: "Practice areas deployed: AI and Security" },
     ],
   },
+
+  "financial-services": {
+    headline: "Banking, payments, and cooperative finance — engineered for the regulator and the customer.",
+    lede:
+      "Core banking analytics, fraud and AML intelligence, and customer experience platforms built for global universal banks, regional carriers, payments networks, and cooperative finance — under PCI-DSS, SOX, and Basel III posture.",
+    whyPoints: [
+      { title: "Bank-grade controls",    body: "PCI-DSS, SOX, and Basel III control patterns implemented at scale across retail, commercial, and cooperative finance." },
+      { title: "Global reach",           body: "Active and recent work spans Latin America, Europe, Asia-Pacific, and North America — the same delivery team across geographies." },
+      { title: "Payments depth",         body: "Card, real-time payments, and core banking experience — from issuer-acquirer to switch infrastructure to fintech rails." },
+      { title: "Fraud and AML",          body: "Detection models, case management, and reporting that hold up to examiner review and reduce false-positive load." },
+    ],
+    clients: [
+      { name: "Santander",            note: "Global universal bank — retail and commercial banking across Europe and the Americas." },
+      { name: "Mizuho",               note: "Japanese megabank — corporate, retail, and global wholesale banking." },
+      { name: "NatWest",              note: "UK retail and commercial bank — personal, business, and corporate banking." },
+      { name: "Itaú",                 note: "Largest private bank in Latin America — retail, wholesale, and wealth management." },
+      { name: "Banorte",              note: "Mexican financial group — retail, commercial, and insurance services." },
+      { name: "Sicoob",               note: "Brazilian credit cooperative system — cooperative finance at national scale." },
+      { name: "Dah Sing Bank",        note: "Hong Kong commercial bank — retail and SME banking across greater China." },
+      { name: "Banco del Pacífico",   note: "Ecuadorian commercial bank — retail and corporate banking." },
+      { name: "BROU",                 note: "Banco República — Uruguay's state-owned commercial bank." },
+      { name: "Fiserv",               note: "Global payments and financial technology platform — issuer, acquirer, and core banking." },
+      { name: "Clip",                 note: "Mexican payments platform — card acceptance and SME financial services." },
+    ],
+    practices: [
+      { id: "data-analytics",      proof: "Core banking analytics, regulatory reporting, and customer 360 for global and regional banks." },
+      { id: "security-compliance", proof: "PCI-DSS, SOX, and AML compliance tooling across card, core, and digital channels." },
+      { id: "automation-finops",   proof: "Payments-platform observability and IT cost transparency for global financial groups." },
+      { id: "ai-generative",       proof: "Customer-service copilots and document intelligence grounded in policy and regulatory content." },
+    ],
+    stats: [
+      { value: "11+",      label: "Named banking and payments clients" },
+      { value: "PCI-DSS",  label: "Payments engagement standard" },
+      { value: "SOX",      label: "Financial controls standard" },
+    ],
+  },
+
+  manufacturing: {
+    headline: "Operational analytics and OT/IT security for global industrials.",
+    lede:
+      "Plant-floor analytics, supply-chain intelligence, and OT/IT security for automotive, materials, industrial equipment, storage technology, and global trading enterprises.",
+    whyPoints: [
+      { title: "OT/IT under one roof",  body: "Observability, identity, and data movement that span operational technology and IT — not two disconnected programs." },
+      { title: "Global industrial fit", body: "Engagements with global industrials including Mercedes-Benz, Dow, Wabtec, NSK, Seagate, and Itochu." },
+      { title: "Supply-chain visibility", body: "Lakehouse and analytics patterns that join MES, ERP, and logistics signals for the planning team and the plant manager." },
+      { title: "ISO 27001 alignment",   body: "Security and data protection patterns aligned to ISO 27001 and NIST CSF — what global industrials' customers ask for." },
+    ],
+    clients: [
+      { name: "Mercedes-Benz", note: "Global automotive manufacturer — premium passenger vehicles and commercial mobility." },
+      { name: "Dow",           note: "Global materials science company — chemicals, plastics, and performance materials." },
+      { name: "Seagate",       note: "Global storage technology — hard drive and data storage manufacturing." },
+      { name: "Wabtec",        note: "Global rail equipment manufacturer — locomotives, braking, and freight technology." },
+      { name: "NSK",           note: "Japanese industrial manufacturer — bearings and precision machinery components." },
+      { name: "Itochu",        note: "Japanese general trading company — industrial, energy, and consumer trading at global scale." },
+    ],
+    practices: [
+      { id: "data-analytics",      proof: "Operational and supply-chain analytics across automotive, materials, and industrial equipment." },
+      { id: "automation-finops",   proof: "Full-stack observability and IT cost management for global industrial estates." },
+      { id: "security-compliance", proof: "OT/IT security and ISO 27001-aligned data protection for global manufacturers." },
+    ],
+    stats: [
+      { value: "6+",         label: "Named global industrial clients" },
+      { value: "ISO 27001",  label: "Security engagement standard" },
+      { value: "NIST CSF",   label: "Cyber risk framework" },
+    ],
+  },
 };

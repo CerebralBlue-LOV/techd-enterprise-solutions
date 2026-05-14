@@ -48,4 +48,18 @@ export const INDUSTRIES: Industry[] = [
     outcome:
       "Auditable AI systems and modernized records management for federal agencies and defense technology organizations.",
   },
+  {
+    id: "financial-services",
+    name: "Financial Services",
+    regulation: "PCI-DSS · SOX · Basel III",
+    outcome:
+      "Core banking analytics, fraud and AML detection, and regulator-ready data platforms for global banks, regional carriers, payments, and cooperative finance.",
+  },
+  {
+    id: "manufacturing",
+    name: "Manufacturing & Industrials",
+    regulation: "ISO 27001 · NIST CSF",
+    outcome:
+      "Operational analytics, supply-chain intelligence, and OT/IT security for automotive, materials, industrial equipment, and global trading enterprises.",
+  },
 ];

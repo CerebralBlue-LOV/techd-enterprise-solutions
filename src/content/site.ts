@@ -24,6 +24,8 @@ export const NAV: NavItem[] = [
       { label: "Energy & Utilities",          href: "/industries/energy-utilities",   description: "Grid analytics, asset performance management, OT/IT security." },
       { label: "Higher Education & Research", href: "/industries/higher-education",   description: "Research computing, identity and SSO, student data platforms." },
       { label: "Public Sector",               href: "/industries/public-sector",      description: "Auditable AI systems, FedRAMP-aligned cloud, records modernization." },
+      { label: "Financial Services",          href: "/industries/financial-services", description: "Core banking analytics, fraud and AML, regulator-ready data platforms." },
+      { label: "Manufacturing & Industrials", href: "/industries/manufacturing",      description: "Operational analytics, supply-chain intelligence, OT/IT security." },
     ],
   },
   {

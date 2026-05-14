@@ -20,6 +20,9 @@ const IndustriesLogosSection = () => {
     return { industry: ind, tiles };
   }).filter((g) => g.tiles.length > 0);
 
+  const assignedNames = new Set(groups.flatMap((g) => g.tiles.map((t) => t.name)));
+  const unassigned = CUSTOMERS.filter((c) => !assignedNames.has(c.name));
+
   const initialsOf = (name: string) =>
     name
       .replace(/[^A-Za-z0-9& ]/g, "")
@@ -96,6 +99,53 @@ const IndustriesLogosSection = () => {
             </div>
           </div>
         ))}
+
+        {unassigned.length > 0 && (
+          <div>
+            <div className="flex items-baseline gap-3">
+              <h3 className="text-xl font-bold text-secondary">Not in any industry</h3>
+              <span className="rounded bg-destructive px-1.5 py-0.5 text-[10px] font-bold text-destructive-foreground">
+                {unassigned.length} unassigned
+              </span>
+            </div>
+            <p className="mt-1 text-xs font-light text-muted-foreground">
+              Logos that exist in CUSTOMERS but are not referenced by any industry's clients list. They appear in the home LogoStrip only.
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {unassigned.map((customer) => {
+                const src = customer.logo
+                  ? `${import.meta.env.BASE_URL}${(customer.logoOnDark ?? customer.logo).replace(/^\//, "")}`
+                  : null;
+                const path = customer.logoOnDark ?? customer.logo ?? "—";
+                return (
+                  <div key={customer.name} className="flex flex-col gap-2">
+                    <div className="relative flex h-32 items-center justify-center rounded-2xl border border-dashed border-border bg-secondary p-5">
+                      {src ? (
+                        <img
+                          src={src}
+                          alt={`${customer.name} logo`}
+                          loading="lazy"
+                          className={cn(
+                            "max-h-12 w-auto max-w-[160px] object-contain",
+                            !customer.logoOnDark && "brightness-0 invert",
+                          )}
+                        />
+                      ) : (
+                        <span className="text-2xl font-bold leading-none tracking-tight text-white/85">
+                          {initialsOf(customer.name)}
+                        </span>
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-bold text-secondary">{customer.name}</p>
+                      <p className="truncate text-[11px] font-light text-muted-foreground">{path}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
