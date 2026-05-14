@@ -124,7 +124,7 @@ export const AppRoutes = () => (
     <Route path="/company/about" element={<About />} />
     <Route path="/company/ibm-partnership" element={<IBMPartnership />} />
     <Route path="/company/delivery-methodology" element={<DeliveryMethodology />} />
-    <Route path="/company/customers" element={<Customers />} />
+    <Route path="/company/customers" element={<Navigate to="/company/about" replace />} />
 
     <Route path="/contact" element={<Contact />} />
     <Route path="/admin-lab" element={<AdminLab />} />
