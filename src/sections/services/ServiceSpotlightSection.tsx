@@ -18,7 +18,7 @@ export const ServiceSpotlightSection = ({ service }: Props) => {
   return (
     <section
       id="spotlight"
-      className="py-16 md:py-24 scroll-mt-24 border-t border-border bg-background"
+      className="py-16 md:py-24 scroll-mt-24 bg-background"
     >
       <SectionMarker page={`Services / ${service.name}`} name="Spotlight" />
       <div className="container-page">
@@ -109,7 +109,8 @@ export const ServiceSpotlightSection = ({ service }: Props) => {
                     {spotlight.bullets.map((b, i) => (
                       <button
                         key={b.label}
-                        onClick={() => setActive(i)}
+                        onMouseEnter={() => setActive(i)}
+                        onFocus={() => setActive(i)}
                         className={`pb-3 pt-1 text-center text-sm font-bold uppercase tracking-[0.15em] border-b-2 -mb-px transition-colors duration-200 ${
                           active === i
                             ? "text-primary border-primary"

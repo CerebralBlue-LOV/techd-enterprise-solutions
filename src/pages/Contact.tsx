@@ -13,10 +13,12 @@ import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
 const HeroParticleField = lazy(
   () => import("@sections/home/_components/HeroParticleField"),
 );
+const ParticleOrbit = lazy(
+  () => import("@sections/home/_components/ParticleOrbit"),
+);
 import StatBand from "@shared/StatBand";
-import StepFlow from "@shared/StepFlow";
 import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
-import LogoStrip from "@shared/LogoStrip";
+import GeometricAccent from "@shared/GeometricAccent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -59,11 +61,6 @@ const HERO_STATS = [
   { value: "Senior", label: "Architect on first call" },
 ];
 
-const NEXT_STEPS = [
-  { label: "You submit the form", detail: "30 seconds. Just enough to route you correctly." },
-  { label: "A senior principal reviews it the same day", detail: "No SDR queue. No discovery-call relay." },
-  { label: "We schedule a 30-minute working call", detail: "Within one business day, with the practitioner who'd lead the work." },
-];
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -129,38 +126,67 @@ const Contact = () => {
       <section className="section">
         <SectionMarker page="Contact" name="Intro + Form" />
         <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Left — editorial intro */}
+          {/* Left — contact sidebar */}
           <Reveal>
-            <div className="lg:sticky lg:top-24 space-y-8">
-              <p className="eyebrow">Why this form is short</p>
-              <h2 className="text-4xl md:text-5xl font-bold leading-[1.05] tracking-tight text-secondary">
-                Tell us what you're trying to ship. We'll route it to the right <span className="text-primary">principal</span>.
-              </h2>
-              <div className="space-y-5 text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-lg">
-                <p>
-                  No SDR queue. No discovery-call relay. The note you write below lands with a senior practitioner the same day — not a sales development rep working from a script.
-                </p>
-                <p>
-                  A good first message is three sentences: the outcome you're after, what's blocking it today, and what success looks like in 90 days. That's enough for us to bring the right person to the call.
-                </p>
+            <div className="lg:sticky lg:top-24 space-y-10">
+              <div>
+                <p className="eyebrow mb-3">Get in touch</p>
+                <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight text-secondary">
+                  The right expert,<br />within <span className="text-primary">one business day</span>.
+                </h2>
               </div>
-              <div className="flex items-start gap-4 pt-2">
-                <IBMPlatinumBadge size="sm" />
-                <p className="text-xs font-light text-muted-foreground leading-relaxed max-w-xs">
-                  21 IBM products. 6 regulated industries. The architect on your first call is the one who'd lead the engagement.
-                </p>
-              </div>
+              <ul className="space-y-7">
+                <li className="flex items-start gap-4">
+                  <div className="grid place-items-center rounded-md bg-secondary size-9 shrink-0 mt-0.5">
+                    <Mail className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-secondary">Email</p>
+                    <p className="text-xs font-light text-muted-foreground mt-0.5">Available at launch</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="grid place-items-center rounded-md bg-secondary size-9 shrink-0 mt-0.5">
+                    <MapPin className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-secondary">Miami, FL</p>
+                    <p className="text-xs font-light text-muted-foreground mt-0.5">Headquarters</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="grid place-items-center rounded-md bg-secondary size-9 shrink-0 mt-0.5">
+                    <Phone className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-secondary">Phone</p>
+                    <p className="text-xs font-light text-muted-foreground mt-0.5">Available at launch</p>
+                  </div>
+                </li>
+              </ul>
+              <IBMPlatinumBadge size="md" showTenure />
             </div>
           </Reveal>
 
           {/* Right — Form card */}
           <Reveal delay={100}>
             <div
-              className="relative rounded-2xl border border-border bg-background p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_24px_48px_-32px_hsl(var(--primary)/0.25)] ring-1 ring-border/60"
+              className="relative rounded-2xl border border-border bg-background p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_24px_48px_-32px_hsl(var(--primary)/0.25)] ring-1 ring-border/60 overflow-hidden"
               aria-live="polite"
             >
+              <GeometricAccent className="opacity-30" />
+              {!submitted && (
+                <div className="relative z-10 mb-8 pb-8 border-b border-border">
+                  <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight text-secondary">
+                    Tell us what you're<br />trying to <span className="text-primary">ship</span>.
+                  </h2>
+                  <p className="mt-2 text-sm font-light text-muted-foreground">
+                    We route it to the right principal — same day, no SDR queue.
+                  </p>
+                </div>
+              )}
               {submitted ? (
-                <div className="py-10 md:py-16 text-center">
+                <div className="relative z-10 py-10 md:py-16 text-center">
                   <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary">
                     <CheckCircle2 className="size-7" />
                   </div>
@@ -188,7 +214,7 @@ const Contact = () => {
                 </div>
               ) : (
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-8" noValidate>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="relative z-10 grid gap-8" noValidate>
                     {/* Group: About you */}
                     <div className="grid gap-5">
                       <p className="eyebrow text-primary/80">About you</p>
@@ -355,40 +381,54 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Trust strip */}
       {/* SUPPORTING INFO BAND */}
       <section className="border-y border-border bg-muted/30">
-        <SectionMarker page="Contact" name="Location + Next steps" />
-        <div className="container-page py-16 md:py-20 grid gap-12 md:grid-cols-2 md:gap-16">
+        <SectionMarker page="Contact" name="IBM Credential + Location" />
+        <div className="container-page py-16 md:py-20 grid gap-12 md:grid-cols-2 md:gap-16 items-center">
           <Reveal>
-            <div>
-              <p className="eyebrow mb-5">Where to find us</p>
-              <ul className="divide-y divide-border border-y border-border">
-                <li className="flex items-center gap-4 py-4">
-                  <MapPin className="size-4 text-primary shrink-0" />
-                  <span className="text-sm font-light text-secondary">Miami, FL — Headquarters</span>
+            <div className="relative flex aspect-square w-full max-w-[320px] md:max-w-[460px] mx-auto items-center justify-center">
+              <Suspense fallback={null}>
+                <ParticleOrbit />
+              </Suspense>
+              <IBMPlatinumBadge size="lg" variant="card" showTenure className="relative z-20" />
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="max-w-xs">
+              <h3 className="text-2xl font-bold text-secondary mb-8">Where to find us</h3>
+              <ul className="space-y-6">
+                <li className="flex items-center gap-4">
+                  <div className="grid place-items-center rounded-md bg-secondary size-9 shrink-0">
+                    <MapPin className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-secondary">Miami, FL</p>
+                    <p className="text-xs font-light text-muted-foreground">Headquarters</p>
+                  </div>
                 </li>
-                <li className="flex items-center gap-4 py-4">
-                  <Mail className="size-4 text-primary shrink-0" />
-                  <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
+                <li className="flex items-center gap-4">
+                  <div className="grid place-items-center rounded-md bg-secondary size-9 shrink-0">
+                    <Mail className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-secondary">Email</p>
+                    <p className="text-xs font-light text-muted-foreground">Available at launch</p>
+                  </div>
                 </li>
-                <li className="flex items-center gap-4 py-4">
-                  <Phone className="size-4 text-primary shrink-0" />
-                  <span className="text-sm font-light text-muted-foreground">Contact details available at launch</span>
+                <li className="flex items-center gap-4">
+                  <div className="grid place-items-center rounded-md bg-secondary size-9 shrink-0">
+                    <Phone className="size-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-secondary">Phone</p>
+                    <p className="text-xs font-light text-muted-foreground">Available at launch</p>
+                  </div>
                 </li>
               </ul>
             </div>
           </Reveal>
-          <Reveal delay={100}>
-            <div>
-              <p className="eyebrow mb-5">What happens next</p>
-              <StepFlow orientation="vertical" steps={NEXT_STEPS} />
-            </div>
-          </Reveal>
         </div>
       </section>
-
-      <LogoStrip />
     </Layout>
   );
 };

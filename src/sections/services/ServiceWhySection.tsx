@@ -102,6 +102,8 @@ export const ServiceWhySection = ({ service }: Props) => {
                   <button
                     key={p.title}
                     type="button"
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
                     onClick={() => setActive(i)}
                     aria-pressed={isActive}
                     className={cn(
