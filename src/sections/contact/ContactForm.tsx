@@ -258,7 +258,7 @@ const ContactForm = () => {
                       <Textarea
                         rows={6}
                         placeholder="A few sentences is plenty — what's the outcome, what's blocking it, and what does success look like?"
-                        className="resize-none focus-visible:ring-primary/50 focus-visible:border-primary transition-colors"
+                        className="min-h-[160px] resize-none bg-muted/30 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200"
                         {...field}
                       />
                     </FormControl>
