@@ -30,8 +30,6 @@ The current `techd.com` runs on a **fully compromised WordPress install** with S
 | Day 4 (Thu) | Sub-pages, company section, resources | ✅ Complete |
 | Day 5 (Fri) | Docs cleanup, handoff | ✅ Complete |
 
----
-
 ## What was delivered
 
 ### Pages built
@@ -39,11 +37,11 @@ The current `techd.com` runs on a **fully compromised WordPress install** with S
 | Section | Routes |
 |---|---|
 | Homepage | `/` |
-| Solutions | `/solutions/ai-generative`, `/solutions/data-analytics`, `/solutions/automation-finops`, `/solutions/security-compliance`, `/solutions/hybrid-cloud` |
+| Solutions | `/solutions/ai-generative`, `/solutions/data-analytics`, `/solutions/automation-finops`, `/solutions/security-compliance` |
 | Services | `/services/advisory`, `/services/implementation`, `/services/managed-services`, `/services/training` |
-| Industries | `/industries/healthcare`, `/industries/media-entertainment`, `/industries/insurance`, `/industries/energy-utilities`, `/industries/higher-education`, `/industries/public-sector` |
+| Industries | `/industries/financial-services`, `/industries/healthcare`, `/industries/manufacturing`, `/industries/media-entertainment`, `/industries/energy-utilities`, `/industries/higher-education`, `/industries/public-sector` |
 | Resources | `/resources/case-studies`, `/resources/blog`, `/resources/webinars`, `/resources/events` |
-| Company | `/company/about`, `/company/ibm-partnership`, `/company/customers` |
+| Company | `/company/about`, `/company/ibm-partnership`, `/company/delivery-methodology`, `/company/customers` |
 | Contact | `/contact` |
 | 404 | `*` |
 
@@ -54,7 +52,8 @@ The current `techd.com` runs on a **fully compromised WordPress install** with S
 - SEO component on every page (meta tags, Open Graph, canonical URLs)
 - 208-rule redirect map built and ready (`docs/REDIRECT-MAP.md`)
 - Content freshness audit complete — stale IBM product names corrected, unverifiable stats removed
-- Industry list rebalanced: "Financial Services" removed (no verified clients), "Media & Entertainment" added (Sony, Comcast confirmed)
+- 7 industry verticals: Financial Services & Insurance, Healthcare & Life Sciences, Manufacturing & Industrials, Media & Entertainment, Energy & Utilities, Higher Education & Research, Public Sector
+- 32 active clients in logo strip across all verticals
 
 ---
 

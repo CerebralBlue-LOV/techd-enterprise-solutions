@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, GitBranch, Hammer, Brain } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
+import DarkSection from "@shared/DarkSection";
 import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
+import PageApproachSection from "@shared/page/PageApproachSection";
 import StatBand from "@shared/StatBand";
-import StepFlow from "@shared/StepFlow";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/tabs";
 import {
   HoverCard,
   HoverCardContent,
@@ -33,8 +33,6 @@ const initials = (name: string) =>
     .slice(0, 2)
     .join("")
     .toUpperCase();
-
-const PRACTICE_ICONS = [Brain, GitBranch, Hammer, ShieldCheck];
 
 const VERTICALS = [
   "Healthcare & Life Sciences",
@@ -133,57 +131,57 @@ const About = () => {
       </section>
 
       {/* Four practices */}
-      <section id="practices" className="section bg-muted/30 scroll-mt-24">
+      <DarkSection id="practices" className="section scroll-mt-24">
         <SectionMarker page="Company / About" name="Practices" />
         <div className="container-page">
           <Reveal>
-            <SectionHeading
-              eyebrow="Four practices"
-              title="Where TechD delivers"
-              subtitle="A practitioner team in each practice area, mapped to IBM's AI Operating Model."
-            />
+            <div className="max-w-3xl">
+              <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary mb-3">
+                Four practices
+              </p>
+              <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-background">
+                Where TechD delivers
+              </h2>
+              <p className="mt-4 text-base font-light text-background/70 leading-relaxed">
+                A practitioner team in each practice area, mapped to IBM's AI Operating Model.
+              </p>
+            </div>
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {PRACTICE_AREAS.map((p, i) => {
-              const Icon = PRACTICE_ICONS[i] ?? Brain;
               const stack = PORTFOLIO_BY_PRACTICE[i]?.products.slice(0, 3) ?? [];
               return (
                 <Reveal key={p.name} delay={i * 60}>
                   <Link
                     to={p.to}
-                    className="group relative block h-full overflow-hidden rounded-xl border border-border bg-background p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.25)] hover:-translate-y-0.5"
+                    className="group relative block h-full overflow-hidden rounded-xl border border-white/10 bg-background/[0.04] backdrop-blur-sm p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.55)] hover:-translate-y-0.5"
                   >
                     {/* faint background numeral */}
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute -top-4 -right-2 text-[110px] font-bold leading-none text-primary/[0.06] transition-colors group-hover:text-primary/[0.10]"
+                      className="pointer-events-none absolute -top-4 -right-2 text-[110px] font-bold leading-none text-background/[0.06] transition-colors group-hover:text-background/[0.10]"
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div className="relative">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-primary transition-colors group-hover:border-primary/60">
-                          <Icon className="h-4 w-4" />
-                        </span>
-                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                          Practice 0{i + 1}
-                        </p>
-                      </div>
-                      <h3 className="mt-4 text-xl font-bold text-secondary leading-tight">
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                        Practice 0{i + 1}
+                      </p>
+                      <h3 className="mt-4 text-xl font-bold text-background leading-tight">
                         {p.name}
                       </h3>
-                      <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
+                      <p className="mt-2 text-sm font-light text-background/70 leading-relaxed">
                         {p.description}
                       </p>
                       {stack.length > 0 && (
-                        <p className="mt-4 text-[11px] font-light text-muted-foreground/80">
-                          <span className="font-bold uppercase tracking-wider text-secondary/70">
+                        <p className="mt-4 text-[11px] font-light text-background/50">
+                          <span className="font-bold uppercase tracking-wider text-background/50">
                             Stack ·{" "}
                           </span>
                           {stack.join(" · ")}
                         </p>
                       )}
-                      <p className="mt-5 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-secondary group-hover:text-primary transition-colors">
+                      <p className="mt-5 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-background/70 group-hover:text-primary transition-colors">
                         See the practice
                         <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                       </p>
@@ -194,7 +192,7 @@ const About = () => {
             })}
           </div>
         </div>
-      </section>
+      </DarkSection>
 
       {/* Regulated-industry depth */}
       <section id="industries" className="section scroll-mt-24">
@@ -208,46 +206,34 @@ const About = () => {
             />
           </Reveal>
 
-          <Reveal delay={80}>
-            <div className="mt-12">
-              <Tabs defaultValue={COMPLIANCE_FRAMEWORKS[0].framework}>
-                <TabsList className="h-auto flex-wrap gap-2 bg-transparent p-0 justify-start">
-                  {COMPLIANCE_FRAMEWORKS.map((f) => (
-                    <TabsTrigger
-                      key={f.framework}
-                      value={f.framework}
-                      className="rounded-full border border-border px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-secondary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary"
-                    >
-                      {f.framework}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                {COMPLIANCE_FRAMEWORKS.map((f) => (
-                  <TabsContent key={f.framework} value={f.framework} className="mt-6">
-                    <div className="rounded-xl border border-border p-6 md:p-8">
-                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                        {f.industry}
-                      </p>
-                      <p className="mt-3 text-base md:text-lg font-light text-muted-foreground leading-relaxed max-w-3xl">
-                        {f.detail}
-                      </p>
-                    </div>
-                  </TabsContent>
-                ))}
-              </Tabs>
-            </div>
-          </Reveal>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+            {COMPLIANCE_FRAMEWORKS.map((f, i) => (
+              <Reveal key={f.framework} delay={i * 60}>
+                <div className="h-full rounded-xl border border-border bg-background p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.2)] hover:-translate-y-0.5">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                    {f.framework}
+                  </p>
+                  <p className="mt-2 text-base font-bold text-secondary leading-tight">
+                    {f.industry}
+                  </p>
+                  <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
+                    {f.detail}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
 
-          <Reveal delay={140}>
-            <div className="mt-10">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary/70">
+          <Reveal delay={160}>
+            <div className="mt-8 rounded-xl border border-border bg-muted/30 px-6 py-5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-secondary/60 mb-3">
                 Verticals served
               </p>
-              <ul className="mt-3 flex flex-wrap gap-2">
+              <ul className="flex flex-wrap gap-2">
                 {VERTICALS.map((v) => (
                   <li
                     key={v}
-                    className="rounded-full border border-border px-3 py-1.5 text-xs font-light text-muted-foreground"
+                    className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-light text-muted-foreground"
                   >
                     {v}
                   </li>
@@ -337,40 +323,15 @@ const About = () => {
         </div>
       </section>
 
-      {/* Methodology preview */}
-      <section id="methodology" className="section scroll-mt-24">
-        <SectionMarker page="Company / About" name="Methodology preview" />
-        <div className="container-page">
-          <Reveal>
-            <SectionHeading
-              eyebrow="How we deliver"
-              title="Five engagement stages, one team"
-              subtitle="The same certified practitioners run every stage — advisory through go-live."
-            />
-          </Reveal>
-
-          <Reveal delay={80}>
-            <div className="mt-12 rounded-xl border border-border p-6 md:p-8">
-              <StepFlow
-                steps={ENGAGEMENT_STAGES.map((s) => ({ label: s.name }))}
-              />
-              <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-border pt-6">
-                <p className="text-sm font-light text-muted-foreground max-w-xl">
-                  Engagement stages, IBM Platform Assessment scope, regulated-industry
-                  depth, and our same-practitioners commitment.
-                </p>
-                <Link
-                  to="/company/delivery-methodology"
-                  className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-[0.18em] text-secondary hover:text-primary transition-colors whitespace-nowrap"
-                >
-                  Read the full methodology
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageApproachSection
+        pageLabel="Company / About"
+        id="methodology"
+        markerName="Methodology preview"
+        eyebrow="How we deliver"
+        title="Five engagement stages, one team"
+        steps={ENGAGEMENT_STAGES.map((s) => ({ step: s.name, detail: s.detail }))}
+        tone="dark"
+      />
 
       <PageFinalCtaSection pageLabel="Company / About" eyebrow="TechD" />
     </Layout>

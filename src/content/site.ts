@@ -1,3 +1,17 @@
+export type ContactEntry = { value: string; status: "pending" | "live" };
+
+export const CONTACT = {
+  email: { value: "—", status: "pending" as "pending" | "live" },
+  phone: { value: "—", status: "pending" as "pending" | "live" },
+  address: {
+    city: "Miami",
+    state: "FL",
+    lines: ["Headquarters"],
+  },
+  responseSla: "1 business day",
+  ibmPlatinumSince: 2009,
+};
+
 export type NavItem = {
   label: string;
   /** Optional href. Top-level dropdown labels omit href and act as menu triggers only. */
