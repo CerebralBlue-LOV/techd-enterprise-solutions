@@ -1,35 +1,56 @@
 ## Goal
 
-Make the Industries Logos section in `/logo-lab` interactive, mirroring the existing Customer Logos QA below it. Each logo tile (rendered on the dark `bg-secondary` surface) gets size presets, and a shared toolbar lets you Copy diff or Download a patched `src/content/site.ts`.
-
-No deprecate action. No reorder. Industries grouping stays as-is.
+Replace the static logo grid in `IndustryClientsSection` with a one-client-per-slide carousel that mirrors the Solutions `ProductsGridSection` pattern (`id="products"`). Same `DarkGlowPanel`, same cross-fading radial glow, same segmented auto-advance progress bar, same clickable name list on the left. Applied to **all 7 industry pages**.
 
 ## What changes
 
-**File: `src/pages/LogoLab.tsx`** — rewrite `IndustriesLogosSection` so it:
+**One file: `src/sections/industries/IndustryClientsSection.tsx`** — full rewrite of the right column. Left column keeps eyebrow + headline + intro paragraph + stats; gains a clickable client-name list below the stats (mirrors `Products in this practice`).
 
-1. Accepts shared `edits` state and an `onEditsChange` setter from the parent `LogoLab` component (lifted up so the existing toolbar + diff/download logic covers both sections).
-2. Renders each tile with the same dark preview it has today, plus the `SIZE_PRESETS` chip row (reusing `src/sections/logo-lab/sizePresets.ts`) under each tile.
-3. Applies the chosen `logoClass` to the live preview `<img>` so resizing is immediate, just like in the Customer QA.
-4. Keeps the "missing logo" red flag and the unassigned bucket. Unassigned tiles also get size presets since they live in CUSTOMERS.
+### Right column — featured client carousel
 
-**File: `src/pages/LogoLab.tsx` (parent `LogoLab`)** — no logic rewrite needed:
+Each slide shows:
 
-- The existing `edits` state already keys by `customer.name` and the existing `buildPatchedFile`, `handleDownload`, `handleCopyDiff`, `handleReset`, and `dirtyCount` already cover every entry in `CUSTOMERS`. We just pass `edits` + `setEdits` down into `IndustriesLogosSection` so its presets feed the same store.
-- Move `IndustriesLogosSection` to render **above** the existing Customer QA grid (it's the section the user is iterating on). Toolbar stays sticky-feeling at the top of the page and operates on both.
+```
+┌──────────────────────────────────────────────┐
+│ [Featured client]            [↗ visit site] │  ← chip row
+│                                              │
+│             [LARGE LOGO]                     │  ← centered, ~h-24 to h-32
+│                                              │
+│            Client Name                       │  ← text-3xl/4xl, bold, white
+│            Industry note copy                │  ← text-base, white/65
+│                                              │
+│  ▬▬▬▬▬▬▬  ─── ─── ─── ─── ─── ─── ─── ───   │  ← segmented progress
+└──────────────────────────────────────────────┘
+```
 
-**No other files touched.** Logos on industry pages (`IndustryClientsSection`) already read `customer.logoClass` via `CUSTOMERS`, so once the diff is applied to `site.ts` the new sizes flow through automatically.
+- Auto-advance: `AUTO_MS = 7000`. Pauses on hover, focus, and when `prefers-reduced-motion: reduce`.
+- Cross-fade: same overlapping enter/exit slide pattern from `ProductsGridSection` (incoming + outgoing layers, `glow-fade-in` / `glow-fade-out`, `slide-in` / `slide-out` keyframes — already defined in `index.css`).
+- Glow positions: reuse the existing `GLOW_POSITIONS` array (extract to a shared util in the same file or inline a copy — inline keeps the change one-file).
+- Keyboard: `ArrowLeft` / `ArrowRight` cycle when the panel has focus (same pattern as Products).
+- Single-slide industries (e.g. Public Sector with the NDA "Federal Agency" entry): auto-advance disabled, progress bar hidden, no arrow keys, name list still renders (1 item).
+
+### Left column — keep + add name list
+
+Below the existing stats `dl`, add a 2-col (lg:grid-cols-2) clickable list of client names. Active client is `text-primary font-normal`; others are `text-white/55 hover:text-white`. CTA buttons stay (`btn-glow` → `/contact`, outline → `/resources/case-studies`) — currently the section doesn't have CTAs, so we add them to match the Products pattern.
+
+### Removed
+
+- The old `ClientCard` component and the 3-col grid of cards.
+- The "Logos remain the property of their respective owners." footnote (move it under the carousel, smaller and centered).
 
 ## Out of scope
 
-- No drag-reorder inside Industries (groups are fixed by `INDUSTRIES_EXTRAS`).
-- No "deprecate" button.
-- No edits to `industries-extras.ts`.
-- No new dependencies. No design tokens added.
+- No edits to `industries-extras.ts` content (clients/notes stay as-is).
+- No new shared component — the carousel logic lives inline in this file. If we later want a second carousel of this exact shape we'll factor out then.
+- No changes to the home `LogoStrip`, `/logo-lab`, or any other industry section (`WhyIndustrySection`, `IndustryOutcomesSection`, etc.).
+- No new dependencies, no new keyframes — reuses what `ProductsGridSection` and `index.css` already define.
 
 ## Technical notes
 
-- `LogoTile` already exists but is wired for the light-surface Customer grid. For the dark Industries surface I'll inline a small `IndustryLogoTile` in `IndustriesLogosSection` rather than overloading `LogoTile` with a `darkSurface` prop — keeps both call sites simple.
-- Size chips reuse `SIZE_PRESETS` and `matchPreset` from `@/sections/logo-lab/sizePresets`.
-- Dirty highlight: tile border switches to `border-primary` when `edits[name] !== (customer.logoClass ?? null)`, matching the Customer QA visual language.
-- `buildPatchedFile` is name-keyed and idempotent — no changes needed for the new edit source.
+- New state in the component: `index`, `prevIndex`, `reverse`, `paused`, plus `cardRef` for focus management.
+- Reuse the `goTo(next, dir)` + `useEffect` auto-advance + keyboard handler shape from `ProductsGridSection.tsx` lines ~140–187 verbatim, just retyped against `ResolvedClient[]` instead of `Product[]`.
+- A small inline `<SlideContent>` component renders one client (logo + name + note + visit link). The outgoing copy is keyed by `prevIndex`, the incoming by `index`, both absolutely positioned on the same focal area.
+- Logo source: `c.logoOnDark ?? c.logo`, with `brightness-0 invert` fallback when `logoOnDark` is missing — same logic the current `ClientCard` uses.
+- Clients without a `customer` match (e.g. "Federal Agency") render the initials fallback inside the slide.
+- `min-h` on the slide area ≈ `min-h-[420px] md:min-h-[480px]` so the panel doesn't jump height between clients with short vs long notes.
+- `prefers-reduced-motion`: skip auto-advance and the cross-fade by short-circuiting `prevIndex` to `null` when the media query matches (matches site-wide rule).
