@@ -11,7 +11,7 @@ const ContactInfo = () => (
       <p className="mt-4 text-base font-light text-muted-foreground leading-relaxed">
         Your note goes directly to a senior practitioner — no account team, no discovery relay. We read it, match it to the right engineer by practice area, and follow up within one business day.
       </p>
-      <IBMPlatinumBadge size="md" showTenure className="mt-8" />
+      <IBMPlatinumBadge size="lg" variant="card" showTenure className="mt-8 flex w-full" />
     </Reveal>
   </div>
 );
