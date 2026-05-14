@@ -268,13 +268,17 @@ const ContactForm = () => {
               />
             </div>
 
-            <div className="flex flex-col-reverse gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs font-light text-muted-foreground">
+            <div className="flex flex-col-reverse gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="flex items-center gap-2 text-xs font-light text-muted-foreground">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                </span>
                 We respond within one business day.
               </p>
-              <Button type="submit" size="lg" className="btn-glow h-12 px-8 w-full sm:w-auto">
+              <Button type="submit" size="lg" className="btn-glow group/btn h-12 px-8 w-full sm:w-auto">
                 Send to a principal
-                <ArrowUpRight className="ml-1" />
+                <ArrowUpRight className="ml-1 transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
               </Button>
             </div>
           </form>
