@@ -165,16 +165,26 @@ const IndustriesLogosSection = ({ edits, onChange }: IndustriesLogosSectionProps
                   ? `${import.meta.env.BASE_URL}${(customer.logoOnDark ?? customer.logo).replace(/^\//, "")}`
                   : null;
                 const path = customer.logoOnDark ?? customer.logo ?? "—";
+                const current = edits[customer.name] ?? null;
+                const dirty = current !== (customer.logoClass ?? null);
+                const sizeClass = current ?? DEFAULT_CLASS;
+                const activePreset = matchPreset(current ?? undefined);
                 return (
                   <div key={customer.name} className="flex flex-col gap-2">
-                    <div className="relative flex h-32 items-center justify-center rounded-2xl border border-dashed border-border bg-secondary p-5">
+                    <div
+                      className={cn(
+                        "relative flex h-32 items-center justify-center rounded-2xl border border-dashed bg-secondary p-5 transition",
+                        dirty ? "border-primary" : "border-border",
+                      )}
+                    >
                       {src ? (
                         <img
                           src={src}
                           alt={`${customer.name} logo`}
                           loading="lazy"
                           className={cn(
-                            "max-h-12 w-auto max-w-[160px] object-contain",
+                            sizeClass,
+                            "w-auto max-w-[200px] object-contain",
                             !customer.logoOnDark && "brightness-0 invert",
                           )}
                         />
@@ -188,6 +198,30 @@ const IndustriesLogosSection = ({ edits, onChange }: IndustriesLogosSectionProps
                       <p className="truncate text-sm font-bold text-secondary">{customer.name}</p>
                       <p className="truncate text-[11px] font-light text-muted-foreground">{path}</p>
                     </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {SIZE_PRESETS.map((p) => {
+                        const active = activePreset.className === p.className;
+                        return (
+                          <button
+                            key={p.label}
+                            type="button"
+                            onClick={() => onChange(customer.name, p.className)}
+                            className={cn(
+                              "rounded-md px-2 py-1 text-[11px] font-bold transition",
+                              active
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-muted/40 text-secondary hover:bg-muted",
+                            )}
+                            title={p.className ?? DEFAULT_CLASS}
+                          >
+                            {p.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="text-[10px] font-mono text-muted-foreground">
+                      {current ?? `${DEFAULT_CLASS}  (default)`}
+                    </p>
                   </div>
                 );
               })}
