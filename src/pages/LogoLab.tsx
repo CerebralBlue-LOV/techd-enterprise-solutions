@@ -4,9 +4,15 @@ import { CUSTOMERS, type Customer } from "@/content/site";
 import { INDUSTRIES } from "@content/industries";
 import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 import LogoTile from "@/sections/logo-lab/LogoTile";
+import { SIZE_PRESETS, DEFAULT_CLASS, matchPreset } from "@/sections/logo-lab/sizePresets";
 import { cn } from "@/lib/utils";
 
-const IndustriesLogosSection = () => {
+interface IndustriesLogosSectionProps {
+  edits: Record<string, string | null>;
+  onChange: (name: string, next: string | null) => void;
+}
+
+const IndustriesLogosSection = ({ edits, onChange }: IndustriesLogosSectionProps) => {
   const byName = useMemo(
     () => Object.fromEntries(CUSTOMERS.map((c) => [c.name, c])) as Record<string, Customer>,
     [],
