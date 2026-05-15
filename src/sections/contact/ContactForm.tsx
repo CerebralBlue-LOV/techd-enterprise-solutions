@@ -209,7 +209,7 @@ const ContactForm = () => {
             {/* About the project */}
             <div className="grid gap-5">
               <p className={SECTION_EYEBROW}>
-                <span className={STEP_NUM}>2</span> About the project
+                <span className="h-px w-6 bg-primary/60" /> About the project
               </p>
 
               <FormField
