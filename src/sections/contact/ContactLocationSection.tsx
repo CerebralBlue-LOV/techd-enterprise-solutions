@@ -56,28 +56,12 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
       {...(isLink ? { href } : {})}
       {...linkProps}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background p-5",
+        "group relative flex h-full flex-col rounded-xl border border-border bg-background p-5",
         "transition-all duration-300 ease-out",
-        isLink &&
-          "hover:-translate-y-1 hover:border-primary hover:shadow-[0_20px_40px_-24px_hsl(var(--primary)/0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+        isLink && "hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-sm",
       )}
     >
-      {/* Hover background gradient */}
-      {isLink && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/[0.06] via-transparent to-primary/[0.03] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        />
-      )}
-      {/* Hover top sheen */}
-      {isLink && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary"
-        />
-      )}
-
-      <div className="relative flex items-center gap-3">
+      <div className="flex items-center gap-3">
         <div className="grid place-items-center size-9 rounded-md bg-secondary text-white transition-colors duration-300 group-hover:bg-primary">
           <Icon className="size-4" />
         </div>
@@ -89,18 +73,17 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
 
       <p
         className={cn(
-          "relative mt-4 text-base md:text-lg font-bold leading-tight tracking-tight",
+          "mt-4 text-base md:text-lg font-bold leading-tight tracking-tight",
           pending ? "text-muted-foreground" : "text-secondary",
         )}
       >
         {title}
       </p>
-      <p className="relative mt-1.5 text-xs font-light text-muted-foreground leading-relaxed">{sub}</p>
+      <p className="mt-1.5 text-xs font-light text-muted-foreground leading-relaxed">{sub}</p>
 
       {cta && (
-        <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-primary">
+        <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-primary">
           {cta}
-          <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </span>
       )}
     </Wrapper>
