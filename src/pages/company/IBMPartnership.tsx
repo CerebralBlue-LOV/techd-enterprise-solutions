@@ -63,7 +63,7 @@ const useProductMeta = () =>
   }, []);
 
 const IBMPartnership = () => {
-  const taglines = useProductTaglines();
+  const productMeta = useProductMeta();
   const totalProducts = PORTFOLIO_BY_PRACTICE.reduce((n, r) => n + r.products.length, 0);
 
   return (
