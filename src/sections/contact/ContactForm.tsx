@@ -76,8 +76,29 @@ const ContactForm = () => {
       aria-live="polite"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
-      <div className="pointer-events-none absolute -top-32 -right-32 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-      <GeometricAccent className="opacity-30" />
+
+      {/* Soft blue grid backdrop */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.5]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, hsl(var(--primary) / 0.08) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary) / 0.08) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 75%)",
+          maskImage:
+            "radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 75%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-32 -right-24 h-[320px] w-[320px] rounded-full bg-primary/[0.07] blur-3xl"
+      />
 
       {submitted ? (
         <div className="relative z-10 py-10 md:py-16 text-center">
