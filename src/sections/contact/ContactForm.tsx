@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import GridBackdrop from "@shared/GridBackdrop";
 
 const AREAS = [
   "AI & Automation",
