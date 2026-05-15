@@ -1,5 +1,4 @@
 import Reveal from "@shared/Reveal";
-import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
 
 const ContactInfo = () => (
   <div className="lg:sticky lg:top-24">
@@ -11,7 +10,13 @@ const ContactInfo = () => (
       <p className="mt-4 text-base font-light text-muted-foreground leading-relaxed">
         Your note goes directly to a senior practitioner — no account team, no discovery relay. We read it, match it to the right engineer by practice area, and follow up within one business day.
       </p>
-      <IBMPlatinumBadge size="lg" variant="card" showTenure className="mt-8 flex w-full" />
+      <p className="mt-8 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+        <span className="text-primary">IBM Platinum</span>
+        <span className="mx-2 text-muted-foreground/50">·</span>
+        <span>15+ years</span>
+        <span className="mx-2 text-muted-foreground/50">·</span>
+        <span>Since 2009</span>
+      </p>
     </Reveal>
   </div>
 );
