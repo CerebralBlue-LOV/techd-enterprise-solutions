@@ -41,16 +41,13 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const PILL =
-  "h-10 px-4 rounded-full border border-border bg-background text-xs font-bold uppercase tracking-wider text-secondary data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary data-[state=on]:shadow-[0_6px_20px_-8px_hsl(var(--primary)/0.6)] hover:border-primary hover:text-primary transition-all duration-200";
+  "h-10 px-4 rounded-md border border-border/70 bg-background/70 text-xs font-bold uppercase tracking-wider text-secondary ring-1 ring-transparent data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary data-[state=on]:ring-primary/30 data-[state=on]:shadow-[0_6px_20px_-10px_hsl(var(--primary)/0.7)] hover:border-primary hover:text-primary transition-all duration-200";
 
 const FIELD_INPUT =
-  "h-12 bg-muted/30 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200";
+  "h-12 bg-background/70 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200";
 
 const SECTION_EYEBROW =
-  "flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
-
-const STEP_NUM =
-  "inline-flex h-6 w-6 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-bold";
+  "flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
 
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
