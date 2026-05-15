@@ -59,21 +59,21 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
         "group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background p-5",
         "transition-all duration-300 ease-out",
         isLink &&
-          "hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_20px_40px_-24px_hsl(var(--primary)/0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+          "hover:-translate-y-1 hover:border-primary hover:shadow-[0_20px_40px_-24px_hsl(var(--primary)/0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0",
       )}
     >
-      {/* Hover sheen */}
+      {/* Hover background gradient */}
+      {isLink && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/[0.06] via-transparent to-primary/[0.03] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        />
+      )}
+      {/* Hover top sheen */}
       {isLink && (
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary"
-        />
-      )}
-      {/* Corner glow on hover */}
-      {isLink && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-primary/0 blur-3xl transition-all duration-500 group-hover:bg-primary/20"
         />
       )}
 
