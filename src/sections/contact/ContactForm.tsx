@@ -137,7 +137,7 @@ const ContactForm = () => {
             {/* About you */}
             <div className="grid gap-5">
               <p className={SECTION_EYEBROW}>
-                <span className={STEP_NUM}>1</span> About you
+                <span className="h-px w-6 bg-primary/60" /> About you
               </p>
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField
