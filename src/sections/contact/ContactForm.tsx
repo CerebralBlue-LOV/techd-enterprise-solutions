@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import GeometricAccent from "@shared/GeometricAccent";
 
 const AREAS = [
   "AI & Automation",
