@@ -1,56 +1,75 @@
 ## Goal
 
-Replace the static logo grid in `IndustryClientsSection` with a one-client-per-slide carousel that mirrors the Solutions `ProductsGridSection` pattern (`id="products"`). Same `DarkGlowPanel`, same cross-fading radial glow, same segmented auto-advance progress bar, same clickable name list on the left. Applied to **all 7 industry pages**.
+Replace the bespoke "Practice → product" section on `/company/ibm-partnership` with a presentation that reuses patterns already proven elsewhere on the site (Solutions practice pages, Home solutions grid), and rewrite the copy so it talks in terms of **solutions** — not "practices" — to match the rest of the marketing voice.
 
-## What changes
+## Wording rules for this section
 
-**One file: `src/sections/industries/IndustryClientsSection.tsx`** — full rewrite of the right column. Left column keeps eyebrow + headline + intro paragraph + stats; gains a clickable client-name list below the stats (mirrors `Products in this practice`).
+- Drop the word "practice" from headings, eyebrows, chips, and body copy. The four buckets become **solution areas** (or just "solutions").
+- Keep the four bucket names exactly as they exist in `PRACTICE_AREAS` / `PORTFOLIO_BY_PRACTICE`: *AI & Generative Solutions*, *Data & Analytics*, *Automation & FinOps*, *Security & Compliance*.
+- Practitioner-to-practitioner voice (per CLAUDE.md): no superlatives, no "world-class", no filler adjectives. Lead with concrete facts ("21 IBM products across four solution areas", "certified across watsonx, Db2, Guardium…").
+- Eyebrow becomes `Solutions → products` (replaces `Practice → product`).
+- Section heading stays factual: `Certified across {totalProducts} IBM products`.
+- Per-card label `Practice 0X` → `Solution 0X`.
+- "See the practice" link → `Explore the solution`.
+- Hover-card "Open product" stays as-is.
 
-### Right column — featured client carousel
+## What to reuse
 
-Each slide shows:
+1. **`SectionHeading`, `SectionMarker`, `Reveal`** — already used; keep.
+2. **`PracticeBadge`** — keep as the oversized ghost initial backdrop. It's already practice-agnostic (just renders 2-letter initials), so no rename needed.
+3. **`HoverCard`** for product chip details — keep.
+4. **Card pattern from `WHAT_PLATINUM_MEANS` block + Home `SolutionsGridSection` chip treatment** — adopt the same card chrome we already use elsewhere on this same page (numbered eyebrow `01`, bold title, hover border-primary, animated bottom underline) so the four solution-area cards visually rhyme with the "What Platinum means" grid directly above and the home solutions grid.
+5. **Chip styling from `FlipCard` chips** (Home `SolutionsGridSection`) — same rounded-full bordered chip with hover lift and primary border, so the IBM page feels like a natural extension of the home grid rather than a one-off.
+6. **`useProductMeta` hook** — keep; it's the right bridge between the flat `PORTFOLIO_BY_PRACTICE` strings and the typed `SOLUTIONS` product entries.
+7. **CTA pattern** — each solution-area card gets the standard `Explore the solution →` link (matches the "See the practice" link style used elsewhere; arrow translates on hover).
 
+## New section structure
+
+Replace the current single-column stack of four wide rows with a **2×2 grid of solution-area cards** that mirrors the home `SolutionsGridSection` rhythm:
+
+```text
+┌──────────────────────────────────────┐
+│ Eyebrow: Solutions → products        │
+│ H2:      Certified across 21 IBM…    │
+│ Sub:     One-line scope reference    │
+│                                      │
+│ Counter pill: 21 products · 4        │
+│ solution areas · Hover any chip      │
+│                                      │
+│ ┌──────────────┐  ┌──────────────┐   │
+│ │ Solution 01  │  │ Solution 02  │   │
+│ │ AI & Gen…    │  │ Data & Anal… │   │
+│ │ [PracticeBadge ghost initial]│   │
+│ │ N certified products         │   │
+│ │ [chips…]                     │   │
+│ │ Explore the solution →       │   │
+│ └──────────────┘  └──────────────┘   │
+│ ┌──────────────┐  ┌──────────────┐   │
+│ │ Solution 03  │  │ Solution 04  │   │
+│ └──────────────┘  └──────────────┘   │
+└──────────────────────────────────────┘
 ```
-┌──────────────────────────────────────────────┐
-│ [Featured client]            [↗ visit site] │  ← chip row
-│                                              │
-│             [LARGE LOGO]                     │  ← centered, ~h-24 to h-32
-│                                              │
-│            Client Name                       │  ← text-3xl/4xl, bold, white
-│            Industry note copy                │  ← text-base, white/65
-│                                              │
-│  ▬▬▬▬▬▬▬  ─── ─── ─── ─── ─── ─── ─── ───   │  ← segmented progress
-└──────────────────────────────────────────────┘
-```
 
-- Auto-advance: `AUTO_MS = 7000`. Pauses on hover, focus, and when `prefers-reduced-motion: reduce`.
-- Cross-fade: same overlapping enter/exit slide pattern from `ProductsGridSection` (incoming + outgoing layers, `glow-fade-in` / `glow-fade-out`, `slide-in` / `slide-out` keyframes — already defined in `index.css`).
-- Glow positions: reuse the existing `GLOW_POSITIONS` array (extract to a shared util in the same file or inline a copy — inline keeps the change one-file).
-- Keyboard: `ArrowLeft` / `ArrowRight` cycle when the panel has focus (same pattern as Products).
-- Single-slide industries (e.g. Public Sector with the NDA "Federal Agency" entry): auto-advance disabled, progress bar hidden, no arrow keys, name list still renders (1 item).
+Why 2×2 instead of the current 1-up rows: matches the home solutions grid and the "What Platinum means" 4-up directly above on the same page; reads faster; gives every solution area equal visual weight.
 
-### Left column — keep + add name list
+## Technical changes
 
-Below the existing stats `dl`, add a 2-col (lg:grid-cols-2) clickable list of client names. Active client is `text-primary font-normal`; others are `text-white/55 hover:text-white`. CTA buttons stay (`btn-glow` → `/contact`, outline → `/resources/case-studies`) — currently the section doesn't have CTAs, so we add them to match the Products pattern.
-
-### Removed
-
-- The old `ClientCard` component and the 3-col grid of cards.
-- The "Logos remain the property of their respective owners." footnote (move it under the carousel, smaller and centered).
+- File: `src/pages/company/IBMPartnership.tsx` only.
+- Section markup swapped from `space-y-3` rows to `grid gap-6 md:grid-cols-2`.
+- Card markup borrowed from the existing "What Platinum means" card on this same page (consistent border, hover border-primary, animated bottom underline) plus the chip-list pattern.
+- Chip rendering logic (HoverCard wrap when `meta?.tagline` exists, internal `Link` when `meta?.href` exists) — keep as-is; only the wrapping card and copy strings change.
+- All copy strings touched:
+  - `eyebrow="Practice → product"` → `eyebrow="Solutions → products"`
+  - Counter pill `{count} practices` → `{count} solution areas`
+  - Per-card `Practice 0{i+1}` → `Solution 0{i+1}`
+  - Per-card `{n} certified products` — kept
+  - Per-card link `See the practice` → `Explore the solution`
+- No changes to `src/content/about.ts` (the `PORTFOLIO_BY_PRACTICE` constant name stays; only user-facing strings change).
+- No changes to `PracticeBadge.tsx`, `SectionHeading`, `Reveal`, `HoverCard`, or any shared component.
+- No new dependencies, no new files.
 
 ## Out of scope
 
-- No edits to `industries-extras.ts` content (clients/notes stay as-is).
-- No new shared component — the carousel logic lives inline in this file. If we later want a second carousel of this exact shape we'll factor out then.
-- No changes to the home `LogoStrip`, `/logo-lab`, or any other industry section (`WhyIndustrySection`, `IndustryOutcomesSection`, etc.).
-- No new dependencies, no new keyframes — reuses what `ProductsGridSection` and `index.css` already define.
-
-## Technical notes
-
-- New state in the component: `index`, `prevIndex`, `reverse`, `paused`, plus `cardRef` for focus management.
-- Reuse the `goTo(next, dir)` + `useEffect` auto-advance + keyboard handler shape from `ProductsGridSection.tsx` lines ~140–187 verbatim, just retyped against `ResolvedClient[]` instead of `Product[]`.
-- A small inline `<SlideContent>` component renders one client (logo + name + note + visit link). The outgoing copy is keyed by `prevIndex`, the incoming by `index`, both absolutely positioned on the same focal area.
-- Logo source: `c.logoOnDark ?? c.logo`, with `brightness-0 invert` fallback when `logoOnDark` is missing — same logic the current `ClientCard` uses.
-- Clients without a `customer` match (e.g. "Federal Agency") render the initials fallback inside the slide.
-- `min-h` on the slide area ≈ `min-h-[420px] md:min-h-[480px]` so the panel doesn't jump height between clients with short vs long notes.
-- `prefers-reduced-motion`: skip auto-advance and the cross-fade by short-circuiting `prevIndex` to `null` when the media query matches (matches site-wide rule).
+- Renaming the `PORTFOLIO_BY_PRACTICE` / `PRACTICE_AREAS` constants or the `PracticeBadge` component (internal naming, no user impact — leave for a future rename pass).
+- Any change to other sections on the page (Credential, What Platinum means, AI Operating Model, Quick Start Advisory).
+- Any change to home, solutions, services, or industries pages.

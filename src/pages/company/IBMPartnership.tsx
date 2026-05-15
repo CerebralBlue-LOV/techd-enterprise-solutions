@@ -184,7 +184,7 @@ const IBMPartnership = () => {
         <div className="container-page">
           <Reveal>
             <SectionHeading
-              eyebrow="Practice → product"
+              eyebrow="Solutions → products"
               title={`Certified across ${totalProducts} IBM products`}
               subtitle="A scannable scope reference for procurement, architecture, and licensing conversations."
             />
@@ -194,43 +194,34 @@ const IBMPartnership = () => {
             <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-secondary">
               <span className="text-primary">{totalProducts} products</span>
               <span className="text-border">·</span>
-              <span>{PORTFOLIO_BY_PRACTICE.length} practices</span>
+              <span>{PORTFOLIO_BY_PRACTICE.length} solution areas</span>
               <span className="text-border">·</span>
               <span className="text-muted-foreground">Hover any chip for details</span>
             </div>
           </Reveal>
 
-          <div className="mt-10 space-y-3">
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
             {PORTFOLIO_BY_PRACTICE.map((row, i) => (
               <Reveal key={row.practice} delay={i * 60}>
-                <div className="group relative overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-colors duration-300 hover:border-primary/50">
+                <div className="group relative h-full overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-colors duration-300 hover:border-primary/50">
                   {/* Oversized ghost initial backdrop */}
                   <PracticeBadge
                     practice={row.practice}
-                    className="pointer-events-none absolute -right-2 -top-6 text-[180px] md:text-[220px] leading-none"
+                    className="pointer-events-none absolute -right-2 -top-6 text-[160px] md:text-[180px] leading-none"
                   />
 
-                  <div className="relative grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)] md:items-start">
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-primary">
-                        Practice 0{i + 1}
-                      </p>
-                      <h3 className="mt-2 text-xl font-bold text-secondary leading-tight">
-                        {row.practice}
-                      </h3>
-                      <p className="mt-2 text-xs font-light text-muted-foreground">
-                        {row.products.length} certified products
-                      </p>
-                      <Link
-                        to={row.to}
-                        className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-secondary group-hover:text-primary transition-colors"
-                      >
-                        See the practice
-                        <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </div>
+                  <div className="relative flex h-full flex-col">
+                    <p className="text-[11px] font-bold tracking-[0.18em] text-primary">
+                      Solution {String(i + 1).padStart(2, "0")}
+                    </p>
+                    <h3 className="mt-3 text-lg font-bold text-secondary leading-tight">
+                      {row.practice}
+                    </h3>
+                    <p className="mt-1 text-xs font-light text-muted-foreground">
+                      {row.products.length} certified products
+                    </p>
 
-                    <ul className="flex flex-wrap gap-2">
+                    <ul className="mt-5 flex flex-wrap gap-2">
                       {row.products.map((p) => {
                         const meta = productMeta.get(p.toLowerCase());
                         const interactive = !!meta?.tagline || !!meta?.href;
@@ -277,6 +268,18 @@ const IBMPartnership = () => {
                         );
                       })}
                     </ul>
+
+                    <Link
+                      to={row.to}
+                      className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-secondary group-hover:text-primary transition-colors"
+                    >
+                      Explore the solution
+                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                    <span
+                      aria-hidden
+                      className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full"
+                    />
                   </div>
                 </div>
               </Reveal>
