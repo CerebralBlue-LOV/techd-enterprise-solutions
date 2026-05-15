@@ -78,7 +78,7 @@ const ContactForm = () => {
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
-      <GridBackdrop tone="primary" cellSize={32} opacity={0.18} mask="top" />
+      <GridBackdrop tone="border" cellSize={56} opacity={0.55} mask="top" />
 
       {submitted ? (
         <div className="relative z-10 py-10 md:py-16 text-center">
