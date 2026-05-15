@@ -1,25 +1,18 @@
 import { Link } from "react-router-dom";
-import { useMemo } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import PracticeBadge from "@shared/PracticeBadge";
 import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
+import PracticeStaticMotif, { initialsFor } from "@shared/PracticeStaticMotif";
+import FlipCard from "@sections/home/_components/FlipCard";
 import ibmLogoWhite from "@/assets/ibm-logo-white.png";
 import { Button } from "@ui/button";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@ui/hover-card";
-import { cn } from "@/lib/utils";
-import {
-  PORTFOLIO_BY_PRACTICE,
   IBM_AI_OPERATING_MODEL,
   QUICK_START_ADVISORY,
   IBM_PARTNER_DIRECTORY_URL,
