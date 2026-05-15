@@ -1,25 +1,18 @@
 import { Link } from "react-router-dom";
-import { useMemo } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
-import PracticeBadge from "@shared/PracticeBadge";
 import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
+import PracticeStaticMotif, { initialsFor } from "@shared/PracticeStaticMotif";
+import FlipCard from "@sections/home/_components/FlipCard";
 import ibmLogoWhite from "@/assets/ibm-logo-white.png";
 import { Button } from "@ui/button";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@ui/hover-card";
-import { cn } from "@/lib/utils";
-import {
-  PORTFOLIO_BY_PRACTICE,
   IBM_AI_OPERATING_MODEL,
   QUICK_START_ADVISORY,
   IBM_PARTNER_DIRECTORY_URL,
@@ -45,26 +38,9 @@ const WHAT_PLATINUM_MEANS = [
   },
 ];
 
-type ProductMeta = { tagline?: string; href?: string };
-
-const useProductMeta = () =>
-  useMemo(() => {
-    const map = new Map<string, ProductMeta>();
-    for (const sol of SOLUTIONS) {
-      for (const p of sol.products) {
-        const href =
-          p.link.kind === "internal"
-            ? `/solutions/${sol.id}/${p.link.slug}`
-            : undefined;
-        map.set(p.name.toLowerCase(), { tagline: p.tagline, href });
-      }
-    }
-    return map;
-  }, []);
-
 const IBMPartnership = () => {
-  const productMeta = useProductMeta();
-  const totalProducts = PORTFOLIO_BY_PRACTICE.reduce((n, r) => n + r.products.length, 0);
+  const totalProducts = SOLUTIONS.reduce((n, s) => n + s.products.length, 0);
+
 
   return (
     <Layout>
@@ -194,96 +170,46 @@ const IBMPartnership = () => {
             <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-secondary">
               <span className="text-primary">{totalProducts} products</span>
               <span className="text-border">·</span>
-              <span>{PORTFOLIO_BY_PRACTICE.length} solution areas</span>
+              <span>{SOLUTIONS.length} solution areas</span>
               <span className="text-border">·</span>
-              <span className="text-muted-foreground">Hover any chip for details</span>
+              <span className="text-muted-foreground">Hover any card to flip</span>
             </div>
           </Reveal>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {PORTFOLIO_BY_PRACTICE.map((row, i) => (
-              <Reveal key={row.practice} delay={i * 60}>
-                <div className="group relative h-full overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-colors duration-300 hover:border-primary/50">
-                  {/* Oversized ghost initial backdrop */}
-                  <PracticeBadge
-                    practice={row.practice}
-                    className="pointer-events-none absolute -right-2 -top-6 text-[160px] md:text-[180px] leading-none"
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            {SOLUTIONS.map((sol, i) => {
+              const CAP = 6;
+              const all = sol.products.map((p) => ({
+                label: p.name,
+                to:
+                  p.link.kind === "internal"
+                    ? `/solutions/${sol.id}/${p.link.slug}`
+                    : p.link.url,
+                external: p.link.kind === "external",
+              }));
+              const chips =
+                all.length <= CAP
+                  ? all
+                  : [
+                      ...all.slice(0, CAP),
+                      { label: `+${all.length - CAP} more`, to: `/solutions/${sol.id}` },
+                    ];
+              return (
+                <Reveal key={sol.id} delay={i * 60}>
+                  <FlipCard
+                    to={`/solutions/${sol.id}`}
+                    eyebrow={sol.name}
+                    title={sol.outcome}
+                    footer={`${sol.products.length} IBM-certified products`}
+                    backTitle={sol.outcome}
+                    backBody={sol.pitch}
+                    chips={chips}
+                    ctaLabel={sol.ctaLabel}
+                    motif={<PracticeStaticMotif initials={initialsFor(sol.name)} />}
                   />
-
-                  <div className="relative flex h-full flex-col">
-                    <p className="text-[11px] font-bold tracking-[0.18em] text-primary">
-                      Solution {String(i + 1).padStart(2, "0")}
-                    </p>
-                    <h3 className="mt-3 text-lg font-bold text-secondary leading-tight">
-                      {row.practice}
-                    </h3>
-                    <p className="mt-1 text-xs font-light text-muted-foreground">
-                      {row.products.length} certified products
-                    </p>
-
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {row.products.map((p) => {
-                        const meta = productMeta.get(p.toLowerCase());
-                        const interactive = !!meta?.tagline || !!meta?.href;
-                        const chip = (
-                          <span
-                            className={cn(
-                              "inline-block rounded-full border border-border bg-background px-3 py-1 text-[12px] font-light text-muted-foreground transition-all duration-200",
-                              interactive &&
-                                "hover:border-primary hover:text-secondary hover:-translate-y-0.5",
-                            )}
-                          >
-                            {p}
-                          </span>
-                        );
-                        const trigger = meta?.href ? (
-                          <Link to={meta.href}>{chip}</Link>
-                        ) : (
-                          chip
-                        );
-                        return (
-                          <li key={p}>
-                            {meta?.tagline ? (
-                              <HoverCard openDelay={120}>
-                                <HoverCardTrigger asChild>{trigger}</HoverCardTrigger>
-                                <HoverCardContent className="w-72">
-                                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                                    {p}
-                                  </p>
-                                  <p className="mt-2 text-xs font-light text-muted-foreground leading-relaxed">
-                                    {meta.tagline}
-                                  </p>
-                                  {meta.href && (
-                                    <p className="mt-3 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.18em] text-secondary">
-                                      Open product
-                                      <ArrowRight className="h-3 w-3" />
-                                    </p>
-                                  )}
-                                </HoverCardContent>
-                              </HoverCard>
-                            ) : (
-                              trigger
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-
-                    <Link
-                      to={row.to}
-                      className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-secondary group-hover:text-primary transition-colors"
-                    >
-                      Explore the solution
-                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                    <span
-                      aria-hidden
-                      className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full"
-                    />
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
