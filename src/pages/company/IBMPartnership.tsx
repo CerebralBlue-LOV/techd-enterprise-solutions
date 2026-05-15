@@ -9,7 +9,7 @@ import SectionHeading from "@shared/SectionHeading";
 import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
-import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
+import ibmLogoWhite from "@/assets/ibm-logo-white.png";
 import { Button } from "@ui/button";
 import {
   HoverCard,
@@ -107,7 +107,9 @@ const IBMPartnership = () => {
               />
               <div className="relative flex flex-col md:flex-row md:items-center gap-6 md:justify-between">
                 <div className="flex items-center gap-5">
-                  <IBMPlatinumBadge size="md" />
+                  <div className="grid place-items-center rounded-md bg-secondary shrink-0 h-9 w-14 px-2">
+                    <img src={ibmLogoWhite} alt="IBM" className="h-full w-full object-contain" />
+                  </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                       IBM Partner Plus
