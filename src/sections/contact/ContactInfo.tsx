@@ -10,12 +10,12 @@ const ContactInfo = () => (
       <p className="mt-4 text-base font-light text-muted-foreground leading-relaxed">
         Your note goes directly to a senior practitioner — no account team, no discovery relay. We read it, match it to the right engineer by practice area, and follow up within one business day.
       </p>
-      <p className="mt-8 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
-        <span className="text-primary">IBM Platinum</span>
-        <span className="mx-2 text-muted-foreground/50">·</span>
-        <span>15+ years</span>
-        <span className="mx-2 text-muted-foreground/50">·</span>
-        <span>Since 2009</span>
+      <p className="group mt-8 inline-flex flex-wrap items-center text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground transition-colors duration-300 hover:text-secondary motion-reduce:transition-none">
+        <span className="transition-colors duration-300 group-hover:text-primary">IBM Platinum</span>
+        <span className="mx-2 text-muted-foreground/50 transition-transform duration-300 group-hover:scale-125">·</span>
+        <span className="transition-colors duration-300 group-hover:text-primary">15+ years</span>
+        <span className="mx-2 text-muted-foreground/50 transition-transform duration-300 group-hover:scale-125">·</span>
+        <span className="transition-colors duration-300 group-hover:text-primary">Since 2009</span>
       </p>
     </Reveal>
   </div>
