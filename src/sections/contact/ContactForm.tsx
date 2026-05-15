@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import GridBackdrop from "@shared/GridBackdrop";
 
 const AREAS = [
   "AI & Automation",
@@ -77,20 +78,7 @@ const ContactForm = () => {
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
-      {/* Soft blue grid backdrop */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.5]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, hsl(var(--primary) / 0.08) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary) / 0.08) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 75%)",
-          maskImage:
-            "radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 75%)",
-        }}
-      />
+      <GridBackdrop tone="primary" cellSize={32} opacity={0.18} mask="top" />
 
       {submitted ? (
         <div className="relative z-10 py-10 md:py-16 text-center">
