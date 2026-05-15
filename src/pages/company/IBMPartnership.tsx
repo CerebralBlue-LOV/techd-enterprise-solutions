@@ -9,7 +9,7 @@ import SectionHeading from "@shared/SectionHeading";
 import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
-import IBMPlatinumBadge from "@shared/IBMPlatinumBadge";
+import ibmLogoWhite from "@/assets/ibm-logo-white.png";
 import { Button } from "@ui/button";
 import {
   HoverCard,
