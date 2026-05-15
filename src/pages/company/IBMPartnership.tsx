@@ -108,7 +108,7 @@ const IBMPartnership = () => {
               <div className="relative flex flex-col md:flex-row md:items-center gap-6 md:justify-between">
                 <div className="flex items-center gap-5">
                   <div className="grid place-items-center rounded-md bg-secondary shrink-0 h-9 w-14 px-2">
-                    <img src={(await import("@/assets/ibm-logo-white.png")).default} alt="IBM" className="h-full w-full object-contain" />
+                    <img src={ibmLogoWhite} alt="IBM" className="h-full w-full object-contain" />
                   </div>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
