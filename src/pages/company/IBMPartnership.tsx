@@ -38,26 +38,9 @@ const WHAT_PLATINUM_MEANS = [
   },
 ];
 
-type ProductMeta = { tagline?: string; href?: string };
-
-const useProductMeta = () =>
-  useMemo(() => {
-    const map = new Map<string, ProductMeta>();
-    for (const sol of SOLUTIONS) {
-      for (const p of sol.products) {
-        const href =
-          p.link.kind === "internal"
-            ? `/solutions/${sol.id}/${p.link.slug}`
-            : undefined;
-        map.set(p.name.toLowerCase(), { tagline: p.tagline, href });
-      }
-    }
-    return map;
-  }, []);
-
 const IBMPartnership = () => {
-  const productMeta = useProductMeta();
-  const totalProducts = PORTFOLIO_BY_PRACTICE.reduce((n, r) => n + r.products.length, 0);
+  const totalProducts = SOLUTIONS.reduce((n, s) => n + s.products.length, 0);
+
 
   return (
     <Layout>
