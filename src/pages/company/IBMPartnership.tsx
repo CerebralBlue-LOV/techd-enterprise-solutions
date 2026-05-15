@@ -200,60 +200,84 @@ const IBMPartnership = () => {
             </div>
           </Reveal>
 
-          <div className="mt-8 space-y-4">
+          <div className="mt-10 space-y-3">
             {PORTFOLIO_BY_PRACTICE.map((row, i) => (
               <Reveal key={row.practice} delay={i * 60}>
-                <div className="rounded-xl border border-border p-6 grid gap-5 md:grid-cols-[1fr_2.4fr] md:items-start">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                      Practice 0{i + 1}
-                    </p>
-                    <h3 className="mt-2 text-lg font-bold text-secondary leading-tight">
-                      {row.practice}
-                    </h3>
-                    <Link
-                      to={row.to}
-                      className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-secondary hover:text-primary transition-colors"
-                    >
-                      See the practice
-                      <ArrowRight className="h-3 w-3" />
-                    </Link>
+                <div className="group relative overflow-hidden rounded-xl border border-border bg-background p-6 md:p-8 transition-colors duration-300 hover:border-primary/50">
+                  {/* Oversized ghost initial backdrop */}
+                  <PracticeBadge
+                    practice={row.practice}
+                    className="pointer-events-none absolute -right-2 -top-6 text-[180px] md:text-[220px] leading-none"
+                  />
+
+                  <div className="relative grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)] md:items-start">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-primary">
+                        Practice 0{i + 1}
+                      </p>
+                      <h3 className="mt-2 text-xl font-bold text-secondary leading-tight">
+                        {row.practice}
+                      </h3>
+                      <p className="mt-2 text-xs font-light text-muted-foreground">
+                        {row.products.length} certified products
+                      </p>
+                      <Link
+                        to={row.to}
+                        className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-secondary group-hover:text-primary transition-colors"
+                      >
+                        See the practice
+                        <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    </div>
+
+                    <ul className="flex flex-wrap gap-2">
+                      {row.products.map((p) => {
+                        const meta = productMeta.get(p.toLowerCase());
+                        const interactive = !!meta?.tagline || !!meta?.href;
+                        const chip = (
+                          <span
+                            className={cn(
+                              "inline-block rounded-full border border-border bg-background px-3 py-1 text-[12px] font-light text-muted-foreground transition-all duration-200",
+                              interactive &&
+                                "hover:border-primary hover:text-secondary hover:-translate-y-0.5",
+                            )}
+                          >
+                            {p}
+                          </span>
+                        );
+                        const trigger = meta?.href ? (
+                          <Link to={meta.href}>{chip}</Link>
+                        ) : (
+                          chip
+                        );
+                        return (
+                          <li key={p}>
+                            {meta?.tagline ? (
+                              <HoverCard openDelay={120}>
+                                <HoverCardTrigger asChild>{trigger}</HoverCardTrigger>
+                                <HoverCardContent className="w-72">
+                                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                                    {p}
+                                  </p>
+                                  <p className="mt-2 text-xs font-light text-muted-foreground leading-relaxed">
+                                    {meta.tagline}
+                                  </p>
+                                  {meta.href && (
+                                    <p className="mt-3 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.18em] text-secondary">
+                                      Open product
+                                      <ArrowRight className="h-3 w-3" />
+                                    </p>
+                                  )}
+                                </HoverCardContent>
+                              </HoverCard>
+                            ) : (
+                              trigger
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-                  <ul className="flex flex-wrap gap-2">
-                    {row.products.map((p) => {
-                      const tag = taglines.get(p.toLowerCase());
-                      const chip = (
-                        <span
-                          className={cn(
-                            "rounded-full border border-border px-3 py-1 text-[12px] font-light text-muted-foreground transition-colors",
-                            tag &&
-                              "cursor-help hover:border-primary/60 hover:text-secondary",
-                          )}
-                        >
-                          {p}
-                        </span>
-                      );
-                      return (
-                        <li key={p}>
-                          {tag ? (
-                            <HoverCard openDelay={120}>
-                              <HoverCardTrigger asChild>{chip}</HoverCardTrigger>
-                              <HoverCardContent className="w-72">
-                                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                                  {p}
-                                </p>
-                                <p className="mt-2 text-xs font-light text-muted-foreground leading-relaxed">
-                                  {tag}
-                                </p>
-                              </HoverCardContent>
-                            </HoverCard>
-                          ) : (
-                            chip
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
                 </div>
               </Reveal>
             ))}
