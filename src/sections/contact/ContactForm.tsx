@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import GeometricAccent from "@shared/GeometricAccent";
 
 const AREAS = [
   "AI & Automation",
@@ -42,16 +41,13 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const PILL =
-  "h-10 px-4 rounded-full border border-border bg-background text-xs font-bold uppercase tracking-wider text-secondary data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary data-[state=on]:shadow-[0_6px_20px_-8px_hsl(var(--primary)/0.6)] hover:border-primary hover:text-primary transition-all duration-200";
+  "h-10 px-4 rounded-md border border-border/70 bg-background/70 text-xs font-bold uppercase tracking-wider text-secondary ring-1 ring-transparent data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary data-[state=on]:ring-primary/30 data-[state=on]:shadow-[0_6px_20px_-10px_hsl(var(--primary)/0.7)] hover:border-primary hover:text-primary transition-all duration-200";
 
 const FIELD_INPUT =
-  "h-12 bg-muted/30 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200";
+  "h-12 bg-background/70 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200";
 
 const SECTION_EYEBROW =
-  "flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
-
-const STEP_NUM =
-  "inline-flex h-6 w-6 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-primary text-[11px] font-bold";
+  "flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
 
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -80,8 +76,29 @@ const ContactForm = () => {
       aria-live="polite"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
-      <div className="pointer-events-none absolute -top-32 -right-32 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-      <GeometricAccent className="opacity-30" />
+
+      {/* Soft blue grid backdrop */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.5]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, hsl(var(--primary) / 0.08) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary) / 0.08) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 75%)",
+          maskImage:
+            "radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 75%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-32 -right-24 h-[320px] w-[320px] rounded-full bg-primary/[0.07] blur-3xl"
+      />
 
       {submitted ? (
         <div className="relative z-10 py-10 md:py-16 text-center">
@@ -120,7 +137,7 @@ const ContactForm = () => {
             {/* About you */}
             <div className="grid gap-5">
               <p className={SECTION_EYEBROW}>
-                <span className={STEP_NUM}>1</span> About you
+                <span className="h-px w-6 bg-primary/60" /> About you
               </p>
               <div className="grid gap-5 sm:grid-cols-2">
                 <FormField
@@ -192,7 +209,7 @@ const ContactForm = () => {
             {/* About the project */}
             <div className="grid gap-5">
               <p className={SECTION_EYEBROW}>
-                <span className={STEP_NUM}>2</span> About the project
+                <span className="h-px w-6 bg-primary/60" /> About the project
               </p>
 
               <FormField
