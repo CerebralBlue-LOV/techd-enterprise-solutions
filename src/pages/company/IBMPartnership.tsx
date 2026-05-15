@@ -6,6 +6,7 @@ import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import SectionHeading from "@shared/SectionHeading";
+import PracticeBadge from "@shared/PracticeBadge";
 import CompanyFigure from "@shared/heroFigures/CompanyFigure";
 import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
