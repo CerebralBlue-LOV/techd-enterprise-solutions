@@ -78,8 +78,8 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
       )}
 
       <div className="relative flex items-center gap-3">
-        <div className="relative grid place-items-center size-9 rounded-md bg-secondary text-white transition-all duration-300 group-hover:bg-primary group-hover:scale-110 group-hover:shadow-[0_8px_20px_-8px_hsl(var(--primary)/0.6)]">
-          <Icon className="size-4 transition-transform duration-300 group-hover:rotate-[-6deg]" />
+        <div className="grid place-items-center size-9 rounded-md bg-secondary text-white transition-colors duration-300 group-hover:bg-primary">
+          <Icon className="size-4" />
         </div>
         <p className="eyebrow">{eyebrow}</p>
         {isLink && (
