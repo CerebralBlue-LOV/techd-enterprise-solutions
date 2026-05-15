@@ -91,14 +91,6 @@ const ContactForm = () => {
             "radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 75%)",
         }}
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-32 -right-24 h-[320px] w-[320px] rounded-full bg-primary/[0.07] blur-3xl"
-      />
 
       {submitted ? (
         <div className="relative z-10 py-10 md:py-16 text-center">
