@@ -45,12 +45,18 @@ const WHAT_PLATINUM_MEANS = [
   },
 ];
 
-const useProductTaglines = () =>
+type ProductMeta = { tagline?: string; href?: string };
+
+const useProductMeta = () =>
   useMemo(() => {
-    const map = new Map<string, string>();
+    const map = new Map<string, ProductMeta>();
     for (const sol of SOLUTIONS) {
       for (const p of sol.products) {
-        if (p.tagline) map.set(p.name.toLowerCase(), p.tagline);
+        const href =
+          p.link.kind === "internal"
+            ? `/solutions/${sol.id}/${p.link.slug}`
+            : undefined;
+        map.set(p.name.toLowerCase(), { tagline: p.tagline, href });
       }
     }
     return map;
