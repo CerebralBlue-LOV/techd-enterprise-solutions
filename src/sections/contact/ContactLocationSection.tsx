@@ -89,8 +89,8 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
 
       <p
         className={cn(
-          "relative mt-4 text-base md:text-lg font-bold leading-tight tracking-tight transition-colors duration-300",
-          pending ? "text-muted-foreground" : "text-secondary group-hover:text-primary",
+          "relative mt-4 text-base md:text-lg font-bold leading-tight tracking-tight",
+          pending ? "text-muted-foreground" : "text-secondary",
         )}
       >
         {title}
