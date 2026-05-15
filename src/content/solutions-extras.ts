@@ -1,5 +1,5 @@
 /**
- * Practice-level extras for the 5 solutions landing pages.
+ * Practice-level extras for the 4 solutions landing pages.
  * Keyed by `Solution.id` from `src/content/solutions.ts`.
  *
  * Industry proof lines reference the existing INDUSTRIES data in

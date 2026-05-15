@@ -121,10 +121,10 @@ export const SOLUTIONS: Solution[] = [
             "AI agent development and production lifecycle management using AgentOps across complex multi-agent architectures",
           ],
           whyTechD: [
-            "IBM Platinum Business Partner — the highest tier in the IBM ecosystem, with certified architects across the full watsonx stack and direct access to IBM's technical roadmap.",
+            "We engage IBM's Platinum partner programs to access watsonx.ai's technical roadmap and pre-GA capabilities — which means we deploy governance and MLOps features in your environment before they reach the broader partner ecosystem.",
             "We build for operability, not demo readiness — every engagement delivers the MLOps pipelines, governance controls, and operational runbooks your team can own without us in the room.",
-            "Regulated industry specialization — HIPAA, FedRAMP, PCI-DSS, and SOX-aligned deployments with the lineage, audit trails, and access controls that survive a real examination.",
-            "15+ years of IBM platform delivery means our architects know what IBM's documentation doesn't say — the edge cases, upgrade paths, and production patterns that actually matter.",
+            "We build for regulated industries — HIPAA, FedRAMP, PCI-DSS, and SOX-aligned watsonx.ai deployments with the lineage, audit trails, and access controls that survive a real examination, not just a vendor demo.",
+            "We've spent 15+ years on IBM platforms, which means our architects know what the documentation doesn't say — the edge cases, upgrade paths, and production patterns that actually matter.",
           ],
           stats: [
             { value: "128K", label: "Granite 4.1 context window (tokens)" },
@@ -160,10 +160,10 @@ export const SOLUTIONS: Solution[] = [
             "Scaled agentic AI — from single-agent pilots to production multi-agent deployments with governance, observability, and policy enforcement",
           ],
           whyTechD: [
-            "IBM Platinum Business Partner — access to IBM's technical roadmap, early feature programs, and escalation paths unavailable at lower partnership tiers.",
-            "End-to-end platform ownership — TechD architects every layer from OpenShift cluster design through the BI and AI applications that consume the platform, with no handoff gaps.",
-            "Regulated industry deployments from day one — HIPAA, FedRAMP, PCI-DSS, and NERC-CIP across healthcare, federal, financial services, and energy clients.",
-            "15+ years of IBM platform delivery means we've navigated the watsonx upgrade paths, the agentic governance edge cases, and the operational patterns that keep the platform running through budget cycles and organizational changes.",
+            "We access IBM's full Platinum partner programs — technical roadmap briefings, early feature access, and direct engineering escalation paths that lower-tier partners can't offer, which we route into your platform build from day one.",
+            "We architect every layer from OpenShift cluster design through the BI and AI applications that consume the platform — no handoff gaps between our infrastructure and application teams, so the platform you receive is a coherent whole.",
+            "We deploy into regulated industries from day one — HIPAA, FedRAMP, PCI-DSS, and NERC-CIP environments where access controls and audit trails aren't optional features, built into every watsonx engagement we run.",
+            "We've navigated the watsonx upgrade paths, the agentic governance edge cases, and the operational patterns that keep the platform running through budget cycles and organizational changes — accumulated from 15+ years on IBM platforms.",
           ],
           stats: [
             { value: "$12.5B", label: "IBM enterprise genAI business on watsonx" },
@@ -199,10 +199,10 @@ export const SOLUTIONS: Solution[] = [
             "Supply chain disruption response — automated analysis and action routing via IBM Sterling, SAP, Oracle, and Coupa integrations",
           ],
           whyTechD: [
-            "IBM Platinum Business Partner with certified Orchestrate architects who have deployed agentic workflows in production for Fortune 500 clients — we've seen what breaks in real environments.",
-            "Governance-first deployment — every agent rollout includes human-in-the-loop controls, audit logs, and policy enforcement that regulated industries require before autonomous actions go live.",
-            "Full-stack integration delivery — we connect Orchestrate agents to your existing Salesforce, Workday, SAP, and custom API landscape, not just the pre-built connector catalog.",
-            "Practical scoping — we identify the highest-value agentic use cases for your organization, sequence for quick wins, and build the governance foundation that scales to enterprise-wide deployment.",
+            "We've deployed agentic workflows in production for Fortune 500 clients — as IBM Platinum-certified Orchestrate architects, we know what fails in real environments and build the governance controls before the first autonomous action runs.",
+            "We go governance-first on every agent rollout — human-in-the-loop controls, audit logs, and policy enforcement that regulated industries require before autonomous actions go live.",
+            "We connect Orchestrate agents to your existing Salesforce, Workday, SAP, and custom API landscape — not just the pre-built connector catalog, but the full integration surface your business runs on.",
+            "We scope for practical wins — identifying the highest-value agentic use cases for your organization, sequencing for quick wins, and building the governance foundation that scales to enterprise-wide deployment.",
           ],
           stats: [
             { value: "80+", label: "enterprise app integrations" },
@@ -214,7 +214,7 @@ export const SOLUTIONS: Solution[] = [
         name: "IBM Bob",
         tagline: "IBM's AI-first development partner — agentic workflows across the full SDLC, from code generation to production-ready delivery.",
         description:
-          "IBM Bob (generally available April 2026) is a full VS Code fork with multi-model agentic orchestration — IBM Granite, Anthropic Claude, Mistral, and specialized fine-tuned models — covering coding, code review, legacy modernization, security analysis, and CI/CD with enterprise governance built in.",
+          "IBM Bob is a full VS Code fork with multi-model agentic orchestration — IBM Granite, Anthropic Claude, Mistral, and specialized fine-tuned models — covering coding, code review, legacy modernization, security analysis, and CI/CD with enterprise governance built in.",
         link: { kind: "internal", slug: "ibm-bob" },
         vendorUrl: "https://www.ibm.com/products/ai-coding-agent",
         detail: {
@@ -238,10 +238,10 @@ export const SOLUTIONS: Solution[] = [
             "Secure application development — shift-left vulnerability scanning, compliance enforcement (HIPAA, FedRAMP), and quantum-safe cryptographic migration",
           ],
           whyTechD: [
-            "TechD has deployed Bob alongside our IBM i, mainframe, and Java modernization engagements — we understand the legacy codebases Bob is purpose-built to modernize.",
-            "Governance-first Bob deployment — we configure prompt normalization, sensitive data scanning, and approval workflows before developers touch the tool, not as an afterthought.",
-            "CI/CD and observability integration — we wire BobShell into your existing pipelines and connect it to your IBM Instana and OpenShift environments so every modernization action is auditable end to end.",
-            "IBM Platinum partnership gives us early access to Bob's roadmap and direct IBM escalation for complex modernization scenarios that generic implementation partners can't support.",
+            "We deploy Bob alongside our IBM i, mainframe, and Java modernization engagements — we understand the legacy codebases Bob is purpose-built to modernize, and we configure it for the specific language mix and governance requirements your codebase demands.",
+            "We configure governance before developers touch the tool — prompt normalization, sensitive data scanning, and approval workflows in place before the first Bob session runs, not as an afterthought.",
+            "We wire BobShell into your existing CI/CD pipelines and connect it to your IBM Instana and OpenShift environments — so every modernization action is auditable end to end, not just inside the IDE.",
+            "We leverage IBM's Platinum-tier roadmap access to prepare your Bob environment for capabilities before they GA — and our direct IBM escalation path resolves complex modernization blockers that generic partners forward to standard support queues.",
           ],
           stats: [
             { value: "45%", label: "average developer productivity gain" },
@@ -277,10 +277,10 @@ export const SOLUTIONS: Solution[] = [
             "Customer churn and lifetime value modeling for media, financial services, and higher education organizations",
           ],
           whyTechD: [
-            "15+ years of SPSS Modeler delivery for healthcare, insurance, higher education, and media clients — we know the algorithm choices, data preparation patterns, and deployment workflows that matter in production.",
-            "IBM Platinum Business Partner with certified SPSS and Cloud Pak for Data architects who have navigated every version from legacy on-premises SPSS through the current Cloud Pak-hosted service.",
+            "We've delivered SPSS Modeler for 15+ years across healthcare, insurance, higher education, and media clients — we know the algorithm choices, data preparation patterns, and deployment workflows that matter in production.",
+            "We hold IBM Platinum certification with SPSS and Cloud Pak for Data architects who've navigated every version from legacy on-premises SPSS through the current Cloud Pak-hosted service — continuity most partners can't offer on a platform that requires long-term expertise.",
             "We build models your analysts can own — visual workflows, documented nodes, and knowledge transfer sessions so the model isn't a black box at handoff.",
-            "Production deployment depth: REST scoring services via Cloud Pak for Data, in-database push-down scoring against Db2 and Netezza, and Cognos Analytics integration for dashboarding — not just model building.",
+            "We deploy to production: REST scoring services via Cloud Pak for Data, in-database push-down scoring against Db2 and Netezza, and Cognos Analytics integration for dashboarding — not just model building and hand-off.",
           ],
           stats: [
             { value: "15+", label: "years TechD SPSS delivery" },
@@ -334,10 +334,10 @@ export const SOLUTIONS: Solution[] = [
             "Legacy Oracle or SQL Server migrations to the IBM stack with FIPS 140-3 compliance and quantum-safe cryptographic readiness",
           ],
           whyTechD: [
-            "15+ years deploying and optimizing Db2 for healthcare systems, media companies, and energy utilities — we know the production patterns that IBM documentation doesn't cover.",
-            "End-to-end delivery: schema design, query optimization, pureScale HA configuration, and containerized Db2 on OpenShift — not just installation and hand-off.",
-            "AI-ready Db2 deployments: we configure native vector stores, LangChain connectors, and Genius Hub policies so your Db2 estate immediately serves watsonx.ai RAG workloads.",
-            "Regulated-industry expertise — FIPS 140-3 compliance, data encryption, and row-level security configurations that pass HIPAA and PCI-DSS audits.",
+            "We've spent 15+ years deploying and optimizing Db2 for healthcare systems, media companies, and energy utilities — we know the production patterns that IBM documentation doesn't cover.",
+            "We deliver end to end: schema design, query optimization, pureScale HA configuration, and containerized Db2 on OpenShift — not just installation and hand-off.",
+            "We configure AI-ready Db2 estates — native vector stores, LangChain connectors, and Genius Hub policies so your Db2 immediately serves watsonx.ai RAG workloads from day one.",
+            "We configure FIPS 140-3 compliance, data encryption, and row-level security for HIPAA and PCI-DSS audits — every regulated-industry Db2 engagement treats these as design requirements, not post-deployment add-ons.",
           ],
           stats: [
             { value: "15+ yrs", label: "TechD Db2 delivery" },
@@ -373,10 +373,10 @@ export const SOLUTIONS: Solution[] = [
             "Cross-cloud data federation for M&A integration scenarios with consistent access policies across environments",
           ],
           whyTechD: [
-            "TechD architects have worked with watsonx.data since its earliest releases — we know the engine configuration choices and governance setup that separate a performant lakehouse from a problematic one.",
-            "Full-stack lakehouse delivery: we connect watsonx.data to your existing Db2 estate, DataStage pipelines, and Cognos Analytics environment — not the lakehouse tier in isolation.",
-            "AI-ready from the start: we configure integrated vector stores, MCP server endpoints, and Iceberg governance so your lakehouse immediately feeds watsonx.ai with quality-assured, lineage-traced datasets.",
-            "IBM Platinum Business Partner with certified watsonx.data architects across IBM Cloud, on-premises, AWS, and Azure deployment patterns.",
+            "We've worked with watsonx.data since its earliest releases — we know the engine configuration choices and governance setup that separate a performant lakehouse from a problematic one.",
+            "We connect watsonx.data to your existing Db2 estate, DataStage pipelines, and Cognos Analytics environment — full-stack lakehouse delivery, not the lakehouse tier in isolation.",
+            "We configure AI-ready lakehouses from the start — integrated vector stores, MCP server endpoints, and Iceberg governance so your lakehouse immediately feeds watsonx.ai with quality-assured, lineage-traced datasets.",
+            "We field IBM Platinum-certified watsonx.data architects across IBM Cloud, on-premises, AWS, and Azure — deployment breadth that comes from running the platform across regulated industries since its earliest releases.",
           ],
           stats: [
             { value: "40%", label: "more accurate AI than conventional RAG (IBM internal testing)" },
@@ -412,10 +412,10 @@ export const SOLUTIONS: Solution[] = [
             "Regulated industry data science environment with AutoPrivacy, audit controls, and RBAC from day one",
           ],
           whyTechD: [
-            "TechD has implemented Cloud Pak for Data since its earliest releases — we've navigated every major version upgrade from 2.x through 5.x for clients who can't afford downtime during transitions.",
-            "OpenShift expertise: we size, build, and configure the cluster before the first Cloud Pak for Data operator is deployed — not after it's already struggling in production.",
-            "Multi-tenant architecture delivery: we design the project workspace structure, RBAC model, and storage tier configuration that lets data science and analytics teams share the platform without collision.",
-            "IBM Platinum Business Partner with certified Cloud Pak for Data architects experienced in air-gapped installations for federal and regulated environments.",
+            "We've implemented Cloud Pak for Data since its earliest releases — navigating every major version upgrade from 2.x through 5.x for clients who can't afford downtime during transitions.",
+            "We size, build, and configure the OpenShift cluster before the first Cloud Pak for Data operator is deployed — not after it's already struggling in production.",
+            "We design the multi-tenant architecture: project workspace structure, RBAC model, and storage tier configuration that lets data science and analytics teams share the platform without collision.",
+            "We field IBM Platinum-certified Cloud Pak for Data architects with proven air-gapped installation experience for federal and regulated environments — a delivery pattern we've run for clients where the data never touches a public network.",
           ],
           stats: [
             { value: "60+", label: "IBM data and AI services deployable on the platform" },
@@ -451,10 +451,10 @@ export const SOLUTIONS: Solution[] = [
             "AI-powered subscriber and content performance analytics for media companies — predictive modeling and forecasting built in",
           ],
           whyTechD: [
-            "One of the deepest Cognos Analytics practices in the IBM Business Partner ecosystem — 15+ years and more delivery hours than nearly any other partner across healthcare, insurance, education, and media.",
-            "TechD's CogSuite — our own administration tooling built specifically to reduce Cognos operational overhead for clients running large, complex multi-tenant deployments.",
-            "Content migration expertise: we've upgraded Cognos environments from 8.x, 10.x, and 11.x to current versions, including framework model migration and SDK customization other partners won't scope.",
-            "IBM Platinum Business Partner — when IBM releases a new Cognos capability like the agentic AI agents, we have it tested in our lab before your IT team sees the release notes.",
+            "We run one of the deepest Cognos Analytics practices in the IBM Business Partner ecosystem — 15+ years and more delivery hours than nearly any other partner across healthcare, insurance, education, and media.",
+            "We built CogSuite — our own administration tooling specifically designed to reduce Cognos operational overhead for clients running large, complex multi-tenant deployments.",
+            "We've upgraded Cognos environments from 8.x, 10.x, and 11.x to current versions, including framework model migration and SDK customization that other partners won't scope.",
+            "We test new Cognos capabilities in our lab before your IT team sees the release notes — an IBM Platinum advantage that means your upgrade path is de-risked before IBM publishes the migration guide.",
           ],
           stats: [
             { value: "15+ yrs", label: "TechD Cognos delivery" },
@@ -490,13 +490,13 @@ export const SOLUTIONS: Solution[] = [
             "Regulatory reserve and claims forecasting for insurance — with rolling forecasts beyond the standard 12-month window",
           ],
           whyTechD: [
-            "15+ years of Planning Analytics and TM1 delivery — we've built FP&A models for clients in healthcare, insurance, energy, and media that have run through dozens of budget cycles without breaking.",
-            "Migration specialists: we've moved clients off Hyperion, Anaplan, and SAP BPC onto Planning Analytics, including the model rearchitecture work that migration tools alone cannot do.",
-            "Model optimization for clients who've outgrown their original TM1 build — we've triaged and rebuilt models where overnight calculations had crept from minutes into hours.",
-            "IBM Platinum Business Partner — we've delivered Planning Analytics implementations at the scale and complexity most partners decline to quote.",
+            "We've delivered Planning Analytics and TM1 for 15+ years — building FP&A models for healthcare, insurance, energy, and media clients that have run through dozens of budget cycles without breaking.",
+            "We migrate clients off Hyperion, Anaplan, and SAP BPC onto Planning Analytics — including the model rearchitecture work that migration tools alone cannot do.",
+            "We optimize models that have outgrown their original TM1 build — we've triaged and rebuilt models where overnight calculations had crept from minutes into hours.",
+            "We deliver Planning Analytics implementations at the scale and complexity most partners decline to quote — and our IBM Platinum status gives us the IBM technical support that makes those engagements deliverable.",
           ],
           stats: [
-            { value: "IDC Leader", label: "2026 Enterprise Planning, Budgeting & Forecasting" },
+            { value: "IDC Leader", label: "IDC MarketScape: Enterprise Planning, Budgeting & Forecasting 2026" },
             { value: "15+ yrs", label: "TechD TM1 & Planning Analytics delivery" },
           ],
         },
@@ -516,7 +516,7 @@ export const SOLUTIONS: Solution[] = [
           capabilities: [
             "GenAI-powered Data Integration Assistant — build ETL/ELT pipelines from natural language intent; no prior DataStage experience required",
             "No-code, low-code, SQL, and pro-code authoring modes — one platform for citizen integrators and experienced data engineers",
-            "Best-in-class parallel execution engine — automatic task pipelining into concurrent operations for throughput and scalability at any scale",
+            "Massively parallel execution engine — automatic task pipelining into concurrent operations for throughput and scalability at any scale",
             "DataStage Flow Designer in Cloud Pak for Data 5.3 — pipeline design, monitoring, and operations from a single integrated web UI",
             "Remote containerized engine — design pipelines once, deploy anywhere: on-premises, IBM Cloud, AWS, Azure, or hybrid",
             "100+ pre-built connectors for Db2, Oracle, SQL Server, Salesforce, S3, HDFS, Kafka, and streaming sources",
@@ -529,10 +529,10 @@ export const SOLUTIONS: Solution[] = [
             "Legacy ETL tool migrations (Informatica, SSIS, Ab Initio) to Cloud Pak for Data with regression-validated production parity",
           ],
           whyTechD: [
-            "TechD teams have built and maintained DataStage pipelines for health systems, media companies, and financial institutions — we know the job design patterns and performance tuning that matter at enterprise scale.",
-            "Migration track record: we've migrated clients from Informatica, SSIS, and Ab Initio to DataStage on Cloud Pak for Data, including the regression testing that validates parity before production cutover.",
-            "End-to-end pipeline delivery: schema design, DataStage job architecture, performance optimization, CDC integration, and lineage wiring into watsonx.data intelligence — not just pipeline build and hand-off.",
-            "IBM Platinum Business Partner with certified DataStage and Cloud Pak for Data architects across on-premises, SaaS, and hybrid deployment models.",
+            "We've built and maintained DataStage pipelines for health systems, media companies, and financial institutions — we know the job design patterns and performance tuning that matter at enterprise scale.",
+            "We've migrated clients from Informatica, SSIS, and Ab Initio to DataStage on Cloud Pak for Data, including the regression testing that validates parity before production cutover.",
+            "We deliver end to end: schema design, DataStage job architecture, performance optimization, CDC integration, and lineage wiring into watsonx.data intelligence — not just pipeline build and hand-off.",
+            "We field IBM Platinum-certified DataStage and Cloud Pak for Data architects who've executed migrations and new builds across on-premises, SaaS, and hybrid deployment models — depth of experience that defines the safe migration path for clients leaving legacy ETL tools.",
           ],
           stats: [
             { value: "100+", label: "pre-built source and target connectors" },
@@ -568,10 +568,10 @@ export const SOLUTIONS: Solution[] = [
             "Legacy Teradata, Sybase IQ, and Vertica migrations to the IBM stack with performance parity and modern open-format support",
           ],
           whyTechD: [
-            "TechD deploys Netezza for clients where query performance is the primary bottleneck — media audience analytics, actuarial modeling, and population health workloads where sub-second results are the expectation.",
-            "Appliance sizing and migration expertise: we've designed Netezza environments from initial sizing through production cutover, and migrated clients from Teradata, Sybase IQ, and Vertica onto the IBM stack.",
-            "Cognos Analytics integration depth: we wire Netezza as the high-performance BI data source behind Cognos reports where warehouse query times were driving user adoption problems.",
-            "IBM Platinum Business Partner with certified Netezza architects for on-premises appliance, SaaS, and BYOC deployment patterns.",
+            "We deploy Netezza for clients where query performance is the primary bottleneck — media audience analytics, actuarial modeling, and population health workloads where sub-second results are the expectation.",
+            "We design Netezza environments from initial sizing through production cutover — and we've migrated clients from Teradata, Sybase IQ, and Vertica onto the IBM stack.",
+            "We wire Netezza as the high-performance BI data source behind Cognos reports where warehouse query times were driving user adoption problems — closing the loop between the analytics engine and the reporting layer.",
+            "We field IBM Platinum-certified Netezza architects who've sized, deployed, and optimized appliance, SaaS, and BYOC environments — the specialization that matters when sub-second query performance is the business requirement.",
           ],
           stats: [
             { value: "90%+", label: "of queries complete in under 1 second" },
@@ -607,10 +607,10 @@ export const SOLUTIONS: Solution[] = [
             "Data quality scoring and remediation workflows with continuous monitoring across hybrid environments",
           ],
           whyTechD: [
-            "TechD implements watsonx.data intelligence as the governance foundation for enterprise AI programs — we've seen the audit results when lineage is missing and we know how to establish it before an examination.",
-            "Practiced alongside watsonx.data and Cloud Pak for Data deployments — we integrate catalog, lineage, and policy layers at platform build time, not as an afterthought.",
-            "Regulated-industry governance specialists: HIPAA, GDPR, CCPA, and PCI-DSS configurations mapped to what auditors actually test — not just what the vendor demo shows.",
-            "IBM Platinum Business Partner — recognized alongside IBM's Gartner Magic Quadrant Leader position for Data and Analytics Governance Platforms.",
+            "We implement watsonx.data intelligence as the governance foundation for enterprise AI programs — we've seen the audit results when lineage is missing and we know how to establish it before an examination.",
+            "We integrate catalog, lineage, and policy layers at platform build time alongside watsonx.data and Cloud Pak for Data deployments — not as an afterthought bolted on after the platform is live.",
+            "We configure HIPAA, GDPR, CCPA, and PCI-DSS governance mapped to what auditors actually test — not just what the vendor demo shows.",
+            "We deliver alongside IBM's Gartner MQ Leader position for Data and Analytics Governance Platforms — as a Platinum partner, our governance configurations reflect the same practices IBM's own architects use.",
           ],
           stats: [
             { value: "100×", label: "faster glossary generation with AI vs. manual process" },
@@ -646,10 +646,10 @@ export const SOLUTIONS: Solution[] = [
             "Hybrid data integration spanning on-premises and cloud sources with design-once, deploy-anywhere remote engines",
           ],
           whyTechD: [
-            "TechD implements watsonx.data integration for clients consolidating legacy ETL tooling — we've migrated Informatica, SSIS, and Ab Initio pipelines onto the IBM-supported stack with the regression testing that validates production parity.",
-            "Full-stack pipeline delivery: we connect watsonx.data integration to your source systems, configure ELT pushdown for in-database execution, and wire the Data Observability layer so your operations team knows before users do when a pipeline fails.",
-            "Unstructured data integration expertise: we build the document, PDF, and PPT ingestion pipelines that feed watsonx.ai RAG applications — from source ingest through chunking strategy and vector store delivery.",
-            "IBM Platinum Business Partner with certified architects across watsonx.data integration's batch, CDC, streaming, and AI-assisted development modes.",
+            "We've migrated Informatica, SSIS, and Ab Initio pipelines onto the IBM-supported stack for clients consolidating legacy ETL tooling — with the regression testing that validates production parity before cutover.",
+            "We connect watsonx.data integration to your source systems, configure ELT pushdown for in-database execution, and wire the Data Observability layer so your operations team knows before users do when a pipeline fails.",
+            "We build the unstructured data ingestion pipelines that feed watsonx.ai RAG applications — from source ingest through chunking strategy and vector store delivery, end to end.",
+            "We field IBM Platinum-certified architects who've executed batch, CDC, streaming, and AI-assisted integration builds across watsonx.data integration — no generic ETL experience, just platform-specific delivery patterns for clients consolidating onto the IBM integration stack.",
           ],
           stats: [
             { value: "3-in-1", label: "batch, CDC, and real-time integration in one platform" },
@@ -710,7 +710,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "Gartner Leader", label: "Cloud Financial Management Tools MQ 2025" },
-            { value: "30%+", label: "cloud unit cost reduction with Cloudability" },
+            { value: "30%+", label: "cloud unit cost reduction — IBM Cloudability benchmark" },
           ],
         },
       },
@@ -742,10 +742,10 @@ export const SOLUTIONS: Solution[] = [
             "Pre- and post-deployment health validation in CI/CD pipelines (Jenkins, GitHub Actions, GitLab CI, Azure DevOps)",
           ],
           whyTechD: [
-            "From 300 alerts to 3 actions: we configure Instana's AI and alerting policies so on-call teams get actionable signals, not noise — the difference between a tool your SREs trust and one they mute.",
-            "GenAI observability from day one: we wire Instana's LLM and watsonx.ai sensors before AI workloads create the blind spots that cause 2 a.m. incidents.",
-            "Instana to Turbonomic: observability data flows into Turbonomic's resource optimization engine so performance insights drive infrastructure action, not just dashboards that require manual follow-up.",
-            "IBM Bob and Instana together: for clients modernizing IBM i or mainframe workloads, we connect Bob's BobShell audit trail to Instana observability so every modernization action is traceable end to end.",
+            "We configure Instana's AI and alerting policies so on-call teams get actionable signals, not noise — from 300 alerts to 3 actions is the difference between a tool your SREs trust and one they mute.",
+            "We wire Instana's LLM and watsonx.ai sensors before AI workloads create the blind spots that cause 2 a.m. incidents — GenAI observability configured from day one, not after the first production outage.",
+            "We connect Instana observability data to Turbonomic's resource optimization engine so performance insights drive infrastructure action — not just dashboards that require manual follow-up.",
+            "We connect Bob's BobShell audit trail to Instana observability for clients modernizing IBM i or mainframe workloads — so every modernization action is traceable end to end, inside and outside the IDE.",
           ],
           stats: [
             { value: "Gartner Leader", label: "2025 Magic Quadrant for Observability Platforms" },
@@ -781,13 +781,13 @@ export const SOLUTIONS: Solution[] = [
             "Pre-migration sizing analysis for data center to cloud lift-and-shift",
           ],
           whyTechD: [
-            "Policy governance before automation: we define the autonomous vs. approval-required action model before Turbonomic runs its first resize — so no production workload gets scaled without the right human checkpoint in place.",
-            "The full performance-to-spend loop: Instana observability feeding Turbonomic optimization feeding Apptio cost allocation is a TechD-delivered integration, not three separate vendor engagements with gaps between them.",
-            "AI infrastructure ready: we configure GenAI Inference Optimization before your GPU spend scales beyond what manual monitoring can track — critical as LLM inference clusters grow.",
-            "VMware to cloud migration input: Turbonomic rightsizing analysis is a core deliverable in TechD's data center migration playbook — sizing cloud targets against actual workload demand, not VM specs.",
+            "We define the autonomous vs. approval-required action model before Turbonomic runs its first resize — so no production workload gets scaled without the right human checkpoint in place.",
+            "We deliver the full performance-to-spend loop — Instana observability feeding Turbonomic optimization feeding Apptio cost allocation — as one integrated engagement, not three separate vendor installs with gaps between them.",
+            "We configure GenAI Inference Optimization before your GPU spend scales beyond what manual monitoring can track — AI infrastructure cost governance in place before the LLM inference clusters grow.",
+            "We include Turbonomic rightsizing analysis as a core deliverable in every data center to cloud migration — so cloud targets are sized against actual workload demand, not VM specs from a server inventory.",
           ],
           stats: [
-            { value: "43%", label: "maximum cloud cost reduction" },
+            { value: "43%", label: "maximum cloud cost reduction — IBM Turbonomic benchmark" },
             { value: "247%", label: "3-year ROI — IBM-reported" },
           ],
         },
@@ -879,12 +879,12 @@ export const SOLUTIONS: Solution[] = [
           whyTechD: [
             "Use cases that hold up in an audit: we develop QRadar correlation rules and SIGMA detections mapped to the specific regulatory frameworks our clients operate under — not generic content packs that generate false positives.",
             "Investigation Assistant tuned for your environment: we configure watsonx.ai integration and MITRE ATT&CK mapping so QRadar's AI summaries reflect your actual asset inventory and threat model.",
-            "On-prem expertise as QRadar SaaS exits: with QRadar SaaS acquired by Palo Alto (EOL April 2025), TechD's on-premises deployment practice is the stable path for regulated enterprises that can't move SIEM data to a third-party cloud.",
+            "On-prem expertise as QRadar SaaS exits: with QRadar SaaS acquired by Palo Alto (EOL April 2025), we provide the stable on-premises deployment path for regulated enterprises that can't move SIEM data to a third-party cloud.",
             "Guardium to QRadar to SOAR: we build and own the full detect-and-respond chain — Guardium data access events feed QRadar offenses that trigger SOAR playbooks — so the loop closes without gaps between vendor teams.",
           ],
           stats: [
             { value: "14 years", label: "consecutive Gartner Magic Quadrant Leader for SIEM" },
-            { value: "55% faster", label: "alert investigation with QRadar Investigation Assistant" },
+            { value: "55% faster", label: "alert investigation — IBM QRadar benchmark" },
           ],
         },
       },
@@ -922,7 +922,7 @@ export const SOLUTIONS: Solution[] = [
             "Cyber insurance documentation built in: every SOAR case produces the timeline, evidence record, and action log that cyber insurers require for claims — we configure this as a design requirement, not an afterthought.",
           ],
           stats: [
-            { value: "85%", label: "reduction in incident response time with AI-guided playbooks" },
+            { value: "85%", label: "reduction in incident response time — IBM QRadar SOAR benchmark" },
             { value: "300+", label: "enterprise-grade bidirectional integrations" },
           ],
         },

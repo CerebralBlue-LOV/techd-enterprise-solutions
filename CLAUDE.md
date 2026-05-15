@@ -33,7 +33,7 @@ If unsure whether something is sensitive, leave it out of the commit.
 | Forms | react-hook-form + zod |
 | 3D / Hero | three.js + @react-three/fiber + @react-three/drei |
 | Hosting | GitHub Pages (served from `/techd-enterprise-solutions/`) |
-| CI/CD | GitHub Actions (`.github/workflows/deploy.yml` + `sync-to-clickup.yml`) |
+| CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) |
 | Contact backend | AWS Lambda + SES (not built yet) |
 | Design tool | Lovable (bidirectional sync with `main`) |
 
@@ -75,9 +75,8 @@ src/
     industries/
     products/
 docs/               # All project documentation (PROJECT-SCOPE, ARCHITECTURE, REDIRECT-MAP, etc.)
-clickup-docs/       # Markdown files synced to ClickUp docs on every push to main
 public/             # robots.txt, favicon, placeholder assets
-.github/workflows/  # deploy.yml (GitHub Pages CI/CD), sync-to-clickup.yml (ClickUp doc sync)
+.github/workflows/  # deploy.yml (GitHub Pages CI/CD)
 ```
 
 ## Content files (`src/content/`)
@@ -166,17 +165,6 @@ Stripe / Linear / Vercel / Anthropic. Quiet, confident, typography-led, generous
 
 CMS integration · real CRM-routed form · dark mode · ROI calculator · multi-language · full WCAG 2.2 AA audit · third-party pen test · 6 approved case studies.
 
-## ClickUp doc sync
-
-Markdown files in `clickup-docs/` are automatically pushed to ClickUp on every commit to `main` that touches those files. The workflow is `.github/workflows/sync-to-clickup.yml`. IDs are stored in the `CLICKUP_SYNC_CONFIG` GitHub secret.
-
-| File | ClickUp doc |
-|---|---|
-| `clickup-docs/prd.md` | PRD — original scope doc from Cesar |
-| `clickup-docs/project-overview.md` | Project Overview — what was built, what's next |
-| `clickup-docs/deferred.md` | Deferred Items — what's out of scope and why |
-| `clickup-docs/brand-guidelines.md` | Brand Guidelines Summary |
-
 ## When you're unsure
 
 Read `docs/PROJECT-SCOPE.md` for full project scope and `docs/ARCHITECTURE.md` for settled architectural decisions. Then ask a clarifying question rather than guessing.
@@ -207,8 +195,6 @@ Use `/admin-lab` to review them visually.
 - Don't reference files in `public/logos/deprecated/` from any component or content file — those are orphaned logos awaiting PM sign-off for deletion.
 
 ## Content copy rules (when editing `src/content/`)
-
-Full guide: ClickUp — "Messaging & Copywriting" page in the Project Overview doc.
 
 Rules that must hold in every content edit:
 

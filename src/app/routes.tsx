@@ -73,9 +73,6 @@ export const AppRoutes = () => (
     <Route path="/solutions/ai" element={<Navigate to="/solutions/ai-generative" replace />} />
     <Route path="/solutions/automation" element={<Navigate to="/solutions/automation-finops" replace />} />
     <Route path="/solutions/security" element={<Navigate to="/solutions/security-compliance" replace />} />
-    {/* Removed Hybrid Cloud practice — redirect to AI practice */}
-    <Route path="/solutions/hybrid-cloud" element={<Navigate to="/solutions/ai-generative" replace />} />
-    <Route path="/solutions/hybrid-cloud/:product" element={<Navigate to="/solutions/ai-generative" replace />} />
     {/* Removed product slugs — redirect to parent practice */}
     <Route path="/solutions/ai-generative/watsonx-assistant" element={<Navigate to="/solutions/ai-generative" replace />} />
     <Route path="/solutions/ai-generative/ibm-knowledge-catalog" element={<Navigate to="/solutions/ai-generative" replace />} />

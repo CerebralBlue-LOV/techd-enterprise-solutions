@@ -113,10 +113,10 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     lede:
       "Executive-grade roadmaps for AI, data, automation, and security — built around your P&L and your compliance tier, not a vendor's catalog. Short, opinionated engagements that produce a decision, not a deck.",
     whyPoints: [
-      { title: "TechD IBM Platform Assessment", body: "A structured one-day evaluation that produces a written findings report covering architecture, configuration, security posture, licensing, and upgrade paths — not a sales discovery call." },
-      { title: "An opinion, not options",       body: "We name the recommended architecture and sequence. Optionality is fine in slideware; useless when payroll is due Friday." },
-      { title: "Anchored in IBM, open to the rest", body: "IBM Platinum Business Partner with certified practitioners across watsonx, Cloud Pak for Data, Db2, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar — paired with realism about AWS, Azure, Snowflake, and the systems you already own." },
-      { title: "Senior practitioners only",     body: "Architects who have shipped in healthcare, insurance, media, energy, higher education, and the public sector — not generalists learning on your dime." },
+      { title: "TechD IBM Platform Assessment", body: "We run a structured one-day evaluation that produces a written findings report covering architecture, configuration, security posture, licensing, and upgrade paths — not a sales discovery call." },
+      { title: "An opinion, not options",        body: "We name the recommended architecture and sequence. Optionality is fine in slideware; useless when payroll is due Friday." },
+      { title: "Anchored in IBM, open to the rest", body: "We hold IBM Platinum status with certified practitioners across watsonx, Cloud Pak for Data, Db2, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar — paired with realism about AWS, Azure, Snowflake, and the systems you already own." },
+      { title: "Senior practitioners only",     body: "We staff with architects who have shipped in healthcare, insurance, media, energy, higher education, and the public sector — not generalists learning on your dime." },
     ],
     spotlight: {
       eyebrow: "Flagship engagement",
@@ -195,10 +195,10 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     lede:
       "Engineering teams that ship. Reference architectures, accelerators, and senior IBM-certified practitioners on every engagement — across watsonx, Cloud Pak for Data, Db2, OpenShift, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar.",
     whyPoints: [
-      { title: "We build what we design",      body: "Advisory and implementation are staffed by the same certified practitioners. The architecture we recommend in an assessment is the architecture we deliver — there is no handoff to a separate delivery organization." },
-      { title: "Reference architectures",      body: "Patterns we have shipped across healthcare, insurance, media, energy, higher education, and the public sector — not slideware drawn for your engagement." },
-      { title: "Integration, not just install", body: "Wired into your IAM, ITSM, observability, CI/CD, CRM, and ERP from day one — production-ready, not lab-ready." },
-      { title: "Stabilize, then hand off",     body: "30-day post-go-live stabilization with documented runbooks and a trained operations team — so you own it the day after the cutover, not six months later." },
+      { title: "We build what we design",       body: "We staff advisory and implementation with the same certified practitioners — the architecture we recommend is the architecture we deliver, with no handoff to a separate delivery organization." },
+      { title: "Reference architectures",       body: "We bring patterns we've shipped across healthcare, insurance, media, energy, higher education, and the public sector — not slideware drawn for your engagement." },
+      { title: "Integration, not just install", body: "We wire into your IAM, ITSM, observability, CI/CD, CRM, and ERP from day one — production-ready, not lab-ready." },
+      { title: "Stabilize, then hand off",      body: "We deliver 30-day post-go-live stabilization with documented runbooks and a trained operations team — so you own the platform the day after cutover, not six months later." },
     ],
     spotlight: {
       eyebrow: "Differentiator",
@@ -265,7 +265,6 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     ],
     stats: [
       { value: "Platinum", label: "IBM Business Partner" },
-      { value: "F500",     label: "Production deployments" },
     ],
   },
 
@@ -274,10 +273,10 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     lede:
       "24×7 operations for AI, data, automation, and security platforms — staffed by the IBM-certified practitioners who build them. SLAs that map to business KPIs, not ticket counts; FinOps that show up in the cloud bill, not the slide deck.",
     whyPoints: [
-      { title: "Built and run by the same team", body: "The architects who deployed it operate it. No tier-1 call center triaging a platform they have never seen." },
-      { title: "SLAs tied to outcomes",          body: "Pipeline availability, report freshness, model inference uptime, and security alert triage time — not ticket counts and CSAT theater." },
-      { title: "FinOps that compounds",          body: "Continuous right-sizing on watsonx, Cloud Pak for Data, OpenShift, and your hyperscaler spend — measured in invoice lines, with Apptio and Turbonomic actions implemented, not just reported." },
-      { title: "Platinum escalation path",       body: "When an IBM platform issue requires IBM Engineering involvement, our Platinum Business Partner relationship provides a direct escalation path — not the standard support queue." },
+      { title: "Built and run by the same team", body: "We have the architects who deployed your platform operate it — no tier-1 call center triaging a system they have never seen." },
+      { title: "SLAs tied to outcomes",          body: "We measure ourselves by pipeline availability, report freshness, model inference uptime, and security alert triage time — not ticket counts and CSAT theater." },
+      { title: "FinOps that compounds",          body: "We implement continuous right-sizing on watsonx, Cloud Pak for Data, OpenShift, and your hyperscaler spend — measured in invoice lines with Apptio and Turbonomic actions taken, not just reported." },
+      { title: "Platinum escalation path",       body: "We use our Platinum status to give your IBM Engineering issues a direct escalation path — bypassing the standard support queue when a platform problem needs an IBM engineer, not a ticket." },
     ],
     spotlight: {
       eyebrow: "How we measure ourselves",
@@ -353,10 +352,10 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     lede:
       "Role-based enablement for executives, architects, and engineering teams — IBM-certified curricula across watsonx, Cloud Pak for Data, Db2, Cognos Analytics 12, Planning Analytics, DataStage, SPSS Modeler, Apptio, Instana, Turbonomic, Guardium, and QRadar. Hands-on labs run on your data when you want them to.",
     whyPoints: [
-      { title: "IBM-certified curricula",      body: "Official IBM training across the data, AI, automation, and security portfolio — delivered by Platinum-tier practitioners with active IBM certifications on the platforms they teach." },
-      { title: "Your data, your use cases",    body: "Bring-your-own-data labs available — train against your schemas, your dashboards, your security policies, and your deployment environment, not a generic IBM sample database." },
-      { title: "Role-based, not one-size",     body: "Executive briefings, architect bootcamps, and engineering labs — three tracks, three audiences, three different formats." },
-      { title: "Modern stack only",            body: "Cognos Analytics 12 and Planning Analytics Workspace — legacy Cognos 10 modules (Query Studio, Workspace Advanced, Cognos Connection) dropped from the catalog." },
+      { title: "IBM-certified curricula",   body: "We deliver official IBM training across the data, AI, automation, and security portfolio — by Platinum-tier practitioners with active IBM certifications on the platforms they teach." },
+      { title: "Your data, your use cases", body: "We make bring-your-own-data labs available — train against your schemas, your dashboards, your security policies, and your deployment environment, not a generic IBM sample database." },
+      { title: "Role-based, not one-size",  body: "We run executive briefings, architect bootcamps, and engineering labs — three tracks, three audiences, three different formats." },
+      { title: "Modern stack only",         body: "We teach Cognos Analytics 12 and Planning Analytics Workspace exclusively — legacy Cognos 10 modules (Query Studio, Workspace Advanced, Cognos Connection) are out of our catalog." },
     ],
     spotlight: {
       eyebrow: "How the catalog is organized",

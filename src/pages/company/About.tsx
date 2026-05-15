@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import garrettPhoto from "../../assets/garrett-rowe.jpg";
+import marcPhoto from "../../assets/marc-martina.jpg";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
@@ -11,11 +13,6 @@ import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 import PageApproachSection from "@shared/page/PageApproachSection";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@ui/hover-card";
-import {
   COMPANY_FACTS,
   PRACTICE_AREAS,
   PORTFOLIO_BY_PRACTICE,
@@ -25,21 +22,24 @@ import {
   WHY_THIS_TEAM,
 } from "@content/about";
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
+const LEADER_PHOTOS: Record<string, string> = {
+  "Marc Martina": marcPhoto,
+  "Garrett Rowe": garrettPhoto,
+};
+
+const LEADER_PHOTO_POSITION: Record<string, string> = {
+  "Marc Martina": "object-center",
+  "Garrett Rowe": "object-top",
+};
 
 const VERTICALS = [
+  "Financial Services & Insurance",
   "Healthcare & Life Sciences",
-  "Insurance",
-  "Public Sector",
+  "Manufacturing & Industrials",
+  "Higher Education & Research",
   "Media & Entertainment",
-  "Higher Education",
   "Energy & Utilities",
+  "Public Sector",
 ];
 
 
@@ -61,8 +61,8 @@ const About = () => {
         anchors={[
           { href: "#story", label: "Story" },
           { href: "#practices", label: "Practices" },
-          { href: "#industries", label: "Industries" },
           { href: "#leadership", label: "Leadership" },
+          { href: "#industries", label: "Industries" },
           { href: "#methodology", label: "Methodology" },
         ]}
       />
@@ -189,58 +189,8 @@ const About = () => {
         </div>
       </DarkSection>
 
-      {/* Regulated-industry depth */}
-      <section id="industries" className="section scroll-mt-24">
-        <SectionMarker page="Company / About" name="Industries" />
-        <div className="container-page">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Regulated-industry depth"
-              title="Six verticals, four compliance frameworks"
-              subtitle="We anchor every engagement to the regulatory frame the client already operates inside."
-            />
-          </Reveal>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
-            {COMPLIANCE_FRAMEWORKS.map((f, i) => (
-              <Reveal key={f.framework} delay={i * 60}>
-                <div className="h-full rounded-xl border border-border bg-background p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.2)] hover:-translate-y-0.5">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                    {f.framework}
-                  </p>
-                  <p className="mt-2 text-base font-bold text-secondary leading-tight">
-                    {f.industry}
-                  </p>
-                  <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
-                    {f.detail}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={160}>
-            <div className="mt-8 rounded-xl border border-border bg-muted/30 px-6 py-5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-secondary/60 mb-3">
-                Verticals served
-              </p>
-              <ul className="flex flex-wrap gap-2">
-                {VERTICALS.map((v) => (
-                  <li
-                    key={v}
-                    className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-light text-muted-foreground"
-                  >
-                    {v}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* Leadership */}
-      <section id="leadership" className="section bg-muted/30 scroll-mt-24">
+      <section id="leadership" className="section scroll-mt-24">
         <SectionMarker page="Company / About" name="Leadership" />
         <div className="container-page">
           <Reveal>
@@ -253,67 +203,109 @@ const About = () => {
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {LEADERSHIP.map((l, i) => (
               <Reveal key={l.name} delay={i * 80}>
-                <div className="group h-full rounded-xl border border-border bg-background p-6 transition-colors hover:border-primary/40">
-                  <div className="flex items-start gap-4">
-                    <HoverCard openDelay={120}>
-                      <HoverCardTrigger asChild>
-                        <button
-                          type="button"
-                          aria-label={`More about ${l.name}`}
-                          className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-border bg-muted/40 text-base font-bold tracking-wider text-secondary outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        >
-                          <span
-                            aria-hidden
-                            className="pointer-events-none absolute -inset-[2px] rounded-full bg-gradient-to-br from-primary/60 via-primary/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
-                          />
-                          <span className="relative">{initials(l.name)}</span>
-                        </button>
-                      </HoverCardTrigger>
-                      <HoverCardContent align="start" className="w-80">
-                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                          {l.title}
-                        </p>
-                        <p className="mt-2 text-sm font-bold text-secondary">{l.name}</p>
-                        <p className="mt-2 text-xs font-light text-muted-foreground leading-relaxed">
-                          {l.bio}
-                        </p>
-                      </HoverCardContent>
-                    </HoverCard>
-                    <div>
-                      <h3 className="text-lg font-bold text-secondary leading-tight">
-                        {l.name}
-                      </h3>
-                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mt-1">
+                <div className="group h-full rounded-xl border border-border bg-background overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-[0_16px_48px_-12px_hsl(var(--primary)/0.2)]">
+                  {/* Photo header */}
+                  <div className="relative overflow-hidden aspect-[4/3]">
+                    <img
+                      src={LEADER_PHOTOS[l.name]}
+                      alt={l.name}
+                      className={`h-full w-full object-cover ${LEADER_PHOTO_POSITION[l.name] ?? "object-center"} transition-transform duration-700 ease-out group-hover:scale-105`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/30 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                         {l.title}
                       </p>
+                      <h3 className="mt-1 text-2xl font-bold text-background leading-tight">
+                        {l.name}
+                      </h3>
                     </div>
                   </div>
-                  <p className="mt-5 text-sm font-light text-muted-foreground leading-relaxed">
-                    {l.bio}
-                  </p>
-                  <div className="mt-5 border-t border-border pt-4">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-secondary/60 mb-2.5">
-                      Domains
+                  {/* Card body */}
+                  <div className="p-6">
+                    <p className="text-sm font-light text-muted-foreground leading-relaxed">
+                      {l.bio}
                     </p>
-                    <ul className="flex flex-wrap gap-2">
-                      {l.domains.map((d) => (
-                        <li
-                          key={d}
-                          className="rounded-full border border-border px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-secondary"
-                        >
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
               </Reveal>
             ))}
           </div>
           <Reveal delay={160}>
-            <p className="mt-10 max-w-3xl text-base font-light text-muted-foreground leading-relaxed">
-              {WHY_THIS_TEAM}
-            </p>
+            <div className="mt-8 relative overflow-hidden rounded-xl border border-border bg-muted/30 px-8 py-6">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -top-6 left-4 text-[96px] leading-none font-bold text-primary/12 select-none"
+              >
+                "
+              </span>
+              <p className="relative text-base font-light text-muted-foreground leading-relaxed max-w-3xl">
+                {WHY_THIS_TEAM}
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Regulated-industry depth */}
+      <section id="industries" className="section bg-muted/30 scroll-mt-24">
+        <SectionMarker page="Company / About" name="Industries" />
+        <div className="container-page">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Regulated-industry depth"
+              title="Seven verticals, four compliance frameworks"
+              subtitle="We anchor every engagement to the regulatory frame the client already operates inside."
+            />
+          </Reveal>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+            {COMPLIANCE_FRAMEWORKS.map((f, i) => (
+              <Reveal key={f.framework} delay={i * 60}>
+                <div className="group relative h-full overflow-hidden rounded-xl border border-border border-l-2 border-l-primary/30 bg-background p-6 transition-all duration-300 hover:border-l-primary hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.2)] hover:-translate-y-0.5">
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute -top-3 -right-1 text-[72px] font-bold leading-none text-primary/[0.05] select-none transition-colors duration-300 group-hover:text-primary/[0.10]"
+                  >
+                    {f.framework}
+                  </span>
+                  <div className="relative">
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                      {f.framework}
+                    </p>
+                    <p className="mt-2 text-base font-bold text-secondary leading-tight">
+                      {f.industry}
+                    </p>
+                    <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
+                      {f.detail}
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={160}>
+            <div className="mt-8">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-secondary/60 mb-3">
+                Verticals served
+              </p>
+              <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {VERTICALS.map((v, i) => (
+                  <li
+                    key={v}
+                    className="flex items-center gap-2.5 rounded-lg border border-border bg-background px-3 py-2.5"
+                  >
+                    <span className="text-[10px] font-bold text-primary/50 shrink-0">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-xs font-light text-muted-foreground leading-tight">
+                      {v}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Reveal>
         </div>
       </section>

@@ -1,5 +1,5 @@
 /**
- * Per-industry extras for the 6 industry landing pages.
+ * Per-industry extras for the 7 industry landing pages.
  * Keyed by `Industry.id` from `src/content/industries.ts`.
  *
  * Headline + lede are short editorial forms used by the hero.
@@ -37,10 +37,10 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "From clinical knowledge agents to HIPAA-grade data platforms, TechD delivers the data and AI work health systems and life sciences leaders trust to put in front of clinicians.",
     whyPoints: [
-      { title: "HIPAA-grade by default",   body: "Lineage, access controls, and de-identification patterns built in — not bolted on at audit time." },
-      { title: "Five named health systems", body: "Active or recent work across Genesis HealthCare, Jefferson Health, Temple Health, Johns Hopkins Medicine, and CHOP." },
-      { title: "Life sciences fluency",     body: "Pharmacovigilance, commercial analytics, and regulated data work for global pharma — including Johnson & Johnson." },
-      { title: "Clinical-grade outputs",    body: "RAG architectures that cite their sources, governance that satisfies your CMIO, and the operational support to keep them running." },
+      { title: "HIPAA-grade by default",   body: "We build HIPAA controls into every layer — lineage, access controls, and de-identification patterns are part of the architecture, not bolted on at audit time." },
+      { title: "Named health systems",     body: "We've delivered active work with Children's Health in North Texas, Netcare across South Africa, and Admed — plus life sciences and clinical engagements under NDA." },
+      { title: "Life sciences fluency",    body: "We've delivered pharmacovigilance, commercial analytics, and regulated data work for life sciences organizations operating under HIPAA and HITECH." },
+      { title: "Clinical-grade outputs",   body: "We build RAG architectures that cite their sources, governance your CMIO can sign off on, and the operational support to keep them running." },
     ],
     clients: [
       { name: "Admed",              note: "Brazilian medical platform — clinical data and decision support." },
@@ -59,10 +59,10 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Content intelligence, audience analytics, and operational AI built for the scale and pace of major studios, streamers, and platform businesses.",
     whyPoints: [
-      { title: "Platform-scale fluency", body: "Work shipped inside global media and platform businesses like Snap, Adobe, and Verizon — not pitched at them." },
-      { title: "Content + audience",     body: "Two sides of the same coin: tag and search the catalog, then understand who's watching what." },
-      { title: "Operational AI",         body: "Workflow assistants, knowledge agents, and automation that take cost out of post, ops, and customer support." },
-      { title: "Built on watsonx",       body: "Foundation-model governance and RAG patterns that hold up to legal review and rights management." },
+      { title: "Platform-scale fluency", body: "We've shipped inside global media and platform businesses — Snap, Adobe, and Verizon — not just pitched at them." },
+      { title: "Content + audience",     body: "We address both sides: tag and search the catalog, then build the analytics to understand who's watching what." },
+      { title: "Operational AI",         body: "We build workflow assistants, knowledge agents, and automation that take cost out of post, ops, and customer support." },
+      { title: "Built on watsonx",       body: "We implement foundation-model governance and RAG patterns that hold up to legal review and rights management." },
     ],
     clients: [
       { name: "Snap Inc.", note: "Camera-first social platform — content and audience scale." },
@@ -84,10 +84,10 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Grid analytics, asset performance management, and OT/IT security for regulated utilities and the independent system operators that keep the lights on.",
     whyPoints: [
-      { title: "NERC-CIP fluency",     body: "Security, identity, and data movement patterns aligned with the controls regulated utilities answer for." },
-      { title: "Grid-scale data work", body: "Engagements with operators like TEPSCO (Tokyo Electric Power Services) across power engineering and grid analytics." },
-      { title: "OT/IT under one roof", body: "Observability and security that span operational technology and IT — not two disconnected programs." },
-      { title: "Built to be audited",  body: "Lineage, access controls, and reporting that satisfy state PUCs and FERC, not just internal audit." },
+      { title: "NERC-CIP fluency",     body: "We implement security, identity, and data movement patterns aligned with the controls regulated utilities answer to." },
+      { title: "Grid-scale data work", body: "We've delivered engagements with operators like TEPSCO (Tokyo Electric Power Services) across power engineering and grid analytics." },
+      { title: "OT/IT under one roof", body: "We deploy observability and security that span operational technology and IT — not two disconnected programs." },
+      { title: "Built to be audited",  body: "We deliver lineage, access controls, and reporting that satisfy state PUCs and FERC, not just internal audit." },
     ],
     clients: [
       { name: "TEPSCO", note: "Tokyo Electric Power Services — engineering for power generation and grid." },
@@ -104,10 +104,10 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Research computing platforms, identity and access, and student data infrastructure for universities and research institutions that need to move fast without losing FERPA posture.",
     whyPoints: [
-      { title: "Research-grade compute", body: "Platforms that handle research workloads alongside administrative analytics on a shared, governed foundation." },
-      { title: "FERPA by design",        body: "Access controls and lineage that protect student data from the catalog up — not patched at the report layer." },
-      { title: "Named institutions",     body: "Active or recent work with Harvard, Penn State, NUS, Stony Brook, and NYIT." },
-      { title: "BI muscle",              body: "Cognos and Planning Analytics depth applied to enrollment, finance, and research analytics." },
+      { title: "Research-grade compute", body: "We build platforms that handle research workloads alongside administrative analytics on a shared, governed foundation." },
+      { title: "FERPA by design",        body: "We configure access controls and lineage that protect student data from the catalog up — not patched at the report layer." },
+      { title: "Named institutions",     body: "We've delivered active work with Harvard, Penn State, NUS, Stony Brook, and NYIT." },
+      { title: "BI muscle",              body: "We apply Cognos and Planning Analytics depth to enrollment, finance, and research analytics for these institutions." },
     ],
     clients: [
       { name: "Harvard University",                    note: "Ivy League — research computing and administrative analytics." },
@@ -128,10 +128,10 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Auditable AI systems and modernized records management for federal agencies and the defense technology organizations that support them.",
     whyPoints: [
-      { title: "FedRAMP-aligned posture", body: "Architectures designed against FedRAMP and FISMA controls — not retrofitted to them." },
-      { title: "Federal experience",      body: "Engagements aligned with U.S. federal mission requirements and defense technology programs." },
-      { title: "Auditable AI",            body: "watsonx-based RAG and governance patterns that produce explainable, source-cited outputs." },
-      { title: "Records modernization",   body: "Data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
+      { title: "FedRAMP-aligned posture", body: "We design architectures against FedRAMP and FISMA controls from the start — not retrofitted to them after the platform is live." },
+      { title: "Federal experience",      body: "We've delivered engagements aligned with U.S. federal mission requirements and defense technology programs." },
+      { title: "Auditable AI",            body: "We implement watsonx-based RAG and governance patterns that produce explainable, source-cited outputs your ATO reviewers can follow." },
+      { title: "Records modernization",   body: "We deliver data movement, catalog, and lineage work that brings legacy records into a governed, queryable state." },
     ],
     clients: [],
     practices: [
@@ -145,10 +145,10 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Core banking analytics, fraud and AML intelligence, underwriting copilots, claims acceleration, and customer experience platforms built for global universal banks, regional carriers, payments networks, cooperative finance, and insurance carriers — under PCI-DSS, SOX, NAIC, and Basel III posture.",
     whyPoints: [
-      { title: "Bank-grade controls",    body: "PCI-DSS, SOX, NAIC, and Basel III control patterns implemented at scale across retail, commercial, cooperative finance, and insurance carriers." },
-      { title: "Payments depth",         body: "Card, real-time payments, and core banking experience — from issuer-acquirer to switch infrastructure to fintech rails." },
-      { title: "Underwriting copilots",  body: "RAG and agentic workflows grounded in your underwriting guidelines and historical book — outputs that hold up to actuarial review." },
-      { title: "Claims acceleration",    body: "Document intelligence, automation, and observability that take days out of the claims cycle for life, group benefits, and P&C carriers." },
+      { title: "Bank-grade controls",    body: "We implement PCI-DSS, SOX, NAIC, and Basel III control patterns at scale across retail, commercial, cooperative finance, and insurance carriers." },
+      { title: "Payments depth",         body: "We bring card, real-time payments, and core banking delivery experience — from issuer-acquirer to switch infrastructure to fintech rails." },
+      { title: "Underwriting copilots",  body: "We build RAG and agentic workflows grounded in your underwriting guidelines and historical book — outputs that hold up to actuarial review." },
+      { title: "Claims acceleration",    body: "We deploy document intelligence, automation, and observability that take days out of the claims cycle for life, group benefits, and P&C carriers." },
     ],
     clients: [
       { name: "Santander",            note: "Global universal bank — retail and commercial banking across Europe and the Americas." },
@@ -177,10 +177,10 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     lede:
       "Plant-floor analytics, supply-chain intelligence, and OT/IT security for automotive, materials, industrial equipment, storage technology, and global trading enterprises.",
     whyPoints: [
-      { title: "OT/IT under one roof",  body: "Observability, identity, and data movement that span operational technology and IT — not two disconnected programs." },
-      { title: "Global industrial fit", body: "Engagements with global industrials including Mercedes-Benz, Dow, Wabtec, NSK, Seagate, and Itochu." },
-      { title: "Supply-chain visibility", body: "Lakehouse and analytics patterns that join MES, ERP, and logistics signals for the planning team and the plant manager." },
-      { title: "ISO 27001 alignment",   body: "Security and data protection patterns aligned to ISO 27001 and NIST CSF — what global industrials' customers ask for." },
+      { title: "OT/IT under one roof",    body: "We deploy observability, identity, and data movement that span operational technology and IT — not two disconnected programs." },
+      { title: "Global industrial fit",   body: "We've delivered engagements with global industrials including Mercedes-Benz, Dow, Wabtec, NSK, Seagate, and Itochu." },
+      { title: "Supply-chain visibility", body: "We build lakehouse and analytics patterns that join MES, ERP, and logistics signals for the planning team and the plant manager." },
+      { title: "ISO 27001 alignment",     body: "We implement security and data protection patterns aligned to ISO 27001 and NIST CSF — what global industrials' customers require." },
     ],
     clients: [
       { name: "Mercedes-Benz", note: "Global automotive manufacturer — premium passenger vehicles and commercial mobility." },
