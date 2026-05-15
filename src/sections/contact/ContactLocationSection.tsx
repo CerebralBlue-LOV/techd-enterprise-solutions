@@ -56,14 +56,30 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
       {...(isLink ? { href } : {})}
       {...linkProps}
       className={cn(
-        "group relative flex h-full flex-col rounded-xl border border-border bg-background p-5",
+        "group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background p-5",
         "transition-all duration-300 ease-out",
-        isLink && "hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-sm",
+        isLink &&
+          "hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_20px_40px_-24px_hsl(var(--primary)/0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0",
       )}
     >
-      <div className="flex items-center gap-3">
-        <div className="grid place-items-center size-9 rounded-md bg-secondary text-white transition-colors duration-300 group-hover:bg-primary">
-          <Icon className="size-4" />
+      {/* Hover sheen */}
+      {isLink && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary"
+        />
+      )}
+      {/* Corner glow on hover */}
+      {isLink && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-primary/0 blur-3xl transition-all duration-500 group-hover:bg-primary/20"
+        />
+      )}
+
+      <div className="relative flex items-center gap-3">
+        <div className="relative grid place-items-center size-9 rounded-md bg-secondary text-white transition-all duration-300 group-hover:bg-primary group-hover:scale-110 group-hover:shadow-[0_8px_20px_-8px_hsl(var(--primary)/0.6)]">
+          <Icon className="size-4 transition-transform duration-300 group-hover:rotate-[-6deg]" />
         </div>
         <p className="eyebrow">{eyebrow}</p>
         {isLink && (
@@ -73,17 +89,18 @@ const DetailCard = ({ detail }: { detail: Detail }) => {
 
       <p
         className={cn(
-          "mt-4 text-base md:text-lg font-bold leading-tight tracking-tight",
-          pending ? "text-muted-foreground" : "text-secondary",
+          "relative mt-4 text-base md:text-lg font-bold leading-tight tracking-tight transition-colors duration-300",
+          pending ? "text-muted-foreground" : "text-secondary group-hover:text-primary",
         )}
       >
         {title}
       </p>
-      <p className="mt-1.5 text-xs font-light text-muted-foreground leading-relaxed">{sub}</p>
+      <p className="relative mt-1.5 text-xs font-light text-muted-foreground leading-relaxed">{sub}</p>
 
       {cta && (
-        <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-primary">
+        <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-primary">
           {cta}
+          <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </span>
       )}
     </Wrapper>
