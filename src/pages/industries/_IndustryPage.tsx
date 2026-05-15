@@ -9,6 +9,7 @@ import IndustryFederalCredentialsSection from "@sections/industries/IndustryFede
 import SolutionsForIndustrySection from "@sections/industries/SolutionsForIndustrySection";
 import IndustryApproachSection from "@sections/industries/IndustryApproachSection";
 import IndustryOutcomesSection from "@sections/industries/IndustryOutcomesSection";
+import IndustryCrossLinksSection from "@sections/industries/IndustryCrossLinksSection";
 import IndustryCtaSection from "@sections/industries/IndustryCtaSection";
 import NotFound from "@pages/NotFound";
 
@@ -39,6 +40,7 @@ const IndustryPage = ({ industryId }: Props) => {
       <SolutionsForIndustrySection industry={industry} />
       <IndustryApproachSection industry={industry} />
       <IndustryOutcomesSection industry={industry} />
+      <IndustryCrossLinksSection industry={industry} />
       <IndustryCtaSection industry={industry} />
     </Layout>
   );
