@@ -254,7 +254,7 @@ const About = () => {
           <Reveal>
             <SectionHeading
               eyebrow="Regulated-industry depth"
-              title="Seven verticals, four compliance frameworks"
+              title="Four compliance frameworks, seven verticals"
               subtitle="We anchor every engagement to the regulatory frame the client already operates inside."
             />
           </Reveal>
@@ -262,7 +262,7 @@ const About = () => {
           <div className="mt-12 grid gap-5 sm:grid-cols-2">
             {COMPLIANCE_FRAMEWORKS.map((f, i) => (
               <Reveal key={f.framework} delay={i * 60}>
-                <div className="group relative h-full overflow-hidden rounded-xl border border-border border-l-2 border-l-primary/30 bg-background p-6 transition-all duration-300 hover:border-l-primary hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.2)] hover:-translate-y-0.5">
+                <div className="group relative h-full overflow-hidden rounded-xl border border-border border-l-2 border-l-primary/30 bg-background p-5 transition-all duration-300 hover:border-l-primary hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.2)] hover:-translate-y-0.5">
                   <span
                     aria-hidden
                     className="pointer-events-none absolute -top-3 -right-1 text-[72px] font-bold leading-none text-primary/[0.05] select-none transition-colors duration-300 group-hover:text-primary/[0.10]"
@@ -270,13 +270,10 @@ const About = () => {
                     {f.framework}
                   </span>
                   <div className="relative">
-                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                      {f.framework}
-                    </p>
-                    <p className="mt-2 text-base font-bold text-secondary leading-tight">
+                    <p className="text-base font-bold text-secondary leading-tight">
                       {f.industry}
                     </p>
-                    <p className="mt-3 text-sm font-light text-muted-foreground leading-relaxed">
+                    <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
                       {f.detail}
                     </p>
                   </div>
@@ -286,27 +283,25 @@ const About = () => {
           </div>
 
           <Reveal delay={160}>
-            <div className="mt-8">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-secondary/60 mb-3">
-                Verticals served
-              </p>
-              <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {VERTICALS.map((v, i) => (
-                  <li
-                    key={v}
-                    className="flex items-center gap-2.5 rounded-lg border border-border bg-background px-3 py-2.5"
-                  >
-                    <span className="text-[10px] font-bold text-primary/50 shrink-0">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-xs font-light text-muted-foreground leading-tight">
-                      {v}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="mt-10 text-[10px] font-bold uppercase tracking-[0.18em] text-secondary/60 mb-3">
+              Verticals served
+            </p>
           </Reveal>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {VERTICALS.map((v, i) => (
+              <Reveal key={v} delay={180 + i * 50}>
+                <li className="group flex items-center gap-2.5 rounded-lg border border-border bg-background px-3 py-2.5 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_6px_20px_-10px_hsl(var(--primary)/0.25)] hover:-translate-y-0.5">
+                  <span className="text-xs font-bold text-primary/60 shrink-0 transition-colors group-hover:text-primary">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-sm font-light text-muted-foreground leading-tight transition-colors group-hover:text-secondary">
+                    {v}
+                  </span>
+                </li>
+              </Reveal>
+            ))}
+          </ul>
+
         </div>
       </section>
 
