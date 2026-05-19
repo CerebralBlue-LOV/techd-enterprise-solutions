@@ -103,6 +103,9 @@ const IBMPartnership = () => {
                     <p className="mt-3 text-sm font-light text-white/70 leading-relaxed max-w-2xl">
                       Authorized IBM reseller and implementer. Verifiable on the IBM Partner Directory.
                     </p>
+                    <p className="mt-2 text-xs font-light text-white/50 leading-relaxed max-w-2xl">
+                      IBM partner since 2009 — held Platinum tier prior to IBM&apos;s 2024 Partner Plus criteria update.
+                    </p>
                   </div>
                 </div>
                 <a
@@ -114,6 +117,18 @@ const IBMPartnership = () => {
                   Verify on IBM Partner Directory
                   <ExternalLink className="h-4 w-4" />
                 </a>
+              </div>
+              <div className="relative mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-4">
+                {[
+                  { value: "21", label: "IBM products" },
+                  { value: "4", label: "Practices" },
+                  { value: "15+", label: "Years delivering" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <p className="text-2xl md:text-3xl font-bold text-white">{s.value}</p>
+                    <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white/60">{s.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </Reveal>
