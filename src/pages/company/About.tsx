@@ -39,14 +39,14 @@ const About = () => {
     <Layout>
       <SEO
         title="About — TechD"
-        description="Founded 2009 in Miami. IBM Platinum Business Partner delivering AI, data, automation, and security across regulated US and Canadian enterprises."
+        description="Founded 2009 in Miami. IBM Gold Business Partner delivering AI, data, automation, and security across regulated US and Canadian enterprises."
       />
 
       <PageHero
         pageLabel="Company / About"
         parent="Company"
         child="About"
-        headline="An IBM Platinum partner built for regulated enterprise delivery."
+        headline="An IBM Gold partner built for regulated enterprise delivery."
         lede="Founded 2009 in Miami. Practitioner-led across the full watsonx, data, automation, and security portfolio — for healthcare, insurance, public sector, media, higher education, and energy clients."
         figure={<CompanyFigure />}
         anchors={[
@@ -80,10 +80,9 @@ const About = () => {
                     Miami, FL.
                   </p>
                   <p>
-                    Seventeen years later, we operate as an IBM Platinum Business Partner
-                    under IBM Partner Plus — IBM's highest commercial tier — with
-                    practitioners certified across the full watsonx, data, automation, and
-                    security portfolio.
+                    Seventeen years later, we operate as an IBM Gold Business Partner
+                    under IBM Partner Plus — with practitioners certified across the
+                    full watsonx, data, automation, and security portfolio.
                   </p>
                   <p>
                     Headquartered in Miami, FL. Delivery teams distributed across the
