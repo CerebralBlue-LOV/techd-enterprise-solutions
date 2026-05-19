@@ -10,7 +10,7 @@ Full project scope, phases, and long-term vision. Read this when sprint scope fe
 
 ## Context
 
-TechD is an IBM Platinum Business Partner delivering AI, data, security, automation, cloud, and application modernization to Fortune 500 clients (J&J, Comcast, Sony, Princeton, Johns Hopkins). The current `techd.com` runs on a compromised WordPress install with SEO cloaking spam injected at theme level. The WordPress server is fully compromised and must be abandoned — clean break, no file migration.
+TechD is an IBM Gold Business Partner delivering AI, data, security, automation, cloud, and application modernization to Fortune 500 clients (J&J, Comcast, Sony, Princeton, Johns Hopkins). The current `techd.com` runs on a compromised WordPress install with SEO cloaking spam injected at theme level. The WordPress server is fully compromised and must be abandoned — clean break, no file migration.
 
 This project replaces it with a modern, fast marketing site. The business goal is not just a pretty website — it's a credible digital face that matches the sophistication of TechD's enterprise clientele and supports lead generation.
 

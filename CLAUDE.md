@@ -4,7 +4,7 @@ Operational context for Claude Code. Loaded every session. Keep tight.
 
 ## What this is
 
-Marketing website rebuild for **TechD** (IBM Platinum Business Partner serving Fortune 500 clients: J&J, Comcast, Sony, Princeton, Johns Hopkins). Replacing a compromised WordPress site.
+Marketing website rebuild for **TechD** (IBM Gold Business Partner serving Fortune 500 clients: J&J, Comcast, Sony, Princeton, Johns Hopkins). Replacing a compromised WordPress site.
 
 **Status: Not live.** The site is still in development. Do not assume the staging URL reflects the final state or that any deadline has passed.
 
@@ -55,7 +55,7 @@ src/
     ui/             # shadcn/ui primitives — DO NOT touch
     layout/         # Header, Footer, Layout, NavLink  (alias: @layout)
     shared/         # Reveal, SectionHeading, SectionMarker, GeometricAccent,
-                    # LogoStrip, IBMPlatinumBadge, SectionBackdrop, SEO
+                    # LogoStrip, IBMGoldBadge, SectionBackdrop, SEO
                     # (aliases: @shared and @seo both resolve here)
   content/          # Typed TS data modules (see Content files below)  (alias: @content)
   hooks/            # use-mobile, use-toast  (alias: @hooks)

@@ -19,22 +19,22 @@ import {
 } from "@content/about";
 import { SOLUTIONS } from "@content/solutions";
 
-const WHAT_PLATINUM_MEANS = [
+const WHAT_GOLD_MEANS = [
   {
-    title: "Direct engineering access",
-    body: "Relationships with IBM product engineering across watsonx, Cloud Pak for Data, IBM Z, and IBM Security — not just a support line.",
+    title: "IBM-certified practitioners",
+    body: "Certified architects and engineers across all four practices — watsonx, Cloud Pak for Data, IBM Z, and IBM Security — current on the platforms they deliver.",
   },
   {
-    title: "Early product access",
-    body: "Participation in IBM beta programs and pre-release testing — so the architectures we recommend reflect where IBM is going, not just where it has been.",
+    title: "Cross-product integration depth",
+    body: "We deliver across the IBM stack — AI, data, automation, and security — so your architecture decisions hold together end to end, not just inside a single product silo.",
   },
   {
-    title: "Deepest certifications",
-    body: "IBM-certified architects and engineers across all four practices — the credential bar required to hold Platinum status under IBM Partner Plus.",
+    title: "Regulated-industry track record",
+    body: "Delivery patterns proven in HIPAA, FedRAMP, PCI-DSS, and NERC-CIP environments — where access controls and audit trails aren't optional features.",
   },
   {
     title: "Since 2009",
-    body: "Over 15 years as an IBM partner. The track record required to maintain IBM's highest tier year over year.",
+    body: "Over 15 years as an IBM partner. The continuity that lets us run platforms through budget cycles, IBM release waves, and organizational change.",
   },
 ];
 
@@ -46,19 +46,19 @@ const IBMPartnership = () => {
     <Layout>
       <SEO
         title="IBM Partnership — TechD"
-        description="TechD is an IBM Platinum Business Partner under IBM Partner Plus — certified across 21 IBM products spanning AI, data, automation, and security."
+        description="TechD is an IBM Gold Business Partner under IBM Partner Plus — certified across 21 IBM products spanning AI, data, automation, and security."
       />
 
       <PageHero
         pageLabel="Company / IBM Partnership"
         parent="Company"
         child="IBM Partnership"
-        headline="IBM Platinum Business Partner since 2009."
-        lede="The highest commercial tier under IBM Partner Plus. Certified across 21 IBM products spanning AI &amp; Generative, Data &amp; Analytics, Automation &amp; FinOps, and Security &amp; Compliance."
+        headline="IBM Gold Business Partner since 2009."
+        lede="An IBM Partner Plus tier we have held through 15+ years of continuous delivery. Certified across 21 IBM products spanning AI &amp; Generative, Data &amp; Analytics, Automation &amp; FinOps, and Security &amp; Compliance."
         figure={<CompanyFigure />}
         anchors={[
           { href: "#credential", label: "Credential" },
-          { href: "#what-platinum", label: "What Platinum means" },
+          { href: "#what-gold", label: "What Gold means" },
           { href: "#portfolio", label: "Portfolio" },
           { href: "#operating-model", label: "AI Operating Model" },
           { href: "#quick-start", label: "Quick Start Advisory" },
@@ -98,7 +98,7 @@ const IBMPartnership = () => {
                       IBM Partner Plus
                     </p>
                     <p className="mt-2 text-2xl md:text-3xl font-bold text-white leading-tight">
-                      Platinum Business Partner — active since 2009.
+                      Gold Business Partner — active since 2009.
                     </p>
                     <p className="mt-3 text-sm font-light text-white/70 leading-relaxed max-w-2xl">
                       Authorized IBM reseller and implementer. Verifiable on the IBM Partner Directory.
@@ -120,18 +120,18 @@ const IBMPartnership = () => {
         </div>
       </section>
 
-      {/* What Platinum means */}
-      <section id="what-platinum" className="section bg-muted/30 scroll-mt-24">
-        <SectionMarker page="Company / IBM Partnership" name="What Platinum means" />
+      {/* What Gold means */}
+      <section id="what-gold" className="section bg-muted/30 scroll-mt-24">
+        <SectionMarker page="Company / IBM Partnership" name="What Gold means" />
         <div className="container-page">
           <Reveal>
             <SectionHeading
-              eyebrow="What Platinum means"
-              title="IBM's highest partner classification — reserved for the deepest track records"
+              eyebrow="What Gold means"
+              title="An IBM Partner Plus tier backed by certified practitioners and 15+ years of continuous IBM delivery"
             />
           </Reveal>
           <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {WHAT_PLATINUM_MEANS.map((p, i) => {
+            {WHAT_GOLD_MEANS.map((p, i) => {
               const num = String(i + 1).padStart(2, "0");
               return (
                 <Reveal key={p.title} delay={i * 80}>
@@ -335,8 +335,8 @@ const IBMPartnership = () => {
 
       <PageFinalCtaSection
         pageLabel="Company / IBM Partnership"
-        eyebrow="IBM Platinum"
-        title="Bring a Platinum partner to your next IBM engagement."
+        eyebrow="IBM Gold"
+        title="Bring a Gold-tier IBM partner to your next engagement."
       />
     </Layout>
   );
