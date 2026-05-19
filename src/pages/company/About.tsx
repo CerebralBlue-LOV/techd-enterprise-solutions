@@ -89,6 +89,17 @@ const About = () => {
                     United States and Canada.
                   </p>
                 </div>
+                <figure className="mt-8 border-l-2 border-primary pl-5">
+                  <blockquote className="text-lg md:text-xl font-light italic text-secondary leading-snug">
+                    "TechD is dedicated to helping organizations gain truth from their data."
+                  </blockquote>
+                  <figcaption className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
+                    Our mission
+                  </figcaption>
+                </figure>
+                <div className="hidden">
+
+                </div>
 
               </div>
             </Reveal>
