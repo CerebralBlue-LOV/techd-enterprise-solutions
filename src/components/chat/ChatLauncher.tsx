@@ -1,4 +1,4 @@
-import { Sparkles, X } from "lucide-react";
+import { Bot, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -37,19 +37,9 @@ export function ChatLauncher({ open, onClick }: Props) {
       />
 
       {open ? (
-        <X
-          className="relative h-6 w-6 transition-transform duration-300 ease-out group-hover:rotate-90 motion-reduce:transition-none motion-reduce:group-hover:rotate-0"
-          aria-hidden
-        />
+        <X className="relative h-6 w-6" aria-hidden />
       ) : (
-        <Sparkles
-          className={cn(
-            "relative h-6 w-6 transition-transform duration-500 ease-out",
-            "group-hover:scale-110 group-hover:-rotate-12",
-            "motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0",
-          )}
-          aria-hidden
-        />
+        <Bot className="relative h-6 w-6" aria-hidden />
       )}
     </button>
   );
