@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { SheetHeader, SheetTitle } from "@ui/sheet";
+
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
@@ -28,12 +28,12 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
 
   return (
     <div className="flex h-full flex-col">
-      <SheetHeader className="border-b border-border px-4 py-3">
-        <SheetTitle className="text-base font-bold text-secondary">Ask TechD</SheetTitle>
+      <div className="border-b border-border px-4 py-3 pl-8">
+        <h2 className="text-base font-bold text-secondary">Ask TechD</h2>
         <p className="text-xs font-light text-muted-foreground">
           Powered by NeuralSeek · Answers cite their source
         </p>
-      </SheetHeader>
+      </div>
 
       <ScrollArea className="flex-1 px-4 py-4">
         {messages.length === 0 ? (
