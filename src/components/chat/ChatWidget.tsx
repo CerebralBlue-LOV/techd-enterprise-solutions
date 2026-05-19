@@ -48,7 +48,7 @@ export function ChatWidget() {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
           side="right"
-          className="flex flex-col p-0 max-w-none sm:max-w-none"
+          className="flex flex-col p-0 max-w-none sm:max-w-none [&>button]:text-white [&>button]:opacity-90 [&>button:hover]:opacity-100"
           style={{ width: `${width}px` }}
           aria-label="TechD AI assistant"
         >

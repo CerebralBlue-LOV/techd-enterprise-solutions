@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Bot, Sparkles, Building2, Briefcase, FileSearch } from "lucide-react";
+import { Bot } from "lucide-react";
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
@@ -7,10 +7,10 @@ import { ChatComposer } from "./ChatComposer";
 import type { Message } from "./types";
 
 const STARTER_PROMPTS = [
-  { text: "What IBM products does TechD implement?", Icon: Sparkles },
-  { text: "How do I start an engagement?", Icon: Briefcase },
-  { text: "Which industries does TechD work with?", Icon: Building2 },
-  { text: "What is the IBM Platform Assessment?", Icon: FileSearch },
+  "What IBM products does TechD implement?",
+  "How do I start an engagement?",
+  "Which industries does TechD work with?",
+  "What is the IBM Platform Assessment?",
 ];
 
 interface Props {
@@ -30,22 +30,11 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
     <div className="flex h-full flex-col bg-gradient-to-b from-muted/20 to-background">
       {/* Gradient header */}
       <header className="relative bg-gradient-to-r from-primary to-primary/70 px-5 py-4 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm ring-1 ring-white/20">
-            <Bot className="h-5 w-5 text-white" aria-hidden />
-          </div>
-          <div className="flex flex-col">
-            <h2 className="text-lg font-bold leading-tight text-white">Ask TechD</h2>
-            <div className="flex items-center gap-1.5">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75 motion-reduce:animate-none" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
-              </span>
-              <p className="text-xs font-light text-white/90">
-                Powered by NeuralSeek · Online
-              </p>
-            </div>
-          </div>
+        <div className="flex flex-col">
+          <h2 className="text-lg font-bold leading-tight text-white">Ask TechD</h2>
+          <p className="text-xs font-light text-white/90">
+            Powered by NeuralSeek
+          </p>
         </div>
       </header>
 
@@ -67,21 +56,18 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
 
             {/* Starter prompts */}
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {STARTER_PROMPTS.map(({ text, Icon }) => (
+              {STARTER_PROMPTS.map((text) => (
                 <button
                   key={text}
                   onClick={() => onSend(text)}
                   className={cn(
-                    "group flex items-start gap-2.5 rounded-xl border border-border/60 bg-white px-3 py-3 text-left",
+                    "rounded-xl border border-border/60 bg-white px-3 py-3 text-left",
                     "shadow-[0_1px_2px_rgba(0,0,0,0.03)]",
                     "transition-all duration-200 ease-out",
                     "hover:border-primary/60 hover:shadow-[0_4px_16px_-6px_hsl(var(--primary)/0.35)] hover:-translate-y-0.5",
                     "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
                   )}
                 >
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                    <Icon className="h-3.5 w-3.5" aria-hidden />
-                  </span>
                   <span className="text-xs font-normal leading-snug text-secondary">
                     {text}
                   </span>
