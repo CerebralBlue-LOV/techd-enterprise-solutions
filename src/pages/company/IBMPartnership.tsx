@@ -219,6 +219,7 @@ const IBMPartnership = () => {
               return (
                 <Reveal key={sol.id} delay={i * 60}>
                   <FlipCard
+                    compact
                     to={`/solutions/${sol.id}`}
                     eyebrow={sol.name}
                     title={sol.outcome}
