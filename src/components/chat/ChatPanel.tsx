@@ -68,7 +68,7 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
                     "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
                   )}
                 >
-                  <span className="text-xs font-normal leading-snug text-secondary">
+                  <span className="text-sm font-normal leading-snug text-secondary">
                     {text}
                   </span>
                 </button>
