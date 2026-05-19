@@ -17,6 +17,7 @@ interface Props {
   messages: Message[];
   loading: boolean;
   onSend: (text: string) => void;
+  onReset: () => void;
 }
 
 export function ChatPanel({ messages, loading, onSend }: Props) {
