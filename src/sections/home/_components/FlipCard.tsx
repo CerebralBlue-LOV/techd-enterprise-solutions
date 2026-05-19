@@ -80,7 +80,7 @@ export const FlipCard = ({
               <p className={`mt-2 font-light leading-relaxed text-secondary/80 ${compact ? "text-xs line-clamp-3" : "text-sm mt-3"}`}>
                 {backBody}
               </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
+              <div className="mt-4 mb-4 flex flex-wrap gap-1.5">
                 {chips.map((chip) => {
                   const baseClass =
                     "rounded-md border border-border bg-background/60 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-secondary transition-colors";
