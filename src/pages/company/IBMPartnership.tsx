@@ -252,43 +252,82 @@ const IBMPartnership = () => {
         </div>
       </section>
 
-      {/* IBM AI Operating Model alignment — horizontal flow */}
+      {/* IBM AI Operating Model alignment */}
       <section id="operating-model" className="section bg-muted/30 scroll-mt-24">
         <SectionMarker page="Company / IBM Partnership" name="AI Operating Model" />
         <div className="container-page">
-          <Reveal>
-            <SectionHeading
-              eyebrow="IBM Think 2026"
-              title="Aligned to the IBM AI Operating Model"
-              subtitle="Govern, integrate, orchestrate, automate. We use IBM's framework so client roadmaps share vocabulary with IBM's own field teams."
-            />
-          </Reveal>
-          <div className="mt-12 relative grid gap-6 md:grid-cols-4">
-            {/* horizontal connector rail (md+) */}
-            <span
-              aria-hidden
-              className="hidden md:block absolute top-12 left-[8%] right-[8%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-            />
-            {IBM_AI_OPERATING_MODEL.map((row, i) => (
-              <Reveal key={row.pillar} delay={i * 70}>
-                <div className="relative h-full rounded-xl border border-border bg-background p-5">
-                  <div className="flex items-center gap-3">
-                    <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-primary bg-background text-xs font-bold text-primary">
-                      0{i + 1}
-                    </span>
-                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                      {row.pillar}
-                    </p>
-                  </div>
-                  <p className="mt-4 text-sm font-bold text-secondary leading-tight">
-                    {row.stage}
-                  </p>
-                  <p className="mt-2 text-xs font-light text-muted-foreground leading-relaxed">
-                    {row.detail}
-                  </p>
+          <div className="grid gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16 items-start">
+            {/* Left: editorial framing */}
+            <Reveal>
+              <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                <span className="h-px w-8 bg-primary" />
+                Announced at IBM Think 2026
+              </p>
+              <h2 className="mt-5 text-3xl md:text-4xl font-bold text-secondary leading-[1.1]">
+                The same four words IBM uses{" "}
+                <span className="text-primary">to scope enterprise AI.</span>
+              </h2>
+              <p className="mt-5 text-base font-light text-muted-foreground leading-relaxed">
+                Govern. Integrate. Orchestrate. Automate. IBM's 2026 operating model is the
+                vocabulary their field teams, product roadmaps, and procurement motions now run on.
+              </p>
+              <p className="mt-4 text-base font-light text-muted-foreground leading-relaxed">
+                We mapped every TechD engagement stage to it — so when you brief your IBM account
+                team on what we're building, the framing already matches the deck they're reading
+                from internally.
+              </p>
+              <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-border pt-6">
+                <div>
+                  <dt className="text-3xl font-bold text-secondary tracking-tight">4</dt>
+                  <dd className="mt-1 text-xs font-light uppercase tracking-[0.12em] text-muted-foreground">
+                    IBM pillars mapped
+                  </dd>
                 </div>
-              </Reveal>
-            ))}
+                <div>
+                  <dt className="text-3xl font-bold text-secondary tracking-tight">5</dt>
+                  <dd className="mt-1 text-xs font-light uppercase tracking-[0.12em] text-muted-foreground">
+                    TechD delivery stages
+                  </dd>
+                </div>
+              </dl>
+            </Reveal>
+
+            {/* Right: paired mapping rows — IBM pillar → TechD stage */}
+            <ol className="space-y-3">
+              {IBM_AI_OPERATING_MODEL.map((row, i) => (
+                <Reveal key={row.pillar} delay={i * 60}>
+                  <li className="group relative grid grid-cols-1 md:grid-cols-[1fr_auto_1.4fr] items-stretch gap-3 md:gap-0 rounded-xl border border-border bg-background overflow-hidden hover:border-primary/40 transition-colors">
+                    {/* IBM pillar */}
+                    <div className="flex items-center gap-4 p-5 md:p-6 bg-secondary/[0.02]">
+                      <span className="font-mono text-xs text-primary/70 tracking-tighter">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                          IBM pillar
+                        </p>
+                        <p className="mt-1 text-lg font-bold text-secondary leading-none">
+                          {row.pillar}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Connector */}
+                    <div className="hidden md:flex items-center justify-center px-2 text-primary/60">
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                    {/* TechD stage */}
+                    <div className="p-5 md:p-6 border-t md:border-t-0 md:border-l border-dashed border-border">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                        TechD · {row.stage}
+                      </p>
+                      <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
+                        {row.detail}
+                      </p>
+                    </div>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
