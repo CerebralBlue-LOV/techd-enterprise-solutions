@@ -30,22 +30,11 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
     <div className="flex h-full flex-col bg-gradient-to-b from-muted/20 to-background">
       {/* Gradient header */}
       <header className="relative bg-gradient-to-r from-primary to-primary/70 px-5 py-4 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm ring-1 ring-white/20">
-            <Bot className="h-5 w-5 text-white" aria-hidden />
-          </div>
-          <div className="flex flex-col">
-            <h2 className="text-lg font-bold leading-tight text-white">Ask TechD</h2>
-            <div className="flex items-center gap-1.5">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75 motion-reduce:animate-none" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
-              </span>
-              <p className="text-xs font-light text-white/90">
-                Powered by NeuralSeek · Online
-              </p>
-            </div>
-          </div>
+        <div className="flex flex-col">
+          <h2 className="text-lg font-bold leading-tight text-white">Ask TechD</h2>
+          <p className="text-xs font-light text-white/90">
+            Powered by NeuralSeek
+          </p>
         </div>
       </header>
 
