@@ -3,6 +3,7 @@ import { Sheet, SheetContent } from "@ui/sheet";
 import { ChatLauncher } from "./ChatLauncher";
 import { ChatPanel } from "./ChatPanel";
 import { useChat } from "./useChat";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const MIN_WIDTH = 320;
 const MAX_WIDTH = 900;
@@ -12,6 +13,7 @@ export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(DEFAULT_WIDTH);
   const draggingRef = useRef(false);
+  const isMobile = useIsMobile();
   const { messages, loading, send, clear } = useChat();
 
   const onMouseDown = useCallback((e: React.MouseEvent) => {
