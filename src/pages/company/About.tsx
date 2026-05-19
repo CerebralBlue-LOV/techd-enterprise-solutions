@@ -141,18 +141,8 @@ const About = () => {
                     to={p.to}
                     className="group relative block h-full overflow-hidden rounded-xl border border-white/10 bg-background/[0.04] backdrop-blur-sm p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.55)] hover:-translate-y-0.5"
                   >
-                    {/* faint background numeral */}
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute -top-4 -right-2 text-[110px] font-bold leading-none text-background/[0.06] transition-colors group-hover:text-background/[0.10]"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                     <div className="relative">
-                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                        Practice 0{i + 1}
-                      </p>
-                      <h3 className="mt-4 text-xl font-bold text-background leading-tight">
+                      <h3 className="text-xl font-bold text-background leading-tight">
                         {p.name}
                       </h3>
                       <p className="mt-2 text-sm font-light text-background/70 leading-relaxed">
@@ -166,11 +156,8 @@ const About = () => {
                           {stack.join(" · ")}
                         </p>
                       )}
-                      <p className="mt-5 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] text-background/70 group-hover:text-primary transition-colors">
-                        See the practice
-                        <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-                      </p>
                     </div>
+
                   </Link>
                 </Reveal>
               );
