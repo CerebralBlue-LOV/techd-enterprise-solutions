@@ -46,10 +46,10 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/70 shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.5)]">
                 <Bot className="h-6 w-6 text-white" aria-hidden />
               </div>
-              <h3 className="text-base font-bold text-secondary">
+              <h3 className="text-lg font-bold text-secondary">
                 Hi — I'm the TechD assistant
               </h3>
-              <p className="text-xs font-light text-muted-foreground">
+              <p className="text-sm font-light text-muted-foreground">
                 Ask anything about our IBM solutions, services, or industries.
               </p>
             </div>
