@@ -264,4 +264,4 @@ export const QUICK_START_ADVISORY = {
 
 /** IBM Partner Directory listing. Source: docs/revisions/about/ibm-partnership.md §1. */
 export const IBM_PARTNER_DIRECTORY_URL =
-  "https://www.ibm.com/partnerplus/directory/profile/69abd900-4f1d-11df-ac68-020031000011";
+  "https://www.ibm.com/partnerplus/directory/company/5531";
