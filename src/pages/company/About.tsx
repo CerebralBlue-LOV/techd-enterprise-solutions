@@ -245,7 +245,7 @@ const About = () => {
           <Reveal>
             <SectionHeading
               eyebrow="Regulated-industry depth"
-              title="Four compliance frameworks, seven verticals"
+              title="Four compliance frameworks"
               subtitle="We anchor every engagement to the regulatory frame the client already operates inside."
             />
           </Reveal>
