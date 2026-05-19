@@ -276,7 +276,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { title: "Built and run by the same team", body: "We have the architects who deployed your platform operate it — no tier-1 call center triaging a system they have never seen." },
       { title: "SLAs tied to outcomes",          body: "We measure ourselves by pipeline availability, report freshness, model inference uptime, and security alert triage time — not ticket counts and CSAT theater." },
       { title: "FinOps that compounds",          body: "We implement continuous right-sizing on watsonx, Cloud Pak for Data, OpenShift, and your hyperscaler spend — measured in invoice lines with Apptio and Turbonomic actions taken, not just reported." },
-      { title: "Platinum escalation path",       body: "We use our Platinum status to give your IBM Engineering issues a direct escalation path — bypassing the standard support queue when a platform problem needs an IBM engineer, not a ticket." },
+      { title: "IBM partner escalation path",       body: "We use our active IBM Partner Plus relationship to route IBM Engineering issues through the right channel — pairing our certified practitioners with IBM support so platform problems get to the engineer who can actually resolve them." },
     ],
     spotlight: {
       eyebrow: "How we measure ourselves",

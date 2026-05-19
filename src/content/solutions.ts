@@ -121,7 +121,7 @@ export const SOLUTIONS: Solution[] = [
             "AI agent development and production lifecycle management using AgentOps across complex multi-agent architectures",
           ],
           whyTechD: [
-            "We engage IBM's Platinum partner programs to access watsonx.ai's technical roadmap and pre-GA capabilities — which means we deploy governance and MLOps features in your environment before they reach the broader partner ecosystem.",
+            "We deploy watsonx.ai governance and MLOps patterns shaped by 15+ years of running IBM data and AI platforms in regulated environments — so the controls, lineage, and operational runbooks are in place before your first production workload moves traffic.",
             "We build for operability, not demo readiness — every engagement delivers the MLOps pipelines, governance controls, and operational runbooks your team can own without us in the room.",
             "We build for regulated industries — HIPAA, FedRAMP, PCI-DSS, and SOX-aligned watsonx.ai deployments with the lineage, audit trails, and access controls that survive a real examination, not just a vendor demo.",
             "We've spent 15+ years on IBM platforms, which means our architects know what the documentation doesn't say — the edge cases, upgrade paths, and production patterns that actually matter.",
@@ -160,7 +160,7 @@ export const SOLUTIONS: Solution[] = [
             "Scaled agentic AI — from single-agent pilots to production multi-agent deployments with governance, observability, and policy enforcement",
           ],
           whyTechD: [
-            "We access IBM's full Platinum partner programs — technical roadmap briefings, early feature access, and direct engineering escalation paths that lower-tier partners can't offer, which we route into your platform build from day one.",
+            "We bring active IBM Partner Plus engagement and IBM-certified watsonx architects into your platform build from day one — connecting your delivery to IBM's enablement programs and joint solution patterns, not just generic integrator playbooks.",
             "We architect every layer from OpenShift cluster design through the BI and AI applications that consume the platform — no handoff gaps between our infrastructure and application teams, so the platform you receive is a coherent whole.",
             "We deploy into regulated industries from day one — HIPAA, FedRAMP, PCI-DSS, and NERC-CIP environments where access controls and audit trails aren't optional features, built into every watsonx engagement we run.",
             "We've navigated the watsonx upgrade paths, the agentic governance edge cases, and the operational patterns that keep the platform running through budget cycles and organizational changes — accumulated from 15+ years on IBM platforms.",
@@ -241,7 +241,7 @@ export const SOLUTIONS: Solution[] = [
             "We deploy Bob alongside our IBM i, mainframe, and Java modernization engagements — we understand the legacy codebases Bob is purpose-built to modernize, and we configure it for the specific language mix and governance requirements your codebase demands.",
             "We configure governance before developers touch the tool — prompt normalization, sensitive data scanning, and approval workflows in place before the first Bob session runs, not as an afterthought.",
             "We wire BobShell into your existing CI/CD pipelines and connect it to your IBM Instana and OpenShift environments — so every modernization action is auditable end to end, not just inside the IDE.",
-            "We leverage IBM's Platinum-tier roadmap access to prepare your Bob environment for capabilities before they GA — and our direct IBM escalation path resolves complex modernization blockers that generic partners forward to standard support queues.",
+            "We pair IBM Bob deployments with deep IBM i, mainframe, and Java modernization experience — so complex blockers get resolved in delivery, with a senior practitioner who has navigated similar codebases before, not just escalated to a support queue.",
           ],
           stats: [
             { value: "45%", label: "average developer productivity gain" },
@@ -454,7 +454,7 @@ export const SOLUTIONS: Solution[] = [
             "We run one of the deepest Cognos Analytics practices in the IBM Business Partner ecosystem — 15+ years and more delivery hours than nearly any other partner across healthcare, insurance, education, and media.",
             "We built CogSuite — our own administration tooling specifically designed to reduce Cognos operational overhead for clients running large, complex multi-tenant deployments.",
             "We've upgraded Cognos environments from 8.x, 10.x, and 11.x to current versions, including framework model migration and SDK customization that other partners won't scope.",
-            "We test new Cognos capabilities in our lab before your IT team sees the release notes — an IBM Platinum advantage that means your upgrade path is de-risked before IBM publishes the migration guide.",
+            "We run Cognos upgrades against our own internal lab environment before recommending the migration path — drawing on 15+ years of Cognos delivery to de-risk version transitions for clients running production workloads they can't afford to break.",
           ],
           stats: [
             { value: "15+ yrs", label: "TechD Cognos delivery" },
