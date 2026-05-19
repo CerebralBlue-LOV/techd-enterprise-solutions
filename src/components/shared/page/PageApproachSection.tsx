@@ -57,7 +57,16 @@ export const PageApproachSection = ({
         )}
       </Reveal>
 
-      <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <ol
+        className={cn(
+          "mt-12 grid gap-5 md:grid-cols-2",
+          steps.length === 5
+            ? "lg:grid-cols-3 xl:grid-cols-5"
+            : steps.length === 3
+              ? "lg:grid-cols-3"
+              : "lg:grid-cols-4",
+        )}
+      >
         {steps.map((step, i) => {
           const num = String(i + 1).padStart(2, "0");
           return (
