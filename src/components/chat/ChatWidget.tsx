@@ -51,17 +51,19 @@ export function ChatWidget() {
         <SheetContent
           side="right"
           className="flex flex-col p-0 max-w-none sm:max-w-none [&>button]:text-white [&>button]:opacity-90 [&>button:hover]:opacity-100"
-          style={{ width: `${width}px` }}
+          style={isMobile ? { width: "100vw", maxWidth: "100vw" } : { width: `${width}px` }}
           aria-label="TechD AI assistant"
         >
-          {/* Resize handle */}
-          <div
-            role="separator"
-            aria-orientation="vertical"
-            aria-label="Resize chat panel"
-            onMouseDown={onMouseDown}
-            className="absolute left-0 top-0 z-50 h-full w-1.5 -translate-x-1/2 cursor-ew-resize bg-transparent transition-colors hover:bg-primary/40"
-          />
+          {/* Resize handle — desktop only */}
+          {!isMobile && (
+            <div
+              role="separator"
+              aria-orientation="vertical"
+              aria-label="Resize chat panel"
+              onMouseDown={onMouseDown}
+              className="absolute left-0 top-0 z-50 h-full w-1.5 -translate-x-1/2 cursor-ew-resize bg-transparent transition-colors hover:bg-primary/40"
+            />
+          )}
           <ChatPanel messages={messages} loading={loading} onSend={send} onReset={clear} />
         </SheetContent>
       </Sheet>
