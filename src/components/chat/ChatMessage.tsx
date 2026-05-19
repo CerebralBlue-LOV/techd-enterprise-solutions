@@ -1,6 +1,46 @@
 import { Bot } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
 import type { Message } from "./types";
+
+const markdownComponents = {
+  p: ({ node, ...props }: any) => <p className="mb-2 last:mb-0" {...props} />,
+  ul: ({ node, ...props }: any) => (
+    <ul className="my-2 list-disc space-y-1 pl-5" {...props} />
+  ),
+  ol: ({ node, ...props }: any) => (
+    <ol className="my-2 list-decimal space-y-1 pl-5" {...props} />
+  ),
+  li: ({ node, ...props }: any) => <li className="leading-relaxed" {...props} />,
+  strong: ({ node, ...props }: any) => (
+    <strong className="font-bold text-secondary" {...props} />
+  ),
+  em: ({ node, ...props }: any) => <em className="italic" {...props} />,
+  a: ({ node, ...props }: any) => (
+    <a
+      className="text-primary underline underline-offset-2 hover:text-primary/80"
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    />
+  ),
+  code: ({ node, inline, ...props }: any) =>
+    inline ? (
+      <code
+        className="rounded bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-secondary"
+        {...props}
+      />
+    ) : (
+      <code className="block font-mono text-[0.9em]" {...props} />
+    ),
+  pre: ({ node, ...props }: any) => (
+    <pre className="my-2 overflow-x-auto rounded-lg bg-muted p-3 text-sm" {...props} />
+  ),
+  h1: ({ node, ...props }: any) => <h1 className="mb-2 text-lg font-bold" {...props} />,
+  h2: ({ node, ...props }: any) => <h2 className="mb-2 text-base font-bold" {...props} />,
+  h3: ({ node, ...props }: any) => <h3 className="mb-1 text-base font-bold" {...props} />,
+};
 
 interface Props {
   message: Message;
@@ -38,7 +78,9 @@ export function ChatMessage({ message }: Props) {
               : "border border-border/60 bg-white text-secondary shadow-[0_1px_2px_rgba(0,0,0,0.04)]",
           )}
         >
-          {message.content}
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+            {message.content}
+          </ReactMarkdown>
         </div>
 
         {message.citations && message.citations.length > 0 && (

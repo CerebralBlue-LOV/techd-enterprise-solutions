@@ -6,7 +6,7 @@ import { useChat } from "./useChat";
 
 const MIN_WIDTH = 320;
 const MAX_WIDTH = 900;
-const DEFAULT_WIDTH = 420;
+const DEFAULT_WIDTH = 520;
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
