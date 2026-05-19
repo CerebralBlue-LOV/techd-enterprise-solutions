@@ -12,7 +12,7 @@ export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(DEFAULT_WIDTH);
   const draggingRef = useRef(false);
-  const { messages, loading, send } = useChat();
+  const { messages, loading, send, clear } = useChat();
 
   const onMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
