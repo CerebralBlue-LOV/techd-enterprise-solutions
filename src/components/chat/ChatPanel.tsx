@@ -31,8 +31,8 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
       {/* Gradient header */}
       <header className="relative bg-gradient-to-r from-primary to-primary/70 px-5 py-4 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
         <div className="flex flex-col">
-          <h2 className="text-lg font-bold leading-tight text-white">Ask TechD</h2>
-          <p className="text-xs font-light text-white/90">
+          <h2 className="text-xl font-bold leading-tight text-white">Ask TechD</h2>
+          <p className="text-sm font-light text-white/90">
             Powered by NeuralSeek
           </p>
         </div>
