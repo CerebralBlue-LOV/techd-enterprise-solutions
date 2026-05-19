@@ -97,9 +97,6 @@ const About = () => {
                     Our mission
                   </figcaption>
                 </figure>
-                <div className="hidden">
-
-                </div>
 
               </div>
             </Reveal>
