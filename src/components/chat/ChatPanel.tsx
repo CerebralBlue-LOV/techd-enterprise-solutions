@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Bot } from "lucide-react";
+import { Bot, RotateCcw } from "lucide-react";
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
