@@ -60,7 +60,7 @@ export function ChatWidget() {
             onMouseDown={onMouseDown}
             className="absolute left-0 top-0 z-50 h-full w-1.5 -translate-x-1/2 cursor-ew-resize bg-transparent transition-colors hover:bg-primary/40"
           />
-          <ChatPanel messages={messages} loading={loading} onSend={send} />
+          <ChatPanel messages={messages} loading={loading} onSend={send} onReset={clear} />
         </SheetContent>
       </Sheet>
     </>
