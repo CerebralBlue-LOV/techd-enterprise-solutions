@@ -321,7 +321,7 @@ const WhyProposalSplit = () => (
           {WHY_TITLE}
         </h2>
         <p className="mt-5 text-[11px] md:text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
-          IBM Platinum Partner · 25+ years
+          IBM Gold Partner · 25+ years
         </p>
       </div>
 

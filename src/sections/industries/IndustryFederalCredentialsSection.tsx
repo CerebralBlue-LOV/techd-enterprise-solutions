@@ -29,8 +29,8 @@ const FRAMEWORKS = [
   },
   {
     icon: Award,
-    label: "IBM Platinum Partner",
-    body: "Top-tier IBM partnership — watsonx, Cloud Pak, Guardium, and QRadar at federal scale.",
+    label: "IBM Gold Partner",
+    body: "IBM Gold partnership — watsonx, Cloud Pak, Guardium, and QRadar at federal scale.",
   },
 ];
 

@@ -2,7 +2,7 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import ParticleOrbit from "./_components/ParticleOrbit";
-import { IBMPlatinumBadge } from "@shared/IBMPlatinumBadge";
+import { IBMGoldBadge } from "@shared/IBMGoldBadge";
 
 export const WhyTechDSection = () => (
   <section id="why-techd" className="section bg-muted/40 overflow-hidden">
@@ -25,7 +25,7 @@ export const WhyTechDSection = () => (
         <Reveal delay={80}>
           <div className="relative flex aspect-square w-full max-w-[320px] md:max-w-[460px] mx-auto lg:mx-0 items-center justify-center">
             <ParticleOrbit />
-            <IBMPlatinumBadge size="lg" variant="card" showTenure href="/company/ibm-partnership" className="relative z-20" />
+            <IBMGoldBadge size="lg" variant="card" showTenure href="/company/ibm-partnership" className="relative z-20" />
           </div>
         </Reveal>
 

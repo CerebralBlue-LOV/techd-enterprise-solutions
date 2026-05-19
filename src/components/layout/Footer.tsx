@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
 import logo from "@/assets/techd-logo.webp";
 import { NAV } from "@/content/site";
-import { IBMPlatinumBadge } from "@shared/IBMPlatinumBadge";
+import { IBMGoldBadge } from "@shared/IBMGoldBadge";
 
 export const Footer = () => (
   <footer className="border-t border-border bg-background">
@@ -11,9 +11,9 @@ export const Footer = () => (
         <img src={logo} alt="TechD" className="h-8 w-auto" loading="lazy" />
         <p className="mt-4 max-w-sm text-sm font-light text-muted-foreground">
           Enterprise AI, data, security, and automation for the Fortune 500.
-          IBM Platinum Business Partner.
+          IBM Gold Business Partner.
         </p>
-        <IBMPlatinumBadge size="md" className="mt-6" href="/company/ibm-partnership" />
+        <IBMGoldBadge size="md" className="mt-6" href="/company/ibm-partnership" />
         <p className="mt-4 text-sm font-light text-muted-foreground">
           Call us:{" "}
           <a href="tel:+18889883243" className="font-normal text-secondary hover:text-primary transition-colors">

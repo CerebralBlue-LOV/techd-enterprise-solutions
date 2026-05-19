@@ -12,7 +12,7 @@ export type Fact = { value: string; label: string };
 
 export const COMPANY_FACTS: Fact[] = [
   { value: "2009", label: "Founded" },
-  { value: "Platinum", label: "IBM Partner Plus tier" },
+  { value: "Gold", label: "IBM Partner Plus tier" },
   { value: "Miami, FL", label: "Headquarters" },
   { value: "US & Canada", label: "Delivery footprint" },
 ];

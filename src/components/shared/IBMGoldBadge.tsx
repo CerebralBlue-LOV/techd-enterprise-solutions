@@ -35,7 +35,7 @@ type Props = {
   href?: string;
 };
 
-export const IBMPlatinumBadge = ({
+export const IBMGoldBadge = ({
   size = "md",
   variant = "inline",
   showTenure = false,
@@ -62,12 +62,12 @@ export const IBMPlatinumBadge = ({
       </div>
       <div className={cn("leading-tight", isCard ? "text-center" : "text-left")}>
         <div className={cn("font-bold uppercase tracking-wider text-primary", s.eyebrow)}>
-          Platinum
+          Gold
         </div>
         <div className={cn("font-bold text-secondary", s.title)}>Business Partner</div>
         {showTenure && (
           <div className="mt-2 text-xs font-light text-muted-foreground">
-            15+ years · Platinum since 2009
+            15+ years · IBM partner since 2009
           </div>
         )}
       </div>
@@ -82,7 +82,7 @@ export const IBMPlatinumBadge = ({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="TechD — IBM Platinum Business Partner (opens IBM)"
+        aria-label="TechD — IBM Gold Business Partner (opens IBM)"
         className={classes}
       >
         {inner}
@@ -91,10 +91,10 @@ export const IBMPlatinumBadge = ({
   }
 
   return (
-    <Link to={href} aria-label="TechD — IBM Platinum Business Partner" className={classes}>
+    <Link to={href} aria-label="TechD — IBM Gold Business Partner" className={classes}>
       {inner}
     </Link>
   );
 };
 
-export default IBMPlatinumBadge;
+export default IBMGoldBadge;

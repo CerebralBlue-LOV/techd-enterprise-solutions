@@ -9,7 +9,7 @@ export const CONTACT = {
     lines: ["Headquarters"],
   },
   responseSla: "1 business day",
-  ibmPlatinumSince: 2009,
+  ibmPartnerSince: 2009,
 };
 
 export type NavItem = {
@@ -63,7 +63,7 @@ export const NAV: NavItem[] = [
     href: "/company/about",
     children: [
       { label: "About",                href: "/company/about",                 description: "Our story, four-practice coverage, and leadership." },
-      { label: "IBM Partnership",      href: "/company/ibm-partnership",       description: "Platinum tier under IBM Partner Plus — 21 products across four practices." },
+      { label: "IBM Partnership",      href: "/company/ibm-partnership",       description: "Gold tier under IBM Partner Plus — 21 products across four practices." },
       { label: "Delivery Methodology", href: "/company/delivery-methodology",  description: "Five engagement stages, IBM Platform Assessment, and compliance posture." },
       { label: "Contact",              href: "/contact",                       description: "Talk to a senior practitioner — no SDR queue." },
     ],
