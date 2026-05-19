@@ -31,30 +31,28 @@ export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
     <div className="flex h-full flex-col bg-gradient-to-b from-muted/20 to-background">
       {/* Gradient header */}
       <header className="relative bg-gradient-to-r from-primary to-primary/70 px-5 py-4 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
-        <div className="flex items-center justify-between gap-3 pr-10">
-          <div className="flex flex-col">
-            <h2 className="text-xl font-bold leading-tight text-white">TechD Assistant</h2>
-            <p className="text-sm font-light text-white/90">
-              Powered by NeuralSeek
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onReset}
-            aria-label="Reset conversation"
-            title="Reset conversation"
-            disabled={messages.length === 0}
-            className={cn(
-              "flex h-8 w-8 items-center justify-center rounded-md text-white/90",
-              "transition-all duration-200 ease-out",
-              "hover:bg-white/15 hover:text-white",
-              "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
-            )}
-          >
-            <RotateCcw className="h-4 w-4" aria-hidden />
-          </button>
+        <div className="flex flex-col pr-16">
+          <h2 className="text-xl font-bold leading-tight text-white">TechD Assistant</h2>
+          <p className="text-sm font-light text-white/90">
+            Powered by NeuralSeek
+          </p>
         </div>
+        <button
+          type="button"
+          onClick={onReset}
+          aria-label="Reset conversation"
+          title="Reset conversation"
+          disabled={messages.length === 0}
+          className={cn(
+            "absolute right-10 top-4 rounded-sm text-white opacity-70 transition-opacity",
+            "hover:opacity-100",
+            "disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:opacity-30",
+            "focus:outline-none focus:ring-2 focus:ring-white/60 focus:ring-offset-2 focus:ring-offset-transparent",
+          )}
+        >
+          <RotateCcw className="h-4 w-4" aria-hidden />
+          <span className="sr-only">Reset conversation</span>
+        </button>
       </header>
 
       <ScrollArea className="flex-1 px-4 py-5">
