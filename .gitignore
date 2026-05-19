@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Env files — never commit credentials
+.env
+.env.local
+.env.*.local
+
+# Generated NeuralSeek KB documents (upload manually via admin UI)
+/kb/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
