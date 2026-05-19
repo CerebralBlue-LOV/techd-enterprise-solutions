@@ -241,6 +241,20 @@ const FigureLab = () => {
               <ResourcesFigure />
             </div>
           </article>
+          <article className="overflow-hidden rounded-lg border border-border bg-background">
+            <div className="flex items-center justify-between border-b border-border px-4 py-2">
+              <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                Chat
+              </span>
+              <code className="text-[10px] text-muted-foreground">ChatFigure</code>
+            </div>
+            <div
+              className="relative aspect-[4/3] w-full bg-primary/15"
+              style={GRID_STYLE}
+            >
+              <ChatFigure />
+            </div>
+          </article>
         </div>
       </section>
     </Layout>
