@@ -282,25 +282,6 @@ const About = () => {
             ))}
           </div>
 
-          <Reveal delay={160}>
-            <p className="mt-10 text-[10px] font-bold uppercase tracking-[0.18em] text-secondary/60 mb-3">
-              Verticals served
-            </p>
-          </Reveal>
-          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {VERTICALS.map((v, i) => (
-              <Reveal key={v} delay={180 + i * 50}>
-                <li className="group flex items-center gap-2.5 rounded-lg border border-border bg-background px-3 py-2.5 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_6px_20px_-10px_hsl(var(--primary)/0.25)] hover:-translate-y-0.5">
-                  <span className="text-xs font-bold text-primary/60 shrink-0 transition-colors group-hover:text-primary">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-sm font-light text-muted-foreground leading-tight transition-colors group-hover:text-secondary">
-                    {v}
-                  </span>
-                </li>
-              </Reveal>
-            ))}
-          </ul>
 
         </div>
       </section>
