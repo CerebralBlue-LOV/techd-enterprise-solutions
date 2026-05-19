@@ -78,7 +78,9 @@ export function ChatMessage({ message }: Props) {
               : "border border-border/60 bg-white text-secondary shadow-[0_1px_2px_rgba(0,0,0,0.04)]",
           )}
         >
-          {message.content}
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+            {message.content}
+          </ReactMarkdown>
         </div>
 
         {message.citations && message.citations.length > 0 && (
