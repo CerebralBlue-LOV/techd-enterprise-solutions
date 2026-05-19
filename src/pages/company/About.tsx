@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+
 import garrettPhoto from "../../assets/garrett-rowe.jpg";
 import marcPhoto from "../../assets/marc-martina.jpg";
 import Layout from "@layout/Layout";
