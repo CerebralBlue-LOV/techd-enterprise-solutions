@@ -89,7 +89,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "40+", label: "LLMs supported" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -167,7 +167,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "$12.5B", label: "IBM enterprise genAI business on watsonx" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -284,7 +284,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "15+", label: "years TechD SPSS delivery" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -341,7 +341,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "15+ yrs", label: "TechD Db2 delivery" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -380,7 +380,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "40%", label: "more accurate AI than conventional RAG (IBM internal testing)" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -419,7 +419,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "60+", label: "IBM data and AI services deployable on the platform" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -458,7 +458,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "15+ yrs", label: "TechD Cognos delivery" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -536,7 +536,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "100+", label: "pre-built source and target connectors" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },
@@ -653,7 +653,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           stats: [
             { value: "3-in-1", label: "batch, CDC, and real-time integration in one platform" },
-            { value: "Platinum", label: "IBM Business Partner" },
+            { value: "Gold", label: "IBM Business Partner" },
           ],
         },
       },

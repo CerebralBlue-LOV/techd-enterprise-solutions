@@ -65,7 +65,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     approach: APPROACH_AI,
     stats: [
       { value: "watsonx",     label: "IBM platform of record" },
-      { value: "Platinum",    label: "IBM Business Partner" },
+      { value: "Gold",    label: "IBM Business Partner" },
     ],
   },
 
@@ -86,7 +86,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     approach: APPROACH_DATA,
     stats: [
       { value: "15+ yrs",  label: "Cognos & TM1 in production" },
-      { value: "Platinum", label: "IBM Business Partner" },
+      { value: "Gold", label: "IBM Business Partner" },
     ],
   },
 

@@ -186,7 +186,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     ],
     stats: [
       { value: "1 day",    label: "TechD IBM Platform Assessment" },
-      { value: "Platinum", label: "IBM Business Partner" },
+      { value: "Gold", label: "IBM Business Partner" },
     ],
   },
 
@@ -264,7 +264,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { id: "public-sector",       proof: "FedRAMP-aligned hybrid platforms for federal agencies and defense technology organizations." },
     ],
     stats: [
-      { value: "Platinum", label: "IBM Business Partner" },
+      { value: "Gold", label: "IBM Business Partner" },
     ],
   },
 
@@ -343,7 +343,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     ],
     stats: [
       { value: "24×7",     label: "Operations coverage" },
-      { value: "Platinum", label: "IBM Business Partner" },
+      { value: "Gold", label: "IBM Business Partner" },
     ],
   },
 
