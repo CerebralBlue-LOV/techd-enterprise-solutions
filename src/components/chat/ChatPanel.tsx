@@ -56,21 +56,18 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
 
             {/* Starter prompts */}
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {STARTER_PROMPTS.map(({ text, Icon }) => (
+              {STARTER_PROMPTS.map(({ text }) => (
                 <button
                   key={text}
                   onClick={() => onSend(text)}
                   className={cn(
-                    "group flex items-start gap-2.5 rounded-xl border border-border/60 bg-white px-3 py-3 text-left",
+                    "rounded-xl border border-border/60 bg-white px-3 py-3 text-left",
                     "shadow-[0_1px_2px_rgba(0,0,0,0.03)]",
                     "transition-all duration-200 ease-out",
                     "hover:border-primary/60 hover:shadow-[0_4px_16px_-6px_hsl(var(--primary)/0.35)] hover:-translate-y-0.5",
                     "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
                   )}
                 >
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                    <Icon className="h-3.5 w-3.5" aria-hidden />
-                  </span>
                   <span className="text-xs font-normal leading-snug text-secondary">
                     {text}
                   </span>
