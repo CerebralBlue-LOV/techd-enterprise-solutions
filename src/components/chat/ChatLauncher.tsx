@@ -17,7 +17,7 @@ export function ChatLauncher({ open, onClick }: Props) {
         "flex h-14 w-14 items-center justify-center rounded-2xl",
         "bg-primary text-white shadow-lg",
         "transition-shadow duration-300 ease-out",
-        "hover:shadow-[0_12px_40px_-8px_hsl(var(--primary)/0.6)]",
+        "hover:shadow-[0_0_32px_4px_hsl(var(--primary)/0.45),0_8px_24px_-4px_hsl(var(--primary)/0.35)]",
         "motion-reduce:transition-none",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
       )}
