@@ -199,7 +199,7 @@ export const SOLUTIONS: Solution[] = [
             "Supply chain disruption response — automated analysis and action routing via IBM Sterling, SAP, Oracle, and Coupa integrations",
           ],
           whyTechD: [
-            "We've deployed agentic workflows in production for Fortune 500 clients — as IBM Platinum-certified Orchestrate architects, we know what fails in real environments and build the governance controls before the first autonomous action runs.",
+            "We've deployed agentic workflows in production for Fortune 500 clients — as IBM IBM-certified Orchestrate architects, we know what fails in real environments and build the governance controls before the first autonomous action runs.",
             "We go governance-first on every agent rollout — human-in-the-loop controls, audit logs, and policy enforcement that regulated industries require before autonomous actions go live.",
             "We connect Orchestrate agents to your existing Salesforce, Workday, SAP, and custom API landscape — not just the pre-built connector catalog, but the full integration surface your business runs on.",
             "We scope for practical wins — identifying the highest-value agentic use cases for your organization, sequencing for quick wins, and building the governance foundation that scales to enterprise-wide deployment.",
@@ -278,7 +278,7 @@ export const SOLUTIONS: Solution[] = [
           ],
           whyTechD: [
             "We've delivered SPSS Modeler for 15+ years across healthcare, insurance, higher education, and media clients — we know the algorithm choices, data preparation patterns, and deployment workflows that matter in production.",
-            "We hold IBM Platinum certification with SPSS and Cloud Pak for Data architects who've navigated every version from legacy on-premises SPSS through the current Cloud Pak-hosted service — continuity most partners can't offer on a platform that requires long-term expertise.",
+            "We hold IBM certifications with SPSS and Cloud Pak for Data architects who've navigated every version from legacy on-premises SPSS through the current Cloud Pak-hosted service — continuity most partners can't offer on a platform that requires long-term expertise.",
             "We build models your analysts can own — visual workflows, documented nodes, and knowledge transfer sessions so the model isn't a black box at handoff.",
             "We deploy to production: REST scoring services via Cloud Pak for Data, in-database push-down scoring against Db2 and Netezza, and Cognos Analytics integration for dashboarding — not just model building and hand-off.",
           ],
@@ -376,7 +376,7 @@ export const SOLUTIONS: Solution[] = [
             "We've worked with watsonx.data since its earliest releases — we know the engine configuration choices and governance setup that separate a performant lakehouse from a problematic one.",
             "We connect watsonx.data to your existing Db2 estate, DataStage pipelines, and Cognos Analytics environment — full-stack lakehouse delivery, not the lakehouse tier in isolation.",
             "We configure AI-ready lakehouses from the start — integrated vector stores, MCP server endpoints, and Iceberg governance so your lakehouse immediately feeds watsonx.ai with quality-assured, lineage-traced datasets.",
-            "We field IBM Platinum-certified watsonx.data architects across IBM Cloud, on-premises, AWS, and Azure — deployment breadth that comes from running the platform across regulated industries since its earliest releases.",
+            "We field IBM IBM-certified watsonx.data architects across IBM Cloud, on-premises, AWS, and Azure — deployment breadth that comes from running the platform across regulated industries since its earliest releases.",
           ],
           stats: [
             { value: "40%", label: "more accurate AI than conventional RAG (IBM internal testing)" },
@@ -415,7 +415,7 @@ export const SOLUTIONS: Solution[] = [
             "We've implemented Cloud Pak for Data since its earliest releases — navigating every major version upgrade from 2.x through 5.x for clients who can't afford downtime during transitions.",
             "We size, build, and configure the OpenShift cluster before the first Cloud Pak for Data operator is deployed — not after it's already struggling in production.",
             "We design the multi-tenant architecture: project workspace structure, RBAC model, and storage tier configuration that lets data science and analytics teams share the platform without collision.",
-            "We field IBM Platinum-certified Cloud Pak for Data architects with proven air-gapped installation experience for federal and regulated environments — a delivery pattern we've run for clients where the data never touches a public network.",
+            "We field IBM IBM-certified Cloud Pak for Data architects with proven air-gapped installation experience for federal and regulated environments — a delivery pattern we've run for clients where the data never touches a public network.",
           ],
           stats: [
             { value: "60+", label: "IBM data and AI services deployable on the platform" },
@@ -493,7 +493,7 @@ export const SOLUTIONS: Solution[] = [
             "We've delivered Planning Analytics and TM1 for 15+ years — building FP&A models for healthcare, insurance, energy, and media clients that have run through dozens of budget cycles without breaking.",
             "We migrate clients off Hyperion, Anaplan, and SAP BPC onto Planning Analytics — including the model rearchitecture work that migration tools alone cannot do.",
             "We optimize models that have outgrown their original TM1 build — we've triaged and rebuilt models where overnight calculations had crept from minutes into hours.",
-            "We deliver Planning Analytics implementations at the scale and complexity most partners decline to quote — and our IBM Platinum status gives us the IBM technical support that makes those engagements deliverable.",
+            "We deliver Planning Analytics implementations at the scale and complexity most partners decline to quote — and our IBM Gold status gives us the IBM technical support that makes those engagements deliverable.",
           ],
           stats: [
             { value: "IDC Leader", label: "IDC MarketScape: Enterprise Planning, Budgeting & Forecasting 2026" },
@@ -532,7 +532,7 @@ export const SOLUTIONS: Solution[] = [
             "We've built and maintained DataStage pipelines for health systems, media companies, and financial institutions — we know the job design patterns and performance tuning that matter at enterprise scale.",
             "We've migrated clients from Informatica, SSIS, and Ab Initio to DataStage on Cloud Pak for Data, including the regression testing that validates parity before production cutover.",
             "We deliver end to end: schema design, DataStage job architecture, performance optimization, CDC integration, and lineage wiring into watsonx.data intelligence — not just pipeline build and hand-off.",
-            "We field IBM Platinum-certified DataStage and Cloud Pak for Data architects who've executed migrations and new builds across on-premises, SaaS, and hybrid deployment models — depth of experience that defines the safe migration path for clients leaving legacy ETL tools.",
+            "We field IBM IBM-certified DataStage and Cloud Pak for Data architects who've executed migrations and new builds across on-premises, SaaS, and hybrid deployment models — depth of experience that defines the safe migration path for clients leaving legacy ETL tools.",
           ],
           stats: [
             { value: "100+", label: "pre-built source and target connectors" },
@@ -571,7 +571,7 @@ export const SOLUTIONS: Solution[] = [
             "We deploy Netezza for clients where query performance is the primary bottleneck — media audience analytics, actuarial modeling, and population health workloads where sub-second results are the expectation.",
             "We design Netezza environments from initial sizing through production cutover — and we've migrated clients from Teradata, Sybase IQ, and Vertica onto the IBM stack.",
             "We wire Netezza as the high-performance BI data source behind Cognos reports where warehouse query times were driving user adoption problems — closing the loop between the analytics engine and the reporting layer.",
-            "We field IBM Platinum-certified Netezza architects who've sized, deployed, and optimized appliance, SaaS, and BYOC environments — the specialization that matters when sub-second query performance is the business requirement.",
+            "We field IBM IBM-certified Netezza architects who've sized, deployed, and optimized appliance, SaaS, and BYOC environments — the specialization that matters when sub-second query performance is the business requirement.",
           ],
           stats: [
             { value: "90%+", label: "of queries complete in under 1 second" },
@@ -610,7 +610,7 @@ export const SOLUTIONS: Solution[] = [
             "We implement watsonx.data intelligence as the governance foundation for enterprise AI programs — we've seen the audit results when lineage is missing and we know how to establish it before an examination.",
             "We integrate catalog, lineage, and policy layers at platform build time alongside watsonx.data and Cloud Pak for Data deployments — not as an afterthought bolted on after the platform is live.",
             "We configure HIPAA, GDPR, CCPA, and PCI-DSS governance mapped to what auditors actually test — not just what the vendor demo shows.",
-            "We deliver alongside IBM's Gartner MQ Leader position for Data and Analytics Governance Platforms — as a Platinum partner, our governance configurations reflect the same practices IBM's own architects use.",
+            "We deliver alongside IBM's Gartner MQ Leader position for Data and Analytics Governance Platforms — as an IBM Gold partner, our governance configurations reflect the same practices IBM's own architects use.",
           ],
           stats: [
             { value: "100×", label: "faster glossary generation with AI vs. manual process" },
@@ -649,7 +649,7 @@ export const SOLUTIONS: Solution[] = [
             "We've migrated Informatica, SSIS, and Ab Initio pipelines onto the IBM-supported stack for clients consolidating legacy ETL tooling — with the regression testing that validates production parity before cutover.",
             "We connect watsonx.data integration to your source systems, configure ELT pushdown for in-database execution, and wire the Data Observability layer so your operations team knows before users do when a pipeline fails.",
             "We build the unstructured data ingestion pipelines that feed watsonx.ai RAG applications — from source ingest through chunking strategy and vector store delivery, end to end.",
-            "We field IBM Platinum-certified architects who've executed batch, CDC, streaming, and AI-assisted integration builds across watsonx.data integration — no generic ETL experience, just platform-specific delivery patterns for clients consolidating onto the IBM integration stack.",
+            "We field IBM IBM-certified architects who've executed batch, CDC, streaming, and AI-assisted integration builds across watsonx.data integration — no generic ETL experience, just platform-specific delivery patterns for clients consolidating onto the IBM integration stack.",
           ],
           stats: [
             { value: "3-in-1", label: "batch, CDC, and real-time integration in one platform" },

@@ -9,7 +9,7 @@
  * IBM Watson Assistant (standalone), watsonx.governance, IBM Cognos
  * Controller, IBM SPSS Statistics, "IBM DB2" all-caps, Cloud Pak for
  * Data System (appliance), or "IBM Software Hub". TechD is an
- * IBM Platinum Business Partner under IBM Partner Plus.
+ * IBM Gold Business Partner under IBM Partner Plus.
  */
 
 export type WhyPoint = { title: string; body: string };
@@ -115,7 +115,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     whyPoints: [
       { title: "TechD IBM Platform Assessment", body: "We run a structured one-day evaluation that produces a written findings report covering architecture, configuration, security posture, licensing, and upgrade paths — not a sales discovery call." },
       { title: "An opinion, not options",        body: "We name the recommended architecture and sequence. Optionality is fine in slideware; useless when payroll is due Friday." },
-      { title: "Anchored in IBM, open to the rest", body: "We hold IBM Platinum status with certified practitioners across watsonx, Cloud Pak for Data, Db2, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar — paired with realism about AWS, Azure, Snowflake, and the systems you already own." },
+      { title: "Anchored in IBM, open to the rest", body: "We hold IBM Gold status with certified practitioners across watsonx, Cloud Pak for Data, Db2, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar — paired with realism about AWS, Azure, Snowflake, and the systems you already own." },
       { title: "Senior practitioners only",     body: "We staff with architects who have shipped in healthcare, insurance, media, energy, higher education, and the public sector — not generalists learning on your dime." },
     ],
     spotlight: {
@@ -352,7 +352,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     lede:
       "Role-based enablement for executives, architects, and engineering teams — IBM-certified curricula across watsonx, Cloud Pak for Data, Db2, Cognos Analytics 12, Planning Analytics, DataStage, SPSS Modeler, Apptio, Instana, Turbonomic, Guardium, and QRadar. Hands-on labs run on your data when you want them to.",
     whyPoints: [
-      { title: "IBM-certified curricula",   body: "We deliver official IBM training across the data, AI, automation, and security portfolio — by Platinum-tier practitioners with active IBM certifications on the platforms they teach." },
+      { title: "IBM-certified curricula",   body: "We deliver official IBM training across the data, AI, automation, and security portfolio — by senior IBM-certified practitioners with active IBM certifications on the platforms they teach." },
       { title: "Your data, your use cases", body: "We make bring-your-own-data labs available — train against your schemas, your dashboards, your security policies, and your deployment environment, not a generic IBM sample database." },
       { title: "Role-based, not one-size",  body: "We run executive briefings, architect bootcamps, and engineering labs — three tracks, three audiences, three different formats." },
       { title: "Modern stack only",         body: "We teach Cognos Analytics 12 and Planning Analytics Workspace exclusively — legacy Cognos 10 modules (Query Studio, Workspace Advanced, Cognos Connection) are out of our catalog." },
