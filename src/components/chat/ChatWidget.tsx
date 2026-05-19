@@ -3,6 +3,7 @@ import { Sheet, SheetContent } from "@ui/sheet";
 import { ChatLauncher } from "./ChatLauncher";
 import { ChatPanel } from "./ChatPanel";
 import { useChat } from "./useChat";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const MIN_WIDTH = 320;
 const MAX_WIDTH = 900;
@@ -12,6 +13,7 @@ export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(DEFAULT_WIDTH);
   const draggingRef = useRef(false);
+  const isMobile = useIsMobile();
   const { messages, loading, send, clear } = useChat();
 
   const onMouseDown = useCallback((e: React.MouseEvent) => {
@@ -49,17 +51,19 @@ export function ChatWidget() {
         <SheetContent
           side="right"
           className="flex flex-col p-0 max-w-none sm:max-w-none [&>button]:text-white [&>button]:opacity-90 [&>button:hover]:opacity-100"
-          style={{ width: `${width}px` }}
+          style={isMobile ? { width: "100vw", maxWidth: "100vw" } : { width: `${width}px` }}
           aria-label="TechD AI assistant"
         >
-          {/* Resize handle */}
-          <div
-            role="separator"
-            aria-orientation="vertical"
-            aria-label="Resize chat panel"
-            onMouseDown={onMouseDown}
-            className="absolute left-0 top-0 z-50 h-full w-1.5 -translate-x-1/2 cursor-ew-resize bg-transparent transition-colors hover:bg-primary/40"
-          />
+          {/* Resize handle — desktop only */}
+          {!isMobile && (
+            <div
+              role="separator"
+              aria-orientation="vertical"
+              aria-label="Resize chat panel"
+              onMouseDown={onMouseDown}
+              className="absolute left-0 top-0 z-50 h-full w-1.5 -translate-x-1/2 cursor-ew-resize bg-transparent transition-colors hover:bg-primary/40"
+            />
+          )}
           <ChatPanel messages={messages} loading={loading} onSend={send} onReset={clear} />
         </SheetContent>
       </Sheet>
