@@ -33,13 +33,13 @@ const LEADER_PHOTO_POSITION: Record<string, string> = {
 };
 
 const VERTICALS = [
-  "Financial Services & Insurance",
   "Healthcare & Life Sciences",
-  "Manufacturing & Industrials",
-  "Higher Education & Research",
-  "Media & Entertainment",
-  "Energy & Utilities",
   "Public Sector",
+  "Financial Services & Insurance",
+  "Energy & Utilities",
+  "Higher Education & Research",
+  "Manufacturing & Industrials",
+  "Media & Entertainment",
 ];
 
 
