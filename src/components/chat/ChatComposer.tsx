@@ -75,7 +75,7 @@ export function ChatComposer({ onSend, loading }: Props) {
           <Send className="h-4 w-4" />
         </button>
       </div>
-      <p className="mt-1.5 px-1 text-[10px] font-light text-muted-foreground">
+      <p className="mt-1.5 px-1 text-xs font-light text-muted-foreground">
         Press Enter to send · Shift+Enter for newline
       </p>
     </div>

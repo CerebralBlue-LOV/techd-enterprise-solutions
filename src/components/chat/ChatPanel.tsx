@@ -31,8 +31,8 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
       {/* Gradient header */}
       <header className="relative bg-gradient-to-r from-primary to-primary/70 px-5 py-4 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
         <div className="flex flex-col">
-          <h2 className="text-lg font-bold leading-tight text-white">Ask TechD</h2>
-          <p className="text-xs font-light text-white/90">
+          <h2 className="text-xl font-bold leading-tight text-white">Ask TechD</h2>
+          <p className="text-sm font-light text-white/90">
             Powered by NeuralSeek
           </p>
         </div>
@@ -46,10 +46,10 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/70 shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.5)]">
                 <Bot className="h-6 w-6 text-white" aria-hidden />
               </div>
-              <h3 className="text-base font-bold text-secondary">
+              <h3 className="text-lg font-bold text-secondary">
                 Hi — I'm the TechD assistant
               </h3>
-              <p className="text-xs font-light text-muted-foreground">
+              <p className="text-sm font-light text-muted-foreground">
                 Ask anything about our IBM solutions, services, or industries.
               </p>
             </div>
@@ -68,7 +68,7 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
                     "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
                   )}
                 >
-                  <span className="text-xs font-normal leading-snug text-secondary">
+                  <span className="text-sm font-normal leading-snug text-secondary">
                     {text}
                   </span>
                 </button>
