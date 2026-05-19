@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Bot, Sparkles, Building2, Briefcase, FileSearch } from "lucide-react";
+import { Bot } from "lucide-react";
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
@@ -7,10 +7,10 @@ import { ChatComposer } from "./ChatComposer";
 import type { Message } from "./types";
 
 const STARTER_PROMPTS = [
-  { text: "What IBM products does TechD implement?", Icon: Sparkles },
-  { text: "How do I start an engagement?", Icon: Briefcase },
-  { text: "Which industries does TechD work with?", Icon: Building2 },
-  { text: "What is the IBM Platform Assessment?", Icon: FileSearch },
+  "What IBM products does TechD implement?",
+  "How do I start an engagement?",
+  "Which industries does TechD work with?",
+  "What is the IBM Platform Assessment?",
 ];
 
 interface Props {
