@@ -130,27 +130,49 @@ const IBMPartnership = () => {
               title="IBM's highest partner classification — reserved for the deepest track records"
             />
           </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {WHAT_PLATINUM_MEANS.map((p, i) => (
-              <Reveal key={p.title} delay={i * 60}>
-                <div className="group relative h-full overflow-hidden rounded-xl border border-border bg-background p-6 transition-colors hover:border-primary/50">
-                  <p className="text-[11px] font-bold tracking-[0.18em] text-primary">
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-3 text-base font-bold text-secondary leading-tight">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-sm font-light text-muted-foreground leading-relaxed">
-                    {p.body}
-                  </p>
-                  <span
-                    aria-hidden
-                    className="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-hover:w-full"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <ol className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {WHAT_PLATINUM_MEANS.map((p, i) => {
+              const num = String(i + 1).padStart(2, "0");
+              return (
+                <Reveal key={p.title} delay={i * 80}>
+                  <li className="group relative h-full flex flex-col rounded-2xl border border-border bg-background p-7 overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-[0_18px_40px_-18px_hsl(var(--primary)/0.4)]">
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -top-4 -right-2 text-[7rem] leading-none font-bold tracking-tighter select-none text-primary/[0.06] transition-all duration-700 ease-out group-hover:-translate-y-1 group-hover:scale-105 group-hover:text-primary/[0.12]"
+                    >
+                      {num}
+                    </span>
+
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-br from-transparent via-primary/[0.06] to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
+                    />
+
+                    <div className="relative flex items-center gap-3">
+                      <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+                        {num}
+                      </span>
+                      <span
+                        aria-hidden
+                        className="relative h-px flex-1 overflow-hidden bg-border"
+                      >
+                        <span className="absolute inset-y-0 left-0 w-0 bg-primary transition-[width] duration-700 ease-out group-hover:w-full" />
+                      </span>
+                    </div>
+
+                    <h3 className="relative mt-5 text-xl md:text-2xl font-bold leading-tight tracking-tight text-secondary transition-transform duration-500 group-hover:translate-x-0.5">
+                      {p.title}
+                    </h3>
+
+                    <p className="relative mt-3 text-sm font-light leading-relaxed text-muted-foreground">
+                      {p.body}
+                    </p>
+                  </li>
+                </Reveal>
+              );
+            })}
+          </ol>
+
         </div>
       </section>
 
