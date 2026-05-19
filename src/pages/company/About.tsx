@@ -32,15 +32,6 @@ const LEADER_PHOTO_POSITION: Record<string, string> = {
   "Garrett Rowe": "object-top",
 };
 
-const VERTICALS = [
-  "Healthcare & Life Sciences",
-  "Public Sector",
-  "Financial Services & Insurance",
-  "Energy & Utilities",
-  "Higher Education & Research",
-  "Manufacturing & Industrials",
-  "Media & Entertainment",
-];
 
 
 const About = () => {
