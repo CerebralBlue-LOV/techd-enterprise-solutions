@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Bot } from "lucide-react";
+import { Bot, RotateCcw } from "lucide-react";
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
@@ -17,9 +17,10 @@ interface Props {
   messages: Message[];
   loading: boolean;
   onSend: (text: string) => void;
+  onReset: () => void;
 }
 
-export function ChatPanel({ messages, loading, onSend }: Props) {
+export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,11 +31,29 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
     <div className="flex h-full flex-col bg-gradient-to-b from-muted/20 to-background">
       {/* Gradient header */}
       <header className="relative bg-gradient-to-r from-primary to-primary/70 px-5 py-4 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
-        <div className="flex flex-col">
-          <h2 className="text-xl font-bold leading-tight text-white">Ask TechD</h2>
-          <p className="text-sm font-light text-white/90">
-            Powered by NeuralSeek
-          </p>
+        <div className="flex items-center justify-between gap-3 pr-10">
+          <div className="flex flex-col">
+            <h2 className="text-xl font-bold leading-tight text-white">TechD Assistant</h2>
+            <p className="text-sm font-light text-white/90">
+              Powered by NeuralSeek
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onReset}
+            aria-label="Reset conversation"
+            title="Reset conversation"
+            disabled={messages.length === 0}
+            className={cn(
+              "flex h-8 w-8 items-center justify-center rounded-md text-white/90",
+              "transition-all duration-200 ease-out",
+              "hover:bg-white/15 hover:text-white",
+              "disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
+            )}
+          >
+            <RotateCcw className="h-4 w-4" aria-hidden />
+          </button>
         </div>
       </header>
 
@@ -47,7 +66,7 @@ export function ChatPanel({ messages, loading, onSend }: Props) {
                 <Bot className="h-6 w-6 text-white" aria-hidden />
               </div>
               <h3 className="text-lg font-bold text-secondary">
-                Hi — I'm the TechD assistant
+                Hi — I'm here to assist you
               </h3>
               <p className="text-sm font-light text-muted-foreground">
                 Ask anything about our IBM solutions, services, or industries.

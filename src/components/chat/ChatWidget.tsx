@@ -12,7 +12,7 @@ export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(DEFAULT_WIDTH);
   const draggingRef = useRef(false);
-  const { messages, loading, send } = useChat();
+  const { messages, loading, send, clear } = useChat();
 
   const onMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -60,7 +60,7 @@ export function ChatWidget() {
             onMouseDown={onMouseDown}
             className="absolute left-0 top-0 z-50 h-full w-1.5 -translate-x-1/2 cursor-ew-resize bg-transparent transition-colors hover:bg-primary/40"
           />
-          <ChatPanel messages={messages} loading={loading} onSend={send} />
+          <ChatPanel messages={messages} loading={loading} onSend={send} onReset={clear} />
         </SheetContent>
       </Sheet>
     </>
