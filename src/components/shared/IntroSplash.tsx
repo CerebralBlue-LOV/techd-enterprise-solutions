@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "techd-intro-played";
 
-export const IntroSplash = () => {
+type Props = {
+  /** Ignore sessionStorage gating — always play. Used in the lab. */
+  force?: boolean;
+  /** Key to force a fresh playback when changed. */
+  playKey?: number;
+};
+
+export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
   const [phase, setPhase] = useState<"hidden" | "playing" | "fading">("hidden");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
+    if (!force && sessionStorage.getItem(STORAGE_KEY)) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    if (!force) sessionStorage.setItem(STORAGE_KEY, "1");
     setPhase("playing");
 
     const fadeAt = reduced ? 400 : 1800;
@@ -22,7 +29,7 @@ export const IntroSplash = () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
     };
-  }, []);
+  }, [force, playKey]);
 
   if (phase === "hidden") return null;
 

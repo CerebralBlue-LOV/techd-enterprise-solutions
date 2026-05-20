@@ -21,6 +21,12 @@ const LAB_ROUTES = [
     blurb:
       "Customer logo QA tool — drag to reorder, pick size presets, export diff back to site.ts.",
   },
+  {
+    path: "/intro-lab",
+    name: "Intro Lab",
+    blurb:
+      "First-load splash animation — gear spins, then TechD wordmark slides in. Replay on demand.",
+  },
 ];
 
 const DEPRECATED_LOGOS = [
