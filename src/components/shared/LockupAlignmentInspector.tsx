@@ -276,20 +276,22 @@ export const LockupAlignmentInspector = () => {
           <h4 className="text-xs font-bold uppercase tracking-wider text-secondary">
             Overlay · original webp behind, lockup on top (50% opacity)
           </h4>
-          <div className="flex items-center justify-center rounded-lg border border-border bg-background p-10">
-            <div className="relative" style={{ height: refHeight }}>
-              <img
-                src={techdLogo}
-                alt="Original TechD logo"
-                style={{ height: refHeight, width: "auto", display: "block" }}
-              />
-              <div
-                className="absolute left-0 top-1/2 -translate-y-1/2"
-                style={{ opacity: 0.5 }}
-              >
-                <Lockup tune={tune} showGuides={guides} />
+          <div className="flex items-center justify-center rounded-lg border border-border bg-background p-6">
+            <CanvasFrame width={CANVAS_W} height={CANVAS_H}>
+              <div className="relative" style={{ height: refHeight }}>
+                <img
+                  src={techdLogo}
+                  alt="Original TechD logo"
+                  style={{ height: refHeight, width: "auto", display: "block" }}
+                />
+                <div
+                  className="absolute left-0 top-1/2 -translate-y-1/2"
+                  style={{ opacity: 0.5 }}
+                >
+                  <Lockup tune={tune} showGuides={guides} />
+                </div>
               </div>
-            </div>
+            </CanvasFrame>
           </div>
         </div>
       ) : (
@@ -298,20 +300,24 @@ export const LockupAlignmentInspector = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-secondary">
               Original · techd-logo.webp
             </h4>
-            <div className="flex items-center justify-center rounded-lg border border-border bg-background p-10 min-h-[200px]">
-              <img
-                src={techdLogo}
-                alt="Original TechD logo"
-                style={{ height: refHeight, width: "auto", display: "block" }}
-              />
+            <div className="flex items-center justify-center rounded-lg border border-border bg-background p-6">
+              <CanvasFrame width={CANVAS_W} height={CANVAS_H}>
+                <img
+                  src={techdLogo}
+                  alt="Original TechD logo"
+                  style={{ height: refHeight, width: "auto", display: "block" }}
+                />
+              </CanvasFrame>
             </div>
           </div>
           <div className="space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-secondary">
               Final lockup · gear + wordmark
             </h4>
-            <div className="flex items-center justify-center rounded-lg border border-border bg-background p-10 min-h-[200px]">
-              <Lockup tune={tune} showGuides={guides} />
+            <div className="flex items-center justify-center rounded-lg border border-border bg-background p-6">
+              <CanvasFrame width={CANVAS_W} height={CANVAS_H}>
+                <Lockup tune={tune} showGuides={guides} />
+              </CanvasFrame>
             </div>
           </div>
         </div>
