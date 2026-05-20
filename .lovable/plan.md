@@ -1,51 +1,52 @@
-# Chat panel UI refresh
+## Logo intro splash
 
-Stay on-brand: cyan/gray/white only, Roboto Condensed only. Push depth, hierarchy, and surface quality.
+A one-time, full-screen splash on first visit per browser session. After dismissal, it never plays again until the session ends.
 
-## Scope
+### Asset
 
-- `src/components/chat/ChatPanel.tsx` — new gradient header, refined empty state
-- `src/components/chat/ChatMessage.tsx` — richer bubbles, AI avatar
-- `src/components/chat/ChatComposer.tsx` — elevated input, send button polish
+You pushed raster favicons only (no SVG):
+- `public/apple-touch-icon.png` (180×180, ~30 KB) — **use this** as the animated gear
+- `favicon-32`, `favicon-16`, `favicon.ico` — too small for the splash
 
-No new dependencies. No font changes.
+Since the gear is raster, the animation is transform-based (rotate/scale/translate) on an `<img>`. Quality stays sharp because we render it at ~96px, well under its native 180px.
 
-## Header — bold gradient
+### Behavior
 
-- Full-width cyan gradient bar (primary → primary/70), 64px tall
-- Bot icon in a frosted white/15 rounded-xl tile, left-aligned
-- Title "Ask TechD" in white, bold, larger (text-lg)
-- Subtitle "Powered by NeuralSeek" with a small pulsing dot for "Online" status
-- Soft inner shadow at bottom edge for depth
+1. On app mount, check `sessionStorage["techd-intro-played"]`.
+2. If absent → render fixed full-screen overlay (white, above header), play animation, set the flag, fade out.
+3. If present → render nothing, no flash.
+4. `prefers-reduced-motion: reduce` → show the final lockup (gear + wordmark) statically for ~400ms then dismiss.
+5. Overlay is non-interactive while visible (pointer-events locked).
 
-## Empty state
+### Animation (~1.8s)
 
-- Replace plain bullet list with a small intro card: bot icon, "Hi — I'm the TechD assistant" headline, one-line subhead
-- Starter prompts as 4 lifted cards (2-col grid on wider widths, stacked on narrow), each with a faint cyan border-glow on hover, leading micro-icon (Sparkles / Building2 / Briefcase / FileSearch)
+Centered on white background.
 
-## Messages
+```text
+  t=0.00s   gear fades in, scale 0.85→1.0                       (250ms)
+  t=0.10s   gear rotates 540° (1.5 turns), ease-in-out          (1100ms)
+  t=0.90s   gear slides left ~half the final lockup width       (450ms, ease-out)
+  t=1.05s   "TechD" wordmark slides in from x:-16 → 0, fades 0→1 (500ms)
+  t=1.55s   thin cyan underline draws under wordmark            (200ms)
+  t=1.80s   overlay fades out                                    (250ms)
+```
 
-- AI bubbles: soft layered surface — `bg-white` with `border-border/50` and a subtle `shadow-[0_1px_2px_rgba(0,0,0,0.04)]`, plus a tiny cyan accent dot on the bubble's top-left
-- User bubbles: keep cyan, add a soft outer glow `shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.35)]`
-- Add a small Bot avatar next to AI messages (cyan circle, white icon)
-- Loading dots: cyan-tinted instead of muted gray
-- Citation chips: slightly larger, hover lifts background to `bg-primary/5`
+- Wordmark: Roboto Condensed Bold, `text-secondary`, height matched to gear.
+- Underline: `bg-primary`, 1px, scale-x 0→1.
+- All colors via existing tokens — no raw hex.
 
-## Composer
+### Files
 
-- Wrap input + button in a single rounded-2xl container with `border-border` and `focus-within:border-primary` + cyan glow ring
-- Send button: cyan with the same soft glow shadow used on the launcher hover state
-- Subtle helper line below: "Press Enter to send · Shift+Enter for newline" in muted xs
+- **New**: `src/components/shared/IntroSplash.tsx`
+  - `fixed inset-0 z-[100] bg-background`
+  - Inline `<style>` with three `@keyframes` (no Tailwind config bloat, no new deps)
+  - Reads/sets `sessionStorage` flag, returns `null` after fade-out
+  - Honors `prefers-reduced-motion`
+- **Edit**: `src/components/layout/Layout.tsx` — mount `<IntroSplash />` once, above `<Header />`
 
-## Tokens / animation
+### Out of scope
 
-- All colors via existing tokens (primary, secondary, muted, border) — no raw hex
-- Reuse the launcher's cyan glow recipe: `shadow-[0_0_24px_2px_hsl(var(--primary)/0.35)]`
-- Status dot: 2s pulse, `motion-reduce:animate-none`
-- All transitions ≤300ms, ease-out
-
-## Out of scope
-
-- ChatLauncher (already redesigned)
-- ChatWidget resize logic (already shipped)
-- Brand tokens, font family, site-wide styles
+- No new dependencies (pure CSS, no framer-motion)
+- No changes to header logo, hero, or favicon files
+- Not a per-route transition — strictly first-load-of-session
+- Header still uses `techd-logo.webp` unchanged
