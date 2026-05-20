@@ -20,9 +20,12 @@ import {
   WHY_THIS_TEAM,
 } from "@content/about";
 
+import marcPhoto from "@/assets/team/marc-martina.jpg";
+import garrettPhoto from "@/assets/team/garrett-rowe.jpg";
+
 const LEADER_PHOTOS: Record<string, string> = {
-  "Marc Martina": "/images/team/marc-martina.jpg",
-  "Garrett Rowe":  "/images/team/garrett-rowe.jpg",
+  "Marc Martina": marcPhoto,
+  "Garrett Rowe":  garrettPhoto,
 };
 
 const LEADER_PHOTO_POSITION: Record<string, string> = {

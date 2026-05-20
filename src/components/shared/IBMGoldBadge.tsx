@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-const ibmLogo = "/images/brand/ibm-logo-white.png";
+import ibmLogo from "@/assets/brand/ibm-logo-white.png";
 import { cn } from "@/lib/utils";
 
 type Size = "sm" | "md" | "lg";

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import techdGear from "@/assets/brand/techd-gear.png";
+import techdWordmark from "@/assets/brand/techd-wordmark.png";
 
 const STORAGE_KEY = "techd-intro-played";
 
@@ -130,19 +132,19 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
                 <div className="absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
                   {/* ...spin animation on the inner wrapper so the offset isn't clobbered */}
                   <div className="techd-gear-spin absolute inset-0">
-                    <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} className="techd-gear-art" style={{ filter: "blur(1px)" }} />
+                    <img src={techdGear} alt="" width={GEAR} height={GEAR} className="techd-gear-art" style={{ filter: "blur(1px)" }} />
                   </div>
                 </div>
               </div>
             ))}
             {/* Sharp gear on top */}
             <div className="techd-gear-spin absolute inset-0">
-              <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} className="techd-gear-art" />
+              <img src={techdGear} alt="" width={GEAR} height={GEAR} className="techd-gear-art" />
             </div>
           </div>
         </div>
         <img
-          src="/images/brand/techd-wordmark.png"
+          src={techdWordmark}
           alt="TechD"
           width={WORD_W}
           height={WORD_H}

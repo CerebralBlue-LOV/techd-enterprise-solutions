@@ -3,8 +3,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-SRC = Path("public/images/brand/techd-logo.webp")
-OUT_DIR = Path("public/images/brand")
+SRC = Path("src/assets/brand/techd-logo.webp")
+OUT_DIR = Path("src/assets/brand")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 im = Image.open(SRC).convert("RGBA")

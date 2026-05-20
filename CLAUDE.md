@@ -50,7 +50,9 @@ If unsure whether something is sensitive, leave it out of the commit.
 ```
 src/
   app/              # App shell, route table (App.tsx, routes.tsx, providers.tsx)
-  assets/           # Static images (logos, webps)
+  assets/
+    brand/          # Brand images imported as ES modules (techd-logo.webp, ibm-logo-white.png, techd-gear.png, techd-wordmark.png)
+    team/           # Leadership headshots imported as ES modules (garrett-rowe.jpg, marc-martina.jpg)
   components/
     ui/             # shadcn/ui primitives — DO NOT touch
     layout/         # Header, Footer, Layout, NavLink  (alias: @layout)
@@ -75,7 +77,7 @@ src/
     industries/
     products/
 docs/               # All project documentation (PROJECT-SCOPE, ARCHITECTURE, REDIRECT-MAP, etc.)
-public/             # robots.txt, favicon, placeholder assets
+public/             # Favicons at root; public/images/ for all other static assets
 .github/workflows/  # deploy.yml (GitHub Pages CI/CD)
 ```
 
@@ -174,14 +176,27 @@ Read `docs/PROJECT-SCOPE.md` for full project scope and `docs/ARCHITECTURE.md` f
 - Short, descriptive commit messages. No `Co-Authored-By` trailers.
 - Small commits, push frequently — Lovable needs to stay in sync.
 
-## Deprecated logos
+## Image asset structure
 
-Logo files in `public/logos/deprecated/` are **orphaned** — they existed in the repo but are no longer referenced by the CUSTOMERS array in `src/content/site.ts` and are not displayed in the LogoStrip. Do not reference these files from any component or content file. They are kept temporarily pending PM confirmation that they can be deleted entirely.
+Two locations, two rules:
 
-Files in `public/logos/deprecated/`:
-`burlington.png` · `chop.png` · `comcast-peacock.svg` · `corning.png` · `dhs.svg` · `dominion-energy.png` · `genesis-healthcare.png` · `hamilton-beach.png` · `jefferson-health.png` · `johns-hopkins.png` · `johnson-and-johnson.png` · `kennedy-center.png` · `kenseal.png` · `l3harris.png` · `miso-energy.png` · `national-general.png` · `princeton-university.png` · `pure-insurance.png` · `sony-interactive.svg` · `sony-pictures.png` · `temple-health.png` · `vcu.png` · `white-cap.png`
+**`src/assets/`** — brand and team images. Always use ES module imports (`import logo from "@/assets/brand/techd-logo.webp"`). Vite fingerprints these files, handles the GitHub Pages base path automatically, and tree-shakes unused ones.
 
-Use `/admin-lab` to review them visually.
+**`public/images/`** — customer logos and deprecated assets. Referenced as string paths. Consumer components prepend `import.meta.env.BASE_URL` so they resolve correctly on GitHub Pages.
+
+| Location | Contents | How to reference |
+|---|---|---|
+| `src/assets/brand/` | techd-logo.webp, ibm-logo-white.png, techd-gear.png, techd-wordmark.png | ES module import |
+| `src/assets/team/` | garrett-rowe.jpg, marc-martina.jpg | ES module import |
+| `public/images/partners/` | Active customer logos (light) — defined in `site.ts` | String path via BASE_URL |
+| `public/images/partners/white/` | Active customer logos (dark background) | String path via BASE_URL |
+| `public/images/partners-deprecated/` | Orphaned logos — kept pending PM sign-off. Do not reference from any component. Use `/admin-lab` to review. | n/a |
+
+Favicons (`favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`) stay at `public/` root — browser convention.
+
+To regenerate brand PNGs from the logo: `python3 scripts/crop-logo.py`
+To regenerate white logo variants: `python3 scripts/generate-white-logos.py`
+To regenerate favicons: `python3 scripts/generate-favicon.py`
 
 ## Anti-patterns to avoid
 
@@ -192,7 +207,8 @@ Use `/admin-lab` to review them visually.
 - Don't touch `src/components/ui/` — those are shadcn defaults.
 - Don't introduce raw hex colors anywhere.
 - Don't write or apply 410 redirects (see `docs/ARCHITECTURE.md` — spam was theme-level, not URL-based).
-- Don't reference files in `public/logos/deprecated/` from any component or content file — those are orphaned logos awaiting PM sign-off for deletion.
+- Don't reference files in `public/images/partners-deprecated/` from any component or content file — those are orphaned logos awaiting PM sign-off for deletion.
+- Don't add images to `src/assets/` — all images belong in `public/images/` and should be referenced as path strings, not ES module imports.
 
 ## Content copy rules (when editing `src/content/`)
 

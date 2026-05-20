@@ -4,7 +4,7 @@ import { Menu, ChevronDown } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-const logo = "/images/brand/techd-logo.webp";
+import logo from "@/assets/brand/techd-logo.webp";
 import { NAV } from "@/content/site";
 
 export const Header = () => {

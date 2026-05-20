@@ -10,7 +10,7 @@ import PageHero from "@shared/page/PageHero";
 import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 import PracticeStaticMotif, { initialsFor } from "@shared/PracticeStaticMotif";
 import FlipCard from "@sections/home/_components/FlipCard";
-const ibmLogoWhite = "/images/brand/ibm-logo-white.png";
+import ibmLogoWhite from "@/assets/brand/ibm-logo-white.png";
 import { Button } from "@ui/button";
 import {
   IBM_AI_OPERATING_MODEL,
