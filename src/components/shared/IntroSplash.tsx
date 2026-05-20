@@ -9,8 +9,22 @@ type Props = {
   playKey?: number;
 };
 
+const shouldPlayInitially = (force: boolean) => {
+  if (typeof window === "undefined") return false;
+  if (force) return true;
+  try {
+    return !sessionStorage.getItem(STORAGE_KEY);
+  } catch {
+    return true;
+  }
+};
+
 export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
-  const [phase, setPhase] = useState<"hidden" | "playing" | "fading">("hidden");
+  // Initialize synchronously so the overlay paints on the very first frame
+  // — otherwise the page content flashes through before the effect runs.
+  const [phase, setPhase] = useState<"hidden" | "playing" | "fading">(() =>
+    shouldPlayInitially(force) ? "playing" : "hidden",
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -19,43 +33,23 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
     let cancelled = false;
     const timers: number[] = [];
 
-    const start = () => {
-      if (cancelled) return;
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!force) sessionStorage.setItem(STORAGE_KEY, "1");
-      setPhase("playing");
+    if (!force) {
+      try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch { /* noop */ }
+    }
+    setPhase("playing");
 
-      const fadeAt = reduced ? 500 : 2600;
-      const removeAt = fadeAt + 350;
-      timers.push(window.setTimeout(() => !cancelled && setPhase("fading"), fadeAt));
-      timers.push(window.setTimeout(() => !cancelled && setPhase("hidden"), removeAt));
-    };
-
-    // Preload both images so the animation doesn't begin before pixels are paintable.
-    const sources = ["/logos/techd-gear.png", "/logos/techd-wordmark.png"];
-    let remaining = sources.length;
-    const tick = () => {
-      remaining -= 1;
-      if (remaining <= 0) {
-        // Wait for the next frame so layout/paint is ready before keyframes start.
-        requestAnimationFrame(() => requestAnimationFrame(start));
-      }
-    };
-    sources.forEach((src) => {
-      const img = new Image();
-      img.onload = tick;
-      img.onerror = tick;
-      img.src = src;
-    });
-    // Safety fallback in case onload never fires (e.g. very slow network).
-    timers.push(window.setTimeout(() => !cancelled && phase === "hidden" && start(), 1500));
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fadeAt = reduced ? 500 : 2600;
+    const removeAt = fadeAt + 350;
+    timers.push(window.setTimeout(() => !cancelled && setPhase("fading"), fadeAt));
+    timers.push(window.setTimeout(() => !cancelled && setPhase("hidden"), removeAt));
 
     return () => {
       cancelled = true;
       timers.forEach(window.clearTimeout);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [force, playKey]);
+
 
   if (phase === "hidden") return null;
 
