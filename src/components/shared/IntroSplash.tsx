@@ -79,28 +79,35 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
       }}
     >
       <style>{`
-        @keyframes techd-gear-in {
-          0%    { opacity: 0; transform: translateX(var(--gear-offset)) rotate(0deg) scale(0.85); }
-          12%   { opacity: 1; transform: translateX(var(--gear-offset)) rotate(0deg) scale(1); }
-          62%   { opacity: 1; transform: translateX(var(--gear-offset)) rotate(720deg) scale(1); }
-          78%   { opacity: 1; transform: translateX(0) rotate(720deg) scale(1); }
-          100%  { opacity: 1; transform: translateX(0) rotate(720deg) scale(1); }
+        @keyframes techd-gear-translate {
+          0%, 62%  { transform: translateX(var(--gear-offset)); }
+          78%, 100%{ transform: translateX(0); }
+        }
+        @keyframes techd-gear-fade {
+          0%   { opacity: 0; transform: scale(0.85); }
+          12%, 100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes techd-gear-spin {
+          0%, 12%  { transform: rotate(0deg); }
+          62%, 100%{ transform: rotate(720deg); }
+        }
+        /* Trail echoes ramp up while spinning, then collapse before the lockup */
+        @keyframes techd-gear-trail {
+          0%, 14%  { opacity: 0; }
+          26%, 50% { opacity: var(--trail-opacity, 0.35); }
+          62%, 100%{ opacity: 0; }
         }
         @keyframes techd-word-in {
           0%, 72%  { opacity: 0; transform: translateX(-20px); }
           90%, 100%{ opacity: 1; transform: translateX(0); }
         }
-        @keyframes techd-gear-blur {
-          0%, 14%  { filter: blur(0px); }
-          28%      { filter: blur(2.5px); }
-          50%      { filter: blur(2.5px); }
-          62%      { filter: blur(0px); }
-          100%     { filter: blur(0px); }
-        }
-        .techd-gear { animation: techd-gear-in 3200ms cubic-bezier(0.65, 0, 0.35, 1) both, techd-gear-blur 3200ms ease-in-out both; }
+        .techd-gear-translate { animation: techd-gear-translate 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-gear-fade { animation: techd-gear-fade 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-gear-spin { animation: techd-gear-spin 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; transform-origin: 50% 50%; }
+        .techd-gear-trail-wrap { animation: techd-gear-trail 3200ms ease-in-out both; }
         .techd-word { animation: techd-word-in 3200ms ease-out both; }
         @media (prefers-reduced-motion: reduce) {
-          .techd-gear { animation: none; transform: translateX(0); }
+          .techd-gear-translate, .techd-gear-fade, .techd-gear-spin, .techd-gear-trail-wrap { animation: none; transform: none; opacity: 1; }
           .techd-word { animation: none; opacity: 1; transform: none; }
         }
       `}</style>
@@ -115,14 +122,26 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
           } as React.CSSProperties
         }
       >
-        <img
-          src="/logos/techd-gear.png"
-          alt=""
-          width={GEAR}
-          height={GEAR}
-          className="techd-gear shrink-0"
-          style={{ willChange: "transform, opacity" }}
-        />
+        <div className="techd-gear-translate shrink-0" style={{ width: GEAR, height: GEAR, willChange: "transform" }}>
+          <div className="techd-gear-fade relative" style={{ width: GEAR, height: GEAR, willChange: "transform, opacity" }}>
+            {/* Trailing echoes rotated slightly behind the sharp gear to fake rotational motion blur */}
+            {[-24, -16, -10, -5].map((deg, i) => (
+              <div
+                key={deg}
+                className="techd-gear-trail-wrap absolute inset-0"
+                style={{ ["--trail-opacity" as string]: `${0.12 + i * 0.06}` } as React.CSSProperties}
+              >
+                <div className="techd-gear-spin absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
+                  <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} style={{ filter: "blur(1px)" }} />
+                </div>
+              </div>
+            ))}
+            {/* Sharp gear on top */}
+            <div className="techd-gear-spin absolute inset-0">
+              <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} />
+            </div>
+          </div>
+        </div>
         <img
           src="/logos/techd-wordmark.png"
           alt="TechD"
