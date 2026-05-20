@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "@layout/Layout";
 import { Button } from "@/components/ui/button";
 import IntroSplash from "@/components/shared/IntroSplash";
+import GearSpinInspector from "@/components/shared/GearSpinInspector";
 import { RotateCw } from "lucide-react";
 
 const IntroLab = () => {
@@ -50,6 +51,21 @@ const IntroLab = () => {
             Asset: <code className="bg-muted px-1.5 py-0.5 rounded">/apple-touch-icon.png</code>.
             Honors <code className="bg-muted px-1.5 py-0.5 rounded">prefers-reduced-motion</code>.
           </p>
+        </div>
+      </section>
+
+      <section className="border-t border-border">
+        <div className="container-page py-10 space-y-6">
+          <div>
+            <h2 className="text-xl font-bold text-secondary">Frame-by-frame inspector</h2>
+            <p className="mt-2 text-sm font-light text-muted-foreground max-w-2xl">
+              The gear in isolation, paused. Drag the slider to scrub through the spin, or scan
+              the strip below to see the whole rotation at a glance. The cyan crosshair marks
+              the rotation pivot — if the gear appears to orbit it instead of rotate around it,
+              the artwork isn't centered in its canvas.
+            </p>
+          </div>
+          <GearSpinInspector />
         </div>
       </section>
 
