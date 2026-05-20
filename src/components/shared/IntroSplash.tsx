@@ -131,8 +131,12 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
                 className="techd-gear-trail-wrap absolute inset-0"
                 style={{ ["--trail-opacity" as string]: `${0.12 + i * 0.06}` } as React.CSSProperties}
               >
-                <div className="techd-gear-spin absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
-                  <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} style={{ filter: "blur(1px)" }} />
+                {/* Static angular offset on the outer wrapper... */}
+                <div className="absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
+                  {/* ...spin animation on the inner wrapper so the offset isn't clobbered */}
+                  <div className="techd-gear-spin absolute inset-0">
+                    <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} style={{ filter: "blur(1px)" }} />
+                  </div>
                 </div>
               </div>
             ))}

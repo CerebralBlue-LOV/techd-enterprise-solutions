@@ -25,7 +25,24 @@ def tight_crop(box):
     bbox = region.getbbox()
     return region.crop(bbox) if bbox else region
 
-gear = tight_crop((0, 0, gap_start, H))
+def center_on_square(img):
+    """Pad img with transparent pixels so its visible bbox sits at the exact
+    geometric center of a square canvas. CSS `transform-origin: 50% 50%` pivots
+    around the image box center, so any asymmetric padding shows up as wobble.
+    """
+    bbox = img.getbbox()  # (l, t, r, b) of opaque pixels
+    if not bbox:
+        return img
+    l, t, r, b = bbox
+    w, h = r - l, b - t
+    side = max(w, h)
+    canvas = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    offset_x = (side - w) // 2 - l
+    offset_y = (side - h) // 2 - t
+    canvas.paste(img, (offset_x, offset_y), img)
+    return canvas
+
+gear = center_on_square(tight_crop((0, 0, gap_start, H)))
 word = tight_crop((gap_end + 1, 0, W, H))
 
 gear_path = OUT_DIR / "techd-gear.png"
