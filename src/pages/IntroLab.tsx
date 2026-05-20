@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "@layout/Layout";
 import { Button } from "@/components/ui/button";
 import IntroSplash from "@/components/shared/IntroSplash";
+import GearSpinInspector from "@/components/shared/GearSpinInspector";
 import { RotateCw } from "lucide-react";
 
 const IntroLab = () => {
