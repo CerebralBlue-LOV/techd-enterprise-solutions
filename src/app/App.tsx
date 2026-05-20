@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { Providers } from "@app/providers";
 import { AppRoutes } from "@app/routes";
+import IntroSplash from "@shared/IntroSplash";
 
 /**
  * App shell. Composes global providers + router + route table.
@@ -9,6 +10,7 @@ import { AppRoutes } from "@app/routes";
 const App = () => (
   <Providers>
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <IntroSplash force />
       <AppRoutes />
     </BrowserRouter>
   </Providers>
