@@ -54,9 +54,22 @@ const IntroLab = () => {
         </div>
       </section>
 
+      <section className="border-t border-border">
+        <div className="container-page py-10 space-y-6">
+          <div>
+            <h2 className="text-xl font-bold text-secondary">Frame-by-frame inspector</h2>
+            <p className="mt-2 text-sm font-light text-muted-foreground max-w-2xl">
+              The gear in isolation, paused. Drag the slider to scrub through the spin, or scan
+              the strip below to see the whole rotation at a glance. The cyan crosshair marks
+              the rotation pivot — if the gear appears to orbit it instead of rotate around it,
+              the artwork isn't centered in its canvas.
+            </p>
+          </div>
+          <GearSpinInspector />
+        </div>
+      </section>
+
       <div className="container-page py-16" />
-    </Layout>
-  );
 };
 
 export default IntroLab;
