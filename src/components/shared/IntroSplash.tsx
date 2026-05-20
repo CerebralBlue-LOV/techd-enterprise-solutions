@@ -20,8 +20,8 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
     if (!force) sessionStorage.setItem(STORAGE_KEY, "1");
     setPhase("playing");
 
-    const fadeAt = reduced ? 400 : 1800;
-    const removeAt = fadeAt + 300;
+    const fadeAt = reduced ? 500 : 3200;
+    const removeAt = fadeAt + 350;
 
     const t1 = window.setTimeout(() => setPhase("fading"), fadeAt);
     const t2 = window.setTimeout(() => setPhase("hidden"), removeAt);
@@ -33,59 +33,70 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
 
   if (phase === "hidden") return null;
 
+  // Final lockup proportions, matching the source logo (gear:gap:word ≈ 70:2:192 over 70 tall).
+  // Gear rendered at 96px → wordmark height 80px, width ≈ 265px, gap ≈ 4px.
+  const GEAR = 96;
+  const GAP = 4;
+  const WORD_H = 80;
+  const WORD_W = Math.round(WORD_H * (192 / 58)); // ≈ 265
+  const LOCKUP_W = GEAR + GAP + WORD_W;
+  // Distance gear must travel from "alone, centered" to its final left-edge position.
+  const GEAR_OFFSET = (LOCKUP_W - GEAR) / 2; // ≈ 86px
+
   return (
     <div
       aria-hidden="true"
       className="fixed inset-0 z-[100] flex items-center justify-center bg-background pointer-events-none"
       style={{
         opacity: phase === "fading" ? 0 : 1,
-        transition: "opacity 250ms ease-out",
+        transition: "opacity 300ms ease-out",
       }}
     >
       <style>{`
         @keyframes techd-gear-in {
-          0%   { opacity: 0; transform: translateX(0) rotate(0deg) scale(0.85); }
-          14%  { opacity: 1; transform: translateX(0) rotate(0deg) scale(1); }
-          61%  { opacity: 1; transform: translateX(0) rotate(540deg) scale(1); }
-          100% { opacity: 1; transform: translateX(-68px) rotate(540deg) scale(1); }
+          0%    { opacity: 0; transform: translateX(var(--gear-offset)) rotate(0deg) scale(0.85); }
+          12%   { opacity: 1; transform: translateX(var(--gear-offset)) rotate(0deg) scale(1); }
+          62%   { opacity: 1; transform: translateX(var(--gear-offset)) rotate(720deg) scale(1); }
+          78%   { opacity: 1; transform: translateX(0) rotate(720deg) scale(1); }
+          100%  { opacity: 1; transform: translateX(0) rotate(720deg) scale(1); }
         }
         @keyframes techd-word-in {
-          0%, 58%  { opacity: 0; transform: translateX(-16px); }
-          86%, 100%{ opacity: 1; transform: translateX(0); }
+          0%, 72%  { opacity: 0; transform: translateX(-20px); }
+          90%, 100%{ opacity: 1; transform: translateX(0); }
         }
-        @keyframes techd-underline-in {
-          0%, 86%  { transform: scaleX(0); }
-          97%, 100%{ transform: scaleX(1); }
-        }
-        .techd-gear   { animation: techd-gear-in 1550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-        .techd-word   { animation: techd-word-in 1800ms ease-out both; }
+        .techd-gear { animation: techd-gear-in 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-word { animation: techd-word-in 3200ms ease-out both; }
         @media (prefers-reduced-motion: reduce) {
-          .techd-gear  { animation: none; transform: translateX(-68px); }
-          .techd-word  { animation: none; opacity: 1; transform: none; }
+          .techd-gear { animation: none; transform: translateX(0); }
+          .techd-word { animation: none; opacity: 1; transform: none; }
         }
       `}</style>
 
-      <div className="relative flex items-center justify-center" style={{ width: 360, height: 96 }}>
+      <div
+        className="relative flex items-center"
+        style={
+          {
+            width: LOCKUP_W,
+            height: GEAR,
+            ["--gear-offset" as string]: `${GEAR_OFFSET}px`,
+          } as React.CSSProperties
+        }
+      >
         <img
           src="/logos/techd-gear.png"
           alt=""
-          width={96}
-          height={96}
-          className="techd-gear absolute left-1/2 top-1/2 -mt-12 -ml-12"
+          width={GEAR}
+          height={GEAR}
+          className="techd-gear shrink-0"
           style={{ willChange: "transform, opacity" }}
         />
         <img
           src="/logos/techd-wordmark.png"
           alt="TechD"
-          height={80}
-          className="techd-word absolute"
-          style={{
-            left: "calc(50% + 28px)",
-            top: "50%",
-            transform: "translateY(-50%)",
-            height: 80,
-            width: "auto",
-          }}
+          width={WORD_W}
+          height={WORD_H}
+          className="techd-word"
+          style={{ marginLeft: GAP, height: WORD_H, width: WORD_W }}
         />
       </div>
     </div>
