@@ -57,10 +57,31 @@ const FrozenGear = ({
         }}
       />
     </div>
-    {/* Crosshair marks the rotation pivot (canvas center) */}
+    {/* Overlay: grid + axes + reference circle + center dot */}
     <div className="pointer-events-none absolute inset-0">
-      <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-primary/40" />
-      <div className="absolute top-1/2 left-0 w-full h-px -translate-y-1/2 bg-primary/40" />
+      {/* Background grid (10% steps) */}
+      <div
+        className="absolute inset-0 opacity-40"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, hsl(var(--muted-foreground) / 0.25) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--muted-foreground) / 0.25) 1px, transparent 1px)",
+          backgroundSize: "10% 10%",
+        }}
+      />
+      {/* Cartesian axes */}
+      <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-primary/60" />
+      <div className="absolute top-1/2 left-0 w-full h-px -translate-y-1/2 bg-primary/60" />
+      {/* Reference circle — inscribed in the canvas, sized to roughly match the gear's outer reach */}
+      <div
+        className="absolute left-1/2 top-1/2 rounded-full border border-primary/70"
+        style={{ width: "92%", height: "92%", transform: "translate(-50%, -50%)" }}
+      />
+      {/* Inner reference ring at 50% for tighter alignment checks */}
+      <div
+        className="absolute left-1/2 top-1/2 rounded-full border border-primary/30"
+        style={{ width: "50%", height: "50%", transform: "translate(-50%, -50%)" }}
+      />
+      {/* Center dot */}
       <div className="absolute left-1/2 top-1/2 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
     </div>
   </div>
