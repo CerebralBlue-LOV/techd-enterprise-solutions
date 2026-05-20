@@ -41,7 +41,10 @@ const OUT_DIR = join(__dirname, "..", "kb");
 mkdirSync(OUT_DIR, { recursive: true });
 
 function emit(filename: string, content: string) {
-  writeFileSync(join(OUT_DIR, filename), content.trimStart(), "utf-8");
+  // Strip YAML frontmatter delimiters (--- ... ---) — NeuralSeek's indexer chokes on them.
+  // The key:value pairs inside are kept as plain text so title/route remain searchable.
+  const cleaned = content.trimStart().replace(/^---\n([\s\S]*?)\n---\n/, "$1\n\n");
+  writeFileSync(join(OUT_DIR, filename), cleaned, "utf-8");
   console.log(`  ✓  ${filename}`);
 }
 
@@ -475,6 +478,7 @@ emit(
   `---
 title: TechD Frequently Asked Questions
 route: /
+url: /
 source: src/content/chatbot-faq.ts
 priority: high
 ---

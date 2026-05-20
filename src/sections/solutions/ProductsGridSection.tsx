@@ -6,7 +6,6 @@ import SectionMarker from "@shared/SectionMarker";
 import DarkGlowPanel from "@shared/DarkGlowPanel";
 import { Button } from "@ui/button";
 import { type Product, type Solution } from "@content/solutions";
-import { PRACTICE_MOTIFS } from "@content/practice-motifs";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -135,7 +134,6 @@ const SlideContent = ({
 export const ProductsGridSection = ({ practice }: Props) => {
   const products = practice.products;
   const total = products.length;
-  const motif = PRACTICE_MOTIFS[practice.id];
   const [index, setIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const [reverse, setReverse] = useState(false);

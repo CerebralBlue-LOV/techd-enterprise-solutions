@@ -6,7 +6,6 @@ import SectionHeading from "@shared/SectionHeading";
 import { SectionBackdrop } from "@shared/SectionBackdrop";
 import { INDUSTRIES_EXTRAS } from "@content/industries-extras";
 import { SOLUTIONS } from "@content/solutions";
-import { PRACTICE_MOTIFS } from "@content/practice-motifs";
 import { cn } from "@/lib/utils";
 
 /**
@@ -425,7 +424,6 @@ const VariantBento = () => {
       />
       <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px]">
         {rows.map(({ sol, proof }, i) => {
-          const motif = PRACTICE_MOTIFS[sol.id];
           const big = i === 0;
           return (
             <Link
@@ -436,19 +434,6 @@ const VariantBento = () => {
                 spans[i % spans.length],
               )}
             >
-              {motif ? (
-                <img
-                  src={motif.image}
-                  alt=""
-                  aria-hidden="true"
-                  className={cn(
-                    "absolute opacity-[0.18] transition-opacity group-hover:opacity-30 pointer-events-none",
-                    big
-                      ? "right-0 bottom-0 w-[55%] max-w-[260px]"
-                      : "right-0 top-1/2 -translate-y-1/2 w-[40%] max-w-[140px]",
-                  )}
-                />
-              ) : null}
               <p className="eyebrow relative z-10">Practice · 0{i + 1}</p>
               <div className="relative z-10">
                 <h3
@@ -484,7 +469,6 @@ const VariantTabs = () => {
   const [active, setActive] = useState(0);
   const current = rows[active];
   if (!current) return null;
-  const motif = PRACTICE_MOTIFS[current.sol.id];
   return (
     <div className="px-6 md:px-10 py-12">
       <SectionHeading
@@ -532,14 +516,6 @@ const VariantTabs = () => {
 
         {/* Right panel */}
         <div className="lg:col-span-8 relative rounded-xl border border-border bg-gradient-to-br from-background to-muted/30 p-8 min-h-[320px] overflow-hidden">
-          {motif ? (
-            <img
-              src={motif.image}
-              alt=""
-              aria-hidden="true"
-              className="absolute right-0 bottom-0 w-[40%] max-w-[220px] opacity-[0.18] pointer-events-none"
-            />
-          ) : null}
           <div className="relative z-10 max-w-xl">
             <p className="eyebrow">Practice</p>
             <h3 className="mt-2 text-3xl font-bold text-secondary leading-tight">
@@ -624,7 +600,6 @@ const VariantDarkBento = () => (
       </h2>
       <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px]">
         {rows.map(({ sol, proof }, i) => {
-          const motif = PRACTICE_MOTIFS[sol.id];
           const big = i === 0;
           return (
             <Link
@@ -641,19 +616,6 @@ const VariantDarkBento = () => (
                 aria-hidden="true"
                 className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-primary/0 blur-2xl transition-all duration-500 group-hover:bg-primary/40"
               />
-              {motif ? (
-                <img
-                  src={motif.image}
-                  alt=""
-                  aria-hidden="true"
-                  className={cn(
-                    "absolute opacity-30 mix-blend-screen transition-transform duration-700 group-hover:scale-110 pointer-events-none",
-                    big
-                      ? "right-0 bottom-0 w-[55%] max-w-[280px]"
-                      : "right-2 top-1/2 -translate-y-1/2 w-[42%] max-w-[140px]",
-                  )}
-                />
-              ) : null}
               <p className="relative text-[10px] font-mono uppercase tracking-[0.2em] text-primary">
                 Practice · 0{i + 1}
               </p>
@@ -690,7 +652,6 @@ const VariantDarkBento = () => (
 const VariantCyanHero = () => {
   const [hero, ...rest] = rows;
   if (!hero) return null;
-  const motif = PRACTICE_MOTIFS[hero.sol.id];
   return (
     <div className="px-6 md:px-10 py-12">
       <SectionHeading
@@ -710,14 +671,6 @@ const VariantCyanHero = () => {
               "radial-gradient(60% 80% at 80% 20%, hsl(var(--background) / 0.3) 0%, transparent 60%), radial-gradient(40% 60% at 20% 100%, hsl(var(--secondary) / 0.4) 0%, transparent 70%)",
           }}
         />
-        {motif ? (
-          <img
-            src={motif.image}
-            alt=""
-            aria-hidden="true"
-            className="absolute right-0 bottom-0 w-[45%] max-w-[320px] opacity-25 mix-blend-screen transition-transform duration-700 group-hover:scale-105 pointer-events-none"
-          />
-        ) : null}
         <div className="relative z-10 max-w-xl">
           <p className="text-xs font-mono uppercase tracking-[0.2em] text-background/80">
             Featured practice · 01
@@ -784,7 +737,6 @@ const VariantFloat = () => (
       />
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
         {rows.map(({ sol, proof }, i) => {
-          const motif = PRACTICE_MOTIFS[sol.id];
           return (
             <Link
               key={sol.id}
@@ -806,14 +758,6 @@ const VariantFloat = () => (
                     {sol.name}
                   </h3>
                 </div>
-                {motif ? (
-                  <img
-                    src={motif.image}
-                    alt=""
-                    aria-hidden="true"
-                    className="size-16 opacity-60 transition-transform duration-700 group-hover:rotate-6 group-hover:scale-110"
-                  />
-                ) : null}
               </div>
               <p className="relative mt-4 text-sm font-light text-muted-foreground leading-relaxed">
                 {proof}
