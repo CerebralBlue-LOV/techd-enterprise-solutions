@@ -3,6 +3,7 @@ import Layout from "@layout/Layout";
 import { Button } from "@/components/ui/button";
 import IntroSplash from "@/components/shared/IntroSplash";
 import GearSpinInspector from "@/components/shared/GearSpinInspector";
+import LockupAlignmentInspector from "@/components/shared/LockupAlignmentInspector";
 import { RotateCw } from "lucide-react";
 
 const IntroLab = () => {
@@ -66,6 +67,21 @@ const IntroLab = () => {
             </p>
           </div>
           <GearSpinInspector />
+        </div>
+      </section>
+
+      <section className="border-t border-border">
+        <div className="container-page py-10 space-y-6">
+          <div>
+            <h2 className="text-xl font-bold text-secondary">Lockup alignment</h2>
+            <p className="mt-2 text-sm font-light text-muted-foreground max-w-2xl">
+              Original <code className="bg-muted px-1.5 py-0.5 rounded">techd-logo.webp</code> next
+              to the final gear + wordmark lockup. Tweak the sliders until the
+              proportions match the original, then copy the snippet and paste
+              it back to bake the values into <code className="bg-muted px-1.5 py-0.5 rounded">IntroSplash</code>.
+            </p>
+          </div>
+          <LockupAlignmentInspector />
         </div>
       </section>
 
