@@ -90,7 +90,14 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
           0%, 72%  { opacity: 0; transform: translateX(-20px); }
           90%, 100%{ opacity: 1; transform: translateX(0); }
         }
-        .techd-gear { animation: techd-gear-in 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        @keyframes techd-gear-blur {
+          0%, 14%  { filter: blur(0px); }
+          28%      { filter: blur(2.5px); }
+          50%      { filter: blur(2.5px); }
+          62%      { filter: blur(0px); }
+          100%     { filter: blur(0px); }
+        }
+        .techd-gear { animation: techd-gear-in 3200ms cubic-bezier(0.65, 0, 0.35, 1) both, techd-gear-blur 3200ms ease-in-out both; }
         .techd-word { animation: techd-word-in 3200ms ease-out both; }
         @media (prefers-reduced-motion: reduce) {
           .techd-gear { animation: none; transform: translateX(0); }
