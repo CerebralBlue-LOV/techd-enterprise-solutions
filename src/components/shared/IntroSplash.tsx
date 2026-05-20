@@ -9,8 +9,22 @@ type Props = {
   playKey?: number;
 };
 
+const shouldPlayInitially = (force: boolean) => {
+  if (typeof window === "undefined") return false;
+  if (force) return true;
+  try {
+    return !sessionStorage.getItem(STORAGE_KEY);
+  } catch {
+    return true;
+  }
+};
+
 export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
-  const [phase, setPhase] = useState<"hidden" | "playing" | "fading">("hidden");
+  // Initialize synchronously so the overlay paints on the very first frame
+  // — otherwise the page content flashes through before the effect runs.
+  const [phase, setPhase] = useState<"hidden" | "playing" | "fading">(() =>
+    shouldPlayInitially(force) ? "playing" : "hidden",
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -19,43 +33,23 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
     let cancelled = false;
     const timers: number[] = [];
 
-    const start = () => {
-      if (cancelled) return;
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!force) sessionStorage.setItem(STORAGE_KEY, "1");
-      setPhase("playing");
+    if (!force) {
+      try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch { /* noop */ }
+    }
+    setPhase("playing");
 
-      const fadeAt = reduced ? 500 : 3200;
-      const removeAt = fadeAt + 350;
-      timers.push(window.setTimeout(() => !cancelled && setPhase("fading"), fadeAt));
-      timers.push(window.setTimeout(() => !cancelled && setPhase("hidden"), removeAt));
-    };
-
-    // Preload both images so the animation doesn't begin before pixels are paintable.
-    const sources = ["/images/brand/techd-gear.png", "/images/brand/techd-wordmark.png"];
-    let remaining = sources.length;
-    const tick = () => {
-      remaining -= 1;
-      if (remaining <= 0) {
-        // Wait for the next frame so layout/paint is ready before keyframes start.
-        requestAnimationFrame(() => requestAnimationFrame(start));
-      }
-    };
-    sources.forEach((src) => {
-      const img = new Image();
-      img.onload = tick;
-      img.onerror = tick;
-      img.src = src;
-    });
-    // Safety fallback in case onload never fires (e.g. very slow network).
-    timers.push(window.setTimeout(() => !cancelled && phase === "hidden" && start(), 1500));
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fadeAt = reduced ? 500 : 2600;
+    const removeAt = fadeAt + 350;
+    timers.push(window.setTimeout(() => !cancelled && setPhase("fading"), fadeAt));
+    timers.push(window.setTimeout(() => !cancelled && setPhase("hidden"), removeAt));
 
     return () => {
       cancelled = true;
       timers.forEach(window.clearTimeout);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [force, playKey]);
+
 
   if (phase === "hidden") return null;
 
@@ -98,14 +92,15 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
           62%, 100%{ opacity: 0; }
         }
         @keyframes techd-word-in {
-          0%, 72%  { opacity: 0; transform: translateX(-20px); }
-          90%, 100%{ opacity: 1; transform: translateX(0); }
+          0%, 72%  { opacity: 0; transform: translate(-20px, -2px); }
+          90%, 100%{ opacity: 1; transform: translate(0, -2px); }
         }
-        .techd-gear-translate { animation: techd-gear-translate 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-        .techd-gear-fade { animation: techd-gear-fade 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-        .techd-gear-spin { animation: techd-gear-spin 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; transform-origin: 50% 50%; }
-        .techd-gear-trail-wrap { animation: techd-gear-trail 3200ms ease-in-out both; }
-        .techd-word { animation: techd-word-in 3200ms ease-out both; }
+        .techd-gear-translate { animation: techd-gear-translate 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-gear-fade { animation: techd-gear-fade 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-gear-spin { animation: techd-gear-spin 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; transform-origin: 50% 50%; }
+        .techd-gear-trail-wrap { animation: techd-gear-trail 2600ms ease-in-out both; }
+        .techd-word { animation: techd-word-in 2600ms ease-out both; }
+        .techd-gear-art { display: block; transform: translate(1%, 0%) scale(1); transform-origin: 50% 50%; }
         @media (prefers-reduced-motion: reduce) {
           .techd-gear-translate, .techd-gear-fade, .techd-gear-spin, .techd-gear-trail-wrap { animation: none; transform: none; opacity: 1; }
           .techd-word { animation: none; opacity: 1; transform: none; }
@@ -135,14 +130,14 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
                 <div className="absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
                   {/* ...spin animation on the inner wrapper so the offset isn't clobbered */}
                   <div className="techd-gear-spin absolute inset-0">
-                    <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} style={{ filter: "blur(1px)" }} />
+                    <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} className="techd-gear-art" style={{ filter: "blur(1px)" }} />
                   </div>
                 </div>
               </div>
             ))}
             {/* Sharp gear on top */}
             <div className="techd-gear-spin absolute inset-0">
-              <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} />
+              <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} className="techd-gear-art" />
             </div>
           </div>
         </div>
