@@ -70,6 +70,8 @@ const IntroLab = () => {
       </section>
 
       <div className="container-page py-16" />
+    </Layout>
+  );
 };
 
 export default IntroLab;
