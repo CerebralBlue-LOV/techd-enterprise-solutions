@@ -1,5 +1,5 @@
 import { useState } from "react";
-import techdLogo from "@/assets/techd-logo.webp";
+const techdLogo = "/images/brand/techd-logo.webp";
 
 /**
  * Side-by-side alignment check for the final intro lockup vs the original
