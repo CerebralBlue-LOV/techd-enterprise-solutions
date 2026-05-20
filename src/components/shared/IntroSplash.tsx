@@ -92,8 +92,8 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
           62%, 100%{ opacity: 0; }
         }
         @keyframes techd-word-in {
-          0%, 72%  { opacity: 0; transform: translateX(-20px); }
-          90%, 100%{ opacity: 1; transform: translateX(0); }
+          0%, 72%  { opacity: 0; transform: translate(-20px, -2px); }
+          90%, 100%{ opacity: 1; transform: translate(0, -2px); }
         }
         .techd-gear-translate { animation: techd-gear-translate 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
         .techd-gear-fade { animation: techd-gear-fade 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
