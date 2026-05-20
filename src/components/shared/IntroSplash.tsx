@@ -16,19 +16,45 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
     if (typeof window === "undefined") return;
     if (!force && sessionStorage.getItem(STORAGE_KEY)) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!force) sessionStorage.setItem(STORAGE_KEY, "1");
-    setPhase("playing");
+    let cancelled = false;
+    const timers: number[] = [];
 
-    const fadeAt = reduced ? 500 : 3200;
-    const removeAt = fadeAt + 350;
+    const start = () => {
+      if (cancelled) return;
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!force) sessionStorage.setItem(STORAGE_KEY, "1");
+      setPhase("playing");
 
-    const t1 = window.setTimeout(() => setPhase("fading"), fadeAt);
-    const t2 = window.setTimeout(() => setPhase("hidden"), removeAt);
-    return () => {
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
+      const fadeAt = reduced ? 500 : 3200;
+      const removeAt = fadeAt + 350;
+      timers.push(window.setTimeout(() => !cancelled && setPhase("fading"), fadeAt));
+      timers.push(window.setTimeout(() => !cancelled && setPhase("hidden"), removeAt));
     };
+
+    // Preload both images so the animation doesn't begin before pixels are paintable.
+    const sources = ["/logos/techd-gear.png", "/logos/techd-wordmark.png"];
+    let remaining = sources.length;
+    const tick = () => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        // Wait for the next frame so layout/paint is ready before keyframes start.
+        requestAnimationFrame(() => requestAnimationFrame(start));
+      }
+    };
+    sources.forEach((src) => {
+      const img = new Image();
+      img.onload = tick;
+      img.onerror = tick;
+      img.src = src;
+    });
+    // Safety fallback in case onload never fires (e.g. very slow network).
+    timers.push(window.setTimeout(() => !cancelled && phase === "hidden" && start(), 1500));
+
+    return () => {
+      cancelled = true;
+      timers.forEach(window.clearTimeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [force, playKey]);
 
   if (phase === "hidden") return null;
