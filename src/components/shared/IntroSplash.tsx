@@ -59,35 +59,34 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
         }
         .techd-gear   { animation: techd-gear-in 1550ms cubic-bezier(0.65, 0, 0.35, 1) both; }
         .techd-word   { animation: techd-word-in 1800ms ease-out both; }
-        .techd-uline  { animation: techd-underline-in 1800ms ease-out both; transform-origin: left center; }
         @media (prefers-reduced-motion: reduce) {
           .techd-gear  { animation: none; transform: translateX(-68px); }
           .techd-word  { animation: none; opacity: 1; transform: none; }
-          .techd-uline { animation: none; transform: scaleX(1); }
         }
       `}</style>
 
-      <div className="relative flex items-center" style={{ width: 280, height: 96 }}>
+      <div className="relative flex items-center justify-center" style={{ width: 360, height: 96 }}>
         <img
-          src="/apple-touch-icon.png"
+          src="/logos/techd-gear.png"
           alt=""
           width={96}
           height={96}
           className="techd-gear absolute left-1/2 top-1/2 -mt-12 -ml-12"
           style={{ willChange: "transform, opacity" }}
         />
-        <div
+        <img
+          src="/logos/techd-wordmark.png"
+          alt="TechD"
+          height={80}
           className="techd-word absolute"
-          style={{ left: "calc(50% + 28px)", top: "50%", transform: "translateY(-50%)" }}
-        >
-          <span className="font-bold text-secondary leading-none tracking-tight" style={{ fontSize: 64 }}>
-            TechD
-          </span>
-          <div
-            className="techd-uline mt-2 h-[2px] bg-primary"
-            style={{ width: "100%" }}
-          />
-        </div>
+          style={{
+            left: "calc(50% + 28px)",
+            top: "50%",
+            transform: "translateY(-50%)",
+            height: 80,
+            width: "auto",
+          }}
+        />
       </div>
     </div>
   );
