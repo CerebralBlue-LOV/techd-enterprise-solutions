@@ -3,8 +3,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-SRC = Path("src/assets/techd-logo.webp")
-OUT_DIR = Path("public/logos")
+SRC = Path("public/images/brand/techd-logo.webp")
+OUT_DIR = Path("public/images/brand")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 im = Image.open(SRC).convert("RGBA")
@@ -47,6 +47,7 @@ word = tight_crop((gap_end + 1, 0, W, H))
 
 gear_path = OUT_DIR / "techd-gear.png"
 word_path = OUT_DIR / "techd-wordmark.png"
+
 gear.save(gear_path, "PNG", optimize=True)
 word.save(word_path, "PNG", optimize=True)
 

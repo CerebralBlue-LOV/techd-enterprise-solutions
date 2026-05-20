@@ -32,7 +32,7 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
     };
 
     // Preload both images so the animation doesn't begin before pixels are paintable.
-    const sources = ["/logos/techd-gear.png", "/logos/techd-wordmark.png"];
+    const sources = ["/images/brand/techd-gear.png", "/images/brand/techd-wordmark.png"];
     let remaining = sources.length;
     const tick = () => {
       remaining -= 1;
@@ -135,19 +135,19 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
                 <div className="absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
                   {/* ...spin animation on the inner wrapper so the offset isn't clobbered */}
                   <div className="techd-gear-spin absolute inset-0">
-                    <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} style={{ filter: "blur(1px)" }} />
+                    <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} style={{ filter: "blur(1px)" }} />
                   </div>
                 </div>
               </div>
             ))}
             {/* Sharp gear on top */}
             <div className="techd-gear-spin absolute inset-0">
-              <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} />
+              <img src="/images/brand/techd-gear.png" alt="" width={GEAR} height={GEAR} />
             </div>
           </div>
         </div>
         <img
-          src="/logos/techd-wordmark.png"
+          src="/images/brand/techd-wordmark.png"
           alt="TechD"
           width={WORD_W}
           height={WORD_H}

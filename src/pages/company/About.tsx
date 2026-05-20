@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 
-import garrettPhoto from "../../assets/garrett-rowe.jpg";
-import marcPhoto from "../../assets/marc-martina.jpg";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
@@ -23,8 +21,8 @@ import {
 } from "@content/about";
 
 const LEADER_PHOTOS: Record<string, string> = {
-  "Marc Martina": marcPhoto,
-  "Garrett Rowe": garrettPhoto,
+  "Marc Martina": "/images/team/marc-martina.jpg",
+  "Garrett Rowe":  "/images/team/garrett-rowe.jpg",
 };
 
 const LEADER_PHOTO_POSITION: Record<string, string> = {

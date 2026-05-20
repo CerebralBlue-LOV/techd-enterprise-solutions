@@ -21,7 +21,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC_LOGO = ROOT / "src" / "assets" / "techd-logo.webp"
+SRC_LOGO = ROOT / "public" / "images" / "brand" / "techd-logo.webp"
 PUBLIC = ROOT / "public"
 INDEX = ROOT / "index.html"
 

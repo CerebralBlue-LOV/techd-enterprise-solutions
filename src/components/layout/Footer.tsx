@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
-import logo from "@/assets/techd-logo.webp";
+const logo = "/images/brand/techd-logo.webp";
 import { NAV } from "@/content/site";
 import { IBMGoldBadge } from "@shared/IBMGoldBadge";
 

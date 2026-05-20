@@ -2,12 +2,12 @@
 """
 Generate white-on-transparent versions of customer logos for use on dark surfaces.
 
-For each allow-listed source logo in public/logos/:
+For each allow-listed source logo in public/images/partners/:
   - If the .svg embeds a base64 PNG (PowerPoint export), extract it.
   - If it's a real .svg vector, skip (CSS invert handles those cleanly).
   - Otherwise load the raster directly.
 Then knock out the white/uniform background, recolor remaining pixels to pure
-white preserving alpha, trim, and save to public/logos/white/<name>.png.
+white preserving alpha, trim, and save to public/images/partners/white/<name>.png.
 
 Re-runnable. Logs per-file outcome.
 """
@@ -20,10 +20,10 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC_DIR = ROOT / "public" / "logos"
+SRC_DIR = ROOT / "public" / "images" / "partners"
 OUT_DIR = SRC_DIR / "white"
 
-# Industry #clients allow-list. Filenames (without extension) under public/logos/.
+# Industry #clients allow-list. Filenames (without extension) under public/images/partners/.
 ALLOW = [
     # Healthcare
     "admed", "netcare", "childrens-health",

@@ -109,7 +109,7 @@ const AdminLab = () => (
         <p className="text-sm text-muted-foreground mb-6 max-w-2xl">
           Logos moved to{" "}
           <code className="text-xs bg-muted px-1.5 py-0.5 rounded">
-            public/logos/deprecated/
+            public/images/partners-deprecated/
           </code>
           . Not referenced in{" "}
           <code className="text-xs bg-muted px-1.5 py-0.5 rounded">site.ts</code> and not
@@ -125,7 +125,7 @@ const AdminLab = () => (
               >
                 <div className="flex h-12 w-full items-center justify-center">
                   <img
-                    src={`/techd-enterprise-solutions/logos/deprecated/${file}`}
+                    src={`/techd-enterprise-solutions/images/partners-deprecated/${file}`}
                     alt={name}
                     className="max-h-10 max-w-full object-contain opacity-50 grayscale"
                     onError={(e) => {
