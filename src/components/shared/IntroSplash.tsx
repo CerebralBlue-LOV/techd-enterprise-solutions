@@ -25,7 +25,7 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
       if (!force) sessionStorage.setItem(STORAGE_KEY, "1");
       setPhase("playing");
 
-      const fadeAt = reduced ? 500 : 3200;
+      const fadeAt = reduced ? 500 : 2600;
       const removeAt = fadeAt + 350;
       timers.push(window.setTimeout(() => !cancelled && setPhase("fading"), fadeAt));
       timers.push(window.setTimeout(() => !cancelled && setPhase("hidden"), removeAt));
@@ -101,11 +101,12 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
           0%, 72%  { opacity: 0; transform: translateX(-20px); }
           90%, 100%{ opacity: 1; transform: translateX(0); }
         }
-        .techd-gear-translate { animation: techd-gear-translate 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-        .techd-gear-fade { animation: techd-gear-fade 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-        .techd-gear-spin { animation: techd-gear-spin 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; transform-origin: 50% 50%; }
-        .techd-gear-trail-wrap { animation: techd-gear-trail 3200ms ease-in-out both; }
-        .techd-word { animation: techd-word-in 3200ms ease-out both; }
+        .techd-gear-translate { animation: techd-gear-translate 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-gear-fade { animation: techd-gear-fade 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-gear-spin { animation: techd-gear-spin 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; transform-origin: 50% 50%; }
+        .techd-gear-trail-wrap { animation: techd-gear-trail 2600ms ease-in-out both; }
+        .techd-word { animation: techd-word-in 2600ms ease-out both; }
+        .techd-gear-art { display: block; transform: translate(1%, 0%) scale(1); transform-origin: 50% 50%; }
         @media (prefers-reduced-motion: reduce) {
           .techd-gear-translate, .techd-gear-fade, .techd-gear-spin, .techd-gear-trail-wrap { animation: none; transform: none; opacity: 1; }
           .techd-word { animation: none; opacity: 1; transform: none; }
@@ -135,14 +136,14 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
                 <div className="absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
                   {/* ...spin animation on the inner wrapper so the offset isn't clobbered */}
                   <div className="techd-gear-spin absolute inset-0">
-                    <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} style={{ filter: "blur(1px)" }} />
+                    <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} className="techd-gear-art" style={{ filter: "blur(1px)" }} />
                   </div>
                 </div>
               </div>
             ))}
             {/* Sharp gear on top */}
             <div className="techd-gear-spin absolute inset-0">
-              <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} />
+              <img src="/logos/techd-gear.png" alt="" width={GEAR} height={GEAR} className="techd-gear-art" />
             </div>
           </div>
         </div>
