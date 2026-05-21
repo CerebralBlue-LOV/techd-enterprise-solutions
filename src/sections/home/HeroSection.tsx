@@ -4,6 +4,7 @@ import { Button } from "@ui/button";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
+import ScrollToSectionLink from "@shared/ScrollToSectionLink";
 
 const HeroParticleField = lazy(
   () => import("@sections/home/_components/HeroParticleField"),
@@ -43,7 +44,7 @@ export const HeroSection = () => (
               <Link to="/contact">Talk to an expert</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-              <Link to="/#solutions">See our solutions</Link>
+              <ScrollToSectionLink sectionId="solutions">See our solutions</ScrollToSectionLink>
             </Button>
           </div>
         </div>
