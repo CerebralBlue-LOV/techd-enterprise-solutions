@@ -2,7 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Sheet, SheetContent } from "@ui/sheet";
 import { ChatLauncher } from "./ChatLauncher";
 import { ChatPanel } from "./ChatPanel";
+import { ChatCta } from "./ChatCta";
 import { useChat } from "./useChat";
+import { useChatCta } from "./useChatCta";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const MIN_WIDTH = 320;
@@ -15,6 +17,23 @@ export function ChatWidget() {
   const draggingRef = useRef(false);
   const isMobile = useIsMobile();
   const { messages, loading, send, clear } = useChat();
+  const { visible: ctaVisible, dismiss: dismissCta, markOpened } = useChatCta({
+    open,
+    isMobile,
+  });
+
+  const openChat = useCallback(() => {
+    markOpened();
+    setOpen(true);
+  }, [markOpened]);
+
+  const toggleChat = useCallback(() => {
+    setOpen((v) => {
+      const next = !v;
+      if (next) markOpened();
+      return next;
+    });
+  }, [markOpened]);
 
   const onMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -45,7 +64,8 @@ export function ChatWidget() {
 
   return (
     <>
-      <ChatLauncher open={open} onClick={() => setOpen((v) => !v)} />
+      <ChatCta visible={ctaVisible} onOpen={openChat} onDismiss={dismissCta} />
+      <ChatLauncher open={open} onClick={toggleChat} />
 
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
