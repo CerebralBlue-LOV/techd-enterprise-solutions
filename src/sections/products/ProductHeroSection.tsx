@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import ScrollToSectionLink from "@shared/ScrollToSectionLink";
 import PageHeroBackdrop from "@shared/page/PageHeroBackdrop";
 import PracticeFigure from "@sections/solutions/_components/PracticeFigure";
+import { Button } from "@ui/button";
 import { type Product, type Solution } from "@content/solutions";
 
 interface Props {
@@ -12,12 +14,13 @@ interface Props {
 }
 
 /**
- * Product detail hero. Original two-line breadcrumb + practice eyebrow
- * styling, with the parent practice's wireframe figure on the right
- * (via the shared `PageHeroBackdrop`). No CTA buttons in the hero —
- * the bottom `ProductCtaSection` carries the closer.
+ * Product detail hero. Breadcrumb + practice eyebrow, parent practice's
+ * wireframe figure on the right, primary "Talk to an expert" CTA matching
+ * the site-wide standard, and in-page anchors via `ScrollToSectionLink`
+ * (clean URLs, repeatable clicks).
  */
 export const ProductHeroSection = ({ practice, product }: Props) => {
+  const { pathname } = useLocation();
   const anchors: { href: string; label: string }[] = [
     { href: "#overview", label: "Overview" },
     ...(practice.id === "ai-generative"
@@ -25,7 +28,8 @@ export const ProductHeroSection = ({ practice, product }: Props) => {
       : []),
     { href: "#use-cases", label: "Use cases" },
     { href: "#why-techd", label: "Why TechD" },
-    { href: "#cta", label: "Talk to an expert" },
+    { href: "#related", label: "Related" },
+    { href: "#cta", label: "Contact" },
   ];
 
   return (
@@ -59,23 +63,36 @@ export const ProductHeroSection = ({ practice, product }: Props) => {
             </p>
           </div>
 
+          <div className="mt-10">
+            <Button asChild size="lg" className="btn-glow">
+              <Link to="/contact">
+                Talk to an expert
+                <ArrowRight className="ml-1" />
+              </Link>
+            </Button>
+          </div>
+
           <nav
             aria-label="On this page"
-            className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-muted-foreground"
+            className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-muted-foreground"
           >
-            {anchors.map((a, i) => (
-              <span key={a.href} className="flex items-center gap-2">
-                {i > 0 && (
-                  <span aria-hidden="true" className="text-muted-foreground/40">·</span>
-                )}
-                <a
-                  href={a.href}
-                  className="transition-colors hover:text-primary focus-visible:text-primary"
-                >
-                  {a.label}
-                </a>
-              </span>
-            ))}
+            {anchors.map((a, i) => {
+              const sectionId = a.href.replace(/^#/, "");
+              return (
+                <span key={a.href} className="flex items-center gap-2">
+                  {i > 0 && (
+                    <span aria-hidden="true" className="text-muted-foreground/40">·</span>
+                  )}
+                  <ScrollToSectionLink
+                    sectionId={sectionId}
+                    path={pathname}
+                    className="transition-colors hover:text-primary focus-visible:text-primary"
+                  >
+                    {a.label}
+                  </ScrollToSectionLink>
+                </span>
+              );
+            })}
           </nav>
         </Reveal>
       </div>
