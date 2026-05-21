@@ -169,24 +169,39 @@ export const PageHero = ({
               </p>
             ) : null}
 
+            {primaryCta ? (
+              <div className="mt-10">
+                <Button asChild size="lg" className="btn-glow">
+                  <Link to={primaryCta.to}>
+                    {primaryCta.label}
+                    <ArrowRight className="ml-1" />
+                  </Link>
+                </Button>
+              </div>
+            ) : null}
+
             {anchors && anchors.length > 0 ? (
               <nav
                 aria-label="On this page"
-                className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-muted-foreground"
+                className={`${primaryCta ? "mt-8" : "mt-10"} flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-muted-foreground`}
               >
-                {anchors.map((a, i) => (
-                  <span key={a.href} className="flex items-center gap-2">
-                    {i > 0 && (
-                      <span aria-hidden="true" className="text-muted-foreground/40">·</span>
-                    )}
-                    <a
-                      href={a.href}
-                      className="transition-colors hover:text-primary focus-visible:text-primary"
-                    >
-                      {a.label}
-                    </a>
-                  </span>
-                ))}
+                {anchors.map((a, i) => {
+                  const sectionId = a.href.replace(/^#/, "");
+                  return (
+                    <span key={a.href} className="flex items-center gap-2">
+                      {i > 0 && (
+                        <span aria-hidden="true" className="text-muted-foreground/40">·</span>
+                      )}
+                      <ScrollToSectionLink
+                        sectionId={sectionId}
+                        path={pathname}
+                        className="transition-colors hover:text-primary focus-visible:text-primary"
+                      >
+                        {a.label}
+                      </ScrollToSectionLink>
+                    </span>
+                  );
+                })}
               </nav>
             ) : null}
           </div>
