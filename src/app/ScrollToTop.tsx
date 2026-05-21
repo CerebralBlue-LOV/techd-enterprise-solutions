@@ -11,10 +11,12 @@ const ScrollToTop = () => {
   useEffect(() => {
     if (hash) {
       const id = hash.slice(1);
-      // Defer so the target section is mounted before we scroll.
       requestAnimationFrame(() => {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        // Strip the hash so the URL stays clean and the same link can be
+        // clicked again (react-router skips navigation to an identical location).
+        window.history.replaceState(null, "", pathname);
       });
       return;
     }
