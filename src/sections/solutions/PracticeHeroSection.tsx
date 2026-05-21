@@ -20,6 +20,7 @@ export const PracticeHeroSection = ({ practice }: Props) => (
     child={practice.name}
     headline={practice.outcome}
     lede={practice.description}
+    primaryCta={{ label: "Talk to an expert", to: "/contact" }}
     anchors={ANCHORS}
     figure={<PracticeFigure practiceId={practice.id} />}
   />

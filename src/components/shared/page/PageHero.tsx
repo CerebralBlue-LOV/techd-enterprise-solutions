@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import ScrollToSectionLink from "@shared/ScrollToSectionLink";
+import { Button } from "@ui/button";
 import PageHeroBackdrop from "./PageHeroBackdrop";
 
 export interface PageHeroAnchor {
   href: string;
   label: string;
+}
+
+export interface PageHeroCta {
+  label: string;
+  to: string;
 }
 
 interface Props {
@@ -31,6 +38,8 @@ interface Props {
   meta?: string;
   /** On-page nav anchors. Hidden when empty. */
   anchors?: PageHeroAnchor[];
+  /** Optional primary CTA shown above the anchors (e.g. "Talk to an expert"). */
+  primaryCta?: PageHeroCta;
   /** Right-side wireframe figure for the backdrop. */
   figure?: ReactNode;
   /** Tailwind min-height. Defaults to `min-h-[70vh]`. */
@@ -61,12 +70,14 @@ export const PageHero = ({
   lede,
   meta,
   anchors,
+  primaryCta,
   figure,
   minHeight = "min-h-[70vh]",
   maxWidth = "max-w-4xl",
   headlineSize = "text-4xl md:text-5xl lg:text-6xl",
   id = "hero",
 }: Props) => {
+  const { pathname } = useLocation();
   const sectionRef = useRef<HTMLElement | null>(null);
   const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -158,24 +169,39 @@ export const PageHero = ({
               </p>
             ) : null}
 
+            {primaryCta ? (
+              <div className="mt-10">
+                <Button asChild size="lg" className="btn-glow">
+                  <Link to={primaryCta.to}>
+                    {primaryCta.label}
+                    <ArrowRight className="ml-1" />
+                  </Link>
+                </Button>
+              </div>
+            ) : null}
+
             {anchors && anchors.length > 0 ? (
               <nav
                 aria-label="On this page"
-                className="mt-10 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-muted-foreground"
+                className={`${primaryCta ? "mt-8" : "mt-10"} flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-muted-foreground`}
               >
-                {anchors.map((a, i) => (
-                  <span key={a.href} className="flex items-center gap-2">
-                    {i > 0 && (
-                      <span aria-hidden="true" className="text-muted-foreground/40">·</span>
-                    )}
-                    <a
-                      href={a.href}
-                      className="transition-colors hover:text-primary focus-visible:text-primary"
-                    >
-                      {a.label}
-                    </a>
-                  </span>
-                ))}
+                {anchors.map((a, i) => {
+                  const sectionId = a.href.replace(/^#/, "");
+                  return (
+                    <span key={a.href} className="flex items-center gap-2">
+                      {i > 0 && (
+                        <span aria-hidden="true" className="text-muted-foreground/40">·</span>
+                      )}
+                      <ScrollToSectionLink
+                        sectionId={sectionId}
+                        path={pathname}
+                        className="transition-colors hover:text-primary focus-visible:text-primary"
+                      >
+                        {a.label}
+                      </ScrollToSectionLink>
+                    </span>
+                  );
+                })}
               </nav>
             ) : null}
           </div>
