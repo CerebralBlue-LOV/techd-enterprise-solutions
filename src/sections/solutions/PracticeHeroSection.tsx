@@ -7,7 +7,7 @@ interface Props {
 }
 
 const ANCHORS = [
-  { href: "#why", label: "Why this practice" },
+  { href: "#why-practice", label: "Why this practice" },
   { href: "#products", label: "Products" },
   { href: "#industries", label: "Industries" },
   { href: "#approach", label: "Approach" },
