@@ -25,7 +25,7 @@ export function ChatCta({ visible, onOpen, onDismiss }: Props) {
           aria-label="Open TechD chat"
           className={cn(
             "group block w-[260px] text-left",
-            "rounded-2xl border border-border bg-background pl-4 pr-9 py-3.5",
+            "rounded-2xl border border-border bg-background px-4 pr-9 py-3.5",
             "shadow-[0_12px_32px_-12px_hsl(var(--secondary)/0.25)]",
             "transition-all duration-200 ease-out",
             "hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_18px_40px_-12px_hsl(var(--primary)/0.35)]",
@@ -33,10 +33,6 @@ export function ChatCta({ visible, onOpen, onDismiss }: Props) {
             "motion-reduce:transition-none",
           )}
         >
-          <span
-            aria-hidden
-            className="absolute left-0 top-3 bottom-3 w-0.5 rounded-r bg-primary"
-          />
           <p className="text-sm font-bold text-secondary leading-snug">
             Not sure where to start? Ask me.
           </p>
@@ -44,6 +40,7 @@ export function ChatCta({ visible, onOpen, onDismiss }: Props) {
             Senior practitioner · replies in 1 business day
           </p>
         </button>
+
 
         {/* Tail pointing at the launcher (bottom-right) */}
         <span
