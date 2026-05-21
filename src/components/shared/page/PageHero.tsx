@@ -38,6 +38,8 @@ interface Props {
   meta?: string;
   /** On-page nav anchors. Hidden when empty. */
   anchors?: PageHeroAnchor[];
+  /** Optional primary CTA shown above the anchors (e.g. "Talk to an expert"). */
+  primaryCta?: PageHeroCta;
   /** Right-side wireframe figure for the backdrop. */
   figure?: ReactNode;
   /** Tailwind min-height. Defaults to `min-h-[70vh]`. */
