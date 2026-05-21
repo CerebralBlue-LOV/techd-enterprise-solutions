@@ -1,106 +1,59 @@
-# Plan — Add missing section IDs + prune the audit doc
+## Goal
 
-Scope: only the §5 / §7 ID work from `docs/audit/site-link-and-section-audit.md`. PR-1 (link fixes) is already shipped and will be removed from the doc. No copy or visual changes — just adding `id="..."` (and a `scroll-mt-24` where the section is a sticky-anchor target) to root `<section>` elements per the §6 naming convention.
+Replace the right-side `Sheet` that hosts the assistant with a **floating chat popover** anchored to the launcher button — similar to Intercom / Crisp / Drift. Smaller footprint, doesn't cover the page, feels conversational instead of dashboard-like.
 
-## Naming convention (locked from §6)
+## What changes
 
-`hero`, `logos`, `why-techd | why-practice | why-industry | why-service`, `products`, `solutions`, `industries`, `approach | methodology`, `spotlight`, `clients | credentials`, `cross-links | related`, `offerings`, `capabilities`, `cta`, `contact-form | contact-info | map | locations`, `list`, `body`, `not-found`. Page-local unique, kebab-case.
+### 1. `ChatWidget.tsx` — drop the Sheet, render a floating panel
 
-## Step 1 — Heroes (4 files)
+- Remove `Sheet`, `SheetContent`, the drag-to-resize logic, and `MIN_WIDTH/MAX_WIDTH/DEFAULT_WIDTH` width state.
+- Render the panel as a `fixed` positioned card directly in the widget, anchored bottom-right above the launcher:
+  - Desktop: `width: 400px`, `height: min(640px, calc(100vh - 7rem))`, positioned `bottom-24 right-6`.
+  - Mobile (`useIsMobile`): full-width with a small inset (`left-3 right-3 bottom-20`), height `calc(100vh - 6rem)` — still floating, not a Sheet takeover.
+- Keep open/close state and `ChatCta` / `ChatLauncher` exactly as today.
+- Add a subtle enter/exit: scale `0.96 → 1`, opacity `0 → 1`, translate-y `8px → 0`, 200ms ease-out; respect `prefers-reduced-motion`.
+- Close on `Escape`. Click-outside stays **disabled** (matches Intercom — user closes via the launcher X or header close button).
+- Use the existing brand shadow vocabulary: `rounded-2xl`, `border border-border/60`, `shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.35),0_8px_24px_-12px_rgba(0,0,0,0.12)]`.
 
-Add `id="hero"` to the root `<section>` of:
-- `src/sections/solutions/PracticeHeroSection.tsx`
-- `src/sections/services/ServiceHeroSection.tsx`
-- `src/sections/industries/IndustryHeroSection.tsx`
-- `src/sections/products/ProductHeroSection.tsx`
+### 2. `ChatPanel.tsx` — tighten for the smaller frame
 
-## Step 2 — Page-local final CTAs (3 files)
+- Header stays gradient but slimmer: `py-3.5`, `text-base` title, `text-xs` subtitle. Add a small close button (X) on the right next to the reset button (since we no longer get one from `SheetContent`).
+- Reduce intro card padding (`p-4`), starter prompts collapse to **single column always** (the panel is narrow now).
+- Composer keeps current styling.
+- Add `rounded-2xl overflow-hidden` to the root so the gradient header clips cleanly to the floating card's corners.
 
-Add `id="cta"` + `scroll-mt-24` to:
-- `src/sections/solutions/PracticeCtaSection.tsx`
-- `src/sections/services/ServiceCtaSection.tsx`
-- `src/sections/industries/IndustryCtaSection.tsx`
+### 3. `ChatLauncher.tsx` — no logic change
 
-(Product CTA already inherits `cta` from `PageFinalCtaSection`.)
+- Keep position, size, sheen animation. The launcher continues to toggle `open`.
 
-## Step 3 — Remaining body sections on solutions / services / industries
+### 4. Cleanup
 
-Solutions practice pages:
-- `WhyPracticeSection` → `why-practice`
-- `ProductsGridSection` → `products`
-- `ApproachSection` → `approach`
+- Remove unused `Sheet` import path from the chat folder.
+- No changes to `useChat`, `useChatCta`, `ChatMessage`, `ChatComposer`, `ChatCta`, or `types.ts`.
 
-Services pages:
-- `ServiceWhySection` → `why-service`
-- `ServiceSpotlightSection` → `spotlight`
-- `ServiceMethodologySection` → `methodology`
-- `ServiceCrossLinksSection` → `cross-links`
+## Layout reference
 
-Industries pages:
-- `WhyIndustrySection` → `why-industry`
-- `IndustryApproachSection` → `approach`
-- `IndustryCrossLinksSection` → `cross-links`
-
-Product detail:
-- `ProductRelatedSection` → `related`
-
-## Step 4 — Home + Contact
-
-Home:
-- `src/sections/home/LogoStripSection.tsx` → `id="logos"`
-
-Contact (`src/sections/contact/*`):
-- `ContactHero` → `hero`
-- `ContactForm` → `contact-form`
-- `ContactInfo` → `contact-info`
-- `ContactMap` → `map`
-- `ContactLocationSection` → `locations`
-
-## Step 5 — Company body sections + Resources + NotFound
-
-Company:
-- `About.tsx` inline sections → `hero`, `story`, `leadership` (keep existing `practices`; `methodology` and `cta` already set)
-- `IBMPartnership.tsx` inline sections in render order → `hero`, `credentials`, `practices`, `quick-start` (`cta` already default)
-- `DeliveryMethodology.tsx` → add `hero` (keep existing `stages`, `commitment`, default `cta`)
-
-Resources list pages — add an id to the local list `<section>` on each:
-- `CaseStudies.tsx` → `case-studies`
-- `Blog.tsx` → `articles`
-- `Webinars.tsx` → `webinars`
-- `Events.tsx` → `events`
-
-Resources detail pages (`CaseStudyDetail`, `BlogDetail`, `WebinarDetail`, `EventDetail`) — body `<section>` → `body`.
-
-`NotFound.tsx` → `not-found`.
-
-## Step 6 — Prune `docs/audit/site-link-and-section-audit.md`
-
-After the code edits land, rewrite the doc so it only describes work still outstanding. Specifically:
-
-- Delete §1 summary rows for "Broken internal links", "External `target="_blank"` missing `noopener`", and "Talk to an expert CTAs not following standard" (all 0 now). Update "Section components with explicit `id`" count to 42 and "missing" count to 0.
-- Delete §4 entirely (all three link issues resolved).
-- Delete §5 per-page rows where the action was completed (every row marked **add** becomes nothing — leave only the table header note saying coverage is complete, or drop the per-page tables in favor of one line: "All section components now carry a kebab-case `id` per §6.").
-- Keep §2 (redirect map), §3 (route inventory), and §6 (naming convention — now the enforced rule).
-- Delete §7 items 1–6 once each is done; the section becomes empty and can be removed.
-- Update the top-of-file note: "Read-only audit" → "Audit + remediation log. All link issues and section-ID gaps from the original audit have been resolved. This file is now the canonical naming convention reference."
-
-The rule per the user: do **not** mark items as "completed" — just remove them. The remaining doc should read as if those problems never existed, leaving only the convention and the still-valid route/redirect inventories.
+```text
+                          ┌─────────────────────────┐
+                          │ TechD Assistant     ↺ × │  ← slim gradient header
+                          ├─────────────────────────┤
+                          │                         │
+                          │   messages / intro      │  ← 400 × 640 max
+                          │                         │
+                          ├─────────────────────────┤
+                          │ [ composer ........  →] │
+                          └─────────────────────────┘
+                                              ●        ← launcher (unchanged)
+```
 
 ## Out of scope
 
-- No visual changes, no copy changes, no new components.
-- No edits to `src/components/ui/`.
-- No `scroll-mt-*` adjustments beyond what's needed to make a newly-anchored section land below the sticky header.
-- No new routes, no nav changes.
+- No copy changes, no new starter prompts, no model/API changes.
+- Resize handle is removed (the floating chat is a fixed size — matches the pattern). If you want resize back later we can add a corner grabber.
+- Desktop "dock to side" toggle not included; can be added as a follow-up if needed.
 
-## Verification
+## Files touched
 
-After edits:
-1. Spot-check 3 routes in the preview by appending `#hero`, `#cta`, and one body anchor (e.g. `/services/advisory#methodology`, `/industries/healthcare#why-industry`, `/contact#contact-form`) — page should scroll to the correct band.
-2. `rg "id=\"" src/sections src/pages` should show every section component with an explicit `id`.
-3. Re-read the pruned audit doc top-to-bottom to confirm no completed item remains.
-
-## Risks
-
-- Two pages compose multiple inline `<section>` blocks (`About.tsx`, `IBMPartnership.tsx`). Adding ids requires reading the file and matching render order — low risk but needs care to avoid duplicate ids.
-- A few sections wrap their root in a shared component (`DarkSection`, `PageFinalCtaSection`) that already accepts an `id` prop — use the prop, don't add a second wrapper `<div>`.
+- `src/components/chat/ChatWidget.tsx` — rewrite render block, remove resize state.
+- `src/components/chat/ChatPanel.tsx` — tighten header, add close button prop, single-column prompts, rounded clipping.
+- (No other files.)
