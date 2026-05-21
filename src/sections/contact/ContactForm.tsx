@@ -371,7 +371,7 @@ const ContactForm = () => {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                We respond within one business day. Fields marked <span className="text-destructive">*</span> are required.
+                We respond within one business day. Fields marked <span className="text-primary">*</span> are required.
               </p>
               <Button type="submit" size="lg" className="btn-glow group/btn h-12 px-8 w-full sm:w-auto">
                 Send to a principal
