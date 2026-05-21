@@ -234,8 +234,8 @@ const ContactForm = () => {
                   name="heardAbout"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-muted-foreground font-normal">
-                        How did you hear about us?<OptionalMark />
+                      <FormLabel>
+                        How did you hear about us?<RequiredMark />
                       </FormLabel>
                       <Select
                         value={field.value}
