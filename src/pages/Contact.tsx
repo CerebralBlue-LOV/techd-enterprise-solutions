@@ -29,6 +29,9 @@ const Contact = () => (
       </div>
     </section>
     <ContactLocationSection />
+    <div className="pt-12 md:pt-20 border-t border-border">
+      <LogoStripSection />
+    </div>
   </Layout>
 );
 
