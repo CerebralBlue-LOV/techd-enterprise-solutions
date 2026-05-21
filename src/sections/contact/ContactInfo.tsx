@@ -2,7 +2,7 @@ import Reveal from "@shared/Reveal";
 import ContactChannels, { DEFAULT_CONTACT_CHANNELS } from "@shared/ContactChannels";
 
 const ContactInfo = () => (
-  <div className="lg:sticky lg:top-24">
+  <div id="contact-info" className="lg:sticky lg:top-24 scroll-mt-24">
     <Reveal>
       <h2 className="text-3xl md:text-4xl font-bold leading-tight tracking-tight text-secondary">
         Let's talk about your next <span className="text-primary">initiative</span>.
