@@ -1,5 +1,7 @@
-import { Sparkles, X } from "lucide-react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import techdMarkWhite from "@/assets/brand/techd-mark-white.png";
+
 
 interface Props {
   open: boolean;
@@ -39,8 +41,14 @@ export function ChatLauncher({ open, onClick }: Props) {
       {open ? (
         <X className="relative h-6 w-6" aria-hidden />
       ) : (
-        <Sparkles className="relative h-6 w-6" fill="currentColor" strokeWidth={1.5} aria-hidden />
+        <img
+          src={techdMarkWhite}
+          alt=""
+          aria-hidden
+          className="relative h-7 w-7 object-contain"
+        />
       )}
+
     </button>
   );
 }
