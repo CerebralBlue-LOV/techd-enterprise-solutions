@@ -54,11 +54,11 @@ const Row = ({
   );
 };
 
-export const LogoStrip = () => {
+export const LogoStrip = ({ bordered = true }: { bordered?: boolean }) => {
   return (
     <section
       aria-label="Trusted by Fortune 500 leaders"
-      className="py-10 border-y border-border bg-background"
+      className={`py-10 bg-background${bordered ? " border-y border-border" : ""}`}
     >
       <div className="px-4 text-center text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
         <p className="md:whitespace-nowrap lg:inline lg:whitespace-normal">
