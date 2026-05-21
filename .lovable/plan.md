@@ -1,59 +1,76 @@
-## Goal
+# Smoother chat open/close
 
-Replace the right-side `Sheet` that hosts the assistant with a **floating chat popover** anchored to the launcher button — similar to Intercom / Crisp / Drift. Smaller footprint, doesn't cover the page, feels conversational instead of dashboard-like.
+## Why it feels off today
 
-## What changes
+Three things are working against the animation:
 
-### 1. `ChatWidget.tsx` — drop the Sheet, render a floating panel
+1. **Everything fires at once.** Launcher fade and panel open both run for 1.00 s starting on the same frame. The eye doesn't know what to follow, so nothing feels intentional.
+2. **The panel starts at `scale(0.04)`.** That's essentially a single pixel growing to full size. Over 1 s it looks like a "zoom from nothing" effect — fast at the start, then crawls. Native panels (iOS, macOS, Linear, Raycast) start at ~0.92–0.96, not near-zero.
+3. **One easing curve for everything.** `cubic-bezier(0.22, 1, 0.36, 1)` is a strong "ease-out" — great for entrances, wrong for exits. Closes feel like they hesitate.
 
-- Remove `Sheet`, `SheetContent`, the drag-to-resize logic, and `MIN_WIDTH/MAX_WIDTH/DEFAULT_WIDTH` width state.
-- Render the panel as a `fixed` positioned card directly in the widget, anchored bottom-right above the launcher:
-  - Desktop: `width: 400px`, `height: min(640px, calc(100vh - 7rem))`, positioned `bottom-24 right-6`.
-  - Mobile (`useIsMobile`): full-width with a small inset (`left-3 right-3 bottom-20`), height `calc(100vh - 6rem)` — still floating, not a Sheet takeover.
-- Keep open/close state and `ChatCta` / `ChatLauncher` exactly as today.
-- Add a subtle enter/exit: scale `0.96 → 1`, opacity `0 → 1`, translate-y `8px → 0`, 200ms ease-out; respect `prefers-reduced-motion`.
-- Close on `Escape`. Click-outside stays **disabled** (matches Intercom — user closes via the launcher X or header close button).
-- Use the existing brand shadow vocabulary: `rounded-2xl`, `border border-border/60`, `shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.35),0_8px_24px_-12px_rgba(0,0,0,0.12)]`.
+## The plan
 
-### 2. `ChatPanel.tsx` — tighten for the smaller frame
+Treat opening and closing as a **two-step choreography**, not one big simultaneous animation.
 
-- Header stays gradient but slimmer: `py-3.5`, `text-base` title, `text-xs` subtitle. Add a small close button (X) on the right next to the reset button (since we no longer get one from `SheetContent`).
-- Reduce intro card padding (`p-4`), starter prompts collapse to **single column always** (the panel is narrow now).
-- Composer keeps current styling.
-- Add `rounded-2xl overflow-hidden` to the root so the gradient header clips cleanly to the floating card's corners.
-
-### 3. `ChatLauncher.tsx` — no logic change
-
-- Keep position, size, sheen animation. The launcher continues to toggle `open`.
-
-### 4. Cleanup
-
-- Remove unused `Sheet` import path from the chat folder.
-- No changes to `useChat`, `useChatCta`, `ChatMessage`, `ChatComposer`, `ChatCta`, or `types.ts`.
-
-## Layout reference
+### Opening (total ~480 ms, feels instant but smooth)
 
 ```text
-                          ┌─────────────────────────┐
-                          │ TechD Assistant     ↺ × │  ← slim gradient header
-                          ├─────────────────────────┤
-                          │                         │
-                          │   messages / intro      │  ← 400 × 640 max
-                          │                         │
-                          ├─────────────────────────┤
-                          │ [ composer ........  →] │
-                          └─────────────────────────┘
-                                              ●        ← launcher (unchanged)
+0 ms ─────────── 180 ms ─────────── 480 ms
+│ launcher fades + scales out      │
+│       │ panel starts rising + fading in
 ```
+
+- **Launcher out:** 180 ms, `ease-in` (quick exit — it's getting out of the way)
+- **Panel in:** starts at 120 ms (slight overlap), runs 360 ms
+  - opacity 0 → 1
+  - scale **0.96 → 1** (not 0.04)
+  - translateY **8 px → 0** (subtle rise from the launcher's position)
+  - no blur (the blur filter is expensive and adds nothing at this scale)
+  - easing: `cubic-bezier(0.22, 1, 0.36, 1)` (ease-out — feels like it "lands")
+
+### Closing (total ~320 ms, snappier than open)
+
+```text
+0 ms ─────────── 240 ms ─────── 320 ms
+│ panel fades + shrinks         │
+│              │ launcher fades back in
+```
+
+- **Panel out:** 240 ms, `cubic-bezier(0.4, 0, 1, 1)` (ease-in — it's leaving)
+  - opacity 1 → 0, scale 1 → 0.96, translateY 0 → 4 px
+- **Launcher in:** starts at 140 ms, runs 180 ms, `ease-out`
+
+Native UIs always close faster than they open — that's what makes closes feel "responsive" instead of "sluggish."
+
+### Why these numbers
+
+- **Material/Apple HIG sweet spot** for panel transitions is 200–400 ms. 1 s is movie-trailer slow for a UI affordance.
+- **Subtle scale (0.96)** + **small translate (8 px)** reads as "the panel grew out of the button" without the cartoonish zoom.
+- **Staggering by ~120 ms** gives the eye a clear focal point: launcher leaves, *then* panel arrives. No competing motion.
+- **Asymmetric open/close durations** match every polished app you've used (Linear, Raycast, Slack, macOS sheets).
+
+## What I'll change
+
+- `ChatWidget.tsx`
+  - Replace single `ANIM_MS = 1000` with separate open/close timings
+  - Drop `blur` from the transition (perf + visual noise)
+  - Change closed state from `scale-[0.04]` → `scale-95` + small translate
+  - Use different easing strings for enter vs exit
+- `ChatLauncher.tsx`
+  - Shorter fade (180 ms out / 180 ms in) with small delay on re-entry
+  - Use `ease-in` going out, `ease-out` coming back
+
+## What stays the same
+
+- Brand colors, button styling, sheen sweep, hover glow
+- Panel content, scroll behavior, focus management
+- `prefers-reduced-motion` still disables transitions
+- Escape-to-close, click-to-toggle
 
 ## Out of scope
 
-- No copy changes, no new starter prompts, no model/API changes.
-- Resize handle is removed (the floating chat is a fixed size — matches the pattern). If you want resize back later we can add a corner grabber.
-- Desktop "dock to side" toggle not included; can be added as a follow-up if needed.
+- Not adding a backdrop/overlay
+- Not changing the panel's position or dimensions
+- Not touching the CTA bubble animation
 
-## Files touched
-
-- `src/components/chat/ChatWidget.tsx` — rewrite render block, remove resize state.
-- `src/components/chat/ChatPanel.tsx` — tighten header, add close button prop, single-column prompts, rounded clipping.
-- (No other files.)
+After implementing, I'll give you the updated timing table so you can fine-tune any single number.

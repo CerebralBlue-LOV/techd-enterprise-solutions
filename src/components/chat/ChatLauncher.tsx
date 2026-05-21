@@ -14,15 +14,22 @@ export function ChatLauncher({ open, onClick }: Props) {
       onClick={onClick}
       aria-label={open ? "Close TechD chat" : "Open TechD chat"}
       aria-expanded={open}
+      style={{
+        transitionProperty: "opacity, transform, box-shadow",
+        transitionDuration: open ? "180ms" : "180ms",
+        transitionDelay: open ? "0ms" : "140ms",
+        transitionTimingFunction: open
+          ? "cubic-bezier(0.4, 0, 1, 1)"
+          : "cubic-bezier(0.22, 1, 0.36, 1)",
+      }}
       className={cn(
         "group fixed bottom-6 right-6 z-50 overflow-hidden",
         "flex h-14 w-14 items-center justify-center rounded-2xl",
         "bg-primary text-white shadow-lg",
-        "transition-[opacity,transform,box-shadow] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)]",
         "hover:shadow-[0_0_32px_4px_hsl(var(--primary)/0.45),0_8px_24px_-4px_hsl(var(--primary)/0.35)]",
-        "motion-reduce:transition-none",
+        "motion-reduce:!transition-none",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-        open && "pointer-events-none opacity-0 scale-75",
+        open && "pointer-events-none opacity-0 scale-90",
       )}
     >
       <span className="sr-only">{open ? "Close chat" : "Ask TechD"}</span>
