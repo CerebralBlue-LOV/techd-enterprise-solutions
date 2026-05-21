@@ -13,6 +13,7 @@ const ANCHORS = [
   { href: "#offerings",   label: "Offerings" },
   { href: "#methodology", label: "Methodology" },
   { href: "#coverage",    label: "Coverage" },
+  { href: "#cta",         label: "Contact" },
 ];
 
 export const ServiceHeroSection = ({ service }: Props) => {
@@ -24,6 +25,7 @@ export const ServiceHeroSection = ({ service }: Props) => {
       child={service.name}
       headline={extras?.headline ?? service.promise}
       lede={extras?.lede ?? service.description}
+      primaryCta={{ label: "Talk to an expert", to: "/contact" }}
       anchors={ANCHORS}
       figure={<ServicesFigure />}
     />
