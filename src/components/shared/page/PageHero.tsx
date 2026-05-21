@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
+import ScrollToSectionLink from "@shared/ScrollToSectionLink";
+import { Button } from "@ui/button";
 import PageHeroBackdrop from "./PageHeroBackdrop";
 
 export interface PageHeroAnchor {
   href: string;
   label: string;
+}
+
+export interface PageHeroCta {
+  label: string;
+  to: string;
 }
 
 interface Props {
