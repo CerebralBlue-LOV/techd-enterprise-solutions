@@ -1,5 +1,7 @@
-import { Sparkles, X } from "lucide-react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import techdMarkWhite from "@/assets/brand/techd-mark-white.png";
+
 
 interface Props {
   open: boolean;
