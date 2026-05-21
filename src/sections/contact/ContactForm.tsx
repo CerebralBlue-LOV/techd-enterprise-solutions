@@ -36,6 +36,7 @@ const TIMELINES = ["Now", "This quarter", "Exploring"] as const;
 
 const HEARD_ABOUT = [
   "Web search",
+  "AI assistant (ChatGPT, Claude, Gemini, Perplexity…)",
   "IBM",
   "Event",
   "Email",
