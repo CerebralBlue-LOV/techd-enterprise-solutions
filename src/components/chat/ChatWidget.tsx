@@ -55,7 +55,7 @@ export function ChatWidget() {
   return (
     <>
       <ChatCta visible={ctaVisible} onOpen={openChat} onDismiss={dismissCta} />
-      <ChatLauncher open={open} onClick={toggleChat} />
+      {!open && <ChatLauncher open={open} onClick={toggleChat} />}
 
       {open && (
         <div
@@ -63,20 +63,20 @@ export function ChatWidget() {
           aria-label="TechD AI assistant"
           aria-modal="false"
           className={cn(
-            "fixed z-40 flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-background",
+            "fixed z-50 flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-background origin-bottom-right",
             "shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.35),0_8px_24px_-12px_rgba(0,0,0,0.12)]",
-            "transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none",
+            "transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
             mounted
-              ? "opacity-100 translate-y-0 scale-100"
-              : "opacity-0 translate-y-2 scale-[0.96]",
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-[0.05]",
             isMobile
-              ? "left-3 right-3 bottom-20"
-              : "right-6 bottom-24 w-[400px]",
+              ? "left-3 right-3 bottom-6"
+              : "right-6 bottom-6 w-[400px]",
           )}
           style={
             isMobile
               ? { height: "calc(100vh - 6rem)" }
-              : { height: "min(640px, calc(100vh - 7rem))" }
+              : { height: "min(640px, calc(100vh - 4rem))" }
           }
         >
           <ChatPanel
@@ -86,21 +86,6 @@ export function ChatWidget() {
             onReset={clear}
             onClose={close}
           />
-
-          {/* Decorative cyan hook in bottom-right corner */}
-          <svg
-            aria-hidden
-            className="pointer-events-none absolute -bottom-1 -right-1 h-4 w-4 text-primary"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
-            <path
-              d="M2 14 Q 14 14 14 2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
         </div>
       )}
     </>
