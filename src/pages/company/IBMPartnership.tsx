@@ -68,7 +68,7 @@ const IBMPartnership = () => {
       <div className="border-t border-border" />
 
       {/* Credential block — dark panel */}
-      <section id="credential" className="section scroll-mt-24">
+      <section id="credentials" className="section scroll-mt-24">
         <SectionMarker page="Company / IBM Partnership" name="Credential" />
         <div className="container-page">
           <Reveal>
