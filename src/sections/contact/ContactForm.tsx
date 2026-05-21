@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowRight, ArrowUpRight, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -247,17 +247,9 @@ const ContactForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {HEARD_ABOUT.map((h) => {
-                            const isAi = h.startsWith("AI assistant");
-                            return (
-                              <SelectItem key={h} value={h}>
-                                <span className="inline-flex items-center gap-2">
-                                  {isAi && <Sparkles className="size-3.5 text-primary" />}
-                                  {h}
-                                </span>
-                              </SelectItem>
-                            );
-                          })}
+                          {HEARD_ABOUT.map((h) => (
+                            <SelectItem key={h} value={h}>{h}</SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </FormItem>
