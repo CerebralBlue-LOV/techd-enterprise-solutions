@@ -7,16 +7,19 @@ interface Props {
   industry: Industry;
 }
 
-const ANCHORS = [
-  { href: "#why", label: "Why TechD" },
-  { href: "#clients", label: "Clients" },
-  { href: "#solutions", label: "Solutions" },
-  { href: "#approach", label: "Approach" },
-  { href: "#outcomes", label: "Outcomes" },
-];
-
 export const IndustryHeroSection = ({ industry }: Props) => {
   const extras = INDUSTRIES_EXTRAS[industry.id];
+  const isPublicSector = industry.id === "public-sector";
+  const anchors = [
+    { href: "#why", label: "Why TechD" },
+    isPublicSector
+      ? { href: "#credentials", label: "Credentials" }
+      : { href: "#clients", label: "Clients" },
+    { href: "#solutions", label: "Solutions" },
+    { href: "#approach", label: "Approach" },
+    { href: "#outcomes", label: "Outcomes" },
+    { href: "#cta", label: "Contact" },
+  ];
   return (
     <PageHero
       pageLabel={`Industries / ${industry.name}`}
@@ -25,7 +28,8 @@ export const IndustryHeroSection = ({ industry }: Props) => {
       headline={extras?.headline ?? industry.outcome}
       lede={extras?.lede ?? industry.outcome}
       meta={industry.regulation}
-      anchors={ANCHORS}
+      primaryCta={{ label: "Talk to an expert", to: "/contact" }}
+      anchors={anchors}
       figure={<IndustriesFigure />}
     />
   );
