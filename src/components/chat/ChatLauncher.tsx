@@ -1,4 +1,4 @@
-import { Bot, X } from "lucide-react";
+import { Sparkles, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
