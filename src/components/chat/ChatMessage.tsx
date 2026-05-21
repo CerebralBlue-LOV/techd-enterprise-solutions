@@ -68,7 +68,8 @@ export function ChatMessage({ message }: Props) {
   return (
     <div className="flex items-start gap-2">
       <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 shadow-[0_2px_8px_-2px_hsl(var(--primary)/0.5)]">
-        <Bot className="h-3.5 w-3.5 text-white" aria-hidden />
+        <img src={techdMark} alt="" aria-hidden className="h-3.5 w-3.5 object-contain" />
+
       </div>
       <div className="flex max-w-[85%] flex-col gap-1.5">
         <div
