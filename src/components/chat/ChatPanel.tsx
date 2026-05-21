@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
-import { Bot, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
 import { ChatComposer } from "./ChatComposer";
 import type { Message } from "./types";
+import techdMarkWhite from "@/assets/brand/techd-mark-white.png";
+
 
 const STARTER_PROMPTS = [
   "What IBM products does TechD implement?",
