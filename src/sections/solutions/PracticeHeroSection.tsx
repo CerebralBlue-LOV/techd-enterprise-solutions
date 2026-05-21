@@ -11,6 +11,7 @@ const ANCHORS = [
   { href: "#products", label: "Products" },
   { href: "#industries", label: "Industries" },
   { href: "#approach", label: "Approach" },
+  { href: "#cta", label: "Contact" },
 ];
 
 export const PracticeHeroSection = ({ practice }: Props) => (
