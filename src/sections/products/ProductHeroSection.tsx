@@ -25,7 +25,7 @@ export const ProductHeroSection = ({ practice, product }: Props) => {
       : []),
     { href: "#use-cases", label: "Use cases" },
     { href: "#why-techd", label: "Why TechD" },
-    { href: "#talk", label: "Talk to an expert" },
+    { href: "#cta", label: "Talk to an expert" },
   ];
 
   return (
