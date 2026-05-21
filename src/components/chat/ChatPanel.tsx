@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, X } from "lucide-react";
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
@@ -20,9 +20,10 @@ interface Props {
   loading: boolean;
   onSend: (text: string) => void;
   onReset: () => void;
+  onClose?: () => void;
 }
 
-export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
+export function ChatPanel({ messages, loading, onSend, onReset, onClose }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,30 +33,49 @@ export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
   return (
     <div className="flex h-full flex-col bg-gradient-to-b from-muted/20 to-background">
       {/* Gradient header */}
-      <header className="relative bg-gradient-to-r from-primary to-primary/70 px-5 py-4 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
-        <div className="flex flex-col pr-16">
-          <h2 className="text-xl font-bold leading-tight text-white">TechD Assistant</h2>
-          <p className="text-sm font-light text-white/90">
+      <header className="relative bg-gradient-to-r from-primary to-primary/70 px-4 py-3 shadow-[inset_0_-1px_0_hsl(var(--primary)/0.4),0_2px_8px_-2px_hsl(var(--primary)/0.3)]">
+        <div className="flex flex-col pr-20">
+          <h2 className="text-base font-bold leading-tight text-white">TechD Assistant</h2>
+          <p className="text-xs font-light text-white/90">
             Powered by NeuralSeek
           </p>
         </div>
-        <button
-          type="button"
-          onClick={onReset}
-          aria-label="Reset conversation"
-          title="Reset conversation"
-          disabled={messages.length === 0}
-          className={cn(
-            "absolute right-10 top-4 rounded-sm text-white opacity-70 transition-opacity",
-            "hover:opacity-100",
-            "disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:opacity-30",
-            "focus:outline-none focus:ring-2 focus:ring-white/60 focus:ring-offset-2 focus:ring-offset-transparent",
+        <div className="absolute right-3 top-3 flex items-center gap-1">
+          <button
+            type="button"
+            onClick={onReset}
+            aria-label="Reset conversation"
+            title="Reset conversation"
+            disabled={messages.length === 0}
+            className={cn(
+              "rounded-sm p-1 text-white opacity-70 transition-opacity",
+              "hover:opacity-100",
+              "disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:opacity-30",
+              "focus:outline-none focus:ring-2 focus:ring-white/60",
+            )}
+          >
+            <RotateCcw className="h-4 w-4" aria-hidden />
+            <span className="sr-only">Reset conversation</span>
+          </button>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close chat"
+              title="Close chat"
+              className={cn(
+                "rounded-sm p-1 text-white opacity-80 transition-opacity",
+                "hover:opacity-100",
+                "focus:outline-none focus:ring-2 focus:ring-white/60",
+              )}
+            >
+              <X className="h-4 w-4" aria-hidden />
+              <span className="sr-only">Close chat</span>
+            </button>
           )}
-        >
-          <RotateCcw className="h-4 w-4" aria-hidden />
-          <span className="sr-only">Reset conversation</span>
-        </button>
+        </div>
       </header>
+
 
       <ScrollArea className="flex-1 px-4 py-5">
         {messages.length === 0 ? (
@@ -75,7 +95,7 @@ export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
             </div>
 
             {/* Starter prompts */}
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2">
               {STARTER_PROMPTS.map((text) => (
                 <button
                   key={text}
