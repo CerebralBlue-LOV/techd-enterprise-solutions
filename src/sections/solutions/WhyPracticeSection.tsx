@@ -59,7 +59,7 @@ export const WhyPracticeSection = ({ practice }: Props) => {
 
   return (
     <section
-      id="why"
+      id="why-practice"
       className="relative py-14 md:py-20 scroll-mt-24 border-t border-border bg-background overflow-hidden"
     >
       <SectionMarker page={`Solutions / ${practice.name}`} name="Why TechD" />
