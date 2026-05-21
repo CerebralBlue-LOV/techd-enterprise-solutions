@@ -39,7 +39,7 @@ const IndustryPage = ({ industryId }: Props) => {
       )}
       <SolutionsForIndustrySection industry={industry} />
       <IndustryApproachSection industry={industry} />
-      <IndustryOutcomesSection industry={industry} />
+      
       <IndustryCrossLinksSection industry={industry} />
       <IndustryCtaSection industry={industry} />
     </Layout>
