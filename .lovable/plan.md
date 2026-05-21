@@ -1,63 +1,131 @@
-
 ## Goal
 
-Add a dismissible "Ask me" speech bubble next to the chat launcher that nudges first-time visitors without becoming annoying — desktop only, route-aware, with smart cooldown logic.
+Two parallel sweeps, reported as findings only (no code changes in this pass):
 
-## What gets built
+1. **Link & redirect audit** — verify every route resolves, every internal link points somewhere real, every redirect lands on the intended target.
+2. **Section ID coverage** — every `<section>` across every page gets a stable, kebab-case `id` (like `id="hero"` on the home hero), so sections are addressable for deep-links, analytics, anchor nav, and QA.
 
-### 1. New component: `src/components/chat/ChatCta.tsx`
+Output is a single report (Markdown) saved to `docs/audit/site-link-and-section-audit.md`. No source files in `src/` are modified.
 
-A small speech-bubble card rendered to the left of the launcher.
+---
 
-- Copy: **"Not sure where to start? Ask me."** (heading) + tiny subline **"Senior practitioner, 1 business day."**
-- Dismiss `×` in the top-right corner.
-- Click the body → opens the chat (same handler as the launcher).
-- Visual: rounded-2xl, `bg-background border border-border shadow-lg`, primary-tinted left edge, little tail/triangle pointing at the launcher.
-- Mount animation: fade + 4px slide-up, 250ms. Respects `prefers-reduced-motion`.
-- Position: `fixed bottom-24 right-6` (sits above the 56px launcher with 12px gap).
-- Mobile (`<768px`): component returns `null`.
+## Scope
 
-### 2. New hook: `src/components/chat/useChatCta.ts`
+**Pages in scope** (from `src/app/routes.tsx`):
 
-Encapsulates all visibility logic so `ChatWidget` stays simple.
+- `/` Home
+- `/solutions/*` — ai-generative, data-analytics, automation-finops, security-compliance (+ legacy redirects + `/solutions/:practice/:product`)
+- `/services/*` — advisory, implementation, managed-services, training
+- `/industries/*` — healthcare, media-entertainment, energy-utilities, higher-education, public-sector, financial-services, manufacturing (+ insurance → financial-services redirect)
+- `/resources/*` — case-studies, blog, webinars, events (+ `:slug` detail pages)
+- `/company/*` — about, ibm-partnership, delivery-methodology
+- `/contact`
+- `*` NotFound
 
-State shape persisted in `localStorage` under key `techd:chat-cta:v1`:
+**Out of scope:** lab pages (`/admin-lab`, `/logo-lab`, `/figure-lab`, `/section-lab`, `/intro-lab`).
 
-```ts
-{ dismissedAt: number | null, opened: boolean }
+---
+
+## Part 1 — Link & redirect audit
+
+### What gets checked
+
+For each route above:
+
+1. **Route resolves** — the path defined in `routes.tsx` mounts the expected component, no console errors.
+2. **Redirects land correctly** — every `<Navigate>` in `routes.tsx` (parent → first child, legacy slug → current slug, removed product → parent practice) ends at a real, rendering page.
+3. **Internal links on the page** — every `<Link to=…>`, `<NavLink>`, and `href` to an internal path resolves to a route in `routes.tsx`. Flag any link to a removed/renamed path.
+4. **CTAs** — every "Talk to an expert" button points to `/contact` and uses the `btn-glow` standard. Flag deviations.
+5. **Nav + footer** — `site.ts` nav items and footer links match the actual route table.
+6. **External links** — `target="_blank"` links have `rel="noopener noreferrer"`. Flag missing.
+7. **Anchors** — any `#section` link points to an id that exists on the target page (becomes much more meaningful after Part 2).
+
+### Method
+
+- Static pass: `rg` across `src/` for `to="`, `href="`, `Navigate to`, then cross-reference against `routes.tsx`.
+- Render pass: for each route, mount in the dev preview, watch console, click each visible internal link, confirm landing route.
+- Redirect pass: hit every legacy path listed in `routes.tsx` directly, confirm final URL + rendered page.
+
+### Deliverable per route
+
+A row in the report:
+
+```text
+Route                          Status   Issues
+/solutions/ai-generative       OK       —
+/solutions/ai                  REDIR    → /solutions/ai-generative ✓
+/industries/insurance          REDIR    → /industries/financial-services ✓
+/resources/blog/some-slug      BROKEN   Link in BlogSection points to /blog/foo (404)
 ```
 
-Inputs: `{ open: boolean, isMobile: boolean }` (the current chat state + viewport).
-Output: `{ visible: boolean, dismiss: () => void, markOpened: () => void }`.
+---
 
-Show rules (all must be true):
-1. Not mobile.
-2. Chat is not currently open.
-3. `opened` flag is false (never opened the chat on this device).
-4. `dismissedAt` is null or older than 7 days.
-5. Current route is not `/contact`.
-6. Trigger fired: **scrolled past 60% of viewport height** OR **12s of idle** (no scroll/mousemove/keydown), whichever comes first.
+## Part 2 — Section IDs on every page
 
-Cleanup: trigger listeners detach as soon as `visible` flips true. Route change resets the trigger (so it re-arms on the next page) but never resets the persistence flags.
+### Standard
 
-### 3. Wire into `ChatWidget.tsx`
+- Every `<section>` element rendered on a page gets `id="<kebab-case-name>"`.
+- IDs are **page-local unique** and **semantic** (describe what the section is, not its position): `hero`, `why-techd`, `solutions-grid`, `industries-served`, `methodology`, `cta`, `cross-links`, etc.
+- Reuse existing names where they already exist (27 of 42 section files already have ids — keep those, normalize anything inconsistent).
+- IDs are stable contracts — once shipped, do not rename without a redirect plan for any anchor links.
 
-- Call `useChatCta({ open, isMobile })`.
-- Call `markOpened()` inside the existing `setOpen(true)` path (both via launcher click and via the CTA bubble click).
-- Render `<ChatCta visible={visible} onOpen={() => { markOpened(); setOpen(true); }} onDismiss={dismiss} />` next to `<ChatLauncher />`.
+### What gets audited
 
-### 4. No changes to `ChatLauncher`, `ChatPanel`, content files, or routing.
+For each page, list its sections in render order with their current id (or `MISSING`) and the proposed id. Example:
 
-## Technical notes
+```text
+Page: /services/advisory
+  ServiceHeroSection                MISSING            → hero
+  ServiceWhySection                 why-advisory       ✓ keep
+  ServiceOfferingsSection           offerings          ✓ keep
+  ServiceMethodologySection         methodology        ✓ keep
+  ServiceProductCoverageSection     product-coverage   ✓ keep
+  ServiceSpotlightSection           spotlight          ✓ keep
+  ServiceCrossLinksSection          cross-links        ✓ keep
+  ServiceCtaSection                 MISSING            → cta
+```
 
-- All colors via Tailwind tokens (`bg-background`, `border-border`, `text-secondary`, `text-primary`).
-- Roboto Condensed (inherited).
-- `localStorage` access wrapped in try/catch (Safari private mode, SSR safety — although this app is client-only).
-- Route detection: `useLocation()` from `react-router-dom`.
-- No new dependencies.
+### Coverage gap (already known from a quick scan)
 
-## Out of scope
+- 42 section components total, 27 currently have an `id`. ~15 sections are missing one and will be flagged with a proposed id.
+- Notable misses include `ServiceHeroSection`, `ServiceCtaSection`, `PracticeHeroSection`, `PracticeCtaSection`, `ApproachSection`, several industry sections, contact sections — confirmed in the final report.
 
-- Analytics events for "shown / dismissed / clicked" (no analytics layer wired yet).
-- A/B testing different copy.
-- Server-side personalization.
+### Naming convention (proposed, for review)
+
+| Section kind | Proposed id |
+|---|---|
+| Page hero | `hero` |
+| Trust strip / logos | `logos` |
+| Why TechD / Why <X> | `why-techd`, `why-<practice>`, `why-<industry>` |
+| Capabilities / offerings | `offerings`, `capabilities` |
+| Products / solutions grid | `products`, `solutions-grid` |
+| Industries served | `industries-served` |
+| Methodology / approach | `methodology`, `approach` |
+| Case study spotlight | `spotlight` |
+| Cross-links / related | `cross-links` |
+| Final CTA band | `cta` |
+| Contact form | `contact-form` |
+| Contact info | `contact-info` |
+
+---
+
+## Deliverable
+
+A single Markdown report at `docs/audit/site-link-and-section-audit.md` with:
+
+1. **Summary table** — pages audited, link issues found, sections missing ids.
+2. **Link audit** — one section per route, listing broken links, wrong redirects, missing `rel="noopener"`, non-standard CTAs.
+3. **Redirect map check** — table of every `<Navigate>` in `routes.tsx`, source → target → ✓/✗.
+4. **Section ID inventory** — one table per page, render-order list of sections with current id, proposed id, and action (`keep` / `add` / `rename`).
+5. **Recommended follow-up PRs** — grouped fixes (e.g. "add hero+cta ids to all service pages", "fix 3 broken blog links"), each small enough to land independently.
+
+No source files changed in this pass. Once you approve the report, the follow-up implementation PRs become the next plan(s).
+
+---
+
+## Out of scope (for this plan)
+
+- Editing components to add the ids (that's the follow-up PR).
+- External-link reachability checks (HTTP HEAD on third-party URLs) — only formatting + `rel` checks.
+- SEO/meta audit, accessibility audit, performance — separate workstreams.
+- Lab pages.
