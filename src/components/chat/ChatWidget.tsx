@@ -7,7 +7,7 @@ import { useChatCta } from "./useChatCta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
-const ANIM_MS = 420;
+const ANIM_MS = 500;
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
