@@ -94,6 +94,7 @@ const ContactForm = () => {
       role: "",
       phone: "",
       heardAbout: undefined,
+      heardAboutOther: "",
       area: undefined as unknown as FormValues["area"],
       timeline: undefined,
       message: "",
