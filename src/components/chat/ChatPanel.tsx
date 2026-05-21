@@ -63,8 +63,9 @@ export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
             {/* Intro card */}
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-border/60 bg-white p-5 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/70 shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.5)]">
-                <Bot className="h-6 w-6 text-white" aria-hidden />
+                <img src={techdMarkWhite} alt="" aria-hidden className="h-7 w-7 object-contain" />
               </div>
+
               <h3 className="text-lg font-bold text-secondary">
                 Hi — I'm here to assist you
               </h3>
