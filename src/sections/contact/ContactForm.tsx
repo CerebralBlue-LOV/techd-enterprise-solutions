@@ -56,7 +56,7 @@ const schema = z.object({
     .max(40)
     .optional()
     .or(z.literal("")),
-  heardAbout: z.enum(HEARD_ABOUT).optional(),
+  heardAbout: z.enum(HEARD_ABOUT, { required_error: "Required" }),
   heardAboutOther: z.string().trim().max(120).optional().or(z.literal("")),
   area: z.enum(AREAS, { required_error: "Pick an area" }),
   timeline: z.enum(TIMELINES).optional(),
@@ -234,8 +234,8 @@ const ContactForm = () => {
                   name="heardAbout"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-muted-foreground font-normal">
-                        How did you hear about us?<OptionalMark />
+                      <FormLabel>
+                        How did you hear about us?<RequiredMark />
                       </FormLabel>
                       <Select
                         value={field.value}
