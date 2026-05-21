@@ -17,7 +17,6 @@ export const IndustryHeroSection = ({ industry }: Props) => {
       : { href: "#clients", label: "Clients" },
     { href: "#solutions", label: "Solutions" },
     { href: "#approach", label: "Approach" },
-    { href: "#outcomes", label: "Outcomes" },
     { href: "#cta", label: "Contact" },
   ];
   return (
