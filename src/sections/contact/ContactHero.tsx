@@ -8,7 +8,7 @@ const HeroParticleField = lazy(
 );
 
 const ContactHero = () => (
-  <section className="relative overflow-hidden border-b border-border">
+  <section id="hero" className="relative overflow-hidden border-b border-border scroll-mt-24">
     <SectionMarker page="Contact" name="Hero" />
     <HeroBackdrop />
     <Suspense fallback={null}>

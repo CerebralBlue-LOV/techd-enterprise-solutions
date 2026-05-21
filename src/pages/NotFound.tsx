@@ -15,7 +15,7 @@ const NotFound = () => {
   return (
     <Layout>
       <SEO title="Page not found — TechD" description="The page you're looking for doesn't exist." />
-      <section className="relative overflow-hidden">
+      <section id="not-found" className="relative overflow-hidden scroll-mt-24">
         <GeometricAccent />
         <div className="container-page relative grid place-items-center text-center py-32 md:py-44">
           <p className="eyebrow">404</p>

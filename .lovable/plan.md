@@ -1,131 +1,106 @@
-## Goal
+# Plan — Add missing section IDs + prune the audit doc
 
-Two parallel sweeps, reported as findings only (no code changes in this pass):
+Scope: only the §5 / §7 ID work from `docs/audit/site-link-and-section-audit.md`. PR-1 (link fixes) is already shipped and will be removed from the doc. No copy or visual changes — just adding `id="..."` (and a `scroll-mt-24` where the section is a sticky-anchor target) to root `<section>` elements per the §6 naming convention.
 
-1. **Link & redirect audit** — verify every route resolves, every internal link points somewhere real, every redirect lands on the intended target.
-2. **Section ID coverage** — every `<section>` across every page gets a stable, kebab-case `id` (like `id="hero"` on the home hero), so sections are addressable for deep-links, analytics, anchor nav, and QA.
+## Naming convention (locked from §6)
 
-Output is a single report (Markdown) saved to `docs/audit/site-link-and-section-audit.md`. No source files in `src/` are modified.
+`hero`, `logos`, `why-techd | why-practice | why-industry | why-service`, `products`, `solutions`, `industries`, `approach | methodology`, `spotlight`, `clients | credentials`, `cross-links | related`, `offerings`, `capabilities`, `cta`, `contact-form | contact-info | map | locations`, `list`, `body`, `not-found`. Page-local unique, kebab-case.
 
----
+## Step 1 — Heroes (4 files)
 
-## Scope
+Add `id="hero"` to the root `<section>` of:
+- `src/sections/solutions/PracticeHeroSection.tsx`
+- `src/sections/services/ServiceHeroSection.tsx`
+- `src/sections/industries/IndustryHeroSection.tsx`
+- `src/sections/products/ProductHeroSection.tsx`
 
-**Pages in scope** (from `src/app/routes.tsx`):
+## Step 2 — Page-local final CTAs (3 files)
 
-- `/` Home
-- `/solutions/*` — ai-generative, data-analytics, automation-finops, security-compliance (+ legacy redirects + `/solutions/:practice/:product`)
-- `/services/*` — advisory, implementation, managed-services, training
-- `/industries/*` — healthcare, media-entertainment, energy-utilities, higher-education, public-sector, financial-services, manufacturing (+ insurance → financial-services redirect)
-- `/resources/*` — case-studies, blog, webinars, events (+ `:slug` detail pages)
-- `/company/*` — about, ibm-partnership, delivery-methodology
-- `/contact`
-- `*` NotFound
+Add `id="cta"` + `scroll-mt-24` to:
+- `src/sections/solutions/PracticeCtaSection.tsx`
+- `src/sections/services/ServiceCtaSection.tsx`
+- `src/sections/industries/IndustryCtaSection.tsx`
 
-**Out of scope:** lab pages (`/admin-lab`, `/logo-lab`, `/figure-lab`, `/section-lab`, `/intro-lab`).
+(Product CTA already inherits `cta` from `PageFinalCtaSection`.)
 
----
+## Step 3 — Remaining body sections on solutions / services / industries
 
-## Part 1 — Link & redirect audit
+Solutions practice pages:
+- `WhyPracticeSection` → `why-practice`
+- `ProductsGridSection` → `products`
+- `ApproachSection` → `approach`
 
-### What gets checked
+Services pages:
+- `ServiceWhySection` → `why-service`
+- `ServiceSpotlightSection` → `spotlight`
+- `ServiceMethodologySection` → `methodology`
+- `ServiceCrossLinksSection` → `cross-links`
 
-For each route above:
+Industries pages:
+- `WhyIndustrySection` → `why-industry`
+- `IndustryApproachSection` → `approach`
+- `IndustryCrossLinksSection` → `cross-links`
 
-1. **Route resolves** — the path defined in `routes.tsx` mounts the expected component, no console errors.
-2. **Redirects land correctly** — every `<Navigate>` in `routes.tsx` (parent → first child, legacy slug → current slug, removed product → parent practice) ends at a real, rendering page.
-3. **Internal links on the page** — every `<Link to=…>`, `<NavLink>`, and `href` to an internal path resolves to a route in `routes.tsx`. Flag any link to a removed/renamed path.
-4. **CTAs** — every "Talk to an expert" button points to `/contact` and uses the `btn-glow` standard. Flag deviations.
-5. **Nav + footer** — `site.ts` nav items and footer links match the actual route table.
-6. **External links** — `target="_blank"` links have `rel="noopener noreferrer"`. Flag missing.
-7. **Anchors** — any `#section` link points to an id that exists on the target page (becomes much more meaningful after Part 2).
+Product detail:
+- `ProductRelatedSection` → `related`
 
-### Method
+## Step 4 — Home + Contact
 
-- Static pass: `rg` across `src/` for `to="`, `href="`, `Navigate to`, then cross-reference against `routes.tsx`.
-- Render pass: for each route, mount in the dev preview, watch console, click each visible internal link, confirm landing route.
-- Redirect pass: hit every legacy path listed in `routes.tsx` directly, confirm final URL + rendered page.
+Home:
+- `src/sections/home/LogoStripSection.tsx` → `id="logos"`
 
-### Deliverable per route
+Contact (`src/sections/contact/*`):
+- `ContactHero` → `hero`
+- `ContactForm` → `contact-form`
+- `ContactInfo` → `contact-info`
+- `ContactMap` → `map`
+- `ContactLocationSection` → `locations`
 
-A row in the report:
+## Step 5 — Company body sections + Resources + NotFound
 
-```text
-Route                          Status   Issues
-/solutions/ai-generative       OK       —
-/solutions/ai                  REDIR    → /solutions/ai-generative ✓
-/industries/insurance          REDIR    → /industries/financial-services ✓
-/resources/blog/some-slug      BROKEN   Link in BlogSection points to /blog/foo (404)
-```
+Company:
+- `About.tsx` inline sections → `hero`, `story`, `leadership` (keep existing `practices`; `methodology` and `cta` already set)
+- `IBMPartnership.tsx` inline sections in render order → `hero`, `credentials`, `practices`, `quick-start` (`cta` already default)
+- `DeliveryMethodology.tsx` → add `hero` (keep existing `stages`, `commitment`, default `cta`)
 
----
+Resources list pages — add an id to the local list `<section>` on each:
+- `CaseStudies.tsx` → `case-studies`
+- `Blog.tsx` → `articles`
+- `Webinars.tsx` → `webinars`
+- `Events.tsx` → `events`
 
-## Part 2 — Section IDs on every page
+Resources detail pages (`CaseStudyDetail`, `BlogDetail`, `WebinarDetail`, `EventDetail`) — body `<section>` → `body`.
 
-### Standard
+`NotFound.tsx` → `not-found`.
 
-- Every `<section>` element rendered on a page gets `id="<kebab-case-name>"`.
-- IDs are **page-local unique** and **semantic** (describe what the section is, not its position): `hero`, `why-techd`, `solutions-grid`, `industries-served`, `methodology`, `cta`, `cross-links`, etc.
-- Reuse existing names where they already exist (27 of 42 section files already have ids — keep those, normalize anything inconsistent).
-- IDs are stable contracts — once shipped, do not rename without a redirect plan for any anchor links.
+## Step 6 — Prune `docs/audit/site-link-and-section-audit.md`
 
-### What gets audited
+After the code edits land, rewrite the doc so it only describes work still outstanding. Specifically:
 
-For each page, list its sections in render order with their current id (or `MISSING`) and the proposed id. Example:
+- Delete §1 summary rows for "Broken internal links", "External `target="_blank"` missing `noopener`", and "Talk to an expert CTAs not following standard" (all 0 now). Update "Section components with explicit `id`" count to 42 and "missing" count to 0.
+- Delete §4 entirely (all three link issues resolved).
+- Delete §5 per-page rows where the action was completed (every row marked **add** becomes nothing — leave only the table header note saying coverage is complete, or drop the per-page tables in favor of one line: "All section components now carry a kebab-case `id` per §6.").
+- Keep §2 (redirect map), §3 (route inventory), and §6 (naming convention — now the enforced rule).
+- Delete §7 items 1–6 once each is done; the section becomes empty and can be removed.
+- Update the top-of-file note: "Read-only audit" → "Audit + remediation log. All link issues and section-ID gaps from the original audit have been resolved. This file is now the canonical naming convention reference."
 
-```text
-Page: /services/advisory
-  ServiceHeroSection                MISSING            → hero
-  ServiceWhySection                 why-advisory       ✓ keep
-  ServiceOfferingsSection           offerings          ✓ keep
-  ServiceMethodologySection         methodology        ✓ keep
-  ServiceProductCoverageSection     product-coverage   ✓ keep
-  ServiceSpotlightSection           spotlight          ✓ keep
-  ServiceCrossLinksSection          cross-links        ✓ keep
-  ServiceCtaSection                 MISSING            → cta
-```
+The rule per the user: do **not** mark items as "completed" — just remove them. The remaining doc should read as if those problems never existed, leaving only the convention and the still-valid route/redirect inventories.
 
-### Coverage gap (already known from a quick scan)
+## Out of scope
 
-- 42 section components total, 27 currently have an `id`. ~15 sections are missing one and will be flagged with a proposed id.
-- Notable misses include `ServiceHeroSection`, `ServiceCtaSection`, `PracticeHeroSection`, `PracticeCtaSection`, `ApproachSection`, several industry sections, contact sections — confirmed in the final report.
+- No visual changes, no copy changes, no new components.
+- No edits to `src/components/ui/`.
+- No `scroll-mt-*` adjustments beyond what's needed to make a newly-anchored section land below the sticky header.
+- No new routes, no nav changes.
 
-### Naming convention (proposed, for review)
+## Verification
 
-| Section kind | Proposed id |
-|---|---|
-| Page hero | `hero` |
-| Trust strip / logos | `logos` |
-| Why TechD / Why <X> | `why-techd`, `why-<practice>`, `why-<industry>` |
-| Capabilities / offerings | `offerings`, `capabilities` |
-| Products / solutions grid | `products`, `solutions-grid` |
-| Industries served | `industries-served` |
-| Methodology / approach | `methodology`, `approach` |
-| Case study spotlight | `spotlight` |
-| Cross-links / related | `cross-links` |
-| Final CTA band | `cta` |
-| Contact form | `contact-form` |
-| Contact info | `contact-info` |
+After edits:
+1. Spot-check 3 routes in the preview by appending `#hero`, `#cta`, and one body anchor (e.g. `/services/advisory#methodology`, `/industries/healthcare#why-industry`, `/contact#contact-form`) — page should scroll to the correct band.
+2. `rg "id=\"" src/sections src/pages` should show every section component with an explicit `id`.
+3. Re-read the pruned audit doc top-to-bottom to confirm no completed item remains.
 
----
+## Risks
 
-## Deliverable
-
-A single Markdown report at `docs/audit/site-link-and-section-audit.md` with:
-
-1. **Summary table** — pages audited, link issues found, sections missing ids.
-2. **Link audit** — one section per route, listing broken links, wrong redirects, missing `rel="noopener"`, non-standard CTAs.
-3. **Redirect map check** — table of every `<Navigate>` in `routes.tsx`, source → target → ✓/✗.
-4. **Section ID inventory** — one table per page, render-order list of sections with current id, proposed id, and action (`keep` / `add` / `rename`).
-5. **Recommended follow-up PRs** — grouped fixes (e.g. "add hero+cta ids to all service pages", "fix 3 broken blog links"), each small enough to land independently.
-
-No source files changed in this pass. Once you approve the report, the follow-up implementation PRs become the next plan(s).
-
----
-
-## Out of scope (for this plan)
-
-- Editing components to add the ids (that's the follow-up PR).
-- External-link reachability checks (HTTP HEAD on third-party URLs) — only formatting + `rel` checks.
-- SEO/meta audit, accessibility audit, performance — separate workstreams.
-- Lab pages.
+- Two pages compose multiple inline `<section>` blocks (`About.tsx`, `IBMPartnership.tsx`). Adding ids requires reading the file and matching render order — low risk but needs care to avoid duplicate ids.
+- A few sections wrap their root in a shared component (`DarkSection`, `PageFinalCtaSection`) that already accepts an `id` prop — use the prop, don't add a second wrapper `<div>`.

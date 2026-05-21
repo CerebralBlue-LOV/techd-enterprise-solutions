@@ -55,7 +55,7 @@ export const ServiceWhySection = ({ service }: Props) => {
 
   return (
     <section
-      id="why"
+      id="why-service"
       className="relative py-14 md:py-20 scroll-mt-24 border-t border-border bg-background overflow-hidden"
     >
       <SectionMarker page={`Services / ${service.name}`} name="Why TechD" />

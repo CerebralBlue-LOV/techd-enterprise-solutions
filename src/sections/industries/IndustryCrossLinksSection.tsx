@@ -14,7 +14,7 @@ const serviceHref = (id: string) =>
   id === "managed" ? "/services/managed-services" : `/services/${id}`;
 
 export const IndustryCrossLinksSection = ({ industry }: Props) => (
-  <DarkSection id="services" intensity="soft" className="py-14 md:py-20 scroll-mt-24">
+  <DarkSection id="cross-links" intensity="soft" className="py-14 md:py-20 scroll-mt-24">
     <SectionMarker page={`Industries / ${industry.name}`} name="Services" />
     <div className="container-page">
       <Reveal>

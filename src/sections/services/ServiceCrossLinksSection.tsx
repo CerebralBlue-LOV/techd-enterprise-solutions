@@ -23,7 +23,7 @@ export const ServiceCrossLinksSection = ({ service }: Props) => {
   if (!links.length) return null;
 
   return (
-    <DarkSection id="related" intensity="soft" className="py-14 md:py-20 scroll-mt-24">
+    <DarkSection id="cross-links" intensity="soft" className="py-14 md:py-20 scroll-mt-24">
       <SectionMarker page={`Services / ${service.name}`} name="Related" />
       <div className="container-page">
         <Reveal>

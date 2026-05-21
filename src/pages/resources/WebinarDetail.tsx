@@ -55,7 +55,7 @@ const WebinarDetail = () => {
       />
 
       {webinar.body && webinar.body.length > 0 && (
-        <section id="content" className="section">
+        <section id="body" className="section">
           <SectionMarker page="Resources / Webinars" name="Detail Body" />
           <div className="container-page">
             <Reveal>

@@ -54,7 +54,7 @@ export const WhyIndustrySection = ({ industry }: Props) => {
 
   return (
     <section
-      id="why"
+      id="why-industry"
       className="relative py-14 md:py-20 scroll-mt-24 border-t border-border bg-background overflow-hidden"
     >
       <SectionMarker page={`Industries / ${industry.name}`} name="Why TechD" />

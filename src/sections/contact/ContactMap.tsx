@@ -69,8 +69,9 @@ const ContactMap = ({ className }: Props = {}) => {
 
   return (
     <div
+      id="map"
       className={cn(
-        "relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-border bg-muted/20",
+        "relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-border bg-muted/20 scroll-mt-24",
         className,
       )}
     >

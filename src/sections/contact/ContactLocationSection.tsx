@@ -4,7 +4,7 @@ import SectionHeading from "@shared/SectionHeading";
 import ContactMap from "./ContactMap";
 
 const ContactLocationSection = () => (
-  <section className="border-y border-border">
+  <section id="locations" className="border-y border-border scroll-mt-24">
     <SectionMarker page="Contact" name="Location" />
     <div className="container-page pt-24 md:pt-28 pb-20 md:pb-24 space-y-12">
       <Reveal>
