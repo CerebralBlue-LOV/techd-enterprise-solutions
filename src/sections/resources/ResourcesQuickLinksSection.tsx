@@ -43,7 +43,7 @@ export const ResourcesQuickLinksSection = () => (
             to="/contact"
             className="text-xs font-bold uppercase tracking-wider text-primary hover:underline shrink-0"
           >
-            Talk to an expert
+            Contact us
           </Link>
         </div>
       </Reveal>
