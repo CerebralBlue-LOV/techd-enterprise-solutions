@@ -10,10 +10,10 @@ import SectionMarker from "@shared/SectionMarker";
  *          @content/site (CUSTOMERS).
  */
 export const LogoStripSection = () => (
-  <div id="clients">
+  <section id="logos" className="scroll-mt-24">
     <SectionMarker page="Home" name="Customer Logo Strip" />
     <LogoStrip />
-  </div>
+  </section>
 );
 
 export default LogoStripSection;
