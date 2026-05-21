@@ -4,10 +4,6 @@ import { cn } from "@/lib/utils";
 import type { Message } from "./types";
 import techdMark from "@/assets/brand/techd-mark-white.png";
 
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { cn } from "@/lib/utils";
-import type { Message } from "./types";
 
 const markdownComponents = {
   p: ({ node, ...props }: any) => <p className="mb-2 last:mb-0" {...props} />,
