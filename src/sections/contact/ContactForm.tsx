@@ -56,7 +56,7 @@ const schema = z.object({
     .max(40)
     .optional()
     .or(z.literal("")),
-  heardAbout: z.enum(HEARD_ABOUT).optional(),
+  heardAbout: z.enum(HEARD_ABOUT, { required_error: "Required" }),
   heardAboutOther: z.string().trim().max(120).optional().or(z.literal("")),
   area: z.enum(AREAS, { required_error: "Pick an area" }),
   timeline: z.enum(TIMELINES).optional(),
