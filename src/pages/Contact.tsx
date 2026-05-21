@@ -6,6 +6,7 @@ import ContactHero from "@sections/contact/ContactHero";
 import ContactInfo from "@sections/contact/ContactInfo";
 import ContactForm from "@sections/contact/ContactForm";
 import ContactLocationSection from "@sections/contact/ContactLocationSection";
+import LogoStripSection from "@sections/home/LogoStripSection";
 
 const Contact = () => (
   <Layout>
