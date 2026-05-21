@@ -70,12 +70,14 @@ export const PageHero = ({
   lede,
   meta,
   anchors,
+  primaryCta,
   figure,
   minHeight = "min-h-[70vh]",
   maxWidth = "max-w-4xl",
   headlineSize = "text-4xl md:text-5xl lg:text-6xl",
   id = "hero",
 }: Props) => {
+  const { pathname } = useLocation();
   const sectionRef = useRef<HTMLElement | null>(null);
   const [cursor, setCursor] = useState<{ x: number; y: number } | null>(null);
   const rafRef = useRef<number | null>(null);
