@@ -60,7 +60,7 @@ export function ChatWidget() {
   return (
     <>
       <ChatCta visible={ctaVisible} onOpen={openChat} onDismiss={dismissCta} />
-      {!rendered && <ChatLauncher open={open} onClick={toggleChat} />}
+      {!rendered || true ? <ChatLauncher open={open} onClick={toggleChat} /> : null}
 
       {rendered && (
         <div
