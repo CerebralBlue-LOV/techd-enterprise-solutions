@@ -50,12 +50,14 @@ const About = () => {
         headline="An IBM Gold partner built for regulated enterprise delivery."
         lede="Founded 2009 in Miami. Practitioner-led across the full watsonx, data, automation, and security portfolio — for healthcare, insurance, public sector, media, higher education, and energy clients."
         figure={<CompanyFigure />}
+        primaryCta={{ label: "Talk to an expert", to: "/contact" }}
         anchors={[
           { href: "#story", label: "Story" },
           { href: "#practices", label: "Practices" },
           { href: "#leadership", label: "Leadership" },
           { href: "#industries", label: "Industries" },
           { href: "#methodology", label: "Methodology" },
+          { href: "#cta", label: "Contact" },
         ]}
       />
 
