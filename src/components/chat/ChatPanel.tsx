@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
-import { Bot, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { ScrollArea } from "@ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./ChatMessage";
 import { ChatComposer } from "./ChatComposer";
 import type { Message } from "./types";
+import techdMarkWhite from "@/assets/brand/techd-mark-white.png";
+
 
 const STARTER_PROMPTS = [
   "What IBM products does TechD implement?",
@@ -61,8 +63,9 @@ export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
             {/* Intro card */}
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-border/60 bg-white p-5 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/70 shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.5)]">
-                <Bot className="h-6 w-6 text-white" aria-hidden />
+                <img src={techdMarkWhite} alt="" aria-hidden className="h-7 w-7 object-contain" />
               </div>
+
               <h3 className="text-lg font-bold text-secondary">
                 Hi — I'm here to assist you
               </h3>
@@ -101,8 +104,9 @@ export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
             {loading && (
               <div className="flex items-start gap-2">
                 <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 shadow-[0_2px_8px_-2px_hsl(var(--primary)/0.5)]">
-                  <Bot className="h-3.5 w-3.5 text-white" aria-hidden />
+                  <img src={techdMarkWhite} alt="" aria-hidden className="h-4 w-4 object-contain" />
                 </div>
+
                 <div className="rounded-2xl rounded-bl-sm border border-border/60 bg-white px-4 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                   <div className="flex gap-1.5">
                     {([0, 200, 400] as const).map((delay, i) => (
