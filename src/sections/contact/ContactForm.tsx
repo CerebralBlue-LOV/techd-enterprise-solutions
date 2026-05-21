@@ -75,7 +75,7 @@ const SECTION_EYEBROW =
   "flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
 
 const RequiredMark = () => (
-  <span aria-hidden="true" className="ml-0.5 text-destructive">*</span>
+  <span aria-hidden="true" className="ml-0.5 text-primary">*</span>
 );
 
 const OptionalMark = () => (
