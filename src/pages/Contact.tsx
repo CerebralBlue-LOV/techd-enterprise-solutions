@@ -29,7 +29,7 @@ const Contact = () => (
       </div>
     </section>
     <ContactLocationSection />
-    <div className="pt-20 md:pt-32 pb-16 md:pb-24">
+    <div className="py-20 md:py-32">
       <LogoStrip bordered={false} />
     </div>
   </Layout>
