@@ -15,8 +15,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-
 
 const AREAS = [
   "AI & Automation",
@@ -29,11 +35,28 @@ const AREAS = [
 
 const TIMELINES = ["Now", "This quarter", "Exploring"] as const;
 
+const HEARD_ABOUT = [
+  "Web search",
+  "IBM",
+  "Event",
+  "Email",
+  "Social media",
+  "Referral",
+  "Other",
+] as const;
+
 const schema = z.object({
   name: z.string().trim().min(1, "Required").max(100),
   email: z.string().trim().email("Enter a valid email").max(255),
   company: z.string().trim().min(1, "Required").max(120),
   role: z.string().trim().min(1, "Required").max(120),
+  phone: z
+    .string()
+    .trim()
+    .max(40)
+    .optional()
+    .or(z.literal("")),
+  heardAbout: z.enum(HEARD_ABOUT).optional(),
   area: z.enum(AREAS, { required_error: "Pick an area" }),
   timeline: z.enum(TIMELINES).optional(),
   message: z.string().trim().min(1, "Required").max(2000),
@@ -45,10 +68,18 @@ const PILL =
   "h-10 px-4 rounded-md border border-border/70 bg-background/70 text-xs font-bold uppercase tracking-wider text-secondary ring-1 ring-transparent data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary data-[state=on]:ring-primary/30 data-[state=on]:shadow-[0_6px_20px_-10px_hsl(var(--primary)/0.7)] hover:border-primary hover:text-primary transition-all duration-200";
 
 const FIELD_INPUT =
-  "h-12 bg-background/70 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200";
+  "h-12 bg-background/70 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive/30";
 
 const SECTION_EYEBROW =
   "flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
+
+const RequiredMark = () => (
+  <span aria-hidden="true" className="ml-0.5 text-destructive">*</span>
+);
+
+const OptionalMark = () => (
+  <span className="ml-1 font-normal text-muted-foreground/60">(optional)</span>
+);
 
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -60,6 +91,8 @@ const ContactForm = () => {
       email: "",
       company: "",
       role: "",
+      phone: "",
+      heardAbout: undefined,
       area: undefined as unknown as FormValues["area"],
       timeline: undefined,
       message: "",
@@ -77,7 +110,6 @@ const ContactForm = () => {
       aria-live="polite"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent transition-opacity duration-500 group-hover:via-primary" />
-
 
       {submitted ? (
         <div className="relative z-10 py-10 md:py-16 text-center">
@@ -124,11 +156,10 @@ const ContactForm = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>Name<RequiredMark /></FormLabel>
                       <FormControl>
                         <Input placeholder="Jane Doe" className={FIELD_INPUT} {...field} />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -137,7 +168,7 @@ const ContactForm = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Work email</FormLabel>
+                      <FormLabel>Work email<RequiredMark /></FormLabel>
                       <FormControl>
                         <Input
                           type="email"
@@ -146,7 +177,6 @@ const ContactForm = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -157,11 +187,10 @@ const ContactForm = () => {
                   name="company"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company</FormLabel>
+                      <FormLabel>Company<RequiredMark /></FormLabel>
                       <FormControl>
                         <Input placeholder="Acme Corp" className={FIELD_INPUT} {...field} />
                       </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -170,11 +199,57 @@ const ContactForm = () => {
                   name="role"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Role</FormLabel>
+                      <FormLabel>Role<RequiredMark /></FormLabel>
                       <FormControl>
                         <Input placeholder="VP Engineering" className={FIELD_INPUT} {...field} />
                       </FormControl>
-                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-muted-foreground font-normal">
+                        Phone<OptionalMark />
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          placeholder="+1 (555) 123-4567"
+                          className={FIELD_INPUT}
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="heardAbout"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-muted-foreground font-normal">
+                        How did you hear about us?<OptionalMark />
+                      </FormLabel>
+                      <Select
+                        value={field.value}
+                        onValueChange={(v) => field.onChange(v || undefined)}
+                      >
+                        <FormControl>
+                          <SelectTrigger className={FIELD_INPUT}>
+                            <SelectValue placeholder="Select an option" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {HEARD_ABOUT.map((h) => (
+                            <SelectItem key={h} value={h}>{h}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </FormItem>
                   )}
                 />
@@ -194,15 +269,23 @@ const ContactForm = () => {
               <FormField
                 control={form.control}
                 name="area"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
-                    <FormLabel>Area of interest</FormLabel>
+                    <FormLabel
+                      className={fieldState.invalid ? "text-destructive" : undefined}
+                    >
+                      Area of interest<RequiredMark />
+                    </FormLabel>
                     <FormControl>
                       <ToggleGroup
                         type="single"
                         value={field.value}
                         onValueChange={(v) => v && field.onChange(v)}
-                        className="flex flex-wrap justify-start gap-2"
+                        className={`flex flex-wrap justify-start gap-2 ${
+                          fieldState.invalid
+                            ? "rounded-md ring-1 ring-destructive/60 p-1 -m-1"
+                            : ""
+                        }`}
                       >
                         {AREAS.map((a) => (
                           <ToggleGroupItem key={a} value={a} className={PILL}>
@@ -211,7 +294,6 @@ const ContactForm = () => {
                         ))}
                       </ToggleGroup>
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -222,8 +304,7 @@ const ContactForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-muted-foreground font-normal">
-                      Timeline{" "}
-                      <span className="text-muted-foreground/60">(optional)</span>
+                      Timeline<OptionalMark />
                     </FormLabel>
                     <FormControl>
                       <ToggleGroup
@@ -239,7 +320,6 @@ const ContactForm = () => {
                         ))}
                       </ToggleGroup>
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -249,16 +329,15 @@ const ContactForm = () => {
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>What are you trying to ship?</FormLabel>
+                    <FormLabel>What are you trying to ship?<RequiredMark /></FormLabel>
                     <FormControl>
                       <Textarea
                         rows={6}
                         placeholder="A few sentences is plenty — what's the outcome, what's blocking it, and what does success look like?"
-                        className="min-h-[160px] resize-none bg-muted/30 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200"
+                        className="min-h-[160px] resize-none bg-muted/30 border-border/70 focus-visible:ring-primary/40 focus-visible:border-primary focus-visible:bg-background transition-all duration-200 aria-[invalid=true]:border-destructive aria-[invalid=true]:focus-visible:ring-destructive/30"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -270,7 +349,7 @@ const ContactForm = () => {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                 </span>
-                We respond within one business day.
+                We respond within one business day. Fields marked <span className="text-destructive">*</span> are required.
               </p>
               <Button type="submit" size="lg" className="btn-glow group/btn h-12 px-8 w-full sm:w-auto">
                 Send to a principal
