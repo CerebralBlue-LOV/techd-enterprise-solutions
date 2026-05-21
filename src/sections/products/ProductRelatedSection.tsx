@@ -26,7 +26,7 @@ export const ProductRelatedSection = ({ practice, product }: Props) => {
   if (!siblings.length) return null;
 
   return (
-    <section className="bg-background">
+    <section id="related" className="bg-background scroll-mt-24">
       <SectionMarker page="Product" name={`${product.name} — Related`} />
       <div className="container-page py-12 md:py-14">
         <Reveal>
