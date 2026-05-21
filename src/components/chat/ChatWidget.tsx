@@ -86,6 +86,21 @@ export function ChatWidget() {
             onReset={clear}
             onClose={close}
           />
+
+          {/* Decorative cyan hook in bottom-right corner */}
+          <svg
+            aria-hidden
+            className="pointer-events-none absolute -bottom-1 -right-1 h-4 w-4 text-primary"
+            viewBox="0 0 16 16"
+            fill="none"
+          >
+            <path
+              d="M2 14 Q 14 14 14 2"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
         </div>
       )}
     </>
