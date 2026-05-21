@@ -64,7 +64,8 @@ export function ChatWidget() {
 
   return (
     <>
-      <ChatLauncher open={open} onClick={() => setOpen((v) => !v)} />
+      <ChatCta visible={ctaVisible} onOpen={openChat} onDismiss={dismissCta} />
+      <ChatLauncher open={open} onClick={toggleChat} />
 
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
