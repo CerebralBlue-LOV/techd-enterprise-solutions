@@ -8,7 +8,7 @@ import IndustryClientsSection from "@sections/industries/IndustryClientsSection"
 import IndustryFederalCredentialsSection from "@sections/industries/IndustryFederalCredentialsSection";
 import SolutionsForIndustrySection from "@sections/industries/SolutionsForIndustrySection";
 import IndustryApproachSection from "@sections/industries/IndustryApproachSection";
-import IndustryOutcomesSection from "@sections/industries/IndustryOutcomesSection";
+
 import IndustryCrossLinksSection from "@sections/industries/IndustryCrossLinksSection";
 import IndustryCtaSection from "@sections/industries/IndustryCtaSection";
 import NotFound from "@pages/NotFound";
