@@ -9,7 +9,15 @@ const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    if (hash) return;
+    if (hash) {
+      const id = hash.slice(1);
+      // Defer so the target section is mounted before we scroll.
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      return;
+    }
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [pathname, hash]);
 
