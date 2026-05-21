@@ -1,53 +1,63 @@
 
 ## Goal
 
-Tighten the /contact page: replace placeholder copy with real contact details, drop the three "Available at launch" cards, give the map its own titled section, and add vertical rhythm before the "Trusted by leaders" strip.
+Add a dismissible "Ask me" speech bubble next to the chat launcher that nudges first-time visitors without becoming annoying — desktop only, route-aware, with smart cooldown logic.
 
-## Changes
+## What gets built
 
-### 1. `src/sections/contact/ContactInfo.tsx` (left column rewrite)
+### 1. New component: `src/components/chat/ChatCta.tsx`
 
-Replace current eyebrow + heading + paragraph + meta line with:
+A small speech-bubble card rendered to the left of the launcher.
 
-- **Eyebrow:** `Contact`
-- **Title (h2):** `Let's talk about your next IBM initiative.`
-- **Description (improved from the legacy copy):**
-  > Reach out for guidance on IBM AI, data, analytics, security, cloud, and data warehousing — from early scoping through production delivery. Your note routes straight to a senior practitioner, no SDR queue.
-- **New `ContactChannels` block below the description** (see component #4) showing:
-  - Phone: `888-98-TECHD (83243)` (tel link)
-  - General & technical: `info@techd.com` (mailto)
-  - Sales: `sales@techd.com` (mailto)
-- Keep the IBM Gold / 15+ yrs / Since 2009 meta line at the bottom.
+- Copy: **"Not sure where to start? Ask me."** (heading) + tiny subline **"Senior practitioner, 1 business day."**
+- Dismiss `×` in the top-right corner.
+- Click the body → opens the chat (same handler as the launcher).
+- Visual: rounded-2xl, `bg-background border border-border shadow-lg`, primary-tinted left edge, little tail/triangle pointing at the launcher.
+- Mount animation: fade + 4px slide-up, 250ms. Respects `prefers-reduced-motion`.
+- Position: `fixed bottom-24 right-6` (sits above the 56px launcher with 12px gap).
+- Mobile (`<768px`): component returns `null`.
 
-### 2. `src/sections/contact/ContactLocationSection.tsx` (replace cards with titled map)
+### 2. New hook: `src/components/chat/useChatCta.ts`
 
-- Delete the `DETAILS` array, `DetailCard` component, and the `<ul>` grid at the bottom (all three cards: Headquarters / Email / Phone).
-- Above the map, add a `SectionHeading` with eyebrow `Visit` and title `Where to find us.` and a short subtitle (`Headquartered in Miami, serving Fortune 500 clients across North America.`).
-- Increase top padding so the section breathes: bump `py-16 md:py-20` → `pt-24 md:pt-28 pb-20 md:pb-24` and increase `space-y-10` → `space-y-12`.
-- Keep `ContactMap` as-is.
+Encapsulates all visibility logic so `ChatWidget` stays simple.
 
-### 3. `src/pages/Contact.tsx` (add spacing before logo strip)
+State shape persisted in `localStorage` under key `techd:chat-cta:v1`:
 
-- Currently ends with `<ContactLocationSection />`. The "Trusted by leaders" strip is the global `LogoStrip` rendered elsewhere — verify during implementation; if it's not on /contact today, mount `<LogoStripSection />` (already used on Home) after `<ContactLocationSection />` with a top border + extra `pt-16 md:pt-24` wrapper so it has clear separation.
-- If it's already rendered globally, just add a spacer/border before it.
+```ts
+{ dismissedAt: number | null, opened: boolean }
+```
 
-### 4. New reusable component `src/components/shared/ContactChannels.tsx`
+Inputs: `{ open: boolean, isMobile: boolean }` (the current chat state + viewport).
+Output: `{ visible: boolean, dismiss: () => void, markOpened: () => void }`.
 
-Small list component (icon + label + value) consumed by `ContactInfo` and reusable on future pages (e.g., footer, about). Props: `items: { icon, label, value, href }[]`. Uses `Phone`, `Mail` from lucide-react, primary-cyan hover, no card chrome — just a clean stacked list to fit the editorial left column.
+Show rules (all must be true):
+1. Not mobile.
+2. Chat is not currently open.
+3. `opened` flag is false (never opened the chat on this device).
+4. `dismissedAt` is null or older than 7 days.
+5. Current route is not `/contact`.
+6. Trigger fired: **scrolled past 60% of viewport height** OR **12s of idle** (no scroll/mousemove/keydown), whichever comes first.
 
-### 5. No content/data changes
+Cleanup: trigger listeners detach as soon as `visible` flips true. Route change resets the trigger (so it re-arms on the next page) but never resets the persistence flags.
 
-Phone/emails are hardcoded into `ContactChannels` usage in `ContactInfo` for now (matches how the footer already inlines the phone number). `src/content/site.ts CONTACT` stays untouched — its `status: "pending"` flags only drove the cards we're removing.
+### 3. Wire into `ChatWidget.tsx`
+
+- Call `useChatCta({ open, isMobile })`.
+- Call `markOpened()` inside the existing `setOpen(true)` path (both via launcher click and via the CTA bubble click).
+- Render `<ChatCta visible={visible} onOpen={() => { markOpened(); setOpen(true); }} onDismiss={dismiss} />` next to `<ChatLauncher />`.
+
+### 4. No changes to `ChatLauncher`, `ChatPanel`, content files, or routing.
 
 ## Technical notes
 
-- All colors via existing tokens (`text-primary`, `text-secondary`, `text-muted-foreground`, `border-border`).
-- Typography stays Roboto Condensed; reuse `SectionHeading` and `Reveal`.
+- All colors via Tailwind tokens (`bg-background`, `border-border`, `text-secondary`, `text-primary`).
+- Roboto Condensed (inherited).
+- `localStorage` access wrapped in try/catch (Safari private mode, SSR safety — although this app is client-only).
+- Route detection: `useLocation()` from `react-router-dom`.
 - No new dependencies.
-- No changes to `ContactMap`, `ContactForm`, `ContactHero`.
 
 ## Out of scope
 
-- Wiring the form to a backend (still deferred to AWS Lambda).
-- Editing `CONTACT` data shape in `site.ts`.
-- Changing the global Header/Footer.
+- Analytics events for "shown / dismissed / clicked" (no analytics layer wired yet).
+- A/B testing different copy.
+- Server-side personalization.
