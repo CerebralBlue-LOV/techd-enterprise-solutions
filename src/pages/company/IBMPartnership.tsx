@@ -111,7 +111,7 @@ const IBMPartnership = () => {
                 <a
                   href={IBM_PARTNER_DIRECTORY_URL}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 h-12 px-6 rounded-md border border-white/30 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:border-primary hover:text-primary self-start md:self-auto whitespace-nowrap"
                 >
                   Verify on IBM Partner Directory
