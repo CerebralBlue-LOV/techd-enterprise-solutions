@@ -1,52 +1,53 @@
-## Logo intro splash
 
-A one-time, full-screen splash on first visit per browser session. After dismissal, it never plays again until the session ends.
+## Goal
 
-### Asset
+Tighten the /contact page: replace placeholder copy with real contact details, drop the three "Available at launch" cards, give the map its own titled section, and add vertical rhythm before the "Trusted by leaders" strip.
 
-You pushed raster favicons only (no SVG):
-- `public/apple-touch-icon.png` (180×180, ~30 KB) — **use this** as the animated gear
-- `favicon-32`, `favicon-16`, `favicon.ico` — too small for the splash
+## Changes
 
-Since the gear is raster, the animation is transform-based (rotate/scale/translate) on an `<img>`. Quality stays sharp because we render it at ~96px, well under its native 180px.
+### 1. `src/sections/contact/ContactInfo.tsx` (left column rewrite)
 
-### Behavior
+Replace current eyebrow + heading + paragraph + meta line with:
 
-1. On app mount, check `sessionStorage["techd-intro-played"]`.
-2. If absent → render fixed full-screen overlay (white, above header), play animation, set the flag, fade out.
-3. If present → render nothing, no flash.
-4. `prefers-reduced-motion: reduce` → show the final lockup (gear + wordmark) statically for ~400ms then dismiss.
-5. Overlay is non-interactive while visible (pointer-events locked).
+- **Eyebrow:** `Contact`
+- **Title (h2):** `Let's talk about your next IBM initiative.`
+- **Description (improved from the legacy copy):**
+  > Reach out for guidance on IBM AI, data, analytics, security, cloud, and data warehousing — from early scoping through production delivery. Your note routes straight to a senior practitioner, no SDR queue.
+- **New `ContactChannels` block below the description** (see component #4) showing:
+  - Phone: `888-98-TECHD (83243)` (tel link)
+  - General & technical: `info@techd.com` (mailto)
+  - Sales: `sales@techd.com` (mailto)
+- Keep the IBM Gold / 15+ yrs / Since 2009 meta line at the bottom.
 
-### Animation (~1.8s)
+### 2. `src/sections/contact/ContactLocationSection.tsx` (replace cards with titled map)
 
-Centered on white background.
+- Delete the `DETAILS` array, `DetailCard` component, and the `<ul>` grid at the bottom (all three cards: Headquarters / Email / Phone).
+- Above the map, add a `SectionHeading` with eyebrow `Visit` and title `Where to find us.` and a short subtitle (`Headquartered in Miami, serving Fortune 500 clients across North America.`).
+- Increase top padding so the section breathes: bump `py-16 md:py-20` → `pt-24 md:pt-28 pb-20 md:pb-24` and increase `space-y-10` → `space-y-12`.
+- Keep `ContactMap` as-is.
 
-```text
-  t=0.00s   gear fades in, scale 0.85→1.0                       (250ms)
-  t=0.10s   gear rotates 540° (1.5 turns), ease-in-out          (1100ms)
-  t=0.90s   gear slides left ~half the final lockup width       (450ms, ease-out)
-  t=1.05s   "TechD" wordmark slides in from x:-16 → 0, fades 0→1 (500ms)
-  t=1.55s   thin cyan underline draws under wordmark            (200ms)
-  t=1.80s   overlay fades out                                    (250ms)
-```
+### 3. `src/pages/Contact.tsx` (add spacing before logo strip)
 
-- Wordmark: Roboto Condensed Bold, `text-secondary`, height matched to gear.
-- Underline: `bg-primary`, 1px, scale-x 0→1.
-- All colors via existing tokens — no raw hex.
+- Currently ends with `<ContactLocationSection />`. The "Trusted by leaders" strip is the global `LogoStrip` rendered elsewhere — verify during implementation; if it's not on /contact today, mount `<LogoStripSection />` (already used on Home) after `<ContactLocationSection />` with a top border + extra `pt-16 md:pt-24` wrapper so it has clear separation.
+- If it's already rendered globally, just add a spacer/border before it.
 
-### Files
+### 4. New reusable component `src/components/shared/ContactChannels.tsx`
 
-- **New**: `src/components/shared/IntroSplash.tsx`
-  - `fixed inset-0 z-[100] bg-background`
-  - Inline `<style>` with three `@keyframes` (no Tailwind config bloat, no new deps)
-  - Reads/sets `sessionStorage` flag, returns `null` after fade-out
-  - Honors `prefers-reduced-motion`
-- **Edit**: `src/components/layout/Layout.tsx` — mount `<IntroSplash />` once, above `<Header />`
+Small list component (icon + label + value) consumed by `ContactInfo` and reusable on future pages (e.g., footer, about). Props: `items: { icon, label, value, href }[]`. Uses `Phone`, `Mail` from lucide-react, primary-cyan hover, no card chrome — just a clean stacked list to fit the editorial left column.
 
-### Out of scope
+### 5. No content/data changes
 
-- No new dependencies (pure CSS, no framer-motion)
-- No changes to header logo, hero, or favicon files
-- Not a per-route transition — strictly first-load-of-session
-- Header still uses `techd-logo.webp` unchanged
+Phone/emails are hardcoded into `ContactChannels` usage in `ContactInfo` for now (matches how the footer already inlines the phone number). `src/content/site.ts CONTACT` stays untouched — its `status: "pending"` flags only drove the cards we're removing.
+
+## Technical notes
+
+- All colors via existing tokens (`text-primary`, `text-secondary`, `text-muted-foreground`, `border-border`).
+- Typography stays Roboto Condensed; reuse `SectionHeading` and `Reveal`.
+- No new dependencies.
+- No changes to `ContactMap`, `ContactForm`, `ContactHero`.
+
+## Out of scope
+
+- Wiring the form to a backend (still deferred to AWS Lambda).
+- Editing `CONTACT` data shape in `site.ts`.
+- Changing the global Header/Footer.
