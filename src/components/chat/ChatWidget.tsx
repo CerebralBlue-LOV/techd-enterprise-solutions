@@ -7,7 +7,15 @@ import { useChatCta } from "./useChatCta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
-const ANIM_MS = 1000;
+// Choreography: open ~480ms total (launcher leaves first, panel lands after).
+// Close is snappier (~320ms) so it feels responsive.
+const PANEL_OPEN_MS = 360;
+const PANEL_OPEN_DELAY_MS = 120;
+const PANEL_CLOSE_MS = 240;
+const UNMOUNT_MS = PANEL_CLOSE_MS + 20;
+
+const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+const EASE_IN = "cubic-bezier(0.4, 0, 1, 1)";
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -43,7 +51,7 @@ export function ChatWidget() {
       return () => cancelAnimationFrame(id);
     }
     setMounted(false);
-    const t = setTimeout(() => setRendered(false), ANIM_MS);
+    const t = setTimeout(() => setRendered(false), UNMOUNT_MS);
     return () => clearTimeout(t);
   }, [open]);
 
@@ -70,16 +78,21 @@ export function ChatWidget() {
           className={cn(
             "fixed z-50 flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-background origin-bottom-right",
             "shadow-[0_24px_60px_-20px_hsl(var(--primary)/0.35),0_8px_24px_-12px_rgba(0,0,0,0.12)]",
-            "transition-[opacity,transform,filter] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+            "motion-reduce:!transition-none",
             mounted
-              ? "opacity-100 scale-100 blur-0"
-              : "opacity-0 scale-[0.04] blur-[2px]",
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 translate-y-2",
             isMobile
               ? "left-3 right-3 bottom-6"
               : "right-6 bottom-6 w-[400px]",
           )}
           style={{
-            transitionDuration: `${ANIM_MS}ms`,
+            transitionProperty: "opacity, transform",
+            transitionDuration: mounted
+              ? `${PANEL_OPEN_MS}ms`
+              : `${PANEL_CLOSE_MS}ms`,
+            transitionDelay: mounted ? `${PANEL_OPEN_DELAY_MS}ms` : "0ms",
+            transitionTimingFunction: mounted ? EASE_OUT : EASE_IN,
             ...(isMobile
               ? { height: "calc(100vh - 6rem)" }
               : { height: "min(640px, calc(100vh - 4rem))" }),
