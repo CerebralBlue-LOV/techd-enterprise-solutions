@@ -104,6 +104,7 @@ public/             # Favicons at root; public/images/ for all other static asse
 - Content data in `src/content/` as typed TS modules — this is what marketing edits later.
 - All colors via Tailwind tokens (`bg-primary`, `text-foreground`), never raw hex.
 - Roboto Condensed only: `font-bold` headings, `font-normal` subheads, `font-light` body (see `src/index.css`).
+- **In-page section links: always use `ScrollToSectionLink`** (`@shared/ScrollToSectionLink`) — never `<Link to="/#section">` or raw hash anchors. It smooth-scrolls on the same page and navigates with router state `{ scrollTo }` across pages, so the URL stays clean and repeat clicks always work. `ScrollToTop` (`src/app/ScrollToTop.tsx`) handles the post-navigation scroll. `PageFinalCtaSection` auto-detects `#section` in its `secondary.to` and routes through `ScrollToSectionLink`.
 
 ## Brand tokens (configured in `tailwind.config.ts` and `src/index.css`)
 
