@@ -73,7 +73,7 @@ const ContactForm = () => {
 
   return (
     <div
-      className="group relative rounded-2xl border border-border bg-gradient-to-br from-background via-background to-muted/20 p-7 md:p-10 shadow-[0_1px_0_hsl(var(--border)),0_30px_60px_-32px_hsl(var(--primary)/0.3)] ring-1 ring-border/60 overflow-hidden transition-all duration-500 ease-out hover:-translate-y-0.5 hover:border-primary/40 hover:ring-primary/20 hover:shadow-[0_1px_0_hsl(var(--primary)/0.4),0_40px_80px_-24px_hsl(var(--primary)/0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+      className="group relative rounded-2xl border border-border bg-gradient-to-br from-background via-background to-muted/20 p-7 md:p-10 shadow-[0_30px_60px_-32px_hsl(var(--primary)/0.3)] overflow-hidden transition-all duration-500 ease-out hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_40px_80px_-24px_hsl(var(--primary)/0.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
       aria-live="polite"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent transition-opacity duration-500 group-hover:via-primary" />
