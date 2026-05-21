@@ -104,8 +104,9 @@ export function ChatPanel({ messages, loading, onSend, onReset }: Props) {
             {loading && (
               <div className="flex items-start gap-2">
                 <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 shadow-[0_2px_8px_-2px_hsl(var(--primary)/0.5)]">
-                  <Bot className="h-3.5 w-3.5 text-white" aria-hidden />
+                  <img src={techdMarkWhite} alt="" aria-hidden className="h-4 w-4 object-contain" />
                 </div>
+
                 <div className="rounded-2xl rounded-bl-sm border border-border/60 bg-white px-4 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                   <div className="flex gap-1.5">
                     {([0, 200, 400] as const).map((delay, i) => (
