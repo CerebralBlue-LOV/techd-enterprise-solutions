@@ -36,9 +36,7 @@ export function ChatCta({ visible, onOpen, onDismiss }: Props) {
           <p className="text-sm font-bold text-secondary leading-snug">
             Not sure where to start? Ask me.
           </p>
-          <p className="mt-1 text-[11px] font-light text-muted-foreground">
-            Senior practitioner · replies in 1 business day
-          </p>
+
         </button>
 
 
