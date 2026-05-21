@@ -256,6 +256,26 @@ const ContactForm = () => {
                   )}
                 />
               </div>
+              {form.watch("heardAbout") === "Other" && (
+                <FormField
+                  control={form.control}
+                  name="heardAboutOther"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-muted-foreground font-normal">
+                        Please specify<OptionalMark />
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Tell us how you found us"
+                          className={FIELD_INPUT}
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
 
             <div className="relative">
