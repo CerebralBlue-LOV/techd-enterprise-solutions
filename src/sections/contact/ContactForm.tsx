@@ -36,6 +36,7 @@ const TIMELINES = ["Now", "This quarter", "Exploring"] as const;
 
 const HEARD_ABOUT = [
   "Web search",
+  "AI assistant (ChatGPT, Claude, Gemini, Perplexity…)",
   "IBM",
   "Event",
   "Email",
@@ -56,6 +57,7 @@ const schema = z.object({
     .optional()
     .or(z.literal("")),
   heardAbout: z.enum(HEARD_ABOUT).optional(),
+  heardAboutOther: z.string().trim().max(120).optional().or(z.literal("")),
   area: z.enum(AREAS, { required_error: "Pick an area" }),
   timeline: z.enum(TIMELINES).optional(),
   message: z.string().trim().min(1, "Required").max(2000),
@@ -73,7 +75,7 @@ const SECTION_EYEBROW =
   "flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary";
 
 const RequiredMark = () => (
-  <span aria-hidden="true" className="ml-0.5 text-destructive">*</span>
+  <span aria-hidden="true" className="ml-0.5 text-primary">*</span>
 );
 
 const OptionalMark = () => (
@@ -92,6 +94,7 @@ const ContactForm = () => {
       role: "",
       phone: "",
       heardAbout: undefined,
+      heardAboutOther: "",
       area: undefined as unknown as FormValues["area"],
       timeline: undefined,
       message: "",
@@ -253,6 +256,26 @@ const ContactForm = () => {
                   )}
                 />
               </div>
+              {form.watch("heardAbout") === "Other" && (
+                <FormField
+                  control={form.control}
+                  name="heardAboutOther"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-muted-foreground font-normal">
+                        Please specify<OptionalMark />
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Tell us how you found us"
+                          className={FIELD_INPUT}
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
 
             <div className="relative">
