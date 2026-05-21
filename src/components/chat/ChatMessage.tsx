@@ -1,4 +1,9 @@
-import { Bot } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { cn } from "@/lib/utils";
+import type { Message } from "./types";
+import techdMark from "@/assets/brand/techd-mark-white.png";
+
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
