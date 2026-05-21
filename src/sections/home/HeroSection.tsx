@@ -43,7 +43,7 @@ export const HeroSection = () => (
               <Link to="/contact">Talk to an expert</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-              <Link to="/solutions">See our solutions</Link>
+              <Link to="/#solutions">See our solutions</Link>
             </Button>
           </div>
         </div>
