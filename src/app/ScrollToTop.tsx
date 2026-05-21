@@ -3,25 +3,27 @@ import { useLocation } from "react-router-dom";
 
 /**
  * Resets scroll to the top on every route change.
- * If the URL contains a hash, lets the browser handle the anchor scroll instead.
+ * If router state carries `scrollTo`, smooth-scrolls to that section id
+ * after the new page mounts (used by ScrollToSectionLink for cross-page nav).
  */
 const ScrollToTop = () => {
-  const { pathname, hash } = useLocation();
+  const { pathname, state } = useLocation() as {
+    pathname: string;
+    state: { scrollTo?: string } | null;
+  };
 
   useEffect(() => {
-    if (hash) {
-      const id = hash.slice(1);
+    const target = state?.scrollTo;
+    if (target) {
       requestAnimationFrame(() => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        // Strip the hash so the URL stays clean and the same link can be
-        // clicked again (react-router skips navigation to an identical location).
-        window.history.replaceState(null, "", pathname);
+        document
+          .getElementById(target)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
       return;
     }
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [pathname, hash]);
+  }, [pathname, state]);
 
   return null;
 };
