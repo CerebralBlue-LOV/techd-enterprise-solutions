@@ -247,9 +247,17 @@ const ContactForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {HEARD_ABOUT.map((h) => (
-                            <SelectItem key={h} value={h}>{h}</SelectItem>
-                          ))}
+                          {HEARD_ABOUT.map((h) => {
+                            const isAi = h.startsWith("AI assistant");
+                            return (
+                              <SelectItem key={h} value={h}>
+                                <span className="inline-flex items-center gap-2">
+                                  {isAi && <Sparkles className="size-3.5 text-primary" />}
+                                  {h}
+                                </span>
+                              </SelectItem>
+                            );
+                          })}
                         </SelectContent>
                       </Select>
                     </FormItem>
