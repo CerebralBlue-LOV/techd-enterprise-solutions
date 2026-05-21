@@ -56,12 +56,14 @@ const IBMPartnership = () => {
         headline="IBM Gold Business Partner since 2009."
         lede="An IBM Partner Plus tier we have held through 15+ years of continuous delivery. Certified across 21 IBM products spanning AI &amp; Generative, Data &amp; Analytics, Automation &amp; FinOps, and Security &amp; Compliance."
         figure={<CompanyFigure />}
+        primaryCta={{ label: "Talk to an expert", to: "/contact" }}
         anchors={[
-          { href: "#credential", label: "Credential" },
+          { href: "#credentials", label: "Credential" },
           { href: "#what-gold", label: "What Gold means" },
           { href: "#portfolio", label: "Portfolio" },
           { href: "#operating-model", label: "AI Operating Model" },
           { href: "#quick-start", label: "Quick Start Advisory" },
+          { href: "#cta", label: "Contact" },
         ]}
       />
 

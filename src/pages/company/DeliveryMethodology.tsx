@@ -31,11 +31,13 @@ const DeliveryMethodology = () => {
         headline="Five engagement stages. One team, advisory through go-live."
         lede="The certified practitioners who scope your engagement design the architecture and execute the implementation. No translation layer between recommendation and build."
         figure={<CompanyFigure />}
+        primaryCta={{ label: "Talk to an expert", to: "/contact" }}
         anchors={[
           { href: "#stages", label: "Engagement stages" },
           { href: "#assessment", label: "Platform Assessment" },
           { href: "#compliance", label: "Compliance" },
           { href: "#commitment", label: "Commitment" },
+          { href: "#cta", label: "Contact" },
         ]}
       />
 
