@@ -19,9 +19,9 @@ const IntroLab = () => {
           Intro Splash
         </h1>
         <p className="mt-4 max-w-2xl text-muted-foreground font-light">
-          First-load splash animation (~1.8s): gear spins, then the "TechD" wordmark slides in
-          beside it. In production this plays only once per browser session. Use the button
-          below to replay it here.
+          First-load splash animation (~5.1s): overlay fades in, gear spins, wordmark slides in,
+          lockup holds, then gently dissolves. In production this plays only once per browser
+          session. Use the button below to replay it here.
         </p>
       </div>
 
@@ -40,14 +40,28 @@ const IntroLab = () => {
       <section className="border-t border-border">
         <div className="container-page py-10 space-y-4">
           <h2 className="text-xl font-bold text-secondary">Timeline</h2>
-          <ul className="text-sm font-light text-muted-foreground space-y-1">
-            <li>0.00s · gear fades in, scale 0.85 → 1.0 (250ms)</li>
-            <li>0.10s · gear rotates 540° / 1.5 turns (1100ms)</li>
-            <li>0.90s · gear slides left to make room (450ms)</li>
-            <li>1.05s · "TechD" wordmark slides in from left (500ms)</li>
-            <li>1.55s · cyan underline draws under wordmark (200ms)</li>
-            <li>1.80s · overlay fades out (250ms)</li>
-          </ul>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm font-light text-muted-foreground border-collapse">
+              <thead>
+                <tr className="border-b border-border text-left">
+                  <th className="pb-2 pr-6 font-normal text-secondary">Step</th>
+                  <th className="pb-2 pr-6 font-normal text-secondary">Start</th>
+                  <th className="pb-2 pr-6 font-normal text-secondary">End</th>
+                  <th className="pb-2 font-normal text-secondary">Duration</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                <tr><td className="py-2 pr-6">Gear fade-in (scale + opacity)</td><td className="py-2 pr-6">100ms</td><td className="py-2 pr-6">1100ms</td><td className="py-2">1000ms</td></tr>
+                <tr><td className="py-2 pr-6">Gear spin (0°→720°)</td><td className="py-2 pr-6">384ms</td><td className="py-2 pr-6">1984ms</td><td className="py-2">1600ms</td></tr>
+                <tr><td className="py-2 pr-6">Trail echoes peak</td><td className="py-2 pr-6">448ms</td><td className="py-2 pr-6">1984ms</td><td className="py-2">~1150ms</td></tr>
+                <tr><td className="py-2 pr-6">Gear slides left</td><td className="py-2 pr-6">1984ms</td><td className="py-2 pr-6">2496ms</td><td className="py-2">512ms</td></tr>
+                <tr><td className="py-2 pr-6">Wordmark slides in</td><td className="py-2 pr-6">2304ms</td><td className="py-2 pr-6">2560ms</td><td className="py-2">256ms</td></tr>
+                <tr><td className="py-2 pr-6">Full lockup holds</td><td className="py-2 pr-6">2560ms</td><td className="py-2 pr-6">3560ms</td><td className="py-2">1000ms</td></tr>
+                <tr className="font-normal"><td className="py-2 pr-6">Overlay dissolves out</td><td className="py-2 pr-6">3560ms</td><td className="py-2 pr-6">4560ms</td><td className="py-2">1000ms</td></tr>
+                <tr className="border-t-2 border-border text-secondary"><td className="pt-3 pr-6 font-bold">Total</td><td className="pt-3 pr-6"></td><td className="pt-3 pr-6"></td><td className="pt-3 font-bold">4560ms</td></tr>
+              </tbody>
+            </table>
+          </div>
           <p className="text-xs text-muted-foreground">
             Asset: <code className="bg-muted px-1.5 py-0.5 rounded">/apple-touch-icon.png</code>.
             Honors <code className="bg-muted px-1.5 py-0.5 rounded">prefers-reduced-motion</code>.

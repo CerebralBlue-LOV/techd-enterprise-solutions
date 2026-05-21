@@ -22,8 +22,6 @@ const shouldPlayInitially = (force: boolean) => {
 };
 
 export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
-  // Initialize synchronously so the overlay paints on the very first frame
-  // — otherwise the page content flashes through before the effect runs.
   const [phase, setPhase] = useState<"hidden" | "playing" | "fading">(() =>
     shouldPlayInitially(force) ? "playing" : "hidden",
   );
@@ -41,8 +39,8 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
     setPhase("playing");
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const fadeAt = reduced ? 500 : 2600;
-    const removeAt = fadeAt + 350;
+    const fadeAt = reduced ? 500 : 3560;  // 3200ms animation + 1000ms hold (lockup completes at 2560ms)
+    const removeAt = fadeAt + 1000;
     timers.push(window.setTimeout(() => !cancelled && setPhase("fading"), fadeAt));
     timers.push(window.setTimeout(() => !cancelled && setPhase("hidden"), removeAt));
 
@@ -51,7 +49,6 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
       timers.forEach(window.clearTimeout);
     };
   }, [force, playKey]);
-
 
   if (phase === "hidden") return null;
 
@@ -71,7 +68,7 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
       className="fixed inset-0 z-[100] flex items-center justify-center bg-background pointer-events-none"
       style={{
         opacity: phase === "fading" ? 0 : 1,
-        transition: "opacity 300ms ease-out",
+        transition: phase === "fading" ? "opacity 1000ms ease-in-out" : "none",
       }}
     >
       <style>{`
@@ -80,8 +77,8 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
           78%, 100%{ transform: translateX(0); }
         }
         @keyframes techd-gear-fade {
-          0%   { opacity: 0; transform: scale(0.85); }
-          12%, 100% { opacity: 1; transform: scale(1); }
+          from { opacity: 0; transform: scale(0.85); }
+          to   { opacity: 1; transform: scale(1); }
         }
         @keyframes techd-gear-spin {
           0%, 12%  { transform: rotate(0deg); }
@@ -95,13 +92,13 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
         }
         @keyframes techd-word-in {
           0%, 72%  { opacity: 0; transform: translate(-20px, -2px); }
-          90%, 100%{ opacity: 1; transform: translate(0, -2px); }
+          80%, 100%{ opacity: 1; transform: translate(0, -2px); }
         }
-        .techd-gear-translate { animation: techd-gear-translate 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-        .techd-gear-fade { animation: techd-gear-fade 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; }
-        .techd-gear-spin { animation: techd-gear-spin 2600ms cubic-bezier(0.65, 0, 0.35, 1) both; transform-origin: 50% 50%; }
-        .techd-gear-trail-wrap { animation: techd-gear-trail 2600ms ease-in-out both; }
-        .techd-word { animation: techd-word-in 2600ms ease-out both; }
+        .techd-gear-translate { animation: techd-gear-translate 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .techd-gear-fade { animation: techd-gear-fade 1000ms ease-out 100ms both; }
+        .techd-gear-spin { animation: techd-gear-spin 3200ms cubic-bezier(0.65, 0, 0.35, 1) both; transform-origin: 50% 50%; }
+        .techd-gear-trail-wrap { animation: techd-gear-trail 3200ms ease-in-out both; }
+        .techd-word { animation: techd-word-in 3200ms ease-out both; }
         .techd-gear-art { display: block; transform: translate(1%, 0%) scale(1); transform-origin: 50% 50%; }
         @media (prefers-reduced-motion: reduce) {
           .techd-gear-translate, .techd-gear-fade, .techd-gear-spin, .techd-gear-trail-wrap { animation: none; transform: none; opacity: 1; }
@@ -121,22 +118,25 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
       >
         <div className="techd-gear-translate shrink-0" style={{ width: GEAR, height: GEAR, willChange: "transform" }}>
           <div className="techd-gear-fade relative" style={{ width: GEAR, height: GEAR, willChange: "transform, opacity" }}>
-            {/* Trailing echoes rotated slightly behind the sharp gear to fake rotational motion blur */}
-            {[-24, -16, -10, -5].map((deg, i) => (
-              <div
-                key={deg}
-                className="techd-gear-trail-wrap absolute inset-0"
-                style={{ ["--trail-opacity" as string]: `${0.12 + i * 0.06}` } as React.CSSProperties}
-              >
-                {/* Static angular offset on the outer wrapper... */}
-                <div className="absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
-                  {/* ...spin animation on the inner wrapper so the offset isn't clobbered */}
-                  <div className="techd-gear-spin absolute inset-0">
-                    <img src={techdGear} alt="" width={GEAR} height={GEAR} className="techd-gear-art" style={{ filter: "blur(1px)" }} />
+            {/* Trailing echoes — graduated opacity + blur to fake rotational motion blur */}
+            {[-52, -38, -26, -16, -9, -4].map((deg, i, arr) => {
+              const t = i / (arr.length - 1); // 0 = furthest, 1 = closest
+              const trailOpacity = (0.15 + t * 0.45).toFixed(2); // 0.15 → 0.60
+              const blurPx = (4.5 - t * 3.5).toFixed(1);         // 4.5px → 1.0px
+              return (
+                <div
+                  key={deg}
+                  className="techd-gear-trail-wrap absolute inset-0"
+                  style={{ ["--trail-opacity" as string]: trailOpacity } as React.CSSProperties}
+                >
+                  <div className="absolute inset-0" style={{ transform: `rotate(${deg}deg)` }}>
+                    <div className="techd-gear-spin absolute inset-0">
+                      <img src={techdGear} alt="" width={GEAR} height={GEAR} className="techd-gear-art" style={{ filter: `blur(${blurPx}px)` }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {/* Sharp gear on top */}
             <div className="techd-gear-spin absolute inset-0">
               <img src={techdGear} alt="" width={GEAR} height={GEAR} className="techd-gear-art" />
