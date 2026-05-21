@@ -29,7 +29,7 @@ export const ProductHeroSection = ({ practice, product }: Props) => {
   ];
 
   return (
-    <section className="relative overflow-hidden min-h-[60vh] flex items-center">
+    <section id="hero" className="relative overflow-hidden min-h-[60vh] flex items-center scroll-mt-24">
       <SectionMarker page={`Product / ${product.name}`} name="Hero" />
       <PageHeroBackdrop figure={<PracticeFigure practiceId={practice.id} />} />
 
