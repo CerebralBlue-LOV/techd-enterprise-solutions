@@ -81,7 +81,7 @@ export function ChatPanel({ messages, loading, onSend, onReset, onClose }: Props
         {messages.length === 0 ? (
           <div className="flex flex-col gap-5">
             {/* Intro card */}
-            <div className="flex flex-col items-center gap-2 rounded-2xl border border-border/60 bg-white p-5 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+            <div className="flex flex-col items-center gap-2 rounded-2xl border border-border/60 bg-muted/30 p-5 text-center shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/70 shadow-[0_4px_16px_-4px_hsl(var(--primary)/0.5)]">
                 <img src={techdMarkWhite} alt="" aria-hidden className="h-7 w-7 object-contain" />
               </div>
@@ -101,7 +101,7 @@ export function ChatPanel({ messages, loading, onSend, onReset, onClose }: Props
                   key={text}
                   onClick={() => onSend(text)}
                   className={cn(
-                    "rounded-xl border border-border/60 bg-white px-3 py-3 text-left",
+                    "rounded-xl border border-border/60 bg-background px-3 py-3 text-left",
                     "shadow-[0_1px_2px_rgba(0,0,0,0.03)]",
                     "transition-all duration-200 ease-out",
                     "hover:border-primary/60 hover:shadow-[0_4px_16px_-6px_hsl(var(--primary)/0.35)] hover:-translate-y-0.5",
@@ -127,7 +127,7 @@ export function ChatPanel({ messages, loading, onSend, onReset, onClose }: Props
                   <img src={techdMarkWhite} alt="" aria-hidden className="h-4 w-4 object-contain" />
                 </div>
 
-                <div className="rounded-2xl rounded-bl-sm border border-border/60 bg-white px-4 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <div className="rounded-2xl rounded-bl-sm border border-border/60 bg-muted/50 px-4 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                   <div className="flex gap-1.5">
                     {([0, 200, 400] as const).map((delay, i) => (
                       <span

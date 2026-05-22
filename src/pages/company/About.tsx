@@ -135,10 +135,10 @@ const About = () => {
               <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary mb-3">
                 Four practices
               </p>
-              <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-background">
+              <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-white">
                 Where TechD delivers
               </h2>
-              <p className="mt-4 text-base font-light text-background/70 leading-relaxed">
+              <p className="mt-4 text-base font-light text-white/70 leading-relaxed">
                 A practitioner team in each practice area, mapped to IBM's AI Operating Model.
               </p>
             </div>
@@ -150,18 +150,18 @@ const About = () => {
                 <Reveal key={p.name} delay={i * 60}>
                   <Link
                     to={p.to}
-                    className="group relative block h-full overflow-hidden rounded-xl border border-white/10 bg-background/[0.04] backdrop-blur-sm p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.55)] hover:-translate-y-0.5"
+                    className="group relative block h-full overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.55)] hover:-translate-y-0.5"
                   >
                     <div className="relative">
-                      <h3 className="text-xl font-bold text-background leading-tight">
+                      <h3 className="text-xl font-bold text-white leading-tight">
                         {p.name}
                       </h3>
-                      <p className="mt-2 text-sm font-light text-background/70 leading-relaxed">
+                      <p className="mt-2 text-sm font-light text-white/70 leading-relaxed">
                         {p.description}
                       </p>
                       {stack.length > 0 && (
-                        <p className="mt-4 text-[11px] font-light text-background/50">
-                          <span className="font-bold uppercase tracking-wider text-background/50">
+                        <p className="mt-4 text-[11px] font-light text-white/50">
+                          <span className="font-bold uppercase tracking-wider text-white/50">
                             Stack ·{" "}
                           </span>
                           {stack.join(" · ")}
@@ -199,12 +199,15 @@ const About = () => {
                       alt={l.name}
                       className={`h-full w-full object-cover ${LEADER_PHOTO_POSITION[l.name] ?? "object-center"} transition-transform duration-700 ease-out group-hover:scale-105`}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/30 to-transparent" />
+                    <div
+                      className="absolute inset-0"
+                      style={{ background: "linear-gradient(to top, hsl(var(--surface-dark-deep) / 0.92), hsl(var(--surface-dark-deep) / 0.3) 55%, transparent)" }}
+                    />
                     <div className="absolute bottom-0 left-0 right-0 p-5">
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                         {l.title}
                       </p>
-                      <h3 className="mt-1 text-2xl font-bold text-background leading-tight">
+                      <h3 className="mt-1 text-2xl font-bold text-white leading-tight">
                         {l.name}
                       </h3>
                     </div>

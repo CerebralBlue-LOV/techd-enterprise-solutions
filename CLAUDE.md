@@ -57,10 +57,10 @@ src/
     ui/             # shadcn/ui primitives — DO NOT touch
     layout/         # Header, Footer, Layout, NavLink  (alias: @layout)
     shared/         # Reveal, SectionHeading, SectionMarker, GeometricAccent,
-                    # LogoStrip, IBMGoldBadge, SectionBackdrop, SEO
+                    # LogoStrip, IBMGoldBadge, SectionBackdrop, SEO, DarkModeToggle
                     # (aliases: @shared and @seo both resolve here)
   content/          # Typed TS data modules (see Content files below)  (alias: @content)
-  hooks/            # use-mobile, use-toast  (alias: @hooks)
+  hooks/            # use-mobile, use-toast, use-dark-mode  (alias: @hooks)
   lib/              # utils.ts  (alias: @lib)
   pages/            # Route-level components  (alias: @pages)
     Home.tsx
@@ -108,14 +108,30 @@ public/             # Favicons at root; public/images/ for all other static asse
 
 ## Brand tokens (configured in `tailwind.config.ts` and `src/index.css`)
 
-| Token | Hex | Usage |
-|---|---|---|
-| `primary` | `#00B3E3` | CTAs, accents, link hovers, focus rings |
-| `secondary` | `#56565A` | Body text, headings, structural |
-| `muted` / `accent` | `#A7A5A8` | Borders, dividers, secondary text |
-| `background` | `#FFFFFF` | Page background |
+| Token | Light | Dark | Usage |
+|---|---|---|---|
+| `primary` | `#00B3E3` | `#00BFEF` | CTAs, accents, link hovers, focus rings |
+| `secondary` | `#56565A` | `#F2F2F2` | Structural text — flips light in dark mode |
+| `foreground` | `#56565A` | `#FAFAFA` | Default text, headings |
+| `muted-foreground` | `#A7A5A8` | `#B3B0B4` | Borders, dividers, secondary text |
+| `background` | `#FFFFFF` | `#16161A` | Page background |
 
-If a design needs a color outside this palette, **stop and ask** — don't introduce colors silently.
+All tokens are defined as paired light/dark values in `src/index.css`. If a design needs a color outside this palette, **stop and ask** — don't introduce colors silently.
+
+## Dark mode
+
+Dark mode is active on the `feature/dark-mode` branch. Architecture uses three layers — see `docs/DARK-MODE.md` for the full model, decision tree, and per-page audit checklist.
+
+**Key files:**
+- `src/index.css` — all color tokens, light and dark paired with comments
+- `src/hooks/use-dark-mode.ts` — toggles `.dark` on `<html>`, persists to `localStorage`
+- `src/components/shared/DarkModeToggle.tsx` — reusable Moon/Sun icon button
+- `src/components/layout/Header.tsx` — renders `<DarkModeToggle />` in the navbar
+
+**Rules:**
+- Fix tokens in `src/index.css` first — one change propagates everywhere.
+- Use `dark:` Tailwind variants only for hardcoded colors that don't go through tokens.
+- For images that don't render on dark backgrounds, use the `logoOnDark` pattern (`src/content/site.ts` + `public/images/partners/white/`).
 
 ## Aesthetic
 
@@ -166,7 +182,7 @@ Stripe / Linear / Vercel / Anthropic. Quiet, confident, typography-led, generous
 
 ## What is deferred (do not build)
 
-CMS integration · real CRM-routed form · dark mode · ROI calculator · multi-language · full WCAG 2.2 AA audit · third-party pen test · 6 approved case studies.
+CMS integration · real CRM-routed form · ROI calculator · multi-language · full WCAG 2.2 AA audit · third-party pen test · 6 approved case studies.
 
 ## When you're unsure
 
@@ -238,3 +254,4 @@ Rules that must hold in every content edit:
 | `docs/rebuild/industries.md` | Industry selection rationale (why Financial Services is out, Media & Entertainment is in). |
 | `docs/rebuild/resources.md` | Resources hub rebuild rationale. Clean slate decision. |
 | `docs/audit/` | Raw per-section audits from techd.com crawl. Reference if PM asks why something was included or excluded. |
+| `docs/DARK-MODE.md` | Dark mode architecture (three layers), decision tree, per-route audit checklist, verification steps. |

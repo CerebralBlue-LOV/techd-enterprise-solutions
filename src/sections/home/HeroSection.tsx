@@ -50,7 +50,7 @@ export const HeroSection = () => {
             <Button asChild size="lg" className="btn-glow w-full sm:w-auto">
               <Link to="/contact">Talk to an expert</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto dark:border-primary dark:text-primary dark:hover:bg-primary/10">
               <ScrollToSectionLink sectionId="solutions">See our solutions</ScrollToSectionLink>
             </Button>
           </div>

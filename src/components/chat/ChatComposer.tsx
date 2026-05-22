@@ -30,13 +30,13 @@ export function ChatComposer({ onSend, loading }: Props) {
   const canSend = !!value.trim() && !loading;
 
   return (
-    <div className="border-t border-border/60 bg-white px-4 py-3">
+    <div className="border-t border-border/60 bg-background px-4 py-3">
       <label className="sr-only" htmlFor="chat-input">
         Ask TechD
       </label>
       <div
         className={cn(
-          "flex items-end gap-2 rounded-2xl border border-border bg-white py-2 pl-4 pr-2",
+          "flex items-end gap-2 rounded-2xl border border-border bg-background py-2 pl-4 pr-2",
           "transition-all duration-200 ease-out",
           "focus-within:border-primary focus-within:shadow-[0_0_0_4px_hsl(var(--primary)/0.12)]",
         )}

@@ -12,67 +12,102 @@
 */
 
 @layer base {
+  /* ─────────────────────────────────────────────────────────────────
+     LIGHT MODE — default tokens
+     Pair every change here with the matching value in the .dark block.
+     Format: --token: H S% L%;   /* dark: H S% L% *\/
+     ───────────────────────────────────────────────────────────────── */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 3% 35%;
+    /* ── Surfaces ─────────────────────────────────────────────────── */
+    --background:           0 0% 100%;        /* dark: 240 6% 10% */
+    --foreground:           240 3% 35%;       /* dark: 0 0% 98%   */
+    --card:                 0 0% 100%;        /* dark: 240 6% 12% */
+    --card-foreground:      240 3% 35%;       /* dark: 0 0% 98%   */
+    --popover:              0 0% 100%;        /* dark: 240 6% 12% */
+    --popover-foreground:   240 3% 35%;       /* dark: 0 0% 98%   */
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 3% 35%;
+    /* ── Brand ────────────────────────────────────────────────────── */
+    --primary:              193 100% 45%;     /* dark: 193 100% 50% */
+    --primary-foreground:   0 0% 100%;        /* dark: 0 0% 100%    */
+    --secondary:            240 3% 35%;       /* dark: 0 0% 95%     */
+    --secondary-foreground: 0 0% 100%;        /* dark: 240 6% 10%   */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 3% 35%;
+    /* ── Neutrals ─────────────────────────────────────────────────── */
+    --muted:                240 5% 96%;       /* dark: 240 4% 18% */
+    --muted-foreground:     285 2% 55%;       /* dark: 285 2% 70% */
+    --accent:               193 100% 96%;     /* dark: 240 4% 20% */
+    --accent-foreground:    240 3% 25%;       /* dark: 0 0% 98%   */
 
-    --primary: 193 100% 45%;
-    --primary-foreground: 0 0% 100%;
+    /* ── Feedback ─────────────────────────────────────────────────── */
+    --destructive:          0 84% 60%;        /* dark: 0 62% 40% */
+    --destructive-foreground: 0 0% 100%;      /* dark: 0 0% 98%  */
 
-    --secondary: 240 3% 35%;
-    --secondary-foreground: 0 0% 100%;
+    /* ── Borders & focus ──────────────────────────────────────────── */
+    --border:               285 2% 88%;       /* dark: 240 4% 22% */
+    --input:                285 2% 88%;       /* dark: 240 4% 22% */
+    --ring:                 193 100% 45%;     /* dark: 193 100% 50% */
 
-    --muted: 240 5% 96%;
-    --muted-foreground: 285 2% 55%;
-
-    --accent: 193 100% 96%;
-    --accent-foreground: 240 3% 25%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 285 2% 88%;
-    --input: 285 2% 88%;
-    --ring: 193 100% 45%;
-
+    /* ── Geometry (mode-independent) ─────────────────────────────── */
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 240 3% 35%;
-    --sidebar-primary: 193 100% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 96%;
-    --sidebar-accent-foreground: 240 3% 25%;
-    --sidebar-border: 285 2% 88%;
-    --sidebar-ring: 193 100% 45%;
+    /* ── Dark surfaces (never flip — always dark in both modes) ──── */
+    --surface-dark:      240 3% 26%;   /* DarkGlowPanel base */
+    --surface-dark-deep: 240 6% 10%;   /* DarkGlowPanel depth — matches dark background */
+
+    /* ── Sidebar ──────────────────────────────────────────────────── */
+    --sidebar-background:        0 0% 100%;   /* dark: 240 6% 10% */
+    --sidebar-foreground:        240 3% 35%;  /* dark: 0 0% 98%   */
+    --sidebar-primary:           193 100% 45%;/* dark: 193 100% 50% */
+    --sidebar-primary-foreground:0 0% 100%;   /* dark: 240 6% 10% */
+    --sidebar-accent:            240 5% 96%;  /* dark: 240 4% 18% */
+    --sidebar-accent-foreground: 240 3% 25%;  /* dark: 0 0% 98%   */
+    --sidebar-border:            285 2% 88%;  /* dark: 240 4% 22% */
+    --sidebar-ring:              193 100% 45%;/* dark: 193 100% 50% */
   }
 
+  /* ─────────────────────────────────────────────────────────────────
+     DARK MODE — overrides
+     Mirrors :root above. Keep the same order so diffs are easy to scan.
+     ───────────────────────────────────────────────────────────────── */
   .dark {
-    --background: 240 6% 10%;
-    --foreground: 0 0% 98%;
-    --card: 240 6% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 6% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 193 100% 50%;
-    --primary-foreground: 240 6% 10%;
-    --secondary: 240 4% 20%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 4% 18%;
-    --muted-foreground: 285 2% 70%;
-    --accent: 240 4% 20%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62% 40%;
+    /* ── Surfaces ─────────────────────────────────────────────────── */
+    --background:           240 6% 10%;
+    --foreground:           0 0% 98%;
+    --card:                 240 6% 12%;
+    --card-foreground:      0 0% 98%;
+    --popover:              240 6% 12%;
+    --popover-foreground:   0 0% 98%;
+
+    /* ── Brand ────────────────────────────────────────────────────── */
+    --primary:              193 100% 50%;
+    --primary-foreground:   0 0% 100%;
+    --secondary:            0 0% 95%;
+    --secondary-foreground: 240 6% 10%;
+
+    /* ── Neutrals ─────────────────────────────────────────────────── */
+    --muted:                240 4% 18%;
+    --muted-foreground:     285 2% 70%;
+    --accent:               240 4% 20%;
+    --accent-foreground:    0 0% 98%;
+
+    /* ── Feedback ─────────────────────────────────────────────────── */
+    --destructive:          0 62% 40%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 4% 22%;
-    --input: 240 4% 22%;
-    --ring: 193 100% 50%;
+
+    /* ── Borders & focus ──────────────────────────────────────────── */
+    --border:               240 4% 22%;
+    --input:                240 4% 22%;
+    --ring:                 193 100% 50%;
+
+    /* ── Sidebar ──────────────────────────────────────────────────── */
+    --sidebar-background:        240 6% 10%;
+    --sidebar-foreground:        0 0% 98%;
+    --sidebar-primary:           193 100% 50%;
+    --sidebar-primary-foreground:240 6% 10%;
+    --sidebar-accent:            240 4% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border:            240 4% 22%;
+    --sidebar-ring:              193 100% 50%;
   }
 }
 
@@ -83,6 +118,7 @@
 
   html {
     scroll-behavior: smooth;
+    overscroll-behavior: none;
   }
 
   body {
@@ -91,11 +127,11 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight text-secondary;
+    @apply font-bold tracking-tight text-foreground;
   }
 
   ::selection {
-    @apply bg-primary/20 text-secondary;
+    @apply bg-primary/20 text-foreground;
   }
 }
 

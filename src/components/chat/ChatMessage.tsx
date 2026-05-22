@@ -77,7 +77,7 @@ export function ChatMessage({ message }: Props) {
             "rounded-2xl rounded-bl-sm px-4 py-2.5 text-base font-light leading-relaxed",
             message.error
               ? "border border-red-200 bg-red-50 text-red-700"
-              : "border border-border/60 bg-white text-secondary shadow-[0_1px_2px_rgba(0,0,0,0.04)]",
+              : "border border-border/60 bg-muted/50 text-secondary shadow-[0_1px_2px_rgba(0,0,0,0.04)]",
           )}
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
@@ -95,7 +95,7 @@ export function ChatMessage({ message }: Props) {
                   target={c.url.startsWith("http") ? "_blank" : undefined}
                   rel={c.url.startsWith("http") ? "noopener noreferrer" : undefined}
                   className={cn(
-                    "inline-flex items-center rounded-full border border-border/70 bg-white px-2.5 py-0.5",
+                    "inline-flex items-center rounded-full border border-border/70 bg-muted/30 px-2.5 py-0.5",
                     "text-sm font-normal text-muted-foreground",
                     "transition-colors duration-200 hover:border-primary hover:bg-primary/5 hover:text-primary",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
@@ -106,7 +106,7 @@ export function ChatMessage({ message }: Props) {
               ) : (
                 <span
                   key={i}
-                  className="inline-flex items-center rounded-full border border-border/70 bg-white px-2.5 py-0.5 text-sm font-normal text-muted-foreground"
+                  className="inline-flex items-center rounded-full border border-border/70 bg-muted/30 px-2.5 py-0.5 text-sm font-normal text-muted-foreground"
                 >
                   {c.title}
                 </span>

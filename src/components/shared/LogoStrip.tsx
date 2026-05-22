@@ -1,4 +1,5 @@
 import { CUSTOMERS, type Customer } from "@/content/site";
+import { useDarkMode } from "@hooks/use-dark-mode";
 
 const Row = ({
   items,
@@ -7,6 +8,7 @@ const Row = ({
   items: Customer[];
   reverse?: boolean;
 }) => {
+  const { isDark } = useDarkMode();
   // Duplicate the list once for a seamless marquee loop. Use negative
   // animation-delay (set in CSS via inline style below) to offset the start
   // so top-tier brands hit center a few seconds into the loop.
@@ -27,28 +29,31 @@ const Row = ({
         }`}
         style={{ animationDelay: "-12s" }}
       >
-        {doubled.map((c, i) => (
-          <a
-            key={`${c.name}-${i}`}
-            href={c.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={c.name}
-            aria-label={c.name}
-            className="group shrink-0 flex items-center"
-            aria-hidden={i >= items.length ? "true" : undefined}
-            tabIndex={i >= items.length ? -1 : 0}
-          >
-            {c.logo && (
-              <img
-                src={`${import.meta.env.BASE_URL}${c.logo.replace(/^\//, "")}`}
-                alt={c.name}
-                loading="lazy"
-                className={`${c.logoClass ?? "h-10 md:h-12"} w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
-              />
-            )}
-          </a>
-        ))}
+        {doubled.map((c, i) => {
+          const logoPath = isDark && c.logoOnDark ? c.logoOnDark : c.logo;
+          return (
+            <a
+              key={`${c.name}-${i}`}
+              href={c.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={c.name}
+              aria-label={c.name}
+              className="group shrink-0 flex items-center"
+              aria-hidden={i >= items.length ? "true" : undefined}
+              tabIndex={i >= items.length ? -1 : 0}
+            >
+              {logoPath && (
+                <img
+                  src={`${import.meta.env.BASE_URL}${logoPath.replace(/^\//, "")}`}
+                  alt={c.name}
+                  loading="lazy"
+                  className={`${c.logoClass ?? "h-10 md:h-12"} w-auto object-contain opacity-70 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0`}
+                />
+              )}
+            </a>
+          );
+        })}
       </div>
     </div>
   );

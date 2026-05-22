@@ -48,7 +48,7 @@ export const PageApproachSection = ({
             <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary mb-3">
               {eyebrow}
             </p>
-            <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-background">
+            <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-white">
               {title}
             </h2>
           </div>
@@ -75,7 +75,7 @@ export const PageApproachSection = ({
                 className={cn(
                   "group relative h-full flex flex-col rounded-2xl p-7 overflow-hidden transition-all duration-500 hover:-translate-y-1.5",
                   isDark
-                    ? "border border-white/10 bg-background/[0.04] backdrop-blur-sm hover:border-primary/60 hover:shadow-[0_18px_40px_-18px_hsl(var(--primary)/0.55)]"
+                    ? "border border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-primary/60 hover:shadow-[0_18px_40px_-18px_hsl(var(--primary)/0.55)]"
                     : "border border-border bg-background hover:border-primary/50 hover:shadow-[0_18px_40px_-18px_hsl(var(--primary)/0.4)]",
                 )}
               >
@@ -84,7 +84,7 @@ export const PageApproachSection = ({
                   className={cn(
                     "pointer-events-none absolute -top-4 -right-2 text-[7rem] leading-none font-bold tracking-tighter select-none transition-all duration-700 ease-out group-hover:-translate-y-1 group-hover:scale-105",
                     isDark
-                      ? "text-background/[0.06] group-hover:text-background/[0.12]"
+                      ? "text-white/[0.06] group-hover:text-white/[0.12]"
                       : "text-primary/[0.06] group-hover:text-primary/[0.12]",
                   )}
                 >
@@ -116,7 +116,7 @@ export const PageApproachSection = ({
                 <h3
                   className={cn(
                     "relative mt-5 text-xl md:text-2xl font-bold leading-tight tracking-tight transition-transform duration-500 group-hover:translate-x-0.5",
-                    isDark ? "text-background" : "text-secondary",
+                    isDark ? "text-white" : "text-secondary",
                   )}
                 >
                   {step.step}
@@ -125,7 +125,7 @@ export const PageApproachSection = ({
                 <p
                   className={cn(
                     "relative mt-3 text-sm font-light leading-relaxed",
-                    isDark ? "text-background/75" : "text-muted-foreground",
+                    isDark ? "text-white/75" : "text-muted-foreground",
                   )}
                 >
                   {step.detail}

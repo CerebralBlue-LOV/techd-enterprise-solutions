@@ -13,7 +13,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 const PANEL_BG: CSSProperties = {
   background:
-    "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
+    "linear-gradient(160deg, hsl(var(--surface-dark)) 0%, hsl(var(--surface-dark) / 0.92) 60%, hsl(var(--surface-dark-deep)) 100%)",
 };
 
 const LEVELS: Record<
@@ -35,7 +35,7 @@ const LEVELS: Record<
     blobA: "0.9",
     blobB: "0.8",
     blobC: "0.75",
-    shadow: "shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)]",
+    shadow: "shadow-[0_30px_80px_-30px_hsl(var(--surface-dark)/0.6)]",
   },
   medium: {
     shimmerOpacity: "opacity-40",
@@ -44,7 +44,7 @@ const LEVELS: Record<
     blobA: "0.6",
     blobB: "0.5",
     blobC: "0.45",
-    shadow: "shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)]",
+    shadow: "shadow-[0_30px_80px_-30px_hsl(var(--surface-dark)/0.6)]",
   },
   soft: {
     shimmerOpacity: "opacity-30",
@@ -53,7 +53,7 @@ const LEVELS: Record<
     blobA: "0.4",
     blobB: "0.35",
     blobC: "0.3",
-    shadow: "shadow-[0_30px_80px_-30px_hsl(var(--secondary)/0.6)]",
+    shadow: "shadow-[0_30px_80px_-30px_hsl(var(--surface-dark)/0.6)]",
   },
 };
 

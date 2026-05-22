@@ -78,7 +78,7 @@ const IBMPartnership = () => {
               className="relative overflow-hidden rounded-2xl border border-white/10 p-6 md:p-10"
               style={{
                 background:
-                  "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
+                  "linear-gradient(160deg, hsl(var(--surface-dark)) 0%, hsl(var(--surface-dark) / 0.92) 60%, hsl(var(--surface-dark-deep)) 100%)",
               }}
             >
               <div

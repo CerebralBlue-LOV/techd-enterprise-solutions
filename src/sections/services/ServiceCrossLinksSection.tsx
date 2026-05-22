@@ -31,10 +31,10 @@ export const ServiceCrossLinksSection = ({ service }: Props) => {
             <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary mb-3">
               Where this fits
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight text-background">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight text-white">
               Adjacent services and practices
             </h2>
-            <p className="mt-4 text-base md:text-lg font-light text-background/75 leading-relaxed">
+            <p className="mt-4 text-base md:text-lg font-light text-white/75 leading-relaxed">
               Most engagements span more than one service. These are the most common adjacencies.
             </p>
           </div>
@@ -49,7 +49,7 @@ export const ServiceCrossLinksSection = ({ service }: Props) => {
                 <li className="h-full">
                   <Link
                     to={to}
-                    className="group relative block h-full overflow-hidden rounded-xl border border-white/10 bg-background/[0.04] backdrop-blur-sm p-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/60 hover:bg-background/[0.07] hover:shadow-[0_12px_32px_-16px_hsl(var(--primary)/0.5)]"
+                    className="group relative block h-full overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-primary/60 hover:bg-white/[0.07] hover:shadow-[0_12px_32px_-16px_hsl(var(--primary)/0.5)]"
                   >
                     <span
                       aria-hidden
@@ -61,13 +61,13 @@ export const ServiceCrossLinksSection = ({ service }: Props) => {
                       </span>
                       <ArrowUpRight
                         size={16}
-                        className="text-background/60 transition-all duration-300 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        className="text-white/60 transition-all duration-300 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                       />
                     </div>
-                    <h3 className="mt-3 text-lg font-bold text-background leading-tight">
+                    <h3 className="mt-3 text-lg font-bold text-white leading-tight">
                       {l.label}
                     </h3>
-                    <p className="mt-2 text-sm font-light text-background/70 leading-relaxed">
+                    <p className="mt-2 text-sm font-light text-white/70 leading-relaxed">
                       {l.blurb}
                     </p>
                   </Link>

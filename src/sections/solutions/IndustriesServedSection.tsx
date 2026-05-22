@@ -43,7 +43,7 @@ export const IndustriesServedSection = ({ practice }: Props) => {
 
         <div className="mt-10">
           {/* Single unified dark card */}
-          <div className="relative overflow-hidden rounded-2xl bg-secondary">
+          <div className="relative overflow-hidden rounded-2xl bg-surface-dark">
             {/* Single subtle cyan glow */}
             <div
               aria-hidden
@@ -87,10 +87,10 @@ export const IndustriesServedSection = ({ practice }: Props) => {
                         <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
                           {it.ind.regulation}
                         </p>
-                        <h3 className="mt-4 text-3xl md:text-4xl font-bold text-background leading-[1.1] tracking-tight">
+                        <h3 className="mt-4 text-3xl md:text-4xl font-bold text-white leading-[1.1] tracking-tight">
                           {it.ind.name}
                         </h3>
-                        <p className="mt-4 max-w-md text-sm md:text-base font-light text-background/70 leading-relaxed">
+                        <p className="mt-4 max-w-md text-sm md:text-base font-light text-white/70 leading-relaxed">
                           {it.proof}
                         </p>
                       </div>
@@ -135,8 +135,8 @@ export const IndustriesServedSection = ({ practice }: Props) => {
                             className={cn(
                               "text-base md:text-lg font-normal leading-tight tracking-tight transition-all duration-500",
                               isActive
-                                ? "text-background translate-x-1"
-                                : "text-background/50 group-hover:text-background",
+                                ? "text-white translate-x-1"
+                                : "text-white/50 group-hover:text-white",
                             )}
                           >
                             {it.ind.name}
