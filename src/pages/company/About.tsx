@@ -112,7 +112,7 @@ const About = () => {
                       aria-hidden
                       className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary/[0.06] to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
                     />
-                    <p className="text-2xl md:text-3xl font-bold text-secondary leading-none transition-all duration-300 group-hover:scale-105 group-hover:text-primary">
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary leading-tight transition-all duration-300 group-hover:scale-105 group-hover:text-primary">
                       {f.value}
                     </p>
                     <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
