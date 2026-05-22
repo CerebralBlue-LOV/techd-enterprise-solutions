@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
+import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
 
 
 type AssetShape = "horizontal" | "square";
@@ -24,6 +25,8 @@ type Asset = {
   shape: AssetShape;
   /** single size (px) at which to render the asset */
   size: number;
+  /** if true, render the surface panel on a dark background */
+  dark?: boolean;
   candidates: Candidate[];
 };
 
@@ -70,6 +73,22 @@ const ASSETS: Asset[] = [
         method: "Nano-Banana · 4× PNG",
         src: gearUpscale,
         note: "Upscaled colored gear mark, transparent background.",
+      },
+    ],
+  },
+  {
+    id: "gear-white",
+    name: "Gear mark (white)",
+    filename: "techd-gear-upscale-white.png",
+    shape: "square",
+    size: 800,
+    dark: true,
+    candidates: [
+      {
+        label: "AI upscale · white",
+        method: "Recolored from colored upscale",
+        src: gearUpscaleWhite,
+        note: "Pure-white gear for dark surfaces; transparent background.",
       },
     ],
   },
@@ -172,18 +191,31 @@ const TechDBrandLab = () => {
                       </code>
                     </div>
 
-                    {/* Single surface panel: colored on light with checkerboard transparency preview */}
+                    {/* Single surface panel: light or dark depending on asset.dark */}
                     {([
-                      {
-                        key: "light",
-                        label: "Colored (on light)",
-                        bgClass: "bg-background",
-                        labelClass: "text-muted-foreground",
-                        checkerLight: "hsl(0 0% 96%)",
-                        checkerDark: "hsl(0 0% 90%)",
-                        imgSrc: c.src,
-                        fileLabel: c.src.split("/").pop()?.split("?")[0] ?? "",
-                      },
+                      asset.dark
+                        ? {
+                            key: "dark",
+                            label: "White (on dark)",
+                            bgClass: "bg-secondary",
+                            labelClass: "text-background/60",
+                            checkerLight: "hsl(var(--secondary))",
+                            checkerDark: "hsl(0 0% 28%)",
+                            imgSrc: c.src,
+                            fileLabel:
+                              c.src.split("/").pop()?.split("?")[0] ?? "",
+                          }
+                        : {
+                            key: "light",
+                            label: "Colored (on light)",
+                            bgClass: "bg-background",
+                            labelClass: "text-muted-foreground",
+                            checkerLight: "hsl(0 0% 96%)",
+                            checkerDark: "hsl(0 0% 90%)",
+                            imgSrc: c.src,
+                            fileLabel:
+                              c.src.split("/").pop()?.split("?")[0] ?? "",
+                          },
                     ] as const).map((surface) => (
                       <div
                         key={surface.key}
