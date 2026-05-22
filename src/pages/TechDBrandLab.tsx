@@ -15,7 +15,7 @@ import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import wordmarkUpscaleWhite from "@/assets/brand/lab/techd-wordmark-upscale-white.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
 import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
-import markWhiteUpscale from "@/assets/brand/lab/techd-mark-white-upscale.png";
+
 
 type AssetShape = "horizontal" | "square";
 
