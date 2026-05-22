@@ -8,23 +8,11 @@ import wordmarkOriginal from "@/assets/brand/techd-wordmark.png";
 import gearOriginal from "@/assets/brand/techd-gear.png";
 import markWhiteOriginal from "@/assets/brand/techd-mark-white.png";
 
-// Vector traces (SVG)
-import logoTrace from "@/assets/brand/lab/techd-logo-trace.svg";
-import wordmarkTrace from "@/assets/brand/lab/techd-wordmark-trace.svg";
-import gearTrace from "@/assets/brand/lab/techd-gear-trace.svg";
-import markWhiteTrace from "@/assets/brand/lab/techd-mark-white-trace.svg";
-
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
 import markWhiteUpscale from "@/assets/brand/lab/techd-mark-white-upscale.png";
-
-// AI redraw (from-scratch raster)
-import logoRedraw from "@/assets/brand/lab/techd-logo-redraw.png";
-import wordmarkRedraw from "@/assets/brand/lab/techd-wordmark-redraw.png";
-import gearRedraw from "@/assets/brand/lab/techd-gear-redraw.png";
-import markWhiteRedraw from "@/assets/brand/lab/techd-mark-white-redraw.png";
 
 type AssetShape = "horizontal" | "square";
 
@@ -63,22 +51,10 @@ const ASSETS: Asset[] = [
         note: "What ships today. Pixelates above ~280px width.",
       },
       {
-        label: "Vector trace",
-        method: "vtracer · SVG",
-        src: logoTrace,
-        note: "Inherits source pixel edges, but resolution-independent.",
-      },
-      {
         label: "AI upscale",
         method: "Nano-Banana · 4× PNG",
         src: logoUpscale,
-        note: "Same shapes, higher pixel count. Still raster.",
-      },
-      {
-        label: "AI redraw",
-        method: "GPT-Image · PNG",
-        src: logoRedraw,
-        note: "Cleanest geometry but gear arrangement may not match brand exactly.",
+        note: "Same shapes, higher pixel count.",
       },
     ],
   },
@@ -97,22 +73,10 @@ const ASSETS: Asset[] = [
         note: "What ships today.",
       },
       {
-        label: "Vector trace",
-        method: "vtracer · SVG",
-        src: wordmarkTrace,
-        note: "Letter shapes from existing PNG.",
-      },
-      {
         label: "AI upscale",
         method: "Nano-Banana · 4× PNG",
         src: wordmarkUpscale,
-        note: "Watch for letterform distortion vs original.",
-      },
-      {
-        label: "AI redraw",
-        method: "GPT-Image · PNG",
-        src: wordmarkRedraw,
-        note: "Clean letters but font may differ from real brand.",
+        note: "Higher resolution version of the wordmark.",
       },
     ],
   },
@@ -131,22 +95,10 @@ const ASSETS: Asset[] = [
         note: "What ships today.",
       },
       {
-        label: "Vector trace",
-        method: "vtracer · SVG",
-        src: gearTrace,
-        note: "Solid color, geometric — best trace candidate.",
-      },
-      {
         label: "AI upscale",
         method: "Nano-Banana · 4× PNG",
         src: gearUpscale,
-        note: "May add stylized outlines or change tooth count.",
-      },
-      {
-        label: "AI redraw",
-        method: "GPT-Image · PNG",
-        src: gearRedraw,
-        note: "Different gear geometry — only use if traces fail.",
+        note: "Higher resolution gear mark.",
       },
     ],
   },
@@ -165,22 +117,10 @@ const ASSETS: Asset[] = [
         note: "Used in footer / dark hero surfaces.",
       },
       {
-        label: "Vector trace",
-        method: "vtracer · SVG",
-        src: markWhiteTrace,
-        note: "Solid white silhouette — strong trace candidate.",
-      },
-      {
         label: "AI upscale",
         method: "Nano-Banana · 4× PNG",
         src: markWhiteUpscale,
-        note: "Watch for lost opacity on white-on-transparent.",
-      },
-      {
-        label: "AI redraw",
-        method: "GPT-Image · PNG",
-        src: markWhiteRedraw,
-        note: "Different gear geometry — only use if traces fail.",
+        note: "Higher resolution white mark.",
       },
     ],
   },
