@@ -15,7 +15,11 @@ Writes *-brand.png siblings next to each *-upscale.png in src/assets/brand/lab/.
 from pathlib import Path
 import numpy as np
 from PIL import Image
-from scipy import ndimage
+
+try:
+    from scipy import ndimage
+except ModuleNotFoundError:
+    ndimage = None
 
 LAB = Path(__file__).parent.parent / "src" / "assets" / "brand" / "lab"
 
@@ -69,6 +73,8 @@ def initial_labels(rgb: np.ndarray) -> np.ndarray:
 def majority_filter(labels: np.ndarray, mask: np.ndarray, window: int) -> np.ndarray:
     """Repaint each masked pixel with the modal label in a window x window box,
     counting only masked (opaque) pixels."""
+    if ndimage is None:
+        return labels
     out = labels.copy()
     for lbl in (0, 1, 2):
         # count of this label in a window x window box around each pixel
@@ -89,6 +95,8 @@ def absorb_small_islands(labels: np.ndarray, mask: np.ndarray, min_area: int) ->
     """Find connected components of each label; any component smaller than
     min_area is reassigned to the modal label of pixels in a dilated ring
     around it (i.e. the surrounding region's color)."""
+    if ndimage is None:
+        return labels
     out = labels.copy()
     for lbl in (0, 1, 2):
         region = (labels == lbl) & mask
