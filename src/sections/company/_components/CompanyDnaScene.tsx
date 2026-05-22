@@ -1,6 +1,7 @@
 import { useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useInView } from "@hooks/useInView";
 
 interface SceneProps {
   tiltX?: number;
@@ -173,17 +174,21 @@ export const CompanyDnaScene = ({ tiltX, tiltY }: SceneProps) => {
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const { ref, inView } = useInView<HTMLDivElement>("200px");
+  const animate = inView && !reduced;
 
   return (
-    <Canvas
-      dpr={[1, 1.75]}
-      camera={{ position: [0, 0.2, 9.5], fov: 44 }}
-      gl={{ alpha: true, antialias: true }}
-      style={{ background: "transparent" }}
-      frameloop={reduced ? "demand" : "always"}
-    >
-      <Helix tiltX={tiltX} tiltY={tiltY} />
-    </Canvas>
+    <div ref={ref} className="absolute inset-0">
+      <Canvas
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 0.2, 9.5], fov: 44 }}
+        gl={{ alpha: true, antialias: true }}
+        style={{ background: "transparent" }}
+        frameloop={animate ? "always" : "demand"}
+      >
+        <Helix tiltX={tiltX} tiltY={tiltY} />
+      </Canvas>
+    </div>
   );
 };
 
