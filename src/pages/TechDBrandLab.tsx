@@ -40,7 +40,7 @@ const ASSETS: Asset[] = [
     name: "Full logo (gears + wordmark)",
     filename: "techd-logo.webp",
     shape: "horizontal",
-    sizes: [70, 140, 280, 560],
+    size: 280,
     needsDark: true,
     candidates: [
       {
@@ -57,7 +57,7 @@ const ASSETS: Asset[] = [
     name: "Wordmark only",
     filename: "techd-wordmark.png",
     shape: "horizontal",
-    sizes: [70, 140, 280, 560],
+    size: 280,
     needsDark: true,
     candidates: [
       {
@@ -194,33 +194,18 @@ const TechDBrandLab = () => {
                         >
                           {surface.label}
                         </p>
-                        <div className="flex items-end gap-6 overflow-x-auto pb-2">
-                          {asset.sizes.map((size) => (
-                            <div
-                              key={size}
-                              className="flex flex-col items-center gap-2 shrink-0"
-                            >
-                              <img
-                                src={surface.imgSrc}
-                                alt={`${c.label} @ ${size}px (${surface.label})`}
-                                style={
-                                  asset.shape === "horizontal"
-                                    ? { height: size, width: "auto" }
-                                    : { height: size, width: size }
-                                }
-                                className="object-contain"
-                                loading="lazy"
-                              />
-                              <span
-                                className={cn(
-                                  "text-[10px] tabular-nums",
-                                  surface.sizeLabelClass,
-                                )}
-                              >
-                                {size}px
-                              </span>
-                            </div>
-                          ))}
+                        <div className="flex items-center justify-center min-h-[200px]">
+                          <img
+                            src={surface.imgSrc}
+                            alt={`${c.label} (${surface.label})`}
+                            style={
+                              asset.shape === "horizontal"
+                                ? { height: asset.size, width: "auto" }
+                                : { height: asset.size, width: asset.size }
+                            }
+                            className="object-contain"
+                            loading="lazy"
+                          />
                         </div>
                       </div>
                     ))}
