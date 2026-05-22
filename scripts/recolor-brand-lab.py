@@ -31,6 +31,8 @@ DARK_LUM_CUTOFF = 145
 ALPHA_FLOOR = 0
 MAJORITY_WINDOW = 7  # odd; pixels are repainted to the modal label in this window
 MIN_ISLAND_AREA = 400  # any color island smaller than this gets absorbed by its neighbors
+WHITE_PRESERVE_LUM = 220
+WHITE_PRESERVE_SAT = 35
 
 
 def initial_labels(rgb: np.ndarray) -> np.ndarray:
@@ -92,7 +94,15 @@ def absorb_small_islands(labels: np.ndarray, mask: np.ndarray, min_area: int) ->
     return out
 
 
-def recolor(src: Path, dst: Path, force_white: bool = False) -> None:
+def white_detail_mask(rgb: np.ndarray, alpha: np.ndarray) -> np.ndarray:
+    """Keep source near-white separator/highlight pixels so the original gear
+    silhouette stays intact after recoloring."""
+    lum = rgb.mean(axis=-1)
+    sat = rgb.max(axis=-1) - rgb.min(axis=-1)
+    return (alpha > ALPHA_FLOOR) & (lum >= WHITE_PRESERVE_LUM) & (sat <= WHITE_PRESERVE_SAT)
+
+
+def recolor(src: Path, dst: Path, force_white: bool = False, preserve_white_details: bool = False) -> None:
     im = Image.open(src).convert("RGBA")
     arr = np.array(im)
     rgb = arr[..., :3]
@@ -115,6 +125,9 @@ def recolor(src: Path, dst: Path, force_white: bool = False) -> None:
 
     palette = np.array([PRIMARY, SECONDARY, MUTED], dtype=np.uint8)
     out_rgb = palette[labels]
+    if preserve_white_details:
+        keep_white = white_detail_mask(rgb, alpha)
+        out_rgb = np.where(keep_white[..., None], rgb, out_rgb)
     # zero out transparent regions cleanly
     out_rgb = np.where(mask[..., None], out_rgb, 0)
     out_alpha = np.where(mask, alpha, 0)
@@ -132,18 +145,18 @@ def recolor(src: Path, dst: Path, force_white: bool = False) -> None:
 
 def main() -> None:
     jobs = [
-        ("techd-logo-upscale.png", "techd-logo-upscale-brand.png", False),
-        ("techd-wordmark-upscale.png", "techd-wordmark-upscale-brand.png", False),
-        ("techd-gear-upscale.png", "techd-gear-upscale-brand.png", False),
-        ("techd-gear-upscale-white.png", "techd-gear-upscale-white-brand.png", True),
+        ("techd-logo-upscale.png", "techd-logo-upscale-brand.png", False, True),
+        ("techd-wordmark-upscale.png", "techd-wordmark-upscale-brand.png", False, False),
+        ("techd-gear-upscale.png", "techd-gear-upscale-brand.png", False, True),
+        ("techd-gear-upscale-white.png", "techd-gear-upscale-white-brand.png", True, False),
     ]
-    for src_name, dst_name, force_white in jobs:
+    for src_name, dst_name, force_white, preserve_white_details in jobs:
         src = LAB / src_name
         dst = LAB / dst_name
         if not src.exists():
             print(f"SKIP (missing): {src}")
             continue
-        recolor(src, dst, force_white=force_white)
+        recolor(src, dst, force_white=force_white, preserve_white_details=preserve_white_details)
 
 
 if __name__ == "__main__":
