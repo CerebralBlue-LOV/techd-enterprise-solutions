@@ -876,3 +876,17 @@
 .leaflet-control-attribution a {
   color: hsl(var(--secondary)) !important;
 }
+
+/* Smooth fade-in for 3D hero canvases on route change / lazy mount.
+   The page-fade on <main> only covers the wrapper; the lazy three.js
+   canvas mounts after Suspense resolves, so it gets its own fade. */
+@keyframes figure-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+main canvas {
+  animation: figure-fade 700ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  main canvas { animation: none; }
+}
