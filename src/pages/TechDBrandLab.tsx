@@ -165,6 +165,7 @@ const TechDBrandLab = () => {
                         checkerLight: "hsl(0 0% 96%)",
                         checkerDark: "hsl(0 0% 90%)",
                         imgSrc: c.src,
+                        fileLabel: c.src.split("/").pop()?.split("?")[0] ?? "",
                       },
                       {
                         key: "dark-white",
@@ -174,20 +175,31 @@ const TechDBrandLab = () => {
                         checkerLight: "hsl(var(--secondary))",
                         checkerDark: "hsl(0 0% 28%)",
                         imgSrc: c.darkSrc ?? c.src,
+                        fileLabel: (c.darkSrc ?? c.src).split("/").pop()?.split("?")[0] ?? "",
                       },
                     ] as const).map((surface) => (
                       <div
                         key={surface.key}
                         className={cn("px-4 py-4 space-y-3", surface.bgClass)}
                       >
-                        <p
-                          className={cn(
-                            "text-[10px] font-bold uppercase tracking-[0.15em]",
-                            surface.labelClass,
-                          )}
-                        >
-                          {surface.label}
-                        </p>
+                        <div className="flex items-baseline justify-between gap-3">
+                          <p
+                            className={cn(
+                              "text-[10px] font-bold uppercase tracking-[0.15em]",
+                              surface.labelClass,
+                            )}
+                          >
+                            {surface.label}
+                          </p>
+                          <code
+                            className={cn(
+                              "text-[10px] font-mono truncate",
+                              surface.labelClass,
+                            )}
+                          >
+                            {surface.fileLabel}
+                          </code>
+                        </div>
                         <div
                           className="flex items-center justify-center min-h-[200px] rounded"
                           style={{
