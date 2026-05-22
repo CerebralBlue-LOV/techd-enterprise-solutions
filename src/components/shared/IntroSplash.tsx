@@ -52,13 +52,14 @@ export const IntroSplash = ({ force = false, playKey = 0 }: Props) => {
 
   if (phase === "hidden") return null;
 
-  // Final lockup proportions derived from the actual asset aspect ratios.
-  // Both gear and wordmark span the same visual height in the source logo, so we
-  // size them to match. Asset aspects: gear 1024×1023 (~1), wordmark 1376×412 (~3.34).
+  // Final lockup proportions derived from the real combined logo (techd-logo.png:
+  // 1148×314, gear ~314×314, wordmark ~823×258 with ~11px gap). The wordmark cap
+  // height sits at ~82% of the gear height — not equal to it.
+  // Wordmark asset aspect: 1376/412 ≈ 3.34.
   const GEAR = 96;
-  const GAP = 8;
-  const WORD_H = GEAR; // match heights
-  const WORD_W = Math.round(WORD_H * (1376 / 412)); // ≈ 321
+  const GAP = Math.round(GEAR * (11 / 314)); // ≈ 3, faithful to source
+  const WORD_H = Math.round(GEAR * (258 / 314)); // ≈ 79
+  const WORD_W = Math.round(WORD_H * (1376 / 412)); // ≈ 264
   const LOCKUP_W = GEAR + GAP + WORD_W;
   // Distance gear must travel from "alone, centered" to its final left-edge position.
   const GEAR_OFFSET = (LOCKUP_W - GEAR) / 2;
