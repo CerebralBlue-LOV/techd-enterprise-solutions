@@ -87,54 +87,6 @@ const ASSETS: Asset[] = [
     ],
   },
 ];
-  },
-  {
-    id: "wordmark",
-    name: "Wordmark only",
-    filename: "techd-wordmark.png",
-    shape: "horizontal",
-    sizes: [70, 140, 280, 560],
-    needsDark: true,
-    candidates: [
-      {
-        label: "Original",
-        method: "192×58 png · raster",
-        src: wordmarkOriginal,
-        note: "What ships today.",
-      },
-      {
-        label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
-        src: wordmarkUpscale,
-        darkSrc: wordmarkUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
-      },
-    ],
-  },
-  {
-    id: "gear",
-    name: "Gear mark (color)",
-    filename: "techd-gear.png",
-    shape: "square",
-    sizes: [40, 80, 160, 320],
-    needsDark: true,
-    candidates: [
-      {
-        label: "Original",
-        method: "70×70 png · raster",
-        src: gearOriginal,
-        note: "What ships today.",
-      },
-      {
-        label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
-        src: gearUpscale,
-        darkSrc: gearUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
-      },
-    ],
-  },
-];
 
 const TechDBrandLab = () => {
   const [bg, setBg] = useState<"both" | "light" | "dark">("both");
