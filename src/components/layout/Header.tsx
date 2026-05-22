@@ -150,37 +150,53 @@ export const Header = () => {
             <SheetContent side="right" className="w-[88vw] sm:w-96 flex flex-col gap-0 overflow-y-auto">
               <SheetTitle className="sr-only">Navigation</SheetTitle>
               <div className="mb-6 pr-8">
-                <img src={logo} alt="TechD" className="h-7 w-auto" />
+                <Link to="/" aria-label="TechD home" onClick={() => setOpen(false)} className="inline-block">
+                  <img src={logo} alt="TechD" className="h-7 w-auto" />
+                </Link>
               </div>
               <nav className="flex flex-col gap-1">
-                {NAV.map((item) => (
+                {NAV.map((item) => {
+                  const sectionActive = isActiveItem(item);
+                  return (
                   <div key={item.label} className="py-2 border-b border-border">
                     {item.href ? (
                       <Link
                         to={item.href}
-                        className="block text-base font-bold text-secondary hover:text-primary"
+                        aria-current={sectionActive ? "page" : undefined}
+                        className={cn(
+                          "block text-base font-bold hover:text-primary",
+                          sectionActive ? "text-primary" : "text-secondary"
+                        )}
                       >
                         {item.label}
                       </Link>
                     ) : (
-                      <p className="text-base font-bold text-secondary">{item.label}</p>
+                      <p className={cn("text-base font-bold", sectionActive ? "text-primary" : "text-secondary")}>{item.label}</p>
                     )}
                     {item.children && (
                       <ul className="mt-2 space-y-1.5 pl-3">
-                        {item.children.map((c) => (
+                        {item.children.map((c) => {
+                          const childActive = location.pathname === c.href;
+                          return (
                           <li key={c.label}>
                             <Link
                               to={c.href}
-                              className="block text-sm font-light text-muted-foreground hover:text-primary"
+                              aria-current={childActive ? "page" : undefined}
+                              className={cn(
+                                "block text-sm font-light hover:text-primary",
+                                childActive ? "text-primary" : "text-muted-foreground"
+                              )}
                             >
                               {c.label}
                             </Link>
                           </li>
-                        ))}
+                          );
+                        })}
                       </ul>
                     )}
                   </div>
-                ))}
+                  );
+                })}
               </nav>
               <Button asChild className="btn-glow mt-6 mb-2 w-full shrink-0">
                 <Link to="/contact">Talk to an expert</Link>
