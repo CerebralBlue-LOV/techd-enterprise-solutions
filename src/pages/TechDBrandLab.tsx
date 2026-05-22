@@ -155,65 +155,75 @@ const TechDBrandLab = () => {
                       </code>
                     </div>
 
-                    {/* Light surface */}
-                    {(bg === "both" || bg === "light") && (
-                      <div className="px-4 py-4 bg-background space-y-3">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground">
-                          on light
+                    {/* Three surface panels, each with all sizes side-by-side */}
+                    {([
+                      {
+                        key: "light",
+                        label: "Light · color",
+                        bgClass: "bg-background",
+                        labelClass: "text-muted-foreground",
+                        sizeLabelClass: "text-muted-foreground",
+                        imgSrc: c.src,
+                      },
+                      {
+                        key: "dark-color",
+                        label: "Dark · color",
+                        bgClass: "bg-secondary",
+                        labelClass: "text-background/60",
+                        sizeLabelClass: "text-background/60",
+                        imgSrc: c.src,
+                      },
+                      {
+                        key: "dark-white",
+                        label: "Dark · white",
+                        bgClass: "bg-secondary",
+                        labelClass: "text-background/60",
+                        sizeLabelClass: "text-background/60",
+                        imgSrc: c.darkSrc ?? c.src,
+                      },
+                    ] as const).map((surface) => (
+                      <div
+                        key={surface.key}
+                        className={cn("px-4 py-4 space-y-3", surface.bgClass)}
+                      >
+                        <p
+                          className={cn(
+                            "text-[10px] font-bold uppercase tracking-[0.15em]",
+                            surface.labelClass,
+                          )}
+                        >
+                          {surface.label}
                         </p>
-                        {asset.sizes.map((size) => (
-                          <div
-                            key={size}
-                            className="flex items-center gap-3"
-                          >
-                            <span className="w-10 shrink-0 text-[10px] text-muted-foreground tabular-nums">
-                              {size}px
-                            </span>
-                            <img
-                              src={c.src}
-                              alt={`${c.label} @ ${size}px`}
-                              style={
-                                asset.shape === "horizontal"
-                                  ? { height: size, width: "auto" }
-                                  : { height: size, width: size }
-                              }
-                              className="object-contain"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
+                        <div className="flex items-end gap-6 overflow-x-auto pb-2">
+                          {asset.sizes.map((size) => (
+                            <div
+                              key={size}
+                              className="flex flex-col items-center gap-2 shrink-0"
+                            >
+                              <img
+                                src={surface.imgSrc}
+                                alt={`${c.label} @ ${size}px (${surface.label})`}
+                                style={
+                                  asset.shape === "horizontal"
+                                    ? { height: size, width: "auto" }
+                                    : { height: size, width: size }
+                                }
+                                className="object-contain"
+                                loading="lazy"
+                              />
+                              <span
+                                className={cn(
+                                  "text-[10px] tabular-nums",
+                                  surface.sizeLabelClass,
+                                )}
+                              >
+                                {size}px
+                              </span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    )}
-
-                    {/* Dark surface */}
-                    {asset.needsDark && (bg === "both" || bg === "dark") && (
-                      <div className="px-4 py-4 bg-secondary space-y-3">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-background/60">
-                          on dark
-                        </p>
-                        {asset.sizes.map((size) => (
-                          <div
-                            key={size}
-                            className="flex items-center gap-3"
-                          >
-                            <span className="w-10 shrink-0 text-[10px] text-background/60 tabular-nums">
-                              {size}px
-                            </span>
-                            <img
-                              src={c.darkSrc ?? c.src}
-                              alt={`${c.label} @ ${size}px (dark)`}
-                              style={
-                                asset.shape === "horizontal"
-                                  ? { height: size, width: "auto" }
-                                  : { height: size, width: size }
-                              }
-                              className="object-contain"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                    ))}
 
                     {/* Footer */}
                     <div className="mt-auto px-4 py-3 border-t border-border bg-muted/30">
