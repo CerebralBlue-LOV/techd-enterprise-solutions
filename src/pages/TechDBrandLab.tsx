@@ -114,6 +114,12 @@ const ASSETS: Asset[] = [
         src: gearUpscaleWhite,
         note: "Pure-white gear for dark surfaces; transparent background.",
       },
+      {
+        label: "Brand-snapped · white",
+        method: "Token-locked recolor · all opaque → #FFFFFF",
+        src: gearBrandWhite,
+        note: "Every opaque pixel forced to pure white. Alpha preserved.",
+      },
     ],
   },
 ];
