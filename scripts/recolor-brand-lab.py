@@ -15,7 +15,11 @@ Writes *-brand.png siblings next to each *-upscale.png in src/assets/brand/lab/.
 from pathlib import Path
 import numpy as np
 from PIL import Image
-from scipy import ndimage
+
+try:
+    from scipy import ndimage
+except ModuleNotFoundError:
+    ndimage = None
 
 LAB = Path(__file__).parent.parent / "src" / "assets" / "brand" / "lab"
 
@@ -35,6 +39,25 @@ WHITE_PRESERVE_LUM = 220
 WHITE_PRESERVE_SAT = 35
 
 
+def tight_crop_rgba(img: Image.Image) -> Image.Image:
+    bbox = img.getbbox()
+    return img.crop(bbox) if bbox else img
+
+
+def center_on_square(img: Image.Image) -> Image.Image:
+    bbox = img.getbbox()
+    if not bbox:
+        return img
+    l, t, r, b = bbox
+    w, h = r - l, b - t
+    side = max(w, h)
+    canvas = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    offset_x = (side - w) // 2 - l
+    offset_y = (side - h) // 2 - t
+    canvas.paste(img, (offset_x, offset_y), img)
+    return canvas
+
+
 def initial_labels(rgb: np.ndarray) -> np.ndarray:
     """Per-pixel label: 0=PRIMARY, 1=SECONDARY, 2=MUTED."""
     r, g, b = rgb[..., 0].astype(int), rgb[..., 1].astype(int), rgb[..., 2].astype(int)
@@ -50,6 +73,8 @@ def initial_labels(rgb: np.ndarray) -> np.ndarray:
 def majority_filter(labels: np.ndarray, mask: np.ndarray, window: int) -> np.ndarray:
     """Repaint each masked pixel with the modal label in a window x window box,
     counting only masked (opaque) pixels."""
+    if ndimage is None:
+        return labels
     out = labels.copy()
     for lbl in (0, 1, 2):
         # count of this label in a window x window box around each pixel
@@ -70,6 +95,8 @@ def absorb_small_islands(labels: np.ndarray, mask: np.ndarray, min_area: int) ->
     """Find connected components of each label; any component smaller than
     min_area is reassigned to the modal label of pixels in a dilated ring
     around it (i.e. the surrounding region's color)."""
+    if ndimage is None:
+        return labels
     out = labels.copy()
     for lbl in (0, 1, 2):
         region = (labels == lbl) & mask
@@ -112,10 +139,12 @@ def recolor(src: Path, dst: Path, force_white: bool = False, preserve_white_deta
     if force_white:
         out_rgb = np.where(mask[..., None], np.array(WHITE, dtype=np.uint8), rgb)
         out_alpha = np.where(mask, alpha, 0)
-        Image.fromarray(
+        out_img = Image.fromarray(
             np.concatenate([out_rgb, out_alpha[..., None]], axis=-1).astype(np.uint8),
             "RGBA",
-        ).save(dst, "PNG")
+        )
+        out_img = center_on_square(tight_crop_rgba(out_img))
+        out_img.save(dst, "PNG")
         print(f"{dst.name}: white={int(mask.sum())} transparent={int((~mask).sum())}")
         return
 
@@ -132,7 +161,12 @@ def recolor(src: Path, dst: Path, force_white: bool = False, preserve_white_deta
     out_rgb = np.where(mask[..., None], out_rgb, 0)
     out_alpha = np.where(mask, alpha, 0)
     out = np.concatenate([out_rgb, out_alpha[..., None]], axis=-1).astype(np.uint8)
-    Image.fromarray(out, "RGBA").save(dst, "PNG")
+    out_img = Image.fromarray(out, "RGBA")
+    if "gear" in src.name:
+        out_img = center_on_square(tight_crop_rgba(out_img))
+    else:
+        out_img = tight_crop_rgba(out_img)
+    out_img.save(dst, "PNG")
 
     counts = {
         "primary": int(((labels == 0) & mask).sum()),
