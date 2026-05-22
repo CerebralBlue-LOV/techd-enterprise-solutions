@@ -10,6 +10,7 @@ import markWhiteOriginal from "@/assets/brand/techd-mark-white.png";
 
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
+import logoUpscaleWhite from "@/assets/brand/lab/techd-logo-upscale-white.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
 import markWhiteUpscale from "@/assets/brand/lab/techd-mark-white-upscale.png";
@@ -20,6 +21,8 @@ type Candidate = {
   label: string;
   method: string;
   src: string;
+  /** Optional override used when rendered on the dark surface */
+  darkSrc?: string;
   note: string;
 };
 
@@ -52,9 +55,10 @@ const ASSETS: Asset[] = [
       },
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
+        method: "Nano-Banana · 4× PNG · white on dark",
         src: logoUpscale,
-        note: "Same shapes, higher pixel count.",
+        darkSrc: logoUpscaleWhite,
+        note: "Color version on light; auto-swaps to pure white on dark surfaces (no more colored lines).",
       },
     ],
   },
@@ -257,7 +261,7 @@ const TechDBrandLab = () => {
                               {size}px
                             </span>
                             <img
-                              src={c.src}
+                              src={c.darkSrc ?? c.src}
                               alt={`${c.label} @ ${size}px (dark)`}
                               style={
                                 asset.shape === "horizontal"
