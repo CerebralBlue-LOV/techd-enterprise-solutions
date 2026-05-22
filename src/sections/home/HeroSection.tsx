@@ -6,6 +6,7 @@ import SectionMarker from "@shared/SectionMarker";
 import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
 import ScrollToSectionLink from "@shared/ScrollToSectionLink";
 import HeroFigureFallback from "@shared/heroFigures/HeroFigureFallback";
+import { useIsMobile } from "@hooks/use-mobile";
 
 const HeroParticleField = lazy(
   () => import("@sections/home/_components/HeroParticleField"),
@@ -19,13 +20,18 @@ const HeroParticleField = lazy(
  *          HeroParticleField (3D), and the headline/CTA stack.
  *          Keep min-h-[88vh] so the hero dominates first paint.
  */
-export const HeroSection = () => (
+export const HeroSection = () => {
+  const isMobile = useIsMobile();
+  return (
   <section id="hero" className="relative overflow-hidden min-h-[80vh] md:min-h-[88vh] flex items-center">
     <SectionMarker page="Home" name="Hero" />
     <HeroBackdrop />
-    <Suspense fallback={<HeroFigureFallback />}>
-      <HeroParticleField />
-    </Suspense>
+    {!isMobile && (
+      <Suspense fallback={<HeroFigureFallback />}>
+        <HeroParticleField />
+      </Suspense>
+    )}
+
 
     <div className="container-page relative z-10 pt-24 pb-20 md:pt-40 md:pb-40">
       <Reveal>
@@ -52,6 +58,8 @@ export const HeroSection = () => (
       </Reveal>
     </div>
   </section>
-);
+  );
+};
+
 
 export default HeroSection;

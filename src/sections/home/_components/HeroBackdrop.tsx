@@ -18,10 +18,10 @@ export const HeroBackdrop = () => (
       }}
     />
 
-    {/* 2. Gradient wash */}
-    <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/15 blur-3xl animate-gradient-drift" />
+    {/* 2. Gradient wash — softened on mobile so the hero reads mostly white. */}
+    <div className="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full bg-primary/5 md:bg-primary/15 blur-3xl animate-gradient-drift" />
     <div
-      className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/10 blur-3xl animate-gradient-drift"
+      className="absolute top-1/3 -left-40 h-[520px] w-[520px] rounded-full bg-primary/5 md:bg-primary/10 blur-3xl animate-gradient-drift"
       style={{ animationDelay: "-9s" }}
     />
     <div
