@@ -89,7 +89,6 @@ const ASSETS: Asset[] = [
 ];
 
 const TechDBrandLab = () => {
-  const [bg, setBg] = useState<"both" | "light" | "dark">("both");
   const [picks, setPicks] = useState<Record<string, string>>({});
 
   return (
