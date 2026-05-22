@@ -55,9 +55,10 @@ const ASSETS: Asset[] = [
       },
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
+        method: "Nano-Banana · 4× PNG · white on dark",
         src: logoUpscale,
-        note: "Same shapes, higher pixel count.",
+        darkSrc: logoUpscaleWhite,
+        note: "Color version on light; auto-swaps to pure white on dark surfaces (no more colored lines).",
       },
     ],
   },
