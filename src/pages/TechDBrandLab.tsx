@@ -4,11 +4,8 @@ import { cn } from "@/lib/utils";
 
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
-import logoUpscaleWhite from "@/assets/brand/lab/techd-logo-upscale-white.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
-import wordmarkUpscaleWhite from "@/assets/brand/lab/techd-wordmark-upscale-white.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
-import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
 
 
 type AssetShape = "horizontal" | "square";
@@ -17,8 +14,6 @@ type Candidate = {
   label: string;
   method: string;
   src: string;
-  /** Optional override used when rendered on the dark surface */
-  darkSrc?: string;
   note: string;
 };
 
@@ -29,8 +24,6 @@ type Asset = {
   shape: AssetShape;
   /** single size (px) at which to render the asset */
   size: number;
-  /** if true, also render against a dark surface */
-  needsDark: boolean;
   candidates: Candidate[];
 };
 
