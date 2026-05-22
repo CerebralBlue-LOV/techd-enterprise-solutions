@@ -120,18 +120,43 @@ const TechDBrandLab = () => {
       {ASSETS.map((asset) => (
         <section key={asset.id} className="border-t border-border">
           <div className="container-page py-10">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-secondary">
-                {asset.name}
-              </h2>
-              <code className="mt-1 inline-block text-xs text-muted-foreground">
-                {asset.filename}
-              </code>
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-secondary">
+                  {asset.name}
+                </h2>
+                <code className="mt-1 inline-block text-xs text-muted-foreground">
+                  {asset.filename}
+                </code>
+              </div>
+              <label className="flex items-center gap-3 min-w-[280px]">
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground whitespace-nowrap">
+                  Scale
+                </span>
+                <input
+                  type="range"
+                  min={asset.shape === "horizontal" ? 80 : 60}
+                  max={asset.shape === "horizontal" ? 800 : 480}
+                  step={8}
+                  value={sizes[asset.id] ?? asset.size}
+                  onChange={(e) =>
+                    setSizes((prev) => ({
+                      ...prev,
+                      [asset.id]: Number(e.target.value),
+                    }))
+                  }
+                  className="flex-1 accent-primary"
+                />
+                <code className="text-xs font-mono text-secondary tabular-nums w-14 text-right">
+                  {sizes[asset.id] ?? asset.size}px
+                </code>
+              </label>
             </div>
 
             <div className="grid grid-cols-1 gap-4">
               {asset.candidates.map((c) => {
                 const isPicked = picks[asset.id] === c.label;
+                const currentSize = sizes[asset.id] ?? asset.size;
                 return (
                   <div
                     key={c.label}
