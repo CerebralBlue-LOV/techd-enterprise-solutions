@@ -155,30 +155,24 @@ const TechDBrandLab = () => {
                       </code>
                     </div>
 
-                    {/* Three surface panels, each with all sizes side-by-side */}
+                    {/* Two surface panels: colored (light) + white (dark), both with checkerboard transparency preview */}
                     {([
                       {
                         key: "light",
-                        label: "Light · color",
+                        label: "Colored (on light)",
                         bgClass: "bg-background",
                         labelClass: "text-muted-foreground",
-                        sizeLabelClass: "text-muted-foreground",
-                        imgSrc: c.src,
-                      },
-                      {
-                        key: "dark-color",
-                        label: "Dark · color",
-                        bgClass: "bg-secondary",
-                        labelClass: "text-background/60",
-                        sizeLabelClass: "text-background/60",
+                        checkerLight: "hsl(0 0% 96%)",
+                        checkerDark: "hsl(0 0% 90%)",
                         imgSrc: c.src,
                       },
                       {
                         key: "dark-white",
-                        label: "Dark · white",
+                        label: "White (on dark)",
                         bgClass: "bg-secondary",
                         labelClass: "text-background/60",
-                        sizeLabelClass: "text-background/60",
+                        checkerLight: "hsl(var(--secondary))",
+                        checkerDark: "hsl(0 0% 28%)",
                         imgSrc: c.darkSrc ?? c.src,
                       },
                     ] as const).map((surface) => (
@@ -194,7 +188,15 @@ const TechDBrandLab = () => {
                         >
                           {surface.label}
                         </p>
-                        <div className="flex items-center justify-center min-h-[200px]">
+                        <div
+                          className="flex items-center justify-center min-h-[200px] rounded"
+                          style={{
+                            backgroundImage: `linear-gradient(45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(-45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${surface.checkerDark} 75%), linear-gradient(-45deg, transparent 75%, ${surface.checkerDark} 75%)`,
+                            backgroundSize: "16px 16px",
+                            backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0",
+                            backgroundColor: surface.checkerLight,
+                          }}
+                        >
                           <img
                             src={surface.imgSrc}
                             alt={`${c.label} (${surface.label})`}
