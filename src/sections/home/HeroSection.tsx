@@ -5,6 +5,7 @@ import Reveal from "@shared/Reveal";
 import SectionMarker from "@shared/SectionMarker";
 import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
 import ScrollToSectionLink from "@shared/ScrollToSectionLink";
+import HeroFigureFallback from "@shared/heroFigures/HeroFigureFallback";
 
 const HeroParticleField = lazy(
   () => import("@sections/home/_components/HeroParticleField"),
@@ -22,7 +23,7 @@ export const HeroSection = () => (
   <section id="hero" className="relative overflow-hidden min-h-[80vh] md:min-h-[88vh] flex items-center">
     <SectionMarker page="Home" name="Hero" />
     <HeroBackdrop />
-    <Suspense fallback={null}>
+    <Suspense fallback={<HeroFigureFallback />}>
       <HeroParticleField />
     </Suspense>
 

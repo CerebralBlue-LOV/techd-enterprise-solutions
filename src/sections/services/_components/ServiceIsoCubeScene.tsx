@@ -76,17 +76,21 @@ export const ServiceIsoCubeScene = ({ tiltX, tiltY }: SceneProps) => {
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const { ref, inView } = useInView<HTMLDivElement>("200px");
+  const animate = inView && !reduced;
 
   return (
-    <Canvas
-      dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 6.4], fov: 52 }}
-      gl={{ alpha: true, antialias: true }}
-      style={{ background: "transparent" }}
-      frameloop={reduced ? "demand" : "always"}
-    >
-      <Borromean tiltX={tiltX} tiltY={tiltY} />
-    </Canvas>
+    <div ref={ref} className="absolute inset-0">
+      <Canvas
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 0, 6.4], fov: 52 }}
+        gl={{ alpha: true, antialias: true }}
+        style={{ background: "transparent" }}
+        frameloop={animate ? "always" : "demand"}
+      >
+        <Borromean tiltX={tiltX} tiltY={tiltY} />
+      </Canvas>
+    </div>
   );
 };
 

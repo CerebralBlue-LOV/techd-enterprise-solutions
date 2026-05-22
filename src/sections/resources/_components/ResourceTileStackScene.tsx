@@ -171,22 +171,26 @@ export const ResourceTileStackScene = ({
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const { ref, inView } = useInView<HTMLDivElement>("200px");
+  const animate = inView && !reduced;
 
   return (
-    <Canvas
-      dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 6.4], fov: 42 }}
-      gl={{ alpha: true, antialias: true }}
-      style={{ background: "transparent" }}
-      frameloop={reduced ? "demand" : "always"}
-    >
-      <Book
-        tiltX={tiltX}
-        tiltY={tiltY}
-        rotationOverride={rotationOverride}
-        positionOverride={positionOverride}
-      />
-    </Canvas>
+    <div ref={ref} className="absolute inset-0">
+      <Canvas
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 0, 6.4], fov: 42 }}
+        gl={{ alpha: true, antialias: true }}
+        style={{ background: "transparent" }}
+        frameloop={animate ? "always" : "demand"}
+      >
+        <Book
+          tiltX={tiltX}
+          tiltY={tiltY}
+          rotationOverride={rotationOverride}
+          positionOverride={positionOverride}
+        />
+      </Canvas>
+    </div>
   );
 };
 
