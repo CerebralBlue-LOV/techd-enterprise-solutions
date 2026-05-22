@@ -90,6 +90,10 @@ const ASSETS: Asset[] = [
 
 const TechDBrandLab = () => {
   const [picks, setPicks] = useState<Record<string, string>>({});
+  const [sizes, setSizes] = useState<Record<string, number>>(() =>
+    Object.fromEntries(ASSETS.map((a) => [a.id, a.size])),
+  );
+
 
   return (
     <Layout>
