@@ -79,9 +79,10 @@ const ASSETS: Asset[] = [
       },
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
+        method: "Nano-Banana · 4× PNG · white on dark",
         src: wordmarkUpscale,
-        note: "Higher resolution version of the wordmark.",
+        darkSrc: wordmarkUpscaleWhite,
+        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
       },
     ],
   },
