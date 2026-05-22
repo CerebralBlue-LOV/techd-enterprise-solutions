@@ -12,6 +12,7 @@ import markWhiteOriginal from "@/assets/brand/techd-mark-white.png";
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
 import logoUpscaleWhite from "@/assets/brand/lab/techd-logo-upscale-white.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
+import wordmarkUpscaleWhite from "@/assets/brand/lab/techd-wordmark-upscale-white.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
 import markWhiteUpscale from "@/assets/brand/lab/techd-mark-white-upscale.png";
 
