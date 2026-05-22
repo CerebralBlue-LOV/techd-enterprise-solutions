@@ -110,28 +110,6 @@ const ASSETS: Asset[] = [
       },
     ],
   },
-  {
-    id: "mark-white",
-    name: "Gear mark (white, for dark surfaces)",
-    filename: "techd-mark-white.png",
-    shape: "square",
-    sizes: [40, 80, 160, 320],
-    needsDark: true,
-    candidates: [
-      {
-        label: "Original",
-        method: "70×70 png · raster",
-        src: markWhiteOriginal,
-        note: "Used in footer / dark hero surfaces.",
-      },
-      {
-        label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
-        src: markWhiteUpscale,
-        note: "Higher resolution white mark.",
-      },
-    ],
-  },
 ];
 
 const TechDBrandLab = () => {
