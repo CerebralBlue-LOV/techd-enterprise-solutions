@@ -6,6 +6,7 @@ import SectionMarker from "@shared/SectionMarker";
 import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
 import ScrollToSectionLink from "@shared/ScrollToSectionLink";
 import HeroFigureFallback from "@shared/heroFigures/HeroFigureFallback";
+import { useIsMobile } from "@hooks/use-mobile";
 
 const HeroParticleField = lazy(
   () => import("@sections/home/_components/HeroParticleField"),
