@@ -2,7 +2,7 @@
 """
 Generate favicon assets from the TechD logo.
 
-Crops the gear icon (left 70×70 px of techd-logo.webp), adds a small
+Crops the gear icon (left 70×70 px of techd-logo.png), adds a small
 transparent pad, then writes:
   public/favicon.ico          — multi-size ICO (16, 32, 48)
   public/favicon-32x32.png
@@ -21,7 +21,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC_LOGO = ROOT / "src" / "assets" / "brand" / "techd-logo.webp"
+SRC_LOGO = ROOT / "src" / "assets" / "brand" / "techd-logo.png"
 PUBLIC = ROOT / "public"
 INDEX = ROOT / "index.html"
 
