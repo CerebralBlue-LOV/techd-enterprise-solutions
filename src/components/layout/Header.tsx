@@ -35,6 +35,15 @@ export const Header = () => {
     closeTimer.current = setTimeout(() => setActiveNav(null), 100);
   };
 
+  const isActiveItem = (item: typeof NAV[number]) => {
+    if (item.children && item.children.length > 0) {
+      const base = "/" + item.children[0].href.split("/")[1];
+      return location.pathname === base || location.pathname.startsWith(base + "/");
+    }
+    if (item.href) return location.pathname === item.href;
+    return false;
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur border-b border-border">
       <div className="container-page flex h-16 items-center justify-between gap-6">
@@ -44,7 +53,9 @@ export const Header = () => {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1 self-stretch">
-          {NAV.map((item, idx) => (
+          {NAV.map((item, idx) => {
+            const sectionActive = isActiveItem(item);
+            return (
             <div
               key={item.label}
               className="relative self-stretch flex items-center"
@@ -53,9 +64,10 @@ export const Header = () => {
             >
               {item.children ? (
                 <button
+                  aria-current={sectionActive ? "page" : undefined}
                   className={cn(
-                    "inline-flex h-10 items-center gap-1.5 px-4 text-sm font-medium text-secondary transition-colors hover:text-primary",
-                    activeNav === item.label && "text-primary"
+                    "inline-flex h-10 items-center gap-1.5 px-4 text-sm font-medium transition-colors hover:text-primary",
+                    sectionActive || activeNav === item.label ? "text-primary" : "text-secondary"
                   )}
                 >
                   {item.label}
@@ -70,7 +82,11 @@ export const Header = () => {
               ) : item.href ? (
                 <Link
                   to={item.href}
-                  className="inline-flex h-10 items-center px-4 text-sm font-medium text-secondary transition-colors hover:text-primary"
+                  aria-current={sectionActive ? "page" : undefined}
+                  className={cn(
+                    "inline-flex h-10 items-center px-4 text-sm font-medium transition-colors hover:text-primary",
+                    sectionActive ? "text-primary" : "text-secondary"
+                  )}
                 >
                   {item.label}
                 </Link>
@@ -85,13 +101,19 @@ export const Header = () => {
                   )}
                 >
                   <ul className="rounded-md border bg-popover shadow-lg p-1.5 flex flex-col gap-0.5">
-                    {item.children.map((c) => (
+                    {item.children.map((c) => {
+                      const childActive = location.pathname === c.href;
+                      return (
                       <li key={c.label}>
                         <Link
                           to={c.href}
-                          className="block rounded-md p-3 transition-colors hover:bg-accent focus:bg-accent"
+                          aria-current={childActive ? "page" : undefined}
+                          className={cn(
+                            "block rounded-md p-3 transition-colors hover:bg-accent focus:bg-accent",
+                            childActive && "bg-accent/50"
+                          )}
                         >
-                          <div className="text-sm font-bold text-secondary">{c.label}</div>
+                          <div className={cn("text-sm font-bold", childActive ? "text-primary" : "text-secondary")}>{c.label}</div>
                           {c.description && (
                             <div className="mt-0.5 text-sm font-light text-muted-foreground">
                               {c.description}
@@ -104,12 +126,14 @@ export const Header = () => {
                           )}
                         </Link>
                       </li>
-                    ))}
+                      );
+                    })}
                   </ul>
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -126,37 +150,53 @@ export const Header = () => {
             <SheetContent side="right" className="w-[88vw] sm:w-96 flex flex-col gap-0 overflow-y-auto">
               <SheetTitle className="sr-only">Navigation</SheetTitle>
               <div className="mb-6 pr-8">
-                <img src={logo} alt="TechD" className="h-7 w-auto" />
+                <Link to="/" aria-label="TechD home" onClick={() => setOpen(false)} className="inline-block">
+                  <img src={logo} alt="TechD" className="h-7 w-auto" />
+                </Link>
               </div>
               <nav className="flex flex-col gap-1">
-                {NAV.map((item) => (
+                {NAV.map((item) => {
+                  const sectionActive = isActiveItem(item);
+                  return (
                   <div key={item.label} className="py-2 border-b border-border">
                     {item.href ? (
                       <Link
                         to={item.href}
-                        className="block text-base font-bold text-secondary hover:text-primary"
+                        aria-current={sectionActive ? "page" : undefined}
+                        className={cn(
+                          "block text-base font-bold hover:text-primary",
+                          sectionActive ? "text-primary" : "text-secondary"
+                        )}
                       >
                         {item.label}
                       </Link>
                     ) : (
-                      <p className="text-base font-bold text-secondary">{item.label}</p>
+                      <p className={cn("text-base font-bold", sectionActive ? "text-primary" : "text-secondary")}>{item.label}</p>
                     )}
                     {item.children && (
                       <ul className="mt-2 space-y-1.5 pl-3">
-                        {item.children.map((c) => (
+                        {item.children.map((c) => {
+                          const childActive = location.pathname === c.href;
+                          return (
                           <li key={c.label}>
                             <Link
                               to={c.href}
-                              className="block text-sm font-light text-muted-foreground hover:text-primary"
+                              aria-current={childActive ? "page" : undefined}
+                              className={cn(
+                                "block text-sm font-light hover:text-primary",
+                                childActive ? "text-primary" : "text-muted-foreground"
+                              )}
                             >
                               {c.label}
                             </Link>
                           </li>
-                        ))}
+                          );
+                        })}
                       </ul>
                     )}
                   </div>
-                ))}
+                  );
+                })}
               </nav>
               <Button asChild className="btn-glow mt-6 mb-2 w-full shrink-0">
                 <Link to="/contact">Talk to an expert</Link>
