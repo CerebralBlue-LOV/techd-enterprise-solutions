@@ -30,6 +30,7 @@ SAT_THRESHOLD = 40
 DARK_LUM_CUTOFF = 145
 ALPHA_FLOOR = 0
 MAJORITY_WINDOW = 7  # odd; pixels are repainted to the modal label in this window
+MIN_ISLAND_AREA = 400  # any color island smaller than this gets absorbed by its neighbors
 
 
 def initial_labels(rgb: np.ndarray) -> np.ndarray:
