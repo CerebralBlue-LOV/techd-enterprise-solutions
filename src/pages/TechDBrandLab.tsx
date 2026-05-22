@@ -40,7 +40,8 @@ const ASSETS: Asset[] = [
     name: "Full logo (gears + wordmark)",
     filename: "techd-logo.webp",
     shape: "horizontal",
-    size: 280,
+    size: 800,
+
     needsDark: true,
     candidates: [
       {
