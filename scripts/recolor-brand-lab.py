@@ -30,6 +30,7 @@ SAT_THRESHOLD = 40
 DARK_LUM_CUTOFF = 145
 ALPHA_FLOOR = 0
 MAJORITY_WINDOW = 7  # odd; pixels are repainted to the modal label in this window
+MIN_ISLAND_AREA = 400  # any color island smaller than this gets absorbed by its neighbors
 
 
 def initial_labels(rgb: np.ndarray) -> np.ndarray:
@@ -63,6 +64,34 @@ def majority_filter(labels: np.ndarray, mask: np.ndarray, window: int) -> np.nda
     return out
 
 
+def absorb_small_islands(labels: np.ndarray, mask: np.ndarray, min_area: int) -> np.ndarray:
+    """Find connected components of each label; any component smaller than
+    min_area is reassigned to the modal label of pixels in a dilated ring
+    around it (i.e. the surrounding region's color)."""
+    out = labels.copy()
+    for lbl in (0, 1, 2):
+        region = (labels == lbl) & mask
+        comp, n = ndimage.label(region)
+        if n == 0:
+            continue
+        sizes = ndimage.sum(np.ones_like(comp), comp, range(1, n + 1))
+        small_ids = [i + 1 for i, s in enumerate(sizes) if s < min_area]
+        for cid in small_ids:
+            island = comp == cid
+            # one-pixel ring just outside the island
+            dilated = ndimage.binary_dilation(island, iterations=2) & ~island & mask
+            if not dilated.any():
+                continue
+            neighbor_labels = out[dilated]
+            # modal neighbor label (excluding the island's own label if possible)
+            others = neighbor_labels[neighbor_labels != lbl]
+            chosen = others if others.size else neighbor_labels
+            counts = np.bincount(chosen, minlength=3)
+            new_lbl = int(np.argmax(counts))
+            out[island] = new_lbl
+    return out
+
+
 def recolor(src: Path, dst: Path, force_white: bool = False) -> None:
     im = Image.open(src).convert("RGBA")
     arr = np.array(im)
@@ -82,6 +111,7 @@ def recolor(src: Path, dst: Path, force_white: bool = False) -> None:
 
     labels = initial_labels(rgb)
     labels = majority_filter(labels, mask, MAJORITY_WINDOW)
+    labels = absorb_small_islands(labels, mask, MIN_ISLAND_AREA)
 
     palette = np.array([PRIMARY, SECONDARY, MUTED], dtype=np.uint8)
     out_rgb = palette[labels]
