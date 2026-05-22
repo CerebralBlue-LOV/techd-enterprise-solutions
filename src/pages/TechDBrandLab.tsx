@@ -75,7 +75,7 @@ const ASSETS: Asset[] = [
     name: "Gear mark (color)",
     filename: "techd-gear.png",
     shape: "square",
-    size: 160,
+    size: 800,
     needsDark: true,
     candidates: [
       {
