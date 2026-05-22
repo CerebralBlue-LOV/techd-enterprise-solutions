@@ -103,9 +103,10 @@ const ASSETS: Asset[] = [
       },
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
+        method: "Nano-Banana · 4× PNG · white on dark",
         src: gearUpscale,
-        note: "Higher resolution gear mark.",
+        darkSrc: gearUpscaleWhite,
+        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
       },
     ],
   },
