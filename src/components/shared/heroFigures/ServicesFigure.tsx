@@ -1,21 +1,28 @@
 import { Suspense, lazy } from "react";
+import { useIsMobile } from "@hooks/use-mobile";
+import HeroFigureFallback from "./HeroFigureFallback";
 
 const IsoCubeScene = lazy(
   () => import("@/sections/services/_components/ServiceIsoCubeScene"),
 );
 
 /**
- * ServicesFigure — isometric wireframe cube viewed from the corner
- * (hexagonal silhouette with a Y inside). Three visible faces pulse
- * with a soft brand-cyan fill in sequence — the X/Y/Z axes highlight
- * from the Dribbble Isometric Shapes Showreel, minus the labels.
+ * ServicesFigure — interlocking wireframe rings. Mobile users get a
+ * static cyan glow instead of the three.js scene.
  */
-export const ServicesFigure = () => (
-  <div className="absolute inset-0">
-    <Suspense fallback={null}>
-      <IsoCubeScene tiltX={0} tiltY={0} />
-    </Suspense>
-  </div>
-);
+export const ServicesFigure = () => {
+  const isMobile = useIsMobile();
+  return (
+    <div className="absolute inset-0">
+      {isMobile ? (
+        <HeroFigureFallback />
+      ) : (
+        <Suspense fallback={<HeroFigureFallback />}>
+          <IsoCubeScene tiltX={0} tiltY={0} />
+        </Suspense>
+      )}
+    </div>
+  );
+};
 
 export default ServicesFigure;
