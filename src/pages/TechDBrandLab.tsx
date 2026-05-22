@@ -4,11 +4,8 @@ import { cn } from "@/lib/utils";
 
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
-import logoUpscaleWhite from "@/assets/brand/lab/techd-logo-upscale-white.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
-import wordmarkUpscaleWhite from "@/assets/brand/lab/techd-wordmark-upscale-white.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
-import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
 
 
 type AssetShape = "horizontal" | "square";
@@ -17,8 +14,6 @@ type Candidate = {
   label: string;
   method: string;
   src: string;
-  /** Optional override used when rendered on the dark surface */
-  darkSrc?: string;
   note: string;
 };
 
@@ -29,8 +24,6 @@ type Asset = {
   shape: AssetShape;
   /** single size (px) at which to render the asset */
   size: number;
-  /** if true, also render against a dark surface */
-  needsDark: boolean;
   candidates: Candidate[];
 };
 
@@ -41,15 +34,12 @@ const ASSETS: Asset[] = [
     filename: "techd-logo.webp",
     shape: "horizontal",
     size: 800,
-
-    needsDark: true,
     candidates: [
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
+        method: "Nano-Banana · 4× PNG",
         src: logoUpscale,
-        darkSrc: logoUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces (no more colored lines).",
+        note: "Upscaled colored logo, transparent background.",
       },
     ],
   },
@@ -59,14 +49,12 @@ const ASSETS: Asset[] = [
     filename: "techd-wordmark.png",
     shape: "horizontal",
     size: 800,
-    needsDark: true,
     candidates: [
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
+        method: "Nano-Banana · 4× PNG",
         src: wordmarkUpscale,
-        darkSrc: wordmarkUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
+        note: "Upscaled colored wordmark, transparent background.",
       },
     ],
   },
@@ -76,14 +64,12 @@ const ASSETS: Asset[] = [
     filename: "techd-gear.png",
     shape: "square",
     size: 800,
-    needsDark: true,
     candidates: [
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
+        method: "Nano-Banana · 4× PNG",
         src: gearUpscale,
-        darkSrc: gearUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
+        note: "Upscaled colored gear mark, transparent background.",
       },
     ],
   },
@@ -186,7 +172,7 @@ const TechDBrandLab = () => {
                       </code>
                     </div>
 
-                    {/* Two surface panels: colored (light) + white (dark), both with checkerboard transparency preview */}
+                    {/* Single surface panel: colored on light with checkerboard transparency preview */}
                     {([
                       {
                         key: "light",
@@ -197,16 +183,6 @@ const TechDBrandLab = () => {
                         checkerDark: "hsl(0 0% 90%)",
                         imgSrc: c.src,
                         fileLabel: c.src.split("/").pop()?.split("?")[0] ?? "",
-                      },
-                      {
-                        key: "dark-white",
-                        label: "White (on dark)",
-                        bgClass: "bg-secondary",
-                        labelClass: "text-background/60",
-                        checkerLight: "hsl(var(--secondary))",
-                        checkerDark: "hsl(0 0% 28%)",
-                        imgSrc: c.darkSrc ?? c.src,
-                        fileLabel: (c.darkSrc ?? c.src).split("/").pop()?.split("?")[0] ?? "",
                       },
                     ] as const).map((surface) => (
                       <div
