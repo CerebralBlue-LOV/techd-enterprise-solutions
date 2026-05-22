@@ -52,10 +52,10 @@ const DeliveryMethodology = () => {
               <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-primary mb-3">
                 Engagement model
               </p>
-              <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-background">
+              <h2 className="text-4xl md:text-5xl leading-[1.05] font-bold tracking-tight text-white">
                 Advisory → Architecture → Implementation → Knowledge Transfer → Support
               </h2>
-              <p className="mt-4 text-base font-light text-background/70 leading-relaxed">
+              <p className="mt-4 text-base font-light text-white/70 leading-relaxed">
                 Each stage has a defined deliverable. No generic consulting language — only what we hand back to you.
               </p>
             </div>
@@ -80,7 +80,7 @@ const DeliveryMethodology = () => {
 
                     <div
                       className={cn(
-                        "group relative overflow-hidden rounded-xl border border-white/10 bg-background/[0.04] backdrop-blur-sm p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.55)] hover:-translate-y-0.5",
+                        "group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_hsl(var(--primary)/0.55)] hover:-translate-y-0.5",
                         right ? "md:col-start-2" : "md:col-start-1",
                       )}
                     >
@@ -92,7 +92,7 @@ const DeliveryMethodology = () => {
                       {/* large bg numeral */}
                       <span
                         aria-hidden
-                        className="pointer-events-none absolute -top-4 -right-2 text-[100px] font-bold leading-none text-background/[0.06] transition-colors duration-300 group-hover:text-background/[0.12]"
+                        className="pointer-events-none absolute -top-4 -right-2 text-[100px] font-bold leading-none text-white/[0.06] transition-colors duration-300 group-hover:text-white/[0.12]"
                       >
                         {String(i + 1).padStart(2, "0")}
                       </span>
@@ -100,10 +100,10 @@ const DeliveryMethodology = () => {
                         <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                           Stage 0{i + 1}
                         </p>
-                        <h3 className="mt-3 text-xl font-bold text-background leading-tight">
+                        <h3 className="mt-3 text-xl font-bold text-white leading-tight">
                           {s.name}
                         </h3>
-                        <p className="mt-2 text-sm font-light text-background/70 leading-relaxed">
+                        <p className="mt-2 text-sm font-light text-white/70 leading-relaxed">
                           {s.detail}
                         </p>
                       </div>

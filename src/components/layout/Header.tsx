@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, ChevronDown } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import DarkModeToggle from "@shared/DarkModeToggle";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/brand/techd-logo.webp";
 import { NAV } from "@/content/site";
@@ -113,6 +114,7 @@ export const Header = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          <DarkModeToggle />
           <Button asChild className="btn-glow hidden md:inline-flex">
             <Link to="/contact">Talk to an expert</Link>
           </Button>

@@ -5,7 +5,7 @@ import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import SectionBackdrop from "@shared/SectionBackdrop";
-import CaseStudyCardBackdropCyan from "@sections/home/_components/CaseStudyCardBackdropCyan";
+import DarkGlowPanel from "@shared/DarkGlowPanel";
 import IndustriesCarousel from "@sections/home/_components/IndustriesCarousel";
 
 const ParticleGlobe = lazy(
@@ -51,8 +51,7 @@ export const EngineeredFieldSection = () => (
       <SectionMarker page="Home" name="Featured Case Study" />
       <div className="container-page">
         <Reveal>
-          <div className="relative overflow-hidden rounded-2xl border border-border ring-1 ring-white/[0.06] text-white p-10 md:p-16">
-            <CaseStudyCardBackdropCyan />
+          <DarkGlowPanel intensity="medium" rounded="rounded-2xl" className="p-10 md:p-16 text-white">
             <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-primary">
               Featured Case · Published by IBM
             </p>
@@ -110,7 +109,7 @@ export const EngineeredFieldSection = () => (
                 </a>
               </Button>
             </div>
-          </div>
+          </DarkGlowPanel>
         </Reveal>
       </div>
     </section>

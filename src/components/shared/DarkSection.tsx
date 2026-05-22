@@ -13,12 +13,12 @@ interface Props extends HTMLAttributes<HTMLElement> {
 
 const PANEL_BG: CSSProperties = {
   background:
-    "linear-gradient(160deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.92) 60%, hsl(220 15% 12%) 100%)",
+    "linear-gradient(160deg, hsl(var(--surface-dark)) 0%, hsl(var(--surface-dark) / 0.92) 60%, hsl(var(--surface-dark-deep)) 100%)",
 };
 
 const SOFTER_BG: CSSProperties = {
   background:
-    "linear-gradient(170deg, hsl(220 15% 14%) 0%, hsl(var(--secondary)) 55%, hsl(var(--secondary) / 0.95) 100%)",
+    "linear-gradient(170deg, hsl(var(--surface-dark-deep)) 0%, hsl(var(--surface-dark)) 55%, hsl(var(--surface-dark) / 0.95) 100%)",
 };
 
 const LEVELS: Record<

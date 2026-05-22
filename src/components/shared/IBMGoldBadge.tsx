@@ -57,7 +57,7 @@ export const IBMGoldBadge = ({
 
   const inner = (
     <>
-      <div className={cn("grid place-items-center rounded-md bg-secondary shrink-0", s.logo)}>
+      <div className={cn("grid place-items-center rounded-md bg-secondary dark:bg-muted shrink-0", s.logo)}>
         <img src={ibmLogo} alt="IBM" className="h-full w-full object-contain" />
       </div>
       <div className={cn("leading-tight", isCard ? "text-center" : "text-left")}>

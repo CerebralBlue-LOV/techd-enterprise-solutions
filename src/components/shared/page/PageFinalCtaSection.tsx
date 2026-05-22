@@ -59,10 +59,10 @@ export const PageFinalCtaSection = ({
                 {eyebrow}
               </p>
             ) : null}
-            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] text-background tracking-tight">
+            <h2 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] text-white tracking-tight">
               {title}
             </h2>
-            <p className="mt-5 mx-auto max-w-xl text-base md:text-lg font-light text-background/75 leading-relaxed">
+            <p className="mt-5 mx-auto max-w-xl text-base md:text-lg font-light text-white/75 leading-relaxed">
               {lede}
             </p>
 
@@ -76,7 +76,7 @@ export const PageFinalCtaSection = ({
               {secondary ? (
                 (() => {
                   const className =
-                    "group inline-flex items-center gap-2 h-14 px-8 rounded-md border border-background/25 text-sm font-bold uppercase tracking-wider text-background/90 transition-colors duration-200 hover:border-background hover:bg-background/5 hover:text-background";
+                    "group inline-flex items-center gap-2 h-14 px-8 rounded-md border border-white/25 text-sm font-bold uppercase tracking-wider text-white/90 transition-colors duration-200 hover:border-white hover:bg-white/5 hover:text-white";
                   const inner = (
                     <>
                       {secondary.label}
