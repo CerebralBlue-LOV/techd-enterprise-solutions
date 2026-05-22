@@ -58,6 +58,8 @@ export const HeroSection = () => {
       </Reveal>
     </div>
   </section>
-);
+  );
+};
+
 
 export default HeroSection;
