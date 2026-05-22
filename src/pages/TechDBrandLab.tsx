@@ -76,6 +76,22 @@ const ASSETS: Asset[] = [
       },
     ],
   },
+  {
+    id: "gear-white",
+    name: "Gear mark (white)",
+    filename: "techd-gear-upscale-white.png",
+    shape: "square",
+    size: 800,
+    dark: true,
+    candidates: [
+      {
+        label: "AI upscale · white",
+        method: "Recolored from colored upscale",
+        src: gearUpscaleWhite,
+        note: "Pure-white gear for dark surfaces; transparent background.",
+      },
+    ],
+  },
 ];
 
 const TechDBrandLab = () => {
