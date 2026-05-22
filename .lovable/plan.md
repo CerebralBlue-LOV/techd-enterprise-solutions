@@ -1,76 +1,52 @@
-# Smoother chat open/close
+# Plan: optimize 3D hero bundles
 
-## Why it feels off today
+## Findings from exploration
 
-Three things are working against the animation:
+- **13 files** import from `three` or `@react-three/fiber` across hero figures, particle scenes, and section scenes.
+- **`@react-three/drei` is installed but never imported anywhere in `src/`.** It sits in `package.json` only.
+- `vite.config.ts` has no `manualChunks` config, so Rollup decides chunking per dynamic import. Each `React.lazy` hero chunk currently risks pulling its own copy of `three` (~150 KB minified).
 
-1. **Everything fires at once.** Launcher fade and panel open both run for 1.00 s starting on the same frame. The eye doesn't know what to follow, so nothing feels intentional.
-2. **The panel starts at `scale(0.04)`.** That's essentially a single pixel growing to full size. Over 1 s it looks like a "zoom from nothing" effect — fast at the start, then crawls. Native panels (iOS, macOS, Linear, Raycast) start at ~0.92–0.96, not near-zero.
-3. **One easing curve for everything.** `cubic-bezier(0.22, 1, 0.36, 1)` is a strong "ease-out" — great for entrances, wrong for exits. Closes feel like they hesitate.
+This changes the original two-step plan:
+1. Manual chunks for `three` + `r3f` — still valuable.
+2. ~~Audit drei imports~~ → **Remove drei entirely** since nothing uses it.
 
-## The plan
+## Changes
 
-Treat opening and closing as a **two-step choreography**, not one big simultaneous animation.
+### 1. Share `three` and `@react-three/fiber` across all lazy chunks
 
-### Opening (total ~480 ms, feels instant but smooth)
+Edit `vite.config.ts` — add `build.rollupOptions.output.manualChunks`:
 
-```text
-0 ms ─────────── 180 ms ─────────── 480 ms
-│ launcher fades + scales out      │
-│       │ panel starts rising + fading in
+```ts
+build: {
+  rollupOptions: {
+    output: {
+      manualChunks: {
+        three: ['three'],
+        r3f: ['@react-three/fiber'],
+      },
+    },
+  },
+},
 ```
 
-- **Launcher out:** 180 ms, `ease-in` (quick exit — it's getting out of the way)
-- **Panel in:** starts at 120 ms (slight overlap), runs 360 ms
-  - opacity 0 → 1
-  - scale **0.96 → 1** (not 0.04)
-  - translateY **8 px → 0** (subtle rise from the launcher's position)
-  - no blur (the blur filter is expensive and adds nothing at this scale)
-  - easing: `cubic-bezier(0.22, 1, 0.36, 1)` (ease-out — feels like it "lands")
+Result: one `three-[hash].js` chunk (~150 KB gz) and one `r3f-[hash].js` chunk (~20 KB gz) load once and are reused by every hero. No duplication across route chunks.
 
-### Closing (total ~320 ms, snappier than open)
+### 2. Remove the unused `@react-three/drei` dependency
 
-```text
-0 ms ─────────── 240 ms ─────── 320 ms
-│ panel fades + shrinks         │
-│              │ launcher fades back in
+```bash
+bun remove @react-three/drei
 ```
 
-- **Panel out:** 240 ms, `cubic-bezier(0.4, 0, 1, 1)` (ease-in — it's leaving)
-  - opacity 1 → 0, scale 1 → 0.96, translateY 0 → 4 px
-- **Launcher in:** starts at 140 ms, runs 180 ms, `ease-out`
+Saves install time, removes ~500 KB from `node_modules`, eliminates the risk of a future contributor adding a barrel `import * from '@react-three/drei'`.
 
-Native UIs always close faster than they open — that's what makes closes feel "responsive" instead of "sluggish."
+## Verification
 
-### Why these numbers
+- Run the build (auto-runs after edits).
+- Confirm the dist output shows a single `three-*.js` chunk and that hero route chunks shrank.
+- Smoke-check each hero in preview: `/`, `/solutions/*`, `/services/*`, `/industries/*`, `/company`, `/resources/*`, `/contact`. They should look and animate identically.
 
-- **Material/Apple HIG sweet spot** for panel transitions is 200–400 ms. 1 s is movie-trailer slow for a UI affordance.
-- **Subtle scale (0.96)** + **small translate (8 px)** reads as "the panel grew out of the button" without the cartoonish zoom.
-- **Staggering by ~120 ms** gives the eye a clear focal point: launcher leaves, *then* panel arrives. No competing motion.
-- **Asymmetric open/close durations** match every polished app you've used (Linear, Raycast, Slack, macOS sheets).
+## Out of scope (saved for later)
 
-## What I'll change
-
-- `ChatWidget.tsx`
-  - Replace single `ANIM_MS = 1000` with separate open/close timings
-  - Drop `blur` from the transition (perf + visual noise)
-  - Change closed state from `scale-[0.04]` → `scale-95` + small translate
-  - Use different easing strings for enter vs exit
-- `ChatLauncher.tsx`
-  - Shorter fade (180 ms out / 180 ms in) with small delay on re-entry
-  - Use `ease-in` going out, `ease-out` coming back
-
-## What stays the same
-
-- Brand colors, button styling, sheen sweep, hover glow
-- Panel content, scroll behavior, focus management
-- `prefers-reduced-motion` still disables transitions
-- Escape-to-close, click-to-toggle
-
-## Out of scope
-
-- Not adding a backdrop/overlay
-- Not changing the panel's position or dimensions
-- Not touching the CTA bubble animation
-
-After implementing, I'll give you the updated timing table so you can fine-tune any single number.
+- Pausing `<Canvas>` render loop when off-screen (item 3 from prior message)
+- Static-image fallback on mobile (item 5)
+- `prefers-reduced-motion` particle reductions (item 6)
