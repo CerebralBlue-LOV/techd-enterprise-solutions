@@ -58,7 +58,7 @@ const ASSETS: Asset[] = [
     name: "Wordmark only",
     filename: "techd-wordmark.png",
     shape: "horizontal",
-    size: 280,
+    size: 800,
     needsDark: true,
     candidates: [
       {
