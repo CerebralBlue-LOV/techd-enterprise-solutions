@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import HeroBackdrop from "@sections/home/_components/HeroBackdrop";
 import SectionMarker from "@shared/SectionMarker";
 import Reveal from "@shared/Reveal";
+import HeroFigureFallback from "@shared/heroFigures/HeroFigureFallback";
 
 const HeroParticleField = lazy(
   () => import("@sections/home/_components/HeroParticleField"),
@@ -11,7 +12,7 @@ const ContactHero = () => (
   <section id="hero" className="relative overflow-hidden border-b border-border scroll-mt-24">
     <SectionMarker page="Contact" name="Hero" />
     <HeroBackdrop />
-    <Suspense fallback={null}>
+    <Suspense fallback={<HeroFigureFallback />}>
       <HeroParticleField />
     </Suspense>
     <div className="container-page relative pt-24 pb-20 md:pt-32 md:pb-24">
