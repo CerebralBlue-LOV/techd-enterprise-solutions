@@ -8,6 +8,12 @@ import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
 import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
 
+// Brand-snapped (token-locked recolor)
+import logoBrand from "@/assets/brand/lab/techd-logo-upscale-brand.png";
+import wordmarkBrand from "@/assets/brand/lab/techd-wordmark-upscale-brand.png";
+import gearBrand from "@/assets/brand/lab/techd-gear-upscale-brand.png";
+import gearBrandWhite from "@/assets/brand/lab/techd-gear-upscale-white-brand.png";
+
 
 type AssetShape = "horizontal" | "square";
 
