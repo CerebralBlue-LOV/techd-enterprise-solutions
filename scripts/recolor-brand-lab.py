@@ -1,14 +1,21 @@
 """Recolor lab brand PNGs to exact brand tokens.
 
-Reads each AI upscale in src/assets/brand/lab/ and writes a *-brand.png
-sibling with every opaque pixel snapped to one of:
-    #00B3E3  primary cyan
-    #56565A  secondary dark gray
-    #A7A5A8  muted light gray
-Alpha is preserved so anti-aliased edges stay smooth.
+Pipeline per asset:
+  1. Initial per-pixel classification by saturation + luminance into one of
+     three brand tokens (PRIMARY / SECONDARY / MUTED).
+  2. Majority-filter cleanup over a 7x7 window on the label map. This flips
+     thin fringe pixels (e.g. the bottom-edge of the dark gear that the AI
+     upscale rendered at L~166 and the strict luminance cutoff misclassifies
+     as muted) back to whatever the surrounding region is.
+  3. Alpha is preserved untouched throughout, so anti-aliased edges stay
+     smooth.
+
+Writes *-brand.png siblings next to each *-upscale.png in src/assets/brand/lab/.
 """
 from pathlib import Path
+import numpy as np
 from PIL import Image
+from scipy import ndimage
 
 LAB = Path(__file__).parent.parent / "src" / "assets" / "brand" / "lab"
 
@@ -17,46 +24,79 @@ SECONDARY = (86, 86, 90)  # #56565A
 MUTED = (167, 165, 168)   # #A7A5A8
 WHITE = (255, 255, 255)
 
+LABELS = {0: PRIMARY, 1: SECONDARY, 2: MUTED}
+
 SAT_THRESHOLD = 40
 DARK_LUM_CUTOFF = 145
 ALPHA_FLOOR = 0
+MAJORITY_WINDOW = 7  # odd; pixels are repainted to the modal label in this window
 
 
-def snap_pixel(r: int, g: int, b: int) -> tuple[int, int, int]:
-    s = max(r, g, b) - min(r, g, b)
-    l = (r + g + b) // 3
-    if s > SAT_THRESHOLD and b >= r and b >= g:
-        return PRIMARY
-    if l < DARK_LUM_CUTOFF:
-        return SECONDARY
-    return MUTED
+def initial_labels(rgb: np.ndarray) -> np.ndarray:
+    """Per-pixel label: 0=PRIMARY, 1=SECONDARY, 2=MUTED."""
+    r, g, b = rgb[..., 0].astype(int), rgb[..., 1].astype(int), rgb[..., 2].astype(int)
+    mx = np.maximum.reduce([r, g, b])
+    mn = np.minimum.reduce([r, g, b])
+    sat = mx - mn
+    lum = (r + g + b) // 3
+    is_cyan = (sat > SAT_THRESHOLD) & (b >= r) & (b >= g)
+    labels = np.where(is_cyan, 0, np.where(lum < DARK_LUM_CUTOFF, 1, 2))
+    return labels.astype(np.uint8)
+
+
+def majority_filter(labels: np.ndarray, mask: np.ndarray, window: int) -> np.ndarray:
+    """Repaint each masked pixel with the modal label in a window x window box,
+    counting only masked (opaque) pixels."""
+    out = labels.copy()
+    for lbl in (0, 1, 2):
+        # count of this label in a window x window box around each pixel
+        is_lbl = ((labels == lbl) & mask).astype(np.uint16)
+        # using uniform filter as a fast box-sum proxy (multiply by area)
+        area = window * window
+        box = ndimage.uniform_filter(is_lbl.astype(np.float32), size=window) * area
+        if lbl == 0:
+            counts = box[..., None]
+        else:
+            counts = np.concatenate([counts, box[..., None]], axis=-1)
+    new_labels = np.argmax(counts, axis=-1).astype(np.uint8)
+    out[mask] = new_labels[mask]
+    return out
 
 
 def recolor(src: Path, dst: Path, force_white: bool = False) -> None:
     im = Image.open(src).convert("RGBA")
-    px = im.load()
-    w, h = im.size
-    counts = {"primary": 0, "secondary": 0, "muted": 0, "white": 0, "transparent": 0}
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = px[x, y]
-            if a <= ALPHA_FLOOR:
-                px[x, y] = (0, 0, 0, 0)
-                counts["transparent"] += 1
-                continue
-            if force_white:
-                px[x, y] = (*WHITE, a)
-                counts["white"] += 1
-                continue
-            nr, ng, nb = snap_pixel(r, g, b)
-            px[x, y] = (nr, ng, nb, a)
-            if (nr, ng, nb) == PRIMARY:
-                counts["primary"] += 1
-            elif (nr, ng, nb) == SECONDARY:
-                counts["secondary"] += 1
-            else:
-                counts["muted"] += 1
-    im.save(dst, "PNG")
+    arr = np.array(im)
+    rgb = arr[..., :3]
+    alpha = arr[..., 3]
+    mask = alpha > ALPHA_FLOOR
+
+    if force_white:
+        out_rgb = np.where(mask[..., None], np.array(WHITE, dtype=np.uint8), rgb)
+        out_alpha = np.where(mask, alpha, 0)
+        Image.fromarray(
+            np.concatenate([out_rgb, out_alpha[..., None]], axis=-1).astype(np.uint8),
+            "RGBA",
+        ).save(dst, "PNG")
+        print(f"{dst.name}: white={int(mask.sum())} transparent={int((~mask).sum())}")
+        return
+
+    labels = initial_labels(rgb)
+    labels = majority_filter(labels, mask, MAJORITY_WINDOW)
+
+    palette = np.array([PRIMARY, SECONDARY, MUTED], dtype=np.uint8)
+    out_rgb = palette[labels]
+    # zero out transparent regions cleanly
+    out_rgb = np.where(mask[..., None], out_rgb, 0)
+    out_alpha = np.where(mask, alpha, 0)
+    out = np.concatenate([out_rgb, out_alpha[..., None]], axis=-1).astype(np.uint8)
+    Image.fromarray(out, "RGBA").save(dst, "PNG")
+
+    counts = {
+        "primary": int(((labels == 0) & mask).sum()),
+        "secondary": int(((labels == 1) & mask).sum()),
+        "muted": int(((labels == 2) & mask).sum()),
+        "transparent": int((~mask).sum()),
+    }
     print(f"{dst.name}: {counts}")
 
 
