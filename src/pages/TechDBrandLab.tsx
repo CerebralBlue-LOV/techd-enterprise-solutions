@@ -110,24 +110,6 @@ const TechDBrandLab = () => {
           and wire it into the header, footer, hero, and intro in one pass.
         </p>
 
-        {/* Background toggle */}
-        <div className="mt-6 inline-flex items-center gap-1 rounded-full border border-border bg-background p-1">
-          {(["both", "light", "dark"] as const).map((opt) => (
-            <button
-              key={opt}
-              type="button"
-              onClick={() => setBg(opt)}
-              className={cn(
-                "px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] rounded-full transition-colors",
-                bg === opt
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-secondary",
-              )}
-            >
-              {opt}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Asset sections */}
