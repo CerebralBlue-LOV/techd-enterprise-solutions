@@ -50,6 +50,12 @@ const ASSETS: Asset[] = [
         src: logoUpscale,
         note: "Upscaled colored logo, transparent background.",
       },
+      {
+        label: "Brand-snapped",
+        method: "Token-locked recolor · #00B3E3 / #56565A / #A7A5A8",
+        src: logoBrand,
+        note: "Every opaque pixel classified by hue/luminance and snapped to a brand token. Alpha preserved for clean edges.",
+      },
     ],
   },
   {
@@ -65,6 +71,12 @@ const ASSETS: Asset[] = [
         src: wordmarkUpscale,
         note: "Upscaled colored wordmark, transparent background.",
       },
+      {
+        label: "Brand-snapped",
+        method: "Token-locked recolor · Tech #00B3E3 / D #56565A",
+        src: wordmarkBrand,
+        note: "Cyan letters snapped to primary; D snapped to secondary. Alpha preserved.",
+      },
     ],
   },
   {
@@ -79,6 +91,12 @@ const ASSETS: Asset[] = [
         method: "Nano-Banana · 4× PNG",
         src: gearUpscale,
         note: "Upscaled colored gear mark, transparent background.",
+      },
+      {
+        label: "Brand-snapped",
+        method: "Token-locked recolor · top #56565A / right #A7A5A8 / bottom #00B3E3",
+        src: gearBrand,
+        note: "Three pieces snapped to their brand tokens by source color. Alpha preserved.",
       },
     ],
   },
