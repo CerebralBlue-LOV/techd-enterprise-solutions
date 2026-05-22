@@ -111,6 +111,7 @@ def recolor(src: Path, dst: Path, force_white: bool = False) -> None:
 
     labels = initial_labels(rgb)
     labels = majority_filter(labels, mask, MAJORITY_WINDOW)
+    labels = absorb_small_islands(labels, mask, MIN_ISLAND_AREA)
 
     palette = np.array([PRIMARY, SECONDARY, MUTED], dtype=np.uint8)
     out_rgb = palette[labels]
