@@ -50,16 +50,23 @@ export const Footer = () => {
         <div key={col.label}>
           <div className="text-sm font-bold text-secondary">{col.label}</div>
           <ul className="mt-3 space-y-2">
-            {(col.children ?? [{ label: col.label, href: col.href ?? "#" }]).map((c) => (
-              <li key={c.label}>
-                <Link
-                  to={c.href}
-                  className="text-sm font-light text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {c.label}
-                </Link>
-              </li>
-            ))}
+            {(col.children ?? [{ label: col.label, href: col.href ?? "#" }]).map((c) => {
+              const active = c.href === pathname;
+              return (
+                <li key={c.label}>
+                  <Link
+                    to={c.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "text-sm font-light transition-colors hover:text-primary",
+                      active ? "text-primary" : "text-muted-foreground"
+                    )}
+                  >
+                    {c.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}
@@ -76,6 +83,7 @@ export const Footer = () => {
       </div>
     </div>
   </footer>
-);
+  );
+};
 
 export default Footer;
