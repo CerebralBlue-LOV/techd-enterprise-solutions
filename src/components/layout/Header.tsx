@@ -35,6 +35,15 @@ export const Header = () => {
     closeTimer.current = setTimeout(() => setActiveNav(null), 100);
   };
 
+  const isActiveItem = (item: typeof NAV[number]) => {
+    if (item.children && item.children.length > 0) {
+      const base = "/" + item.children[0].href.split("/")[1];
+      return location.pathname === base || location.pathname.startsWith(base + "/");
+    }
+    if (item.href) return location.pathname === item.href;
+    return false;
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur border-b border-border">
       <div className="container-page flex h-16 items-center justify-between gap-6">
