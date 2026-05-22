@@ -2,12 +2,6 @@ import { useState } from "react";
 import Layout from "@layout/Layout";
 import { cn } from "@/lib/utils";
 
-// Originals
-import logoOriginal from "@/assets/brand/techd-logo.webp";
-import wordmarkOriginal from "@/assets/brand/techd-wordmark.png";
-import gearOriginal from "@/assets/brand/techd-gear.png";
-
-
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
 import logoUpscaleWhite from "@/assets/brand/lab/techd-logo-upscale-white.png";
@@ -50,12 +44,6 @@ const ASSETS: Asset[] = [
     needsDark: true,
     candidates: [
       {
-        label: "Original",
-        method: "264×70 webp · raster",
-        src: logoOriginal,
-        note: "What ships today. Pixelates above ~280px width.",
-      },
-      {
         label: "AI upscale",
         method: "Nano-Banana · 4× PNG · white on dark",
         src: logoUpscale,
@@ -73,12 +61,6 @@ const ASSETS: Asset[] = [
     needsDark: true,
     candidates: [
       {
-        label: "Original",
-        method: "192×58 png · raster",
-        src: wordmarkOriginal,
-        note: "What ships today.",
-      },
-      {
         label: "AI upscale",
         method: "Nano-Banana · 4× PNG · white on dark",
         src: wordmarkUpscale,
@@ -95,12 +77,6 @@ const ASSETS: Asset[] = [
     sizes: [40, 80, 160, 320],
     needsDark: true,
     candidates: [
-      {
-        label: "Original",
-        method: "70×70 png · raster",
-        src: gearOriginal,
-        note: "What ships today.",
-      },
       {
         label: "AI upscale",
         method: "Nano-Banana · 4× PNG · white on dark",
