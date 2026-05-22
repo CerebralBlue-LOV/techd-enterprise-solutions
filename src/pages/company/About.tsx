@@ -104,7 +104,7 @@ const About = () => {
               </div>
             </Reveal>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {COMPANY_FACTS.map((f, i) => (
                 <Reveal key={f.label} delay={80 + i * 70}>
                   <div className="group relative overflow-hidden rounded-xl border border-border bg-background px-6 py-5 transition-all duration-300 hover:border-primary/50 hover:shadow-[0_8px_24px_-8px_hsl(var(--primary)/0.2)]">
