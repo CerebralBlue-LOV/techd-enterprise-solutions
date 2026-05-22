@@ -45,12 +45,6 @@ const ASSETS: Asset[] = [
     size: 800,
     candidates: [
       {
-        label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
-        src: logoUpscale,
-        note: "Upscaled colored logo, transparent background.",
-      },
-      {
         label: "Brand-snapped",
         method: "Token-locked recolor · #00B3E3 / #56565A / #A7A5A8",
         src: logoBrand,
@@ -65,12 +59,6 @@ const ASSETS: Asset[] = [
     shape: "horizontal",
     size: 800,
     candidates: [
-      {
-        label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
-        src: wordmarkUpscale,
-        note: "Upscaled colored wordmark, transparent background.",
-      },
       {
         label: "Brand-snapped",
         method: "Token-locked recolor · Tech #00B3E3 / D #56565A",
@@ -87,12 +75,6 @@ const ASSETS: Asset[] = [
     size: 800,
     candidates: [
       {
-        label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
-        src: gearUpscale,
-        note: "Upscaled colored gear mark, transparent background.",
-      },
-      {
         label: "Brand-snapped",
         method: "Token-locked recolor · top #56565A / right #A7A5A8 / bottom #00B3E3",
         src: gearBrand,
@@ -108,12 +90,6 @@ const ASSETS: Asset[] = [
     size: 800,
     dark: true,
     candidates: [
-      {
-        label: "AI upscale · white",
-        method: "Recolored from colored upscale",
-        src: gearUpscaleWhite,
-        note: "Pure-white gear for dark surfaces; transparent background.",
-      },
       {
         label: "Brand-snapped · white",
         method: "Token-locked recolor · all opaque → #FFFFFF",
