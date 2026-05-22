@@ -21,6 +21,8 @@ type Candidate = {
   label: string;
   method: string;
   src: string;
+  /** Optional override used when rendered on the dark surface */
+  darkSrc?: string;
   note: string;
 };
 
