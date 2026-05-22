@@ -34,15 +34,12 @@ const ASSETS: Asset[] = [
     filename: "techd-logo.webp",
     shape: "horizontal",
     size: 800,
-
-    needsDark: true,
     candidates: [
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
+        method: "Nano-Banana · 4× PNG",
         src: logoUpscale,
-        darkSrc: logoUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces (no more colored lines).",
+        note: "Upscaled colored logo, transparent background.",
       },
     ],
   },
@@ -52,14 +49,12 @@ const ASSETS: Asset[] = [
     filename: "techd-wordmark.png",
     shape: "horizontal",
     size: 800,
-    needsDark: true,
     candidates: [
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
+        method: "Nano-Banana · 4× PNG",
         src: wordmarkUpscale,
-        darkSrc: wordmarkUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
+        note: "Upscaled colored wordmark, transparent background.",
       },
     ],
   },
@@ -69,14 +64,12 @@ const ASSETS: Asset[] = [
     filename: "techd-gear.png",
     shape: "square",
     size: 800,
-    needsDark: true,
     candidates: [
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG · white on dark",
+        method: "Nano-Banana · 4× PNG",
         src: gearUpscale,
-        darkSrc: gearUpscaleWhite,
-        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
+        note: "Upscaled colored gear mark, transparent background.",
       },
     ],
   },
