@@ -136,8 +136,9 @@ const TechDBrandLab = () => {
                 </span>
                 <input
                   type="range"
-                  min={asset.shape === "horizontal" ? 80 : 60}
-                  max={asset.shape === "horizontal" ? 800 : 480}
+                  min={80}
+                  max={1200}
+
                   step={8}
                   value={sizes[asset.id] ?? asset.size}
                   onChange={(e) =>
