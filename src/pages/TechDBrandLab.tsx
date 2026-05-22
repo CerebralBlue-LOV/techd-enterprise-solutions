@@ -230,8 +230,9 @@ const TechDBrandLab = () => {
                           </code>
                         </div>
                         <div
-                          className="flex items-center justify-center min-h-[200px] rounded"
+                          className="flex items-center justify-center rounded"
                           style={{
+                            minHeight: Math.max(240, currentSize + 80),
                             backgroundImage: `linear-gradient(45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(-45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${surface.checkerDark} 75%), linear-gradient(-45deg, transparent 75%, ${surface.checkerDark} 75%)`,
                             backgroundSize: "16px 16px",
                             backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0",
@@ -243,8 +244,8 @@ const TechDBrandLab = () => {
                             alt={`${c.label} (${surface.label})`}
                             style={
                               asset.shape === "horizontal"
-                                ? { height: asset.size, width: "auto" }
-                                : { height: asset.size, width: asset.size }
+                                ? { height: currentSize, width: "auto" }
+                                : { height: currentSize, width: currentSize }
                             }
                             className="object-contain"
                             loading="lazy"
