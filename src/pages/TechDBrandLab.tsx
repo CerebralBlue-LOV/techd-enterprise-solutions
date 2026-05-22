@@ -27,8 +27,8 @@ type Asset = {
   name: string;
   filename: string;
   shape: AssetShape;
-  /** sizes (px) at which to render the asset for comparison */
-  sizes: number[];
+  /** single size (px) at which to render the asset */
+  size: number;
   /** if true, also render against a dark surface */
   needsDark: boolean;
   candidates: Candidate[];
