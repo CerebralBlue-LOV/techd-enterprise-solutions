@@ -165,6 +165,7 @@ const TechDBrandLab = () => {
                         checkerLight: "hsl(0 0% 96%)",
                         checkerDark: "hsl(0 0% 90%)",
                         imgSrc: c.src,
+                        fileLabel: c.src.split("/").pop()?.split("?")[0] ?? "",
                       },
                       {
                         key: "dark-white",
