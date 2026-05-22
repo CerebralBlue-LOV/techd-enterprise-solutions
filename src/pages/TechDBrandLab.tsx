@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import logoOriginal from "@/assets/brand/techd-logo.webp";
 import wordmarkOriginal from "@/assets/brand/techd-wordmark.png";
 import gearOriginal from "@/assets/brand/techd-gear.png";
-import markWhiteOriginal from "@/assets/brand/techd-mark-white.png";
+
 
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
