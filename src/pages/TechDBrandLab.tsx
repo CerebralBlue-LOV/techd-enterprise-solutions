@@ -191,18 +191,31 @@ const TechDBrandLab = () => {
                       </code>
                     </div>
 
-                    {/* Single surface panel: colored on light with checkerboard transparency preview */}
+                    {/* Single surface panel: light or dark depending on asset.dark */}
                     {([
-                      {
-                        key: "light",
-                        label: "Colored (on light)",
-                        bgClass: "bg-background",
-                        labelClass: "text-muted-foreground",
-                        checkerLight: "hsl(0 0% 96%)",
-                        checkerDark: "hsl(0 0% 90%)",
-                        imgSrc: c.src,
-                        fileLabel: c.src.split("/").pop()?.split("?")[0] ?? "",
-                      },
+                      asset.dark
+                        ? {
+                            key: "dark",
+                            label: "White (on dark)",
+                            bgClass: "bg-secondary",
+                            labelClass: "text-background/60",
+                            checkerLight: "hsl(var(--secondary))",
+                            checkerDark: "hsl(0 0% 28%)",
+                            imgSrc: c.src,
+                            fileLabel:
+                              c.src.split("/").pop()?.split("?")[0] ?? "",
+                          }
+                        : {
+                            key: "light",
+                            label: "Colored (on light)",
+                            bgClass: "bg-background",
+                            labelClass: "text-muted-foreground",
+                            checkerLight: "hsl(0 0% 96%)",
+                            checkerDark: "hsl(0 0% 90%)",
+                            imgSrc: c.src,
+                            fileLabel:
+                              c.src.split("/").pop()?.split("?")[0] ?? "",
+                          },
                     ] as const).map((surface) => (
                       <div
                         key={surface.key}
