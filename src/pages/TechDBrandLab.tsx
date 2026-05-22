@@ -172,7 +172,7 @@ const TechDBrandLab = () => {
                       </code>
                     </div>
 
-                    {/* Two surface panels: colored (light) + white (dark), both with checkerboard transparency preview */}
+                    {/* Single surface panel: colored on light with checkerboard transparency preview */}
                     {([
                       {
                         key: "light",
@@ -183,16 +183,6 @@ const TechDBrandLab = () => {
                         checkerDark: "hsl(0 0% 90%)",
                         imgSrc: c.src,
                         fileLabel: c.src.split("/").pop()?.split("?")[0] ?? "",
-                      },
-                      {
-                        key: "dark-white",
-                        label: "White (on dark)",
-                        bgClass: "bg-secondary",
-                        labelClass: "text-background/60",
-                        checkerLight: "hsl(var(--secondary))",
-                        checkerDark: "hsl(0 0% 28%)",
-                        imgSrc: c.darkSrc ?? c.src,
-                        fileLabel: (c.darkSrc ?? c.src).split("/").pop()?.split("?")[0] ?? "",
                       },
                     ] as const).map((surface) => (
                       <div
