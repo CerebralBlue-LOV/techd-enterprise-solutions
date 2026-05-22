@@ -40,7 +40,8 @@ const ASSETS: Asset[] = [
     name: "Full logo (gears + wordmark)",
     filename: "techd-logo.webp",
     shape: "horizontal",
-    size: 280,
+    size: 800,
+
     needsDark: true,
     candidates: [
       {
@@ -57,7 +58,7 @@ const ASSETS: Asset[] = [
     name: "Wordmark only",
     filename: "techd-wordmark.png",
     shape: "horizontal",
-    size: 280,
+    size: 800,
     needsDark: true,
     candidates: [
       {
@@ -74,7 +75,7 @@ const ASSETS: Asset[] = [
     name: "Gear mark (color)",
     filename: "techd-gear.png",
     shape: "square",
-    size: 160,
+    size: 800,
     needsDark: true,
     candidates: [
       {
@@ -135,8 +136,9 @@ const TechDBrandLab = () => {
                 </span>
                 <input
                   type="range"
-                  min={asset.shape === "horizontal" ? 80 : 60}
-                  max={asset.shape === "horizontal" ? 800 : 480}
+                  min={80}
+                  max={1200}
+
                   step={8}
                   value={sizes[asset.id] ?? asset.size}
                   onChange={(e) =>
