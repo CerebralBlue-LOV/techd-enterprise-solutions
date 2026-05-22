@@ -14,6 +14,7 @@ import logoUpscaleWhite from "@/assets/brand/lab/techd-logo-upscale-white.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import wordmarkUpscaleWhite from "@/assets/brand/lab/techd-wordmark-upscale-white.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
+import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
 import markWhiteUpscale from "@/assets/brand/lab/techd-mark-white-upscale.png";
 
 type AssetShape = "horizontal" | "square";
@@ -102,9 +103,10 @@ const ASSETS: Asset[] = [
       },
       {
         label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
+        method: "Nano-Banana · 4× PNG · white on dark",
         src: gearUpscale,
-        note: "Higher resolution gear mark.",
+        darkSrc: gearUpscaleWhite,
+        note: "Color version on light; auto-swaps to pure white on dark surfaces.",
       },
     ],
   },
