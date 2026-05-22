@@ -1,5 +1,5 @@
 import { useState } from "react";
-import techdLogo from "@/assets/brand/techd-logo.webp";
+import techdLogo from "@/assets/brand/techd-logo.png";
 
 /**
  * Side-by-side alignment check for the final intro lockup vs the original
@@ -298,7 +298,7 @@ export const LockupAlignmentInspector = () => {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-secondary">
-              Original · techd-logo.webp
+              Original · techd-logo.png
             </h4>
             <div className="flex items-center justify-center rounded-lg border border-border bg-background p-6">
               <CanvasFrame width={CANVAS_W} height={CANVAS_H}>

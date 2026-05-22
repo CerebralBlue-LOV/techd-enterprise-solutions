@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Generate favicon assets from the TechD logo.
+Generate favicon assets from the TechD gear mark.
 
-Crops the gear icon (left 70×70 px of techd-logo.webp), adds a small
-transparent pad, then writes:
+Sources the standalone gear (`src/assets/brand/techd-gear.png`, square,
+transparent background), adds a small transparent pad, then writes:
   public/favicon.ico          — multi-size ICO (16, 32, 48)
   public/favicon-32x32.png
   public/favicon-16x16.png
@@ -21,7 +21,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC_LOGO = ROOT / "src" / "assets" / "brand" / "techd-logo.webp"
+SRC_GEAR = ROOT / "src" / "assets" / "brand" / "techd-gear.png"
 PUBLIC = ROOT / "public"
 INDEX = ROOT / "index.html"
 
@@ -31,18 +31,24 @@ PAD_FRACTION = 0.08   # transparent padding as fraction of icon size
 def make_icon(src: Path, out_size: int, out_path: Path) -> None:
     img = Image.open(src).convert("RGBA")
 
-    # Crop the square icon region (left 70×70 px)
-    icon_raw = img.crop((0, 0, img.height, img.height))
+    # Tight-crop to the gear's non-transparent bounding box, then square it
+    bbox = img.getbbox()
+    if bbox:
+        img = img.crop(bbox)
+    side = max(img.size)
+    square = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    square.paste(img, ((side - img.width) // 2, (side - img.height) // 2))
 
     # Add transparent padding so the mark doesn't bleed to the edge
-    pad = int(icon_raw.width * PAD_FRACTION)
-    padded_size = icon_raw.width + pad * 2
+    pad = int(side * PAD_FRACTION)
+    padded_size = side + pad * 2
     canvas = Image.new("RGBA", (padded_size, padded_size), (0, 0, 0, 0))
-    canvas.paste(icon_raw, (pad, pad))
+    canvas.paste(square, (pad, pad))
 
     out = canvas.resize((out_size, out_size), Image.LANCZOS)
     out.save(out_path)
     print(f"  ✓  {out_path.relative_to(ROOT)}")
+
 
 
 # ── Delete old Lovable favicon ──────────────────────────────────────────────
@@ -52,20 +58,26 @@ if old_ico.exists():
     print(f"  ✗  deleted {old_ico.relative_to(ROOT)}")
 
 # ── Generate new assets ─────────────────────────────────────────────────────
-make_icon(SRC_LOGO, 16,  PUBLIC / "favicon-16x16.png")
-make_icon(SRC_LOGO, 32,  PUBLIC / "favicon-32x32.png")
-make_icon(SRC_LOGO, 180, PUBLIC / "apple-touch-icon.png")
+make_icon(SRC_GEAR, 16,  PUBLIC / "favicon-16x16.png")
+make_icon(SRC_GEAR, 32,  PUBLIC / "favicon-32x32.png")
+make_icon(SRC_GEAR, 180, PUBLIC / "apple-touch-icon.png")
 
 # ICO bundles 16, 32, 48 into one file
 imgs = []
 for size in (16, 32, 48):
-    img = Image.open(SRC_LOGO).convert("RGBA")
-    icon_raw = img.crop((0, 0, img.height, img.height))
-    pad = int(icon_raw.width * PAD_FRACTION)
-    padded_size = icon_raw.width + pad * 2
+    img = Image.open(SRC_GEAR).convert("RGBA")
+    bbox = img.getbbox()
+    if bbox:
+        img = img.crop(bbox)
+    side = max(img.size)
+    square = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    square.paste(img, ((side - img.width) // 2, (side - img.height) // 2))
+    pad = int(side * PAD_FRACTION)
+    padded_size = side + pad * 2
     canvas = Image.new("RGBA", (padded_size, padded_size), (0, 0, 0, 0))
-    canvas.paste(icon_raw, (pad, pad))
+    canvas.paste(square, (pad, pad))
     imgs.append(canvas.resize((size, size), Image.LANCZOS))
+
 
 ico_path = PUBLIC / "favicon.ico"
 imgs[0].save(ico_path, format="ICO", sizes=[(16, 16), (32, 32), (48, 48)],
