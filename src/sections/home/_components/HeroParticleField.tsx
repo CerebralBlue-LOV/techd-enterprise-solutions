@@ -1,11 +1,19 @@
 import { useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { useInView } from "@hooks/useInView";
 
-const COLS = 56;
-const ROWS = 36;
-const SPACING = 0.42;
-const HIGHLIGHT_COUNT = 14;
+const prefersReducedMotion =
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Scale particle/grid density way down for reduced-motion users so the
+// frozen scene also has a smaller memory + GPU upload cost.
+const DENSITY = prefersReducedMotion ? 0.45 : 1;
+const COLS = Math.round(56 * DENSITY);
+const ROWS = Math.round(36 * DENSITY);
+const SPACING = 0.42 / DENSITY;
+const HIGHLIGHT_COUNT = Math.max(4, Math.round(14 * DENSITY));
 
 /** Builds a flat grid of points (later undulated in useFrame). */
 function buildGrid() {
@@ -280,12 +288,12 @@ const Field = ({ animate }: { animate: boolean }) => {
 };
 
 export const HeroParticleField = () => {
-  const reduced =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const { ref, inView } = useInView<HTMLDivElement>("200px");
+  const animate = inView && !prefersReducedMotion;
 
   return (
     <div
+      ref={ref}
       aria-hidden="true"
       className="absolute inset-y-0 right-0 hidden md:block md:w-[72%] lg:w-[70%]"
     >
@@ -293,9 +301,9 @@ export const HeroParticleField = () => {
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
         camera={{ position: [0, 4, 7.5], fov: 50 }}
-        frameloop={reduced ? "demand" : "always"}
+        frameloop={animate ? "always" : "demand"}
       >
-        <Field animate={!reduced} />
+        <Field animate={animate} />
       </Canvas>
       {/* Edge fades — radial on the left so it only blends where the graphic actually sits */}
       <div

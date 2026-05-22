@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useInView } from "@hooks/useInView";
 
 interface SceneProps {
   tiltX?: number;
@@ -55,17 +56,21 @@ export const PracticeWireframeScene = ({ tiltX, tiltY }: SceneProps) => {
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const { ref, inView } = useInView<HTMLDivElement>("200px");
+  const animate = inView && !reduced;
 
   return (
-    <Canvas
-      dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 7], fov: 50 }}
-      gl={{ alpha: true, antialias: true }}
-      style={{ background: "transparent" }}
-      frameloop={reduced ? "demand" : "always"}
-    >
-      <Wireframe tiltX={tiltX} tiltY={tiltY} />
-    </Canvas>
+    <div ref={ref} className="absolute inset-0">
+      <Canvas
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 0, 7], fov: 50 }}
+        gl={{ alpha: true, antialias: true }}
+        style={{ background: "transparent" }}
+        frameloop={animate ? "always" : "demand"}
+      >
+        <Wireframe tiltX={tiltX} tiltY={tiltY} />
+      </Canvas>
+    </div>
   );
 };
 
