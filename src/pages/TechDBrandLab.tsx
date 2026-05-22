@@ -2,12 +2,6 @@ import { useState } from "react";
 import Layout from "@layout/Layout";
 import { cn } from "@/lib/utils";
 
-// AI upscale (hi-res raster)
-import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
-import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
-import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
-import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
-
 // Brand-snapped (token-locked recolor)
 import logoBrand from "@/assets/brand/lab/techd-logo-upscale-brand.png";
 import wordmarkBrand from "@/assets/brand/lab/techd-wordmark-upscale-brand.png";
