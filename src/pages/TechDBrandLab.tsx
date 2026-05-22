@@ -8,6 +8,12 @@ import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
 import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
 
+// Brand-snapped (token-locked recolor)
+import logoBrand from "@/assets/brand/lab/techd-logo-upscale-brand.png";
+import wordmarkBrand from "@/assets/brand/lab/techd-wordmark-upscale-brand.png";
+import gearBrand from "@/assets/brand/lab/techd-gear-upscale-brand.png";
+import gearBrandWhite from "@/assets/brand/lab/techd-gear-upscale-white-brand.png";
+
 
 type AssetShape = "horizontal" | "square";
 
@@ -44,6 +50,12 @@ const ASSETS: Asset[] = [
         src: logoUpscale,
         note: "Upscaled colored logo, transparent background.",
       },
+      {
+        label: "Brand-snapped",
+        method: "Token-locked recolor · #00B3E3 / #56565A / #A7A5A8",
+        src: logoBrand,
+        note: "Every opaque pixel classified by hue/luminance and snapped to a brand token. Alpha preserved for clean edges.",
+      },
     ],
   },
   {
@@ -58,6 +70,12 @@ const ASSETS: Asset[] = [
         method: "Nano-Banana · 4× PNG",
         src: wordmarkUpscale,
         note: "Upscaled colored wordmark, transparent background.",
+      },
+      {
+        label: "Brand-snapped",
+        method: "Token-locked recolor · Tech #00B3E3 / D #56565A",
+        src: wordmarkBrand,
+        note: "Cyan letters snapped to primary; D snapped to secondary. Alpha preserved.",
       },
     ],
   },
@@ -74,6 +92,12 @@ const ASSETS: Asset[] = [
         src: gearUpscale,
         note: "Upscaled colored gear mark, transparent background.",
       },
+      {
+        label: "Brand-snapped",
+        method: "Token-locked recolor · top #56565A / right #A7A5A8 / bottom #00B3E3",
+        src: gearBrand,
+        note: "Three pieces snapped to their brand tokens by source color. Alpha preserved.",
+      },
     ],
   },
   {
@@ -89,6 +113,12 @@ const ASSETS: Asset[] = [
         method: "Recolored from colored upscale",
         src: gearUpscaleWhite,
         note: "Pure-white gear for dark surfaces; transparent background.",
+      },
+      {
+        label: "Brand-snapped · white",
+        method: "Token-locked recolor · all opaque → #FFFFFF",
+        src: gearBrandWhite,
+        note: "Every opaque pixel forced to pure white. Alpha preserved.",
       },
     ],
   },
