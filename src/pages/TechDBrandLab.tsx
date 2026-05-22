@@ -90,6 +90,10 @@ const ASSETS: Asset[] = [
 
 const TechDBrandLab = () => {
   const [picks, setPicks] = useState<Record<string, string>>({});
+  const [sizes, setSizes] = useState<Record<string, number>>(() =>
+    Object.fromEntries(ASSETS.map((a) => [a.id, a.size])),
+  );
+
 
   return (
     <Layout>
@@ -116,18 +120,43 @@ const TechDBrandLab = () => {
       {ASSETS.map((asset) => (
         <section key={asset.id} className="border-t border-border">
           <div className="container-page py-10">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-secondary">
-                {asset.name}
-              </h2>
-              <code className="mt-1 inline-block text-xs text-muted-foreground">
-                {asset.filename}
-              </code>
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-secondary">
+                  {asset.name}
+                </h2>
+                <code className="mt-1 inline-block text-xs text-muted-foreground">
+                  {asset.filename}
+                </code>
+              </div>
+              <label className="flex items-center gap-3 min-w-[280px]">
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground whitespace-nowrap">
+                  Scale
+                </span>
+                <input
+                  type="range"
+                  min={asset.shape === "horizontal" ? 80 : 60}
+                  max={asset.shape === "horizontal" ? 800 : 480}
+                  step={8}
+                  value={sizes[asset.id] ?? asset.size}
+                  onChange={(e) =>
+                    setSizes((prev) => ({
+                      ...prev,
+                      [asset.id]: Number(e.target.value),
+                    }))
+                  }
+                  className="flex-1 accent-primary"
+                />
+                <code className="text-xs font-mono text-secondary tabular-nums w-14 text-right">
+                  {sizes[asset.id] ?? asset.size}px
+                </code>
+              </label>
             </div>
 
             <div className="grid grid-cols-1 gap-4">
               {asset.candidates.map((c) => {
                 const isPicked = picks[asset.id] === c.label;
+                const currentSize = sizes[asset.id] ?? asset.size;
                 return (
                   <div
                     key={c.label}
@@ -201,8 +230,9 @@ const TechDBrandLab = () => {
                           </code>
                         </div>
                         <div
-                          className="flex items-center justify-center min-h-[200px] rounded"
+                          className="flex items-center justify-center rounded"
                           style={{
+                            minHeight: Math.max(240, currentSize + 80),
                             backgroundImage: `linear-gradient(45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(-45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${surface.checkerDark} 75%), linear-gradient(-45deg, transparent 75%, ${surface.checkerDark} 75%)`,
                             backgroundSize: "16px 16px",
                             backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0",
@@ -214,8 +244,8 @@ const TechDBrandLab = () => {
                             alt={`${c.label} (${surface.label})`}
                             style={
                               asset.shape === "horizontal"
-                                ? { height: asset.size, width: "auto" }
-                                : { height: asset.size, width: asset.size }
+                                ? { height: currentSize, width: "auto" }
+                                : { height: currentSize, width: currentSize }
                             }
                             className="object-contain"
                             loading="lazy"
