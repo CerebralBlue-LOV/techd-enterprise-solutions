@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
 import logo from "@/assets/brand/techd-logo.webp";
 import { NAV } from "@/content/site";
 import { IBMGoldBadge } from "@shared/IBMGoldBadge";
+import { cn } from "@/lib/utils";
 
-export const Footer = () => (
+export const Footer = () => {
+  const { pathname } = useLocation();
+  return (
   <footer className="border-t border-border bg-background">
     <div className="container-page py-16 grid gap-10 md:grid-cols-5 lg:grid-cols-6">
       <div className="md:col-span-5 lg:col-span-2">
-        <img src={logo} alt="TechD" className="h-8 w-auto" loading="lazy" />
+        <Link to="/" aria-label="TechD home" className="inline-block">
+          <img src={logo} alt="TechD" className="h-8 w-auto" loading="lazy" />
+        </Link>
         <p className="mt-4 max-w-sm text-sm font-light text-muted-foreground">
           Enterprise AI, data, security, and automation for the Fortune 500.
           IBM Gold Business Partner.

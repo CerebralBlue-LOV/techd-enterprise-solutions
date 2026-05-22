@@ -1,83 +1,50 @@
-# Plan: finish 3D hero performance pass
+# Logo links + active section highlighting
 
-Four remaining optimizations from the earlier audit, ordered cheapest → highest impact.
+Two small UX fixes across header (desktop + mobile sheet) and footer.
 
-## 1. Pause `<Canvas>` render loops when off-screen
+## 1. Make TechD logo a link to home
 
-**Problem:** Every hero `<Canvas>` keeps animating at 60 fps even after the user scrolls past, burning CPU/GPU.
+**Footer (`src/components/layout/Footer.tsx`)**
+- Wrap the `<img src={logo} ... />` in a `<Link to="/" aria-label="TechD home">`. Currently it's a plain img.
 
-**Approach:** Add a shared `useInViewFrameloop` hook that returns `"always" | "demand"` based on an `IntersectionObserver`. Wire it into every `<Canvas frameloop={...}>`:
+**Mobile nav sheet (`src/components/layout/Header.tsx`)**
+- Inside `<SheetContent>`, the header logo is a bare `<img>`. Wrap it in `<Link to="/" aria-label="TechD home">` and trigger `setOpen(false)` on click so the sheet closes after navigation.
+- Desktop header logo already links to `/` — no change.
 
-- `src/sections/home/_components/HeroParticleField.tsx`
-- `src/sections/industries/_components/IndustryStackingCubeScene.tsx`
-- `src/sections/services/_components/ServiceIsoCubeScene.tsx`
-- `src/sections/solutions/_components/PracticeWireframeScene.tsx`
-- `src/sections/resources/_components/ResourceTileStackScene.tsx`
-- `src/sections/company/_components/CompanyDnaScene.tsx`
-- `src/components/shared/heroFigures/solutions/_SharedWireframe.tsx` (covers all 5 per-practice figures)
-- Plus contact hero scene if present
+## 2. Highlight the active section
 
-`prefers-reduced-motion` still wins (forces `"demand"` regardless).
+Active = current pathname matches the link's section. For top-level nav groups (Solutions, Industries, Services, Resources, Company), active = pathname starts with that section's base (`/solutions`, `/industries`, etc.). For leaf links (footer columns, dropdown children, mobile sheet children), active = exact pathname match.
 
-**Result:** Each hero only consumes GPU while visible. Negligible bundle cost; one small hook file.
+**Desktop header (`Header.tsx`)**
+- Compute `isActiveSection(item)` from `useLocation().pathname`:
+  - If `item.children`, active when pathname starts with the section root derived from the first child's href (e.g. `/solutions`).
+  - If leaf (`Company` has direct href), exact match.
+- Apply `text-primary` to the trigger button / NavLink when active (replaces only the idle `text-secondary`). Keep existing hover/open styles.
+- Inside the open dropdown panel, mark the child whose `href === pathname` with `text-primary` and a subtle `bg-accent/50`.
 
-## 2. `prefers-reduced-motion` particle reduction
+**Mobile sheet (`Header.tsx`)**
+- Same rules: group label gets `text-primary` when active; child link gets `text-primary` on exact match.
 
-**Problem:** Today reduced-motion just freezes the frame loop (`frameloop="demand"`). The geometry is still built — particle-heavy scenes still cost memory and a one-time GPU upload.
+**Footer (`Footer.tsx`)**
+- For each column's child links, apply `text-primary` when `href === pathname`. Column heading stays as-is (footer headings aren't links).
 
-**Approach:** In each scene that has a particle/point count constant, multiply by `0.2` when `prefers-reduced-motion: reduce` is set. Primary targets:
+## Implementation notes
 
-- `HeroParticleField` (the home hero — the heaviest)
-- Any `<points>` geometry in the wireframe figures (small but free win)
-
-Read the media query once at module/component init; pass the scaled count into the geometry builder.
-
-**Result:** Accessibility users get a static, low-cost scene instead of a frozen heavy one.
-
-## 3. Suspense fallback skeletons (CLS fix)
-
-**Problem:** `<Suspense fallback={null}>` everywhere means the hero figure area is empty until the lazy chunk resolves, then pops in. On slow connections this causes layout shift and a flash.
-
-**Approach:** Replace `fallback={null}` with a tiny presentational skeleton that fills `absolute inset-0` with a faint brand-cyan radial gradient (no animation, no JS). One shared `<HeroFigureFallback />` in `src/components/shared/heroFigures/`. Wire it into:
-
-- `HeroSection` (home)
-- `SolutionsFigure`, `IndustriesFigure`, `ResourcesFigure`, `CompanyFigure`
-- `_SharedWireframe` (per-practice figures)
-- `ContactHero` if applicable
-
-No layout math needed — the wrappers already reserve space via `absolute inset-0` inside a sized parent. Goal is purely the visual placeholder, not dimension reservation.
-
-## 4. Mobile static-image fallback (biggest LCP win)
-
-**Problem:** Mobile users download `three` (~150 KB gz) + the scene chunk + run a WebGL context for a decorative background. Cuts straight into LCP and battery.
-
-**Approach:**
-
-**a. Generate stills.** Add a one-off script `scripts/capture-hero-stills.ts` that opens each figure in a Puppeteer/Playwright headless browser at a fixed viewport, waits for the scene, screenshots transparent PNG, and `cwebp`-compresses to `public/images/hero-stills/<figure>.webp`. Run manually, commit the output. (Alternative if Playwright is heavy: render each scene once in a hidden `<Canvas>` at build time and `gl.domElement.toDataURL()` — but a script is simpler and re-runnable.)
-
-**b. Swap at runtime.** New `<HeroFigure>` wrapper in `src/components/shared/heroFigures/`:
-
-```text
-if (isMobile)  → <img src="…/figure-name.webp" alt="" loading="eager" decoding="async" />
-else           → existing lazy <Canvas> tree
-```
-
-Use `useIsMobile()` (already exists in `src/hooks/use-mobile.tsx`). Below 768px the three.js chunk never loads — `React.lazy` only fires when the component mounts.
-
-**c. Per-figure mapping.** Each figure component (`SolutionsFigure`, `IndustriesFigure`, etc.) passes its still path + the lazy scene component to the wrapper.
-
-**Result:** Mobile LCP drops ~400–800 ms, zero WebGL context on phones, zero three.js JS shipped to mobile users on first paint.
-
-## Verification
-
-- Build runs clean; `dist` chunks unchanged in size except for the small new hook/wrapper.
-- Desktop: scroll past each hero, confirm `requestAnimationFrame` stops (Performance tab shows idle).
-- Mobile viewport (390×844): network tab shows `three-*.js` is NOT requested on `/`, `/solutions/*`, `/industries/*`, `/services/*`, `/resources/*`, `/company`.
-- Toggle "Reduce motion" in OS settings: particle counts visibly lower, no animation.
-- Lighthouse mobile run on `/`: expect LCP improvement of 300–800 ms.
+- Centralize the logic in one small helper inside `Header.tsx` (and reuse the pathname-match snippet in `Footer.tsx`) — no new shared file needed for two call sites.
+- Use `useLocation()` from `react-router-dom` (already imported in Header; add to Footer).
+- Use `cn()` from `@/lib/utils` to conditionally add `text-primary`. Do not introduce new colors.
+- `ProductDetail` routes (`/solutions/:practice/:product`) should still light up the parent `Solutions` group and the matching practice child via `startsWith` on the practice base.
+- Respect existing classes — only swap the idle color token when active; keep `hover:text-primary` so non-active items still react.
 
 ## Out of scope
 
-- Replacing three.js with CSS/SVG figures entirely
-- Server-side rendering
-- Image transformer / responsive `srcset` for the stills (single WebP is enough for decorative backgrounds)
+- No changes to nav data structure in `site.ts`.
+- No new aria-current beyond what's needed: add `aria-current="page"` on the active leaf links for accessibility.
+- No restyling of the dropdown panel or sheet beyond the active-state token swap.
+
+## Verification
+
+- `/` → all groups idle in header; footer has no active leaf.
+- `/solutions/data-analytics` → header "Solutions" trigger is cyan; opening dropdown shows "Data & Analytics" highlighted; footer "Data & Analytics" link is cyan.
+- `/solutions/ai-generative/some-product` → "Solutions" group + "AI & Generative Solutions" child both highlight.
+- Mobile sheet on `/contact` → "Contact" child under Company is cyan; tapping the logo closes the sheet and lands on `/`.
