@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
 import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
+import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
 
 
 type AssetShape = "horizontal" | "square";
@@ -24,6 +25,8 @@ type Asset = {
   shape: AssetShape;
   /** single size (px) at which to render the asset */
   size: number;
+  /** if true, render the surface panel on a dark background */
+  dark?: boolean;
   candidates: Candidate[];
 };
 
