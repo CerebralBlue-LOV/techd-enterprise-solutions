@@ -2,12 +2,6 @@ import { useState } from "react";
 import Layout from "@layout/Layout";
 import { cn } from "@/lib/utils";
 
-// Originals
-import logoOriginal from "@/assets/brand/techd-logo.webp";
-import wordmarkOriginal from "@/assets/brand/techd-wordmark.png";
-import gearOriginal from "@/assets/brand/techd-gear.png";
-
-
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
 import logoUpscaleWhite from "@/assets/brand/lab/techd-logo-upscale-white.png";
