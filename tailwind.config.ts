@@ -157,6 +157,7 @@ export default {
         float: "float 7s ease-in-out infinite",
         "card-sweep": "card-sweep 0.3s ease-out forwards",
         "progress-fill": "progress-fill 7s linear forwards",
+        "page-fade": "page-fade 220ms ease-out both",
       },
     },
   },
