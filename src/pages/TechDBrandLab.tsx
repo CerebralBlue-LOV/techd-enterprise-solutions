@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import logoOriginal from "@/assets/brand/techd-logo.webp";
 import wordmarkOriginal from "@/assets/brand/techd-wordmark.png";
 import gearOriginal from "@/assets/brand/techd-gear.png";
-import markWhiteOriginal from "@/assets/brand/techd-mark-white.png";
+
 
 // AI upscale (hi-res raster)
 import logoUpscale from "@/assets/brand/lab/techd-logo-upscale.png";
@@ -15,7 +15,7 @@ import wordmarkUpscale from "@/assets/brand/lab/techd-wordmark-upscale.png";
 import wordmarkUpscaleWhite from "@/assets/brand/lab/techd-wordmark-upscale-white.png";
 import gearUpscale from "@/assets/brand/lab/techd-gear-upscale.png";
 import gearUpscaleWhite from "@/assets/brand/lab/techd-gear-upscale-white.png";
-import markWhiteUpscale from "@/assets/brand/lab/techd-mark-white-upscale.png";
+
 
 type AssetShape = "horizontal" | "square";
 
@@ -107,28 +107,6 @@ const ASSETS: Asset[] = [
         src: gearUpscale,
         darkSrc: gearUpscaleWhite,
         note: "Color version on light; auto-swaps to pure white on dark surfaces.",
-      },
-    ],
-  },
-  {
-    id: "mark-white",
-    name: "Gear mark (white, for dark surfaces)",
-    filename: "techd-mark-white.png",
-    shape: "square",
-    sizes: [40, 80, 160, 320],
-    needsDark: true,
-    candidates: [
-      {
-        label: "Original",
-        method: "70×70 png · raster",
-        src: markWhiteOriginal,
-        note: "Used in footer / dark hero surfaces.",
-      },
-      {
-        label: "AI upscale",
-        method: "Nano-Banana · 4× PNG",
-        src: markWhiteUpscale,
-        note: "Higher resolution white mark.",
       },
     ],
   },
