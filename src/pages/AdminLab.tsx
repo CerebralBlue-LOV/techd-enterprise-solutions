@@ -27,6 +27,12 @@ const LAB_ROUTES = [
     blurb:
       "First-load splash animation — gear spins, then TechD wordmark slides in. Replay on demand.",
   },
+  {
+    path: "/techd-brand-lab",
+    name: "TechD Brand Lab",
+    blurb:
+      "Side-by-side comparison of the TechD logo, wordmark, and gear mark across 4 reconstruction methods (original, vector trace, AI upscale, AI redraw) at multiple sizes on light + dark surfaces. Pick a winner per asset.",
+  },
 ];
 
 const DEPRECATED_LOGOS = [
