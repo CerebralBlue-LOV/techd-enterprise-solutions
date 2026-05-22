@@ -135,6 +135,10 @@ export default {
           "0%": { transform: "translateX(-100%) skewX(-12deg)" },
           "100%": { transform: "translateX(100%) skewX(-12deg)" },
         },
+        "page-fade": {
+          "0%": { opacity: "0", transform: "translateY(4px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -153,6 +157,7 @@ export default {
         float: "float 7s ease-in-out infinite",
         "card-sweep": "card-sweep 0.3s ease-out forwards",
         "progress-fill": "progress-fill 7s linear forwards",
+        "page-fade": "page-fade 220ms ease-out both",
       },
     },
   },
