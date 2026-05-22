@@ -261,7 +261,7 @@ const TechDBrandLab = () => {
                               {size}px
                             </span>
                             <img
-                              src={c.src}
+                              src={c.darkSrc ?? c.src}
                               alt={`${c.label} @ ${size}px (dark)`}
                               style={
                                 asset.shape === "horizontal"
