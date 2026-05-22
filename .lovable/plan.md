@@ -1,25 +1,33 @@
 ## Goal
 
-Restructure each asset card in `/techd-brand-lab` so we can compare every upscaled logo across three surfaces, with all sizes laid out horizontally in a single glance.
+Regenerate `src/assets/brand/lab/techd-logo-upscale.png` so it (a) preserves the **original brand color depth** instead of being flat single-tone cyan, and (b) has enough transparent margin that no part of the gears or wordmark is clipped.
 
-## Layout changes
+## Problems with current file
 
-Per asset card, render three stacked surface panels (top to bottom):
+- Lost color richness — looks like a flat fill in one cyan tone
+- Edges clipped at the corners (notably the "D" in TechD)
 
-1. **Light** — white background, colored logo (`src`)
-2. **Dark / Color** — secondary (dark) background, colored logo (`src`)
-3. **Dark / White** — secondary (dark) background, white logo variant (`darkSrc`)
+## Steps
 
-Within each panel, render all sizes (70/140/280/560 for horizontal, 40/80/160/320 for square) **side by side in a horizontal row** instead of stacked vertically. The row scrolls horizontally on narrow viewports if widths exceed the card. Each size has its label (`70px`, `140px`, …) below or above the image.
-
-Remove the existing "on light" / "on dark" toggle (now redundant — all three are always visible). Keep the "Picked / Use this" footer per card.
+1. Re-run `imagegen--edit_image` using the **canonical source** `src/assets/brand/techd-logo.webp` as input (not the previous upscale, which already degraded the color).
+2. Prompt the model to:
+   - Upscale to high-resolution PNG with crisp, vector-like edges
+   - Preserve the exact original TechD cyan tone and any subtle tonal variation in the original
+   - Keep a fully transparent background
+   - Add generous empty space on all four sides so no glyph or gear tooth touches the canvas edge
+   - Aspect ratio `3:2` (wider than the logo's natural ratio to guarantee margin)
+3. Post-process with a small Python (PIL) script:
+   - Detect bbox of non-transparent pixels
+   - Re-crop with ~8% padding on each side (instead of tight-cropping to bbox)
+   - Overwrite `src/assets/brand/lab/techd-logo-upscale.png`
+4. Leave white variant, wordmark, gear, and `TechDBrandLab.tsx` untouched — the lab already reads this filename.
 
 ## Files touched
 
-- `src/pages/TechDBrandLab.tsx` — only this file. Refactor the card's surface rendering block. Replace the two-section vertical stack with three sections, each containing a flex/overflow-x-auto row of sized images. Remove the `bg` state and toggle UI.
+- `src/assets/brand/lab/techd-logo-upscale.png` (overwrite only)
 
 ## Out of scope
 
-- No new assets generated.
-- No production component changes.
-- No new routes or content edits.
+- White, wordmark, gear variants
+- Production assets in `src/assets/brand/`
+- Any component or styling change
