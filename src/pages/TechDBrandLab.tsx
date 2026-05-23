@@ -2,8 +2,7 @@ import { useState } from "react";
 import Layout from "@layout/Layout";
 import { cn } from "@/lib/utils";
 
-// Brand-snapped (token-locked recolor)
-import logoBrand from "@/assets/brand/lab/techd-logo-upscale-brand.png";
+// Full logo (Nano Banana composite of clean gear + wordmark)
 import logoNano from "@/assets/brand/lab/techd-logo-nano.png";
 import wordmarkBrand from "@/assets/brand/lab/techd-wordmark-upscale-brand.png";
 import gearBrand from "@/assets/brand/lab/techd-gear-upscale-brand.png";
@@ -42,16 +41,10 @@ const ASSETS: Asset[] = [
     surfaces: ["light", "dark"],
     candidates: [
       {
-        label: "Brand-snapped",
-        method: "Token-locked recolor · #00B3E3 / #56565A / #A7A5A8",
-        src: logoBrand,
-        note: "Every opaque pixel classified by hue/luminance and snapped to a brand token. Alpha preserved for clean edges. Fringe pixels inherit the color of their nearest opaque neighbor (no white/cyan halo).",
-      },
-      {
         label: "Nano Banana composite",
         method: "Gemini multi-image · gear + wordmark composited verbatim onto layout reference",
         src: logoNano,
-        note: "Built by feeding Nano Banana the two clean brand-snapped assets (gear + wordmark) plus the original full logo as a layout reference. Lowercase 'techd' preserved, brand hex held, transparent background, no white speckles between gear teeth.",
+        note: "Built by feeding Nano Banana the two clean brand-snapped assets (gear + wordmark) plus the original full logo as a layout reference. Brand hex held, transparent background, no white speckles between gear teeth. Now live in the header and footer.",
       },
     ],
   },
