@@ -48,10 +48,10 @@ const ASSETS: Asset[] = [
         note: "Every opaque pixel classified by hue/luminance and snapped to a brand token. Alpha preserved for clean edges. Fringe pixels inherit the color of their nearest opaque neighbor (no white/cyan halo).",
       },
       {
-        label: "Nano Banana redraw",
-        method: "Gemini image edit · transparent background pass",
+        label: "Nano Banana composite",
+        method: "Gemini multi-image · gear + wordmark composited verbatim onto layout reference",
         src: logoNano,
-        note: "AI-redrawn from the brand-snapped source. Looks clean visually but shapes drift slightly from the original, colors land 1–4 units off the brand hex, and ~4k white-opaque + ~40k bright fringe pixels remain. Useful as a visual reference, not as a production asset.",
+        note: "Built by feeding Nano Banana the two clean brand-snapped assets (gear + wordmark) plus the original full logo as a layout reference. Lowercase 'techd' preserved, brand hex held, transparent background, no white speckles between gear teeth.",
       },
     ],
   },
