@@ -25,8 +25,8 @@ type Asset = {
   shape: AssetShape;
   /** single size (px) at which to render the asset */
   size: number;
-  /** if true, render the surface panel on a dark background */
-  dark?: boolean;
+  /** which surfaces to render — defaults to ["light"] */
+  surfaces?: ("light" | "dark")[];
   candidates: Candidate[];
 };
 
@@ -37,6 +37,8 @@ const ASSETS: Asset[] = [
     filename: "techd-logo.webp",
     shape: "horizontal",
     size: 800,
+    // Show on both surfaces so transparency / white-halo issues are visible.
+    surfaces: ["light", "dark"],
     candidates: [
       {
         label: "Brand-snapped",
@@ -82,7 +84,7 @@ const ASSETS: Asset[] = [
     filename: "techd-gear-upscale-white.png",
     shape: "square",
     size: 800,
-    dark: true,
+    surfaces: ["dark"],
     candidates: [
       {
         label: "Brand-snapped · white",
@@ -191,78 +193,76 @@ const TechDBrandLab = () => {
                       </code>
                     </div>
 
-                    {/* Single surface panel: light or dark depending on asset.dark */}
-                    {([
-                      asset.dark
-                        ? {
-                            key: "dark",
-                            label: "White (on dark)",
-                            bgClass: "bg-secondary",
-                            labelClass: "text-background/60",
-                            checkerLight: "hsl(var(--secondary))",
-                            checkerDark: "hsl(0 0% 28%)",
-                            imgSrc: c.src,
-                            fileLabel:
-                              c.src.split("/").pop()?.split("?")[0] ?? "",
-                          }
-                        : {
-                            key: "light",
-                            label: "Colored (on light)",
-                            bgClass: "bg-background",
-                            labelClass: "text-muted-foreground",
-                            checkerLight: "hsl(0 0% 96%)",
-                            checkerDark: "hsl(0 0% 90%)",
-                            imgSrc: c.src,
-                            fileLabel:
-                              c.src.split("/").pop()?.split("?")[0] ?? "",
-                          },
-                    ] as const).map((surface) => (
-                      <div
-                        key={surface.key}
-                        className={cn("px-4 py-4 space-y-3", surface.bgClass)}
-                      >
-                        <div className="flex items-baseline justify-between gap-3">
-                          <p
-                            className={cn(
-                              "text-[10px] font-bold uppercase tracking-[0.15em]",
-                              surface.labelClass,
-                            )}
-                          >
-                            {surface.label}
-                          </p>
-                          <code
-                            className={cn(
-                              "text-[10px] font-mono truncate",
-                              surface.labelClass,
-                            )}
-                          >
-                            {surface.fileLabel}
-                          </code>
-                        </div>
-                        <div
-                          className="flex items-center justify-center rounded"
-                          style={{
-                            minHeight: Math.max(240, currentSize + 80),
-                            backgroundImage: `linear-gradient(45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(-45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${surface.checkerDark} 75%), linear-gradient(-45deg, transparent 75%, ${surface.checkerDark} 75%)`,
-                            backgroundSize: "16px 16px",
-                            backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0",
-                            backgroundColor: surface.checkerLight,
-                          }}
-                        >
-                          <img
-                            src={surface.imgSrc}
-                            alt={`${c.label} (${surface.label})`}
-                            style={
-                              asset.shape === "horizontal"
-                                ? { height: currentSize, width: "auto" }
-                                : { height: currentSize, width: currentSize }
+                    {/* One or more surface panels (light / dark) per the asset config. */}
+                    {(asset.surfaces ?? ["light"]).map((surfaceKind) => {
+                      const surface =
+                        surfaceKind === "dark"
+                          ? {
+                              key: "dark" as const,
+                              label: "White / on dark",
+                              bgClass: "bg-secondary",
+                              labelClass: "text-background/60",
+                              checkerLight: "hsl(var(--secondary))",
+                              checkerDark: "hsl(0 0% 28%)",
                             }
-                            className="object-contain"
-                            loading="lazy"
-                          />
+                          : {
+                              key: "light" as const,
+                              label: "Colored / on light",
+                              bgClass: "bg-background",
+                              labelClass: "text-muted-foreground",
+                              checkerLight: "hsl(0 0% 96%)",
+                              checkerDark: "hsl(0 0% 90%)",
+                            };
+                      const fileLabel =
+                        c.src.split("/").pop()?.split("?")[0] ?? "";
+                      return (
+                        <div
+                          key={surface.key}
+                          className={cn("px-4 py-4 space-y-3", surface.bgClass)}
+                        >
+                          <div className="flex items-baseline justify-between gap-3">
+                            <p
+                              className={cn(
+                                "text-[10px] font-bold uppercase tracking-[0.15em]",
+                                surface.labelClass,
+                              )}
+                            >
+                              {surface.label}
+                            </p>
+                            <code
+                              className={cn(
+                                "text-[10px] font-mono truncate",
+                                surface.labelClass,
+                              )}
+                            >
+                              {fileLabel}
+                            </code>
+                          </div>
+                          <div
+                            className="flex items-center justify-center rounded"
+                            style={{
+                              minHeight: Math.max(240, currentSize + 80),
+                              backgroundImage: `linear-gradient(45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(-45deg, ${surface.checkerDark} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${surface.checkerDark} 75%), linear-gradient(-45deg, transparent 75%, ${surface.checkerDark} 75%)`,
+                              backgroundSize: "16px 16px",
+                              backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0",
+                              backgroundColor: surface.checkerLight,
+                            }}
+                          >
+                            <img
+                              src={c.src}
+                              alt={`${c.label} (${surface.label})`}
+                              style={
+                                asset.shape === "horizontal"
+                                  ? { height: currentSize, width: "auto" }
+                                  : { height: currentSize, width: currentSize }
+                              }
+                              className="object-contain"
+                              loading="lazy"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
 
                     {/* Footer */}
                     <div className="mt-auto px-4 py-3 border-t border-border bg-muted/30">
