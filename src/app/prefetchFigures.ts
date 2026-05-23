@@ -18,6 +18,7 @@ const warm = () => {
 
   // Fire-and-forget. Failures are swallowed — these are pure prefetches.
   const imports: Array<Promise<unknown>> = [
+    // Section-hero figure wrappers (each lazy-loads its own three.js scene)
     import("@shared/heroFigures/CompanyFigure"),
     import("@shared/heroFigures/IndustriesFigure"),
     import("@shared/heroFigures/ServicesFigure"),
@@ -27,6 +28,10 @@ const warm = () => {
     import("@shared/heroFigures/solutions/DataAnalyticsFigure"),
     import("@shared/heroFigures/solutions/AutomationFinOpsFigure"),
     import("@shared/heroFigures/solutions/SecurityComplianceFigure"),
+    // Home + Contact particle scenes
+    import("@/sections/home/_components/HeroParticleField"),
+    import("@/sections/home/_components/ParticleOrbit"),
+    import("@/sections/home/_components/ParticleGlobe"),
   ];
   Promise.allSettled(imports).catch(() => {});
 };
