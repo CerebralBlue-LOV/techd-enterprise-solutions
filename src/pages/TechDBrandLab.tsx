@@ -25,8 +25,8 @@ type Asset = {
   shape: AssetShape;
   /** single size (px) at which to render the asset */
   size: number;
-  /** if true, render the surface panel on a dark background */
-  dark?: boolean;
+  /** which surfaces to render — defaults to ["light"] */
+  surfaces?: ("light" | "dark")[];
   candidates: Candidate[];
 };
 
@@ -37,6 +37,8 @@ const ASSETS: Asset[] = [
     filename: "techd-logo.webp",
     shape: "horizontal",
     size: 800,
+    // Show on both surfaces so transparency / white-halo issues are visible.
+    surfaces: ["light", "dark"],
     candidates: [
       {
         label: "Brand-snapped",
