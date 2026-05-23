@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 
 // Brand-snapped (token-locked recolor)
 import logoBrand from "@/assets/brand/lab/techd-logo-upscale-brand.png";
+import logoNano from "@/assets/brand/lab/techd-logo-nano.png";
 import wordmarkBrand from "@/assets/brand/lab/techd-wordmark-upscale-brand.png";
 import gearBrand from "@/assets/brand/lab/techd-gear-upscale-brand.png";
 import gearBrandWhite from "@/assets/brand/lab/techd-gear-upscale-white-brand.png";
@@ -44,7 +45,13 @@ const ASSETS: Asset[] = [
         label: "Brand-snapped",
         method: "Token-locked recolor · #00B3E3 / #56565A / #A7A5A8",
         src: logoBrand,
-        note: "Every opaque pixel classified by hue/luminance and snapped to a brand token. Alpha preserved for clean edges.",
+        note: "Every opaque pixel classified by hue/luminance and snapped to a brand token. Alpha preserved for clean edges. Fringe pixels inherit the color of their nearest opaque neighbor (no white/cyan halo).",
+      },
+      {
+        label: "Nano Banana redraw",
+        method: "Gemini image edit · transparent background pass",
+        src: logoNano,
+        note: "AI-redrawn from the brand-snapped source. Looks clean visually but shapes drift slightly from the original, colors land 1–4 units off the brand hex, and ~4k white-opaque + ~40k bright fringe pixels remain. Useful as a visual reference, not as a production asset.",
       },
     ],
   },
