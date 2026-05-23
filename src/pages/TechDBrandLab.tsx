@@ -84,7 +84,7 @@ const ASSETS: Asset[] = [
     filename: "techd-gear-upscale-white.png",
     shape: "square",
     size: 800,
-    dark: true,
+    surfaces: ["dark"],
     candidates: [
       {
         label: "Brand-snapped · white",
