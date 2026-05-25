@@ -100,7 +100,12 @@ const Field = ({ animate }: { animate: boolean }) => {
 
   useMemo(() => {
     const dom = gl.domElement;
-    const onMove = (e: PointerEvent) => {
+    let rafQueued = false;
+    let lastEvent: PointerEvent | null = null;
+    const process = () => {
+      rafQueued = false;
+      const e = lastEvent;
+      if (!e) return;
       const rect = dom.getBoundingClientRect();
       const ndc = new THREE.Vector2(
         ((e.clientX - rect.left) / rect.width) * 2 - 1,
@@ -109,11 +114,8 @@ const Field = ({ animate }: { animate: boolean }) => {
       raycaster.setFromCamera(ndc, camera);
       const hit = new THREE.Vector3();
       if (raycaster.ray.intersectPlane(interactionPlane, hit)) {
-        // Convert world hit into the group's local space (group is at
-        // position [0,-1.2,0] and rotated [-0.55, 0, 0]). We invert that.
         const local = hit.clone();
         local.y += 1.2;
-        // Inverse rotation around X by -0.55:
         const a = 0.55;
         const cosA = Math.cos(a);
         const sinA = Math.sin(a);
@@ -121,20 +123,21 @@ const Field = ({ animate }: { animate: boolean }) => {
         const lz = local.z;
         local.y = ly * cosA + lz * sinA;
         local.z = -ly * sinA + lz * cosA;
-        const pos = new THREE.Vector3(local.x, 0, local.z);
-        // Snap smooth position on first entry so the hill appears immediately.
-        if (pointerActiveTarget.current === 0) {
-          pointerSmoothed.current.copy(pos);
-        }
-        pointerWorld.current.copy(pos);
+        pointerWorld.current.set(local.x, 0, local.z);
         pointerActiveTarget.current = 1;
       }
     };
+    const onMove = (e: PointerEvent) => {
+      lastEvent = e;
+      if (!rafQueued) {
+        rafQueued = true;
+        requestAnimationFrame(process);
+      }
+    };
     const onLeave = () => {
-      // Smoothly ease the ripple back to neutral instead of snapping.
       pointerActiveTarget.current = 0;
     };
-    dom.addEventListener("pointermove", onMove);
+    dom.addEventListener("pointermove", onMove, { passive: true });
     dom.addEventListener("pointerleave", onLeave);
     return () => {
       dom.removeEventListener("pointermove", onMove);
@@ -145,21 +148,34 @@ const Field = ({ animate }: { animate: boolean }) => {
   useFrame(({ clock }, delta) => {
     if (!animate) return;
     const t = clock.getElapsedTime();
+    // Clamp delta so a tab-switch hiccup doesn't slam the smoothing forward.
+    const dt = Math.min(delta, 0.05);
 
-    // Smooth pointer follow (slower lerp = the hill drifts toward the
-    // cursor instead of teleporting). Eased active envelope.
-    pointerSmoothed.current.lerp(pointerWorld.current, Math.min(1, delta * 2.2));
+    // Frame-rate-independent exponential smoothing.
+    // Slower follow on the pointer position (drifty, fluid feel).
+    const followK = 3.2;
+    const followAlpha = 1 - Math.exp(-followK * dt);
+    pointerSmoothed.current.lerp(pointerWorld.current, followAlpha);
+
+    // Asymmetric envelope: ramp in quickly, fade out slowly so the hill
+    // dissolves instead of snapping when the cursor leaves.
+    const envK = pointerActiveTarget.current > pointerActive.current ? 5.5 : 2.2;
+    const envAlpha = 1 - Math.exp(-envK * dt);
     pointerActive.current = THREE.MathUtils.lerp(
       pointerActive.current,
       pointerActiveTarget.current,
-      Math.min(1, delta * 3.5),
+      envAlpha,
     );
 
     const px = pointerSmoothed.current.x;
     const pz = pointerSmoothed.current.z;
-    const RIPPLE_RADIUS = 3.2;
-    const RIPPLE_AMP = 0.65 * pointerActive.current;
+    const RIPPLE_RADIUS = 3.0;
+    // Smoothstep the envelope so the bump eases in/out instead of being linear.
+    const eased =
+      pointerActive.current * pointerActive.current * (3 - 2 * pointerActive.current);
+    const RIPPLE_AMP = 0.5 * eased;
     const r2 = RIPPLE_RADIUS * RIPPLE_RADIUS;
+
 
     for (let i = 0; i < livePositions.length; i += 3) {
       const x = basePositions[i];
