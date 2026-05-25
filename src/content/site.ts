@@ -87,7 +87,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "MetLife", url: "https://www.metlife.com", logo: "/images/partners/metlife.svg", logoOnDark: "/images/partners/white/metlife.png", logoClass: "h-7 md:h-8" },
   { name: "Mizuho", url: "https://www.mizuho-financial.com", logo: "/images/partners/mizuho.svg", logoOnDark: "/images/partners/white/mizuho.png", logoClass: "h-8 md:h-9" },
   { name: "NatWest", url: "https://www.natwest.com", logo: "/images/partners/natwest.svg", logoOnDark: "/images/partners/white/natwest.png", logoClass: "h-14 md:h-16" },
-  { name: "Itaú", url: "https://www.itau.com.br", logo: "/images/partners/itau.svg", logoOnDark: "/images/partners/white/itau.png", logoClass: "h-16 md:h-20" },
+  { name: "Itaú", url: "https://www.itau.com.br", logo: "/images/partners/itau.svg", logoOnDark: "/images/partners/white/itau.png", logoClass: "h-14 md:h-16" },
   { name: "Dow", url: "https://www.dow.com", logo: "/images/partners/dow.webp", logoOnDark: "/images/partners/white/dow.png", logoClass: "h-16 md:h-20" },
   { name: "Fiserv", url: "https://www.fiserv.com", logo: "/images/partners/fiserv.svg", logoOnDark: "/images/partners/white/fiserv.png", logoClass: "h-8 md:h-9" },
   { name: "Seagate", url: "https://www.seagate.com", logo: "/images/partners/seagate.svg", logoOnDark: "/images/partners/white/seagate.png", logoClass: "h-8 md:h-9" },
