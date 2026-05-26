@@ -971,7 +971,7 @@ export const SOLUTIONS: Solution[] = [
   {
     id: "infrastructure",
     name: "Infrastructure",
-    outcome: "Run watsonx and Cloud Pak for Data on-prem with cloud-grade operations — where sovereignty, latency, or regulation rules out public cloud.",
+    outcome: "Run watsonx and Cloud Pak for Data on-prem with cloud-grade operations.",
     description:
       "On-prem runtime for enterprise AI and data workloads — built on IBM Storage Fusion HCI, the pre-integrated OpenShift + container-native storage appliance purpose-built for watsonx and Cloud Pak for Data.",
     highlights: [
