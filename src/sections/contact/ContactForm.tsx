@@ -249,17 +249,18 @@ const ContactForm = () => {
                 <FormField
                   control={form.control}
                   name="phone"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem>
                       <FormLabel className="text-muted-foreground font-normal">
                         Phone<OptionalMark />
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="tel"
-                          placeholder="+1 (555) 123-4567"
-                          className={FIELD_INPUT}
-                          {...field}
+                        <PhoneField
+                          value={field.value || undefined}
+                          onChange={(v) => field.onChange(v ?? "")}
+                          onBlur={field.onBlur}
+                          placeholder="(555) 123-4567"
+                          invalid={fieldState.invalid}
                         />
                       </FormControl>
                     </FormItem>
