@@ -139,6 +139,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
       { id: "security-compliance", proof: "FedRAMP-aligned security architectures for federal missions." },
+      { id: "infrastructure",      proof: "On-prem and air-gapped Fusion HCI runtime for watsonx and Cloud Pak for Data — built for FedRAMP-High and sovereign-cloud missions." },
     ],
   },
 
