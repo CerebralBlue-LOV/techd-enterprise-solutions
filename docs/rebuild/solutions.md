@@ -31,7 +31,7 @@ This structure is IBM's internal taxonomy, not a buyer's taxonomy. Enterprise bu
 | Data & Analytics | Make your data AI-ready, governed, and defensible |
 | Automation & FinOps | Observe everything, optimize spend, and eliminate manual toil |
 | Security & Compliance | Pass the audit. Protect the data. Respond to the breach. |
-| Hybrid Cloud & Infrastructure | Run mission workloads where they belong — and move them when you need to |
+| Infrastructure | Run watsonx and Cloud Pak for Data on-prem with cloud-grade operations |
 
 This collapses 10 navigation sections → 5, removes 7+ stale/404 pages from the IA, and lets the product list underneath each practice serve as proof of capability rather than primary navigation.
 
