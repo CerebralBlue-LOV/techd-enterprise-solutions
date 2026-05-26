@@ -12,3 +12,12 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin-lab
+Disallow: /logo-lab
+Disallow: /figure-lab
+Disallow: /section-lab
+Disallow: /intro-lab
+Disallow: /techd-brand-lab
+Disallow: /contact-lab
+
+Sitemap: https://techd.com/sitemap.xml

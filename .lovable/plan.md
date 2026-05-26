@@ -1,142 +1,97 @@
-# Contact form → Google Apps Script integration
+# SEO Review & Implementation Plan
 
-Goal: keep the branded React form on `/contact`, send submissions to a Google Apps Script web app on `@techd.com` that (1) emails the recipient list instantly and (2) appends a row to a backup Google Sheet. No backend, no secrets, public-repo-safe.
+Target domain: **https://techd.com** (apex). All canonicals, sitemap entries, OG URLs, and JSON-LD will use this base.
 
-**Testing recipient (for now):** `fvargas@techd.com`
-**Production recipients (later swap):** `bsyring@techd.com`, `info@techd.com`
-**Deployed endpoint:** `https://script.google.com/macros/s/AKfycbxZzWP0YBibJKvj7Q7zJ5879_cFc_AQ1mhnlPrMgpORp-IEBF0zKqlutkcDdzIMELWqcg/exec`
+Work is split into 4 phases. Each phase is independently shippable.
 
 ---
 
-## Part 1 — Google side (already done by you)
+## Phase 1 — Technical foundation
 
-- Sheet + Apps Script created in `fvargas@techd.com`.
-- Deployed as Web App, Execute as: Me, Access: Anyone.
-- Recipient list in the script currently set to `fvargas@techd.com` for testing.
-- When ready to go live: edit the `RECIPIENTS` constant in the script → save → Deploy → Manage deployments → New version (URL stays the same).
+Goal: every page is crawlable, indexable, has unique meta, and shows correct social previews.
 
----
+1. **Add `react-helmet-async`** and wrap `<App />` in `<HelmetProvider>` in `src/main.tsx`.
+2. **Refactor `src/components/shared/SEO.tsx`** to use `<Helmet>` instead of `useEffect`. Add props: `title`, `description`, `canonical` (path), `ogImage`, `ogType`, `jsonLd`. Auto-prefix canonical with `https://techd.com`.
+3. **Update `index.html`** sitewide head:
+   - Brand title + description
+   - Sitewide OG fallback (for LinkedIn/Slack — they don't run JS)
+   - Organization JSON-LD (name, url, logo, sameAs, founder, foundingDate, areaServed)
+   - Remove `<link rel="canonical">` (Helmet owns it per route)
+4. **Audit and fill `<SEO>` on every route** — 30+ pages across solutions, services, industries, resources, company, contact. Each gets a unique keyword-driven title (<60 chars) and description (<160 chars).
+5. **Generate `public/sitemap.xml`** via `scripts/generate-sitemap.ts`, wired to `predev` + `prebuild`. Reads from `src/app/routes.tsx`, excludes redirects, `*`, `/admin-lab`, `/*-lab` internal routes. Includes dynamic resource detail routes from `src/content/resources.ts`.
+6. **Update `public/robots.txt`** — add `Sitemap: https://techd.com/sitemap.xml`. Disallow `/admin-lab`, `/logo-lab`, `/figure-lab`, `/section-lab`, `/intro-lab`, `/techd-brand-lab`, `/contact-lab`.
+7. **Add per-page JSON-LD** where it helps: `BreadcrumbList` on every nested page, `Service` schema on services pages, `FAQPage` on Contact (using the existing chatbot FAQ data).
 
-## Part 2 — React side (codebase changes)
+## Phase 2 — Keyword & competitor research (Semrush)
 
-Small, contained. Only the contact form touches network code.
+Goal: ground every meta and H1 in real search behavior.
 
-### Files to add
-- **`src/lib/contact-submit.ts`** — single async `submitContact(payload)` that POSTs JSON to the Apps Script URL.
-  - Uses `mode: "no-cors"` (Apps Script doesn't return CORS headers; we accept opaque response and treat a non-thrown fetch as success).
-  - `Content-Type: text/plain;charset=utf-8` so the request stays a simple request (no preflight, which `no-cors` blocks anyway).
-  - 10s timeout via `AbortController`.
-  - Pulls the endpoint URL from `site.ts`.
+1. `domain_analysis` on techd.com — current rankings baseline.
+2. `competitive_analysis` to surface IBM-partner / enterprise-AI competitors (Mainline, Sirius/CDW, Presidio, Ensono, Kyndryl, etc.).
+3. `keyword_research` on the core terms per practice:
+   - "watsonx implementation partner", "ibm gold partner", "ibm cognos implementation", "ibm guardium consulting", "ibm cloud paks", "ibm planning analytics", "ibm maximo partner", etc.
+4. `serp_analysis` on top 5 commercial-intent terms to gauge difficulty.
+5. Deliver a keyword-to-page mapping table (which keyword each page should own) as `docs/SEO-KEYWORD-MAP.md`.
 
-### Files to edit
-- **`src/content/site.ts`** — add a `contactEndpoint` constant with the script URL above. Safe in a public repo.
-- **`src/sections/contact/ContactForm.tsx`**:
-  - Add a hidden honeypot field `website` (visually hidden, `tabIndex={-1}`, `autoComplete="off"`). If filled → show success screen without POSTing.
-  - Add `isSubmitting` + `submitError` state.
-  - Replace the `console.info` in `onSubmit` with `await submitContact(...)`. Payload includes all form fields plus `userAgent` and `page` (`window.location.href`).
-  - Disable submit button + show spinner while in flight.
-  - On failure: inline error above the button with a `mailto:fvargas@techd.com` fallback; keep form filled so the user can retry.
-  - Keep existing success screen as-is.
+## Phase 3 — Per-page copy rewrites for SEO
 
-### What does NOT change
-- Layout, styling, copy, validation schema, field order, pill toggles, `btn-glow` CTA — untouched.
-- No new dependencies.
-- No env vars, no secrets, no GitHub Actions changes.
+Goal: H1, intro paragraph, and meta align with the keyword map without breaking the established voice rules in `CLAUDE.md`.
 
----
+Touches **only**:
+- Each page's hero `<h1>` / lede (in the section component)
+- `<SEO title=… description=…>` props
+- Where natural, the first body paragraph
 
-## Part 3 — Apps Script reference (already deployed by you)
+Scope (one PR per group):
+1. 5 solutions pages
+2. 4 services pages
+3. 7 industries pages
+4. Company + Contact + Home
 
-For documentation only — this is the script running at the URL above:
+Voice rules from `CLAUDE.md` are non-negotiable — no superlatives, practitioner-to-practitioner, specific claims only.
 
-```javascript
-const RECIPIENTS = ['fvargas@techd.com']; // TODO: swap to bsyring@ + info@ before go-live
-const SUBJECT_PREFIX = '[techd.com lead]';
+## Phase 4 — OG images + Analytics + Search Console
 
-function doPost(e) {
-  try {
-    const data = JSON.parse(e.postData.contents);
-    if (data.website) return ok(); // honeypot
-
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-    sheet.appendRow([
-      new Date(), data.name, data.email, data.company, data.role,
-      data.phone || '', data.heardAbout, data.heardAboutOther || '',
-      data.area, data.timeline || '', data.message,
-      data.userAgent || '', data.page || ''
-    ]);
-
-    MailApp.sendEmail({
-      to: RECIPIENTS.join(','),
-      replyTo: data.email,
-      subject: `${SUBJECT_PREFIX} ${data.name} — ${data.company} (${data.area})`,
-      htmlBody: renderEmail(data),
-    });
-    return ok();
-  } catch (err) {
-    console.error(err);
-    return ContentService.createTextOutput(JSON.stringify({ ok: false }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function ok() {
-  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-function renderEmail(d) {
-  return `
-    <h2>New contact form submission</h2>
-    <p><b>${d.name}</b> — ${d.role} at ${d.company}</p>
-    <p><a href="mailto:${d.email}">${d.email}</a>${d.phone ? ' · ' + d.phone : ''}</p>
-    <p><b>Area:</b> ${d.area}${d.timeline ? ' · <b>Timeline:</b> ' + d.timeline : ''}</p>
-    <p><b>Heard about us:</b> ${d.heardAbout}${d.heardAboutOther ? ' (' + d.heardAboutOther + ')' : ''}</p>
-    <hr><p style="white-space:pre-wrap">${d.message.replace(/</g,'&lt;')}</p>
-    <hr><small>${d.page || ''}<br>${d.userAgent || ''}</small>`;
-}
-```
+1. **OG images (1200×630)** via `imagegen`:
+   - 1 default sitewide (`public/og/default.jpg`) — TechD wordmark + IBM Gold lockup
+   - 1 per top-level section (solutions, services, industries, resources, company, contact) — 7 total
+   - Each page's `<SEO ogImage="…">` points at the right one
+2. **GA4** — add `gtag.js` snippet in `index.html` behind a `VITE_GA_MEASUREMENT_ID` env var (left empty for now; PM provides the ID at cutover).
+3. **Google Search Console** — use the GSC connector to:
+   - Request a META verification token for `https://techd.com/`
+   - Add the meta tag to `index.html`
+   - (After domain cutover) call verify, then PUT the site into GSC, then submit `/sitemap.xml`.
 
 ---
 
-## Flow
+## Technical details
 
-```text
-Branded React form (/contact)
-   │   fetch POST (JSON body, text/plain, no-cors)
-   ▼
-Google Apps Script web app  (runs as fvargas@techd.com)
-   ├──► MailApp.sendEmail → fvargas@techd.com  (testing; reply-to = submitter)
-   └──► Sheet.appendRow   → backup + edit-notification subscribers
-```
+**Files created**
+- `scripts/generate-sitemap.ts`
+- `docs/SEO-KEYWORD-MAP.md`
+- `public/og/default.jpg` + 7 section variants
 
----
+**Files modified**
+- `src/main.tsx` — add `<HelmetProvider>`
+- `src/components/shared/SEO.tsx` — rewrite on top of `react-helmet-async`
+- `index.html` — sitewide head, Organization JSON-LD, GA4 snippet, GSC meta
+- `public/robots.txt` — sitemap line + lab disallows
+- `package.json` — add `react-helmet-async`, add `predev`/`prebuild` hooks
+- ~30 page components — `<SEO>` props + hero copy where Phase 3 covers them
 
-## Test plan (after build mode)
+**Out of scope (per `CLAUDE.md` deferred list)**
+- CMS, real CRM form, multi-language, full WCAG audit, third-party pen test
 
-1. Open `/contact`, fill all required fields with a test email, submit.
-2. Confirm success screen renders.
-3. Confirm a row appears in the Sheet within ~5s.
-4. Confirm `fvargas@techd.com` receives the email, and that "Reply" goes to the submitter's address.
-5. Honeypot test: in DevTools, set the hidden `website` input value and submit → success screen shows, but no Sheet row and no email.
-6. Network failure test: throttle to offline in DevTools → submit → inline error with `mailto:` fallback appears, form stays filled.
-
----
-
-## Trade-offs (technical)
-
-- **`no-cors` = opaque response.** We can't read `{ok:true}` back. The Sheet is the source of truth; if a row is missing we know it failed. Acceptable for a contact form.
-- **Honeypot only, no CAPTCHA.** Apps Script quotas (~20k emails/day) absorb realistic abuse. Add reCAPTCHA later only if spam appears.
-- **Versioning.** Every script edit needs Deploy → Manage deployments → New version. URL stays stable.
-- **Migration path.** If we later move to Cloudflare Worker / AWS Lambda, only `src/lib/contact-submit.ts` + the `contactEndpoint` constant change. Form component stays identical.
+**Verification at the end**
+- Build site, view-source on every route to confirm unique title/description/canonical/OG
+- Run the in-product SEO scanner (`seo_chat`) and resolve findings
+- Validate sitemap.xml with `xmllint`
+- Test OG previews via opengraph.xyz once deployed
 
 ---
 
-## Go-live checklist (later, not now)
+## Suggested execution order
 
-- [ ] In Apps Script, change `RECIPIENTS` to `['bsyring@techd.com', 'info@techd.com']`.
-- [ ] Deploy → Manage deployments → New version.
-- [ ] Share the Sheet with `bsyring@techd.com` (Editor) so Robert can enable Tools → Notification settings → "Any changes" → "Email right away".
-- [ ] Update the `mailto:` fallback in `ContactForm.tsx` from `fvargas@` to `info@techd.com`.
+Phase 1 first (unblocks everything else and is safe to ship before domain cutover since canonicals will already point at techd.com — search engines just won't see them until DNS flips). Phase 2 in parallel. Phase 3 after the keyword map is approved. Phase 4 right before / at cutover.
 
-Ready to switch to build mode and wire this up?
+Want me to start with Phase 1 end-to-end, or do Phase 1 + Phase 2 research in one pass so you can review the keyword map before any copy moves?
