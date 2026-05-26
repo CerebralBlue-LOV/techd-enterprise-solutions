@@ -665,14 +665,15 @@ export const SOLUTIONS: Solution[] = [
     name: "Automation & FinOps",
     outcome: "Observe everything, optimize spend, and eliminate manual toil.",
     description:
-      "IBM Apptio, Instana, and Turbonomic give your IT and finance teams full-stack visibility — from application traces to cloud bill line items — with AI-driven recommendations that act.",
+      "IBM Apptio, Instana, and Turbonomic give your IT and finance teams full-stack visibility — from application traces to cloud bill line items — with AI-driven recommendations that act, and IBM Concert as the agentic layer that connects them.",
     highlights: [
       "Full-stack APM and tracing",
       "Cloud FinOps and showback",
       "AI-driven resource actions",
+      "Agentic cross-domain orchestration",
     ],
     pitch:
-      "Full-stack observability, AI-driven resource optimization, and Technology Business Management — so IT leaders can see everything, cut waste, and prove the value of every dollar spent.",
+      "Full-stack observability, AI-driven resource optimization, Technology Business Management, and agentic cross-domain orchestration — so IT leaders can see everything, cut waste, and act on insight with governance.",
     ctaLabel: "Explore automation practice",
     products: [
       {
