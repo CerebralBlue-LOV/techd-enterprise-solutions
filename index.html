@@ -5,16 +5,91 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TechD | IBM Gold Partner</title>
-    <meta name="description" content="TechD is an IBM Gold Business Partner delivering enterprise AI, data, security, and automation solutions to Fortune 500 organizations." />
-    <meta name="author" content="TechD" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <title>TechD | IBM Gold Business Partner — Enterprise AI, Data, Security</title>
+    <meta
+      name="description"
+      content="IBM Gold Business Partner since 2009. TechD delivers watsonx, Cognos, Guardium, and Cloud Pak implementations for Fortune 500 healthcare, finance, and public-sector leaders."
+    />
+    <meta name="author" content="TechD" />
+    <meta name="theme-color" content="#00B3E3" />
+
+    <!-- Sitewide social-preview fallback (per-route values are set via react-helmet-async) -->
+    <meta property="og:site_name" content="TechD" />
     <meta property="og:title" content="TechD — Enterprise AI, Engineered for Outcomes" />
     <meta property="og:description" content="IBM Gold Business Partner. Enterprise AI, data, security, and automation for Fortune 500 leaders." />
     <meta property="og:type" content="website" />
-
+    <meta property="og:url" content="https://techd.com/" />
+    <meta property="og:image" content="https://techd.com/og/default.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://techd.com/og/default.jpg" />
+
+    <!-- Google Search Console verification (token added at cutover) -->
+    <!-- <meta name="google-site-verification" content="REPLACE_AT_CUTOVER" /> -->
+
+    <!-- Organization JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "TechD",
+        "alternateName": "TechD Enterprise Solutions",
+        "url": "https://techd.com",
+        "logo": "https://techd.com/images/techd-logo.png",
+        "description": "IBM Gold Business Partner delivering enterprise AI, data, analytics, security, and automation solutions to Fortune 500 organizations.",
+        "foundingDate": "2009",
+        "areaServed": ["US", "LATAM", "EMEA"],
+        "knowsAbout": [
+          "IBM watsonx",
+          "IBM Cognos Analytics",
+          "IBM Planning Analytics",
+          "IBM Guardium",
+          "IBM QRadar",
+          "IBM Cloud Pak for Data",
+          "IBM Apptio",
+          "IBM Instana",
+          "IBM Turbonomic",
+          "Enterprise AI",
+          "Data governance",
+          "FinOps"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Miami",
+          "addressRegion": "FL",
+          "addressCountry": "US"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "email": "info@techd.com",
+          "availableLanguage": ["en", "es"]
+        }
+      }
+    </script>
+
+    <!-- WebSite JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "TechD",
+        "url": "https://techd.com"
+      }
+    </script>
+
+    <!-- GA4: enable at cutover by setting VITE_GA_MEASUREMENT_ID and uncommenting -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
