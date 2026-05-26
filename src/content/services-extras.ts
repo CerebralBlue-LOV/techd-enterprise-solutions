@@ -94,7 +94,7 @@ const APPROACH_IMPLEMENTATION: ApproachStep[] = [
 const APPROACH_MANAGED: ApproachStep[] = [
   { step: "Onboard",  detail: "Discovery and documentation sprint to baseline the environment in scope — performance, cost, integrations, escalation paths, and compliance posture." },
   { step: "Operate",  detail: "24×7 monitoring, patching, backup/restore, and incident response across watsonx, Cloud Pak for Data, Db2, OpenShift, Cognos, Planning Analytics, Guardium, and QRadar — by the people who built it." },
-  { step: "Optimize", detail: "FinOps reviews, performance tuning, and capacity planning on the cadence of your cloud bill — Apptio, Instana, and Turbonomic actions implemented, not just reported." },
+  { step: "Optimize", detail: "FinOps reviews, performance tuning, and capacity planning on the cadence of your cloud bill — Apptio, Instana, and Turbonomic actions implemented, not just reported, with IBM Concert tracked as the agentic orchestration layer as modules reach GA." },
   { step: "Evolve",   detail: "Quarterly business reviews, IBM platform release alignment, and capability planning with senior practitioners — Managed Services that compound, not stagnate." },
 ];
 
@@ -115,7 +115,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     whyPoints: [
       { title: "TechD IBM Platform Assessment", body: "We run a structured one-day evaluation that produces a written findings report covering architecture, configuration, security posture, licensing, and upgrade paths — not a sales discovery call." },
       { title: "An opinion, not options",        body: "We name the recommended architecture and sequence. Optionality is fine in slideware; useless when payroll is due Friday." },
-      { title: "Anchored in IBM, open to the rest", body: "We hold IBM Gold status with certified practitioners across watsonx, Cloud Pak for Data, Db2, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar — paired with realism about AWS, Azure, Snowflake, and the systems you already own." },
+      { title: "Anchored in IBM, open to the rest", body: "We hold IBM Gold status with certified practitioners across watsonx, Cloud Pak for Data, Db2, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Concert, Guardium, and QRadar — paired with realism about AWS, Azure, Snowflake, and the systems you already own." },
       { title: "Senior practitioners only",     body: "We staff with architects who have shipped in healthcare, insurance, media, energy, higher education, and the public sector — not generalists learning on your dime." },
     ],
     spotlight: {
@@ -149,7 +149,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
         { name: "Govern",     body: "Data, model, and access governance posture across the IBM platforms in scope. Compliance tier (HIPAA, FedRAMP, PCI-DSS, NERC-CIP) drives the gap analysis." },
         { name: "Integrate",  body: "Data foundations and integration patterns: Db2, watsonx.data, DataStage, and the connector layer to non-IBM systems already in your estate." },
         { name: "Orchestrate", body: "Workflow and AI orchestration readiness: watsonx.ai, watsonx Orchestrate, and the policy controls required to move agents toward production." },
-        { name: "Automate",   body: "Operational and FinOps maturity: Instana, Apptio, and Turbonomic posture against the platform economics your CFO has to defend." },
+        { name: "Automate",   body: "Operational and FinOps maturity: Instana, Apptio, and Turbonomic posture against the platform economics your CFO has to defend — with IBM Concert readiness for the agentic ops layer." },
       ],
     },
     productCoverage: {
@@ -157,7 +157,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       rows: [
         { practice: "AI & Generative",    products: ["watsonx.ai", "watsonx (platform)", "watsonx Orchestrate", "IBM Bob", "NeuralSeek", "IBM SPSS Modeler"] },
         { practice: "Data & Analytics",   products: ["IBM Db2", "watsonx.data", "watsonx.data intelligence", "watsonx.data integration", "Cloud Pak for Data", "IBM DataStage", "IBM Netezza Performance Server", "Cognos Analytics 12", "Planning Analytics"] },
-        { practice: "Automation & FinOps", products: ["IBM Apptio", "IBM Instana", "IBM Turbonomic"] },
+        { practice: "Automation & FinOps", products: ["IBM Apptio", "IBM Instana", "IBM Turbonomic", "IBM Concert (preview readiness)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium", "IBM QRadar", "IBM Resilient (QRadar SOAR)"] },
       ],
     },
@@ -193,7 +193,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
   implementation: {
     headline: "From PowerPoint to production.",
     lede:
-      "Engineering teams that ship. Reference architectures, accelerators, and senior IBM-certified practitioners on every engagement — across watsonx, Cloud Pak for Data, Db2, OpenShift, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar.",
+      "Engineering teams that ship. Reference architectures, accelerators, and senior IBM-certified practitioners on every engagement — across watsonx, Cloud Pak for Data, Db2, OpenShift, Cognos, Planning Analytics, DataStage, Apptio, Instana, Turbonomic, Concert, Guardium, and QRadar.",
     whyPoints: [
       { title: "We build what we design",       body: "We staff advisory and implementation with the same certified practitioners — the architecture we recommend is the architecture we deliver, with no handoff to a separate delivery organization." },
       { title: "Reference architectures",       body: "We bring patterns we've shipped across healthcare, insurance, media, energy, higher education, and the public sector — not slideware drawn for your engagement." },
@@ -235,7 +235,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       rows: [
         { practice: "AI & Generative",    products: ["watsonx.ai (RAG, fine-tuning, deployment)", "watsonx (platform)", "watsonx Orchestrate", "IBM Bob", "NeuralSeek", "IBM SPSS Modeler"] },
         { practice: "Data & Analytics",   products: ["IBM Db2 12.1 (install, migrate, tune)", "watsonx.data (lakehouse, Iceberg, Presto)", "watsonx.data intelligence", "watsonx.data integration", "Cloud Pak for Data on OpenShift", "IBM DataStage (ETL/ELT, streaming)", "IBM Netezza Performance Server", "Cognos Analytics 12 (build, migration, AI Assistant)", "Planning Analytics (TM1, Workspace)"] },
-        { practice: "Automation & FinOps", products: ["IBM Apptio (TBM build, cost allocation, ITSM integration)", "IBM Instana (agent rollout, dashboards, alerting)", "IBM Turbonomic (optimization policy, hybrid cloud)"] },
+        { practice: "Automation & FinOps", products: ["IBM Apptio (TBM build, cost allocation, ITSM integration)", "IBM Instana (agent rollout, dashboards, alerting)", "IBM Turbonomic (optimization policy, hybrid cloud)", "IBM Concert (preview — agentic workflow design, governance setup)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium (DAM policy, vulnerability scanning, compliance reporting)", "IBM QRadar (SIEM build, detection rules, source integration)", "IBM Resilient / QRadar SOAR (playbook deployment, ticketing wiring)"] },
       ],
     },
@@ -255,7 +255,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { id: "ai-generative",       proof: "watsonx.ai builds — RAG pipelines, vector store design, prompt governance, and MLOps in production." },
       { id: "data-analytics",      proof: "Db2, DataStage, Netezza Performance Server, watsonx.data, Cognos, and Planning Analytics builds and migrations." },
       { id: "security-compliance", proof: "Guardium, QRadar, and Resilient deployments — use-case rule development and compliance report validation." },
-      { id: "automation-finops",   proof: "Instana, Apptio, and Turbonomic deployment and integration into your ITSM and CFO dashboards." },
+      { id: "automation-finops",   proof: "Instana, Apptio, and Turbonomic deployment and integration into your ITSM and CFO dashboards — with IBM Concert preview engagements for the agentic orchestration layer." },
     ],
     industries: [
       { id: "healthcare",          proof: "HIPAA-grade data platforms and clinical AI builds for major U.S. health systems." },
@@ -313,7 +313,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       rows: [
         { practice: "AI & Generative",    products: ["watsonx.ai (model deployment, inference, token consumption)", "watsonx (platform)", "watsonx Orchestrate (emerging — agent operations ahead of GA)", "NeuralSeek", "IBM SPSS Modeler"] },
         { practice: "Data & Analytics",   products: ["Cloud Pak for Data 5.x on OpenShift", "watsonx.data (Iceberg, Presto, ingestion health)", "watsonx.data intelligence / integration", "IBM DataStage (job schedules, lineage)", "IBM Db2 (availability, backup validation)", "IBM Netezza Performance Server", "Cognos Analytics 12 (delivery monitoring, lifecycle)", "Planning Analytics (TM1 cubes, Workspace)"] },
-        { practice: "Automation & FinOps", products: ["IBM Apptio (monthly IT financial reporting, license utilization)", "IBM Instana (baseline tracking, threshold tuning)", "IBM Turbonomic (workload placement, monthly savings reporting)"] },
+        { practice: "Automation & FinOps", products: ["IBM Apptio (monthly IT financial reporting, license utilization)", "IBM Instana (baseline tracking, threshold tuning)", "IBM Turbonomic (workload placement, monthly savings reporting)", "IBM Concert (preview — agentic workflow operations as modules reach GA)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium (DAM policy review, alert triage, compliance reporting)", "IBM QRadar (alert triage, rule tuning, threat intel)", "IBM Resilient / QRadar SOAR (playbook execution, incident lifecycle)"] },
       ],
     },
@@ -321,7 +321,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { kind: "service",  id: "advisory",       label: "Advisory",       blurb: "Right-size your operations contract with a one-day platform assessment first." },
       { kind: "service",  id: "implementation", label: "Implementation", blurb: "We can build the platform we operate — same team, no transition loss." },
       { kind: "solution", id: "security-compliance", label: "Security & Compliance", blurb: "Guardium and QRadar SOC operations and rule tuning for regulated estates." },
-      { kind: "solution", id: "automation-finops",   label: "Automation & FinOps",   blurb: "Continuous Apptio, Instana, and Turbonomic operations with cost actions implemented." },
+      { kind: "solution", id: "automation-finops",   label: "Automation & FinOps",   blurb: "Continuous Apptio, Instana, and Turbonomic operations with cost actions implemented — and IBM Concert tracked as the agentic orchestration layer." },
     ],
     deliverables: [
       { title: "Platform operations",       body: "24×7 operations for watsonx, Cloud Pak for Data, Db2, OpenShift, Cognos, Planning Analytics, and DataStage — monitored, patched, backed up, and tuned." },
@@ -333,7 +333,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       { id: "data-analytics",      proof: "Cognos, Planning Analytics, Db2, DataStage, and watsonx.data administration in production." },
       { id: "ai-generative",       proof: "watsonx.ai operations — model drift monitoring, prompt library updates, RAG pipeline health." },
       { id: "security-compliance", proof: "Guardium and QRadar SOC operations and rule tuning for regulated estates." },
-      { id: "automation-finops",   proof: "Instana, Apptio, and Turbonomic operations with continuous cost optimization." },
+      { id: "automation-finops",   proof: "Instana, Apptio, and Turbonomic operations with continuous cost optimization — and IBM Concert preview engagements as modules reach GA." },
     ],
     industries: [
       { id: "healthcare",       proof: "HIPAA-grade managed operations for major U.S. health systems." },
@@ -350,7 +350,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
   training: {
     headline: "Lift the whole organization, not just the lab.",
     lede:
-      "Role-based enablement for executives, architects, and engineering teams — IBM-certified curricula across watsonx, Cloud Pak for Data, Db2, Cognos Analytics 12, Planning Analytics, DataStage, SPSS Modeler, Apptio, Instana, Turbonomic, Guardium, and QRadar. Hands-on labs run on your data when you want them to.",
+      "Role-based enablement for executives, architects, and engineering teams — IBM-certified curricula across watsonx, Cloud Pak for Data, Db2, Cognos Analytics 12, Planning Analytics, DataStage, SPSS Modeler, Apptio, Instana, Turbonomic, Concert, Guardium, and QRadar. Hands-on labs run on your data when you want them to.",
     whyPoints: [
       { title: "IBM-certified curricula",   body: "We deliver official IBM training across the data, AI, automation, and security portfolio — by senior IBM-certified practitioners with active IBM certifications on the platforms they teach." },
       { title: "Your data, your use cases", body: "We make bring-your-own-data labs available — train against your schemas, your dashboards, your security policies, and your deployment environment, not a generic IBM sample database." },
@@ -392,7 +392,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       rows: [
         { practice: "AI & Generative",    products: ["watsonx.ai (Studio, prompting, fine-tuning, RAG, deployment)", "watsonx Orchestrate (emerging — tracking GA)", "IBM Bob (IDE integration, governance)", "NeuralSeek (knowledge bases, conversational AI)", "IBM SPSS Modeler (visual model design, deployment)"] },
         { practice: "Data & Analytics",   products: ["IBM Db2 12.1 (administration, AI query optimization, performance)", "watsonx.data (lakehouse, Iceberg, Presto)", "watsonx.data intelligence", "Cloud Pak for Data Platform Operations (OpenShift, services, IAM)", "IBM DataStage (job design, parallel framework, monitoring)", "Cognos Analytics 12 (foundational + advanced — Framework Manager, AI Assistant, administration)", "Planning Analytics (TM1, Workspace, budgeting & forecasting)"] },
-        { practice: "Automation & FinOps", products: ["IBM Apptio (TBM orientation, cost allocation, reporting)", "IBM Instana (APM navigation, alerting, baselines)", "IBM Turbonomic (optimization actions, policy, cloud cost reporting)"] },
+        { practice: "Automation & FinOps", products: ["IBM Apptio (TBM orientation, cost allocation, reporting)", "IBM Instana (APM navigation, alerting, baselines)", "IBM Turbonomic (optimization actions, policy, cloud cost reporting)", "IBM Concert (preview overview — agentic IT ops, governance model)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium (DAM policy, compliance reporting, vulnerability assessment)", "IBM QRadar (SIEM fundamentals, use-case configuration, alert triage)", "IBM Resilient / QRadar SOAR (playbook design, incident lifecycle)"] },
       ],
     },
@@ -411,7 +411,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
     solutions: [
       { id: "ai-generative",       proof: "watsonx, watsonx.ai, watsonx Orchestrate, NeuralSeek, and SPSS Modeler enablement for data science and platform teams." },
       { id: "data-analytics",      proof: "Cognos Analytics 12, Planning Analytics, Db2, and DataStage training across analyst, developer, and admin tracks." },
-      { id: "automation-finops",   proof: "Apptio, Instana, and Turbonomic enablement for FinOps practitioners and platform operations teams." },
+      { id: "automation-finops",   proof: "Apptio, Instana, and Turbonomic enablement for FinOps practitioners and platform operations teams — plus IBM Concert preview briefings for the agentic IT ops layer." },
       { id: "security-compliance", proof: "Guardium, QRadar, and Resilient training for security operations teams." },
     ],
     industries: [

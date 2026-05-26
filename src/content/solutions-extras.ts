@@ -35,7 +35,7 @@ const APPROACH_DATA: ApproachStep[] = [
 
 const APPROACH_AUTOMATION: ApproachStep[] = [
   { step: "Discover", detail: "Map your observability blind spots and IT cost allocation gaps — from application performance to cloud invoice line items." },
-  { step: "Architect", detail: "Instrument the stack with Instana, align cost models with Apptio's TBM taxonomy, and define Turbonomic action policies before anything is automated." },
+  { step: "Architect", detail: "Instrument the stack with Instana, align cost models with Apptio's TBM taxonomy, define Turbonomic action policies before anything is automated, and design the IBM Concert governance model for cross-domain agentic workflows." },
   { step: "Deliver",   detail: "Configured, integrated, and tuned — alerts connected to your ITSM, cost models in your CFO's dashboard, autonomous actions governed by your policy." },
   { step: "Operate",   detail: "Continuous tuning, new-service onboarding, and FinOps review cycles tied to your cloud billing cadence and organizational changes." },
 ];
@@ -95,6 +95,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     whyPoints: [
       { title: "See the whole stack",   body: "Instana for full-stack observability — application, runtime, infrastructure, and the network in between." },
       { title: "Right-size the spend",  body: "Apptio for IT financial management and Turbonomic for workload-level cost optimization." },
+      { title: "Orchestrate across domains", body: "IBM Concert (preview) as the agentic layer that correlates observability, cost, and risk signals into governed remediation workflows." },
       { title: "Eliminate manual toil", body: "Automated remediation playbooks tied to the alerts that actually matter." },
       { title: "FinOps that scales",    body: "Cost allocation models that survive a re-org, a cloud migration, or an M&A." },
     ],

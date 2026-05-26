@@ -55,9 +55,9 @@ export const CHATBOT_FAQ: FaqEntry[] = [
   {
     question: "What IBM products does TechD implement?",
     answer:
-      "TechD implements 21 IBM products across four practices: AI & Generative (watsonx.ai, watsonx platform, watsonx Orchestrate, watsonx Assistant, NeuralSeek, IBM SPSS Modeler); Data & Analytics (IBM Db2, watsonx.data, Cloud Pak for Data, IBM DataStage, IBM Netezza Performance Server, Cognos Analytics 12, Planning Analytics); Automation & FinOps (IBM Apptio, IBM Instana, IBM Turbonomic); Security & Compliance (IBM Guardium, IBM QRadar, IBM QRadar SOAR).",
+      "TechD implements 22 IBM products across four practices: AI & Generative (watsonx.ai, watsonx platform, watsonx Orchestrate, watsonx Assistant, NeuralSeek, IBM SPSS Modeler); Data & Analytics (IBM Db2, watsonx.data, Cloud Pak for Data, IBM DataStage, IBM Netezza Performance Server, Cognos Analytics 12, Planning Analytics); Automation & FinOps (IBM Apptio, IBM Instana, IBM Turbonomic, IBM Concert); Security & Compliance (IBM Guardium, IBM QRadar, IBM QRadar SOAR).",
     links: [{ label: "IBM Partnership", href: "/company/ibm-partnership" }],
-    tags: ["products", "ibm", "watsonx", "cognos", "db2", "guardium", "qradar", "apptio"],
+    tags: ["products", "ibm", "watsonx", "cognos", "db2", "guardium", "qradar", "apptio", "concert"],
   },
 
   // ── Solutions practices ──────────────────────────────────────────────────
@@ -78,9 +78,9 @@ export const CHATBOT_FAQ: FaqEntry[] = [
   {
     question: "What is TechD's Automation & FinOps practice?",
     answer:
-      "TechD's Automation & FinOps practice delivers full-stack observability with IBM Instana, IT financial management with IBM Apptio, and workload cost optimization with IBM Turbonomic.",
+      "TechD's Automation & FinOps practice delivers full-stack observability with IBM Instana, IT financial management with IBM Apptio, workload cost optimization with IBM Turbonomic, and agentic cross-domain orchestration with IBM Concert (preview).",
     links: [{ label: "Automation & FinOps", href: "/solutions/automation-finops" }],
-    tags: ["automation", "finops", "instana", "apptio", "turbonomic", "observability", "cost"],
+    tags: ["automation", "finops", "instana", "apptio", "turbonomic", "concert", "observability", "cost"],
   },
   {
     question: "What does TechD do for cybersecurity and compliance?",
@@ -115,7 +115,7 @@ export const CHATBOT_FAQ: FaqEntry[] = [
   {
     question: "Does TechD offer IBM training?",
     answer:
-      "TechD Training delivers IBM-certified, role-based enablement for executives, architects, and engineering teams — covering all four practice areas in online, instructor-led, on-site, or custom formats. We train on watsonx, Cognos Analytics 12, Planning Analytics, Db2, DataStage, Apptio, Instana, Turbonomic, Guardium, and QRadar.",
+      "TechD Training delivers IBM-certified, role-based enablement for executives, architects, and engineering teams — covering all four practice areas in online, instructor-led, on-site, or custom formats. We train on watsonx, Cognos Analytics 12, Planning Analytics, Db2, DataStage, Apptio, Instana, Turbonomic, Concert, Guardium, and QRadar.",
     links: [{ label: "Training", href: "/services/training" }],
     tags: ["training", "certification", "ibm", "course", "enablement", "bootcamp", "education"],
   },
