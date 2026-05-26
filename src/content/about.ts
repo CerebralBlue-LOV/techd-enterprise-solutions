@@ -39,7 +39,7 @@ export const PRACTICE_AREAS: PracticeArea[] = [
   {
     name: "Automation & FinOps",
     description:
-      "Apptio, Instana, and Turbonomic for cost governance, observability, and resource optimization.",
+      "Apptio, Instana, and Turbonomic for cost governance, observability, and resource optimization — with IBM Concert as the agentic orchestration layer.",
     to: "/solutions/automation-finops",
   },
   {
@@ -88,7 +88,7 @@ export const PORTFOLIO_BY_PRACTICE: PortfolioPractice[] = [
   {
     practice: "Automation & FinOps",
     to: "/solutions/automation-finops",
-    products: ["IBM Apptio", "IBM Instana", "IBM Turbonomic"],
+    products: ["IBM Apptio", "IBM Instana", "IBM Turbonomic", "IBM Concert (preview)"],
   },
   {
     practice: "Security & Compliance",
@@ -240,7 +240,7 @@ export const LEADERSHIP: LeadershipEntry[] = [
       "watsonx.ai",
       "watsonx Orchestrate",
       "watsonx Assistant",
-      "Apptio · Turbonomic · Instana",
+      "Apptio · Turbonomic · Instana · Concert",
     ],
   },
 ];

@@ -1,77 +1,61 @@
-## Goal
+# Surface IBM Concert everywhere the Automation & FinOps stack is listed
 
-Add **IBM Concert** as a 4th product under the **Automation & FinOps** practice (`/solutions/automation-finops`), with its own internal detail page at `/solutions/automation-finops/ibm-concert`, matching the depth and voice of the existing Apptio / Instana / Turbonomic entries.
+Concert was added to `src/content/solutions.ts` (4th product + practice description/pitch). But the trio "Apptio · Instana · Turbonomic" is hard-coded in ~15 other places. This plan reviews each surface and updates copy so Concert appears where it belongs — without inflating claims (Concert is preview-stage).
 
-## What Concert is (sourced from ibm.com/products/concert, May 2026)
+## Audit results — where the trio appears
 
-- **Positioning:** "Agentic IT Ops platform" — unified operational layer that connects signals across apps, infra, network, and cost; uses agentic AI to surface, prioritize, and orchestrate action through governed workflows.
-- **Status:** Currently **preview / waitlist** ("Experience the preview" CTA on ibm.com). Not yet GA.
-- **Modules:** Concert Observe, Concert Operate, Concert Optimize, Concert Protect, Concert Resilience, Concert Workflows.
-- **Use cases:** Prevent (early warning across domains), Resolve (AI-guided root cause + automated remediation), Scale (perf + cost right-sizing across infra/cloud/AI), Govern (vulnerabilities, certs, compliance, change-impact).
-- **Fits naturally** in the Automation & FinOps practice — it's the cross-domain orchestration layer that sits over Instana (observability) + Turbonomic (resource action) + Apptio (cost).
+### A. Will be updated (Concert added)
 
-## Changes
+**Navigation / structural**
+1. `src/content/site.ts:28` — navbar dropdown description: `"IBM Apptio, Instana, Turbonomic."` → add Concert.
 
-### 1. `src/content/solutions.ts` — Automation & FinOps practice block (~line 677)
+**Company / About page**
+2. `src/content/about.ts:42` — capability bullet listing the three products.
+3. `src/content/about.ts:91` — `products: ["IBM Apptio", "IBM Instana", "IBM Turbonomic"]` (the practice "Stack" card you mentioned).
+4. `src/content/about.ts:243` — credentials/stack chip `"Apptio · Turbonomic · Instana"`.
 
-Append a 4th product entry after Turbonomic:
+**Chatbot FAQ**
+5. `src/content/chatbot-faq.ts:58` — "21 IBM products" inventory line + product count.
+6. `src/content/chatbot-faq.ts:60` — `tags` array.
+7. `src/content/chatbot-faq.ts:81` — Automation & FinOps practice summary.
+8. `src/content/chatbot-faq.ts:83` — `tags` array.
 
-```ts
-{
-  name: "IBM Concert",
-  tagline: "Agentic IT Ops — one operational layer connecting observability, cost, and risk into governed automated action.",
-  description: "...",
-  link: { kind: "internal", slug: "ibm-concert" },
-  vendorUrl: "https://www.ibm.com/products/concert",
-  detail: {
-    overview: [ /* 2 paragraphs — what Concert is + how TechD delivers it */ ],
-    capabilities: [ /* 7 bullets — Observe, Operate, Optimize, Protect, Resilience, Workflows, plus governance/agentic AI */ ],
-    useCases: [ /* 4 — Prevent / Resolve / Scale / Govern, framed for regulated enterprises */ ],
-    whyTechD: [ /* 4 — Instana→Turbonomic→Apptio→Concert integration story, governance-first rollout, preview/early-access positioning, regulated industry fit */ ],
-    stats: [ /* 2 — drawn only from IBM-published material; likely qualitative (e.g. "Preview — 2026" + cross-domain integration claim) since no Forrester TEI exists yet */ ],
-  },
-},
-```
+**Solutions practice extras (industry proof / approach copy)**
+9. `src/content/solutions-extras.ts:38` — "Architect" step (mention Concert governance for cross-domain workflows).
+10. `src/content/solutions-extras.ts:96-97` — practice value props (add a 3rd bullet for agentic orchestration).
+11. `src/content/solutions-extras.ts:102-103` — industry proof points (light touch — only if natural).
 
-Also update the practice-level `highlights` array (currently 3 bullets) to optionally mention "agentic cross-domain orchestration", and the `pitch` sentence to acknowledge Concert as the connective layer.
+**Services pages (Advisory / Implementation / Managed / Training)**
+12. `src/content/services-extras.ts:97` — Managed Services "Optimize" step.
+13. `src/content/services-extras.ts:118` — IBM-certified products list.
+14. `src/content/services-extras.ts:152` — Advisory "Automate" maturity dimension.
+15. `src/content/services-extras.ts:160, 238, 316, 395` — `practice: "Automation & FinOps"` product arrays (Advisory, Implementation, Managed, Training coverage tables).
+16. `src/content/services-extras.ts:196, 353` — long product enumerations in section intros.
+17. `src/content/services-extras.ts:258, 336, 414` — practice proof lines per service page.
+18. `src/content/services-extras.ts:278, 290, 296, 329, 374-375, 407-408` — FinOps/managed/training body copy (add Concert only where it reads natural; Concert is preview, so we won't claim it's running in production engagements).
+19. `src/content/services-extras.ts:324` — Managed cross-link blurb.
 
-### 2. Practice `description` field
+### B. Will NOT be changed (and why)
 
-Currently lists "IBM Apptio, IBM Instana, IBM Turbonomic — the spend-aware observability and automation stack…". Update to include Concert as the orchestration layer over the three.
+- **`src/content/resources.ts:230-238, 324-333, 447-450`** — these are specific past/scheduled webinars and case studies titled around the Apptio/Turbonomic/Instana workflow. Concert wasn't part of those events. Adding it would fabricate event content.
+- **`src/sections/home/SolutionsGridSection.tsx`** — already pulls products dynamically from `SOLUTIONS`; Concert appears automatically (caps at 6 with "+N more"). No code change.
+- **`src/components/shared/heroFigures/solutions/AutomationFinOpsFigure.tsx`** — visual figure, not product-list-driven. No change.
+- **`src/sections/services/ServiceProductCoverageSection.tsx`** — renders from `services-extras.ts` data; updated via the data edits above.
 
-### 3. No route / page-component changes needed
+## Voice rules to apply (per CLAUDE.md)
 
-`ProductDetail.tsx` already renders any product whose `link.kind === "internal"` and that has a `detail` block. The route `/solutions/automation-finops/ibm-concert` will work automatically once the data is added.
-
-### 4. No image / icon asset needed
-
-Practice pages and product detail pages don't use per-product imagery — they use the shared `PracticeFigure` and typography-led layouts.
-
-## Voice & content rules to apply
-
-- Follow `CLAUDE.md` content rules: practitioner voice, no superlatives, capabilities as `Feature — what it does`, whyTechD in first person ("we configure…"), stats only from IBM-published or Forrester-published sources.
-- **Honest preview framing:** Concert is preview/waitlist (May 2026). Copy must not imply TechD has shipped production Concert deployments. Frame as "early-access partner" / "design partner positioning" / "ready when GA lands" — same tone TechD uses for QRadar's on-prem-only framing.
-- Lean into the **integration story**: Concert is most compelling for TechD clients who already run Instana + Turbonomic + Apptio. That's the differentiator vs. a generalist SI.
+- Concert is preview/2026 — never claim "we run Concert in production today."
+- Where the trio is sold as a *delivered* workflow (managed services SLAs, past case studies), keep the trio and add Concert with framing like "tracking IBM Concert as the agentic orchestration layer" or "Concert (preview) for cross-domain workflows."
+- Where it's a capability list ("we cover X products"), Concert joins the list cleanly.
+- Don't bump claimed product counts in chatbot FAQ unless the new total is accurate (21 → 22).
 
 ## Out of scope
 
-- No new practice page, no new section component, no nav change.
-- No changes to Apptio / Instana / Turbonomic copy (only the practice-level `description` / `pitch` to acknowledge Concert).
-- No imagery/figure changes.
-- No redirect map changes.
+- No new routes, components, images, or visual figures.
+- No edits to `src/components/ui/`.
+- No changes to webinar/case-study content in `resources.ts`.
+- No changes to the `solutions.ts` Concert entry itself (already done).
 
-## Questions before I write copy
+## Open question before I implement
 
-1. **Preview framing — how forward should we lean?** Three options:
-   - **(a) Conservative** — "TechD is tracking IBM Concert through preview; engagements available when GA lands." Lowest risk, weakest pitch.
-   - **(b) Design-partner** — "TechD is an early-access partner positioning clients for Concert rollouts as modules reach GA." Stronger, only honest if TechD actually has preview access.
-   - **(c) Aggressive** — write as if GA, with a small "currently in preview with IBM" footnote.
-   My default would be **(b)** if you confirm TechD has (or is pursuing) preview access; otherwise **(a)**.
-
-2. **Stats slot** — Concert has no Forrester TEI or Gartner MQ yet. Options:
-   - Leave `stats` empty (the ProductCtaSection / hero handles missing stats gracefully — I'd verify).
-   - Use qualitative stats like `{ value: "6 modules", label: "Observe · Operate · Optimize · Protect · Resilience · Workflows" }` and `{ value: "Preview 2026", label: "IBM Concert availability" }`.
-   - Borrow the Instana/Turbonomic numbers as "stack-level" stats (not honest — I wouldn't recommend).
-   My default: **qualitative stats** unless you'd rather leave it empty.
-
-3. **Should I also add Concert as a cross-link** from the Instana, Turbonomic, and Apptio detail pages' `whyTechD` or related-products section? It strengthens the cross-sell story, but it touches three other product entries. Default: **yes, add Concert to `ProductRelatedSection` automatically** (already practice-scoped, no code change), and **leave the existing whyTechD bullets alone**.
+For Managed Services + Implementation product coverage tables (items 15, 18) — do you want Concert listed as a delivered offering with a "(preview tracking)" suffix, or held out of the operational/managed lists entirely until GA and only added to Advisory + Training + capability mentions? Default if you don't specify: **add with "(preview)" suffix in operational lists**, full inclusion in Advisory/Training/About/Navbar/Chatbot.
