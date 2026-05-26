@@ -76,8 +76,13 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
     const handleCountrySelect = (next: CountryCode) => {
       setOpen(false);
       const dial = `+${getCountryCallingCode(next)}`;
-      // Keep digits the user already typed when switching country.
-      const digits = (nationalDisplay || "").replace(/\D/g, "");
+      let digits = (nationalDisplay || "").replace(/\D/g, "");
+      while (
+        digits.length > 0 &&
+        validatePhoneNumberLength(`${dial}${digits}`, next) === "TOO_LONG"
+      ) {
+        digits = digits.slice(0, -1);
+      }
       onChange(digits ? `${dial}${digits}` : dial);
     };
 
