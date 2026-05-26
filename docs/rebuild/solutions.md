@@ -79,13 +79,15 @@ Each product still gets its own full detail page at `/solutions/<practice>/<prod
 | **IBM MDM** | Master Data Management is an active IBM product (MDM multi-domain, graph-based, cloud variants). "InfoSphere MDM" brand retired — use "IBM MDM" only. Included under Security & Compliance because MDM is a governance and compliance control (patient identity, PII master records). |
 | **IBM Data Replication** | Log-based CDC (IIDR). Active IBM product. Key for zero-downtime migrations and hybrid mainframe data access. Included under Security & Compliance because it powers the data movement pipelines that support compliance architectures (mainframe offload, HIPAA data flow). |
 
-### Practice 5 — Hybrid Cloud & Infrastructure (`/solutions#hybrid-cloud`)
+### Practice 5 — Infrastructure (`/solutions/infrastructure`)
+
+**Scope today:** Fusion HCI only. **Sales motion:** implementation-only — the client procures the appliance from IBM; TechD owns architecture, deployment, integration, and day-2 operations. No reselling.
 
 | Product | Justification |
 |---|---|
-| **IBM Cloud** | Active 2026. The deployment target for watsonx.ai, Db2 on Cloud, and CP4D SaaS. Note: the existing techd.com cloud page references "IBM Cloud Private for Data" (deprecated name) — new site uses current naming only. |
-| **Red Hat OpenShift** | Active 2026. Required runtime for all on-premises CP4D and watsonx deployments. Deep TechD delivery history. |
-| **Mainframe Integration** | Not an IBM product per se — TechD's practice area for connecting IBM Z systems to modern cloud, AI, and data architectures using Db2 IIDR, z/OS Connect, and watsonx.data federation. Included as a product card because TechD has unique capability here and several clients have Z environments. |
+| **IBM Storage Fusion HCI** | Pre-integrated rack-ready appliance bundling Red Hat OpenShift, IBM container-native storage, and integrated data protection. Purpose-built as the on-prem runtime for watsonx and Cloud Pak for Data when sovereignty, latency, or regulation rules out public cloud. Active 2026, GA on IBM's current price list. |
+
+**Deliberately out of scope today** (would be absorbed into this practice later without IA changes): IBM Power, IBM Z, IBM FlashSystem, IBM Cloud Pak for Data System with Performance Server. Hybrid Cloud as a standalone practice has been removed — IBM Cloud, Red Hat OpenShift, and Mainframe Integration are delivered as capabilities inside the relevant outcome-based practice (Data & Analytics, AI & Generative, Security & Compliance) rather than as a separate nav section.
 
 ---
 
