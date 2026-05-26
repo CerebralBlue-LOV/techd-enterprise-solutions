@@ -3,6 +3,7 @@ import {
   getCountries,
   getCountryCallingCode,
   parsePhoneNumberFromString,
+  validatePhoneNumberLength,
   AsYouType,
   type CountryCode,
 } from "libphonenumber-js";
@@ -81,9 +82,16 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
     };
 
     const handleNumberChange = (raw: string) => {
-      const digits = raw.replace(/\D/g, "");
+      let digits = raw.replace(/\D/g, "");
       if (!digits) return onChange("");
       const dial = `+${getCountryCallingCode(country)}`;
+      // Reject extra digits past the country's max national length.
+      while (
+        digits.length > 0 &&
+        validatePhoneNumberLength(`${dial}${digits}`, country) === "TOO_LONG"
+      ) {
+        digits = digits.slice(0, -1);
+      }
       onChange(`${dial}${digits}`);
     };
 
