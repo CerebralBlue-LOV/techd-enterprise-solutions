@@ -51,6 +51,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "ai-generative",       proof: "Clinical knowledge agents and grounded RAG built on watsonx, deployed inside health systems." },
       { id: "data-analytics",      proof: "Clinical and operational dashboards on Cognos and Db2, plus open lakehouse foundations on watsonx.data." },
       { id: "security-compliance", proof: "HIPAA-grade data protection, audit readiness, and zero-downtime data movement." },
+      { id: "infrastructure",      proof: "On-prem Fusion HCI runtime for watsonx and Cloud Pak for Data — keeps PHI inside the hospital's own four walls under HIPAA." },
     ],
   },
 
@@ -96,6 +97,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "data-analytics",      proof: "Grid analytics and operational dashboards for regulated utilities and ISOs." },
       { id: "automation-finops",   proof: "Grid-system observability and OT/IT cost management." },
       { id: "security-compliance", proof: "NERC-CIP and OT/IT security for utilities and ISOs." },
+      { id: "infrastructure",      proof: "On-prem Fusion HCI runtime for watsonx and Cloud Pak for Data — keeps grid and OT-adjacent workloads inside the NERC-CIP perimeter." },
     ],
   },
 
@@ -137,6 +139,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     practices: [
       { id: "ai-generative",       proof: "Auditable AI systems for federal agencies and defense technology organizations." },
       { id: "security-compliance", proof: "FedRAMP-aligned security architectures for federal missions." },
+      { id: "infrastructure",      proof: "On-prem and air-gapped Fusion HCI runtime for watsonx and Cloud Pak for Data — built for FedRAMP-High and sovereign-cloud missions." },
     ],
   },
 
@@ -169,6 +172,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "security-compliance", proof: "PCI-DSS, SOX, NAIC, and AML compliance tooling across card, core, digital channels, and carrier policy admin." },
       { id: "automation-finops",   proof: "Payments-platform and claims-platform observability with IT cost transparency for global financial groups and carriers." },
       { id: "ai-generative",       proof: "Customer-service copilots, underwriting assistants, and document intelligence grounded in policy and regulatory content." },
+      { id: "infrastructure",      proof: "On-prem Fusion HCI runtime for watsonx and Cloud Pak for Data — keeps core banking, card data, and policy admin workloads inside data-residency and latency boundaries the regulator can verify." },
     ],
   },
 
