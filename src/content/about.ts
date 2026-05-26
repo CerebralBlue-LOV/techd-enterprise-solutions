@@ -48,6 +48,12 @@ export const PRACTICE_AREAS: PracticeArea[] = [
       "Guardium, QRadar, and QRadar SOAR for data protection, threat detection, and incident response.",
     to: "/solutions/security-compliance",
   },
+  {
+    name: "Infrastructure",
+    description:
+      "IBM Storage Fusion HCI — the on-prem OpenShift + container-native storage runtime for watsonx and Cloud Pak for Data.",
+    to: "/solutions/infrastructure",
+  },
 ];
 
 export type PortfolioPractice = {
@@ -94,6 +100,11 @@ export const PORTFOLIO_BY_PRACTICE: PortfolioPractice[] = [
     practice: "Security & Compliance",
     to: "/solutions/security-compliance",
     products: ["IBM Guardium", "IBM QRadar", "IBM QRadar SOAR"],
+  },
+  {
+    practice: "Infrastructure",
+    to: "/solutions/infrastructure",
+    products: ["IBM Storage Fusion HCI"],
   },
 ];
 

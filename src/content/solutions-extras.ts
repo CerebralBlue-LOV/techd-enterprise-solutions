@@ -46,6 +46,13 @@ const APPROACH_SECURITY: ApproachStep[] = [
   { step: "Deliver",   detail: "IBM-certified deployment with use-case rule development, integration testing, and compliance report validation before go-live." },
   { step: "Operate",   detail: "Ongoing rule tuning, threat intelligence updates, and incident response support — keeping pace with your evolving regulatory and threat environment." },
 ];
+const APPROACH_INFRASTRUCTURE: ApproachStep[] = [
+  { step: "Discover", detail: "Workload inventory and residency map — which AI and data workloads must stay on-prem, which can burst, which need air-gap. Compliance tier (HIPAA, FedRAMP, NERC-CIP) sets the constraints." },
+  { step: "Architect", detail: "Landing-zone design: rack topology, network segmentation, identity integration, OpenShift cluster sizing, storage classes per workload tier, and backup/DR posture aligned to your compliance windows." },
+  { step: "Deliver",   detail: "Fusion HCI cluster provisioning, watsonx and Cloud Pak for Data deployment onto the cluster, integration with your IAM and observability stack, and tested DR runbooks before go-live." },
+  { step: "Operate",   detail: "Day-2 operations under defined SLAs — cluster upgrades, capacity planning, workload right-sizing, and the IBM platform release alignment your team would otherwise own." },
+];
+
 
 export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   "ai-generative": {
@@ -122,6 +129,27 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
       { id: "energy-utilities", proof: "NERC-CIP and OT/IT security for regulated utilities and ISOs. Asset-level monitoring at the IT/OT boundary, with response playbooks that recognize the operational risk of a wrong move." },
     ],
     approach: APPROACH_SECURITY,
+  },
+
+  "infrastructure": {
+    whyTitle: "On-prem runtime for watsonx and Cloud Pak for Data — sovereign, supported, and ready to run",
+    whyPoints: [
+      { title: "One SKU, one stack",          body: "Red Hat OpenShift, IBM container-native storage, and integrated backup/DR pre-integrated and IBM-supported as a single platform — no cluster build, no storage integration project." },
+      { title: "Built for watsonx",           body: "IBM's reference on-prem runtime for watsonx and Cloud Pak for Data — tested patterns we've delivered, not first-time integrations on your clock." },
+      { title: "Sovereign and air-gap ready", body: "For workloads that can't leave the data center — HIPAA PHI, FedRAMP-bound systems, NERC-CIP OT proximity, classified-boundary AI." },
+      { title: "We implement, you procure",   body: "You buy the appliance from IBM. We own the architecture, the deployment, and the day-2 operations — no hardware-margin conflict of interest." },
+    ],
+    industries: [
+      { id: "healthcare",          proof: "On-prem watsonx and Cloud Pak for Data for major U.S. health systems where PHI residency, EHR latency, and HIPAA Business Associate constraints rule out public cloud. Fusion HCI sits adjacent to Epic and Cerner — the AI platform meets the data, not the other way around." },
+      { id: "financial-services",  proof: "Sovereign AI runtime for banks, payments networks, and specialty carriers under data-residency mandates. Fusion HCI hosts watsonx workloads on-prem with the audit trail, encryption, and access controls examiners follow — without exposing core data to a third-party cloud tenant." },
+      { id: "public-sector",       proof: "Air-gap-capable Cloud Pak for Data and watsonx deployments for federal agencies and defense technology organizations. Authorization-aligned topologies for classified-boundary, IL5/IL6-adjacent, and FedRAMP environments where public cloud isn't an option." },
+      { id: "energy-utilities",    proof: "Low-latency AI inference for regulated utilities and ISOs — Fusion HCI deployed adjacent to grid operations and SCADA-adjacent systems, where round-trip latency to a hyperscaler region breaks the use case." },
+    ],
+    approach: APPROACH_INFRASTRUCTURE,
+    stats: [
+      { value: "Single stack", label: "OpenShift + storage + DR" },
+      { value: "Gold",         label: "IBM Business Partner" },
+    ],
   },
 
 };

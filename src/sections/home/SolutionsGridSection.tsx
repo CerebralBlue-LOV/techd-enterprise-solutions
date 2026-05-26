@@ -7,6 +7,7 @@ import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGene
 import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
 import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
 import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
+import InfrastructureFigure from "@/components/shared/heroFigures/solutions/InfrastructureFigure";
 import type { ComponentType } from "react";
 
 const FIGURES: Record<string, { Figure: ComponentType; backTitle: string; footer: string }> = {
@@ -14,6 +15,7 @@ const FIGURES: Record<string, { Figure: ComponentType; backTitle: string; footer
   "data-analytics": { Figure: DataAnalyticsFigure, backTitle: "Data foundations", footer: "United States" },
   "automation-finops": { Figure: AutomationFinOpsFigure, backTitle: "Run smarter", footer: "Global" },
   "security-compliance": { Figure: SecurityComplianceFigure, backTitle: "Defense in depth", footer: "Regulated industries" },
+  "infrastructure": { Figure: InfrastructureFigure, backTitle: "On-prem, cloud-grade", footer: "Sovereign & regulated" },
 };
 
 /**
@@ -39,8 +41,13 @@ export const SolutionsGridSection = () => (
           const m = FIGURES[s.id];
           if (!m) return null;
           const { Figure } = m;
+          const isLastOdd = i === SOLUTIONS.length - 1 && SOLUTIONS.length % 2 === 1;
           return (
-            <Reveal key={s.id} delay={i * 50}>
+            <Reveal
+              key={s.id}
+              delay={i * 50}
+              className={isLastOdd ? "md:col-span-2 md:max-w-[calc(50%-12px)] md:mx-auto md:w-full" : ""}
+            >
               <FlipCard
                 to={`/solutions/${s.id}`}
                 eyebrow={s.name}

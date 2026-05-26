@@ -41,7 +41,7 @@ export const CHATBOT_FAQ: FaqEntry[] = [
   {
     question: "Is TechD an IBM Business Partner?",
     answer:
-      "TechD has been an IBM Gold Business Partner under IBM Partner Plus since 2009. We hold active authorizations across 21 IBM products spanning AI & Generative, Data & Analytics, Automation & FinOps, and Security & Compliance.",
+      "TechD has been an IBM Gold Business Partner under IBM Partner Plus since 2009. We hold active authorizations across 23 IBM products spanning AI & Generative, Data & Analytics, Automation & FinOps, Security & Compliance, and Infrastructure.",
     links: [{ label: "IBM Partnership page", href: "/company/ibm-partnership" }],
     tags: ["ibm", "partner", "gold", "certification", "authorized"],
   },
@@ -55,9 +55,9 @@ export const CHATBOT_FAQ: FaqEntry[] = [
   {
     question: "What IBM products does TechD implement?",
     answer:
-      "TechD implements 22 IBM products across four practices: AI & Generative (watsonx.ai, watsonx platform, watsonx Orchestrate, watsonx Assistant, NeuralSeek, IBM SPSS Modeler); Data & Analytics (IBM Db2, watsonx.data, Cloud Pak for Data, IBM DataStage, IBM Netezza Performance Server, Cognos Analytics 12, Planning Analytics); Automation & FinOps (IBM Apptio, IBM Instana, IBM Turbonomic, IBM Concert); Security & Compliance (IBM Guardium, IBM QRadar, IBM QRadar SOAR).",
+      "TechD implements 23 IBM products across five practices: AI & Generative (watsonx.ai, watsonx platform, watsonx Orchestrate, watsonx Assistant, NeuralSeek, IBM SPSS Modeler); Data & Analytics (IBM Db2, watsonx.data, Cloud Pak for Data, IBM DataStage, IBM Netezza Performance Server, Cognos Analytics 12, Planning Analytics); Automation & FinOps (IBM Apptio, IBM Instana, IBM Turbonomic, IBM Concert); Security & Compliance (IBM Guardium, IBM QRadar, IBM QRadar SOAR); Infrastructure (IBM Storage Fusion HCI).",
     links: [{ label: "IBM Partnership", href: "/company/ibm-partnership" }],
-    tags: ["products", "ibm", "watsonx", "cognos", "db2", "guardium", "qradar", "apptio", "concert"],
+    tags: ["products", "ibm", "watsonx", "cognos", "db2", "guardium", "qradar", "apptio", "concert", "fusion", "infrastructure"],
   },
 
   // ── Solutions practices ──────────────────────────────────────────────────
@@ -88,6 +88,13 @@ export const CHATBOT_FAQ: FaqEntry[] = [
       "TechD's Security & Compliance practice implements IBM Guardium for data activity monitoring and compliance reporting, IBM QRadar for SIEM and threat detection, and IBM QRadar SOAR for incident response playbooks. We have active delivery experience with HIPAA, FedRAMP, PCI-DSS, NERC-CIP, NAIC, and SOX.",
     links: [{ label: "Security & Compliance", href: "/solutions/security-compliance" }],
     tags: ["security", "compliance", "guardium", "qradar", "hipaa", "fedramp", "pci", "siem", "soar"],
+  },
+  {
+    question: "Does TechD deploy on-prem hardware or appliances?",
+    answer:
+      "Yes. TechD's Infrastructure practice implements IBM Storage Fusion HCI — a hyperconverged appliance bundling Red Hat OpenShift, IBM container-native storage, and integrated backup/DR as the on-prem runtime for watsonx and Cloud Pak for Data. The client procures the appliance from IBM; TechD owns the landing-zone design, cluster deployment, watsonx and Cloud Pak for Data integration, and day-2 operations. Used by clients with data-residency, low-latency, or air-gap requirements that rule out public cloud.",
+    links: [{ label: "Infrastructure", href: "/solutions/infrastructure" }],
+    tags: ["infrastructure", "hardware", "appliance", "fusion", "fusion hci", "on-prem", "on premises", "sovereign", "air gap", "openshift", "hyperconverged", "hci"],
   },
 
   // ── Services ────────────────────────────────────────────────────────────
