@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { AlertCircle, ArrowRight, ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
+import { submitContact } from "@/lib/contact-submit";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -61,6 +62,8 @@ const schema = z.object({
   area: z.enum(AREAS, { required_error: "Pick an area" }),
   timeline: z.enum(TIMELINES).optional(),
   message: z.string().trim().min(1, "Required").max(2000),
+  // Honeypot — hidden from real users; bots tend to fill every field.
+  website: z.string().max(200).optional().or(z.literal("")),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -84,6 +87,8 @@ const OptionalMark = () => (
 
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -98,12 +103,36 @@ const ContactForm = () => {
       area: undefined as unknown as FormValues["area"],
       timeline: undefined,
       message: "",
+      // honeypot: must stay empty for real humans
+      website: "",
     },
   });
 
-  const onSubmit = (values: FormValues) => {
-    console.info("[contact] submission", values);
-    setSubmitted(true);
+  const onSubmit = async (values: FormValues) => {
+    // Honeypot: bots fill hidden fields. Pretend success, send nothing.
+    if (values.website && values.website.trim() !== "") {
+      setSubmitted(true);
+      return;
+    }
+
+    setSubmitError(null);
+    setIsSubmitting(true);
+    try {
+      await submitContact({
+        ...values,
+        website: undefined,
+        userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
+        page: typeof window !== "undefined" ? window.location.href : "",
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("[contact] submit failed", err);
+      setSubmitError(
+        "We couldn't send your message. Please try again, or email us directly."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -366,6 +395,40 @@ const ContactForm = () => {
               />
             </div>
 
+            {/* Honeypot — hidden from humans, catches naive bots. */}
+            <div
+              aria-hidden="true"
+              className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+            >
+              <label>
+                Website
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  {...form.register("website")}
+                />
+              </label>
+            </div>
+
+            {submitError && (
+              <div
+                role="alert"
+                className="flex items-start gap-3 rounded-md border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive"
+              >
+                <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                <p className="font-normal">
+                  {submitError}{" "}
+                  <a
+                    href="mailto:fvargas@techd.com"
+                    className="font-bold underline underline-offset-2 hover:text-destructive/80"
+                  >
+                    fvargas@techd.com
+                  </a>
+                </p>
+              </div>
+            )}
+
             <div className="flex flex-col-reverse gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <p className="flex items-center gap-2 text-xs font-light text-muted-foreground">
                 <span className="relative flex h-2 w-2">
@@ -374,9 +437,23 @@ const ContactForm = () => {
                 </span>
                 We respond within one business day. Fields marked <span className="text-primary">*</span> are required.
               </p>
-              <Button type="submit" size="lg" className="btn-glow group/btn h-12 px-8 w-full sm:w-auto">
-                Send to a principal
-                <ArrowUpRight className="ml-1 transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="btn-glow group/btn h-12 px-8 w-full sm:w-auto"
+              >
+                {isSubmitting ? (
+                  <>
+                    Sending…
+                    <Loader2 className="ml-1 size-4 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Send to a principal
+                    <ArrowUpRight className="ml-1 transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
+                  </>
+                )}
               </Button>
             </div>
           </form>
