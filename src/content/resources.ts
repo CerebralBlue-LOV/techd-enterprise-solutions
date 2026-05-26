@@ -214,7 +214,13 @@ export const RESOURCES: Resource[] = [
     date: "May 2026",
     practice: "ai-generative",
     tags: ["AI & Generative", "Operating model"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "The conversation about agentic AI inside large enterprises tends to focus on which model to use, how to connect it to internal data, and which vendor's agent framework is most mature. These are real questions. But organizations that treat agentic AI as a technology procurement decision — rather than an operating model decision — consistently hit the same wall six months in: agents that work in a demo and stall in production.",
+      "The IBM AI Operating Model frames AI deployment across four disciplines: govern, integrate, orchestrate, and automate. The sequencing matters. Governance — establishing who is accountable for AI decisions, what data is permitted in which model, and how outputs are audited — has to come before orchestration. An agent that can take action in a production system without a governance layer attached to it is not an AI asset; it is a liability.",
+      "The organizations that TechD sees moving fastest are not the ones with the largest AI budgets. They are the ones that assigned an AI operating model owner before they assigned an AI platform. That person typically sits between IT and the business unit — not fully in either camp — and their job is to define the lanes before agents start driving. Roles, data access policies, escalation paths, and audit trails need to exist as institutional infrastructure, not as per-project afterthoughts.",
+      "When we implement watsonx Orchestrate with a client, the first month of the engagement is rarely about the software. It is about understanding who owns the workflows the agent is going to touch, which systems it can write to versus read from, and what a human-in-the-loop review step looks like for the use case in scope. The model selection — and there are good reasons to choose one model over another — comes after those questions are answered. That ordering is the operating model.",
+    ],
+    draft: false,
   },
   {
     id: "bl-2",
@@ -226,7 +232,13 @@ export const RESOURCES: Resource[] = [
     practice: "ai-generative",
     products: ["watsonx.governance"],
     tags: ["Governance", "watsonx"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "AWS Bedrock, Azure AI Foundry, and Google Vertex AI are all capable platforms. If you need to fine-tune a model quickly, connect it to an internal knowledge base, and deploy it into an application, each of them can get you there in days. The gap shows up later — when an auditor asks which training data the model saw, when a model starts drifting and you need to know which version of the weights you are running in production, and when a regulator asks for a model risk assessment.",
+      "watsonx.governance addresses this gap specifically. AI Factsheets are automated model cards that capture training data provenance, evaluation results, deployment metadata, and drift metrics — not as a one-time document, but as a live record that updates through the model lifecycle. For a healthcare organization under HIPAA scrutiny or a financial services firm under SR 11-7 model risk management requirements, that record is not optional.",
+      "The lineage capability in watsonx.governance also traces how data moved from its source through transformation steps to the model. That is rarely available out of the box in hyperscaler tooling, and building it yourself requires instrumentation at every pipeline stage. In regulated industries, the absence of that lineage trail is not a technical debt problem — it is a compliance exposure.",
+      "None of this means watsonx is the right choice for every workload. If you are building a general-purpose consumer application that does not handle regulated data, AWS and Azure have mature ecosystems and aggressive pricing. The decision point comes when the AI output has business, legal, or patient-care consequences attached to it. That is where IBM's deliberate investment in governance infrastructure translates into a practical procurement argument, not just a vendor positioning story.",
+    ],
+    draft: false,
   },
   {
     id: "bl-3",
@@ -238,7 +250,13 @@ export const RESOURCES: Resource[] = [
     practice: "security-compliance",
     products: ["IBM Guardium", "IBM QRadar"],
     tags: ["Zero trust", "Security & Compliance"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "Zero trust as a security architecture principle is not new, but the implementation gap between the principle and what most enterprises actually run is significant. The concept — never trust, always verify, limit lateral movement — is sound. The problem is that most zero-trust rollouts start at the perimeter and work inward, which means the parts of the environment that carry the highest business risk (the data tier) are often the last to be covered.",
+      "For regulated enterprises, we recommend inverting that sequence. Start with data-level access controls using IBM Guardium Data Protection. Guardium monitors all access to sensitive data stores — databases, data warehouses, cloud object storage — at the session level, enforcing least-privilege policies and logging every query. HIPAA, PCI-DSS, and FedRAMP audit requirements are satisfied by the access record Guardium produces; that is often the fastest path to a compliance posture improvement that a regulator can verify.",
+      "Once the data perimeter is instrumented, extend zero-trust controls to the network and identity layers using IBM QRadar SIEM. QRadar correlates events across identity providers, network flows, and endpoint telemetry to surface anomalous access patterns — a user pulling an unusual volume of records at an unusual hour, a service account accessing a system it has never touched before. These are the signals that Guardium alone does not generate, because individual queries may each be within policy even when the aggregate behavior is not.",
+      "The sequencing matters practically because each layer has its own change management cycle. Rolling out Guardium does not require changes to user workflows — it monitors passively at first, then enforces incrementally. That makes it a lower-friction starting point than identity re-architecture, which touches every user at login. Get the data layer right, demonstrate audit value, then build the political capital internally to move the identity and network layers. That order has a better delivery track record than starting with a full zero-trust framework rollout on day one.",
+    ],
+    draft: false,
   },
 
   // Net-new draft topics from docs/revisions/resources/blog.md §5.
@@ -254,7 +272,13 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM watsonx.data"],
     tags: ["Data integration", "Migration"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "IBM DataStage has been the backbone of enterprise ETL for decades. If you have production pipelines running on DataStage today, the rebrand to watsonx.data integration (as of the v2.1.x release) does not break anything — your existing jobs still run, your connectors still work, and your operational procedures do not need to change on day one. What has changed is the architectural home the product lives in, and that affects decisions you will be making in the next 12 to 24 months.",
+      "Under the watsonx umbrella, IBM is aligning DataStage's pipeline execution engine with watsonx.data's Presto-based query layer and watsonx.governance's lineage tracking. In practice, this means pipelines built in watsonx.data integration v2.1.x can participate in the same data lineage graph as your warehousing and AI workloads — a capability that was previously only available through separate instrumentation. For teams running both DataStage ETL and Cognos or watsonx.ai on the same data sets, that lineage connection is operationally useful, not just architecturally elegant.",
+      "The GPU acceleration announced in the May 2026 release targets data transformation jobs at scale — specifically large joins and aggregations that previously required throwing more CPU cores at the problem. If your current DataStage environment is compute-constrained at month-end processing windows, this is worth evaluating in a sandbox before your next infrastructure renewal cycle.",
+      "The migration decision framework we use with clients is simple: if your DataStage jobs are stable and meeting SLAs, there is no urgent reason to replatform them — the v2.1.x engine runs them as-is. The trigger to invest in a migration to the new authoring environment is usually one of three things: you need the lineage integration for a governance initiative, you are spinning up new pipelines that will feed watsonx.ai and want unified tooling, or your current DataStage version has reached end of standard support. In any of those cases, we can scope a migration without touching pipelines that are already working.",
+    ],
+    draft: false,
   },
   {
     id: "bl-cognos-12-cutoff",
@@ -268,7 +292,13 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Cognos Analytics"],
     tags: ["Cognos", "Migration"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "IBM moved Cognos Analytics 11.2.x to tiered support status as of April 30, 2026. This does not mean the product stops working that day — IBM's tiered support model (Extended Support, then Sustained Support) provides a structured wind-down, not an immediate cliff. But it does mean that new defect fixes and security patches are no longer guaranteed on the same cadence as they were under standard support. For organizations where Cognos is in the path of regulated data, the support tier change is a risk management event, not just an IT scheduling concern.",
+      "Cognos Analytics 12 (current release: 12.1.2) is not simply a version increment on 11.2.x. IBM rebuilt the rendering engine, replaced the legacy Java-based framework for dashboards with a modern web component architecture, and reorganized the administration interface. Existing reports and dashboards migrate cleanly for the majority of use cases — IBM's own migration tooling handles the bulk of metadata conversion — but there are edge cases in custom JavaScript extensions and embedded analytics that require manual review before go-live.",
+      "The migration sequence we use in practice: first, audit your active report inventory and tag reports by usage frequency. A typical enterprise Cognos environment has a long tail of reports that were built years ago and are now run by two people a quarter. Those do not need to be migrated at all — they can be archived. The actively used, business-critical reports get migrated and regression-tested first, in a parallel 12.x environment, before the old instance is decommissioned. That approach consistently produces faster timelines than trying to migrate everything at once.",
+      "On the platform side, Cognos Analytics 12 has tightened its integration with IBM Planning Analytics and watsonx.data — both report-level and at the data source level. If you are running Planning Analytics alongside Cognos, the v12 upgrade is also the point at which it makes sense to review your datasource architecture and consolidate any redundant connections. Coming to that upgrade in 2026 with a clean datasource inventory puts you in a better position than carrying forward the accumulated configuration debt from 11.x.",
+    ],
+    draft: false,
   },
   {
     id: "bl-finops-loop",
@@ -282,7 +312,13 @@ export const RESOURCES: Resource[] = [
     practice: "automation-finops",
     products: ["IBM Apptio", "IBM Turbonomic", "IBM Instana"],
     tags: ["FinOps", "Observability"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "Most FinOps programs stall at the reporting stage. Teams get good at showing where the money went — cloud spend by team, by workload, by region — but the accountability loop never closes. The engineering team sees the cost report two weeks after the billing cycle. By then, the decision to over-provision happened a month ago and has been repeated three times since. Reporting is necessary but not sufficient. The gap is between visibility and action.",
+      "Closing that gap requires three capabilities working in sequence. First, real-time observability at the application and infrastructure layer — which is what IBM Instana provides. Instana's auto-discovery maps every service, container, and host continuously, with 1-second metric granularity. Engineers can see exactly which services are consuming which resources at the workload level, not the account level. That granularity is what makes optimization decisions defensible rather than speculative.",
+      "Second, workload optimization at the infrastructure layer — which is what IBM Turbonomic handles. Turbonomic ingests Instana's telemetry alongside cloud provider pricing data and generates specific right-sizing and placement recommendations: resize this VM, move this workload to spot capacity during off-peak hours, consolidate these underutilized containers. Critically, Turbonomic can execute those changes automatically within defined policy guardrails — it is not a recommendation engine that requires a human to open a change ticket for every action.",
+      "Third, cost accountability at the business unit level — which is where IBM Apptio's Technology Business Management layer operates. Apptio takes the infrastructure-level spend data and allocates it to business services, cost centers, and projects according to a financial model the IT finance team controls. The output is not a cloud bill — it is a business-level cost statement that a CIO can bring to a budget review. When all three tools are connected, the loop closes: Instana shows what is running, Turbonomic optimizes how it runs, and Apptio shows who is paying for it. FinOps becomes a continuous operational process rather than a quarterly reconciliation.",
+    ],
+    draft: false,
   },
   {
     id: "bl-orchestrate-erp",
@@ -296,7 +332,13 @@ export const RESOURCES: Resource[] = [
     practice: "ai-generative",
     products: ["watsonx Orchestrate"],
     tags: ["Agentic AI", "Automation"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "The standard objection to AI automation in enterprise environments is the integration objection: our ERP is SAP, our HRIS is Workday, our service desk is ServiceNow, and connecting a new AI layer to all of them is a multi-year integration project with its own governance cycle. That objection was valid for most AI tooling three years ago. It is substantially less valid for watsonx Orchestrate today, and understanding why requires a clear picture of what the product's connector architecture actually does.",
+      "watsonx Orchestrate ships with over 80 pre-built connectors to enterprise applications — SAP, Salesforce, Workday, ServiceNow, Microsoft 365, and others. These are not thin HTTP wrappers; they are OpenAPI-spec skill definitions that the orchestration engine can invoke as actions in a multi-step agent workflow. When a manager asks the Orchestrate agent to process a promotion for a direct report, the agent can pull the employee record from Workday, check the compensation band in SAP, create the approval workflow in ServiceNow, and send a confirmation in Slack — as a single coordinated action, not four separate tool calls the user has to initiate manually.",
+      "The agentic control plane — the layer that decides which skills to invoke in which order — runs on IBM's foundation models and can be configured with policy constraints that define what the agent is and is not permitted to do without human approval. An agent that books travel can do so within a defined cost threshold automatically; anything above that threshold pauses and routes to a manager. Those guardrails are configuration, not custom code.",
+      "Where TechD's implementation work begins is past the point where the out-of-box demo ends. IBM's connector library covers the standard API surface of each application, but enterprise ERP deployments are rarely running stock configurations. Custom fields, bespoke approval chains, and modified workflows mean that the connector mapping from watsonx Orchestrate to your SAP instance will differ from the reference configuration. TechD maps the actual configuration of your environment to the skill definitions the agent needs, tests edge cases in the approval chains, and builds the governance guardrails specific to your IT and compliance policies. That scoping is what determines whether the deployment is running in production in eight weeks or eight months.",
+    ],
+    draft: false,
   },
   {
     id: "bl-planning-analytics-21",
@@ -309,7 +351,13 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Planning Analytics"],
     tags: ["FP&A", "Planning Analytics"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "IBM Planning Analytics 2.1.x is the current production release, and the 2025–2026 update cycle added changes that are operationally meaningful for FP&A teams — not just platform updates that matter to system administrators. The IDC MarketScape named IBM a Leader in the 2025 Financial Performance Management category, specifically citing Planning Analytics' strength in complex, multi-dimensional modeling at enterprise scale. That recognition matters because it reflects customer deployments, not feature checklists.",
+      "The most significant change for teams running on-premises deployments is the addition of Planning Analytics as a Service — a SaaS deployment option that IBM manages at the infrastructure level. For organizations whose IT teams have historically owned the TM1 server stack, SaaS removes the patching, backup, and scaling management overhead from the internal team. The TM1 engine underneath is the same; what changes is who keeps it running. This is not the right choice for every organization — some regulated environments have data residency requirements that make managed cloud hosting complicated — but it is now a viable option for many mid-size enterprises that have been running PA on hardware they own.",
+      "At the model level, v2.1.x improved write-back performance for large consolidated models and added enhancements to the Workspace interface for scenario planning — specifically, the ability to manage multiple scenario versions within a single plan without duplicating the underlying TM1 model structure. For FP&A teams running rolling forecasts alongside the annual budget cycle, that separation of scenario state is a meaningful workflow improvement.",
+      "Planning Analytics also deepened its integration with IBM Cognos Analytics 12 in this release cycle. Reports and dashboards built in Cognos can now pull directly from Planning Analytics cubes using a live connection that updates as the model data changes — not a snapshot export. If you are running both products and are still using a file-based data exchange between them, the upgrade path to this live connection mode is worth prioritizing in your next PA maintenance window.",
+    ],
+    draft: false,
   },
   {
     id: "bl-spss-automl",
@@ -322,7 +370,13 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM SPSS Modeler"],
     tags: ["AutoML", "Analytics"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    body: [
+      "The data science talent market is competitive enough that most mid-size enterprises in healthcare and insurance have already accepted the premise that they will not be building a full ML engineering function any time soon. The question that analytics leads in those organizations are actually dealing with is more specific: we have structured data, we have a business question we want to answer predictively, and we need to get from data to a working model without hiring three people who do not exist in our labor market. IBM SPSS Modeler v18.x addresses that constraint directly.",
+      "SPSS Modeler's AutoML capability — AutoClassifier and AutoNumeric, depending on whether the target variable is categorical or continuous — runs a battery of candidate algorithms against your data, tunes hyperparameters for each, and ranks the results by a configurable accuracy metric. The process does not require writing code. An analytics lead with domain expertise and comfort with structured data can run a feature selection analysis, configure the node parameters through the visual interface, and produce a scored output file. The tool is not a replacement for a data scientist on a complex problem; it is a practical path to predictive output for the class of business problems that structured data and classical ML techniques handle well.",
+      "In healthcare, the most common use cases we see are patient no-show prediction (scheduling optimization), readmission risk scoring (care management triage), and claims anomaly detection (pre-authorization screening). In insurance, they are claims severity prediction, fraud scoring, and customer churn modeling. None of these require deep learning — they require good feature engineering and a disciplined model evaluation process, both of which SPSS Modeler supports without requiring Python or R expertise.",
+      "The deployment path from SPSS Modeler into production has also improved in v18.x. Models can be exported to PMML for scoring in downstream systems, or deployed directly as a REST endpoint when the environment is connected to IBM Watson Machine Learning. For organizations already running Cognos Analytics or Planning Analytics, SPSS model scores can be fed into existing reports and dashboards without building a separate data pipeline. That integration is the practical reason to stay in the IBM stack for this use case rather than evaluating standalone AutoML tools.",
+    ],
+    draft: false,
   },
 
   // ─── Webinars ────────────────────────────────────────────────────────────────
