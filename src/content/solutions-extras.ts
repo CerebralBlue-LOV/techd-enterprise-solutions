@@ -131,4 +131,25 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     approach: APPROACH_SECURITY,
   },
 
+  "infrastructure": {
+    whyTitle: "On-prem runtime for watsonx and Cloud Pak for Data — sovereign, supported, and ready to run",
+    whyPoints: [
+      { title: "One SKU, one stack",          body: "Red Hat OpenShift, IBM container-native storage, and integrated backup/DR pre-integrated and IBM-supported as a single platform — no cluster build, no storage integration project." },
+      { title: "Built for watsonx",           body: "IBM's reference on-prem runtime for watsonx and Cloud Pak for Data — tested patterns we've delivered, not first-time integrations on your clock." },
+      { title: "Sovereign and air-gap ready", body: "For workloads that can't leave the data center — HIPAA PHI, FedRAMP-bound systems, NERC-CIP OT proximity, classified-boundary AI." },
+      { title: "We implement, you procure",   body: "You buy the appliance from IBM. We own the architecture, the deployment, and the day-2 operations — no hardware-margin conflict of interest." },
+    ],
+    industries: [
+      { id: "healthcare",          proof: "On-prem watsonx and Cloud Pak for Data for major U.S. health systems where PHI residency, EHR latency, and HIPAA Business Associate constraints rule out public cloud. Fusion HCI sits adjacent to Epic and Cerner — the AI platform meets the data, not the other way around." },
+      { id: "financial-services",  proof: "Sovereign AI runtime for banks, payments networks, and specialty carriers under data-residency mandates. Fusion HCI hosts watsonx workloads on-prem with the audit trail, encryption, and access controls examiners follow — without exposing core data to a third-party cloud tenant." },
+      { id: "public-sector",       proof: "Air-gap-capable Cloud Pak for Data and watsonx deployments for federal agencies and defense technology organizations. Authorization-aligned topologies for classified-boundary, IL5/IL6-adjacent, and FedRAMP environments where public cloud isn't an option." },
+      { id: "energy-utilities",    proof: "Low-latency AI inference for regulated utilities and ISOs — Fusion HCI deployed adjacent to grid operations and SCADA-adjacent systems, where round-trip latency to a hyperscaler region breaks the use case." },
+    ],
+    approach: APPROACH_INFRASTRUCTURE,
+    stats: [
+      { value: "Single stack", label: "OpenShift + storage + DR" },
+      { value: "Gold",         label: "IBM Business Partner" },
+    ],
+  },
+
 };
