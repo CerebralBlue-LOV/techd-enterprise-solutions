@@ -2,11 +2,13 @@ import * as React from "react";
 import {
   getCountries,
   getCountryCallingCode,
+  getExampleNumber,
   parsePhoneNumberFromString,
   validatePhoneNumberLength,
   AsYouType,
   type CountryCode,
 } from "libphonenumber-js";
+import examples from "libphonenumber-js/examples.mobile.json";
 import en from "react-phone-number-input/locale/en.json";
 import { Check, ChevronDown, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -73,6 +75,11 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
         setCountry(parsed.country as CountryCode);
       }
     }, [parsed, country]);
+
+    const examplePlaceholder = React.useMemo(() => {
+      const ex = getExampleNumber(country, examples as Parameters<typeof getExampleNumber>[1]);
+      return ex ? ex.formatNational() : "";
+    }, [country]);
 
     const nationalDisplay = React.useMemo(() => {
       if (!value) return "";
@@ -205,7 +212,7 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
           type="tel"
           inputMode="tel"
           autoComplete="tel-national"
-          placeholder={placeholder ?? "(555) 123-4567"}
+          placeholder={placeholder ?? examplePlaceholder ?? "Phone number"}
           value={nationalDisplay}
           onChange={(e) => handleNumberChange(e.target.value)}
           onBlur={onBlur}
