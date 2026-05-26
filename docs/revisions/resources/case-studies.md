@@ -46,7 +46,7 @@ All five salvageable legacy case studies map to a single practice:
 | AI & Generative | None |
 | Automation & FinOps | None |
 | Security & Compliance | None |
-| Hybrid Cloud | None |
+| Infrastructure | None |
 
 **Vertical coverage from legacy:**
 - Healthcare: 2 items (hospital data warehouse, cancer treatment center BI)

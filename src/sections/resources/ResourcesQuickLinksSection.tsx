@@ -5,7 +5,7 @@ import SectionMarker from "@shared/SectionMarker";
 const LINKS = [
   {
     name: "Solutions",
-    tagline: "Five IBM-aligned practices — AI, data, automation, security, hybrid cloud.",
+    tagline: "Five IBM-aligned practices — AI, data, automation, security, infrastructure.",
     to: "/solutions",
   },
   {

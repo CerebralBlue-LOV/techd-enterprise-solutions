@@ -373,7 +373,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
       ],
     },
     engagements: [
-      { name: "Executive briefings",   duration: "Half-day to full-day", summary: "Strategy-level briefings on watsonx, IBM AI Operating Model, hybrid cloud, and security for leadership teams — outcomes, not feature tours." },
+      { name: "Executive briefings",   duration: "Half-day to full-day", summary: "Strategy-level briefings on watsonx, IBM AI Operating Model, infrastructure, and security for leadership teams — outcomes, not feature tours." },
       { name: "Architect bootcamps",   duration: "2–5 days",       summary: "Deep architectural training on watsonx.ai, watsonx.data, Cloud Pak for Data, OpenShift, Apptio, and Guardium for senior technical staff." },
       { name: "Engineering labs",      duration: "1–5 days",       summary: "Hands-on labs across Cognos Analytics 12, Planning Analytics, DataStage, Db2, SPSS Modeler, Instana, Turbonomic, Guardium, and QRadar — instructor-led, your data optional." },
       { name: "Custom curriculum",     duration: "Project-based",  summary: "Bespoke programs blending IBM-certified content with your platform configuration, governance model, and use cases." },

@@ -70,7 +70,7 @@ Track which routes have been verified in dark mode. Status legend: `[ ]` not aud
 - [ ] `/solutions/data-analytics`
 - [ ] `/solutions/automation-finops`
 - [ ] `/solutions/security-compliance`
-- [ ] `/solutions/hybrid-cloud`
+- [ ] `/solutions/infrastructure`
 - [ ] `/solutions/:practice/:product` — ProductDetail (verify with at least 2 products)
 
 ### Services

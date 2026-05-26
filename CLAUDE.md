@@ -67,7 +67,7 @@ src/
     Contact.tsx
     NotFound.tsx
     ProductDetail.tsx
-    solutions/      # AIGenerative, DataAnalytics, AutomationFinOps, SecurityCompliance, HybridCloud, _PracticePage
+    solutions/      # AIGenerative, DataAnalytics, AutomationFinOps, SecurityCompliance, Infrastructure, _PracticePage
     services/       # Advisory, Implementation, ManagedServices, Training
     industries/     # Healthcare, MediaEntertainment, Insurance, EnergyUtilities, HigherEducation, PublicSector
     resources/      # CaseStudies, Blog, Webinars, Events
@@ -158,7 +158,7 @@ Stripe / Linear / Vercel / Anthropic. Quiet, confident, typography-led, generous
 | `/solutions/data-analytics` | `solutions/DataAnalytics.tsx` |
 | `/solutions/automation-finops` | `solutions/AutomationFinOps.tsx` |
 | `/solutions/security-compliance` | `solutions/SecurityCompliance.tsx` |
-| `/solutions/hybrid-cloud` | `solutions/HybridCloud.tsx` |
+| `/solutions/infrastructure` | `solutions/Infrastructure.tsx` |
 | `/solutions/:practice/:product` | `ProductDetail.tsx` |
 | `/services` | → redirects to `/services/advisory` |
 | `/services/advisory` | `services/Advisory.tsx` |

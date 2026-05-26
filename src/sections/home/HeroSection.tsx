@@ -42,7 +42,7 @@ export const HeroSection = () => {
             <span className="text-primary">trustworthy AI.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base md:text-2xl font-light text-muted-foreground">
-            We design, build, and run secure AI, data, and hybrid cloud systems
+            We design, build, and run secure AI, data, and infrastructure systems
             for Fortune 500 healthcare, media, energy, and public sector
             organizations — on IBM watsonx, Db2, and the open stack around them.
           </p>

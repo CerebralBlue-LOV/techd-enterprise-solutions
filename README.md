@@ -55,7 +55,7 @@ src/
   hooks/                  # Custom React hooks
   lib/                    # Utility functions
   pages/                  # Route-level page components
-    solutions/            # AIGenerative, DataAnalytics, AutomationFinOps, SecurityCompliance, HybridCloud
+    solutions/            # AIGenerative, DataAnalytics, AutomationFinOps, SecurityCompliance, Infrastructure
     services/             # Advisory, Implementation, ManagedServices, Training
     industries/           # Healthcare, MediaEntertainment, Insurance, EnergyUtilities, HigherEducation, PublicSector
     resources/            # CaseStudies, Blog, Webinars, Events

@@ -56,7 +56,7 @@ Salvageable legacy webinars cover two practices:
 | Security & Compliance | Guardium (data protection) — 1 topic |
 | AI & Generative | None |
 | Automation & FinOps | None |
-| Hybrid Cloud | Cloud Pak for Data (tangential) — 1 topic |
+| Infrastructure | Cloud Pak for Data (tangential) — 1 topic |
 
 The two `draft: true` entries already in `resources.ts` partially address AI & Generative (watsonx Orchestrate, watsonx.data) but leave Automation & FinOps (Instana, Turbonomic, Apptio) with zero webinar coverage.
 

@@ -55,7 +55,7 @@ Salvageable legacy topics cover two practices only:
 | Security & Compliance | Guardium — 1 topic |
 | AI & Generative | None |
 | Automation & FinOps | None |
-| Hybrid Cloud | None (Cloud Pak for Data touches this tangentially) |
+| Infrastructure | None (Cloud Pak for Data touches this tangentially) |
 
 The three `draft: true` entries already in `resources.ts` partially address AI & Generative and Security & Compliance but leave Automation & FinOps (Instana, Turbonomic, Apptio) with zero blog coverage.
 
