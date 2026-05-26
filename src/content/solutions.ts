@@ -792,6 +792,45 @@ export const SOLUTIONS: Solution[] = [
           ],
         },
       },
+      {
+        name: "IBM Concert",
+        tagline: "Agentic IT Ops — one operational layer connecting observability, cost, and risk into governed automated action.",
+        description:
+          "IBM Concert is an agentic IT Operations platform that creates a unified operational layer across applications, infrastructure, network, and cost — correlating cross-domain signals into shared context and orchestrating remediation through governed AI-driven workflows.",
+        link: { kind: "internal", slug: "ibm-concert" },
+        vendorUrl: "https://www.ibm.com/products/concert",
+        detail: {
+          overview: [
+            "IBM Concert is an agentic IT Operations platform that connects telemetry, cost, and risk signals across the stack into a single adaptable operational layer. Six modules — Concert Observe, Operate, Optimize, Protect, Resilience, and Workflows — share context across apps, infrastructure, network, and cloud so teams stop chasing alerts in silos. Agentic AI surfaces what matters by business impact, prioritizes risk before it cascades, and orchestrates remediation through governed workflows that move from insight to action with built-in oversight. Concert is currently in preview on ibm.com with a waitlist for early access.",
+            "TechD is tracking IBM Concert through preview and preparing implementation playbooks for clients already running the IBM observability and optimization stack. Concert is most valuable where Instana, Turbonomic, and Apptio are already deployed — it is the cross-domain layer that turns those separate signal sources into one coordinated operational view. Our engagements will cover signal integration design, agentic workflow governance, and the rollout sequencing that gets Concert live alongside existing ITSM and change-management processes as modules reach general availability.",
+          ],
+          capabilities: [
+            "Concert Observe — full-stack observability that connects telemetry into shared context across apps, infrastructure, and network without adding silos",
+            "Concert Operate — AI-guided root cause and automated remediation across tools and domains from a unified operational view",
+            "Concert Optimize — compute, Kubernetes, AI, and hybrid cloud telemetry correlated into demand-versus-capacity right-sizing actions",
+            "Concert Protect — risk signals (vulnerabilities, certificates, compliance, change-impact) enriched onto observability data for one shared posture",
+            "Concert Resilience — anticipate impact, identify risk early, and prevent cascading failures across interconnected services",
+            "Concert Workflows — governed agentic workflows that orchestrate remediation across security, ops, and change systems with auditable action",
+            "Cross-domain context engine — correlates application, network, synthetic, GenAI, cost, and risk signals into one prioritized view",
+          ],
+          useCases: [
+            "Prevent — early-warning detection across apps, infrastructure, and dependencies before users feel degradation",
+            "Resolve — unified application, network, synthetic, and GenAI signals so teams share context, not alerts, on every incident",
+            "Scale — performance and cost optimization across infrastructure, cloud, and AI workloads through automated right-sizing actions",
+            "Govern — real-time risk posture across security, ops, and change with AI-orchestrated, auditable remediation workflows",
+          ],
+          whyTechD: [
+            "We deliver Concert as the connective layer over the IBM stack we already implement — Instana telemetry, Turbonomic optimization actions, and Apptio cost allocation feeding one shared operational view, not four tools clients have to integrate themselves.",
+            "We design the agentic workflow governance model before Concert orchestrates its first action — defining which remediations run autonomously, which require human approval, and how every action ties back to ITSM and change-management audit trails.",
+            "We position regulated-industry clients for Concert rollouts as modules reach GA — sequencing Observe, Optimize, and Protect against existing compliance controls so adoption does not break SOX, HIPAA, or FedRAMP evidence chains.",
+            "We bring 15+ years of continuous IBM delivery to a brand-new platform — so clients are not the first to debug agentic workflows in production; we apply lessons from Instana, Turbonomic, Apptio, and watsonx engagements to Concert from day one.",
+          ],
+          stats: [
+            { value: "6 modules", label: "Observe · Operate · Optimize · Protect · Resilience · Workflows" },
+            { value: "Preview 2026", label: "IBM Concert availability" },
+          ],
+        },
+      },
     ],
   },
 
