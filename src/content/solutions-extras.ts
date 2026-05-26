@@ -46,6 +46,13 @@ const APPROACH_SECURITY: ApproachStep[] = [
   { step: "Deliver",   detail: "IBM-certified deployment with use-case rule development, integration testing, and compliance report validation before go-live." },
   { step: "Operate",   detail: "Ongoing rule tuning, threat intelligence updates, and incident response support — keeping pace with your evolving regulatory and threat environment." },
 ];
+const APPROACH_INFRASTRUCTURE: ApproachStep[] = [
+  { step: "Discover", detail: "Workload inventory and residency map — which AI and data workloads must stay on-prem, which can burst, which need air-gap. Compliance tier (HIPAA, FedRAMP, NERC-CIP) sets the constraints." },
+  { step: "Architect", detail: "Landing-zone design: rack topology, network segmentation, identity integration, OpenShift cluster sizing, storage classes per workload tier, and backup/DR posture aligned to your compliance windows." },
+  { step: "Deliver",   detail: "Fusion HCI cluster provisioning, watsonx and Cloud Pak for Data deployment onto the cluster, integration with your IAM and observability stack, and tested DR runbooks before go-live." },
+  { step: "Operate",   detail: "Day-2 operations under defined SLAs — cluster upgrades, capacity planning, workload right-sizing, and the IBM platform release alignment your team would otherwise own." },
+];
+
 
 export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
   "ai-generative": {

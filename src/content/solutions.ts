@@ -968,4 +968,61 @@ export const SOLUTIONS: Solution[] = [
       },
     ],
   },
+  {
+    id: "infrastructure",
+    name: "Infrastructure",
+    outcome: "Run watsonx and Cloud Pak for Data on-prem with cloud-grade operations — where sovereignty, latency, or regulation rules out public cloud.",
+    description:
+      "On-prem runtime for enterprise AI and data workloads — built on IBM Storage Fusion HCI, the pre-integrated OpenShift + container-native storage appliance purpose-built for watsonx and Cloud Pak for Data.",
+    highlights: [
+      "watsonx on-prem, ready-to-run",
+      "OpenShift + storage in one SKU",
+      "Sovereign, air-gap-capable",
+    ],
+    pitch:
+      "When your data can't leave the data center, the AI platform has to come to it. We architect, implement, and operate IBM Storage Fusion HCI as the runtime under your watsonx and Cloud Pak for Data workloads — no cluster build, no storage integration project.",
+    ctaLabel: "Explore Infrastructure practice",
+    products: [
+      {
+        name: "IBM Storage Fusion HCI",
+        tagline: "Hyperconverged OpenShift + container-native storage appliance — the on-prem runtime for watsonx and Cloud Pak for Data.",
+        description:
+          "IBM Storage Fusion HCI is a pre-integrated rack-ready appliance bundling Red Hat OpenShift, IBM container-native storage, and integrated data protection — purpose-built to run watsonx, Cloud Pak for Data, and containerized AI workloads on-premises with cloud-grade operations.",
+        link: { kind: "internal", slug: "ibm-storage-fusion-hci" },
+        vendorUrl: "https://www.ibm.com/products/storage-fusion",
+        detail: {
+          overview: [
+            "IBM Storage Fusion HCI is a hyperconverged appliance that ships as a rack-ready cluster of compute nodes with Red Hat OpenShift, IBM container-native storage (the same engine that powers IBM Spectrum Scale), and integrated backup and disaster recovery — pre-integrated, pre-tested, and supported as a single stack. It is IBM's reference on-prem runtime for watsonx, Cloud Pak for Data, and any containerized AI or data workload that needs sovereignty, low latency to ground-truth data, or air-gapped deployment. The platform handles cluster lifecycle, storage management, data protection, and metro/regional resilience under one control plane.",
+            "TechD implements Fusion HCI as the runtime under client-procured IBM appliances. Our engagements cover landing-zone design, network and identity integration, OpenShift cluster configuration, storage class and namespace topology, watsonx and Cloud Pak for Data deployment onto the cluster, and the backup/DR posture that satisfies your compliance tier. We do not resell the hardware — the client procures direct from IBM — but we own the architecture, the integration, and the day-2 operations.",
+          ],
+          capabilities: [
+            "Pre-integrated Red Hat OpenShift + IBM container-native storage in a single rack-ready appliance — no separate cluster build, no storage integration project",
+            "Reference runtime for watsonx, Cloud Pak for Data, and IBM Spectrum Discover — IBM-tested and supported as one stack",
+            "Integrated backup, snapshot, and metro/regional disaster recovery built into the platform, not bolted on with third-party tools",
+            "Air-gapped and sovereign deployment options for regulated workloads that cannot touch public cloud",
+            "Cluster lifecycle automation — upgrades, scaling, and node replacement handled by Fusion's control plane",
+            "Bare-metal performance for low-latency AI inference and high-throughput data pipelines next to ground-truth data",
+            "Single-vendor support contract spanning hardware, OpenShift, storage, and data protection — one number to call",
+          ],
+          useCases: [
+            "On-prem watsonx and Cloud Pak for Data deployments for healthcare, public sector, and financial services clients with data-residency constraints",
+            "Low-latency AI inference workloads that need to sit next to ground-truth data — clinical systems, trading platforms, OT/SCADA-adjacent analytics",
+            "Air-gapped AI environments for defense, intelligence, and classified-boundary programs",
+            "Hybrid landing zones — Fusion HCI on-prem as the primary, with controlled bursting to IBM Cloud, AWS, or Azure for non-sensitive workloads",
+          ],
+          whyTechD: [
+            "We've spent 15+ years deploying the IBM data and AI stack — Cloud Pak for Data, Db2, watsonx — onto OpenShift in regulated environments. Fusion HCI removes the cluster build from that work; we still own everything that runs on top.",
+            "We architect the integration layer most teams skip: identity, network segmentation, storage classes per workload tier, backup policies tied to compliance windows, and DR runbooks that get tested before go-live, not after an incident.",
+            "We do not resell the appliance — you procure direct from IBM. We are accountable for the architecture, the deployment, and the operations, not for the hardware margin.",
+            "We hand off a platform your team can operate — documented cluster topology, namespace conventions, upgrade procedures, and a Managed Services option if you'd rather we keep running it.",
+          ],
+          stats: [
+            { value: "One SKU", label: "OpenShift + storage + DR, IBM-supported" },
+            { value: "Gold", label: "IBM Business Partner" },
+          ],
+        },
+      },
+    ],
+  },
 ];
+
