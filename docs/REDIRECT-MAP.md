@@ -28,7 +28,7 @@ GitHub Pages returns HTTP 200 for all served paths and has no redirect configura
 | Customer case-study pages | 5 | `/` |
 | Misc company news | 1 | `/` |
 | Orphan posts (`?p=N`) | 14 | `/` |
-| Data-solution overview + detail pages | 51 | `/solutions` |
+| Data-solution overview + detail pages | 51 | `/solutions` (49) or `/solutions/infrastructure` (2 — on-prem appliance + IBM Cloud pages) |
 | Services overview + detail pages | 16 | `/services` |
 | Privacy policy | 1 | `/privacy-policy` _(or `/contact` — Day 3 decision)_ |
 | All webinars | 63 | `/resources` |
