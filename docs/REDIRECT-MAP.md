@@ -107,7 +107,7 @@ GitHub Pages returns HTTP 200 for all served paths and has no redirect configura
 | `/data-solutions/ibm-business-intelligence-and-analytics/cognos-controller/` | `/solutions` | 301 |
 | `/data-solutions/ibm-business-intelligence-and-analytics/ibm-planning-analytics/` | `/solutions` | 301 |
 | `/data-solutions/ibm-business-intelligence-and-analytics/planning-analytics/` | `/solutions` | 301 |
-| `/data-solutions/ibm-cloud/` | `/solutions` | 301 |
+| `/data-solutions/ibm-cloud/` | `/solutions/infrastructure` | 301 |
 | `/data-solutions/ibm-cognos-analytics-administration/` | `/solutions` | 301 |
 | `/data-solutions/ibm-data-science-platform/` | `/solutions` | 301 |
 | `/data-solutions/ibm-data-science-platform/data-science-ibm-watson-studio/` | `/solutions` | 301 |
