@@ -1,34 +1,77 @@
 ## Goal
 
-Fix the broken "Full logo" candidate in `/techd-brand-lab`. The wordmark-only and gear-only brand-snapped assets are already perfect; only the composite full logo has artifacts (white speckles between cyan teeth, halos). Instead of patching pixels, compose a new full logo with Nano Banana using the two known-good assets as references, then replace the existing Nano candidate file.
+Add **IBM Concert** as a 4th product under the **Automation & FinOps** practice (`/solutions/automation-finops`), with its own internal detail page at `/solutions/automation-finops/ibm-concert`, matching the depth and voice of the existing Apptio / Instana / Turbonomic entries.
 
-## Approach
+## What Concert is (sourced from ibm.com/products/concert, May 2026)
 
-1. **Feed Nano Banana the two perfect assets as references** (multi-image edit):
-   - `src/assets/brand/lab/techd-gear-upscale-brand.png` (perfect gear)
-   - `src/assets/brand/lab/techd-wordmark-upscale-brand.png` (perfect wordmark)
-   - Plus `src/assets/brand/lab/techd-logo-upscale-brand.png` as the **layout reference** so proportions, gear-to-wordmark gap, vertical alignment, and overall horizontal aspect ratio stay identical to the current logo.
+- **Positioning:** "Agentic IT Ops platform" — unified operational layer that connects signals across apps, infra, network, and cost; uses agentic AI to surface, prioritize, and orchestrate action through governed workflows.
+- **Status:** Currently **preview / waitlist** ("Experience the preview" CTA on ibm.com). Not yet GA.
+- **Modules:** Concert Observe, Concert Operate, Concert Optimize, Concert Protect, Concert Resilience, Concert Workflows.
+- **Use cases:** Prevent (early warning across domains), Resolve (AI-guided root cause + automated remediation), Scale (perf + cost right-sizing across infra/cloud/AI), Govern (vulnerabilities, certs, compliance, change-impact).
+- **Fits naturally** in the Automation & FinOps practice — it's the cross-domain orchestration layer that sits over Instana (observability) + Turbonomic (resource action) + Apptio (cost).
 
-2. **Prompt rules given to Nano Banana**:
-   - Do NOT redraw the gear or the wordmark — composite them verbatim from the two reference images.
-   - Keep the exact same composition, scale ratio, spacing, baseline, and aspect ratio as the layout reference.
-   - Transparent background, clean alpha edges, no white halo, no white speckles between gear teeth, hub holes transparent.
-   - Preserve exact brand hex: `#00B3E3` cyan, `#56565A` dark grey, `#A7A5A8` muted grey. No color drift.
+## Changes
 
-3. **Save output** to `src/assets/brand/lab/techd-logo-nano.png` (overwriting the current bad Nano file — the lab already imports this path, so no code change needed if we keep the filename).
+### 1. `src/content/solutions.ts` — Automation & FinOps practice block (~line 677)
 
-4. **Verify** by opening `/techd-brand-lab` and inspecting the Nano candidate on both light and dark surfaces at full scale. Zoom into the gear region to confirm no white speckles and clean separation between cyan and grey segments.
+Append a 4th product entry after Turbonomic:
 
-5. **If the first pass still drifts**: re-run with a tighter prompt (or fall back to a deterministic Python composite — paste the gear PNG + wordmark PNG onto a transparent canvas at measured offsets — which guarantees zero pixel drift but loses Nano's anti-aliasing polish). I'll only do this if Nano fails twice.
+```ts
+{
+  name: "IBM Concert",
+  tagline: "Agentic IT Ops — one operational layer connecting observability, cost, and risk into governed automated action.",
+  description: "...",
+  link: { kind: "internal", slug: "ibm-concert" },
+  vendorUrl: "https://www.ibm.com/products/concert",
+  detail: {
+    overview: [ /* 2 paragraphs — what Concert is + how TechD delivers it */ ],
+    capabilities: [ /* 7 bullets — Observe, Operate, Optimize, Protect, Resilience, Workflows, plus governance/agentic AI */ ],
+    useCases: [ /* 4 — Prevent / Resolve / Scale / Govern, framed for regulated enterprises */ ],
+    whyTechD: [ /* 4 — Instana→Turbonomic→Apptio→Concert integration story, governance-first rollout, preview/early-access positioning, regulated industry fit */ ],
+    stats: [ /* 2 — drawn only from IBM-published material; likely qualitative (e.g. "Preview — 2026" + cross-domain integration claim) since no Forrester TEI exists yet */ ],
+  },
+},
+```
+
+Also update the practice-level `highlights` array (currently 3 bullets) to optionally mention "agentic cross-domain orchestration", and the `pitch` sentence to acknowledge Concert as the connective layer.
+
+### 2. Practice `description` field
+
+Currently lists "IBM Apptio, IBM Instana, IBM Turbonomic — the spend-aware observability and automation stack…". Update to include Concert as the orchestration layer over the three.
+
+### 3. No route / page-component changes needed
+
+`ProductDetail.tsx` already renders any product whose `link.kind === "internal"` and that has a `detail` block. The route `/solutions/automation-finops/ibm-concert` will work automatically once the data is added.
+
+### 4. No image / icon asset needed
+
+Practice pages and product detail pages don't use per-product imagery — they use the shared `PracticeFigure` and typography-led layouts.
+
+## Voice & content rules to apply
+
+- Follow `CLAUDE.md` content rules: practitioner voice, no superlatives, capabilities as `Feature — what it does`, whyTechD in first person ("we configure…"), stats only from IBM-published or Forrester-published sources.
+- **Honest preview framing:** Concert is preview/waitlist (May 2026). Copy must not imply TechD has shipped production Concert deployments. Frame as "early-access partner" / "design partner positioning" / "ready when GA lands" — same tone TechD uses for QRadar's on-prem-only framing.
+- Lean into the **integration story**: Concert is most compelling for TechD clients who already run Instana + Turbonomic + Apptio. That's the differentiator vs. a generalist SI.
 
 ## Out of scope
 
-- No changes to the wordmark-only, gear-color, or gear-white candidates (all already perfect).
-- No changes to the Brand-snapped full-logo candidate (kept as the algorithmic baseline for comparison).
-- No changes to production assets in `src/assets/brand/` — this is lab-only until you pick a winner.
-- No size, layout, or component changes to the Brand Lab page itself.
+- No new practice page, no new section component, no nav change.
+- No changes to Apptio / Instana / Turbonomic copy (only the practice-level `description` / `pitch` to acknowledge Concert).
+- No imagery/figure changes.
+- No redirect map changes.
 
-## Files touched
+## Questions before I write copy
 
-- `src/assets/brand/lab/techd-logo-nano.png` (overwritten)
-- Optionally update the `note` field for the Nano candidate in `src/pages/TechDBrandLab.tsx` to reflect the new compositing method.
+1. **Preview framing — how forward should we lean?** Three options:
+   - **(a) Conservative** — "TechD is tracking IBM Concert through preview; engagements available when GA lands." Lowest risk, weakest pitch.
+   - **(b) Design-partner** — "TechD is an early-access partner positioning clients for Concert rollouts as modules reach GA." Stronger, only honest if TechD actually has preview access.
+   - **(c) Aggressive** — write as if GA, with a small "currently in preview with IBM" footnote.
+   My default would be **(b)** if you confirm TechD has (or is pursuing) preview access; otherwise **(a)**.
+
+2. **Stats slot** — Concert has no Forrester TEI or Gartner MQ yet. Options:
+   - Leave `stats` empty (the ProductCtaSection / hero handles missing stats gracefully — I'd verify).
+   - Use qualitative stats like `{ value: "6 modules", label: "Observe · Operate · Optimize · Protect · Resilience · Workflows" }` and `{ value: "Preview 2026", label: "IBM Concert availability" }`.
+   - Borrow the Instana/Turbonomic numbers as "stack-level" stats (not honest — I wouldn't recommend).
+   My default: **qualitative stats** unless you'd rather leave it empty.
+
+3. **Should I also add Concert as a cross-link** from the Instana, Turbonomic, and Apptio detail pages' `whyTechD` or related-products section? It strengthens the cross-sell story, but it touches three other product entries. Default: **yes, add Concert to `ProductRelatedSection` automatically** (already practice-scoped, no code change), and **leave the existing whyTechD bullets alone**.
