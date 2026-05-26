@@ -1,83 +1,50 @@
-# Plan — Add "Infrastructure" practice with IBM Storage Fusion HCI
+## Goal
 
-5th outcome-based practice alongside AI, Data & Analytics, Automation & FinOps, Security & Compliance. Single product at launch: **IBM Storage Fusion HCI**. Implementation-led voice (TechD does not resell hardware). Surfaces everywhere the other 4 practices appear.
-
----
-
-## 1. Product framing — IBM Storage Fusion HCI
-
-Source: ibm.com/products/storage-fusion
-
-- Hyperconverged appliance bundling Red Hat OpenShift + IBM container-native storage on a rack-ready node cluster
-- Purpose-built runtime for Cloud Pak for Data, watsonx, and other containerized AI/data workloads on-prem
-- Use cases: data sovereignty, low-latency AI inference, regulated workloads that can't leave the data center, mainframe-adjacent modernization
-- TechD positioning: **we implement, integrate, and operate Fusion HCI; the client procures the appliance from IBM.** Page voice = services + architecture, not vendor resale.
+Finish the Infrastructure / Fusion HCI rollout by aligning documentation, legacy URL redirects, and industry-page cross-links with the live IA (5 practices: AI, Data, Automation/FinOps, Security, Infrastructure — Hybrid Cloud has been removed).
 
 ---
 
-## 2. Practice definition
+## 1. Docs sync — `docs/rebuild/solutions.md`
 
+- Replace the "Practice 5 — Hybrid Cloud & Infrastructure" section with a new **Practice 5 — Infrastructure (`/solutions/infrastructure`)** section:
+  - Outcome line, scope statement (Fusion HCI only today), sales motion (implementation-only, no resell).
+  - Product table with one row: **IBM Storage Fusion HCI** — hyperconverged appliance bundling Red Hat OpenShift + IBM container-native storage + integrated data protection; on-prem runtime for watsonx and Cloud Pak for Data.
+  - Note that IBM Power, IBM Z, IBM FlashSystem, and CP4D System are explicitly out of scope today and would be absorbed here later without IA changes.
+- Update the 5-practice summary table at the top of the file (row 34): rename "Hybrid Cloud & Infrastructure" → "Infrastructure" with the new one-line outcome.
+- Update the URL map block (rows 133, 157–159): drop `/solutions/hybrid-cloud/*` example paths; add `/solutions/infrastructure` and `/solutions/infrastructure/ibm-storage-fusion-hci`.
+- Leave the CP4D System exclusion note (row 101) as-is — still correct.
 
-| Field           | Value                                                                                                                                     |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| id              | `infrastructure`                                                                                                                          |
-| name            | Infrastructure                                                                                                                            |
-| route           | `/solutions/infrastructure`                                                                                                               |
-| outcome         | Run mission AI and data workloads on-prem with cloud-grade operations — where sovereignty, latency, or regulation rules out public cloud. |
-| ctaLabel        | Explore Infrastructure practice                                                                                                           |
-| launch products | IBM Storage Fusion HCI (only)                                                                                                             |
+## 2. Redirect map — `docs/REDIRECT-MAP.md`
 
+- Add a small **→ `/solutions/infrastructure`** bucket to the redirect table for the handful of legacy paths that map naturally to the new practice:
+  - `/data-solutions/cloud/` → `/solutions/infrastructure`
+  - `/data-solutions/enterprise-insights/cloud-pak-data-system-with-ibm-performance-server/` → `/solutions/infrastructure/ibm-storage-fusion-hci`
+  - Any `*hybrid-cloud*` slugs currently pointed at `/solutions` get repointed to `/solutions/infrastructure` only when the legacy page was about on-prem CP4D / appliance content; pure "hybrid cloud strategy" pages stay at `/solutions` (the catch-all).
+- Update the bucket-summary table counts accordingly and bump the total/footnote.
+- Keep the GitHub Pages caveat block at the top unchanged.
 
----
+## 3. Industry cross-links — `src/content/industries-extras.ts`
 
-## 3. File-by-file changes
+Add a 4th `practices[]` entry `{ id: "infrastructure", proof: "…" }` to the four target verticals:
 
-### Navigation & routing
+- **healthcare** — proof framed around HIPAA + on-prem PHI runtime for watsonx clinical assistants.
+- **financial-services** — proof framed around data-residency / latency / regulatory rulings that keep core workloads off public cloud (covers the former "insurance" target since insurance was folded into FS).
+- **public-sector** — proof framed around air-gap / FedRAMP-High / sovereign-cloud needs.
+- **energy-utilities** — proof framed around NERC-CIP and OT-adjacent workloads needing on-prem AI/data runtime.
 
-- `**src/content/site.ts**` — add 5th nav child under Solutions: "Infrastructure — IBM Storage Fusion HCI for on-prem watsonx and Cloud Pak for Data."
-- `**src/app/routes.tsx**` — add `/solutions/infrastructure` and product detail route `/solutions/infrastructure/ibm-storage-fusion-hci`
-- `**src/pages/solutions/Infrastructure.tsx**` — new page using shared `_PracticePage` composition (same as the other 4)
-
-### Practice content
-
-- `**src/content/solutions.ts**` — append 5th `SOLUTIONS[]` entry with full Product object for Fusion HCI (overview, capabilities, use cases, whyTechD, stats — practitioner voice per CLAUDE.md content rules)
-- `**src/content/solutions-extras.ts**` — add `PRACTICE_EXTRAS["infrastructure"]` block: whyTitle, 4 whyPoints, industry proof lines (healthcare data residency, financial services sovereignty, public sector FedRAMP/air-gap, energy & utilities OT proximity), 4-step approach (Discover / Architect / Deliver / Operate)
-- `**src/content/practice-motifs.ts**` — add motif/accent entry for `infrastructure`
-
-### Cross-surface updates
-
-- `**src/sections/home/SolutionsGridSection.tsx**` — extend grid from 4 → 5 cards (confirmed by user). Layout becomes 3 across × 2 rows with one card centered on the second row, or 2×2 + 1 — picked at implementation time based on visual balance.
-- `**src/content/about.ts**` — Stack section gets a 5th capability card "Infrastructure"; capability bullet + products array updated to include Fusion HCI
-- `**src/content/services-extras.ts**` — product coverage tables on Advisory / Implementation / Managed Services / Training get an "Infrastructure" row mentioning Fusion HCI
-- `**src/content/chatbot-faq.ts**` — bump product count 22 → 23, add `infrastructure` + `fusion-hci` tags, add "IBM Storage Fusion HCI" to product list, add Q/A pair "Does TechD deploy on-prem appliances? / Yes — we implement IBM Storage Fusion HCI as the runtime for watsonx and Cloud Pak for Data when sovereignty or latency requires on-prem."
-- `**.lovable/plan.md**` — append a dated entry recording the new practice and product
-
-### Documentation
-
-- `**docs/rebuild/solutions.md**` — add Infrastructure practice section + Fusion HCI row + route to the route table; clarify this revives a narrower version of the original 5th practice (Fusion HCI only, not IBM Cloud / OpenShift / Mainframe — those remain in scope of other practices or deferred)
+Each proof: one sentence, practitioner voice, names Fusion HCI as the runtime for watsonx / Cloud Pak for Data. No edits to `clients`, `whyPoints`, or `lede`. Other industries (media, higher ed, manufacturing) get no Infrastructure link — not a fit today.
 
 ---
 
-## 4. Out of scope (explicit)
+## Out of scope
 
-- IBM Power, IBM Z, IBM FlashSystem, Cloud Pak for Data System — not added now; the practice is designed to absorb them later without IA changes
-- Reselling Fusion HCI — voice stays implementation-only
-- New 3D figure for the practice page — reuse existing `PracticeWireframeScene` pattern with a new motif variant; no new asset pipeline
+- No code changes to industry page components (`_IndustryPage.tsx` already renders whatever practices the content lists).
+- No new redirects file in `public/` — this is doc-only; the live redirect implementation is the deferred Cloudflare Worker.
+- No edits to `CLAUDE.md` route table beyond what's already correct.
+- Items 4 (Resources stubs), 5 (ProductDetail route), 6 (visual QA) — user confirmed already done / acceptable.
 
----
+## Files touched
 
-## 5. Technical notes
-
-- `_PracticePage.tsx` is already practice-agnostic (driven by `Solution.id`) — no changes needed there
-- `ProductDetail.tsx` reads from `SOLUTIONS[].products` by slug — Fusion HCI page works automatically once the data is added
-- Solutions index redirect (`/solutions` → first child) stays pointed at `ai-generative` — no change
-- All content follows existing voice rules: practitioner-to-practitioner, named features only, no superlatives, stats only from documented sources (IBM datasheet, Forrester TEI if available)
-
----
-
-## 6. Open questions before I build
-
-1. **Practice headline outcome** — proposed: *"Run mission AI and data workloads on-prem with cloud-grade operations."* OK, or do you want it more sovereignty-focused / more AI-focused? answer: more ai focused
-2. **Industries to feature on the practice page** — proposing healthcare, financial services, public sector, energy & utilities (the 4 with the strongest "can't go to public cloud" stories). Swap any?  not sure about it, take the better dessition and let me know
-3. **Home grid layout when going to 5** — preference between 3+2 (top-heavy) or 2+2+1 (centered last card)? I'll pick visually if you don't care. yes pick it we can change it latter but i think it is better 2 +2 +1
-4. &nbsp;
+- `docs/rebuild/solutions.md`
+- `docs/REDIRECT-MAP.md`
+- `src/content/industries-extras.ts`
