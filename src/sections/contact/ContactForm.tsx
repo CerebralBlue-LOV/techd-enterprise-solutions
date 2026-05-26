@@ -395,6 +395,40 @@ const ContactForm = () => {
               />
             </div>
 
+            {/* Honeypot — hidden from humans, catches naive bots. */}
+            <div
+              aria-hidden="true"
+              className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden"
+            >
+              <label>
+                Website
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  {...form.register("website")}
+                />
+              </label>
+            </div>
+
+            {submitError && (
+              <div
+                role="alert"
+                className="flex items-start gap-3 rounded-md border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive"
+              >
+                <AlertCircle className="mt-0.5 size-4 shrink-0" />
+                <p className="font-normal">
+                  {submitError}{" "}
+                  <a
+                    href="mailto:fvargas@techd.com"
+                    className="font-bold underline underline-offset-2 hover:text-destructive/80"
+                  >
+                    fvargas@techd.com
+                  </a>
+                </p>
+              </div>
+            )}
+
             <div className="flex flex-col-reverse gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <p className="flex items-center gap-2 text-xs font-light text-muted-foreground">
                 <span className="relative flex h-2 w-2">
@@ -403,9 +437,23 @@ const ContactForm = () => {
                 </span>
                 We respond within one business day. Fields marked <span className="text-primary">*</span> are required.
               </p>
-              <Button type="submit" size="lg" className="btn-glow group/btn h-12 px-8 w-full sm:w-auto">
-                Send to a principal
-                <ArrowUpRight className="ml-1 transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSubmitting}
+                className="btn-glow group/btn h-12 px-8 w-full sm:w-auto"
+              >
+                {isSubmitting ? (
+                  <>
+                    Sending…
+                    <Loader2 className="ml-1 size-4 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Send to a principal
+                    <ArrowUpRight className="ml-1 transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
+                  </>
+                )}
               </Button>
             </div>
           </form>
