@@ -156,7 +156,5 @@ These naming decisions were made during the audit and applied consistently acros
 /solutions/security/ibm-mdm                → IBM MDM detail
 /solutions/security/ibm-data-replication   → IBM Data Replication detail
 
-/solutions/hybrid-cloud/ibm-cloud              → IBM Cloud detail
-/solutions/hybrid-cloud/red-hat-openshift      → Red Hat OpenShift detail
-/solutions/hybrid-cloud/mainframe-integration  → Mainframe Integration detail
+/solutions/infrastructure/ibm-storage-fusion-hci  → IBM Storage Fusion HCI detail
 ```
