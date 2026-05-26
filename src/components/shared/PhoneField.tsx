@@ -76,10 +76,16 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
       }
     }, [parsed, country]);
 
-    const examplePlaceholder = React.useMemo(() => {
-      const ex = getExampleNumber(country, examples as Parameters<typeof getExampleNumber>[1]);
-      return ex ? ex.formatNational() : "";
-    }, [country]);
+    const exampleNumber = React.useMemo(
+      () => getExampleNumber(country, examples as Parameters<typeof getExampleNumber>[1]),
+      [country],
+    );
+    const examplePlaceholder = exampleNumber ? exampleNumber.formatNational() : "";
+    // Max digits in the country's national number — used to hard-cap input.
+    const maxNationalDigits = React.useMemo(() => {
+      if (!exampleNumber) return 15; // E.164 absolute max
+      return exampleNumber.nationalNumber.length;
+    }, [exampleNumber]);
 
     const nationalDisplay = React.useMemo(() => {
       if (!value) return "";
@@ -89,33 +95,36 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
       return formatter.input(local);
     }, [value, country]);
 
+    const capDigits = (digits: string, c: CountryCode, max: number) => {
+      let out = digits.slice(0, max);
+      const dial = `+${getCountryCallingCode(c)}`;
+      // If still TOO_LONG (variable-length countries), trim until it isn't.
+      while (
+        out.length > 0 &&
+        validatePhoneNumberLength(`${dial}${out}`, c) === "TOO_LONG"
+      ) {
+        out = out.slice(0, -1);
+      }
+      return out;
+    };
+
     const handleCountrySelect = (next: CountryCode) => {
       setOpen(false);
       setCountry(next);
       const dial = `+${getCountryCallingCode(next)}`;
-      let digits = (nationalDisplay || "").replace(/\D/g, "");
-      while (
-        digits.length > 0 &&
-        validatePhoneNumberLength(`${dial}${digits}`, next) === "TOO_LONG"
-      ) {
-        digits = digits.slice(0, -1);
-      }
+      const nextEx = getExampleNumber(next, examples as Parameters<typeof getExampleNumber>[1]);
+      const nextMax = nextEx ? nextEx.nationalNumber.length : 15;
+      const digits = capDigits((nationalDisplay || "").replace(/\D/g, ""), next, nextMax);
       onChange(digits ? `${dial}${digits}` : dial);
     };
 
     const handleNumberChange = (raw: string) => {
-      let digits = raw.replace(/\D/g, "");
+      const digits = capDigits(raw.replace(/\D/g, ""), country, maxNationalDigits);
       if (!digits) return onChange("");
       const dial = `+${getCountryCallingCode(country)}`;
-      // Reject extra digits past the country's max national length.
-      while (
-        digits.length > 0 &&
-        validatePhoneNumberLength(`${dial}${digits}`, country) === "TOO_LONG"
-      ) {
-        digits = digits.slice(0, -1);
-      }
       onChange(`${dial}${digits}`);
     };
+
 
     return (
       <div className={cn("flex items-stretch gap-2", className)}>
