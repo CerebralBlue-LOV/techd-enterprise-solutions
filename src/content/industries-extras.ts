@@ -172,6 +172,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "security-compliance", proof: "PCI-DSS, SOX, NAIC, and AML compliance tooling across card, core, digital channels, and carrier policy admin." },
       { id: "automation-finops",   proof: "Payments-platform and claims-platform observability with IT cost transparency for global financial groups and carriers." },
       { id: "ai-generative",       proof: "Customer-service copilots, underwriting assistants, and document intelligence grounded in policy and regulatory content." },
+      { id: "infrastructure",      proof: "On-prem Fusion HCI runtime for watsonx and Cloud Pak for Data — keeps core banking, card data, and policy admin workloads inside data-residency and latency boundaries the regulator can verify." },
     ],
   },
 
