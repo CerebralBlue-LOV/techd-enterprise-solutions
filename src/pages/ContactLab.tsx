@@ -19,7 +19,7 @@ const TEST_PAYLOAD = {
   email: "test+lab@techd.com",
   company: "TechD Lab",
   role: "QA Engineer",
-  phone: "+1 (555) 010-1234",
+  phone: "+15550101234",
   heardAbout: "Web search",
   area: "AI & Automation",
   timeline: "Exploring",
@@ -147,7 +147,14 @@ const ContactLab = () => {
     setInput("email", TEST_PAYLOAD.email);
     setInput("company", TEST_PAYLOAD.company);
     setInput("role", TEST_PAYLOAD.role);
-    setInput("phone", TEST_PAYLOAD.phone);
+
+    // Phone — PhoneField renders <input type="tel"> (no name attr).
+    // Strip the +1 country code; the field auto-prefixes from the country selector.
+    const phoneEl = host.querySelector<HTMLInputElement>('input[type="tel"]');
+    if (phoneEl) {
+      const national = TEST_PAYLOAD.phone.replace(/^\+1/, "").replace(/\D/g, "");
+      setReactValue(phoneEl, national);
+    }
 
     const messageEl = host.querySelector<HTMLTextAreaElement>(
       'textarea[name="message"]',
@@ -158,17 +165,22 @@ const ContactLab = () => {
     clickByText(host, 'button[role="radio"]', TEST_PAYLOAD.area);
     clickByText(host, 'button[role="radio"]', TEST_PAYLOAD.timeline);
 
-    // "How did you hear about us?" — shadcn Select. Open then pick option.
-    const selectTrigger = host.querySelector<HTMLButtonElement>(
-      'button[role="combobox"]',
+    // "How did you hear about us?" — shadcn Select.
+    // NOTE: PhoneField also exposes role="combobox" (country picker), so pick
+    // the trigger that is NOT labeled "Select country".
+    const comboboxes = Array.from(
+      host.querySelectorAll<HTMLButtonElement>('button[role="combobox"]'),
+    );
+    const selectTrigger = comboboxes.find(
+      (b) => b.getAttribute("aria-label") !== "Select country",
     );
     if (selectTrigger) {
       selectTrigger.click();
-      // Options render in a portal; wait a tick.
       setTimeout(() => {
         clickByText(document.body, '[role="option"]', TEST_PAYLOAD.heardAbout);
       }, 50);
     }
+
 
     addLog({
       level: "info",
