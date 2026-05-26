@@ -95,7 +95,7 @@ export const PRACTICE_EXTRAS: Record<string, PracticeExtras> = {
     whyPoints: [
       { title: "See the whole stack",   body: "Instana for full-stack observability — application, runtime, infrastructure, and the network in between." },
       { title: "Right-size the spend",  body: "Apptio for IT financial management and Turbonomic for workload-level cost optimization." },
-      { title: "Orchestrate across domains", body: "IBM Concert (preview) as the agentic layer that correlates observability, cost, and risk signals into governed remediation workflows." },
+      
       { title: "Eliminate manual toil", body: "Automated remediation playbooks tied to the alerts that actually matter." },
       { title: "FinOps that scales",    body: "Cost allocation models that survive a re-org, a cloud migration, or an M&A." },
     ],
