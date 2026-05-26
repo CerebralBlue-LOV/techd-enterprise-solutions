@@ -97,6 +97,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "data-analytics",      proof: "Grid analytics and operational dashboards for regulated utilities and ISOs." },
       { id: "automation-finops",   proof: "Grid-system observability and OT/IT cost management." },
       { id: "security-compliance", proof: "NERC-CIP and OT/IT security for utilities and ISOs." },
+      { id: "infrastructure",      proof: "On-prem Fusion HCI runtime for watsonx and Cloud Pak for Data — keeps grid and OT-adjacent workloads inside the NERC-CIP perimeter." },
     ],
   },
 
