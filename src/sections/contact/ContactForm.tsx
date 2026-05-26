@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AlertCircle, ArrowRight, ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
+import { isValidPhoneNumber } from "libphonenumber-js";
 import { submitContact } from "@/lib/contact-submit";
+import PhoneField from "@/components/shared/PhoneField";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,7 +58,11 @@ const schema = z.object({
     .trim()
     .max(40)
     .optional()
-    .or(z.literal("")),
+    .or(z.literal(""))
+    .refine(
+      (v) => !v || isValidPhoneNumber(v),
+      { message: "Enter a valid phone number" },
+    ),
   heardAbout: z.enum(HEARD_ABOUT, { required_error: "Required" }),
   heardAboutOther: z.string().trim().max(120).optional().or(z.literal("")),
   area: z.enum(AREAS, { required_error: "Pick an area" }),
