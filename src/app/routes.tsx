@@ -22,6 +22,7 @@ import AIGenerative from "@pages/solutions/AIGenerative";
 import DataAnalytics from "@pages/solutions/DataAnalytics";
 import AutomationFinOps from "@pages/solutions/AutomationFinOps";
 import SecurityCompliance from "@pages/solutions/SecurityCompliance";
+import Infrastructure from "@pages/solutions/Infrastructure";
 
 
 // Services
@@ -71,6 +72,7 @@ export const AppRoutes = () => (
     <Route path="/solutions/data-analytics" element={<DataAnalytics />} />
     <Route path="/solutions/automation-finops" element={<AutomationFinOps />} />
     <Route path="/solutions/security-compliance" element={<SecurityCompliance />} />
+    <Route path="/solutions/infrastructure" element={<Infrastructure />} />
     {/* Legacy practice slug redirects */}
     <Route path="/solutions/ai" element={<Navigate to="/solutions/ai-generative" replace />} />
     <Route path="/solutions/automation" element={<Navigate to="/solutions/automation-finops" replace />} />

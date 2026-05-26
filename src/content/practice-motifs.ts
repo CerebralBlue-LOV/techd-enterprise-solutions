@@ -7,4 +7,5 @@ export const PRACTICE_MOTIFS: Record<string, PracticeMotif> = {
   "data-analytics":      { variant: "data" },
   "automation-finops":   { variant: "automation" },
   "security-compliance": { variant: "security" },
+  "infrastructure":      { variant: "cloud" },
 };
