@@ -38,8 +38,8 @@ export const HeroSection = () => {
         <div className="max-w-3xl">
           <p className="eyebrow">IBM Gold Business Partner · Since 2009</p>
           <h1 className="mt-4 text-5xl md:text-8xl leading-[1.05] md:leading-[1.02] font-bold tracking-tight">
-            Enterprise AI, delivered by an{" "}
-            <span className="text-primary">IBM Gold Partner.</span>
+            Turn enterprise data into{" "}
+            <span className="text-primary">trustworthy AI.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base md:text-2xl font-light text-muted-foreground">
             TechD has delivered watsonx, Cognos, Guardium, and Apptio to Fortune 500
