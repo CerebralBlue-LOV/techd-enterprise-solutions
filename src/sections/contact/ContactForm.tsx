@@ -259,7 +259,7 @@ const ContactForm = () => {
                           value={field.value || undefined}
                           onChange={(v) => field.onChange(v ?? "")}
                           onBlur={field.onBlur}
-                          placeholder="(555) 123-4567"
+                          
                           invalid={fieldState.invalid}
                         />
                       </FormControl>
