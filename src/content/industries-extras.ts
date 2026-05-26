@@ -51,6 +51,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
       { id: "ai-generative",       proof: "Clinical knowledge agents and grounded RAG built on watsonx, deployed inside health systems." },
       { id: "data-analytics",      proof: "Clinical and operational dashboards on Cognos and Db2, plus open lakehouse foundations on watsonx.data." },
       { id: "security-compliance", proof: "HIPAA-grade data protection, audit readiness, and zero-downtime data movement." },
+      { id: "infrastructure",      proof: "On-prem Fusion HCI runtime for watsonx and Cloud Pak for Data — keeps PHI inside the hospital's own four walls under HIPAA." },
     ],
   },
 
