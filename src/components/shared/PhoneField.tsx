@@ -58,16 +58,25 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
   ) => {
     const [open, setOpen] = React.useState(false);
 
-    // Derive selected country + national portion from the stored E.164 value.
+    // Track the selected country locally — parsing only works once the
+    // national number is long enough, so we can't rely solely on the value.
     const parsed = React.useMemo(
       () => (value ? parsePhoneNumberFromString(value) : undefined),
       [value],
     );
-    const country: CountryCode = (parsed?.country as CountryCode) || defaultCountry;
+    const [country, setCountry] = React.useState<CountryCode>(
+      (parsed?.country as CountryCode) || defaultCountry,
+    );
+    // If the parsed value yields a definitive country, keep state in sync.
+    React.useEffect(() => {
+      if (parsed?.country && parsed.country !== country) {
+        setCountry(parsed.country as CountryCode);
+      }
+    }, [parsed, country]);
+
     const nationalDisplay = React.useMemo(() => {
       if (!value) return "";
       const formatter = new AsYouType(country);
-      // Strip the country prefix so the input shows only the national part.
       const dial = `+${getCountryCallingCode(country)}`;
       const local = value.startsWith(dial) ? value.slice(dial.length) : value;
       return formatter.input(local);
@@ -75,6 +84,7 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
 
     const handleCountrySelect = (next: CountryCode) => {
       setOpen(false);
+      setCountry(next);
       const dial = `+${getCountryCallingCode(next)}`;
       let digits = (nationalDisplay || "").replace(/\D/g, "");
       while (
