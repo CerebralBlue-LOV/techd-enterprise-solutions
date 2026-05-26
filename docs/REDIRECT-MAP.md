@@ -94,7 +94,7 @@ GitHub Pages returns HTTP 200 for all served paths and has no redirect configura
 | `/data-solutions/data-science/predictive-spss/` | `/solutions` | 301 |
 | `/data-solutions/enterprise-insights/` | `/solutions` | 301 |
 | `/data-solutions/enterprise-insights/cloud-pak-data/` | `/solutions` | 301 |
-| `/data-solutions/enterprise-insights/cloud-pak-data-system-with-ibm-performance-server/` | `/solutions` | 301 |
+| `/data-solutions/enterprise-insights/cloud-pak-data-system-with-ibm-performance-server/` | `/solutions/infrastructure/ibm-storage-fusion-hci` | 301 |
 | `/data-solutions/enterprise-insights/ibm-cloud-pak-data/` | `/solutions` | 301 |
 | `/data-solutions/enterprise-insights/ibm-datastage-integration/` | `/solutions` | 301 |
 | `/data-solutions/hybrid-data-management/` | `/solutions` | 301 |
