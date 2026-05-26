@@ -23,8 +23,9 @@ import PageFinalCtaSection from "@shared/page/PageFinalCtaSection";
 const Home = () => (
   <Layout>
     <SEO
-      title="TechD — IBM Gold Partner for Enterprise AI, Data & Infrastructure"
-      description="TechD has helped Fortune 500 enterprises turn data into trustworthy AI since 2009. IBM Gold Business Partner specializing in watsonx, Db2, infrastructure, and security for regulated industries."
+      title="TechD — IBM Gold Business Partner for Enterprise AI"
+      description="IBM Gold partner since 2009 delivering watsonx, Cognos, Guardium, and Apptio to Fortune 500 clients in healthcare, insurance, and public sector."
+      canonical="/"
     />
     <HeroSection />
     <LogoStripSection />

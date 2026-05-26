@@ -20,10 +20,10 @@ const ContactHero = () => (
         <div className="max-w-3xl">
           <p className="eyebrow mb-4">Contact</p>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight text-secondary">
-            Talk to an <span className="text-primary">expert</span>.
+            Talk to an IBM <span className="text-primary">practitioner</span>.
           </h1>
           <p className="mt-6 max-w-xl text-lg md:text-xl font-light text-muted-foreground leading-relaxed">
-            No SDR queue. No discovery-call routing. Tell us what you're trying to ship and we'll match you with the right senior practitioner — usually within one business day.
+            Tell us what you're trying to ship with watsonx, Cognos, Guardium, or Apptio — we'll route you to the certified engineer who's done it before. Typical reply within one business day.
           </p>
         </div>
       </Reveal>

@@ -36,15 +36,15 @@ export const HeroSection = () => {
     <div className="container-page relative z-10 pt-24 pb-20 md:pt-40 md:pb-40">
       <Reveal>
         <div className="max-w-3xl">
-          <p className="eyebrow">IBM Gold Partner · Since 2009</p>
+          <p className="eyebrow">IBM Gold Business Partner · Since 2009</p>
           <h1 className="mt-4 text-5xl md:text-8xl leading-[1.05] md:leading-[1.02] font-bold tracking-tight">
-            Turn enterprise data into{" "}
-            <span className="text-primary">trustworthy AI.</span>
+            Enterprise AI, delivered by an{" "}
+            <span className="text-primary">IBM Gold Partner.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base md:text-2xl font-light text-muted-foreground">
-            We design, build, and run secure AI, data, and infrastructure systems
-            for Fortune 500 healthcare, media, energy, and public sector
-            organizations — on IBM watsonx, Db2, and the open stack around them.
+            TechD has delivered watsonx, Cognos, Guardium, and Apptio to Fortune 500
+            healthcare, insurance, media, and public-sector clients for 15+ years —
+            with IBM-certified engineers who stay through go-live and beyond.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
             <Button asChild size="lg" className="btn-glow w-full sm:w-auto">
