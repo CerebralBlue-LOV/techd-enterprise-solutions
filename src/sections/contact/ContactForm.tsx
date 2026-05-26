@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AlertCircle, ArrowRight, ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import { validatePhoneNumberLength } from "libphonenumber-js";
 import { submitContact } from "@/lib/contact-submit";
 import PhoneField from "@/components/shared/PhoneField";
 import { Link } from "react-router-dom";
