@@ -132,7 +132,7 @@ These naming decisions were made during the audit and applied consistently acros
 /solutions#data-analytics              → Data & Analytics anchor
 /solutions#automation                  → Automation & FinOps anchor
 /solutions#security                    → Security & Compliance anchor
-/solutions#hybrid-cloud                → Hybrid Cloud & Infrastructure anchor
+/solutions/infrastructure              → Infrastructure practice page
 
 /solutions/ai/watsonx-ai               → watsonx.ai detail
 /solutions/ai/watsonx-assistant        → watsonx Assistant detail
