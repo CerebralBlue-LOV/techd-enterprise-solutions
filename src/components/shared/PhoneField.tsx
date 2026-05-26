@@ -124,7 +124,7 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
       const dial = `+${getCountryCallingCode(country)}`;
       onChange(`${dial}${digits}`);
     };
-    };
+
 
     return (
       <div className={cn("flex items-stretch gap-2", className)}>
