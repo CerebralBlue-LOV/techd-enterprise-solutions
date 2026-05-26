@@ -12,6 +12,14 @@ export const CONTACT = {
   ibmPartnerSince: 2009,
 };
 
+/**
+ * Public Google Apps Script web app URL that receives contact form submissions.
+ * Safe to commit: the script runs as the @techd.com owner and only appends to
+ * a private Sheet + sends email to the configured recipient list.
+ */
+export const CONTACT_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbxZzWP0YBibJKvj7Q7zJ5879_cFc_AQ1mhnlPrMgpORp-IEBF0zKqlutkcDdzIMELWqcg/exec";
+
 export type NavItem = {
   label: string;
   /** Optional href. Top-level dropdown labels omit href and act as menu triggers only. */

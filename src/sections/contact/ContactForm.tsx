@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { AlertCircle, ArrowRight, ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
+import { submitContact } from "@/lib/contact-submit";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -84,6 +85,8 @@ const OptionalMark = () => (
 
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -98,12 +101,36 @@ const ContactForm = () => {
       area: undefined as unknown as FormValues["area"],
       timeline: undefined,
       message: "",
+      // honeypot: must stay empty for real humans
+      website: "",
     },
   });
 
-  const onSubmit = (values: FormValues) => {
-    console.info("[contact] submission", values);
-    setSubmitted(true);
+  const onSubmit = async (values: FormValues) => {
+    // Honeypot: bots fill hidden fields. Pretend success, send nothing.
+    if (values.website && values.website.trim() !== "") {
+      setSubmitted(true);
+      return;
+    }
+
+    setSubmitError(null);
+    setIsSubmitting(true);
+    try {
+      await submitContact({
+        ...values,
+        website: undefined,
+        userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
+        page: typeof window !== "undefined" ? window.location.href : "",
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("[contact] submit failed", err);
+      setSubmitError(
+        "We couldn't send your message. Please try again, or email us directly."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
