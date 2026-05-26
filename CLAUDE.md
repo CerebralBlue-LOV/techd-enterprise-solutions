@@ -34,14 +34,14 @@ If unsure whether something is sensitive, leave it out of the commit.
 | 3D / Hero | three.js + @react-three/fiber + @react-three/drei |
 | Hosting | GitHub Pages (served from `/techd-enterprise-solutions/`) |
 | CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) |
-| Contact backend | AWS Lambda + SES (not built yet) |
+| Contact backend | Google Apps Script web app (POST, `no-cors`) — see Contact form below |
 | Design tool | Lovable (bidirectional sync with `main`) |
 
 ## Working agreement
 
 - **Always `git pull` before starting work.** Lovable may have pushed changes between sessions.
 - **Lovable handles:** new components, visual iteration, design tweaks.
-- **Claude Code handles:** build config, GitHub Actions, AWS Lambda form backend, SEO files, content data files in `src/content/`, brand tokens, infrastructure — anything Lovable does badly.
+- **Claude Code handles:** build config, GitHub Actions, Apps Script form backend, SEO files, content data files in `src/content/`, brand tokens, infrastructure — anything Lovable does badly.
 - **Don't edit a file Lovable just touched** without checking — overwrite risk when Lovable pulls.
 - **Push frequently.** Small commits, descriptive messages. Lovable must stay in sync.
 
@@ -219,7 +219,7 @@ To regenerate favicons: `python3 scripts/generate-favicon.py`
 
 - Don't suggest switching to Astro, Next.js, or any other framework. Stack is locked.
 - Don't add CMS integration. Deferred.
-- Don't build form backends in the React app. Forms POST to an AWS Lambda function (not built yet).
+- Don't build a Node/Express/Cloudflare form backend in the React app. The contact form POSTs JSON (as `text/plain`, `mode: "no-cors"`) directly to a Google Apps Script web app hosted in TechD's Google Workspace. See the Contact form section below for the integration details.
 - Don't add new dependencies without flagging the trade-off.
 - Don't touch `src/components/ui/` — those are shadcn defaults.
 - Don't introduce raw hex colors anywhere.
@@ -238,7 +238,65 @@ Rules that must hold in every content edit:
 - **Stats:** only use numbers from Forrester TEI, Gartner MQ, official IBM benchmarks, or documented customer results. Always format as `{ value: "X", label: "source context" }`. Never invent or round up.
 - **Industry framing:** anchor use cases to TechD's six verticals — healthcare, insurance, public sector, media & entertainment, higher education, energy & utilities. Name compliance frameworks (HIPAA, FedRAMP, PCI-DSS, NERC-CIP) where they apply naturally.
 
+## Contact form (Google Apps Script integration)
+
+The contact form is **live and end-to-end working**. There is no Lambda, no Cloudflare Worker, no Supabase — the React form POSTs directly to a Google Apps Script web app inside TechD's Google Workspace.
+
+### Architecture
+
+```
+ContactForm.tsx ──► submitContact() ──► fetch(CONTACT_ENDPOINT, no-cors, text/plain)
+                                                │
+                                                ▼
+                                  Apps Script web app (TechD GWS)
+                                                │
+                                       ┌────────┴────────┐
+                                       ▼                 ▼
+                                  MailApp.sendEmail   Sheet.appendRow
+                                  (bsyring@techd.com,  (leads spreadsheet)
+                                   info@techd.com)
+```
+
+### Why this approach (public repo, no secrets)
+
+- The script URL is the only "credential" and it's safe to commit — anyone with it can only POST a lead payload to TechD's own sheet/mailbox, which is the intended behavior.
+- `mode: "no-cors"` + `Content-Type: text/plain` avoids the CORS preflight Apps Script can't satisfy. The response is opaque (status 0), so the frontend treats any non-thrown fetch as success.
+- No build-time env vars required. If we ever rotate the script, swap `CONTACT_ENDPOINT` in `src/content/site.ts` and push.
+
+### Files
+
+| File | Purpose |
+|---|---|
+| `src/content/site.ts` | Exports `CONTACT_ENDPOINT` (the deployed `/exec` URL) |
+| `src/lib/contact-submit.ts` | `submitContact(payload)` — fetch with `no-cors`, 10s `AbortController` timeout |
+| `src/sections/contact/ContactForm.tsx` | The form. RHF + zod. Hidden `website` honeypot. `mailto:bsyring@techd.com,info@techd.com` fallback on error |
+| `src/components/shared/PhoneField.tsx` | Custom country-selector + national-number input. E.164 storage, `libphonenumber-js` length-capped per country, example number as placeholder |
+| `src/pages/ContactLab.tsx` | `/contact-lab` — fill-with-test-data button + submit button + live request/response log panel (intercepts `window.fetch`). Internal QA tool |
+
+### Recipients
+
+- **Production:** `bsyring@techd.com`, `info@techd.com` (comma-separated `to:` in `MailApp.sendEmail`)
+- **Current test deploy:** `fvargas@techd.com` only — switch in the Apps Script before going live
+- The React fallback `mailto:` link already points at the production pair
+
+### Updating the Apps Script
+
+The script source is **not in this repo** (lives in the TechD Google account that owns the deployment). To change recipients, sheet ID, email body, or add server-side spam checks:
+
+1. Open the Apps Script project from the script URL
+2. Edit `Code.gs`
+3. **Deploy → Manage deployments → Edit (pencil icon) → New version → Deploy**
+4. The `/exec` URL **does not change** between versions, so no React change is required
+
+### Known limitations
+
+- Opaque response means we cannot show server-side validation errors. Client-side zod + honeypot is the only feedback loop.
+- Apps Script has a per-day quota (~100 emails for consumer accounts, ~1500 for Workspace). Fine for marketing-site lead volume.
+- No retry / queue. If the fetch is aborted (>10s) we surface the `mailto:` fallback.
+
 ---
+
+
 
 ## Documentation index
 

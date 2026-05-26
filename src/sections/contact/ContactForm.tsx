@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AlertCircle, ArrowRight, ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import { validatePhoneNumberLength } from "libphonenumber-js";
 import { submitContact } from "@/lib/contact-submit";
 import PhoneField from "@/components/shared/PhoneField";
 import { Link } from "react-router-dom";
@@ -60,7 +60,9 @@ const schema = z.object({
     .optional()
     .or(z.literal(""))
     .refine(
-      (v) => !v || isValidPhoneNumber(v),
+      // Accept any number with a plausible length — strict assignable-range
+      // checks reject too many real numbers (e.g. fictional 555-01XX in US).
+      (v) => !v || validatePhoneNumberLength(v) === undefined,
       { message: "Enter a valid phone number" },
     ),
   heardAbout: z.enum(HEARD_ABOUT, { required_error: "Required" }),
