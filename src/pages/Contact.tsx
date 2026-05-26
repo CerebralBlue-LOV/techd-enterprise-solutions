@@ -11,8 +11,9 @@ import ContactLocationSection from "@sections/contact/ContactLocationSection";
 const Contact = () => (
   <Layout>
     <SEO
-      title="Contact — TechD"
-      description="Talk to a senior IBM-certified architect. No SDR queue, no discovery-call relay. One business day response."
+      title="Contact TechD — Talk to an IBM Practitioner"
+      description="Talk to a certified IBM practitioner about watsonx, Cognos, Guardium, or Apptio. US-based delivery team. Typical reply within one business day."
+      canonical="/contact"
     />
     <ContactHero />
     <section className="section">
