@@ -62,6 +62,8 @@ const schema = z.object({
   area: z.enum(AREAS, { required_error: "Pick an area" }),
   timeline: z.enum(TIMELINES).optional(),
   message: z.string().trim().min(1, "Required").max(2000),
+  // Honeypot — hidden from real users; bots tend to fill every field.
+  website: z.string().max(200).optional().or(z.literal("")),
 });
 
 type FormValues = z.infer<typeof schema>;
