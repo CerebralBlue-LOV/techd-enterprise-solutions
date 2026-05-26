@@ -76,6 +76,11 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
       }
     }, [parsed, country]);
 
+    const examplePlaceholder = React.useMemo(() => {
+      const ex = getExampleNumber(country, examples as Parameters<typeof getExampleNumber>[1]);
+      return ex ? ex.formatNational() : "";
+    }, [country]);
+
     const nationalDisplay = React.useMemo(() => {
       if (!value) return "";
       const formatter = new AsYouType(country);
