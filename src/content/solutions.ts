@@ -668,8 +668,7 @@ export const SOLUTIONS: Solution[] = [
       "IBM Apptio, Instana, and Turbonomic give your IT and finance teams full-stack visibility — from application traces to cloud bill line items — with AI-driven recommendations that act, and IBM Concert as the agentic layer that connects them.",
     highlights: [
       "Full-stack APM and tracing",
-      "Cloud FinOps and showback",
-      "AI-driven resource actions",
+      "Cloud FinOps and resource actions",
       "Agentic cross-domain orchestration",
     ],
     pitch:
