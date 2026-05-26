@@ -40,7 +40,7 @@ export type Methodology = {
 
 /** A row in the IBM practice coverage grid. */
 export type CoverageRow = {
-  practice: "AI & Generative" | "Data & Analytics" | "Automation & FinOps" | "Security & Compliance";
+  practice: "AI & Generative" | "Data & Analytics" | "Automation & FinOps" | "Security & Compliance" | "Infrastructure";
   /** Short product names (already corrected to current IBM 2026 nomenclature). */
   products: string[];
 };
@@ -159,6 +159,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
         { practice: "Data & Analytics",   products: ["IBM Db2", "watsonx.data", "watsonx.data intelligence", "watsonx.data integration", "Cloud Pak for Data", "IBM DataStage", "IBM Netezza Performance Server", "Cognos Analytics 12", "Planning Analytics"] },
         { practice: "Automation & FinOps", products: ["IBM Apptio", "IBM Instana", "IBM Turbonomic", "IBM Concert (preview readiness)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium", "IBM QRadar", "IBM Resilient (QRadar SOAR)"] },
+        { practice: "Infrastructure",        products: ["IBM Storage Fusion HCI (on-prem watsonx & Cloud Pak for Data runtime)"] },
       ],
     },
     crossLinks: [
@@ -237,6 +238,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
         { practice: "Data & Analytics",   products: ["IBM Db2 12.1 (install, migrate, tune)", "watsonx.data (lakehouse, Iceberg, Presto)", "watsonx.data intelligence", "watsonx.data integration", "Cloud Pak for Data on OpenShift", "IBM DataStage (ETL/ELT, streaming)", "IBM Netezza Performance Server", "Cognos Analytics 12 (build, migration, AI Assistant)", "Planning Analytics (TM1, Workspace)"] },
         { practice: "Automation & FinOps", products: ["IBM Apptio (TBM build, cost allocation, ITSM integration)", "IBM Instana (agent rollout, dashboards, alerting)", "IBM Turbonomic (optimization policy, hybrid cloud)", "IBM Concert (preview — agentic workflow design, governance setup)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium (DAM policy, vulnerability scanning, compliance reporting)", "IBM QRadar (SIEM build, detection rules, source integration)", "IBM Resilient / QRadar SOAR (playbook deployment, ticketing wiring)"] },
+        { practice: "Infrastructure",        products: ["IBM Storage Fusion HCI (landing-zone design, OpenShift cluster, storage classes, backup/DR, watsonx & Cloud Pak for Data deployment)"] },
       ],
     },
     crossLinks: [
@@ -315,6 +317,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
         { practice: "Data & Analytics",   products: ["Cloud Pak for Data 5.x on OpenShift", "watsonx.data (Iceberg, Presto, ingestion health)", "watsonx.data intelligence / integration", "IBM DataStage (job schedules, lineage)", "IBM Db2 (availability, backup validation)", "IBM Netezza Performance Server", "Cognos Analytics 12 (delivery monitoring, lifecycle)", "Planning Analytics (TM1 cubes, Workspace)"] },
         { practice: "Automation & FinOps", products: ["IBM Apptio (monthly IT financial reporting, license utilization)", "IBM Instana (baseline tracking, threshold tuning)", "IBM Turbonomic (workload placement, monthly savings reporting)", "IBM Concert (preview — agentic workflow operations as modules reach GA)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium (DAM policy review, alert triage, compliance reporting)", "IBM QRadar (alert triage, rule tuning, threat intel)", "IBM Resilient / QRadar SOAR (playbook execution, incident lifecycle)"] },
+        { practice: "Infrastructure",        products: ["IBM Storage Fusion HCI (cluster operations, OpenShift upgrades, storage capacity, backup/DR validation)"] },
       ],
     },
     crossLinks: [
@@ -394,6 +397,7 @@ export const SERVICES_EXTRAS: Record<string, ServiceExtras> = {
         { practice: "Data & Analytics",   products: ["IBM Db2 12.1 (administration, AI query optimization, performance)", "watsonx.data (lakehouse, Iceberg, Presto)", "watsonx.data intelligence", "Cloud Pak for Data Platform Operations (OpenShift, services, IAM)", "IBM DataStage (job design, parallel framework, monitoring)", "Cognos Analytics 12 (foundational + advanced — Framework Manager, AI Assistant, administration)", "Planning Analytics (TM1, Workspace, budgeting & forecasting)"] },
         { practice: "Automation & FinOps", products: ["IBM Apptio (TBM orientation, cost allocation, reporting)", "IBM Instana (APM navigation, alerting, baselines)", "IBM Turbonomic (optimization actions, policy, cloud cost reporting)", "IBM Concert (preview overview — agentic IT ops, governance model)"] },
         { practice: "Security & Compliance", products: ["IBM Guardium (DAM policy, compliance reporting, vulnerability assessment)", "IBM QRadar (SIEM fundamentals, use-case configuration, alert triage)", "IBM Resilient / QRadar SOAR (playbook design, incident lifecycle)"] },
+        { practice: "Infrastructure",        products: ["IBM Storage Fusion HCI (OpenShift cluster operations, storage administration, backup/DR runbooks for watsonx and Cloud Pak for Data)"] },
       ],
     },
     crossLinks: [
