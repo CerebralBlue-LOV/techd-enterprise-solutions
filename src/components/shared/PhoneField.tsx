@@ -2,11 +2,13 @@ import * as React from "react";
 import {
   getCountries,
   getCountryCallingCode,
+  getExampleNumber,
   parsePhoneNumberFromString,
   validatePhoneNumberLength,
   AsYouType,
   type CountryCode,
 } from "libphonenumber-js";
+import examples from "libphonenumber-js/examples.mobile.json";
 import en from "react-phone-number-input/locale/en.json";
 import { Check, ChevronDown, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
