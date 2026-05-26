@@ -427,10 +427,10 @@ const ContactForm = () => {
                 <p className="font-normal">
                   {submitError}{" "}
                   <a
-                    href="mailto:fvargas@techd.com"
+                    href="mailto:bsyring@techd.com,info@techd.com"
                     className="font-bold underline underline-offset-2 hover:text-destructive/80"
                   >
-                    fvargas@techd.com
+                    bsyring@techd.com
                   </a>
                 </p>
               </div>
