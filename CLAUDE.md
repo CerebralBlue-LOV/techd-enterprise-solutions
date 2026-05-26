@@ -34,14 +34,14 @@ If unsure whether something is sensitive, leave it out of the commit.
 | 3D / Hero | three.js + @react-three/fiber + @react-three/drei |
 | Hosting | GitHub Pages (served from `/techd-enterprise-solutions/`) |
 | CI/CD | GitHub Actions (`.github/workflows/deploy.yml`) |
-| Contact backend | AWS Lambda + SES (not built yet) |
+| Contact backend | Google Apps Script web app (POST, `no-cors`) — see Contact form below |
 | Design tool | Lovable (bidirectional sync with `main`) |
 
 ## Working agreement
 
 - **Always `git pull` before starting work.** Lovable may have pushed changes between sessions.
 - **Lovable handles:** new components, visual iteration, design tweaks.
-- **Claude Code handles:** build config, GitHub Actions, AWS Lambda form backend, SEO files, content data files in `src/content/`, brand tokens, infrastructure — anything Lovable does badly.
+- **Claude Code handles:** build config, GitHub Actions, Apps Script form backend, SEO files, content data files in `src/content/`, brand tokens, infrastructure — anything Lovable does badly.
 - **Don't edit a file Lovable just touched** without checking — overwrite risk when Lovable pulls.
 - **Push frequently.** Small commits, descriptive messages. Lovable must stay in sync.
 
@@ -219,7 +219,7 @@ To regenerate favicons: `python3 scripts/generate-favicon.py`
 
 - Don't suggest switching to Astro, Next.js, or any other framework. Stack is locked.
 - Don't add CMS integration. Deferred.
-- Don't build form backends in the React app. Forms POST to an AWS Lambda function (not built yet).
+- Don't build a Node/Express/Cloudflare form backend in the React app. The contact form POSTs JSON (as `text/plain`, `mode: "no-cors"`) directly to a Google Apps Script web app hosted in TechD's Google Workspace. See the Contact form section below for the integration details.
 - Don't add new dependencies without flagging the trade-off.
 - Don't touch `src/components/ui/` — those are shadcn defaults.
 - Don't introduce raw hex colors anywhere.
