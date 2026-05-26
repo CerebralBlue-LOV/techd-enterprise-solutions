@@ -212,7 +212,7 @@ const PhoneField = React.forwardRef<HTMLInputElement, Props>(
           type="tel"
           inputMode="tel"
           autoComplete="tel-national"
-          placeholder={placeholder ?? "(555) 123-4567"}
+          placeholder={placeholder ?? examplePlaceholder ?? "Phone number"}
           value={nationalDisplay}
           onChange={(e) => handleNumberChange(e.target.value)}
           onBlur={onBlur}
