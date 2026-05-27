@@ -24,14 +24,20 @@ const ClientsLab = () => {
   const setHeight = (name: string, h: HeightToken) =>
     setHeights((prev) => ({ ...prev, [name]: h }));
 
+  const changed = useMemo(
+    () => MARC_CLIENTS.filter((c) => heights[c.name] !== c.defaultHeight),
+    [heights]
+  );
+
   const snippet = useMemo(() => {
+    if (changed.length === 0) {
+      return "// No entries changed yet. Move a slider to generate a snippet.";
+    }
     const lines = [
-      "// Paste into CUSTOMERS in src/content/site.ts",
-      "// Reminder: move the 7 revived logos from public/images/deprecated/partners-deprecated/",
-      "// into public/images/partners/ before this works on the live site.",
+      `// ${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} — paste into CUSTOMERS in src/content/site.ts`,
       "",
     ];
-    for (const c of MARC_CLIENTS) {
+    for (const c of changed) {
       const cls = toLogoClass(heights[c.name]);
       if (c.placeholder) {
         lines.push(`// TODO add logo file: ${c.logo}`);
@@ -45,14 +51,14 @@ const ClientsLab = () => {
       }
     }
     return lines.join("\n");
-  }, [heights]);
+  }, [changed, heights]);
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(snippet);
       toast({
         title: "Copied to clipboard",
-        description: `${MARC_CLIENTS.length} entries ready to paste into site.ts`,
+        description: `${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} ready to paste into site.ts`,
       });
     } catch {
       toast({
@@ -102,8 +108,8 @@ const ClientsLab = () => {
                 .
               </p>
             </div>
-            <Button onClick={handleCopy} className="btn-glow shrink-0">
-              Copy ALL entries
+            <Button onClick={handleCopy} className="btn-glow shrink-0" disabled={changed.length === 0}>
+              Copy changed entries ({changed.length})
             </Button>
           </div>
 
