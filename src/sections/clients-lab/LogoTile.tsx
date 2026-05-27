@@ -5,22 +5,44 @@ interface LogoTileProps {
   client: LabClient;
   height: HeightToken;
   onHeightChange: (h: HeightToken) => void;
+  variant?: "light" | "dark";
 }
 
-export const LogoTile = ({ client, height, onHeightChange }: LogoTileProps) => {
+export const LogoTile = ({ client, height, onHeightChange, variant = "light" }: LogoTileProps) => {
   const heightIndex = HEIGHT_TOKENS.indexOf(height);
   const logoClass = toLogoClass(height);
-  const src = client.currentLogo
+  const isDark = variant === "dark";
+
+  const lightSrc = client.currentLogo
     ? `${import.meta.env.BASE_URL}${client.currentLogo.replace(/^\//, "")}`
     : undefined;
+  const darkSrc = client.currentLogoDark
+    ? `${import.meta.env.BASE_URL}${client.currentLogoDark.replace(/^\//, "")}`
+    : undefined;
+
+  // Dark preview: prefer generated white PNG; fallback to CSS-inverted light source
+  const src = isDark ? (darkSrc ?? lightSrc) : lightSrc;
+  const needsInvert = isDark && !darkSrc && !!lightSrc;
 
   return (
-    <div className="flex flex-col rounded-lg border border-border bg-card p-5">
-      {/* Preview area — fixed height so grid doesn't jump as slider moves */}
-      <div className="flex h-32 items-center justify-center rounded border border-dashed border-border bg-background">
+    <div
+      className={`flex flex-col rounded-lg border p-5 ${
+        isDark ? "border-muted-foreground/30 bg-secondary" : "border-border bg-card"
+      }`}
+    >
+      {/* Preview area */}
+      <div
+        className={`flex h-32 items-center justify-center rounded border border-dashed ${
+          isDark ? "border-muted-foreground/40 bg-secondary" : "border-border bg-background"
+        }`}
+      >
         {client.placeholder || !src ? (
           <div
-            className={`${logoClass} flex items-center justify-center rounded border border-dashed border-muted-foreground bg-muted/40 px-4 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground transition-all duration-300`}
+            className={`${logoClass} flex items-center justify-center rounded border border-dashed px-4 text-center text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
+              isDark
+                ? "border-background/40 bg-background/10 text-background"
+                : "border-muted-foreground bg-muted/40 text-muted-foreground"
+            }`}
           >
             {client.name}
           </div>
@@ -28,19 +50,27 @@ export const LogoTile = ({ client, height, onHeightChange }: LogoTileProps) => {
           <img
             src={src}
             alt={client.name}
-            className={`${logoClass} w-auto object-contain opacity-70 grayscale transition-all duration-300 hover:scale-105 hover:opacity-100 hover:grayscale-0`}
+            className={`${logoClass} w-auto object-contain transition-all duration-300 ${
+              isDark
+                ? `opacity-90 hover:opacity-100${needsInvert ? " invert brightness-0" : ""}`
+                : "opacity-70 grayscale hover:scale-105 hover:opacity-100 hover:grayscale-0"
+            }`}
           />
         )}
       </div>
 
       {/* Meta */}
       <div className="mt-4 min-h-[2.5rem]">
-        <p className="text-sm font-bold text-foreground leading-tight">{client.name}</p>
+        <p className={`text-sm font-bold leading-tight ${isDark ? "text-background" : "text-foreground"}`}>
+          {client.name}
+        </p>
         <a
           href={client.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-1 inline-block text-[11px] font-light text-muted-foreground hover:text-primary truncate max-w-full"
+          className={`mt-1 inline-block text-[11px] font-light hover:text-primary truncate max-w-full ${
+            isDark ? "text-background/70" : "text-muted-foreground"
+          }`}
         >
           {client.url.replace(/^https?:\/\//, "")} ↗
         </a>
@@ -51,21 +81,29 @@ export const LogoTile = ({ client, height, onHeightChange }: LogoTileProps) => {
         )}
       </div>
 
-      {/* Slider */}
-      <div className="mt-3">
-        <Slider
-          value={[heightIndex]}
-          min={0}
-          max={HEIGHT_TOKENS.length - 1}
-          step={1}
-          onValueChange={(vals) => onHeightChange(HEIGHT_TOKENS[vals[0]])}
-        />
-        <div className="mt-2 flex items-center justify-between font-mono text-[11px] text-muted-foreground">
-          <span>h-6</span>
-          <span className="rounded bg-muted px-2 py-0.5 text-foreground">{logoClass}</span>
-          <span>h-20</span>
+      {/* Slider — only on light variant (source of truth) */}
+      {!isDark ? (
+        <div className="mt-3">
+          <Slider
+            value={[heightIndex]}
+            min={0}
+            max={HEIGHT_TOKENS.length - 1}
+            step={1}
+            onValueChange={(vals) => onHeightChange(HEIGHT_TOKENS[vals[0]])}
+          />
+          <div className="mt-2 flex items-center justify-between font-mono text-[11px] text-muted-foreground">
+            <span>h-6</span>
+            <span className="rounded bg-muted px-2 py-0.5 text-foreground">{logoClass}</span>
+            <span>h-20</span>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="mt-3 flex justify-center">
+          <span className="rounded bg-background/10 px-2 py-0.5 font-mono text-[11px] text-background">
+            {logoClass}
+          </span>
+        </div>
+      )}
     </div>
   );
 };
