@@ -58,7 +58,7 @@ const ClientsLab = () => {
       await navigator.clipboard.writeText(snippet);
       toast({
         title: "Copied to clipboard",
-        description: `${MARC_CLIENTS.length} entries ready to paste into site.ts`,
+        description: `${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} ready to paste into site.ts`,
       });
     } catch {
       toast({
