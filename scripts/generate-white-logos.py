@@ -47,7 +47,7 @@ EDGE_TOLERANCE = 18    # tolerance for matching the dominant corner color
 
 
 def find_source(stem: str) -> Path | None:
-    for ext in (".svg", ".png", ".jpg", ".jpeg"):
+    for ext in (".svg", ".png", ".jpg", ".jpeg", ".webp"):
         p = SRC_DIR / f"{stem}{ext}"
         if p.exists():
             return p
