@@ -5,51 +5,52 @@ import { Button } from "@ui/button";
 import { toast } from "@hooks/use-toast";
 import { LogoTile } from "@sections/clients-lab/LogoTile";
 import {
-  getLabClients,
+  MARC_CLIENTS,
   toLogoClass,
   type HeightToken,
-  type LabClient,
 } from "@sections/clients-lab/clients-lab-data";
 
 /**
- * Internal sizing lab — sandbox for the home-page logo strip.
- * Reads from the live CUSTOMERS array in src/content/site.ts and only emits
- * size-only diffs. It never adds, removes, or renames clients.
- *
+ * Internal sizing lab for Marc's 13-client logo list.
  * Hidden route — not in nav, noindex.
+ * Workflow: tune each logo's height, hit "Copy ALL entries", paste into
+ * src/content/site.ts CUSTOMERS.
  */
 const ClientsLab = () => {
-  const clients = useMemo<LabClient[]>(() => getLabClients(), []);
-
   const [heights, setHeights] = useState<Record<string, HeightToken>>(() =>
-    Object.fromEntries(clients.map((c) => [c.name, c.currentHeight]))
+    Object.fromEntries(MARC_CLIENTS.map((c) => [c.name, c.defaultHeight]))
   );
 
   const setHeight = (name: string, h: HeightToken) =>
     setHeights((prev) => ({ ...prev, [name]: h }));
 
   const changed = useMemo(
-    () => clients.filter((c) => toLogoClass(heights[c.name]) !== c.currentClass),
-    [clients, heights]
+    () => MARC_CLIENTS.filter((c) => heights[c.name] !== c.defaultHeight),
+    [heights]
   );
 
   const snippet = useMemo(() => {
     if (changed.length === 0) {
-      return "// No entries changed yet. Move a slider to generate a diff.";
+      return "// No entries changed yet. Move a slider to generate a snippet.";
     }
     const lines = [
-      `// ${changed.length} size change${changed.length === 1 ? "" : "s"} — paste over the matching row(s) in CUSTOMERS in src/content/site.ts`,
+      `// ${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} — paste into CUSTOMERS in src/content/site.ts`,
       "",
     ];
     for (const c of changed) {
       const cls = toLogoClass(heights[c.name]);
-      lines.push(
-        `// ${c.name}: ${c.currentClass ?? "(no logoClass)"} → ${cls}`
-      );
-      lines.push(`logoClass: "${cls}",`);
-      lines.push("");
+      if (c.placeholder) {
+        lines.push(`// TODO add logo file: ${c.logo}`);
+        lines.push(
+          `// { name: "${c.name}", url: "${c.url}", logo: "${c.logo}", logoClass: "${cls}" },`
+        );
+      } else {
+        lines.push(
+          `{ name: "${c.name}", url: "${c.url}", logo: "${c.logo}", logoClass: "${cls}" },`
+        );
+      }
     }
-    return lines.join("\n").trimEnd();
+    return lines.join("\n");
   }, [changed, heights]);
 
   const handleCopy = async () => {
@@ -58,6 +59,7 @@ const ClientsLab = () => {
       await navigator.clipboard.writeText(snippet);
       ok = true;
     } catch {
+      // Fallback for sandboxed iframes where the async Clipboard API is blocked
       try {
         const ta = document.createElement("textarea");
         ta.value = snippet;
@@ -75,7 +77,7 @@ const ClientsLab = () => {
     if (ok) {
       toast({
         title: "Copied to clipboard",
-        description: `${changed.length} size change${changed.length === 1 ? "" : "s"} ready to paste into site.ts`,
+        description: `${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} ready to paste into site.ts`,
       });
     } else {
       toast({
@@ -87,6 +89,9 @@ const ClientsLab = () => {
       console.log(snippet);
     }
   };
+
+
+  const placeholderCount = MARC_CLIENTS.filter((c) => c.placeholder).length;
 
   return (
     <Layout>
@@ -103,8 +108,8 @@ const ClientsLab = () => {
               Internal tool
             </span>
             <span className="ml-2 text-muted-foreground">
-              Sizing sandbox for the home-page logo strip. Reads live CUSTOMERS from
-              site.ts. Emits size-only diffs. Never adds or removes clients.
+              Sizing sandbox for the home-page logo strip. Not linked from nav.
+              Not indexed.
             </span>
           </div>
 
@@ -115,12 +120,10 @@ const ClientsLab = () => {
                 Clients Lab
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground font-light">
-                {clients.length} clients currently in the live strip. Adjust any
-                slider, then copy the diff and paste it over the matching{" "}
-                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
-                  logoClass
-                </code>{" "}
-                in{" "}
+                Marc's list of {MARC_CLIENTS.length} TechD clients.{" "}
+                {MARC_CLIENTS.length - placeholderCount} have logos,{" "}
+                {placeholderCount} are placeholders. Adjust each height with the
+                slider, then copy the generated snippet into{" "}
                 <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
                   src/content/site.ts
                 </code>
@@ -134,7 +137,7 @@ const ClientsLab = () => {
 
           {/* Grid */}
           <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {clients.map((c) => (
+            {MARC_CLIENTS.map((c) => (
               <LogoTile
                 key={c.name}
                 client={c}
@@ -143,6 +146,7 @@ const ClientsLab = () => {
               />
             ))}
           </div>
+
         </div>
       </section>
     </Layout>

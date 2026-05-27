@@ -10,18 +10,27 @@ interface LogoTileProps {
 export const LogoTile = ({ client, height, onHeightChange }: LogoTileProps) => {
   const heightIndex = HEIGHT_TOKENS.indexOf(height);
   const logoClass = toLogoClass(height);
-  const src = `${import.meta.env.BASE_URL}${client.logo.replace(/^\//, "")}`;
-  const isDirty = client.currentClass !== logoClass;
+  const src = client.currentLogo
+    ? `${import.meta.env.BASE_URL}${client.currentLogo.replace(/^\//, "")}`
+    : undefined;
 
   return (
     <div className="flex flex-col rounded-lg border border-border bg-card p-5">
       {/* Preview area — fixed height so grid doesn't jump as slider moves */}
       <div className="flex h-32 items-center justify-center rounded border border-dashed border-border bg-background">
-        <img
-          src={src}
-          alt={client.name}
-          className={`${logoClass} w-auto object-contain opacity-70 grayscale transition-all duration-300 hover:scale-105 hover:opacity-100 hover:grayscale-0`}
-        />
+        {client.placeholder || !src ? (
+          <div
+            className={`${logoClass} flex items-center justify-center rounded border border-dashed border-muted-foreground bg-muted/40 px-4 text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground transition-all duration-300`}
+          >
+            {client.name}
+          </div>
+        ) : (
+          <img
+            src={src}
+            alt={client.name}
+            className={`${logoClass} w-auto object-contain opacity-70 grayscale transition-all duration-300 hover:scale-105 hover:opacity-100 hover:grayscale-0`}
+          />
+        )}
       </div>
 
       {/* Meta */}
@@ -35,6 +44,11 @@ export const LogoTile = ({ client, height, onHeightChange }: LogoTileProps) => {
         >
           {client.url.replace(/^https?:\/\//, "")} ↗
         </a>
+        {client.placeholder && (
+          <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+            Placeholder — needs logo file
+          </p>
+        )}
       </div>
 
       {/* Slider */}
@@ -48,16 +62,9 @@ export const LogoTile = ({ client, height, onHeightChange }: LogoTileProps) => {
         />
         <div className="mt-2 flex items-center justify-between font-mono text-[11px] text-muted-foreground">
           <span>h-6</span>
-          <span className={`rounded px-2 py-0.5 ${isDirty ? "bg-primary/15 text-primary font-bold" : "bg-muted text-foreground"}`}>
-            {logoClass}
-          </span>
+          <span className="rounded bg-muted px-2 py-0.5 text-foreground">{logoClass}</span>
           <span>h-20</span>
         </div>
-        {client.currentClass && isDirty && (
-          <p className="mt-1 text-center font-mono text-[10px] text-muted-foreground">
-            current: {client.currentClass}
-          </p>
-        )}
       </div>
     </div>
   );
