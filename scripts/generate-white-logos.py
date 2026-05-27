@@ -128,10 +128,30 @@ def trim(img: Image.Image) -> Image.Image:
 
 
 def main() -> int:
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--src", help="Source dir (overrides default partners/)", default=None)
+    parser.add_argument("--out", help="Output dir (overrides default partners/white/)", default=None)
+    parser.add_argument("--all", action="store_true", help="Process every image in src dir (ignore ALLOW)")
+    args = parser.parse_args()
+
+    global SRC_DIR, OUT_DIR
+    if args.src:
+        SRC_DIR = (ROOT / args.src).resolve()
+    if args.out:
+        OUT_DIR = (ROOT / args.out).resolve()
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"Source: {SRC_DIR.relative_to(ROOT)}")
     print(f"Output: {OUT_DIR.relative_to(ROOT)}\n")
+
+    if args.all:
+        stems = sorted({p.stem for p in SRC_DIR.iterdir() if p.is_file() and p.suffix.lower() in (".svg", ".png", ".jpg", ".jpeg", ".webp")})
+    else:
+        stems = ALLOW
+
     summary = []
-    for stem in ALLOW:
+    for stem in stems:
         src = find_source(stem)
         if src is None:
             summary.append((stem, "MISSING source", 0))
@@ -142,7 +162,6 @@ def main() -> int:
             continue
         white = knockout_to_white(img)
         white = trim(white)
-        # Sanity: count non-transparent pixels
         alpha = white.split()[-1]
         opaque = sum(1 for v in alpha.getdata() if v > 0)
         out_path = OUT_DIR / f"{stem}.png"
