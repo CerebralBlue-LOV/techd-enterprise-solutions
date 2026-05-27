@@ -67,22 +67,22 @@ export const MARC_CLIENTS: LabClient[] = [
   {
     name: "Concord Music",
     url: "https://concord.com",
-    logo: "/images/partners/concord-music.svg",
-    placeholder: true,
+    logo: "/images/partners/concord-music.png",
+    currentLogo: "/images/partners/concord-music.png",
     defaultHeight: "h-10",
   },
   {
     name: "State of Delaware",
     url: "https://delaware.gov",
-    logo: "/images/partners/state-of-delaware.svg",
-    placeholder: true,
+    logo: "/images/partners/state-of-delaware.png",
+    currentLogo: "/images/partners/state-of-delaware.png",
     defaultHeight: "h-12",
   },
   {
     name: "FIA Tech",
     url: "https://fia-tech.com",
-    logo: "/images/partners/fia-tech.svg",
-    placeholder: true,
+    logo: "/images/partners/fia-tech.jpg",
+    currentLogo: "/images/partners/fia-tech.jpg",
     defaultHeight: "h-8",
   },
   {
@@ -102,8 +102,8 @@ export const MARC_CLIENTS: LabClient[] = [
   {
     name: "Noresco",
     url: "https://www.noresco.com",
-    logo: "/images/partners/noresco.svg",
-    placeholder: true,
+    logo: "/images/partners/noresco.png",
+    currentLogo: "/images/partners/noresco.png",
     defaultHeight: "h-8",
   },
   {
@@ -123,8 +123,8 @@ export const MARC_CLIENTS: LabClient[] = [
   {
     name: "Memorial Sloan Kettering",
     url: "https://www.mskcc.org",
-    logo: "/images/partners/msk.svg",
-    placeholder: true,
+    logo: "/images/partners/msk.png",
+    currentLogo: "/images/partners/msk.png",
     defaultHeight: "h-10",
   },
   {
