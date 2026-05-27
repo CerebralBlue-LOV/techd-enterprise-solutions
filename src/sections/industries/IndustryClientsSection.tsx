@@ -7,14 +7,14 @@ import DarkGlowPanel from "@shared/DarkGlowPanel";
 import { Button } from "@ui/button";
 import { type Industry } from "@content/industries";
 import { INDUSTRIES_EXTRAS, type ClientEntry } from "@content/industries-extras";
-import { CUSTOMERS, type Customer } from "@content/site";
+import { CLIENTS, type Client } from "@content/site";
 import { cn } from "@/lib/utils";
 
 interface Props {
   industry: Industry;
 }
 
-type ResolvedClient = ClientEntry & { customer?: Customer };
+type ResolvedClient = ClientEntry & { client?: Client };
 
 const GLOW_POSITIONS = [
   { x: "20%", y: "15%" },
@@ -61,7 +61,7 @@ const SlideContent = ({
       ? "animate-slide-out-right"
       : "animate-slide-out-left";
   const baseDelay = isIn ? 1400 : 0;
-  const c = client.customer;
+  const c = client.client;
   const logoSrc = c?.logo
     ? `${import.meta.env.BASE_URL}${(c.logoOnDark ?? c.logo).replace(/^\//, "")}`
     : null;
@@ -143,7 +143,7 @@ export const IndustryClientsSection = ({ industry }: Props) => {
   const resolved: ResolvedClient[] = (extras?.clients ?? []).slice(0, 12).map(
     (c) => ({
       ...c,
-      customer: CUSTOMERS.find((x) => x.name === c.name),
+      client: CLIENTS.find((x) => x.name === c.name),
     }),
   );
   const total = resolved.length;

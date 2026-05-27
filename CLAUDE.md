@@ -199,18 +199,36 @@ Two locations, two rules:
 
 **`src/assets/`** — brand and team images. Always use ES module imports (`import logo from "@/assets/brand/techd-logo.webp"`). Vite fingerprints these files, handles the GitHub Pages base path automatically, and tree-shakes unused ones.
 
-**`public/images/`** — customer logos and deprecated assets. Referenced as string paths. Consumer components prepend `import.meta.env.BASE_URL` so they resolve correctly on GitHub Pages.
+**`public/images/`** — client logos and deprecated assets. Referenced as string paths. Consumer components prepend `import.meta.env.BASE_URL` so they resolve correctly on GitHub Pages.
 
 | Location | Contents | How to reference |
 |---|---|---|
 | `src/assets/brand/` | techd-logo.webp, ibm-logo-white.png, techd-gear.png, techd-wordmark.png | ES module import |
 | `src/assets/team/` | garrett-rowe.jpg, marc-martina.jpg | ES module import |
-| `public/images/partners/` | Active customer logos (light) — defined in `site.ts` | String path via BASE_URL |
-| `public/images/partners/white/` | Active customer logos (dark background) | String path via BASE_URL |
+| `public/images/clients/light/` | Active client logos (color, light bg) — derived from `clients-lab-data.ts` | String path via BASE_URL |
+| `public/images/clients/dark/` | Active client logos (white-on-transparent, dark bg) | String path via BASE_URL |
+| `public/images/deprecated/partners-2025/` | Retired legacy partner/brand logos — do not reintroduce | (not referenced) |
 
 Favicons (`favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`) stay at `public/` root — browser convention.
 
 To regenerate favicons: `python3 scripts/generate-favicon.py`
+
+## Client list (single source of truth)
+
+The TechD client list — the 13 names rendered in the home `LogoStrip` and every industry "Clients we serve" carousel — is owned by **one file**:
+
+**`src/sections/clients-lab/clients-lab-data.ts`** exports `CLIENTS`. `src/content/site.ts` re-derives its public `CLIENTS` constant from it. Do not hand-edit `site.ts` to add or resize a client.
+
+Rules:
+
+- **One word, used everywhere: `clients`.** Do not introduce `customers` or `partners` as folder names, type names, or identifiers. Older `Customer` / `CUSTOMERS` symbols have been retired.
+- **Editing surface: `/clients-lab`.** The sandbox renders both Light and Dark previews, lets you tune each logo's `defaultHeight`, and emits a copy-paste instruction. The lab is hidden from nav and `noindex`.
+- **Logo files:** color logos at `public/images/clients/light/<name>.<ext>`, dark variants at `public/images/clients/dark/<name>.png`. Regenerate dark variants with `python3 scripts/generate-white-logos.py --src public/images/clients/light --out public/images/clients/dark --all`.
+- **Industry assignment:** `src/content/industries-extras.ts` `clients[]` per industry. Each `name` must match a `CLIENTS` entry exactly, or the carousel falls back to initials.
+- **Higher Education currently has no client.** `IndustryClientsSection` returns `null` for an empty list, so the carousel auto-hides. When a real higher-ed client lands, add it to the lab and populate `higher-education.clients[]`.
+- **Do not reintroduce legacy partner logos** from `public/images/deprecated/partners-2025/`. They are retired.
+
+
 
 ## Anti-patterns to avoid
 

@@ -1,11 +1,11 @@
-import { CUSTOMERS, type Customer } from "@/content/site";
+import { CLIENTS, type Client } from "@/content/site";
 import { useDarkMode } from "@hooks/use-dark-mode";
 
 const Row = ({
   items,
   reverse = false,
 }: {
-  items: Customer[];
+  items: Client[];
   reverse?: boolean;
 }) => {
   const { isDark } = useDarkMode();
@@ -80,7 +80,7 @@ export const LogoStrip = ({ bordered = true }: { bordered?: boolean }) => {
       </div>
 
       <div className="mt-8">
-        <Row items={CUSTOMERS} />
+        <Row items={CLIENTS} />
       </div>
     </section>
   );

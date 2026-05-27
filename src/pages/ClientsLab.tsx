@@ -5,26 +5,26 @@ import { Button } from "@ui/button";
 import { toast } from "@hooks/use-toast";
 import { LogoTile } from "@sections/clients-lab/LogoTile";
 import {
-  MARC_CLIENTS,
+  CLIENTS,
   type HeightToken,
 } from "@sections/clients-lab/clients-lab-data";
 
 /**
- * Internal sizing lab for Marc's 13-client logo list.
+ * Internal sizing lab — source of truth for the 13 TechD clients.
  * Hidden route — not in nav, noindex.
- * Workflow: tune each logo's height, hit "Copy ALL entries", paste into
- * src/content/site.ts CUSTOMERS.
+ * Workflow: tune each logo's height, hit "Copy changed sizes", paste the
+ * resulting instruction into src/sections/clients-lab/clients-lab-data.ts.
  */
 const ClientsLab = () => {
   const [heights, setHeights] = useState<Record<string, HeightToken>>(() =>
-    Object.fromEntries(MARC_CLIENTS.map((c) => [c.name, c.defaultHeight]))
+    Object.fromEntries(CLIENTS.map((c) => [c.name, c.defaultHeight]))
   );
 
   const setHeight = (name: string, h: HeightToken) =>
     setHeights((prev) => ({ ...prev, [name]: h }));
 
   const changed = useMemo(
-    () => MARC_CLIENTS.filter((c) => heights[c.name] !== c.defaultHeight),
+    () => CLIENTS.filter((c) => heights[c.name] !== c.defaultHeight),
     [heights]
   );
 
@@ -44,10 +44,10 @@ const ClientsLab = () => {
 
   const currentSnippet = useMemo(() => {
     const lines = [
-      `Current sizes for all ${MARC_CLIENTS.length} clients in /clients-lab:`,
+      `Current sizes for all ${CLIENTS.length} clients in /clients-lab:`,
       "",
     ];
-    for (const c of MARC_CLIENTS) {
+    for (const c of CLIENTS) {
       lines.push(`- ${c.name}: ${heights[c.name]}`);
     }
     return lines.join("\n");
@@ -80,7 +80,7 @@ const ClientsLab = () => {
     if (ok) {
       toast({
         title: "Copied to clipboard",
-        description: `${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} ready to paste into site.ts`,
+        description: `${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} ready to paste`,
       });
     } else {
       toast({
@@ -98,7 +98,7 @@ const ClientsLab = () => {
     if (ok) {
       toast({
         title: "Copied to clipboard",
-        description: `Current sizes for all ${MARC_CLIENTS.length} clients`,
+        description: `Current sizes for all ${CLIENTS.length} clients`,
       });
     } else {
       toast({
@@ -110,9 +110,6 @@ const ClientsLab = () => {
       console.log(currentSnippet);
     }
   };
-
-
-
 
   return (
     <Layout>
@@ -131,7 +128,7 @@ const ClientsLab = () => {
                 Clients Lab
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground font-light">
-                Marc's list of {MARC_CLIENTS.length} TechD clients.
+                TechD's {CLIENTS.length} clients — source of truth for the home strip and every industry carousel.
               </p>
             </div>
             <div className="flex flex-wrap gap-2 shrink-0">
@@ -148,7 +145,7 @@ const ClientsLab = () => {
             Light
           </p>
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {MARC_CLIENTS.map((c) => (
+            {CLIENTS.map((c) => (
               <LogoTile
                 key={`light-${c.name}`}
                 client={c}
@@ -168,7 +165,7 @@ const ClientsLab = () => {
             Dark
           </p>
           <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {MARC_CLIENTS.map((c) => (
+            {CLIENTS.map((c) => (
               <LogoTile
                 key={`dark-${c.name}`}
                 client={c}
