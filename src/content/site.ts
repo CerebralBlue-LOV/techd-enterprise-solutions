@@ -123,7 +123,7 @@ export const CUSTOMERS: Customer[] = [
   { name: "Children's Health", url: "https://www.childrens.com", logo: "/images/partners/childrens-health.svg", logoOnDark: "/images/partners/white/childrens-health.png", logoClass: "h-8 md:h-9" },
 
   // TechD-true clients (Marc's list — appended; no dark variants yet)
-  { name: "Hamilton Beach", url: "https://hamiltonbeach.com", logo: "/images/partners/hamilton-beach.png", logoClass: "h-20 md:h-20" },
+  { name: "Hamilton Beach", url: "https://hamiltonbeach.com", logo: "/images/partners/hamilton-beach.png", logoClass: "h-10 md:h-12" },
   { name: "Concord Music", url: "https://concord.com", logo: "/images/partners/concord-music.png", logoClass: "h-16 md:h-20" },
   { name: "State of Delaware", url: "https://delaware.gov", logo: "/images/partners/state-of-delaware.png", logoClass: "h-14 md:h-16" },
   { name: "FIA Tech", url: "https://fia-tech.com", logo: "/images/partners/fia-tech.jpg", logoClass: "h-10 md:h-12" },
