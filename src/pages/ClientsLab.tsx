@@ -42,27 +42,41 @@ const ClientsLab = () => {
     return lines.join("\n");
   }, [changed, heights]);
 
-  const handleCopy = async () => {
-    let ok = false;
+  const currentSnippet = useMemo(() => {
+    const lines = [
+      `Current sizes for all ${MARC_CLIENTS.length} clients in /clients-lab:`,
+      "",
+    ];
+    for (const c of MARC_CLIENTS) {
+      lines.push(`- ${c.name}: ${heights[c.name]}`);
+    }
+    return lines.join("\n");
+  }, [heights]);
+
+  const copyToClipboard = async (text: string): Promise<boolean> => {
     try {
-      await navigator.clipboard.writeText(snippet);
-      ok = true;
+      await navigator.clipboard.writeText(text);
+      return true;
     } catch {
-      // Fallback for sandboxed iframes where the async Clipboard API is blocked
       try {
         const ta = document.createElement("textarea");
-        ta.value = snippet;
+        ta.value = text;
         ta.style.position = "fixed";
         ta.style.opacity = "0";
         document.body.appendChild(ta);
         ta.focus();
         ta.select();
-        ok = document.execCommand("copy");
+        const ok = document.execCommand("copy");
         document.body.removeChild(ta);
+        return ok;
       } catch {
-        ok = false;
+        return false;
       }
     }
+  };
+
+  const handleCopy = async () => {
+    const ok = await copyToClipboard(snippet);
     if (ok) {
       toast({
         title: "Copied to clipboard",
@@ -76,6 +90,24 @@ const ClientsLab = () => {
       });
       // eslint-disable-next-line no-console
       console.log(snippet);
+    }
+  };
+
+  const handleCopyCurrent = async () => {
+    const ok = await copyToClipboard(currentSnippet);
+    if (ok) {
+      toast({
+        title: "Copied to clipboard",
+        description: `Current sizes for all ${MARC_CLIENTS.length} clients`,
+      });
+    } else {
+      toast({
+        title: "Copy failed",
+        description: "Open this page in a new tab to copy, or check console for the snippet.",
+        variant: "destructive",
+      });
+      // eslint-disable-next-line no-console
+      console.log(currentSnippet);
     }
   };
 
