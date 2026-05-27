@@ -123,9 +123,12 @@ export const CUSTOMERS: Customer[] = [
   { name: "Children's Health", url: "https://www.childrens.com", logo: "/images/partners/childrens-health.svg", logoOnDark: "/images/partners/white/childrens-health.png", logoClass: "h-8 md:h-9" },
 
   // TechD-true clients (Marc's list — appended; no dark variants yet)
+  { name: "Hamilton Beach", url: "https://hamiltonbeach.com", logo: "/images/partners/hamilton-beach.png", logoClass: "h-20 md:h-20" },
   { name: "Concord Music", url: "https://concord.com", logo: "/images/partners/concord-music.png", logoClass: "h-16 md:h-20" },
+  { name: "State of Delaware", url: "https://delaware.gov", logo: "/images/partners/state-of-delaware.png", logoClass: "h-14 md:h-16" },
   { name: "FIA Tech", url: "https://fia-tech.com", logo: "/images/partners/fia-tech.jpg", logoClass: "h-10 md:h-12" },
   { name: "L3Harris", url: "https://www.l3harris.com", logo: "/images/partners/l3harris.png", logoClass: "h-10 md:h-12" },
   { name: "MISO", url: "https://www.misoenergy.org", logo: "/images/partners/miso-energy.png", logoClass: "h-12 md:h-14" },
   { name: "Noresco", url: "https://www.noresco.com", logo: "/images/partners/noresco.png", logoClass: "h-9 md:h-10" },
+  { name: "Sony Pictures", url: "https://www.sonypictures.com", logo: "/images/partners/sony-pictures.png", logoClass: "h-16 md:h-20" },
 ];
