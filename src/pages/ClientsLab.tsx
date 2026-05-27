@@ -125,20 +125,6 @@ const ClientsLab = () => {
             ))}
           </div>
 
-          {/* Snippet preview */}
-          <div className="mt-12">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-foreground">
-                Generated snippet
-              </h2>
-              <Button variant="outline" size="sm" onClick={handleCopy}>
-                Copy
-              </Button>
-            </div>
-            <pre className="max-h-96 overflow-auto rounded-lg border border-border bg-muted/30 p-4 font-mono text-xs leading-relaxed text-foreground">
-              {snippet}
-            </pre>
-          </div>
         </div>
       </section>
     </Layout>
