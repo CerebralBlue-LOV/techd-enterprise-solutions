@@ -54,7 +54,7 @@ export const MARC_CLIENTS: LabClient[] = [
     name: "Hamilton Beach",
     url: "https://hamiltonbeach.com",
     logo: "/images/partners/hamilton-beach.png",
-    currentLogo: "/images/deprecated/partners-deprecated/hamilton-beach.png",
+    currentLogo: "/images/partners/hamilton-beach.png",
     defaultHeight: "h-10",
   },
   {
