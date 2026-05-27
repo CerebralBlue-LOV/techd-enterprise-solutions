@@ -3,15 +3,6 @@ import Home from "@pages/Home";
 import ProductDetail from "@pages/ProductDetail";
 import Contact from "@pages/Contact";
 import NotFound from "@pages/NotFound";
-import AdminLab from "@pages/AdminLab";
-
-import LogoLab from "@pages/LogoLab";
-import FigureLab from "@pages/FigureLab";
-import SectionLab from "@pages/SectionLab";
-import IntroLab from "@pages/IntroLab";
-import TechDBrandLab from "@pages/TechDBrandLab";
-import ContactLab from "@pages/ContactLab";
-
 // Company
 import About from "@pages/company/About";
 import IBMPartnership from "@pages/company/IBMPartnership";
@@ -129,14 +120,6 @@ export const AppRoutes = () => (
     <Route path="/company/customers" element={<Navigate to="/company/about" replace />} />
 
     <Route path="/contact" element={<Contact />} />
-    <Route path="/admin-lab" element={<AdminLab />} />
-    
-    <Route path="/logo-lab" element={<LogoLab />} />
-    <Route path="/figure-lab" element={<FigureLab />} />
-    <Route path="/section-lab" element={<SectionLab />} />
-    <Route path="/intro-lab" element={<IntroLab />} />
-    <Route path="/techd-brand-lab" element={<TechDBrandLab />} />
-    <Route path="/contact-lab" element={<ContactLab />} />
     {/* Catch-all — must stay last. */}
     <Route path="*" element={<NotFound />} />
     </Routes>

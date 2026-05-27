@@ -207,7 +207,6 @@ Two locations, two rules:
 | `src/assets/team/` | garrett-rowe.jpg, marc-martina.jpg | ES module import |
 | `public/images/partners/` | Active customer logos (light) — defined in `site.ts` | String path via BASE_URL |
 | `public/images/partners/white/` | Active customer logos (dark background) | String path via BASE_URL |
-| `public/images/partners-deprecated/` | Orphaned logos — kept pending PM sign-off. Do not reference from any component. Use `/admin-lab` to review. | n/a |
 
 Favicons (`favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`) stay at `public/` root — browser convention.
 
@@ -224,7 +223,6 @@ To regenerate favicons: `python3 scripts/generate-favicon.py`
 - Don't touch `src/components/ui/` — those are shadcn defaults.
 - Don't introduce raw hex colors anywhere.
 - Don't write or apply 410 redirects (see `docs/ARCHITECTURE.md` — spam was theme-level, not URL-based).
-- Don't reference files in `public/images/partners-deprecated/` from any component or content file — those are orphaned logos awaiting PM sign-off for deletion.
 - Don't add images to `src/assets/` — all images belong in `public/images/` and should be referenced as path strings, not ES module imports.
 
 ## Content copy rules (when editing `src/content/`)
@@ -271,7 +269,6 @@ ContactForm.tsx ──► submitContact() ──► fetch(CONTACT_ENDPOINT, no-c
 | `src/lib/contact-submit.ts` | `submitContact(payload)` — fetch with `no-cors`, 10s `AbortController` timeout |
 | `src/sections/contact/ContactForm.tsx` | The form. RHF + zod. Hidden `website` honeypot. `mailto:bsyring@techd.com,info@techd.com` fallback on error |
 | `src/components/shared/PhoneField.tsx` | Custom country-selector + national-number input. E.164 storage, `libphonenumber-js` length-capped per country, example number as placeholder |
-| `src/pages/ContactLab.tsx` | `/contact-lab` — fill-with-test-data button + submit button + live request/response log panel (intercepts `window.fetch`). Internal QA tool |
 
 ### Recipients
 
