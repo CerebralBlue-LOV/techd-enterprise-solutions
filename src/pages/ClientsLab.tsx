@@ -134,9 +134,14 @@ const ClientsLab = () => {
                 Marc's list of {MARC_CLIENTS.length} TechD clients.
               </p>
             </div>
-            <Button onClick={handleCopy} className="btn-glow shrink-0" disabled={changed.length === 0}>
-              Copy changed sizes ({changed.length})
-            </Button>
+            <div className="flex flex-wrap gap-2 shrink-0">
+              <Button onClick={handleCopyCurrent} variant="outline">
+                Copy current sizes
+              </Button>
+              <Button onClick={handleCopy} className="btn-glow" disabled={changed.length === 0}>
+                Copy changed sizes ({changed.length})
+              </Button>
+            </div>
           </div>
 
           <p className="mt-10 text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
