@@ -138,7 +138,7 @@ export const MARC_CLIENTS: LabClient[] = [
     name: "Sony Pictures",
     url: "https://www.sonypictures.com",
     logo: "/images/partners/sony-pictures.png",
-    currentLogo: "/images/deprecated/partners-deprecated/sony-pictures.png",
+    currentLogo: "/images/partners/sony-pictures.png",
     defaultHeight: "h-10",
   },
 ];
