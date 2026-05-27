@@ -8,6 +8,7 @@ import ScrollToTop from "./ScrollToTop";
 const Home = lazy(() => import("@pages/Home"));
 const ProductDetail = lazy(() => import("@pages/ProductDetail"));
 const Contact = lazy(() => import("@pages/Contact"));
+const ClientsLab = lazy(() => import("@pages/ClientsLab"));
 
 // Company
 const About = lazy(() => import("@pages/company/About"));
@@ -122,6 +123,9 @@ export const AppRoutes = () => (
         <Route path="/company/customers" element={<Navigate to="/company/about" replace />} />
 
         <Route path="/contact" element={<Contact />} />
+
+        {/* Internal sizing tool — hidden, no nav link, noindex */}
+        <Route path="/clients-lab" element={<ClientsLab />} />
         {/* Catch-all — must stay last. */}
         <Route path="*" element={<NotFound />} />
       </Routes>
