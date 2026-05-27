@@ -36,6 +36,14 @@ export const LogoTile = ({ client, height, onHeightChange }: LogoTileProps) => {
       {/* Meta */}
       <div className="mt-4 min-h-[2.5rem]">
         <p className="text-sm font-bold text-foreground leading-tight">{client.name}</p>
+        <a
+          href={client.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-1 inline-block text-[11px] font-light text-muted-foreground hover:text-primary truncate max-w-full"
+        >
+          {client.url.replace(/^https?:\/\//, "")} ↗
+        </a>
         {client.placeholder && (
           <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-primary">
             Placeholder — needs logo file
