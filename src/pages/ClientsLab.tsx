@@ -6,7 +6,6 @@ import { toast } from "@hooks/use-toast";
 import { LogoTile } from "@sections/clients-lab/LogoTile";
 import {
   MARC_CLIENTS,
-  toLogoClass,
   type HeightToken,
 } from "@sections/clients-lab/clients-lab-data";
 
@@ -31,24 +30,14 @@ const ClientsLab = () => {
 
   const snippet = useMemo(() => {
     if (changed.length === 0) {
-      return "// No entries changed yet. Move a slider to generate a snippet.";
+      return "// No sizes changed yet. Move a slider to generate an instruction.";
     }
     const lines = [
-      `// ${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} — paste into CUSTOMERS in src/content/site.ts`,
+      `Lovable: update defaultHeight in src/sections/clients-lab/clients-lab-data.ts for these ${changed.length} client${changed.length === 1 ? "" : "s"} (lab is the source of truth — do NOT touch site.ts):`,
       "",
     ];
     for (const c of changed) {
-      const cls = toLogoClass(heights[c.name]);
-      if (c.placeholder) {
-        lines.push(`// TODO add logo file: ${c.logo}`);
-        lines.push(
-          `// { name: "${c.name}", url: "${c.url}", logo: "${c.logo}", logoClass: "${cls}" },`
-        );
-      } else {
-        lines.push(
-          `{ name: "${c.name}", url: "${c.url}", logo: "${c.logo}", logoClass: "${cls}" },`
-        );
-      }
+      lines.push(`- ${c.name}: ${heights[c.name]}`);
     }
     return lines.join("\n");
   }, [changed, heights]);
