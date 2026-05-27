@@ -76,7 +76,7 @@ src/
     solutions/
     industries/
     products/
-docs/               # All project documentation (PROJECT-SCOPE, ARCHITECTURE, REDIRECT-MAP, etc.)
+docs/               # ARCHITECTURE.md — settled decisions and IA rationale
 public/             # Favicons at root; public/images/ for all other static assets
 .github/workflows/  # deploy.yml (GitHub Pages CI/CD)
 ```
@@ -120,7 +120,7 @@ All tokens are defined as paired light/dark values in `src/index.css`. If a desi
 
 ## Dark mode
 
-Dark mode is active on the `feature/dark-mode` branch. Architecture uses three layers — see `docs/DARK-MODE.md` for the full model, decision tree, and per-page audit checklist.
+Dark mode is active on the `feature/dark-mode` branch. Architecture uses three layers: color tokens in `src/index.css`, `dark:` Tailwind variants for hardcoded colors, and theme-aware asset swaps.
 
 **Key files:**
 - `src/index.css` — all color tokens, light and dark paired with comments
@@ -186,7 +186,7 @@ CMS integration · real CRM-routed form · ROI calculator · multi-language · f
 
 ## When you're unsure
 
-Read `docs/PROJECT-SCOPE.md` for full project scope and `docs/ARCHITECTURE.md` for settled architectural decisions. Then ask a clarifying question rather than guessing.
+Read `docs/ARCHITECTURE.md` for settled architectural decisions and IA rationale. Then ask a clarifying question rather than guessing.
 
 ## Git conventions
 
@@ -299,9 +299,4 @@ The script source is **not in this repo** (lives in the TechD Google account tha
 
 | File | When to read it |
 |---|---|
-| `docs/PROJECT-SCOPE.md` | Full project scope, phases, and long-term vision. Read when scope is ambiguous. |
-| `docs/ARCHITECTURE.md` | Architectural and product decisions, dated with rationale. Includes IA rationale for Solutions, Services, Industries, Resources. Read when in doubt. |
-| `docs/SPAM-REPORT.md` | What was wrong with the old site, why no 410s needed. Read if asked about redirects. |
-| `docs/REDIRECT-MAP.md` | Legacy URL → new URL mapping. Needed at domain cutover for 301 enforcement. |
-| `docs/SEO-KEYWORD-MAP.md` | Page-by-page keyword targets with Semrush data. Read before editing meta titles or descriptions. |
-| `docs/DARK-MODE.md` | Dark mode architecture (three layers), decision tree, per-route audit checklist, verification steps. |
+| `docs/ARCHITECTURE.md` | All settled decisions: stack, hosting, contact form, 3D figures, IA rationale for Solutions/Services/Industries/Resources. Read when in doubt. |

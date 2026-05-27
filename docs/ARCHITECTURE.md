@@ -1,38 +1,76 @@
 # Architecture decisions
 
-Architectural and product decisions, dated, with rationale. Future-me and Claude Code read this to avoid relitigating settled questions.
-
-Format: most recent first.
+Settled decisions with rationale. Read this before relitigating stack choices, IA structure, or build configuration.
 
 ---
 
-## 2026-05-08 — Contact form backend: AWS SES + Lambda (not Cloudflare Worker)
+## Contact form: Google Apps Script
 
-**Decision:** The contact form will POST to an AWS Lambda function, which validates, rate-limits, and forwards via Amazon SES. Cloudflare Worker is off the table.
+**Decision:** The contact form POSTs directly to a Google Apps Script web app inside TechD's Google Workspace. No Lambda, no Cloudflare Worker.
 
-**Why:** TechD manages AWS infrastructure, not Cloudflare. Using AWS keeps the form backend on infrastructure the team already owns and can operate.
+**Why:** TechD's Google Workspace owns the email infrastructure. The script URL is the only credential — safe to commit because anyone with it can only POST a lead payload to TechD's own sheet and mailbox. `mode: "no-cors"` + `Content-Type: text/plain` avoids the CORS preflight that Apps Script cannot satisfy.
 
-**Trade-offs accepted:** Lambda cold starts are negligible for a low-volume contact form. SES requires domain verification before sending, which must be done before the form goes live.
-
-**Replaces:** The earlier Cloudflare Worker decision (2026-05-04) — that decision is superseded by this one.
+**Trade-offs accepted:** Opaque response (status 0) — frontend treats any non-thrown fetch as success. No server-side validation errors surfaceable. Apps Script daily quota (~1500 emails on Workspace) is fine for marketing-site lead volume. See CLAUDE.md for full integration details.
 
 ---
 
-## 2026-05-08 — Hosting confirmed: GitHub Pages (supersedes PRD)
+## Hosting: GitHub Pages
 
-**Decision:** GitHub Pages is the confirmed hosting platform. The original PRD mentioned ECS + Fargate / AWS App Runner, but Cesar confirmed GitHub Pages.
+**Decision:** GitHub Pages is the hosting platform. `vite.config.ts` sets `base: "/techd-enterprise-solutions/"` in production. React Router uses a matching `basename`. SPA fallback: `cp dist/index.html dist/404.html` in the deploy workflow.
 
-**Why:** Simpler operational model for a static marketing site. Zero infra to manage. GitHub Actions CI/CD already in place and working.
+**Why:** Static marketing site — zero infra to manage. GitHub Actions CI/CD already in place.
 
-**Constraint:** GitHub Pages cannot serve HTTP 301 redirects natively. When the domain cutover to `techd.com` happens, a Cloudflare proxy layer (or AWS CloudFront) will be needed in front of GitHub Pages to enforce the 208 legacy URL redirects from `docs/REDIRECT-MAP.md`.
+**Constraint:** GitHub Pages cannot serve HTTP 301 redirects natively. Domain cutover to `techd.com` will require a Cloudflare proxy or AWS CloudFront in front of GitHub Pages to enforce legacy URL redirects.
+
+**Revisit if:** Custom domain is confirmed — base path changes back to `/`.
 
 ---
 
-## 2026-05-08 — Information architecture: Solutions, Services, Industries, Resources
+## Repo is public
+
+**Decision:** Repository is public.
+
+**Why:** GitHub Pages doesn't support private repos on the org's current plan. No secrets in the codebase — secrets stay in GitHub Secrets and environment variables.
+
+---
+
+## Stack: locked
+
+**Decision:** Vite 5 + React 18 + TypeScript + Tailwind CSS + shadcn/ui. No migration to Astro, Next.js, or any other framework.
+
+**Trade-off accepted:** Client-rendered React means weaker default SEO than SSG. Mitigation: per-page `<SEO>` component, semantic HTML, `sitemap.xml`, OG tags.
+
+---
+
+## Lovable + Claude Code: bidirectional on main
+
+**Decision:** Both Lovable and Claude Code commit directly to `main`. Always `git pull` before local work.
+
+**Responsibility split:** Lovable = visual iteration and components. Claude Code = build config, infra, content data files, SEO, anything Lovable does badly.
+
+---
+
+## 3D figures: react-three-fiber, lazy-loaded
+
+**Decision:** Hero particle field and practice figures built with `three` + `@react-three/fiber` + `@react-three/drei`. All figure components loaded via `React.lazy` + `Suspense`. Route-level code splitting via lazy imports in `routes.tsx`. Figures not rendered on mobile.
+
+**Trade-off accepted:** three.js vendor chunk (~666 KB) loads lazily — no impact on initial paint. `HeroFigureFallback` (CSS radial glow) renders while loading and on mobile.
+
+---
+
+## No 410 redirects
+
+**Decision:** All legacy techd.com URLs get 301'd to new equivalents. No 410s.
+
+**Why:** Spam on the legacy WordPress site was theme-level PHP injection on `/` only, served conditionally to crawlers via cloaking. Spam dies when WordPress dies. All 210 legacy URLs map to real new destinations — none need to be declared gone.
+
+---
+
+## Information architecture
 
 ### Solutions: 5 outcome-based practices
 
-**Decision:** Collapsed IBM's 10-product-family taxonomy into 5 outcome-based practices. Buyers search by pain point, not by IBM product family. Products still get individual detail pages at `/solutions/<practice>/<product>`.
+**Decision:** Collapsed IBM's 10-product-family taxonomy into 5 outcome-based practices. Buyers search by pain point, not IBM product family. Products get individual detail pages at `/solutions/<practice>/<product>`.
 
 | Practice | Outcome |
 |---|---|
@@ -42,25 +80,25 @@ Format: most recent first.
 | Security & Compliance | Pass the audit. Protect the data. Respond to the breach. |
 | Infrastructure | Run watsonx and Cloud Pak for Data on-prem, cloud-grade operations |
 
-**IBM brand naming applied throughout:** Watson → watsonx equivalents; InfoSphere brand dropped; "Cloud Private for Data" removed; InfoSphere MDM → IBM MDM.
+**IBM brand naming:** Watson → watsonx equivalents throughout; InfoSphere brand dropped; "Cloud Private for Data" removed; InfoSphere MDM → IBM MDM.
 
-**Excluded:** Watson AI Applications (discontinued/404), SPSS (no active TechD delivery evidence), BigInsights (replaced by watsonx.data), InfoSphere Information Server (superseded by DataStage). TechD CogSuite is a differentiator callout on the Cognos Analytics detail page, not a nav item.
+**Excluded:** Watson AI Applications (discontinued), SPSS (no active TechD delivery evidence), BigInsights (replaced by watsonx.data), InfoSphere Information Server (superseded by DataStage). TechD CogSuite is a differentiator callout on the Cognos Analytics product page — not a nav item.
 
 ---
 
 ### Services: 4 lines
 
-**Decision:** 15+ legacy service sub-pages collapsed into 4 routes — Advisory, Implementation, Managed Services, Training. "Consulting" and "Advisory" merged. All legacy URLs 301'd via `docs/REDIRECT-MAP.md`.
+**Decision:** 15+ legacy service sub-pages consolidated into 4 routes — Advisory, Implementation, Managed Services, Training. "Consulting" and "Advisory" merged into Advisory.
 
-**Open question (awaiting PM — Cesar):** Should reactive post-go-live support be a 5th service line (`/services/support`) or a named tier within Managed Services? Option A (fold in) = cleaner IA, no new route. Option B (separate route) = explicit surface for support-seeking buyers. Impact if Option B: new entry in `src/content/services.ts`, new route, new page `src/pages/services/Support.tsx`.
+**Open question (awaiting Cesar):** Should reactive post-go-live support be a 5th service line (`/services/support`) separate from proactive Managed Services, or a named tier within Managed Services? If yes: new entry in `src/content/services.ts`, new route, new page `src/pages/services/Support.tsx`.
 
 ---
 
 ### Industries: 6 verticals
 
-**Decision:** Industries section added (no equivalent on legacy techd.com). Six verticals backed by verified client evidence: Healthcare, Media & Entertainment, Energy & Utilities, Higher Education, Public Sector, Insurance.
+**Decision:** Industries section added (no equivalent existed on legacy techd.com). Six verticals backed by verified client evidence.
 
-**Financial Services removed:** Appeared on old site but no verifiable client evidence found. Removed to avoid an empty industry page.
+**Financial Services removed:** Appeared on old site but no verifiable client evidence found.
 
 **Media & Entertainment added:** Sony Pictures, Sony Interactive, Comcast/Peacock are confirmed TechD clients.
 
@@ -68,102 +106,6 @@ Format: most recent first.
 
 ### Resources: clean slate
 
-**Decision:** All ~86 legacy webinar and event URLs dropped — no historical archive carried over. Four routes (case-studies, blog, webinars, events) are placeholders awaiting CMS. Old URLs 301 → `/resources` per `docs/REDIRECT-MAP.md`.
+**Decision:** All ~86 legacy webinar and event URLs dropped — no historical archive. Four routes (case-studies, blog, webinars, events) are placeholders awaiting CMS integration.
 
-**One verified case study at build time:** IBM-published TechD/NeuralSeek retail stack (Db2 + watsonx Assistant). All other case study cards are placeholders pending legal approval.
-
----
-
-## 2026-05-04 — Repo set to public
-
-**Decision:** Repository is public (was private initially).
-
-**Why:** GitHub Pages doesn't support private repos on the org's current GitHub plan. Approved by product owner. Site code will be public anyway when site launches. No secrets in the codebase — secrets stay in GitHub Secrets and AWS environment variables.
-
-**Trade-offs accepted:** Brand assets and placeholder copy visible to anyone with the repo URL during the build week. Acceptable.
-
----
-
-## 2026-05-04 — Hosting: GitHub Pages + Vite base path
-
-**Decision:** Deploy to `cerebralblue-lov.github.io/techd-enterprise-solutions/` via GitHub Actions. `vite.config.ts` sets `base: "/techd-enterprise-solutions/"` in production. React Router uses matching `basename`.
-
-**Why:** Per product owner's stated stack. SPA-on-Pages requires the `404.html` fallback pattern (handled in deploy workflow: `cp dist/index.html dist/404.html`).
-
-**Revisit if:** Custom domain (`staging.techd.com` or `techd.com`) becomes available — base path changes back to `/`.
-
----
-
-## 2026-05-04 — Stack locked: Lovable → Vite/React/Tailwind/shadcn → GitHub Pages
-
-**Decision:** Use Lovable's default output (Vite 5 + React 18 + TS + Tailwind + shadcn/ui). No migration to Astro this week.
-
-**Why:** Lovable can't output Astro. Migration mid-sprint costs a day minimum. Acceptable for staging-quality launch. If SEO benchmarks fail post-launch, revisit Astro in a hardening phase.
-
-**Trade-off accepted:** Client-rendered React means weaker default SEO than SSG. Mitigation: per-page meta tags via `<SEO>` component, semantic HTML, sitemap.xml, OG tags.
-
----
-
-## 2026-05-04 — Lovable + Claude Code: bidirectional, both work on `main`
-
-**Decision:** Lovable's GitHub integration stays connected. Both Lovable and Claude Code commit directly to `main`. Always `git pull` before local work.
-
-**Why:** Tested — bidirectional sync works. Splitting tools by responsibility (Lovable = visual/components, Claude Code = infra/build/Worker/SEO/content) keeps conflicts rare.
-
-**Risk:** Merge conflicts if both tools touch the same file in the same session. Mitigated by working asynchronously and pulling frequently.
-
----
-
-## 2026-05-04 — No 410 redirects in the redirect map
-
-**Decision:** All 210 legacy URLs from techd.com get 301'd to new equivalents. No 410s.
-
-**Why:** Spam was theme-level PHP injection on `/` only, served conditionally to crawlers via cloaking. Not a separate spam URL path. The homepage can't 410 itself. Spam dies when WordPress dies. Recovery via Google Search Console post-launch.
-
-**See:** `docs/SPAM-REPORT.md`
-
----
-
-## 2026-05-04 — Contact form: separate backend, not in React app
-
-**Decision:** Form POSTs to a backend endpoint. Validation, rate-limiting, and email forwarding happen server-side. CRM integration deferred.
-
-**Why:** GitHub Pages is static — no backend can run in the React app.
-
-**Superseded:** Original plan was Cloudflare Worker. Decision updated 2026-05-08 to AWS Lambda + SES. See the 2026-05-08 entry above.
-
----
-
-## 2026-05-04 — 3D hero: react-three-fiber + drei (lazy-loaded)
-
-**Decision:** Hero particle field built with `three` + `@react-three/fiber` + `@react-three/drei`. Component loaded via `React.lazy` + `Suspense`. Not mounted on mobile (`< md`).
-
-**Why:** Lovable's hero plan specified this stack. Packages pinned: `three@^0.160`, `@react-three/fiber@^8.18`, `@react-three/drei@^9.122`.
-
-**Trade-off accepted:** ~200KB additional bundle (lazy-loaded, so no impact on initial paint). Static fallback rendered on reduced-motion. Canvas omitted on mobile to save battery.
-
----
-
-## 2026-05-04 — Friday is staging-quality, not production-ready
-
-**Decision:** Friday delivery is "production-quality build, ready for review and content sign-off, with a defined hardening phase before public launch." Not a public-launchable site.
-
-**Why:** PRD scopes a multi-phase project. 5-day compression means deferring: full WCAG 2.2 AA audit, third-party pen test, Lighthouse 90+ across all pages, real CRM integration, 6 legal-approved case studies, CMS, dark mode, ROI calculator. Product owner must understand the gap.
-
-**See:** `docs/GRAND.md` deferred section.
-
----
-
-## Template for new entries
-
-```
-## YYYY-MM-DD — Short decision title
-
-**Decision:** What was decided.
-
-**Why:** Reasoning, constraints considered.
-
-**Trade-offs accepted:** What we're giving up.
-
-**Revisit if:** Conditions that would prompt reconsideration.
-```
+**One verified case study:** IBM-published TechD/NeuralSeek retail stack (Db2 + watsonx Assistant). All other case study cards are placeholders pending legal approval.
