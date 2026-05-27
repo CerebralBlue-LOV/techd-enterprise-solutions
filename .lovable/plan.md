@@ -1,76 +1,106 @@
-# Phase 3 — Per-page copy rewrites for SEO
+## Goal
 
-Apply the recommendations in `docs/SEO-KEYWORD-MAP.md` to the live site. **Surgical edits only**: `<SEO>` props, hero H1, hero lede, and the first body paragraph on each page. No layout, no component, no design changes.
+A hidden internal tool at `/clients-lab` to dial in Marc's 13-client logo strip without touching the live home page. Adjust each logo's size, see the result instantly, then copy a ready-to-paste TypeScript block into `src/content/site.ts`.
 
-## Scope of edit per page
+## The 13 clients (Marc's list)
 
-For every page in scope:
+| # | Client | Logo status | Source |
+|---|---|---|---|
+| 1 | Hamilton Beach | revive | `deprecated/partners-deprecated/hamilton-beach.png` |
+| 2 | Seagate | already live | `partners/seagate.svg` |
+| 3 | Concord Music | **placeholder** | — |
+| 4 | State of Delaware | **placeholder** | — |
+| 5 | FIA Tech | **placeholder** | — |
+| 6 | L3Harris | revive | `deprecated/partners-deprecated/l3harris.png` |
+| 7 | MISO | revive | `deprecated/partners-deprecated/miso-energy.png` |
+| 8 | Noresco | **placeholder** | — |
+| 9 | Wabtec | already live | `partners/wabtec.webp` |
+| 10 | Dominion Energy | revive | `deprecated/partners-deprecated/dominion-energy.png` |
+| 11 | Memorial Sloan Kettering | **placeholder** | — |
+| 12 | Thomas Jefferson University Hospital | revive | `deprecated/partners-deprecated/jefferson-health.png` |
+| 13 | Sony Pictures | revive | `deprecated/partners-deprecated/sony-pictures.png` |
 
-1. **`<SEO>` props** — `title`, `description`, `canonical`, and (where useful) `jsonLd`. Lengths enforced: title ≤60 chars, description ≤160 chars.
-2. **Hero H1** — lead with the primary keyword phrasing (still natural English; voice rules in `CLAUDE.md` apply — no "world-class", no "best-in-class").
-3. **Hero lede / subhead** — one sentence under ~25 words, includes the keyword + a concrete differentiator.
-4. **First body paragraph** of the page's primary section — reinforces the keyword cluster naturally.
+8 real logos + 5 placeholders. Live `site.ts` stays untouched — the lab uses its own local list.
 
-Nothing else moves. Bullets, stats, images, CTAs, components — untouched.
+## What the page does
 
-## Where the edits actually land
+```text
+┌──────────────────────────────────────────────────────────┐
+│  Clients Lab           [Copy ALL entries to clipboard]   │
+│  Internal sizing tool — not linked from nav              │
+├──────────────────────────────────────────────────────────┤
+│                                                          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
+│  │  [logo]  │  │  [logo]  │  │PLACEHOLDER│ │  [logo]  │ │
+│  │          │  │          │  │ Concord   │ │          │ │
+│  │ Hamilton │  │ Seagate  │  │ Music     │ │  FIA …   │ │
+│  │ ──●───── │  │ ───●──── │  │ ─●─────── │ │ ──●───── │ │
+│  │ h-10     │  │ h-12     │  │ h-10      │ │ h-10     │ │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘ │
+│                                                          │
+│  (responsive grid, 2-4 cols, hover = full color + zoom)  │
+└──────────────────────────────────────────────────────────┘
+```
 
-Most pages share template wrappers, so the real edits land in **content modules**, not the page files:
+Each tile shows:
+- The logo (or a dashed gray placeholder box with the brand name centered, for the 5 missing)
+- The brand name underneath
+- A slider that sets the `logoClass` height (range: `h-6` → `h-20` in 2-step increments; uses existing Tailwind tokens so the output matches what the live marquee accepts)
+- The current class string in monospace so you can read what's set
 
-- Solutions → `src/content/solutions.ts`, `src/content/solutions-extras.ts`, rendered via `pages/solutions/_PracticePage.tsx`
-- Services → `src/content/services.ts`, rendered via `pages/services/_ServicePage.tsx`
-- Industries → `src/content/industries.ts`, rendered via `pages/industries/_IndustryPage.tsx`
-- Home → `pages/Home.tsx` + `sections/home/HeroSection.tsx`
-- Contact, Company pages, Resources index, NotFound → page files directly
-- Case studies, blog posts, webinars, events → `src/content/resources.ts` (titles only; bodies are out of scope this phase)
+Hover behavior matches the live marquee exactly: starts at `opacity-70 grayscale`, hover restores `opacity-100` + color, 300ms transition. Adds a subtle 2-3% scale-up so the hover state reads clearly in the lab (the marquee version doesn't scale; we keep the live behavior identical).
 
-I'll read the relevant content files before each batch to land edits in the right shape.
+## "Copy ALL entries" button
 
-## Execution order (six batches, one user review between each)
+Generates a TypeScript snippet like:
 
-Each batch ships in a single response, you review, then I move to the next.
+```ts
+// Paste into CUSTOMERS in src/content/site.ts
+{ name: "Hamilton Beach", url: "https://hamiltonbeach.com", logo: "/images/partners/hamilton-beach.png", logoClass: "h-10 md:h-12" },
+{ name: "Seagate", url: "https://www.seagate.com", logo: "/images/partners/seagate.svg", logoClass: "h-8 md:h-9" },
+// … all 13 entries with whatever sizes you chose
+```
 
-1. **Batch 1 — Top of funnel** (`/`, `/contact`)
-2. **Batch 2 — Solutions** (5 practice pages)
-3. **Batch 3 — Industries** (7 pages, including legacy `financial-services`)
-4. **Batch 4 — Services** (4 pages)
-5. **Batch 5 — Company** (`/company/about`, `/company/ibm-partnership`, `/company/delivery-methodology`)
-6. **Batch 6 — Resources** (4 hub index pages + recommended titles on 7 case studies, 9 blog posts, 7 webinars, 5 events)
+Writes to clipboard via `navigator.clipboard.writeText`. Shows a toast "Copied 13 entries to clipboard". This is the only "diff" output — no file writes, no API.
 
-## Hard constraints
+Placeholders emit a commented entry so it's obvious they need a real asset:
 
-- Voice rules from `CLAUDE.md` are non-negotiable (no "world-class", "cutting-edge", "robust", "powerful", "industry-leading"; no passive voice in delivery claims; practitioner-to-practitioner).
-- IBM tier rule: "IBM Gold Business Partner" everywhere. Never "Platinum" except the single approved historical line on `/company/ibm-partnership`.
-- "Talk to an expert" CTA stays exactly as it is — Phase 3 doesn't touch CTAs.
-- No new components, no new dependencies.
-- No edits to `src/components/ui/`.
+```ts
+// TODO add logo file: /images/partners/concord-music.{svg|png}
+// { name: "Concord Music", url: "", logo: "/images/partners/concord-music.svg", logoClass: "h-10 md:h-12" },
+```
 
-## What this phase does NOT touch
+## Logo file handling
 
-- Page layout, sections, components, or visual design
-- Bullets, stats, capability lists, case-study bodies
-- OG images (that's Phase 4)
-- Redirects from legacy URLs (that's Phase 4 / cutover)
-- New blog posts or new pages
+For the 7 deprecated logos we want to revive: the lab **references them directly from their current `deprecated/` paths** so we don't move files in this step. The generated snippet, however, writes the **target** `/images/partners/...` path — a one-line note at the top of the page reminds you "move these 7 files from `deprecated/partners-deprecated/` → `partners/` before pasting into site.ts". Keeps the lab pure-frontend, no file-system side effects.
 
-## Verification per batch
+Recommendation: do the file moves as a separate follow-up commit once Marc signs off on the sizes — that way the deprecated folder stays the safety net until the final list is locked.
 
-After each batch:
+## Files to add
 
-- Grep the edited files for forbidden words (`world-class`, `best-in-class`, `cutting-edge`, `robust`, `powerful`, `industry-leading`, `Platinum` outside the approved line)
-- Confirm every edited `<SEO title>` ≤60 chars and `description` ≤160 chars
-- Confirm `<h1>` reads naturally and includes the primary keyword
-- Build is clean (Lovable auto-builds)
+- `src/pages/ClientsLab.tsx` — the page (route component, page-level layout, header, copy button, grid)
+- `src/sections/clients-lab/LogoTile.tsx` — one card: logo/placeholder + name + slider + class readout
+- `src/sections/clients-lab/clients-lab-data.ts` — the local 13-entry list (typed, exported); keeps the page component lean and makes future edits trivial
+- Route entry in `src/app/routes.tsx`: `<Route path="/clients-lab" element={<ClientsLab />} />` — outside the redirects, no nav link
 
-## Verification at end of Phase 3
+## Technical details
 
-- Every URL in `docs/SEO-KEYWORD-MAP.md` has an updated title + description that matches the map
-- Run `seo--list_findings` and mark anything now resolved
+- Slider: shadcn `Slider` (already in `components/ui/`), single value, maps index → `["h-6","h-7","h-8","h-9","h-10","h-12","h-14","h-16","h-20"]`. Output writes `${base} md:${oneStepUp}` to mirror the existing `logoClass` convention in `site.ts`.
+- Placeholder component: dashed `border-muted-foreground`, `bg-muted/30`, brand name in `font-bold uppercase tracking-wider text-xs text-muted-foreground`, fixed aspect close to a real logo tile so the grid doesn't jump.
+- All Tailwind tokens only (per project memory) — no raw hex, no new design tokens.
+- Page wrapped in standard `Layout` (Header/Footer) for consistency, but with a clear "Internal — clients sizing lab" banner at the top so anyone who lands on it knows it's not public content.
+- No SEO meta / sitemap entry / robots change (it's just an unlinked route; not worth a noindex tag unless you want one — happy to add `<meta name="robots" content="noindex" />` via the existing `SEO` component, recommended).
 
-## Deliverable
+## Out of scope (deliberately)
 
-Each page now ranks on a real keyword cluster, reads in TechD's voice, and is ready for Phase 4 (OG images + GA4 + Search Console + 301 redirect map enforcement).
+- Moving the 7 deprecated logo files into `partners/` (follow-up commit once sized)
+- Sourcing the 5 missing logos (Concord, Delaware, FIA Tech, Noresco, MSK) — placeholders only
+- Updating live `site.ts` CUSTOMERS — the lab is the sandbox; you copy-paste when ready
+- Dark-mode `logoOnDark` variants (project memory says dark mode is deferred; the lab honors the live light palette only)
+- Marquee preview in the lab (you picked static grid only)
 
----
+## Recommendations
 
-**Want me to start with Batch 1 (`/` + `/contact`) right after approval, or batch differently?**
+1. **Add `noindex` meta** on the lab page so it never ends up in search results even if the URL leaks. Low cost, high safety.
+2. **Don't delete the current CUSTOMERS array yet.** Once you've got the new 13 entries ready, replace in one commit so the home page never shows a half-list. I'd also keep one or two of the strongest current logos (e.g. Adobe, Mercedes) on a separate question to Marc — his message said "I would put [these]" not "delete everything else." Worth a 1-line clarification before the final swap.
+3. **For the 5 missing logos**, the easiest source for each: Concord Music (Wikipedia SVG), State of Delaware (delaware.gov press kit), FIA Tech (their site footer), Noresco (their site header), MSK (mskcc.org brand assets). I can fetch these in the follow-up commit if you want.
