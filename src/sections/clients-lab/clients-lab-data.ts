@@ -2,18 +2,21 @@
  * Marc's 13-client list for the home-page logo strip.
  * Used only by /clients-lab (internal sizing tool).
  *
- * `logo` is the path the live site will reference (under /images/partners/).
- * `currentLogo` is where the file actually lives RIGHT NOW so the lab can
- * render it. Seven of these are still in deprecated/ and need to be moved
- * before pasting the generated snippet into src/content/site.ts.
+ * Asset structure:
+ *   public/images/clients/light/  ← source-of-truth color logos
+ *   public/images/clients/dark/   ← generated white-on-transparent variants
+ *     (regenerate via: python scripts/generate-white-logos.py
+ *        --src public/images/clients/light --out public/images/clients/dark --all)
  */
 export type LabClient = {
   name: string;
   url: string;
-  /** Target path that will go into site.ts CUSTOMERS */
+  /** Path that will eventually go into site.ts CUSTOMERS (light variant) */
   logo: string;
-  /** Where the file actually lives now (may equal `logo`) */
+  /** Where the light logo file lives now */
   currentLogo?: string;
+  /** Where the dark (white) variant lives, if generated */
+  currentLogoDark?: string;
   /** True when we don't yet have a real logo file */
   placeholder?: boolean;
   /** Default Tailwind height class (h-6 .. h-20). Mobile size. */
@@ -49,96 +52,111 @@ const DESKTOP_BUMP: Record<HeightToken, HeightToken> = {
 export const toLogoClass = (h: HeightToken) =>
   `${h} md:${DESKTOP_BUMP[h]}`;
 
+const L = (file: string) => `/images/clients/light/${file}`;
+const D = (stem: string) => `/images/clients/dark/${stem}.png`;
+
 export const MARC_CLIENTS: LabClient[] = [
   {
     name: "Hamilton Beach",
     url: "https://hamiltonbeach.com",
-    logo: "/images/partners/hamilton-beach.png",
-    currentLogo: "/images/partners/hamilton-beach.png",
+    logo: L("hamilton-beach.png"),
+    currentLogo: L("hamilton-beach.png"),
+    currentLogoDark: D("hamilton-beach"),
     defaultHeight: "h-9",
   },
   {
     name: "Seagate",
     url: "https://www.seagate.com",
-    logo: "/images/partners/seagate.svg",
-    currentLogo: "/images/partners/seagate.svg",
+    logo: L("seagate.svg"),
+    currentLogo: L("seagate.svg"),
+    currentLogoDark: D("seagate"),
     defaultHeight: "h-10",
   },
   {
     name: "Concord Music",
     url: "https://concord.com",
-    logo: "/images/partners/concord-music.png",
-    currentLogo: "/images/partners/concord-music.png",
+    logo: L("concord-music.png"),
+    currentLogo: L("concord-music.png"),
+    currentLogoDark: D("concord-music"),
     defaultHeight: "h-16",
   },
   {
     name: "State of Delaware",
     url: "https://delaware.gov",
-    logo: "/images/partners/state-of-delaware.png",
-    currentLogo: "/images/partners/state-of-delaware.png",
+    logo: L("state-of-delaware.png"),
+    currentLogo: L("state-of-delaware.png"),
+    currentLogoDark: D("state-of-delaware"),
     defaultHeight: "h-16",
   },
   {
     name: "FIA Tech",
     url: "https://fia-tech.com",
-    logo: "/images/partners/fia-tech.jpg",
-    currentLogo: "/images/partners/fia-tech.jpg",
+    logo: L("fia-tech.jpg"),
+    currentLogo: L("fia-tech.jpg"),
+    currentLogoDark: D("fia-tech"),
     defaultHeight: "h-10",
   },
   {
     name: "L3Harris",
     url: "https://www.l3harris.com",
-    logo: "/images/partners/l3harris.png",
-    currentLogo: "/images/deprecated/partners-deprecated/l3harris.png",
+    logo: L("l3harris.png"),
+    currentLogo: L("l3harris.png"),
+    currentLogoDark: D("l3harris"),
     defaultHeight: "h-10",
   },
   {
     name: "MISO",
     url: "https://www.misoenergy.org",
-    logo: "/images/partners/miso-energy.png",
-    currentLogo: "/images/deprecated/partners-deprecated/miso-energy.png",
+    logo: L("miso-energy.png"),
+    currentLogo: L("miso-energy.png"),
+    currentLogoDark: D("miso-energy"),
     defaultHeight: "h-12",
   },
   {
     name: "Noresco",
     url: "https://www.noresco.com",
-    logo: "/images/partners/noresco.png",
-    currentLogo: "/images/partners/noresco.png",
+    logo: L("noresco.png"),
+    currentLogo: L("noresco.png"),
+    currentLogoDark: D("noresco"),
     defaultHeight: "h-9",
   },
   {
     name: "Wabtec",
     url: "https://www.wabteccorp.com",
-    logo: "/images/partners/wabtec.webp",
-    currentLogo: "/images/partners/wabtec.webp",
+    logo: L("wabtec.webp"),
+    currentLogo: L("wabtec.webp"),
+    currentLogoDark: D("wabtec"),
     defaultHeight: "h-12",
   },
   {
     name: "Dominion Energy",
     url: "https://www.dominionenergy.com",
-    logo: "/images/partners/dominion-energy.png",
-    currentLogo: "/images/deprecated/partners-deprecated/dominion-energy.png",
+    logo: L("dominion-energy.png"),
+    currentLogo: L("dominion-energy.png"),
+    currentLogoDark: D("dominion-energy"),
     defaultHeight: "h-12",
   },
   {
     name: "Memorial Sloan Kettering",
     url: "https://www.mskcc.org",
-    logo: "/images/partners/msk.png",
-    currentLogo: "/images/partners/msk.png",
+    logo: L("msk.png"),
+    placeholder: true,
     defaultHeight: "h-10",
   },
   {
     name: "Thomas Jefferson University Hospital",
     url: "https://www.jeffersonhealth.org",
-    logo: "/images/partners/jefferson-health.png",
-    currentLogo: "/images/deprecated/partners-deprecated/jefferson-health.png",
+    logo: L("jefferson-health.png"),
+    currentLogo: L("jefferson-health.png"),
+    currentLogoDark: D("jefferson-health"),
     defaultHeight: "h-10",
   },
   {
     name: "Sony Pictures",
     url: "https://www.sonypictures.com",
-    logo: "/images/partners/sony-pictures.png",
-    currentLogo: "/images/partners/sony-pictures.png",
+    logo: L("sony-pictures.png"),
+    currentLogo: L("sony-pictures.png"),
+    currentLogoDark: D("sony-pictures"),
     defaultHeight: "h-16",
   },
 ];

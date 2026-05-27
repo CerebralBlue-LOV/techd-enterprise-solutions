@@ -80,7 +80,7 @@ const ClientsLab = () => {
   };
 
 
-  const placeholderCount = MARC_CLIENTS.filter((c) => c.placeholder).length;
+
 
   return (
     <Layout>
@@ -89,19 +89,9 @@ const ClientsLab = () => {
         description="Internal logo sizing tool. Not for public viewing."
         noindex
       />
+      {/* Light section */}
       <section className="bg-background py-12 md:py-16">
         <div className="container mx-auto max-w-7xl px-4">
-          {/* Internal banner */}
-          <div className="mb-6 rounded border border-primary/30 bg-primary/5 px-4 py-3 text-sm text-foreground">
-            <span className="font-bold uppercase tracking-wider text-primary">
-              Internal tool
-            </span>
-            <span className="ml-2 text-muted-foreground">
-              Sizing sandbox for the home-page logo strip. Not linked from nav.
-              Not indexed.
-            </span>
-          </div>
-
           {/* Header */}
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -109,33 +99,48 @@ const ClientsLab = () => {
                 Clients Lab
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground font-light">
-                Marc's list of {MARC_CLIENTS.length} TechD clients.{" "}
-                {MARC_CLIENTS.length - placeholderCount} have logos,{" "}
-                {placeholderCount} are placeholders. Adjust each height with the
-                slider, then copy the generated snippet into{" "}
-                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
-                  src/content/site.ts
-                </code>
-                .
+                Marc's list of {MARC_CLIENTS.length} TechD clients.
               </p>
             </div>
             <Button onClick={handleCopy} className="btn-glow shrink-0" disabled={changed.length === 0}>
-              Copy changed entries ({changed.length})
+              Copy changed sizes ({changed.length})
             </Button>
           </div>
 
-          {/* Grid */}
-          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <p className="mt-10 text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">
+            Light
+          </p>
+          <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {MARC_CLIENTS.map((c) => (
               <LogoTile
-                key={c.name}
+                key={`light-${c.name}`}
                 client={c}
                 height={heights[c.name]}
                 onHeightChange={(h) => setHeight(c.name, h)}
+                variant="light"
               />
             ))}
           </div>
+        </div>
+      </section>
 
+      {/* Dark section */}
+      <section className="bg-secondary py-12 md:py-16">
+        <div className="container mx-auto max-w-7xl px-4">
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-background/70">
+            Dark
+          </p>
+          <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {MARC_CLIENTS.map((c) => (
+              <LogoTile
+                key={`dark-${c.name}`}
+                client={c}
+                height={heights[c.name]}
+                onHeightChange={(h) => setHeight(c.name, h)}
+                variant="dark"
+              />
+            ))}
+          </div>
         </div>
       </section>
     </Layout>
