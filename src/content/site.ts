@@ -99,8 +99,8 @@ export const CUSTOMERS: Customer[] = [
   { name: "Itaú", url: "https://www.itau.com.br", logo: "/images/partners/itau.svg", logoOnDark: "/images/partners/white/itau.png", logoClass: "h-14 md:h-16" },
   { name: "Dow", url: "https://www.dow.com", logo: "/images/partners/dow.webp", logoOnDark: "/images/partners/white/dow.png", logoClass: "h-16 md:h-20" },
   { name: "Fiserv", url: "https://www.fiserv.com", logo: "/images/partners/fiserv.svg", logoOnDark: "/images/partners/white/fiserv.png", logoClass: "h-8 md:h-9" },
-  { name: "Seagate", url: "https://www.seagate.com", logo: "/images/partners/seagate.svg", logoOnDark: "/images/partners/white/seagate.png", logoClass: "h-8 md:h-9" },
-  { name: "Wabtec", url: "https://www.wabteccorp.com", logo: "/images/partners/wabtec.webp", logoOnDark: "/images/partners/white/wabtec.png" },
+  { name: "Seagate", url: "https://www.seagate.com", logo: "/images/partners/seagate.svg", logoOnDark: "/images/partners/white/seagate.png", logoClass: "h-10 md:h-12" },
+  { name: "Wabtec", url: "https://www.wabteccorp.com", logo: "/images/partners/wabtec.webp", logoOnDark: "/images/partners/white/wabtec.png", logoClass: "h-12 md:h-14" },
   { name: "Itochu", url: "https://www.itochu.co.jp/en/", logo: "/images/partners/itochu.svg", logoOnDark: "/images/partners/white/itochu.png" },
   { name: "NSK", url: "https://www.nsk.com", logo: "/images/partners/nsk.svg", logoOnDark: "/images/partners/white/nsk.png", logoClass: "h-8 md:h-9" },
 
