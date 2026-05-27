@@ -80,7 +80,7 @@ const ClientsLab = () => {
   };
 
 
-  const placeholderCount = MARC_CLIENTS.filter((c) => c.placeholder).length;
+
 
   return (
     <Layout>
