@@ -54,20 +54,42 @@ const ClientsLab = () => {
   }, [changed, heights]);
 
   const handleCopy = async () => {
+    let ok = false;
     try {
       await navigator.clipboard.writeText(snippet);
+      ok = true;
+    } catch {
+      // Fallback for sandboxed iframes where the async Clipboard API is blocked
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = snippet;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+      } catch {
+        ok = false;
+      }
+    }
+    if (ok) {
       toast({
         title: "Copied to clipboard",
         description: `${changed.length} changed entr${changed.length === 1 ? "y" : "ies"} ready to paste into site.ts`,
       });
-    } catch {
+    } else {
       toast({
         title: "Copy failed",
-        description: "Select the snippet below and copy manually.",
+        description: "Open this page in a new tab to copy, or check console for the snippet.",
         variant: "destructive",
       });
+      // eslint-disable-next-line no-console
+      console.log(snippet);
     }
   };
+
 
   const placeholderCount = MARC_CLIENTS.filter((c) => c.placeholder).length;
 
