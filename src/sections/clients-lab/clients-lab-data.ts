@@ -158,6 +158,14 @@ export const CLIENTS: LabClient[] = [
     defaultHeight: "h-10",
   },
   {
+    name: "Children's Hospital of Philadelphia",
+    url: "https://www.chop.edu",
+    logo: L("chop.png"),
+    currentLogo: L("chop.png"),
+    currentLogoDark: D("chop"),
+    defaultHeight: "h-10",
+  },
+  {
     name: "Sony Pictures",
     url: "https://www.sonypictures.com",
     logo: L("sony-pictures.png"),

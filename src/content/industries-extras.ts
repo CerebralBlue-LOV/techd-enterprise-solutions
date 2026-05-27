@@ -44,6 +44,7 @@ export const INDUSTRIES_EXTRAS: Record<string, IndustryExtras> = {
     clients: [
       { name: "Memorial Sloan Kettering",            note: "NCI-designated cancer center, New York — clinical data and oncology informatics." },
       { name: "Thomas Jefferson University Hospital", note: "Jefferson Health academic medical system, Philadelphia." },
+      { name: "Children's Hospital of Philadelphia",  note: "Top-ranked pediatric academic medical center — clinical data and research informatics." },
     ],
     practices: [
       { id: "ai-generative",       proof: "Clinical knowledge agents and grounded RAG built on watsonx, deployed inside health systems." },
