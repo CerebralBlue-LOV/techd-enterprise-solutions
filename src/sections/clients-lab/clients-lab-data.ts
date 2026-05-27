@@ -1,6 +1,11 @@
 /**
- * Marc's 13-client list for the home-page logo strip.
- * Used only by /clients-lab (internal sizing tool).
+ * TechD client list — single source of truth.
+ *
+ * This file owns the 13 TechD clients used everywhere on the site:
+ *   - home `LogoStrip` (via `CLIENTS` re-exported from `@content/site`)
+ *   - each industry "Clients we serve" carousel (matched by `name` in
+ *     `src/content/industries-extras.ts`)
+ *   - the sandbox at `/clients-lab` where heights are tuned
  *
  * Asset structure:
  *   public/images/clients/light/  ← source-of-truth color logos
@@ -11,13 +16,13 @@
 export type LabClient = {
   name: string;
   url: string;
-  /** Path that will eventually go into site.ts CUSTOMERS (light variant) */
+  /** Light (color) logo path — used on light backgrounds. */
   logo: string;
-  /** Where the light logo file lives now */
+  /** Same as `logo`. Kept for `/clients-lab` ergonomics. */
   currentLogo?: string;
-  /** Where the dark (white) variant lives, if generated */
+  /** Dark (white-on-transparent) variant path, when generated. */
   currentLogoDark?: string;
-  /** True when we don't yet have a real logo file */
+  /** True when we don't yet have a real logo file. */
   placeholder?: boolean;
   /** Default Tailwind height class (h-6 .. h-20). Mobile size. */
   defaultHeight: HeightToken;
@@ -55,7 +60,7 @@ export const toLogoClass = (h: HeightToken) =>
 const L = (file: string) => `/images/clients/light/${file}`;
 const D = (stem: string) => `/images/clients/dark/${stem}.png`;
 
-export const MARC_CLIENTS: LabClient[] = [
+export const CLIENTS: LabClient[] = [
   {
     name: "Hamilton Beach",
     url: "https://hamiltonbeach.com",

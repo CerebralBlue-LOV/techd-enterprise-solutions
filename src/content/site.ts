@@ -1,3 +1,5 @@
+import { CLIENTS as LAB_CLIENTS, toLogoClass } from "@sections/clients-lab/clients-lab-data";
+
 export type ContactEntry = { value: string; status: "pending" | "live" };
 
 export const CONTACT = {
@@ -79,57 +81,24 @@ export const NAV: NavItem[] = [
   },
 ];
 
-export type Customer = { name: string; url: string; logo?: string; logoOnDark?: string; logoClass?: string };
+/**
+ * Client = the public shape consumed by the home `LogoStrip` and the
+ * industry "Clients we serve" carousel. The list is derived from
+ * `src/sections/clients-lab/clients-lab-data.ts` — the sandbox at
+ * `/clients-lab` is the editing surface. Do not hand-edit this list.
+ */
+export type Client = {
+  name: string;
+  url: string;
+  logo?: string;
+  logoOnDark?: string;
+  logoClass?: string;
+};
 
-export const CUSTOMERS: Customer[] = [
-  // Lead-in trio (per request)
-  { name: "Admed", url: "https://www.admed.com.br", logo: "/images/partners/admed.svg", logoOnDark: "/images/partners/white/admed.png" },
-  { name: "Great Day Improvements", url: "https://greatdayimprovements.com", logo: "/images/partners/greatday.png", logoOnDark: "/images/partners/white/greatday.png", logoClass: "h-8 md:h-9" },
-  { name: "Clip", url: "https://www.clip.mx", logo: "/images/partners/clip.svg", logoOnDark: "/images/partners/white/clip.png", logoClass: "h-12 md:h-14" },
-
-  // Tier 1 — global blue-chip enterprises (most recognizable F500 / global brands)
-  { name: "Adobe", url: "https://www.adobe.com", logo: "/images/partners/adobe.svg", logoOnDark: "/images/partners/white/adobe.png", logoClass: "h-12 md:h-14" },
-  { name: "Mercedes-Benz", url: "https://www.mercedes-benz.com", logo: "/images/partners/benz.svg", logoOnDark: "/images/partners/white/benz.png", logoClass: "h-14 md:h-16" },
-  { name: "Verizon", url: "https://www.verizon.com", logo: "/images/partners/verizon.svg", logoOnDark: "/images/partners/white/verizon.png", logoClass: "h-8 md:h-9" },
-  { name: "Snap Inc.", url: "https://www.snap.com", logo: "/images/partners/snap.webp", logoOnDark: "/images/partners/white/snap.png", logoClass: "h-12 md:h-14" },
-  { name: "Santander", url: "https://www.santander.com", logo: "/images/partners/santander.svg", logoOnDark: "/images/partners/white/santander.png", logoClass: "h-8 md:h-9" },
-  { name: "MetLife", url: "https://www.metlife.com", logo: "/images/partners/metlife.svg", logoOnDark: "/images/partners/white/metlife.png", logoClass: "h-7 md:h-8" },
-  { name: "Mizuho", url: "https://www.mizuho-financial.com", logo: "/images/partners/mizuho.svg", logoOnDark: "/images/partners/white/mizuho.png", logoClass: "h-8 md:h-9" },
-  { name: "NatWest", url: "https://www.natwest.com", logo: "/images/partners/natwest.svg", logoOnDark: "/images/partners/white/natwest.png", logoClass: "h-14 md:h-16" },
-  { name: "Itaú", url: "https://www.itau.com.br", logo: "/images/partners/itau.svg", logoOnDark: "/images/partners/white/itau.png", logoClass: "h-14 md:h-16" },
-  { name: "Dow", url: "https://www.dow.com", logo: "/images/partners/dow.webp", logoOnDark: "/images/partners/white/dow.png", logoClass: "h-16 md:h-20" },
-  { name: "Fiserv", url: "https://www.fiserv.com", logo: "/images/partners/fiserv.svg", logoOnDark: "/images/partners/white/fiserv.png", logoClass: "h-8 md:h-9" },
-  { name: "Seagate", url: "https://www.seagate.com", logo: "/images/partners/seagate.svg", logoOnDark: "/images/partners/white/seagate.png", logoClass: "h-10 md:h-12" },
-  { name: "Wabtec", url: "https://www.wabteccorp.com", logo: "/images/partners/wabtec.webp", logoOnDark: "/images/partners/white/wabtec.png", logoClass: "h-12 md:h-14" },
-  { name: "Itochu", url: "https://www.itochu.co.jp/en/", logo: "/images/partners/itochu.svg", logoOnDark: "/images/partners/white/itochu.png" },
-  { name: "NSK", url: "https://www.nsk.com", logo: "/images/partners/nsk.svg", logoOnDark: "/images/partners/white/nsk.png", logoClass: "h-8 md:h-9" },
-
-  // Tier 2 — top-tier universities and major institutions
-  { name: "Harvard University", url: "https://www.harvard.edu", logo: "/images/partners/harvard.svg", logoOnDark: "/images/partners/white/harvard.png", logoClass: "h-14 md:h-16" },
-  { name: "Penn State", url: "https://www.psu.edu", logo: "/images/partners/pennstate.svg", logoOnDark: "/images/partners/white/pennstate.png" },
-  { name: "National University of Singapore", url: "https://www.nus.edu.sg", logo: "/images/partners/nus.svg", logoOnDark: "/images/partners/white/nus.png", logoClass: "h-10 md:h-12" },
-  { name: "Stony Brook University", url: "https://www.stonybrook.edu", logo: "/images/partners/stonybrook.svg", logoOnDark: "/images/partners/white/stonybrook.png", logoClass: "h-8 md:h-9" },
-  { name: "New York Institute of Technology", url: "https://www.nyit.edu", logo: "/images/partners/nyit.svg", logoOnDark: "/images/partners/white/nyit.png" },
-
-  // Tier 3 — strong regional / sector leaders
-  { name: "Banorte", url: "https://www.banorte.com", logo: "/images/partners/banorte.svg", logoOnDark: "/images/partners/white/banorte.png", logoClass: "h-6 md:h-7" },
-  { name: "Vornado Realty Trust", url: "https://www.vno.com", logo: "/images/partners/vornado.png", logoOnDark: "/images/partners/white/vornado.png", logoClass: "h-8 md:h-9" },
-  { name: "Sicoob", url: "https://www.sicoob.com.br", logo: "/images/partners/sicoob.svg", logoOnDark: "/images/partners/white/sicoob.png", logoClass: "h-6 md:h-7" },
-  { name: "Dah Sing Bank", url: "https://www.dahsing.com", logo: "/images/partners/dahsing.svg", logoOnDark: "/images/partners/white/dahsing.png", logoClass: "h-8 md:h-9" },
-  { name: "Banco del Pacífico", url: "https://www.bancodelpacifico.com", logo: "/images/partners/banco-del-pacifico.svg", logoOnDark: "/images/partners/white/banco-del-pacifico.png" },
-  { name: "BROU", url: "https://www.brou.com.uy", logo: "/images/partners/brou.svg", logoOnDark: "/images/partners/white/brou.png", logoClass: "h-7 md:h-8" },
-  { name: "TEPSCO", url: "https://www.tepsco.co.jp", logo: "/images/partners/tepsco.webp", logoOnDark: "/images/partners/white/tepsco.png", logoClass: "h-12 md:h-14" },
-  { name: "Netcare", url: "https://www.netcare.co.za", logo: "/images/partners/netcare.webp", logoOnDark: "/images/partners/white/netcare.png", logoClass: "h-16 md:h-20" },
-  { name: "Children's Health", url: "https://www.childrens.com", logo: "/images/partners/childrens-health.svg", logoOnDark: "/images/partners/white/childrens-health.png", logoClass: "h-8 md:h-9" },
-
-  // TechD-true clients (Marc's list — appended; no dark variants yet)
-  { name: "Hamilton Beach", url: "https://hamiltonbeach.com", logo: "/images/partners/hamilton-beach.png", logoClass: "h-9 md:h-10" },
-  { name: "Concord Music", url: "https://concord.com", logo: "/images/partners/concord-music.png", logoClass: "h-16 md:h-20" },
-  { name: "State of Delaware", url: "https://delaware.gov", logo: "/images/partners/state-of-delaware.png", logoClass: "h-16 md:h-20" },
-  { name: "FIA Tech", url: "https://fia-tech.com", logo: "/images/partners/fia-tech.jpg", logoClass: "h-10 md:h-12" },
-  { name: "L3Harris", url: "https://www.l3harris.com", logo: "/images/partners/l3harris.png", logoClass: "h-10 md:h-12" },
-  { name: "MISO", url: "https://www.misoenergy.org", logo: "/images/partners/miso-energy.png", logoClass: "h-12 md:h-14" },
-  { name: "Noresco", url: "https://www.noresco.com", logo: "/images/partners/noresco.png", logoClass: "h-9 md:h-10" },
-  { name: "Dominion Energy", url: "https://www.dominionenergy.com", logo: "/images/partners/dominion-energy.png", logoClass: "h-12 md:h-14" },
-  { name: "Sony Pictures", url: "https://www.sonypictures.com", logo: "/images/partners/sony-pictures.png", logoClass: "h-16 md:h-20" },
-];
+export const CLIENTS: Client[] = LAB_CLIENTS.map((c) => ({
+  name: c.name,
+  url: c.url,
+  logo: c.currentLogo ?? c.logo,
+  logoOnDark: c.currentLogoDark,
+  logoClass: toLogoClass(c.defaultHeight),
+}));
