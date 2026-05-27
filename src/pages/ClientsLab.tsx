@@ -108,8 +108,8 @@ const ClientsLab = () => {
                 .
               </p>
             </div>
-            <Button onClick={handleCopy} className="btn-glow shrink-0">
-              Copy ALL entries
+            <Button onClick={handleCopy} className="btn-glow shrink-0" disabled={changed.length === 0}>
+              Copy changed entries ({changed.length})
             </Button>
           </div>
 
