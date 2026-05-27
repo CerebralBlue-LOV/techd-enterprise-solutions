@@ -1,106 +1,84 @@
 ## Goal
 
-A hidden internal tool at `/clients-lab` to dial in Marc's 13-client logo strip without touching the live home page. Adjust each logo's size, see the result instantly, then copy a ready-to-paste TypeScript block into `src/content/site.ts`.
+Turn `/clients-lab` into a two-section sandbox: **Light** (current grid) and **Dark** (same 13 logos, white-on-dark). Sliders in either section control the same shared size — both previews stay in sync. Restructure logo assets into a clean `clients/light` + `clients/dark` folder pair, generate real white PNGs for Marc's 13 via the existing Python script.
 
-## The 13 clients (Marc's list)
+## 1. Folder restructure
 
-| # | Client | Logo status | Source |
-|---|---|---|---|
-| 1 | Hamilton Beach | revive | `deprecated/partners-deprecated/hamilton-beach.png` |
-| 2 | Seagate | already live | `partners/seagate.svg` |
-| 3 | Concord Music | **placeholder** | — |
-| 4 | State of Delaware | **placeholder** | — |
-| 5 | FIA Tech | **placeholder** | — |
-| 6 | L3Harris | revive | `deprecated/partners-deprecated/l3harris.png` |
-| 7 | MISO | revive | `deprecated/partners-deprecated/miso-energy.png` |
-| 8 | Noresco | **placeholder** | — |
-| 9 | Wabtec | already live | `partners/wabtec.webp` |
-| 10 | Dominion Energy | revive | `deprecated/partners-deprecated/dominion-energy.png` |
-| 11 | Memorial Sloan Kettering | **placeholder** | — |
-| 12 | Thomas Jefferson University Hospital | revive | `deprecated/partners-deprecated/jefferson-health.png` |
-| 13 | Sony Pictures | revive | `deprecated/partners-deprecated/sony-pictures.png` |
-
-8 real logos + 5 placeholders. Live `site.ts` stays untouched — the lab uses its own local list.
-
-## What the page does
+New canonical home for Marc's 13 client logos, separate from the legacy `partners/` set:
 
 ```text
-┌──────────────────────────────────────────────────────────┐
-│  Clients Lab           [Copy ALL entries to clipboard]   │
-│  Internal sizing tool — not linked from nav              │
-├──────────────────────────────────────────────────────────┤
-│                                                          │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
-│  │  [logo]  │  │  [logo]  │  │PLACEHOLDER│ │  [logo]  │ │
-│  │          │  │          │  │ Concord   │ │          │ │
-│  │ Hamilton │  │ Seagate  │  │ Music     │ │  FIA …   │ │
-│  │ ──●───── │  │ ───●──── │  │ ─●─────── │ │ ──●───── │ │
-│  │ h-10     │  │ h-12     │  │ h-10      │ │ h-10     │ │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘ │
-│                                                          │
-│  (responsive grid, 2-4 cols, hover = full color + zoom)  │
-└──────────────────────────────────────────────────────────┘
+public/images/clients/
+  light/   ← color logos on white bg (source of truth)
+  dark/    ← white-on-transparent versions for dark bg
 ```
 
-Each tile shows:
-- The logo (or a dashed gray placeholder box with the brand name centered, for the 5 missing)
-- The brand name underneath
-- A slider that sets the `logoClass` height (range: `h-6` → `h-20` in 2-step increments; uses existing Tailwind tokens so the output matches what the live marquee accepts)
-- The current class string in monospace so you can read what's set
+- Copy the 8 existing real logos into `clients/light/` (keeps `partners/` intact so the live home strip doesn't break):
+  - From `partners/`: hamilton-beach, seagate, concord-music, state-of-delaware, fia-tech, noresco, wabtec, sony-pictures
+  - From `deprecated/partners-deprecated/`: l3harris, miso-energy, dominion-energy, jefferson-health
+  - Placeholder (still missing): memorial-sloan-kettering
+- Update `clients-lab-data.ts`: `currentLogo` paths all point to `/images/clients/light/<name>.<ext>`; add a `currentLogoDark` field pointing to `/images/clients/dark/<name>.png`. Drop the old `deprecated/` references.
 
-Hover behavior matches the live marquee exactly: starts at `opacity-70 grayscale`, hover restores `opacity-100` + color, 300ms transition. Adds a subtle 2-3% scale-up so the hover state reads clearly in the lab (the marquee version doesn't scale; we keep the live behavior identical).
+## 2. Generate dark logos
 
-## "Copy ALL entries" button
+Reuse `scripts/generate-white-logos.py` with a small adapter:
 
-Generates a TypeScript snippet like:
+- Add a CLI flag `--src` / `--out` so it can target `public/images/clients/light` → `public/images/clients/dark` without disturbing the existing `partners/white/` flow.
+- Extend (or pass) the ALLOW list with Marc's 12 real names. The script already handles raster + embedded-PNG SVG; it'll skip true-vector SVGs (seagate.svg) — for those we render with a CSS `invert brightness-0` fallback in the dark tile (script already documents this).
+- Run once; commit the generated PNGs to `public/images/clients/dark/`.
 
-```ts
-// Paste into CUSTOMERS in src/content/site.ts
-{ name: "Hamilton Beach", url: "https://hamiltonbeach.com", logo: "/images/partners/hamilton-beach.png", logoClass: "h-10 md:h-12" },
-{ name: "Seagate", url: "https://www.seagate.com", logo: "/images/partners/seagate.svg", logoClass: "h-8 md:h-9" },
-// … all 13 entries with whatever sizes you chose
+MSK stays a placeholder in both sections until you supply a logo file.
+
+## 3. Page restructure (`src/pages/ClientsLab.tsx`)
+
+```text
+┌────────────────────────────────────────────────────────────┐
+│  Clients Lab                  [Copy changed sizes (N)]     │
+│  Marc's list of 13 TechD clients.                          │
+├────────────────────────────────────────────────────────────┤
+│  ── Light ────────────────────────────────────             │
+│  [tile] [tile] [tile] [tile]                               │
+│  [tile] [tile] [tile] [tile]                               │
+│  ...                                                        │
+├────────────────────────────────────────────────────────────┤
+│  ── Dark ─────────────────────────────────────             │
+│  (bg-secondary, dark tile bg)                              │
+│  [tile] [tile] [tile] [tile]                               │
+│  ...                                                        │
+└────────────────────────────────────────────────────────────┘
 ```
 
-Writes to clipboard via `navigator.clipboard.writeText`. Shows a toast "Copied 13 entries to clipboard". This is the only "diff" output — no file writes, no API.
+- **Remove** the "Internal tool / Sizing sandbox… / Not linked from nav. Not indexed." banner.
+- **New description** (single line under H1): `Marc's list of 13 TechD clients.`
+- Two `<section>`s, each with a small left-aligned label (`Light` / `Dark`) using `text-xs uppercase tracking-wider font-bold text-muted-foreground` — quiet, on-brand.
+- Dark section background: `bg-secondary` (token; in light mode = `#56565A`, gives proper dark surface).
+- Both sections render the same 13 tiles from the same `heights` state — moving a slider in either section updates both previews simultaneously. This is the whole point of the lab: see each logo on light + dark side by side.
 
-Placeholders emit a commented entry so it's obvious they need a real asset:
+## 4. Tile changes (`LogoTile.tsx`)
 
-```ts
-// TODO add logo file: /images/partners/concord-music.{svg|png}
-// { name: "Concord Music", url: "", logo: "/images/partners/concord-music.svg", logoClass: "h-10 md:h-12" },
-```
+- Add a `variant: "light" | "dark"` prop.
+- Light variant: unchanged.
+- Dark variant:
+  - Preview area: `bg-secondary` (or `bg-[#16161A]` via token), border in muted token.
+  - `<img src>` uses `currentLogoDark` when present; if missing, falls back to `currentLogo` with `className="… invert brightness-0 contrast-200"` so true-vector SVGs (Seagate) still render white.
+  - Placeholder box flips to dark-friendly colors (border-muted, light text).
+- No slider duplication — the slider lives only on the **light** tile (source of truth). The dark tile is read-only preview with the same `logoClass` + the current class readout underneath. Keeps the UI uncluttered.
 
-## Logo file handling
+## 5. Copy-changed-sizes button
 
-For the 7 deprecated logos we want to revive: the lab **references them directly from their current `deprecated/` paths** so we don't move files in this step. The generated snippet, however, writes the **target** `/images/partners/...` path — a one-line note at the top of the page reminds you "move these 7 files from `deprecated/partners-deprecated/` → `partners/` before pasting into site.ts". Keeps the lab pure-frontend, no file-system side effects.
+Unchanged from last edit — still emits the "Lovable: update defaultHeight in clients-lab-data.ts for these N clients" instruction. The lab remains the source of truth; site.ts stays untouched.
 
-Recommendation: do the file moves as a separate follow-up commit once Marc signs off on the sizes — that way the deprecated folder stays the safety net until the final list is locked.
+## Files touched
 
-## Files to add
-
-- `src/pages/ClientsLab.tsx` — the page (route component, page-level layout, header, copy button, grid)
-- `src/sections/clients-lab/LogoTile.tsx` — one card: logo/placeholder + name + slider + class readout
-- `src/sections/clients-lab/clients-lab-data.ts` — the local 13-entry list (typed, exported); keeps the page component lean and makes future edits trivial
-- Route entry in `src/app/routes.tsx`: `<Route path="/clients-lab" element={<ClientsLab />} />` — outside the redirects, no nav link
-
-## Technical details
-
-- Slider: shadcn `Slider` (already in `components/ui/`), single value, maps index → `["h-6","h-7","h-8","h-9","h-10","h-12","h-14","h-16","h-20"]`. Output writes `${base} md:${oneStepUp}` to mirror the existing `logoClass` convention in `site.ts`.
-- Placeholder component: dashed `border-muted-foreground`, `bg-muted/30`, brand name in `font-bold uppercase tracking-wider text-xs text-muted-foreground`, fixed aspect close to a real logo tile so the grid doesn't jump.
-- All Tailwind tokens only (per project memory) — no raw hex, no new design tokens.
-- Page wrapped in standard `Layout` (Header/Footer) for consistency, but with a clear "Internal — clients sizing lab" banner at the top so anyone who lands on it knows it's not public content.
-- No SEO meta / sitemap entry / robots change (it's just an unlinked route; not worth a noindex tag unless you want one — happy to add `<meta name="robots" content="noindex" />` via the existing `SEO` component, recommended).
-
-## Out of scope (deliberately)
-
-- Moving the 7 deprecated logo files into `partners/` (follow-up commit once sized)
-- Sourcing the 5 missing logos (Concord, Delaware, FIA Tech, Noresco, MSK) — placeholders only
-- Updating live `site.ts` CUSTOMERS — the lab is the sandbox; you copy-paste when ready
-- Dark-mode `logoOnDark` variants (project memory says dark mode is deferred; the lab honors the live light palette only)
-- Marquee preview in the lab (you picked static grid only)
+- `public/images/clients/light/*` — new (12 copied files)
+- `public/images/clients/dark/*` — new (generated by script, ~11 PNGs; seagate falls back to CSS invert)
+- `scripts/generate-white-logos.py` — add `--src/--out` flags
+- `src/sections/clients-lab/clients-lab-data.ts` — repath `currentLogo`, add `currentLogoDark`
+- `src/sections/clients-lab/LogoTile.tsx` — add `variant` prop, dark styling
+- `src/pages/ClientsLab.tsx` — remove banner, new description, two sections, shared state
 
 ## Recommendations
 
-1. **Add `noindex` meta** on the lab page so it never ends up in search results even if the URL leaks. Low cost, high safety.
-2. **Don't delete the current CUSTOMERS array yet.** Once you've got the new 13 entries ready, replace in one commit so the home page never shows a half-list. I'd also keep one or two of the strongest current logos (e.g. Adobe, Mercedes) on a separate question to Marc — his message said "I would put [these]" not "delete everything else." Worth a 1-line clarification before the final swap.
-3. **For the 5 missing logos**, the easiest source for each: Concord Music (Wikipedia SVG), State of Delaware (delaware.gov press kit), FIA Tech (their site footer), Noresco (their site header), MSK (mskcc.org brand assets). I can fetch these in the follow-up commit if you want.
+1. **Seagate is a true-vector SVG** — the script will skip it. The CSS-invert fallback works but loses any non-monochrome detail. If you want a clean white Seagate PNG, I can either (a) rasterize the SVG at high-res then run it through the script, or (b) hand-tweak. Flag if you want me to handle this.
+2. **Don't delete `public/images/partners/`** in this task — the live home `LogoStrip` still reads from it. Migrating the live strip to `clients/` is a separate decision once Marc signs off on the 13.
+3. **MSK placeholder** — if you want, I can fetch one from mskcc.org press kit in the same pass and drop it into `clients/light/msk.png` so the lab has all 13 real assets.
+4. **Sliders shared across sections** is the right call — duplicating them per section would double the UI for no value. If you want independent sizing per light/dark (rare), say so and I'll split the state.
