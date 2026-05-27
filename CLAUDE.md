@@ -210,8 +210,6 @@ Two locations, two rules:
 
 Favicons (`favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`) stay at `public/` root — browser convention.
 
-To regenerate brand PNGs from the logo: `python3 scripts/crop-logo.py`
-To regenerate white logo variants: `python3 scripts/generate-white-logos.py`
 To regenerate favicons: `python3 scripts/generate-favicon.py`
 
 ## Anti-patterns to avoid
