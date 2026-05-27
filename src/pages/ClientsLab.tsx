@@ -6,7 +6,6 @@ import { toast } from "@hooks/use-toast";
 import { LogoTile } from "@sections/clients-lab/LogoTile";
 import {
   MARC_CLIENTS,
-  toLogoClass,
   type HeightToken,
 } from "@sections/clients-lab/clients-lab-data";
 
