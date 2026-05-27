@@ -1,14 +1,16 @@
+import { lazy, Suspense, type ComponentType } from "react";
 import Reveal from "@shared/Reveal";
 import SectionHeading from "@shared/SectionHeading";
 import SectionMarker from "@shared/SectionMarker";
 import { SOLUTIONS } from "@content/solutions";
 import FlipCard from "@sections/home/_components/FlipCard";
-import AiGenerativeFigure from "@/components/shared/heroFigures/solutions/AiGenerativeFigure";
-import DataAnalyticsFigure from "@/components/shared/heroFigures/solutions/DataAnalyticsFigure";
-import AutomationFinOpsFigure from "@/components/shared/heroFigures/solutions/AutomationFinOpsFigure";
-import SecurityComplianceFigure from "@/components/shared/heroFigures/solutions/SecurityComplianceFigure";
-import InfrastructureFigure from "@/components/shared/heroFigures/solutions/InfrastructureFigure";
-import type { ComponentType } from "react";
+import HeroFigureFallback from "@shared/heroFigures/HeroFigureFallback";
+
+const AiGenerativeFigure = lazy(() => import("@shared/heroFigures/solutions/AiGenerativeFigure"));
+const DataAnalyticsFigure = lazy(() => import("@shared/heroFigures/solutions/DataAnalyticsFigure"));
+const AutomationFinOpsFigure = lazy(() => import("@shared/heroFigures/solutions/AutomationFinOpsFigure"));
+const SecurityComplianceFigure = lazy(() => import("@shared/heroFigures/solutions/SecurityComplianceFigure"));
+const InfrastructureFigure = lazy(() => import("@shared/heroFigures/solutions/InfrastructureFigure"));
 
 const FIGURES: Record<string, { Figure: ComponentType; backTitle: string; footer: string }> = {
   "ai-generative": { Figure: AiGenerativeFigure, backTitle: "Production-grade AI", footer: "United States" },
@@ -72,7 +74,7 @@ export const SolutionsGridSection = () => (
                   ];
                 })()}
                 ctaLabel={s.ctaLabel}
-                motif={<Figure />}
+                motif={<Suspense fallback={<HeroFigureFallback />}><Figure /></Suspense>}
               />
             </Reveal>
           );
