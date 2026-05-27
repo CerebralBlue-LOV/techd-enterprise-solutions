@@ -161,7 +161,9 @@ def main() -> int:
             summary.append((stem, kind, 0))
             continue
         white = knockout_to_white(img)
-        white = trim(white)
+        # NOTE: do NOT trim — keeping original canvas ensures the dark PNG has the
+        # same bounding box as the source light logo so h-X renders at identical
+        # visual size in both Light and Dark previews.
         alpha = white.split()[-1]
         opaque = sum(1 for v in alpha.getdata() if v > 0)
         out_path = OUT_DIR / f"{stem}.png"
