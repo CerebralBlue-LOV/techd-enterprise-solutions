@@ -50,10 +50,12 @@ export const LogoTile = ({ client, height, onHeightChange, variant = "light" }: 
           <img
             src={src}
             alt={client.name}
-            className={`${logoClass} w-auto object-contain transition-all duration-300 ${
+            className={`${logoClass} w-auto object-contain transition-all duration-300 opacity-70 hover:scale-105 hover:opacity-100 ${
               isDark
-                ? `opacity-90 hover:opacity-100${needsInvert ? " invert brightness-0" : ""}`
-                : "opacity-70 grayscale hover:scale-105 hover:opacity-100 hover:grayscale-0"
+                ? needsInvert
+                  ? "invert brightness-0"
+                  : ""
+                : "grayscale hover:grayscale-0"
             }`}
           />
         )}
@@ -81,29 +83,21 @@ export const LogoTile = ({ client, height, onHeightChange, variant = "light" }: 
         )}
       </div>
 
-      {/* Slider — only on light variant (source of truth) */}
-      {!isDark ? (
-        <div className="mt-3">
-          <Slider
-            value={[heightIndex]}
-            min={0}
-            max={HEIGHT_TOKENS.length - 1}
-            step={1}
-            onValueChange={(vals) => onHeightChange(HEIGHT_TOKENS[vals[0]])}
-          />
-          <div className="mt-2 flex items-center justify-between font-mono text-[11px] text-muted-foreground">
-            <span>h-6</span>
-            <span className="rounded bg-muted px-2 py-0.5 text-foreground">{logoClass}</span>
-            <span>h-20</span>
-          </div>
+      {/* Slider — both variants stay in sync via shared parent state */}
+      <div className="mt-3">
+        <Slider
+          value={[heightIndex]}
+          min={0}
+          max={HEIGHT_TOKENS.length - 1}
+          step={1}
+          onValueChange={(vals) => onHeightChange(HEIGHT_TOKENS[vals[0]])}
+        />
+        <div className={`mt-2 flex items-center justify-between font-mono text-[11px] ${isDark ? "text-background/70" : "text-muted-foreground"}`}>
+          <span>h-6</span>
+          <span className={`rounded px-2 py-0.5 ${isDark ? "bg-background/10 text-background" : "bg-muted text-foreground"}`}>{logoClass}</span>
+          <span>h-20</span>
         </div>
-      ) : (
-        <div className="mt-3 flex justify-center">
-          <span className="rounded bg-background/10 px-2 py-0.5 font-mono text-[11px] text-background">
-            {logoClass}
-          </span>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
