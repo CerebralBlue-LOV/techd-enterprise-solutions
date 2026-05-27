@@ -15,7 +15,7 @@ Marketing website rebuild for **TechD** (IBM Gold Business Partner serving Fortu
 This repository is **public**. Before committing anything, verify:
 
 - No personal names, email addresses, or phone numbers in any file
-  - Exception: Executive leadership names and career details (prior employers, education, tenure) are permitted in `docs/revisions/`, `docs/audit/`, and `src/content/about.ts`. No personal contact details (home address, personal phone, personal email) in any file.
+  - Exception: Executive leadership names and career details (prior employers, education, tenure) are permitted in `src/content/about.ts`. No personal contact details (home address, personal phone, personal email) in any file.
 - No API keys, tokens, secrets, or credentials anywhere (use GitHub Secrets / AWS environment variables)
 - No internal Slack handles, Google Drive links, or internal URLs
 - No local filesystem paths (`~/Documents/...`, `/home/...`)
@@ -300,13 +300,8 @@ The script source is **not in this repo** (lives in the TechD Google account tha
 | File | When to read it |
 |---|---|
 | `docs/PROJECT-SCOPE.md` | Full project scope, phases, and long-term vision. Read when scope is ambiguous. |
-| `docs/ARCHITECTURE.md` | Architectural and product decisions, dated with rationale. Read when in doubt. |
-| `docs/BRAND.md` | Colors, fonts, voice, logo rules. Read for any visual or copy work. |
+| `docs/ARCHITECTURE.md` | Architectural and product decisions, dated with rationale. Includes IA rationale for Solutions, Services, Industries, Resources. Read when in doubt. |
 | `docs/SPAM-REPORT.md` | What was wrong with the old site, why no 410s needed. Read if asked about redirects. |
 | `docs/REDIRECT-MAP.md` | Legacy URL → new URL mapping. Needed at domain cutover for 301 enforcement. |
-| `docs/rebuild/solutions.md` | IBM product naming rules and rationale for the 5-practice IA. Read before editing solutions content. |
-| `docs/rebuild/services.md` | Service line consolidation rationale. |
-| `docs/rebuild/industries.md` | Industry selection rationale (why Financial Services is out, Media & Entertainment is in). |
-| `docs/rebuild/resources.md` | Resources hub rebuild rationale. Clean slate decision. |
-| `docs/audit/` | Raw per-section audits from techd.com crawl. Reference if PM asks why something was included or excluded. |
+| `docs/SEO-KEYWORD-MAP.md` | Page-by-page keyword targets with Semrush data. Read before editing meta titles or descriptions. |
 | `docs/DARK-MODE.md` | Dark mode architecture (three layers), decision tree, per-route audit checklist, verification steps. |

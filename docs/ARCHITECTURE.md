@@ -28,6 +28,52 @@ Format: most recent first.
 
 ---
 
+## 2026-05-08 — Information architecture: Solutions, Services, Industries, Resources
+
+### Solutions: 5 outcome-based practices
+
+**Decision:** Collapsed IBM's 10-product-family taxonomy into 5 outcome-based practices. Buyers search by pain point, not by IBM product family. Products still get individual detail pages at `/solutions/<practice>/<product>`.
+
+| Practice | Outcome |
+|---|---|
+| AI & Generative | Ship trustworthy gen AI on governed enterprise data |
+| Data & Analytics | Make data AI-ready, governed, and defensible |
+| Automation & FinOps | Observe everything, optimize spend, eliminate manual toil |
+| Security & Compliance | Pass the audit. Protect the data. Respond to the breach. |
+| Infrastructure | Run watsonx and Cloud Pak for Data on-prem, cloud-grade operations |
+
+**IBM brand naming applied throughout:** Watson → watsonx equivalents; InfoSphere brand dropped; "Cloud Private for Data" removed; InfoSphere MDM → IBM MDM.
+
+**Excluded:** Watson AI Applications (discontinued/404), SPSS (no active TechD delivery evidence), BigInsights (replaced by watsonx.data), InfoSphere Information Server (superseded by DataStage). TechD CogSuite is a differentiator callout on the Cognos Analytics detail page, not a nav item.
+
+---
+
+### Services: 4 lines
+
+**Decision:** 15+ legacy service sub-pages collapsed into 4 routes — Advisory, Implementation, Managed Services, Training. "Consulting" and "Advisory" merged. All legacy URLs 301'd via `docs/REDIRECT-MAP.md`.
+
+**Open question (awaiting PM — Cesar):** Should reactive post-go-live support be a 5th service line (`/services/support`) or a named tier within Managed Services? Option A (fold in) = cleaner IA, no new route. Option B (separate route) = explicit surface for support-seeking buyers. Impact if Option B: new entry in `src/content/services.ts`, new route, new page `src/pages/services/Support.tsx`.
+
+---
+
+### Industries: 6 verticals
+
+**Decision:** Industries section added (no equivalent on legacy techd.com). Six verticals backed by verified client evidence: Healthcare, Media & Entertainment, Energy & Utilities, Higher Education, Public Sector, Insurance.
+
+**Financial Services removed:** Appeared on old site but no verifiable client evidence found. Removed to avoid an empty industry page.
+
+**Media & Entertainment added:** Sony Pictures, Sony Interactive, Comcast/Peacock are confirmed TechD clients.
+
+---
+
+### Resources: clean slate
+
+**Decision:** All ~86 legacy webinar and event URLs dropped — no historical archive carried over. Four routes (case-studies, blog, webinars, events) are placeholders awaiting CMS. Old URLs 301 → `/resources` per `docs/REDIRECT-MAP.md`.
+
+**One verified case study at build time:** IBM-published TechD/NeuralSeek retail stack (Db2 + watsonx Assistant). All other case study cards are placeholders pending legal approval.
+
+---
+
 ## 2026-05-04 — Repo set to public
 
 **Decision:** Repository is public (was private initially).
