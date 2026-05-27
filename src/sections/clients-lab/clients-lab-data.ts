@@ -140,7 +140,8 @@ export const MARC_CLIENTS: LabClient[] = [
     name: "Memorial Sloan Kettering",
     url: "https://www.mskcc.org",
     logo: L("msk.png"),
-    placeholder: true,
+    currentLogo: L("msk.png"),
+    currentLogoDark: D("msk"),
     defaultHeight: "h-10",
   },
   {
