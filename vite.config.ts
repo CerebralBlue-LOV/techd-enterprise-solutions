@@ -41,7 +41,8 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          three: ["three", "@react-three/fiber"],
+          three: ["three"],
+          r3f: ["@react-three/fiber"],
         },
       },
     },
