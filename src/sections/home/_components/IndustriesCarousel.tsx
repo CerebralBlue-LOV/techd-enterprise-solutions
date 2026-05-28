@@ -211,8 +211,9 @@ const StackedCard = ({ ind, index, depth, signedDepth, isActive, total, onActiva
 
   return (
     <div
-      className="absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+      className="absolute inset-0 transition-all duration-500"
       style={{
+        transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
         transform,
         opacity,
         zIndex,
