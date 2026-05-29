@@ -2,14 +2,14 @@
  * KB generator for the NeuralSeek techd-website instance.
  *
  * Usage:   npm run kb:build
- * Output:  dist/kb/*.md  (gitignored — dist/ is excluded)
- * Upload:  drag dist/kb/ folder into the NeuralSeek admin knowledge tab
- *          at https://staging.neuralseek.com/techd-website/
+ * Output:  kb/*.md  (gitignored — kb/ is excluded)
+ * Upload:  drag kb/ folder into the NeuralSeek admin knowledge tab
+ *          at https://console-partners.neuralseek.com/c282eeff30a86ea816c32551/
  *
  * Relative imports are intentional — tsx (esbuild) does not resolve Vite @-aliases.
  */
 
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, writeFileSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -125,6 +125,7 @@ const SOLUTION_FILE_PREFIXES: Record<string, string> = {
   "data-analytics":     "11-solutions-data-analytics",
   "automation-finops":  "12-solutions-automation-finops",
   "security-compliance":"13-solutions-security-compliance",
+  "infrastructure":     "14-solutions-infrastructure",
 };
 
 for (const solution of SOLUTIONS) {
@@ -519,6 +520,6 @@ const files = [
 ];
 
 console.log(`\nKB generation complete → kb/`);
-console.log(`${files.length} documents ready for upload to NeuralSeek.`);
+console.log(`${readdirSync(OUT_DIR).length} documents ready for upload to NeuralSeek.`);
 console.log(`\nNext step: drag kb/ into the knowledge tab at`);
-console.log(`  https://staging.neuralseek.com/techd-website/`);
+console.log(`  https://console-partners.neuralseek.com/c282eeff30a86ea816c32551/`);

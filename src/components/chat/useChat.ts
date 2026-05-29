@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 import type { Message, SeekResponse } from "./types";
 
-const SEEK_URL = "https://stagingapi.neuralseek.com/v1/techd-website/seek";
-const EMBED_CODE = "611208311";
+const SEEK_URL = "https://console-partners.neuralseek.com/v1/c282eeff30a86ea816c32551/seek";
+const EMBED_CODE = "1698972448";
 
 function uid() {
   return Math.random().toString(36).slice(2);
