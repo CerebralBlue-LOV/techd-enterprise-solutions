@@ -2,50 +2,63 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "@pages/NotFound";
 import ScrollToTop from "./ScrollToTop";
+import { hasReloadedForStaleChunk, tryReloadForStaleChunk } from "../main";
 
 // All page components are lazy-loaded so three.js and page-specific code
 // stay out of the main bundle and only download on first navigation.
-const Home = lazy(() => import("@pages/Home"));
-const ProductDetail = lazy(() => import("@pages/ProductDetail"));
-const Contact = lazy(() => import("@pages/Contact"));
-const ClientsLab = lazy(() => import("@pages/ClientsLab"));
+const lazyPage = <T extends Promise<unknown>>(loader: () => T) =>
+  lazy(async () => {
+    try {
+      return (await loader()) as Awaited<T>;
+    } catch (error) {
+      if (!tryReloadForStaleChunk(error) && hasReloadedForStaleChunk()) {
+        window.location.assign(window.location.href);
+      }
+      throw error;
+    }
+  });
+
+const Home = lazyPage(() => import("@pages/Home"));
+const ProductDetail = lazyPage(() => import("@pages/ProductDetail"));
+const Contact = lazyPage(() => import("@pages/Contact"));
+const ClientsLab = lazyPage(() => import("@pages/ClientsLab"));
 
 // Company
-const About = lazy(() => import("@pages/company/About"));
-const IBMPartnership = lazy(() => import("@pages/company/IBMPartnership"));
-const DeliveryMethodology = lazy(() => import("@pages/company/DeliveryMethodology"));
+const About = lazyPage(() => import("@pages/company/About"));
+const IBMPartnership = lazyPage(() => import("@pages/company/IBMPartnership"));
+const DeliveryMethodology = lazyPage(() => import("@pages/company/DeliveryMethodology"));
 
 // Solutions
-const AIGenerative = lazy(() => import("@pages/solutions/AIGenerative"));
-const DataAnalytics = lazy(() => import("@pages/solutions/DataAnalytics"));
-const AutomationFinOps = lazy(() => import("@pages/solutions/AutomationFinOps"));
-const SecurityCompliance = lazy(() => import("@pages/solutions/SecurityCompliance"));
-const Infrastructure = lazy(() => import("@pages/solutions/Infrastructure"));
+const AIGenerative = lazyPage(() => import("@pages/solutions/AIGenerative"));
+const DataAnalytics = lazyPage(() => import("@pages/solutions/DataAnalytics"));
+const AutomationFinOps = lazyPage(() => import("@pages/solutions/AutomationFinOps"));
+const SecurityCompliance = lazyPage(() => import("@pages/solutions/SecurityCompliance"));
+const Infrastructure = lazyPage(() => import("@pages/solutions/Infrastructure"));
 
 // Services
-const Advisory = lazy(() => import("@pages/services/Advisory"));
-const Implementation = lazy(() => import("@pages/services/Implementation"));
-const ManagedServices = lazy(() => import("@pages/services/ManagedServices"));
-const Training = lazy(() => import("@pages/services/Training"));
+const Advisory = lazyPage(() => import("@pages/services/Advisory"));
+const Implementation = lazyPage(() => import("@pages/services/Implementation"));
+const ManagedServices = lazyPage(() => import("@pages/services/ManagedServices"));
+const Training = lazyPage(() => import("@pages/services/Training"));
 
 // Industries
-const Healthcare = lazy(() => import("@pages/industries/Healthcare"));
-const MediaEntertainment = lazy(() => import("@pages/industries/MediaEntertainment"));
-const EnergyUtilities = lazy(() => import("@pages/industries/EnergyUtilities"));
-const HigherEducation = lazy(() => import("@pages/industries/HigherEducation"));
-const PublicSector = lazy(() => import("@pages/industries/PublicSector"));
-const FinancialServices = lazy(() => import("@pages/industries/FinancialServices"));
-const Manufacturing = lazy(() => import("@pages/industries/Manufacturing"));
+const Healthcare = lazyPage(() => import("@pages/industries/Healthcare"));
+const MediaEntertainment = lazyPage(() => import("@pages/industries/MediaEntertainment"));
+const EnergyUtilities = lazyPage(() => import("@pages/industries/EnergyUtilities"));
+const HigherEducation = lazyPage(() => import("@pages/industries/HigherEducation"));
+const PublicSector = lazyPage(() => import("@pages/industries/PublicSector"));
+const FinancialServices = lazyPage(() => import("@pages/industries/FinancialServices"));
+const Manufacturing = lazyPage(() => import("@pages/industries/Manufacturing"));
 
 // Resources
-const CaseStudies = lazy(() => import("@pages/resources/CaseStudies"));
-const CaseStudyDetail = lazy(() => import("@pages/resources/CaseStudyDetail"));
-const Blog = lazy(() => import("@pages/resources/Blog"));
-const BlogDetail = lazy(() => import("@pages/resources/BlogDetail"));
-const Webinars = lazy(() => import("@pages/resources/Webinars"));
-const WebinarDetail = lazy(() => import("@pages/resources/WebinarDetail"));
-const Events = lazy(() => import("@pages/resources/Events"));
-const EventDetail = lazy(() => import("@pages/resources/EventDetail"));
+const CaseStudies = lazyPage(() => import("@pages/resources/CaseStudies"));
+const CaseStudyDetail = lazyPage(() => import("@pages/resources/CaseStudyDetail"));
+const Blog = lazyPage(() => import("@pages/resources/Blog"));
+const BlogDetail = lazyPage(() => import("@pages/resources/BlogDetail"));
+const Webinars = lazyPage(() => import("@pages/resources/Webinars"));
+const WebinarDetail = lazyPage(() => import("@pages/resources/WebinarDetail"));
+const Events = lazyPage(() => import("@pages/resources/Events"));
+const EventDetail = lazyPage(() => import("@pages/resources/EventDetail"));
 
 /**
  * Central route table.
