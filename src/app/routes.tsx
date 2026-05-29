@@ -2,50 +2,51 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "@pages/NotFound";
 import ScrollToTop from "./ScrollToTop";
+import { recoverableLazyImport } from "./staleChunkRecovery";
 
 // All page components are lazy-loaded so three.js and page-specific code
 // stay out of the main bundle and only download on first navigation.
-const Home = lazy(() => import("@pages/Home"));
-const ProductDetail = lazy(() => import("@pages/ProductDetail"));
-const Contact = lazy(() => import("@pages/Contact"));
-const ClientsLab = lazy(() => import("@pages/ClientsLab"));
+const Home = lazy(recoverableLazyImport(() => import("@pages/Home")));
+const ProductDetail = lazy(recoverableLazyImport(() => import("@pages/ProductDetail")));
+const Contact = lazy(recoverableLazyImport(() => import("@pages/Contact")));
+const ClientsLab = lazy(recoverableLazyImport(() => import("@pages/ClientsLab")));
 
 // Company
-const About = lazy(() => import("@pages/company/About"));
-const IBMPartnership = lazy(() => import("@pages/company/IBMPartnership"));
-const DeliveryMethodology = lazy(() => import("@pages/company/DeliveryMethodology"));
+const About = lazy(recoverableLazyImport(() => import("@pages/company/About")));
+const IBMPartnership = lazy(recoverableLazyImport(() => import("@pages/company/IBMPartnership")));
+const DeliveryMethodology = lazy(recoverableLazyImport(() => import("@pages/company/DeliveryMethodology")));
 
 // Solutions
-const AIGenerative = lazy(() => import("@pages/solutions/AIGenerative"));
-const DataAnalytics = lazy(() => import("@pages/solutions/DataAnalytics"));
-const AutomationFinOps = lazy(() => import("@pages/solutions/AutomationFinOps"));
-const SecurityCompliance = lazy(() => import("@pages/solutions/SecurityCompliance"));
-const Infrastructure = lazy(() => import("@pages/solutions/Infrastructure"));
+const AIGenerative = lazy(recoverableLazyImport(() => import("@pages/solutions/AIGenerative")));
+const DataAnalytics = lazy(recoverableLazyImport(() => import("@pages/solutions/DataAnalytics")));
+const AutomationFinOps = lazy(recoverableLazyImport(() => import("@pages/solutions/AutomationFinOps")));
+const SecurityCompliance = lazy(recoverableLazyImport(() => import("@pages/solutions/SecurityCompliance")));
+const Infrastructure = lazy(recoverableLazyImport(() => import("@pages/solutions/Infrastructure")));
 
 // Services
-const Advisory = lazy(() => import("@pages/services/Advisory"));
-const Implementation = lazy(() => import("@pages/services/Implementation"));
-const ManagedServices = lazy(() => import("@pages/services/ManagedServices"));
-const Training = lazy(() => import("@pages/services/Training"));
+const Advisory = lazy(recoverableLazyImport(() => import("@pages/services/Advisory")));
+const Implementation = lazy(recoverableLazyImport(() => import("@pages/services/Implementation")));
+const ManagedServices = lazy(recoverableLazyImport(() => import("@pages/services/ManagedServices")));
+const Training = lazy(recoverableLazyImport(() => import("@pages/services/Training")));
 
 // Industries
-const Healthcare = lazy(() => import("@pages/industries/Healthcare"));
-const MediaEntertainment = lazy(() => import("@pages/industries/MediaEntertainment"));
-const EnergyUtilities = lazy(() => import("@pages/industries/EnergyUtilities"));
-const HigherEducation = lazy(() => import("@pages/industries/HigherEducation"));
-const PublicSector = lazy(() => import("@pages/industries/PublicSector"));
-const FinancialServices = lazy(() => import("@pages/industries/FinancialServices"));
-const Manufacturing = lazy(() => import("@pages/industries/Manufacturing"));
+const Healthcare = lazy(recoverableLazyImport(() => import("@pages/industries/Healthcare")));
+const MediaEntertainment = lazy(recoverableLazyImport(() => import("@pages/industries/MediaEntertainment")));
+const EnergyUtilities = lazy(recoverableLazyImport(() => import("@pages/industries/EnergyUtilities")));
+const HigherEducation = lazy(recoverableLazyImport(() => import("@pages/industries/HigherEducation")));
+const PublicSector = lazy(recoverableLazyImport(() => import("@pages/industries/PublicSector")));
+const FinancialServices = lazy(recoverableLazyImport(() => import("@pages/industries/FinancialServices")));
+const Manufacturing = lazy(recoverableLazyImport(() => import("@pages/industries/Manufacturing")));
 
 // Resources
-const CaseStudies = lazy(() => import("@pages/resources/CaseStudies"));
-const CaseStudyDetail = lazy(() => import("@pages/resources/CaseStudyDetail"));
-const Blog = lazy(() => import("@pages/resources/Blog"));
-const BlogDetail = lazy(() => import("@pages/resources/BlogDetail"));
-const Webinars = lazy(() => import("@pages/resources/Webinars"));
-const WebinarDetail = lazy(() => import("@pages/resources/WebinarDetail"));
-const Events = lazy(() => import("@pages/resources/Events"));
-const EventDetail = lazy(() => import("@pages/resources/EventDetail"));
+const CaseStudies = lazy(recoverableLazyImport(() => import("@pages/resources/CaseStudies")));
+const CaseStudyDetail = lazy(recoverableLazyImport(() => import("@pages/resources/CaseStudyDetail")));
+const Blog = lazy(recoverableLazyImport(() => import("@pages/resources/Blog")));
+const BlogDetail = lazy(recoverableLazyImport(() => import("@pages/resources/BlogDetail")));
+const Webinars = lazy(recoverableLazyImport(() => import("@pages/resources/Webinars")));
+const WebinarDetail = lazy(recoverableLazyImport(() => import("@pages/resources/WebinarDetail")));
+const Events = lazy(recoverableLazyImport(() => import("@pages/resources/Events")));
+const EventDetail = lazy(recoverableLazyImport(() => import("@pages/resources/EventDetail")));
 
 /**
  * Central route table.
