@@ -1,7 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import NotFound from "@pages/NotFound";
 import ScrollToTop from "./ScrollToTop";
+import TrailingSlashRedirect from "./TrailingSlashRedirect";
+import LegacySlugRouter from "./LegacySlugRouter";
 import { recoverableLazyImport } from "./staleChunkRecovery";
 
 // All page components are lazy-loaded so three.js and page-specific code
@@ -58,6 +59,7 @@ const EventDetail = lazy(recoverableLazyImport(() => import("@pages/resources/Ev
 export const AppRoutes = () => (
   <>
     <ScrollToTop />
+    <TrailingSlashRedirect />
     <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -127,8 +129,86 @@ export const AppRoutes = () => (
 
         {/* Internal sizing tool — hidden, no nav link, noindex */}
         <Route path="/clients-lab" element={<ClientsLab />} />
-        {/* Catch-all — must stay last. */}
-        <Route path="*" element={<NotFound />} />
+
+        {/* ── Legacy WordPress redirects ──────────────────────────────────────
+            Source: techd.com sitemap crawled 2026-05-29 (~228 indexed URLs).
+            These are client-side navigations, not HTTP 301s. True server-side
+            301s require Cloudflare in front of GitHub Pages (deferred post-launch).
+            TrailingSlashRedirect (mounted above) strips the WP trailing slash
+            before these routes are evaluated, so we only write each path once.
+        ─────────────────────────────────────────────────────────────────────── */}
+
+        {/* Company / contact */}
+        <Route path="/about-us"            element={<Navigate to="/company/about" replace />} />
+        <Route path="/our-story"           element={<Navigate to="/company/about" replace />} />
+        <Route path="/our-customers"       element={<Navigate to="/company/about" replace />} />
+        <Route path="/depth-of-experience" element={<Navigate to="/company/about" replace />} />
+        <Route path="/contact-us"          element={<Navigate to="/contact" replace />} />
+        <Route path="/ibm-business-partner" element={<Navigate to="/company/ibm-partnership" replace />} />
+        <Route path="/privacy-policy"      element={<Navigate to="/" replace />} />
+
+        {/* Services */}
+        <Route path="/services/strategy-and-consulting"                              element={<Navigate to="/services/advisory" replace />} />
+        <Route path="/services/strategy-and-consulting/implementation"               element={<Navigate to="/services/implementation" replace />} />
+        <Route path="/services/strategy-and-consulting/solution-design"              element={<Navigate to="/services/advisory" replace />} />
+        <Route path="/services/strategy-and-consulting/field-services"               element={<Navigate to="/services/managed-services" replace />} />
+        <Route path="/services/strategy-and-consulting/lifecycle-services-and-customer-success" element={<Navigate to="/services/managed-services" replace />} />
+        <Route path="/services/technology-expertise"                                 element={<Navigate to="/services/advisory" replace />} />
+        <Route path="/services/advisory-assessment-services"                         element={<Navigate to="/services/advisory" replace />} />
+        <Route path="/services/advisory-assessment-services/security"                element={<Navigate to="/solutions/security-compliance" replace />} />
+        <Route path="/services/advisory-assessment-services/analytics"               element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/services/advisory-assessment-services/data-assessment"         element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/services/techd-ibm-ai-data-quick-start-advisory-service"      element={<Navigate to="/services/advisory" replace />} />
+
+        {/* Data solutions taxonomy → new solutions */}
+        <Route path="/data-solutions"      element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/ibm-data-solutions"  element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/data-solutions/ibm-business-intelligence-and-analytics/*"      element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/data-solutions/ibm-data-science-platform/*"                    element={<Navigate to="/solutions/ai-generative" replace />} />
+        <Route path="/data-solutions/unified-governance-and-integration/*"            element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/data-solutions/hybrid-data-management/*"                        element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/data-solutions/security-intelligence/*"                         element={<Navigate to="/solutions/security-compliance" replace />} />
+        <Route path="/data-solutions/enterprise-insights/*"                           element={<Navigate to="/solutions/infrastructure" replace />} />
+        <Route path="/data-solutions/ibm-cloud/*"                                    element={<Navigate to="/solutions/infrastructure" replace />} />
+        <Route path="/data-solutions/ibm-cognos-analytics-administration"             element={<Navigate to="/solutions/data-analytics" replace />} />
+        <Route path="/data-solutions/watson-assisstant-ai-chatbot-transformative-ai-applications-techd-ibm" element={<Navigate to="/solutions/ai-generative" replace />} />
+
+        {/* Flagship product landing pages */}
+        <Route path="/ibm-turbonomic-cloud-cost-optimization"  element={<Navigate to="/solutions/automation-finops" replace />} />
+        <Route path="/real-time-observability-with-ibm-instana" element={<Navigate to="/solutions/automation-finops" replace />} />
+        <Route path="/apptio-setup-implementation-services"    element={<Navigate to="/solutions/automation-finops" replace />} />
+
+        {/* News / resources hubs */}
+        <Route path="/news-and-events"                                           element={<Navigate to="/resources/events" replace />} />
+        <Route path="/news-and-events/white-papers"                              element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/news-and-events/user-group-presentations"                  element={<Navigate to="/resources/events" replace />} />
+        <Route path="/news-and-events/user-group-presentations/user-group-downloads" element={<Navigate to="/resources/events" replace />} />
+        <Route path="/case-studies"                                              element={<Navigate to="/resources/case-studies" replace />} />
+        <Route path="/resources-big-data-solutions"                              element={<Navigate to="/resources/case-studies" replace />} />
+        <Route path="/resources-big-data-solutions/success-stories"              element={<Navigate to="/resources/case-studies" replace />} />
+        <Route path="/resources-big-data-solutions/blogs-and-insights"           element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/resources-big-data-solutions/white-papers"                 element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/resources-big-data-solutions/events-and-webinars"          element={<Navigate to="/resources/webinars" replace />} />
+        <Route path="/resources-big-data-solutions/past-events"                  element={<Navigate to="/resources/events" replace />} />
+        <Route path="/resources-big-data-solutions/social-media"                 element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/techd-and-ibm-publications"                                element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/software-downloads"                                        element={<Navigate to="/" replace />} />
+        <Route path="/software-downloads/thanks"                                 element={<Navigate to="/" replace />} />
+        <Route path="/download-free-trial-versions-of-techds-ibm-cogsuite-software-tools" element={<Navigate to="/" replace />} />
+
+        {/* WordPress category taxonomy */}
+        <Route path="/category/blogs-and-insights/*"  element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/category/success-stories/*"     element={<Navigate to="/resources/case-studies" replace />} />
+        <Route path="/category/events/*"              element={<Navigate to="/resources/events" replace />} />
+        <Route path="/category/webinars/*"            element={<Navigate to="/resources/webinars" replace />} />
+        <Route path="/category/cognos-user-groups/*"  element={<Navigate to="/resources/events" replace />} />
+        <Route path="/category/techd-news/*"          element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/category/publications/*"        element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/category/white-papers/*"        element={<Navigate to="/resources/blog" replace />} />
+        <Route path="/category/ibm-data-solutions/*"  element={<Navigate to="/solutions/data-analytics" replace />} />
+
+        {/* Catch-all: keyword-routes WP post slugs; falls through to NotFound for true unknowns */}
+        <Route path="*" element={<LegacySlugRouter />} />
       </Routes>
     </Suspense>
   </>
