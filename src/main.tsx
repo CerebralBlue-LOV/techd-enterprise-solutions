@@ -8,6 +8,7 @@ import "./index.css";
 // that no longer exists, React lazy() throws "error loading dynamically
 // imported module". One reload picks up the new manifest.
 const RELOAD_FLAG = "lov:chunk-reloaded";
+export const hasReloadedForStaleChunk = () => sessionStorage.getItem(RELOAD_FLAG) === "1";
 const isStaleChunkError = (value: unknown): boolean => {
   const msg = String(
     (value as { message?: string } | null)?.message ?? value ?? "",
@@ -19,14 +20,20 @@ const isStaleChunkError = (value: unknown): boolean => {
     /ChunkLoadError/i.test(msg)
   );
 };
-const tryReload = (value: unknown) => {
-  if (isStaleChunkError(value) && !sessionStorage.getItem(RELOAD_FLAG)) {
+export const tryReloadForStaleChunk = (value: unknown): boolean => {
+  if (isStaleChunkError(value) && !hasReloadedForStaleChunk()) {
     sessionStorage.setItem(RELOAD_FLAG, "1");
     window.location.reload();
+    return true;
   }
+  return false;
 };
-window.addEventListener("error", (event) => tryReload(event));
-window.addEventListener("unhandledrejection", (event) => tryReload(event.reason));
+window.addEventListener("error", (event) => {
+  tryReloadForStaleChunk(event.error ?? event.message ?? event);
+});
+window.addEventListener("unhandledrejection", (event) => {
+  tryReloadForStaleChunk(event.reason);
+});
 window.addEventListener("load", () => {
   sessionStorage.removeItem(RELOAD_FLAG);
 });
