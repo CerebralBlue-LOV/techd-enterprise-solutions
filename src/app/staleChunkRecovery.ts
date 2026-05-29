@@ -1,3 +1,5 @@
+import type { ComponentType } from "react";
+
 const RELOAD_FLAG = "lov:chunk-reloaded";
 
 const isStaleChunkError = (value: unknown): boolean => {
@@ -40,7 +42,7 @@ export const installStaleChunkRecovery = () => {
   });
 };
 
-export const recoverableLazyImport = <TModule extends { default: React.ComponentType<any> }>(
+export const recoverableLazyImport = <TModule extends { default: ComponentType<any> }>(
   loader: () => Promise<TModule>,
 ) => async () => {
   try {
