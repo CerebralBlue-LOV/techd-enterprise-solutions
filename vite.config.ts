@@ -6,7 +6,7 @@ import { saveLogoSizesPlugin } from "./vite-plugins/save-logo-sizes";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/techd-enterprise-solutions/" : "/",
+  base: "/",
   server: {
     host: "::",
     port: 8080,
