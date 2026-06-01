@@ -6,9 +6,7 @@ Operational context for Claude Code. Loaded every session. Keep tight.
 
 Marketing website rebuild for **TechD** (IBM Gold Business Partner serving Fortune 500 clients: J&J, Comcast, Sony, Princeton, Johns Hopkins). Replacing a compromised WordPress site.
 
-**Status: Not live.** The site is still in development. Do not assume the staging URL reflects the final state or that any deadline has passed.
-
-**Staging URL:** `cerebralblue-lov.github.io/techd-enterprise-solutions/`
+**Status: Live** at `https://techd.com` as of June 1, 2026. Hosted on GitHub Pages via `cerebralblue-lov/techd-enterprise-solutions`. The old staging URL (`cerebralblue-lov.github.io/techd-enterprise-solutions/`) now redirects to the production domain.
 
 ## Public repo — security rules
 

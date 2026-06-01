@@ -11,7 +11,7 @@ Staging URL (current): `cerebralblue-lov.github.io/techd-enterprise-solutions/`
 - [x] `vite.config.ts` — base changed from `/techd-enterprise-solutions/` to `/`
 - [x] `public/CNAME` — created with `www.techd.com`
 - [x] Legacy WordPress URL redirects — ~228 URLs mapped (Tier 1 explicit, Tier 2 category catch-alls, Tier 3 slug router). See `src/app/routes.tsx`, `src/app/TrailingSlashRedirect.tsx`, `src/app/LegacySlugRouter.tsx`
-- [ ] Merge branch once Marc confirms DNS is live
+- [x] Merge branch — deployed June 1, 2026
 
 ---
 
@@ -23,7 +23,7 @@ Recipients updated to `['fvargas@techd.com', 'bsyring@techd.com', 'info@techd.co
 
 ---
 
-## Marc Martina (DNS in Bluehost) — PENDING
+## Marc Martina (DNS in Bluehost) — DONE
 
 Add these records in Bluehost DNS:
 
@@ -41,17 +41,19 @@ Once records are saved, confirm with Fabio so the branch can be merged.
 
 ---
 
-## Fabio — after DNS is confirmed
+## Fabio — after DNS is confirmed — DONE (June 1, 2026)
 
-- [ ] Merge `main` → GitHub Actions builds & deploys (~3 min)
-- [ ] GitHub Pages detects `CNAME`, validates DNS, provisions HTTPS cert (~15 min)
-- [ ] Verify `https://www.techd.com` loads correctly
-- [ ] Verify `https://techd.com` redirects to `www.techd.com`
-- [ ] Test contact form (submit a lead, confirm Bryan/Brian receives it)
-- [ ] Test a few routes: `/solutions/ai-generative`, `/contact`, `/industries/healthcare`
-- [ ] Check browser console — no 404s for assets
+- [x] Merge `main` → GitHub Actions builds & deploys
+- [x] GitHub Pages detects `CNAME`, validates DNS, provisions HTTPS cert
+- [x] `https://techd.com` loads correctly
+- [x] `https://www.techd.com` redirects to `https://techd.com`
 
 ---
+
+## Post-launch backlog
+
+- [ ] Performance — Lighthouse score 51 (TBT 12s from three.js hero). Optimize after things settle.
+- [ ] Case studies / success stories — add when Bryan is ready
 
 ## Notes
 
