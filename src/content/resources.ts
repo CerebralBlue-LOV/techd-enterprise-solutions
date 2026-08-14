@@ -409,11 +409,11 @@ export const RESOURCES: Resource[] = [
   // ─── Webinars ────────────────────────────────────────────────────────────────
 
   {
-    id: "wb-secured-ai-internal-chat",
-    slug: "secured-ai-internal-chat",
+    id: "wb-secured-ai",
+    slug: "secured-ai",
     type: "webinars",
     title:
-      "Secured AI Internal Chat: Containerized on IBM Fusion, powered by NeuralSeek",
+      "Secured AI: Containerized on IBM Fusion, powered by NeuralSeek",
     summary:
       "See how healthcare and financial services teams run generative AI entirely behind their firewall — without rebuilding their infrastructure.",
     // Sept 15 2026 falls inside US Daylight Saving, so this is EDT. The source
@@ -430,7 +430,7 @@ export const RESOURCES: Resource[] = [
     highlights: [
       "Why public-cloud AI tools stall in regulated industries — and what to do instead",
       "How IBM Fusion provides a containerized, on-prem, behind-the-firewall foundation",
-      "A live demo of Secured AI Internal Chat, powered by NeuralSeek — including what happens when a question falls outside approved boundaries",
+      "A live demo of Secured AI, powered by NeuralSeek — including what happens when a question falls outside approved boundaries",
       "Real deployment patterns from healthcare and financial services",
       "How to evaluate whether this approach fits your organization's data and use case",
     ],
@@ -446,7 +446,7 @@ export const RESOURCES: Resource[] = [
           "Immutable backup, access control, encryption and single-copy governance, mapped to what auditors actually ask for.",
       },
       {
-        title: "Live demo: Secured AI Internal Chat, powered by NeuralSeek",
+        title: "Live demo: Secured AI, powered by NeuralSeek",
         detail:
           "A real internal assistant answering from a curated knowledge base — including what it refuses to answer.",
       },
@@ -479,7 +479,7 @@ export const RESOURCES: Resource[] = [
       "CISOs & Risk Leaders",
       "Data & Platform Engineering Teams",
     ],
-    seoTitle: "Secured AI Internal Chat — Webinar Registration | TechD",
+    seoTitle: "Secured AI — Webinar Registration | TechD",
     seoDescription:
       "Join TechD to see how IBM Fusion and NeuralSeek deliver a secured, containerized AI chat experience for healthcare and financial services teams — no data leaves your environment.",
   },

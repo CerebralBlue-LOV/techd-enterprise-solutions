@@ -206,42 +206,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://techd.com/resources/webinars/secured-ai-internal-chat</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://techd.com/resources/webinars/ai-agents-that-pass-an-audit</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://techd.com/resources/webinars/data-lake-to-data-product</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://techd.com/resources/webinars/neuralseek-watsonx-rag-regulated-industries</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://techd.com/resources/webinars/turbonomic-instana-apm-to-cost-reduction</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://techd.com/resources/webinars/planning-analytics-21-tm1-to-saas</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://techd.com/resources/webinars/guardium-ddr-insider-threats-hybrid-cloud</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://techd.com/resources/webinars/cognos-analytics-12-agentic-bi</loc>
+    <loc>https://techd.com/resources/webinars/secured-ai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

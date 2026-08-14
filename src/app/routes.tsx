@@ -114,6 +114,13 @@ export const AppRoutes = () => (
         <Route path="/resources/blog" element={<Blog />} />
         <Route path="/resources/blog/:slug" element={<BlogDetail />} />
         <Route path="/resources/webinars" element={<Webinars />} />
+        {/* Renamed Aug 2026 — "Internal Chat" dropped from the title. The old URL was
+            shared before the rename, so it keeps resolving. Must sit here rather than in
+            LegacySlugRouter, which only handles single-segment paths. */}
+        <Route
+          path="/resources/webinars/secured-ai-internal-chat"
+          element={<Navigate to="/resources/webinars/secured-ai" replace />}
+        />
         <Route path="/resources/webinars/:slug" element={<WebinarDetail />} />
         <Route path="/resources/events" element={<Events />} />
         <Route path="/resources/events/:slug" element={<EventDetail />} />
