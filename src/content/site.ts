@@ -77,7 +77,8 @@ export const NAV: NavItem[] = [
     children: [
       { label: "Case Studies", href: "/resources/case-studies", description: "Client stories from named enterprise engagements.", latest: "2025" },
       { label: "Blog",         href: "/resources/blog",         description: "Insights on AI, data governance, and enterprise architecture." },
-      // Webinars and Events exist as routes but are hidden from nav until content is confirmed ready.
+      { label: "Webinars",     href: "/resources/webinars",     description: "Live sessions with TechD and IBM practitioners." },
+      // Events exists as a route but is hidden from nav until content is confirmed ready.
     ],
   },
   {

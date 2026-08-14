@@ -493,7 +493,7 @@ export const RESOURCES: Resource[] = [
     date: "On-demand",
     practice: "ai-generative",
     products: ["watsonx Orchestrate", "watsonx.governance"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    draft: true, /* hidden — only the September 15 session is live */
   },
   {
     id: "wb-2",
@@ -504,7 +504,7 @@ export const RESOURCES: Resource[] = [
     date: "On-demand",
     practice: "data-analytics",
     products: ["IBM watsonx.data"],
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    draft: true, /* hidden — only the September 15 session is live */
   },
 
   // Net-new draft webinars from docs/revisions/resources/webinars.md §5.
@@ -520,7 +520,7 @@ export const RESOURCES: Resource[] = [
     practice: "ai-generative",
     products: ["NeuralSeek", "watsonx.ai"],
     registrationUrl: null,
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    draft: true, /* hidden — only the September 15 session is live */
   },
   {
     id: "wb-turbonomic-instana",
@@ -534,7 +534,7 @@ export const RESOURCES: Resource[] = [
     practice: "automation-finops",
     products: ["IBM Instana", "IBM Turbonomic"],
     registrationUrl: null,
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    draft: true, /* hidden — only the September 15 session is live */
   },
   {
     id: "wb-pa-21-migration",
@@ -547,7 +547,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Planning Analytics"],
     registrationUrl: null,
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    draft: true, /* hidden — only the September 15 session is live */
   },
   {
     id: "wb-guardium-ddr",
@@ -561,7 +561,7 @@ export const RESOURCES: Resource[] = [
     practice: "security-compliance",
     products: ["IBM Guardium"],
     registrationUrl: null,
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    draft: true, /* hidden — only the September 15 session is live */
   },
   {
     id: "wb-cognos-12-agents",
@@ -574,7 +574,7 @@ export const RESOURCES: Resource[] = [
     practice: "data-analytics",
     products: ["IBM Cognos Analytics"],
     registrationUrl: null,
-    draft: false, /* PREVIEW ONLY — revert before publish */
+    draft: true, /* hidden — only the September 15 session is live */
   },
 
   // ─── Events ──────────────────────────────────────────────────────────────────
