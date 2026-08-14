@@ -22,6 +22,17 @@ export const CONTACT = {
 export const CONTACT_ENDPOINT =
   "https://script.google.com/macros/s/AKfycbxZzWP0YBibJKvj7Q7zJ5879_cFc_AQ1mhnlPrMgpORp-IEBF0zKqlutkcDdzIMELWqcg/exec";
 
+/**
+ * Public Google Apps Script web app URL that receives webinar registrations.
+ * Same posture as CONTACT_ENDPOINT: safe to commit, separate deployment.
+ */
+export const WEBINAR_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycby6o2Y8lcB2u6Y1MZ5o5yQiKfdlNulSI4RS-i322ol6mzuccgOIhcpNVeTsDh1bGiJs/exec";
+
+/** False until the endpoint above is filled in; the form refuses to submit. */
+export const WEBINAR_ENDPOINT_READY =
+  !WEBINAR_ENDPOINT.includes("REPLACE_WITH");
+
 export type NavItem = {
   label: string;
   /** Optional href. Top-level dropdown labels omit href and act as menu triggers only. */

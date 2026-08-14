@@ -39,6 +39,33 @@ export type Resource = {
   location?: string | null;
   /** Registration URL for events / webinars. */
   registrationUrl?: string | null;
+  /**
+   * When true, the detail page renders the on-site registration form instead of
+   * linking out. Takes precedence over `registrationUrl` — keeping the visitor
+   * on techd.com is the point.
+   */
+  registrationOpen?: boolean;
+  /** Bullets rendered above the form, e.g. "What you'll see in this session". */
+  highlights?: string[];
+  /** Ordered agenda entries for a live session. */
+  agenda?: { title: string; detail: string }[];
+  /**
+   * Presenters. `title` and `bio` render only when present, so an unconfirmed
+   * speaker shows as a name rather than a "[TITLE — please confirm]" placeholder.
+   */
+  speakers?: { name: string; title?: string; bio?: string }[];
+  /** Paragraph under the registration headline, after the date line. */
+  registrationLede?: string;
+  /** Short "what happens after you register" list beside the form. */
+  registrationNotes?: string[];
+  /** Intro paragraph for the "who should attend" section. */
+  audienceLede?: string;
+  /** Chips under the audience lede, e.g. "CISOs & Risk Leaders". */
+  audienceTags?: string[];
+  /** Overrides the `<title>` when the resource title is too long for a tab. */
+  seoTitle?: string;
+  /** Overrides the meta description. */
+  seoDescription?: string;
   /** ISO date string for blog publishing / event scheduling. */
   publishedAt?: string;
 };
@@ -380,6 +407,82 @@ export const RESOURCES: Resource[] = [
   },
 
   // ─── Webinars ────────────────────────────────────────────────────────────────
+
+  {
+    id: "wb-secured-ai-internal-chat",
+    slug: "secured-ai-internal-chat",
+    type: "webinars",
+    title:
+      "Secured AI Internal Chat: Containerized on IBM Fusion, powered by NeuralSeek",
+    summary:
+      "See how healthcare and financial services teams run generative AI entirely behind their firewall — without rebuilding their infrastructure.",
+    // Sept 15 2026 falls inside US Daylight Saving, so this is EDT. The source
+    // brief says "EST", which would put the session an hour late.
+    date: "September 15, 2026 · 1:00 PM ET",
+    publishedAt: "2026-09-15T13:00:00-04:00",
+    practice: "ai-generative",
+    products: ["IBM Storage Fusion", "NeuralSeek"],
+    tags: ["Regulated industries", "On-prem AI", "RAG"],
+    registrationOpen: true,
+    // No `body` prose on purpose — the source brief goes straight from the hero
+    // to "What You'll See", and a lede paragraph here just restated the
+    // subheadline at length.
+    highlights: [
+      "Why public-cloud AI tools stall in regulated industries — and what to do instead",
+      "How IBM Fusion provides a containerized, on-prem, behind-the-firewall foundation",
+      "A live demo of Secured AI Internal Chat, powered by NeuralSeek — including what happens when a question falls outside approved boundaries",
+      "Real deployment patterns from healthcare and financial services",
+      "How to evaluate whether this approach fits your organization's data and use case",
+    ],
+    agenda: [
+      {
+        title: "The challenge: AI in regulated industries",
+        detail:
+          "Why PHI, PII and financial data can't leave the firewall, and where AI projects die in compliance review.",
+      },
+      {
+        title: "The IBM Fusion foundation",
+        detail:
+          "Immutable backup, access control, encryption and single-copy governance, mapped to what auditors actually ask for.",
+      },
+      {
+        title: "Live demo: Secured AI Internal Chat, powered by NeuralSeek",
+        detail:
+          "A real internal assistant answering from a curated knowledge base — including what it refuses to answer.",
+      },
+      {
+        title: "Deployment patterns in healthcare and financial services",
+        detail:
+          "How the compliance problem, the deployment and the measurable outcome fit together in practice.",
+      },
+      {
+        title: "Next steps",
+        detail:
+          "Booking a free AI consultation: a data landscape review, your compliance requirements, and an honest fit assessment.",
+      },
+    ],
+    // Titles and bios are unconfirmed in the source brief; the cards render the
+    // name alone rather than showing a placeholder on a live page.
+    speakers: [{ name: "Brian Syring" }, { name: "Marc Martina" }],
+    registrationLede:
+      "Thirty minutes, no slideware. You'll see the architecture that puts generative AI behind your own firewall, a live demo answering from a curated knowledge base, and an honest read on where this fits and where it doesn't.",
+    registrationNotes: [
+      "A confirmation email with your joining link, straight away.",
+      "Reply to it with anything you want covered — we'd rather answer real questions than run a script.",
+      "Nothing else. We'll only email you about this session.",
+    ],
+    audienceLede:
+      "This session is designed for IT, security, and compliance leaders at healthcare and financial services organizations evaluating generative AI — especially those who need AI to stay fully within their own infrastructure to meet HIPAA, PCI DSS, SOX, or GLBA requirements.",
+    audienceTags: [
+      "Healthcare IT & Security",
+      "Financial Services IT & Compliance",
+      "CISOs & Risk Leaders",
+      "Data & Platform Engineering Teams",
+    ],
+    seoTitle: "Secured AI Internal Chat — Webinar Registration | TechD",
+    seoDescription:
+      "Join TechD to see how IBM Fusion and NeuralSeek deliver a secured, containerized AI chat experience for healthcare and financial services teams — no data leaves your environment.",
+  },
 
   {
     id: "wb-1",
