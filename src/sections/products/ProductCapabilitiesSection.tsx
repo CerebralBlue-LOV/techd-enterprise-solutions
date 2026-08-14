@@ -11,6 +11,12 @@ interface Props {
  * Dedicated Key Capabilities section rendered on a dark cyan-glow panel.
  * Typography-led — mono index + light capability text, divided by hairlines.
  * Currently wired only on AI & Generative product detail pages.
+ *
+ * Text here is `white`, not `background`. DarkGlowPanel is dark in both themes
+ * (`--surface-dark` is not redefined under `.dark`), but `--background` flips
+ * to near-black in dark mode — so `text-background` rendered dark-on-dark and
+ * the whole section became unreadable with the theme toggle on. The hairlines
+ * below already used `white/10` for the same reason.
  */
 export const ProductCapabilitiesSection = ({ product }: Props) => {
   const capabilities = product.detail?.capabilities;
@@ -32,7 +38,7 @@ export const ProductCapabilitiesSection = ({ product }: Props) => {
                 <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-primary">
                   Key Capabilities
                 </p>
-                <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.05] text-background tracking-tight">
+                <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.05] text-white tracking-tight">
                   What {product.name} delivers in production
                 </h2>
               </div>
@@ -61,10 +67,10 @@ const CapabilityList = ({
   <ul className="divide-y divide-white/10 border-t border-white/10">
     {items.map((cap, i) => (
       <li key={cap} className="flex items-start gap-5 py-5">
-        <span className="font-mono text-xs text-background/40 tabular-nums pt-1 shrink-0">
+        <span className="font-mono text-xs text-white/60 tabular-nums pt-1 shrink-0">
           {String(startIndex + i + 1).padStart(2, "0")}
         </span>
-        <span className="text-base font-light text-background/90 leading-relaxed">
+        <span className="text-base font-light text-white/90 leading-relaxed">
           {cap}
         </span>
       </li>
