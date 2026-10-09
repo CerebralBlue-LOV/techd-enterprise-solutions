@@ -307,10 +307,35 @@ The script source is **not in this repo** (lives in the TechD Google account tha
 
 ---
 
+## Site chatbot (NeuralSeek)
+
+`src/components/chat/` — mounted in `Layout.tsx` on every page. `useChat.ts` POSTs the question to the instance's `/seek` with the browser-safe `embedcode` header (never the admin key) and shows the top-level `url` from the response as the source link.
+
+### Knowledge base
+
+The KB is built from `src/content/` (plus `src/content/chatbot-faq.ts`) and loaded by script — **never drag-and-drop in the admin UI**: those docs carry no URL, so answers lose their source link.
+
+```
+npm run kb:build                 # src/content → kb/*.md (gitignored)
+npm run kb:sync                  # dry run: lists new / changed / removed docs, sends nothing
+npm run kb:sync -- --apply       # deletes changed/removed docs, adds changed/new ones
+```
+
+- `scripts/kb-sync.mjs` — one KB document per `kb/*.md`, added with its page URL (`https://techd.com` + its `route:` line). Only changed files are rewritten.
+- Needs `.neuralseekrc.json` (gitignored) or `NS_BASE_URL` / `NS_API_KEY`. State file: `_private/kb-sync/<instance>.json`.
+- Run it after any content edit that should reach the chatbot.
+
+### If the chatbot answers "nothing in our knowledge base" to everything
+
+Check the **Seek LLM** in the admin UI (Neural Config → LLM Details) before the KB. On Oct 9 2026 the Seek model made the semantic check fail, so every answer scored 0 and was replaced by the fallback text; switching the model fixed it. Settings changes go through the admin UI.
+
+---
+
 
 
 ## Documentation index
 
 | File | When to read it |
 |---|---|
+| `scripts/kb-sync.mjs` | How the chatbot KB is loaded — see "Site chatbot" above. |
 | `docs/ARCHITECTURE.md` | All settled decisions: stack, hosting, contact form, 3D figures, IA rationale for Solutions/Services/Industries/Resources. Read when in doubt. |
