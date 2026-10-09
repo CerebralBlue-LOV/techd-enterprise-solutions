@@ -46,7 +46,7 @@ const IBMPartnership = () => {
     <Layout>
       <SEO
         title="IBM Partnership — TechD"
-        description="TechD is an IBM Gold Business Partner under IBM Partner Plus — certified across 21 IBM products spanning AI, data, automation, and security."
+        description="TechD is an IBM Gold Business Partner under IBM Partner Plus — certified across 23 IBM products spanning AI, data, automation, security, and infrastructure."
       />
 
       <PageHero
@@ -54,7 +54,7 @@ const IBMPartnership = () => {
         parent="Company"
         child="IBM Partnership"
         headline="IBM Gold Business Partner since 2009."
-        lede="An IBM Partner Plus tier we have held through 15+ years of continuous delivery. Certified across 21 IBM products spanning AI &amp; Generative, Data &amp; Analytics, Automation &amp; FinOps, and Security &amp; Compliance."
+        lede="An IBM Partner Plus tier we have held through 15+ years of continuous delivery. Certified across 23 IBM products spanning AI &amp; Generative, Data &amp; Analytics, Automation &amp; FinOps, Security &amp; Compliance, and Infrastructure."
         figure={<CompanyFigure />}
         primaryCta={{ label: "Talk to an expert", to: "/contact" }}
         anchors={[
@@ -122,7 +122,7 @@ const IBMPartnership = () => {
               </div>
               <div className="relative mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-4">
                 {[
-                  { value: "21", label: "IBM products" },
+                  { value: "23", label: "IBM products" },
                   { value: "4", label: "Practices" },
                   { value: "15+", label: "Years delivering" },
                 ].map((s) => (

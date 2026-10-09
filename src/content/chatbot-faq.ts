@@ -41,7 +41,7 @@ export const CHATBOT_FAQ: FaqEntry[] = [
   {
     question: "Is TechD an IBM Business Partner?",
     answer:
-      "TechD has been an IBM Gold Business Partner under IBM Partner Plus since 2009. We hold active authorizations across 21 IBM products spanning AI & Generative, Data & Analytics, Automation & FinOps, Security & Compliance, and Infrastructure.",
+      "TechD has been an IBM Gold Business Partner under IBM Partner Plus since 2009. We hold active authorizations across 23 IBM products spanning AI & Generative, Data & Analytics, Automation & FinOps, Security & Compliance, and Infrastructure.",
     links: [{ label: "IBM Partnership page", href: "/company/ibm-partnership" }],
     tags: ["ibm", "partner", "gold", "certification", "authorized"],
   },
@@ -55,7 +55,7 @@ export const CHATBOT_FAQ: FaqEntry[] = [
   {
     question: "What IBM products does TechD implement?",
     answer:
-      "TechD implements 21 IBM products across five practices: AI & Generative (watsonx.ai, watsonx platform, watsonx Orchestrate, watsonx Assistant, NeuralSeek, IBM SPSS Modeler); Data & Analytics (IBM Db2, watsonx.data, Cloud Pak for Data, IBM DataStage, IBM Netezza Performance Server, Cognos Analytics 12, Planning Analytics); Automation & FinOps (IBM Apptio, IBM Instana, IBM Turbonomic, IBM Concert); Security & Compliance (IBM Guardium, IBM QRadar, IBM QRadar SOAR); Infrastructure (IBM Storage Fusion HCI).",
+      "TechD implements 23 IBM products across five practices: AI & Generative (watsonx.ai, watsonx platform, watsonx Orchestrate, watsonx Assistant, NeuralSeek, IBM SPSS Modeler); Data & Analytics (IBM Db2, watsonx.data, watsonx.data intelligence, watsonx.data integration, Cloud Pak for Data, IBM DataStage, IBM Netezza Performance Server, Cognos Analytics 12, Planning Analytics); Automation & FinOps (IBM Apptio, IBM Instana, IBM Turbonomic, IBM Concert); Security & Compliance (IBM Guardium, IBM QRadar, IBM QRadar SOAR); Infrastructure (IBM Storage Fusion HCI).",
     links: [{ label: "IBM Partnership", href: "/company/ibm-partnership" }],
     tags: ["products", "ibm", "watsonx", "cognos", "db2", "guardium", "qradar", "apptio", "concert", "fusion", "infrastructure"],
   },

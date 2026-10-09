@@ -445,7 +445,7 @@ source: src/content/about.ts
 
 # TechD IBM Partnership
 
-TechD has been an IBM Gold Business Partner under IBM Partner Plus since ${CONTACT.ibmPartnerSince}. We hold active delivery authorizations across 21 IBM products.
+TechD has been an IBM Gold Business Partner under IBM Partner Plus since ${CONTACT.ibmPartnerSince}. We hold active delivery authorizations across ${PORTFOLIO_BY_PRACTICE.reduce((n, p) => n + p.products.length, 0)} IBM products.
 
 ## IBM Product Portfolio by Practice
 

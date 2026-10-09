@@ -62,7 +62,7 @@ export type PortfolioPractice = {
   products: string[];
 };
 
-/** 21 confirmed products across four practices. Source: docs/revisions/about/ibm-partnership.md §1. */
+/** 23 products across five practices: the 21 confirmed in the original partnership revision, plus IBM Concert and IBM Storage Fusion HCI (Infrastructure), added later. */
 export const PORTFOLIO_BY_PRACTICE: PortfolioPractice[] = [
   {
     practice: "AI & Generative",
