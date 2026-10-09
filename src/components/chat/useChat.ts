@@ -21,11 +21,31 @@ async function seekAnswer(question: string): Promise<SeekResponse> {
   return res.json() as Promise<SeekResponse>;
 }
 
+/** Only absolute http(s) URLs or site-relative paths may reach an href — never `javascript:` or `data:`. */
+function safeUrl(raw: string | undefined): string | undefined {
+  const url = raw?.trim();
+  if (!url) return undefined;
+  if (url.startsWith("/") && !url.startsWith("//")) return url;
+  try {
+    const { protocol } = new URL(url);
+    return protocol === "http:" || protocol === "https:" ? url : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** "00-site-meta.md" → "site meta": the KB file name, readable. */
+function sourceTitle(document: string | undefined): string {
+  const name = document?.trim().replace(/\.md$/i, "").replace(/^\d+-/, "").replace(/-/g, " ");
+  return name || "Source";
+}
+
 function extractAnswer(data: SeekResponse): { content: string; citations: { title: string; url?: string }[] } {
   const text = data.answer ?? data.answersText ?? data.fwd ?? "";
   const citations: { title: string; url?: string }[] = [];
-  if (data.document?.title) {
-    citations.push({ title: data.document.title, url: data.document.url });
+  const url = safeUrl(data.url);
+  if (url) {
+    citations.push({ title: sourceTitle(data.document), url });
   }
   return { content: text.trim(), citations };
 }
