@@ -33,3 +33,6 @@ dist-ssr
 
 # Local-only working files — never commit (public repo)
 /_private/
+
+.mcp.json
+.neuralseekrc.json

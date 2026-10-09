@@ -3,8 +3,8 @@
  *
  * Usage:   npm run kb:build
  * Output:  kb/*.md  (gitignored — kb/ is excluded)
- * Upload:  drag kb/ folder into the NeuralSeek admin knowledge tab
- *          at https://console-partners.neuralseek.com/c282eeff30a86ea816c32551/
+ * Upload:  npm run kb:sync (dry run), then npm run kb:sync -- --apply
+ *          — see scripts/kb-sync.mjs. Do not drag-and-drop: those docs carry no URL.
  *
  * Relative imports are intentional — tsx (esbuild) does not resolve Vite @-aliases.
  */
@@ -521,5 +521,4 @@ const files = [
 
 console.log(`\nKB generation complete → kb/`);
 console.log(`${readdirSync(OUT_DIR).length} documents ready for upload to NeuralSeek.`);
-console.log(`\nNext step: drag kb/ into the knowledge tab at`);
-console.log(`  https://console-partners.neuralseek.com/c282eeff30a86ea816c32551/`);
+console.log(`\nNext step: npm run kb:sync (dry run), then npm run kb:sync -- --apply`);
