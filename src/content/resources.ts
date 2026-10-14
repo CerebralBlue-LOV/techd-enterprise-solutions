@@ -47,6 +47,14 @@ export type Resource = {
   registrationOpen?: boolean;
   /** Bullets rendered above the form, e.g. "What you'll see in this session". */
   highlights?: string[];
+  /**
+   * A past session: the recording. A plain link out to YouTube, never an embed —
+   * nothing third-party loads on the page. Its presence is what switches the
+   * detail page to past tense.
+   */
+  recordingUrl?: string | null;
+  /** A past session: what was actually covered, from the recording. */
+  covered?: { title: string; detail: string }[];
   /** Ordered agenda entries for a live session. */
   agenda?: { title: string; detail: string }[];
   /**
@@ -415,73 +423,83 @@ export const RESOURCES: Resource[] = [
     title:
       "Secured AI: Containerized on IBM Fusion, powered by NeuralSeek",
     summary:
-      "See how healthcare and financial services teams run generative AI entirely behind their firewall — without rebuilding their infrastructure.",
-    // Sept 15 2026 falls inside US Daylight Saving, so this is EDT. The source
-    // brief says "EST", which would put the session an hour late.
-    date: "September 15, 2026 · 1:00 PM ET",
+      "How healthcare and financial services teams run generative AI entirely behind their own firewall, with the hardware, platform and first applications delivered together.",
+    // Shown verbatim on the webinars index card and the detail hero. The session
+    // ran Sept 15 2026, 1:00 PM EDT (the source brief's "EST" was an hour off).
+    date: "On-demand · recorded September 15, 2026",
     publishedAt: "2026-09-15T13:00:00-04:00",
     practice: "ai-generative",
     products: ["IBM Storage Fusion", "NeuralSeek"],
     tags: ["Regulated industries", "On-prem AI", "RAG"],
-    registrationOpen: true,
-    // No `body` prose on purpose — the source brief goes straight from the hero
-    // to "What You'll See", and a lede paragraph here just restated the
-    // subheadline at length.
-    highlights: [
-      "Why public-cloud AI tools stall in regulated industries — and what to do instead",
-      "How IBM Fusion provides a containerized, on-prem, behind-the-firewall foundation",
-      "A live demo of Secured AI, powered by NeuralSeek — including what happens when a question falls outside approved boundaries",
-      "Real deployment patterns from healthcare and financial services",
-      "How to evaluate whether this approach fits your organization's data and use case",
+    // Past session: registration closed, recording linked out. Content rewritten
+    // in the past tense from the recording, matching the neuralseek.com record
+    // (ns-website `src/content/resources/events.ts`, SECURED_AI). Counts, prices
+    // and competitor names quoted in the session are left out on purpose.
+    registrationOpen: false,
+    recordingUrl: "https://www.youtube.com/live/mDpNd4zILys",
+    covered: [
+      {
+        title: "Data sovereignty as the deciding question",
+        detail:
+          "The most common concern was jurisdiction: where the data goes, who can be compelled to hand it over, and what happens if a provider withdraws a model. The answer: a solution that works with the internet unplugged, on models you host, under your own retention policy.",
+      },
+      {
+        title: "IBM Fusion as the foundation",
+        detail:
+          "On-premises, containerized infrastructure — compute, storage, networking and backup on Red Hat OpenShift, in your building. One vendor to call and one environment to show an auditor.",
+      },
+      {
+        title: "NeuralSeek as the layer on top",
+        detail:
+          "Guardrails, auditing and governance built in, a visual view of every agent, and the freedom to swap the language model without re-tuning anything else. The right model depends on the task, the latency and the cost.",
+      },
+      {
+        title: "Applications that work on the first day",
+        detail:
+          "A meeting listener that keeps transcripts and summaries on your own infrastructure, and Word, Excel, PowerPoint and Outlook add-ins that run against the models you chose. Shadow AI was the argument for shipping something usable immediately.",
+      },
     ],
     agenda: [
       {
-        title: "The challenge: AI in regulated industries",
+        title: "Why AI purchases stall",
         detail:
-          "Why PHI, PII and financial data can't leave the firewall, and where AI projects die in compliance review.",
+          "Hardware without applications, months of building before anything is shown, and the pressure that puts on the team that signed the order.",
       },
       {
         title: "The IBM Fusion foundation",
         detail:
-          "Immutable backup, access control, encryption and single-copy governance, mapped to what auditors actually ask for.",
+          "What the appliance provides underneath: OpenShift, storage, backup and the operational consistency of one hardware platform.",
       },
       {
-        title: "Live demo: Secured AI, powered by NeuralSeek",
+        title: "Sovereignty, retention and provider risk",
         detail:
-          "A real internal assistant answering from a curated knowledge base — including what it refuses to answer.",
+          "Cross-border data transfer, compelled access, cloud-provider retention of queries, and models withdrawn without notice.",
       },
       {
-        title: "Deployment patterns in healthcare and financial services",
+        title: "Demo: Secured AI, powered by NeuralSeek",
         detail:
-          "How the compliance problem, the deployment and the measurable outcome fit together in practice.",
+          "The bundled applications, the model-swap workflow and the Office add-ins, shown in the product.",
       },
       {
-        title: "Next steps",
+        title: "Questions",
         detail:
-          "Booking a free AI consultation: a data landscape review, your compliance requirements, and an honest fit assessment.",
+          "How long it takes an engineer with no model experience to become productive, and whether email can be used as a data source.",
       },
     ],
     // Titles and bios are unconfirmed in the source brief; the cards render the
     // name alone rather than showing a placeholder on a live page.
     speakers: [{ name: "Brian Syring" }, { name: "Marc Martina" }],
-    registrationLede:
-      "Thirty minutes, no slideware. You'll see the architecture that puts generative AI behind your own firewall, a live demo answering from a curated knowledge base, and an honest read on where this fits and where it doesn't.",
-    registrationNotes: [
-      "A confirmation email with your joining link, straight away.",
-      "Reply to it with anything you want covered — we'd rather answer real questions than run a script.",
-      "Nothing else. We'll only email you about this session.",
-    ],
     audienceLede:
-      "This session is designed for IT, security, and compliance leaders at healthcare and financial services organizations evaluating generative AI — especially those who need AI to stay fully within their own infrastructure to meet HIPAA, PCI DSS, SOX, or GLBA requirements.",
+      "Recorded for IT, security and compliance leaders at healthcare and financial services organizations evaluating generative AI — especially those who need AI to stay fully within their own infrastructure to meet HIPAA, PCI DSS, SOX or GLBA requirements.",
     audienceTags: [
       "Healthcare IT & Security",
       "Financial Services IT & Compliance",
       "CISOs & Risk Leaders",
       "Data & Platform Engineering Teams",
     ],
-    seoTitle: "Secured AI — Webinar Registration | TechD",
+    seoTitle: "Secured AI on IBM Fusion — Webinar Recording | TechD",
     seoDescription:
-      "Join TechD to see how IBM Fusion and NeuralSeek deliver a secured, containerized AI chat experience for healthcare and financial services teams — no data leaves your environment.",
+      "Watch the recording: how IBM Fusion and NeuralSeek run generative AI behind your own firewall for healthcare and financial services teams — no data leaves your environment.",
   },
 
   {

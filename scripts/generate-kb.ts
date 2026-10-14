@@ -392,6 +392,8 @@ ${
         parts.push(r.summary);
         if (r.body?.length) parts.push(r.body.join("\n\n"));
         if (r.externalUrl) parts.push(`[Read more](${r.externalUrl})`);
+        if (r.covered?.length) parts.push(r.covered.map((c) => `- **${c.title}:** ${c.detail}`).join("\n"));
+        if (r.recordingUrl) parts.push(`[Watch the recording on YouTube](${r.recordingUrl})`);
         return parts.join("\n\n");
       }).join("\n\n---\n\n")
 }

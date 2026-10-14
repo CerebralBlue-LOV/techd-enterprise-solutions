@@ -1,5 +1,5 @@
 import { useParams, useLocation } from "react-router-dom";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import Layout from "@layout/Layout";
 import SEO from "@seo/SEO";
 import Reveal from "@shared/Reveal";
@@ -27,6 +27,10 @@ const WebinarDetail = () => {
   // An open registration keeps the visitor on techd.com, so it wins over an
   // external registrationUrl when a webinar somehow carries both.
   const registrationOpen = webinar.registrationOpen === true;
+  // A recording means the session is over: the page switches to past tense and
+  // the band links out to YouTube (a link, never an embed).
+  const recordingUrl = webinar.recordingUrl ?? undefined;
+  const isPast = Boolean(recordingUrl);
 
   const cta =
     !registrationOpen && webinar.registrationUrl
@@ -71,7 +75,7 @@ const WebinarDetail = () => {
           IBM is first and larger, NeuralSeek second and smaller: Fusion is the
           foundation, NeuralSeek the layer on it. TechD frames the page as host
           through the site header, not inside this lockup. */}
-      {registrationOpen && (
+      {(registrationOpen || isPast) && (
         <section id="at-a-glance" className="section pt-0">
           <SectionMarker page="Resources / Webinars" name="At a glance" />
           <div className="container-page">
@@ -111,21 +115,65 @@ const WebinarDetail = () => {
                     </div>
                   </div>
 
-                  <Button asChild size="lg" className="btn-glow shrink-0">
-                    <ScrollToSectionLink sectionId="register" path={pathname}>
-                      Register Now
-                      <ArrowRight className="ml-1 size-4" />
-                    </ScrollToSectionLink>
-                  </Button>
+                  {registrationOpen ? (
+                    <Button asChild size="lg" className="btn-glow shrink-0">
+                      <ScrollToSectionLink sectionId="register" path={pathname}>
+                        Register Now
+                        <ArrowRight className="ml-1 size-4" />
+                      </ScrollToSectionLink>
+                    </Button>
+                  ) : (
+                    <Button asChild size="lg" className="btn-glow shrink-0">
+                      <a href={recordingUrl} target="_blank" rel="noopener noreferrer">
+                        Watch the recording on YouTube
+                        <ArrowUpRight className="ml-1 size-4" />
+                      </a>
+                    </Button>
+                  )}
                 </div>
 
                 <div className="relative px-8 pb-10 md:px-12">
                   <p className="text-sm font-light text-white/80">
-                    {webinar.date} · free, 30-minute session · online
+                    {isPast
+                      ? `${webinar.date} · 30-minute session · opens on YouTube`
+                      : `${webinar.date} · free, 30-minute session · online`}
                   </p>
                 </div>
               </DarkGlowPanel>
             </Reveal>
+          </div>
+        </section>
+      )}
+
+      {webinar.covered && webinar.covered.length > 0 && (
+        <section id="what-was-covered" className="section">
+          <SectionMarker page="Resources / Webinars" name="What was covered" />
+          <div className="container-page">
+            <Reveal>
+              <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
+                <span className="h-px w-6 bg-primary/60" /> What was covered
+              </p>
+              <h2 className="mt-4 max-w-2xl text-3xl md:text-4xl font-bold text-secondary leading-tight">
+                Highlights from the session.
+              </h2>
+            </Reveal>
+            <ul className="mt-10 grid gap-4 md:max-w-4xl md:grid-cols-2">
+              {webinar.covered.map((item) => (
+                <Reveal key={item.title}>
+                  <li className="flex h-full items-start gap-4 rounded-xl border border-border/70 bg-background/60 p-5 transition-colors duration-200 hover:border-primary/40">
+                    <Check className="mt-1 size-4 shrink-0 text-primary" />
+                    <div>
+                      <h3 className="text-base font-bold text-secondary">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1.5 text-sm font-light text-secondary/70 leading-relaxed">
+                        {item.detail}
+                      </p>
+                    </div>
+                  </li>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </section>
       )}
@@ -185,7 +233,7 @@ const WebinarDetail = () => {
           <div className="container-page">
             <Reveal>
               <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
-                <span className="h-px w-6 bg-primary/60" /> Agenda
+                <span className="h-px w-6 bg-primary/60" /> {isPast ? "How the session ran" : "Agenda"}
               </p>
               <h2 className="mt-4 max-w-2xl text-3xl md:text-4xl font-bold text-secondary leading-tight">
                 Thirty minutes, start to finish.
@@ -257,10 +305,10 @@ const WebinarDetail = () => {
           <div className="container-page">
             <Reveal>
               <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
-                <span className="h-px w-6 bg-primary/60" /> Featuring
+                <span className="h-px w-6 bg-primary/60" /> {isPast ? "Presented by" : "Featuring"}
               </p>
               <h2 className="mt-4 text-3xl md:text-4xl font-bold text-secondary leading-tight">
-                Your presenters.
+                {isPast ? "The presenters." : "Your presenters."}
               </h2>
             </Reveal>
             <ul className="mt-10 grid gap-4 sm:grid-cols-2 md:max-w-3xl">
@@ -284,7 +332,7 @@ const WebinarDetail = () => {
             </ul>
             <Reveal>
               <p className="mt-6 text-sm font-light text-muted-foreground">
-                The IBM Fusion foundation section is presented by the IBM Fusion team.
+                The IBM Fusion foundation section {isPast ? "was" : "is"} presented by the IBM Fusion team.
               </p>
             </Reveal>
           </div>
