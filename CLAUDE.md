@@ -237,6 +237,7 @@ Rules:
 - Don't touch `src/components/ui/` — those are shadcn defaults.
 - Don't introduce raw hex colors anywhere.
 - Don't write or apply 410 redirects (see `docs/ARCHITECTURE.md` — spam was theme-level, not URL-based).
+- Don't add third-party tracking or visitor-identification scripts to `index.html`. The KPI "Omni Signals" widget (`app.omniop.io`, loaded pre-consent) was removed *Oct 14 2026* when the campaign that installed it ended. The only chat on the site is our own NeuralSeek chatbot (see Site chatbot).
 - Don't add images to `src/assets/` — all images belong in `public/images/` and should be referenced as path strings, not ES module imports.
 
 ## Content copy rules (when editing `src/content/`)
